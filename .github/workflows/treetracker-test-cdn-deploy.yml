@@ -1,12 +1,12 @@
 name: Frontend Test CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      git-tag:
+        description: "Branch/hash/tag"
+        required: true
+        default: 'master'
 
 env: 
   project-directory: ./
@@ -26,9 +26,9 @@ jobs:
     - name: npm clean install
       run: npm ci
       working-directory: ${{ env.project-directory }}
-    - name: run ESLint
-      run: npm run lint
-      working-directory: ${{ env.project-directory }}
+    # - name: run ESLint
+    #   run: npm run lint
+    #   working-directory: ${{ env.project-directory }}
     # define the endpoints for test in github secrets
     - name: build frontend project
       run: ${{ secrets.TEST_APP_ENDPOINTS }} npm run build
@@ -38,9 +38,9 @@ jobs:
       with:
         name: frontend-bundle
         path: build
-    - name: run React tests
-      run: npm test
-      working-directory: ${{ env.project-directory }}
+    # - name: run React tests
+    #   run: npm test
+    #   working-directory: ${{ env.project-directory }}
 
   deploy:
     name: Deploy to TEST CDN
