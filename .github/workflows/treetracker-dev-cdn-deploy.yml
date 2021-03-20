@@ -38,9 +38,9 @@ jobs:
       with:
         name: frontend-bundle
         path: build
-    - name: run React tests
-      run: npm test
-      working-directory: ${{ env.project-directory }}
+    # - name: run React tests
+    #   run: npm test
+    #   working-directory: ${{ env.project-directory }}
   release:
     name: Release semantic version
     needs: frontend
