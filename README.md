@@ -42,80 +42,6 @@ npm start
 ```
 4. Open the web map in the browser with URL: http://localhost:3000
 
-#### Backend Development
-1. Install node modules, run npm i in server/ folder
-```
-cd server
-npm i
-```
-2. Set up database connection string.  Get the development .env from the slack channel, or edit server/.env to contain the following lines (get the db connection string itself on slack)
-```
-DATABASE_URL=postgresql://xxxx:xxxx@dxxxx:25060/treetracker?ssl=no-verify
-```
-3. Install supervisor globally
-```
-npm i -g supervisor
-```
-4. Run server.js with CORS restrictions lifted
-```
-NODE_ENV=dev supervisor server.js
-```
-
-### Local development (Advanced)
-1. Install postgres
-2. Install postGIS
-3. Create a database named 'treetracker'
-4. Import our developer seed into your database.  Ask in slack for the link to the seed.
-5. Configure server/.env to point to your local database
-6. Install node modules, run npm i in server/ folder
-```
-npm i
-```
-7. Install supervisor globally
-```
-npm i -g supervisor
-```
-
-1. Make sure all npm modules are installed under client.
-```
-cd client
-npm i
-```
-
-2. Start the server
-```
-cd server
-npm run dev
-```
-
-3. Start the client
-```
-cd client
-npm start
-```
-
-4. Open the web map in the browser with URL: http://localhost:3000
-
-NOTE: in this way, the server would run on port 3001, and client would run on port 3000.
-
-## How to enable log on console.
-
-By default, the client just output logs which are level of `warn` or above, this remains the browser console clean for normal users, to display more logs for debuggering, please follow this guide:
-
-1. Open the browser console panel.
-
-2. Open application tab, then open `Local Storage` tab:
-
-3. Add a key-value pair:
-
-key: loglevel
-value: DEBUG
-
-4. Refresh the page.
-
-![demo for set log](./log-demo.gif)
-
-
 ### How to test
 
 We use Jest to build tests.
@@ -124,13 +50,6 @@ We use Jest to build tests.
 ```
 npm test
 ```
-
-2. To test server
-```
-cd server
-npm test
-```
-
 
 ### Alternative development environment for MS Windows (Works on Linux and Mac also)
 On Windows, the easiest way to develop and debug Node.js applications is using Visual Studio Code.
