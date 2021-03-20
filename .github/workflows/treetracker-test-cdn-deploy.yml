@@ -34,7 +34,6 @@ jobs:
       run: ${{ secrets.TEST_APP_ENDPOINTS }} npm run build
       working-directory: ${{ env.project-directory }}
     - uses: actions/upload-artifact@v2
-      if: github.event_name == 'push' && github.repository == "Greenstand/${{ github.event.repository.name }}"
       with:
         name: frontend-bundle
         path: build
@@ -47,8 +46,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: frontend
     if: |
-      !contains(github.event.head_commit.message, 'skip-ci') &&
-      github.event_name == 'push' &&
       github.repository == "Greenstand/${{ github.event.repository.name }}"   
     steps:
     - uses: actions/checkout@v2
