@@ -31,7 +31,7 @@ jobs:
     #   working-directory: ${{ env.project-directory }}
     # define the endpoints for DEV in github secrets
     - name: build frontend project
-      run: "{{ secrets.DEV_APP_ENDPOINTS }} npm run build"
+      run: {{ secrets.DEV_APP_ENDPOINTS }} npm run build
       working-directory: ${{ env.project-directory }}
     - uses: actions/upload-artifact@v2
       if: github.event_name == 'push' && github.repository == "Greenstand/${{ github.event.repository.name }}"
