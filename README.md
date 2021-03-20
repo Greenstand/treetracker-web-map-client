@@ -18,7 +18,7 @@ Displays location and details of all trees that have been tracked.
 
 Live map is at [www.treetracker.org](https://www.treetracker.org)
 
-For more details see the [Tree Tracker Web Map Wiki] (https://github.com/Greenstand/treetracker-web-map/wiki)
+For more details see the [Tree Tracker Web Map Wiki] (https://github.com/Greenstand/treetracker-web-map-client/wiki)
 
 &nbsp;
 &nbsp;
@@ -122,7 +122,6 @@ We use Jest to build tests.
 
 1. To test client
 ```
-cd client
 npm test
 ```
 
