@@ -265,7 +265,11 @@ function App() {
     const marker = map.getMarkerByPointId()[tree.id]
     if(marker){
       expect(marker).defined();
-      const {top, left} = mapTools.getPixelCoordinateByLatLng(marker.getPosition().lat(), marker.getPosition().lng(), map.getMap());
+      const mapLeaflet = map.getMap();
+      log.log("map leaflet:", mapLeaflet);
+//      const {top, left} = mapTools.getPixelCoordinateByLatLng(marker.getLatLng().lat, marker.getLatLng().lng, map.getMap());
+      const {x:left, y:top} = mapLeaflet.latLngToContainerPoint(marker.getLatLng());
+      log.log("top:", top, "left:", left);
       expect(top).number();
       expect(left).number();
       log.log("the point at:", top, left);
@@ -303,7 +307,7 @@ function App() {
         const x = left - leftCenter;
         const y = top - topCenter;
         log.log("pant by x,y:", x, y);
-        map.getMap().panBy(x,y);
+        map.getMap().panBy(window.L.point(x,y));
       }
       setHasNext(map.hasNextPoint());
       setHasPrev(map.hasPrevPoint());
@@ -417,20 +421,13 @@ function App() {
 
   React.useEffect(() => {
     log.debug("useEffect 1");
-    const script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
-    script.id = 'googleMaps';
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      //map.initialize();
-      const map = load();
-      mapRef.current.map = map;
-      expect(mapRef)
-        .property("current").defined();
-      expect(map).property("rerender").defined();
-      injectApp();
-    };
+    //map.initialize();
+    injectApp();
+    const map = load();
+    mapRef.current.map = map;
+    expect(mapRef)
+      .property("current").defined();
+    expect(map).property("rerender").defined();
   }, []);
 
   /*
