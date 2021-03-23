@@ -903,6 +903,22 @@ var initialize = function() {
   //        });
   //      });
         //expect(e.data).property("id").a("number");
+
+        //load points from utf cache
+        //TODO this might not be the best way to load the points
+        expect(utfGridLayer).property("_cache").defined();
+        //fetch all the point data in the cache
+        const itemList = Object.values(utfGridLayer._cache).map(e => e.data).filter(e => Object.keys(e).length > 0).reduce((a,c) => a.concat(Object.values(c)),[])
+        log.info("loaded data in cache:", itemList.length);
+
+        //filter the duplicate points
+        const itemMap = {};
+        itemList.forEach(e => itemMap[e.id] = e);
+        
+        //update the global points 
+        points = Object.values(itemMap);
+        log.info("loaded points:", points.length);
+
         const point = points.reduce((a,c) => {
           //expect(c).property("id").a("number");
           if(c.id === e.data.id){
@@ -954,6 +970,25 @@ var initialize = function() {
       });
       map.removeLayer(markerHighlight);
     });
+
+    //load all tile
+//    utfGridLayer.on("load", function(e){
+//      log.info("tile loaded", e);
+//      expect(e).property("target").property("_cache").defined();
+//      log.warn("datra:", JSON.stringify(e.target._cache));
+//      //fetch all the point data in the cache
+//      const itemList = Object.values(utfGridLayer._cache).map(e => e.data).filter(e => Object.keys(e).length > 0).reduce((a,c) => a.concat(Object.values(c)),[])
+//      log.info("loaded data in cache:", itemList.length);
+//
+//      //filter the duplicate points
+//      const itemMap = {};
+//      itemList.forEach(e => itemMap[e.id] = e);
+//      
+//      //update the global points 
+//      points = Object.values(itemMap);
+//      log.info("loaded points:", points.length);
+//      
+//    });
     utfGridLayer.addTo(map);
   }else{
     log.info("do not use tile server");

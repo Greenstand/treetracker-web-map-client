@@ -48,12 +48,15 @@ class MapModel {
 
     //check zoom level
     log.warn("zoom level:", mymap.getZoom());
-    expect(utfGridLayer).property("options").property("minZoom").defined();
+//    expect(utfGridLayer).property("options").property("minZoom").defined();
     if(
-      mymap.getZoom() > utfGridLayer.options.maxZoom ||
-      mymap.getZoom() < utfGridLayer.options.minZoom
+      utfGridLayer === undefined ||
+      (
+        mymap.getZoom() > utfGridLayer.options.maxZoom ||
+        mymap.getZoom() < utfGridLayer.options.minZoom
+      )
     ){
-      log.warn("out of utf layer range, use old way");
+      log.warn("no utf or out of utf layer range, use old way");
       if(
         //no markers
         this._markers.length === 0 || 
