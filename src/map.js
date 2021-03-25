@@ -77,6 +77,9 @@ let timeline = undefined;
  */
 let markerHighlight = undefined;
 
+let isUsingTile = false;
+let utfGridLayer;
+
 if(process.env.REACT_APP_API){
   treetrackerApiUrl = process.env.REACT_APP_API;
 }else{
@@ -857,6 +860,7 @@ var initialize = function() {
   //if isn't cases like wallet, org, then use tile
   if(!token && !mapName && !treeid && !userid && !wallet){
     log.info("use tile server");
+    isUsingTile = true;
     var baseURL_def = process.env.REACT_APP_TILE_SERVER_URL;
     if(!baseURL_def){
       throw new Error("Tile server url isn't set");
@@ -868,7 +872,7 @@ var initialize = function() {
         maxZoom: 20,
       }
     ).addTo(map);
-    var utfGridLayer = new window.L.utfGrid(
+    utfGridLayer = new window.L.utfGrid(
       baseURL_def + '{z}/{x}/{y}.grid.json',
       {
         minZoom: 15,
@@ -917,7 +921,7 @@ var initialize = function() {
         
         //update the global points 
         points = Object.values(itemMap);
-        log.info("loaded points:", points.length);
+        log.warn("loaded points:", points.length);
 
         const point = points.reduce((a,c) => {
           //expect(c).property("id").a("number");
@@ -1250,6 +1254,7 @@ function addMarkerByPixel(top, left, tree){
 }
 
 function getCurrentIndex(){
+  log.info("getCurrentIndex");
   expect(selectedTreeMarker)
     .property("payload")
     .property("id")
@@ -1265,6 +1270,7 @@ function getCurrentIndex(){
   if(index === -1){
     throw Error("can not find point");
   }
+  log.info("current index:", index);
   return index;
 }
 
@@ -1274,9 +1280,16 @@ function goNextPoint(){
   const nextIndex = (index + 1) % points.length;
   expect(nextIndex).within(0, points.length);
   const nextPoint = points[nextIndex];
-  const marker = markerByPointId[nextPoint.id];
-  expect(marker).defined();
-  marker.fire("click");
+  if(isUsingTile){
+    log.info("with tile, fire on utf grid:", nextPoint);
+    utfGridLayer.fire("click", {
+      data: nextPoint,
+    });
+  }else{
+    const marker = markerByPointId[nextPoint.id];
+    expect(marker).defined();
+    marker.fire("click");
+  }
 }
 
 function goPrevPoint(){
@@ -1287,9 +1300,16 @@ function goPrevPoint(){
     points.length + (index -1);
   expect(prevIndex).within(0, points.length);
   const prevPoint = points[prevIndex];
-  const marker = markerByPointId[prevPoint.id];
-  expect(marker).defined();
-  marker.fire("click");
+  if(isUsingTile){
+    log.info("with tile, fire on utf grid:", prevPoint);
+    utfGridLayer.fire("click", {
+      data: prevPoint,
+    });
+  }else{
+    const marker = markerByPointId[prevPoint.id];
+    expect(marker).defined();
+    marker.fire("click");
+  }
 }
 
 function hasNextPoint(){
@@ -1348,6 +1368,7 @@ return {
   getMarkerByPointId: () => markerByPointId,
   getLoadingMarkers: () => isLoadingMarkers,
   getPoints: () => points,
+  getCurrentIndex,
   getPrevPoint,
   getNextPoint,
   goPrevPoint,
@@ -1356,6 +1377,7 @@ return {
   hasNextPoint,
   addMarkerByPixel,
   rerender,
+  checkUsingTile: () => isUsingTile,
 }
 
 }

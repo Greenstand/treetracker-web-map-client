@@ -262,16 +262,22 @@ function App() {
     setTree(tree);
     //consider the visible of the point
     const {map} = mapRef.current;
-    const marker = map.getMarkerByPointId()[tree.id]
-    if(marker){
-      expect(marker).defined();
-      const mapLeaflet = map.getMap();
-      log.log("map leaflet:", mapLeaflet);
-//      const {top, left} = mapTools.getPixelCoordinateByLatLng(marker.getLatLng().lat, marker.getLatLng().lng, map.getMap());
+    const mapLeaflet = map.getMap();
+    let left,top;
+    if(map.checkUsingTile()){
+      const point = map.getPoints()[map.getCurrentIndex()];
+      log.warn("current point:", point);
+      const {x, y} = mapLeaflet.latLngToContainerPoint([point.lat, point.lon]);
+      left = x;
+      top = y;
+    }else{
+      const marker = map.getMarkerByPointId()[tree.id]
       const {x:left, y:top} = mapLeaflet.latLngToContainerPoint(marker.getLatLng());
-      log.log("top:", top, "left:", left);
-      expect(top).number();
-      expect(left).number();
+    }
+    log.log("top:", top, "left:", left);
+    expect(top).number();
+    expect(left).number();
+    if(left ){
       log.log("the point at:", top, left);
       expect(SidePanel).property("WIDTH").number();
       const {clientWidth, clientHeight} = mapRef.current;
@@ -309,9 +315,11 @@ function App() {
         log.log("pant by x,y:", x, y);
         map.getMap().panBy(window.L.point(x,y));
       }
-      setHasNext(map.hasNextPoint());
-      setHasPrev(map.hasPrevPoint());
+    }else{
+      log.info("there is no marker");
     }
+    setHasNext(map.hasNextPoint());
+    setHasPrev(map.hasPrevPoint());
   }
 
   function showPanelWithoutTree(){
