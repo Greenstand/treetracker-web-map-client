@@ -262,12 +262,24 @@ function App() {
     setTree(tree);
     //consider the visible of the point
     const {map} = mapRef.current;
-    const marker = map.getMarkerByPointId()[tree.id]
-    if(marker){
-      expect(marker).defined();
-      const {top, left} = mapTools.getPixelCoordinateByLatLng(marker.getPosition().lat(), marker.getPosition().lng(), map.getMap());
-      expect(top).number();
-      expect(left).number();
+    const mapLeaflet = map.getMap();
+    let left,top;
+    if(map.checkUsingTile()){
+      const point = map.getPoints()[map.getCurrentIndex()];
+      log.warn("current point:", point);
+      const {x, y} = mapLeaflet.latLngToContainerPoint([point.lat, point.lon]);
+      left = x;
+      top = y;
+    }else{
+      const marker = map.getMarkerByPointId()[tree.id]
+      const {x, y} = mapLeaflet.latLngToContainerPoint(marker.getLatLng());
+      left = x;
+      top =y;
+    }
+    log.log("top:", top, "left:", left);
+    expect(top).number();
+    expect(left).number();
+    if(true){
       log.log("the point at:", top, left);
       expect(SidePanel).property("WIDTH").number();
       const {clientWidth, clientHeight} = mapRef.current;
@@ -303,11 +315,13 @@ function App() {
         const x = left - leftCenter;
         const y = top - topCenter;
         log.log("pant by x,y:", x, y);
-        map.getMap().panBy(x,y);
+        map.getMap().panBy(window.L.point(x,y));
       }
-      setHasNext(map.hasNextPoint());
-      setHasPrev(map.hasPrevPoint());
+    }else{
+      log.info("there is no marker");
     }
+    setHasNext(map.hasNextPoint());
+    setHasPrev(map.hasPrevPoint());
   }
 
   function showPanelWithoutTree(){
@@ -417,20 +431,13 @@ function App() {
 
   React.useEffect(() => {
     log.debug("useEffect 1");
-    const script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
-    script.id = 'googleMaps';
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      //map.initialize();
-      const map = load();
-      mapRef.current.map = map;
-      expect(mapRef)
-        .property("current").defined();
-      expect(map).property("rerender").defined();
-      injectApp();
-    };
+    //map.initialize();
+    injectApp();
+    const map = load();
+    mapRef.current.map = map;
+    expect(mapRef)
+      .property("current").defined();
+    expect(map).property("rerender").defined();
   }, []);
 
   /*
