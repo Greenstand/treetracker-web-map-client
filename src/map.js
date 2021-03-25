@@ -473,6 +473,10 @@ var initMarkers = function(viewportBounds, zoomLevel) {
         getApp().loaded();
         firstRender = false;
         if (treeid != null) {
+          selectedTreeMarker = {
+            payload: points[0],
+          }
+          changeTreeMarkSelected();
           getApp().showPanel(points[0]);
         }
       }
@@ -539,18 +543,45 @@ function showAlert() {
 
 
 function changeTreeMarkSelected() {
-  if (selectedOldTreeMarker) {
-//TODO to highlight icon
-//    selectedOldTreeMarker.setIcon(require("./images/pin_29px.png"));
-//    selectedOldTreeMarker.setZIndex(0);
-    window.L.DomUtil.removeClass(selectedOldTreeMarker._icon, "clicked");
+//  if (selectedOldTreeMarker) {
+////TODO to highlight icon
+////    selectedOldTreeMarker.setIcon(require("./images/pin_29px.png"));
+////    selectedOldTreeMarker.setZIndex(0);
+//    window.L.DomUtil.removeClass(selectedOldTreeMarker._icon, "clicked");
+//  }
+//
+//  if (selectedTreeMarker) {
+////    selectedTreeMarker.setIcon(require("./images/pin_32px.png"));
+////    selectedTreeMarker.setZIndex(99999);
+//    window.L.DomUtil.addClass(selectedTreeMarker._icon, "clicked");
+//  }
+  //new way to hanlde the selected icon
+  log.info("change tree mark selected");
+  //before set the selected tree icon, remote if any
+  if(selectedTreeMarker && selectedTreeMarker.layer){
+    log.info("there is a selected tree layer already:", selectedTreeMarker.layer);
+    map.removeLayer(selectedTreeMarker.layer);
   }
-
-  if (selectedTreeMarker) {
-//    selectedTreeMarker.setIcon(require("./images/pin_32px.png"));
-//    selectedTreeMarker.setZIndex(99999);
-    window.L.DomUtil.addClass(selectedTreeMarker._icon, "clicked");
-  }
+  
+  //set the selected marker
+  const markerSelected = new window.L.marker(
+    [selectedTreeMarker.payload.lat, selectedTreeMarker.payload.lon],
+    {
+        icon: new window.L.DivIcon({
+          className: "greenstand-point-selected",
+          html: `
+            <div class="greenstand-point-selected-box"  >
+            <div></div>
+            </div>
+          `,
+          iconSize: [32, 32],
+        }),
+    }
+  );
+  markerSelected.payload = {
+    id: selectedTreeMarker.payload.id,
+  };
+  markerSelected.addTo(map);
 }
 
 // using an index, get the point and marker and show them
