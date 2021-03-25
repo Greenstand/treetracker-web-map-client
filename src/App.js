@@ -431,6 +431,10 @@ function App() {
 
   React.useEffect(() => {
     log.debug("useEffect 1");
+    const script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
+    script.id = 'googleMaps';
+    document.body.appendChild(script);
     //map.initialize();
     injectApp();
     const map = load();

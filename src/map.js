@@ -10,6 +10,7 @@ import {mapConfig} from "./mapConfig";
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import "leaflet-utfgrid/L.UTFGrid-min.js";
+import 'leaflet.gridlayer.googlemutant';
 
 const CancelToken = axios.CancelToken;
 let source;
@@ -882,6 +883,11 @@ var initialize = function() {
   }).addTo(map);
 
   //google satillite map
+  window.L.gridLayer.googleMutant({
+    maxZoom: 20,
+    type: 'satellite'
+  }).addTo(map);
+  /*
   const googleSat = window.L.tileLayer(
     'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
       maxZoom: 20,
@@ -890,6 +896,7 @@ var initialize = function() {
       subdomains:['mt0','mt1','mt2','mt3']
     });
   googleSat.addTo(map);
+  */
 
   //if isn't cases like wallet, org, then use tile
   if(!token && (mapName === undefined || mapName === "freetown") && !treeid && !userid && !wallet){
