@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.0.1...v1.1.0) (2021-03-25)
+
+
+### Bug Fixes
+
+* treeid=xxx fails ([412f424](https://github.com/Greenstand/treetracker-web-map-client/commit/412f4246fa6e8cfa0e8de1fe8bf2c4d8a6ccc737))
+
+
+### Features
+
+* can display map with leaflet, (new code) ([d515804](https://github.com/Greenstand/treetracker-web-map-client/commit/d515804f6d0f0704b14013f76417115b73e650af))
+* restored next/prev tree in tile version ([3f1894e](https://github.com/Greenstand/treetracker-web-map-client/commit/3f1894e2968f356106d52d770e3c98c2a2ef19f6))
+
 ## [1.0.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.0.0...v1.0.1) (2021-03-22)
 
 
