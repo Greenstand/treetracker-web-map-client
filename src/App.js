@@ -272,12 +272,14 @@ function App() {
       top = y;
     }else{
       const marker = map.getMarkerByPointId()[tree.id]
-      const {x:left, y:top} = mapLeaflet.latLngToContainerPoint(marker.getLatLng());
+      const {x, y} = mapLeaflet.latLngToContainerPoint(marker.getLatLng());
+      left = x;
+      top =y;
     }
     log.log("top:", top, "left:", left);
     expect(top).number();
     expect(left).number();
-    if(left ){
+    if(true){
       log.log("the point at:", top, left);
       expect(SidePanel).property("WIDTH").number();
       const {clientWidth, clientHeight} = mapRef.current;
