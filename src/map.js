@@ -204,12 +204,15 @@ var initMarkers = function(viewportBounds, zoomLevel) {
   log.log("request:", queryUrl);
   source = CancelToken.source();
 
+  //disable loading icon anyway
+  getApp().loadingB(false);
+
   //for tile server version, if zoom level > 15, and it isn't cases like
   //map_name, wallet, then do not request for points, just let the tile
   //server works.
   if(
     queryUrl.match(/zoom_level=(16|17|18|19|20|21|22)/) &&
-    !queryUrl.match(/(wallet|map_name|timeline|userid|token)/)
+    isUsingTile
   ){
     log.warn("quit, use tile server instead");
     clearOverlays(markers);
@@ -218,7 +221,6 @@ var initMarkers = function(viewportBounds, zoomLevel) {
 
 
   //loading
-  getApp().loadingB(false);
   if(!firstRender){
     loadingTimer = setTimeout(() => {
       getApp().loadingB(true);
@@ -403,10 +405,11 @@ var initMarkers = function(viewportBounds, zoomLevel) {
 //              }
             });
           marker.payload = {
-            id: item["id"]
+            id: item["id"],
+            lat: item["lat"],
+            lon: item["lon"],
           };
-          //NOTE close, use tile server to render points.
-          //marker.addTo(map);
+          marker.addTo(map);
 
           if (
             selectedTreeMarker &&
@@ -889,7 +892,7 @@ var initialize = function() {
   googleSat.addTo(map);
 
   //if isn't cases like wallet, org, then use tile
-  if(!token && !mapName && !treeid && !userid && !wallet){
+  if(!token && (mapName === undefined || mapName === "freetown") && !treeid && !userid && !wallet){
     log.info("use tile server");
     isUsingTile = true;
     var baseURL_def = process.env.REACT_APP_TILE_SERVER_URL;
