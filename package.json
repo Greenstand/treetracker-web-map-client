@@ -12,6 +12,7 @@
     "expect-runtime": "^0.4.0",
     "leaflet": "^1.7.1",
     "leaflet-utfgrid": "^0.3.0",
+    "leaflet.gridlayer.googlemutant": "^0.12.1",
     "loglevel": "^1.7.0",
     "moment": "^2.29.1",
     "react": "^16.13.1",
