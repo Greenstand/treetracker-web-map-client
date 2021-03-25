@@ -932,9 +932,37 @@ var initialize = function() {
           }
         }, undefined);
         expect(point).defined();
+
+        //before set the selected tree icon, remote if any
+        if(selectedTreeMarker && selectedTreeMarker.layer){
+          log.info("there is a selected tree layer already:", selectedTreeMarker.layer);
+          map.removeLayer(selectedTreeMarker.layer);
+        }
+        
+        //set the selected marker
+        const markerSelected = new window.L.marker(
+          [e.data.lat, e.data.lon],
+          {
+              icon: new window.L.DivIcon({
+                className: "greenstand-point-selected",
+                html: `
+                  <div class="greenstand-point-selected-box"  >
+                  <div></div>
+                  </div>
+                `,
+                iconSize: [32, 32],
+              }),
+          }
+        );
+        markerSelected.payload = {
+          id: e.data.id,
+        };
+        markerSelected.addTo(map);
         selectedTreeMarker = {
           payload: e.data,
+          layer: markerSelected,
         }
+
         getApp().showPanel(point);
       } else {
         console.log('click nothing');
