@@ -1173,31 +1173,12 @@ var initialize = function() {
             app.showMessage(`Could not find any trees associated with userid ${userid}`);
             return;
           }
-<<<<<<< HEAD
           if (data.length === 0) {
             //            showAlert();
-=======
-
-          /*if variable has word Token and does not return data, then 
-          redirect to wallet with the same content*/
-          if(treeQueryParameters.indexOf("token") >=0 && data.length === 0){
-            
-            var queryUrl = window.location.href.replace("token","wallet");
-         
-            log.log(queryUrl);
-            
-            //redirects the page with wallet in the query instead of token
-            window.location.href = queryUrl;
-          }
-          /* if it is not token and does not return data, show the message */
-          else if (data.length === 0) {
-            // showAlert();
->>>>>>> e09b48671add155fd3ef8edf9ffbe108b0a6366f
             app.loaded();
-            app.showMessage(` Could not find any data `);
+            app.showMessage(`Could not find any data `);
             return;
           }
-
           if(data.length == 1){
             // rerun at higher zoom level
             let queryZoomLevel12 = 12
