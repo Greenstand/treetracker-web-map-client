@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.3.0...v1.4.0) (2021-03-25)
+
+
+### Features
+
+* freetown org name use tile server ([44cbbf7](https://github.com/Greenstand/treetracker-web-map-client/commit/44cbbf77358e4f311d91238f972395bb69f92f56))
+
 # [1.3.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.2.0...v1.3.0) (2021-03-25)
 
 
