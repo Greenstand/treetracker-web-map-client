@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.2.0...v1.3.0) (2021-03-25)
+
+
+### Features
+
+* solved the treeid=xxx problem ([2b16855](https://github.com/Greenstand/treetracker-web-map-client/commit/2b16855f300afe8091dcfabec0fc2c5821b8e7ab))
+
 # [1.2.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.1.0...v1.2.0) (2021-03-25)
 
 
