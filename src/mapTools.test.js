@@ -82,25 +82,6 @@ describe("getInitialBounds", () => {
 
 
   it("getInitialBounds(0,0)", () => {
-    global.google = {
-      maps: {
-        LatLngBounds: jest.fn().mockImplementation(() => ({
-          extend: jest.fn(),
-          getCenter: () => ({
-            lat: () => 0,
-            lng: () => 0,
-          }),
-          getSouthWest: () => ({
-            lat: () => 0,
-            lng: () => 0,
-          }),
-          getNorthEast: () => ({
-            lat: () => 0,
-            lng: () => 0,
-          }),
-        })),
-      },
-    };
     const result = mapTools.getInitialBounds([{lat:0, lng:0}], 500, 500);
     expect(result).toMatchObject({
       center: {

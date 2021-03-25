@@ -3,6 +3,7 @@
  */
 import expect from "expect-runtime";
 import log from "loglevel";
+import "leaflet";
 
 function go(direction, location, degree){
   expect(direction).oneOf(["east", "west", "north", "south"]);
@@ -113,29 +114,29 @@ function getInitialBounds (locations, width, height){
     locations.push(cornerEastSouth);
   }
 
-  const bounds = new window.google.maps.LatLngBounds();
+  const bounds = new window.L.latLngBounds();
   for(let location of locations){
     bounds.extend(location);
   }
   log.log("bounds:", bounds);
   const center = {
-    lat: bounds.getCenter().lat(),
-    lng: bounds.getCenter().lng(),
+    lat: bounds.getCenter().lat,
+    lng: bounds.getCenter().lng,
   }
   //cal zoom
   let zoom;
   var GLOBE_WIDTH = 256; // a constant in Google's map projection
   {
-    const west = bounds.getSouthWest().lng();
-    const east = bounds.getNorthEast().lng();
+    const west = bounds.getSouthWest().lng;
+    const east = bounds.getNorthEast().lng;
     const angle = getAngleLng(east, west);
     zoom = Math.round(Math.log(width * 360 / angle / GLOBE_WIDTH) / Math.LN2);
     log.log("zoom1:", zoom);
   }
   let zoom2;
   {
-    const south = bounds.getSouthWest().lat();
-    const north = bounds.getNorthEast().lat();
+    const south = bounds.getSouthWest().lat;
+    const north = bounds.getNorthEast().lat;
     const angle = getAngleLat(north, south);
     log.log("angle:", angle);
     zoom2 = Math.round(Math.log(height * 360 / angle / GLOBE_WIDTH) / Math.LN2);
@@ -156,14 +157,14 @@ const TILE_SIZE = 256;
 // The mapping between latitude, longitude and pixels is defined by the web
 // mercator projection.
 function project(latLng: google.maps.LatLng) {
-  let siny = Math.sin((latLng.lat() * Math.PI) / 180);
+  let siny = Math.sin((latLng.lat * Math.PI) / 180);
 
   // Truncating to 0.9999 effectively limits latitude to 89.189. This is
   // about a third of a tile past the edge of the world tile.
   siny = Math.min(Math.max(siny, -0.9999), 0.9999);
 
-  return new google.maps.Point(
-    TILE_SIZE * (0.5 + latLng.lng() / 360),
+  return window.L.point(
+    TILE_SIZE * (0.5 + latLng.lng / 360),
     TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI))
   );
 }
@@ -172,12 +173,12 @@ function getLatLngCoordinateByPixel(top, left, map){
   expect(top).number();
   expect(left).number();
   expect(map).defined();
-  const northWest = new window.google.maps.LatLng(
-    map.getBounds().getNorthEast().lat(),
-    map.getBounds().getSouthWest().lng());
+  const northWest = window.L.latLng(
+    map.getBounds().getNorthEast().lat,
+    map.getBounds().getSouthWest().lng);
   const northWestPixel = map.getProjection().fromLatLngToPoint(northWest);
   const pixelSize = Math.pow(2, -map.getZoom());
-  const result = new window.google.maps.Point(
+  const result = window.L.point(
     northWestPixel.x + left*pixelSize,
     northWestPixel.y + top*pixelSize
   );
@@ -190,11 +191,11 @@ function getPixelCoordinateByLatLng(lat, lng, map){
   expect(lat).number();
   expect(lng).number();
   expect(map).defined();
-  const northWest = new window.google.maps.LatLng(
-    map.getBounds().getNorthEast().lat(),
-    map.getBounds().getSouthWest().lng());
+  const northWest = window.L.latLng(
+    map.getBounds().getNorthEast().lat,
+    map.getBounds().getSouthWest().lng);
   const northWestPixel = map.getProjection().fromLatLngToPoint(northWest);
-  const target = new window.google.maps.LatLng(
+  const target = window.L.latLng(
     lat,
     lng
   )
