@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.1.0...v1.2.0) (2021-03-25)
+
+
+### Features
+
+* can show selected tree icon ([a55ddf4](https://github.com/Greenstand/treetracker-web-map-client/commit/a55ddf423bc86d987bd083daaddd6d390af235de))
+
 # [1.1.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.0.1...v1.1.0) (2021-03-25)
 
 
