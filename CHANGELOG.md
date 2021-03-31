@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.0...v1.4.1) (2021-03-31)
+
+
+### Bug Fixes
+
+* do not load tile server ([863aba6](https://github.com/Greenstand/treetracker-web-map-client/commit/863aba668370b7174e1506667a63cb92592b4807))
+
 # [1.4.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.3.0...v1.4.0) (2021-03-25)
 
 
