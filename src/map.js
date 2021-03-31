@@ -899,7 +899,7 @@ var initialize = function() {
   */
 
   //if isn't cases like wallet, org, then use tile
-  if(!token && (mapName === undefined || mapName === "freetown") && !treeid && !userid && !wallet){
+  if(!token && (mapName === undefined || mapName === null || mapName === "freetown") && !treeid && !userid && !wallet){
     log.info("use tile server");
     isUsingTile = true;
     var baseURL_def = process.env.REACT_APP_TILE_SERVER_URL;
