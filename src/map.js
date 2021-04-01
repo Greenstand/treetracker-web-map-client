@@ -1288,7 +1288,8 @@ function onMapMove() {
   const z = map._zoom;
   const bounds = map.getBounds();
   const {lat, lng} = bounds.getCenter();
-  window.history.replaceState(null, '', `@${lat},${lng},${z}z`);
+  //TODO: this cannot replace the query string
+  //window.history.replaceState(null, '', `@${lat},${lng},${z}z`);
 }
 
 function getNextPoint(point) {
