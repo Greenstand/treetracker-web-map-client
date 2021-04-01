@@ -645,7 +645,7 @@ function getHandleVariable(name, url) {
   let results = regex.exec(url);
   log.log(results);
   if (!results) return null;
-  if (!results[1]) return "";
+  if (!results[1] || getValidInitialPostion() !== null) return "";
   return results[1];
 }
 
@@ -856,11 +856,10 @@ var initialize = function() {
   //  }
   //  releaseTile(tile) {}
   //}
-
-
+  var mapInitialPosition = getValidInitialPostion() || [20, 0, initialZoom];
   var mapOptions = {
-    zoom: initialZoom,
-    center: window.L.latLng( 20, 0 ),
+    zoom: +mapInitialPosition[2],
+    center: window.L.latLng( +mapInitialPosition[0], +mapInitialPosition[1]),
     minZoom: minZoom,
     //    mapTypeId: "hybrid",
     //    mapTypeControl: false,
@@ -1130,6 +1129,9 @@ var initialize = function() {
   //    }
   //  });
 
+  // Update URL with bounding box
+  map.on('moveend', onMapMove);
+
 
   map.on("moveend load", function() {
     log.log('IDLE');
@@ -1257,6 +1259,24 @@ var initialize = function() {
 
 //window.google.maps.event.addDomListener(window, "load", initialize);
 initialize();
+
+function getValidInitialPostion() {
+  if (!window.location.pathname.endsWith('z') || !window.location.pathname.startsWith('/@')) {
+    return null;
+  }
+  const arr = window.location.pathname.substring(2, window.location.pathname.length - 1).split(',');
+  if (arr.length !== 3 || arr.some(item => isNaN(item))) {
+    return null;
+  }
+  return arr;
+}
+
+function onMapMove() {
+  const z = map._zoom;
+  const bounds = map.getBounds();
+  const {lat, lng} = bounds.getCenter();
+  window.history.replaceState(null, '', `@${lat},${lng},${z}z`);
+}
 
 function getNextPoint(point) {
   expect(point).property("id").number();
