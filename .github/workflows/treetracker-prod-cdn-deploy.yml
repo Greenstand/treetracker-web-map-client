@@ -1,4 +1,4 @@
-name: Frontend Prod CI/CD Pipeline
+name: Deploy to Prod Env
 
 on:
   workflow_dispatch:
