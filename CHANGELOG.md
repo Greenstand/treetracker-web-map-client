@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.0...v1.6.1) (2021-04-01)
+
+
+### Bug Fixes
+
+* remove the map bounds url update for now ([87fda83](https://github.com/Greenstand/treetracker-web-map-client/commit/87fda83281339ee141fa88d39d937dea3a519c0d))
+
 # [1.6.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.5.0...v1.6.0) (2021-04-01)
 
 
