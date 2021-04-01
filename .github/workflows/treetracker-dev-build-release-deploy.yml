@@ -1,12 +1,12 @@
-name: Deploy to Dev Env
+name: Frontend Dev CI/CD Pipeline
 
 on:
-  workflow_dispatch:
-    inputs:
-      git-tag:
-        description: "Branch/hash/tag"
-        required: true
-        default: 'master'
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 env: 
   project-directory: ./
@@ -29,23 +29,44 @@ jobs:
     # - name: run ESLint
     #   run: npm run lint
     #   working-directory: ${{ env.project-directory }}
-    # define the endpoints for PROD in github secrets
+    # define the endpoints for DEV in github secrets
     - name: build frontend project
       run: ${{ secrets.DEV_APP_ENDPOINTS }} CI= npm run build
       working-directory: ${{ env.project-directory }}
     - uses: actions/upload-artifact@v2
+      if: github.event_name == 'push' && github.repository == "Greenstand/${{ github.event.repository.name }}"
       with:
         name: frontend-bundle
         path: build
     # - name: run React tests
     #   run: npm test
     #   working-directory: ${{ env.project-directory }}
-
-  deploy:
-    name: Deploy to PROD CDN
-    runs-on: ubuntu-latest
+  release:
+    name: Release semantic version
     needs: frontend
+    runs-on: ubuntu-latest
     if: |
+      !contains(github.event.head_commit.message, 'skip-ci') &&
+      github.event_name == 'push' &&
+      github.repository == "Greenstand/${{ github.event.repository.name }}"
+    steps:
+      # check out repository code and setup node
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      # install dependencies and run semantic-release
+      - run: npm i -g semantic-release @semantic-release/{git,exec,changelog}
+      - run: semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    name: Deploy to DEV CDN
+    runs-on: ubuntu-latest
+    needs: release
+    if: |
+      !contains(github.event.head_commit.message, 'skip-ci') &&
+      github.event_name == 'push' &&
       github.repository == "Greenstand/${{ github.event.repository.name }}"   
     steps:
     - uses: actions/checkout@v2
