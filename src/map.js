@@ -900,6 +900,7 @@ var initialize = function() {
 
   //if isn't cases like wallet, org, then use tile
   if(!token && (mapName === undefined || mapName === null || mapName === "freetown") && !treeid && !userid && !wallet){
+    const isFreetown = mapName === "freetown";
     log.info("use tile server");
     isUsingTile = true;
     var baseURL_def = process.env.REACT_APP_TILE_SERVER_URL;
@@ -907,14 +908,14 @@ var initialize = function() {
       throw new Error("Tile server url isn't set");
     }
     new window.L.tileLayer(
-      baseURL_def + '{z}/{x}/{y}.png',
+      baseURL_def + `${isFreetown?"freetown":""}/{z}/{x}/{y}.png`,
       {
         minZoom: 16,
         maxZoom: 20,
       }
     ).addTo(map);
     utfGridLayer = new window.L.utfGrid(
-      baseURL_def + '{z}/{x}/{y}.grid.json',
+      baseURL_def + `${isFreetown?"freetown":""}/{z}/{x}/{y}.grid.json`,
       {
         minZoom: 16,
         maxZoom: 20,
