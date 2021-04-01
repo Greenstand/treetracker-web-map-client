@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.5.0...v1.6.0) (2021-04-01)
+
+
+### Features
+
+* fix two point problem ([36b840b](https://github.com/Greenstand/treetracker-web-map-client/commit/36b840b98e886caeebdb81d0ecc5156631aeee2b))
+
 # [1.5.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.2...v1.5.0) (2021-04-01)
 
 
