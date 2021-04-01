@@ -909,7 +909,7 @@ var initialize = function() {
     utfGridLayer = new window.L.utfGrid(
       baseURL_def + '{z}/{x}/{y}.grid.json',
       {
-        minZoom: 15,
+        minZoom: 16,
         maxZoom: 20,
       }
     );
