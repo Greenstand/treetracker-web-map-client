@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.2...v1.5.0) (2021-04-01)
+
+
+### Features
+
+* freetown map use special tile ([e25976c](https://github.com/Greenstand/treetracker-web-map-client/commit/e25976c0c0e36e2015538d0cbaafcf06d13d33e1))
+
 ## [1.4.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.1...v1.4.2) (2021-04-01)
 
 
