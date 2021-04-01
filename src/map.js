@@ -578,7 +578,7 @@ function changeTreeMarkSelected() {
             <div></div>
             </div>
           `,
-          iconSize: [32, 32],
+//          iconSize: [32, 32],
         }),
     }
   );
