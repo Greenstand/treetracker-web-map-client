@@ -19,6 +19,8 @@ jobs:
       !contains(github.event.head_commit.message, 'skip-ci')
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.inputs.git-tag }}
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
