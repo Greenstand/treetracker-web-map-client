@@ -1,4 +1,4 @@
-name: Frontend Test CI/CD Pipeline
+name: Deploy to Test Env
 
 on:
   workflow_dispatch:
