@@ -268,4 +268,5 @@ body {
   /*transform: translate(-50%, -50%);*/
   font-family: Roboto, Arial, sans-serif;
   font-size: 14px;
+  transform: translate(-50%, -50%);
 }

@@ -1,3 +1,24 @@
+# [1.6.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.5.0...v1.6.0) (2021-04-01)
+
+
+### Features
+
+* fix two point problem ([36b840b](https://github.com/Greenstand/treetracker-web-map-client/commit/36b840b98e886caeebdb81d0ecc5156631aeee2b))
+
+# [1.5.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.2...v1.5.0) (2021-04-01)
+
+
+### Features
+
+* freetown map use special tile ([e25976c](https://github.com/Greenstand/treetracker-web-map-client/commit/e25976c0c0e36e2015538d0cbaafcf06d13d33e1))
+
+## [1.4.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.1...v1.4.2) (2021-04-01)
+
+
+### Bug Fixes
+
+* incorrectly displaying icons in some zoomlevel ([377b697](https://github.com/Greenstand/treetracker-web-map-client/commit/377b697efc3d3439f7631c79b83289bf1856fef6))
+
 ## [1.4.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.0...v1.4.1) (2021-03-31)
 
 
