@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.1...v1.4.2) (2021-04-01)
+
+
+### Bug Fixes
+
+* incorrectly displaying icons in some zoomlevel ([377b697](https://github.com/Greenstand/treetracker-web-map-client/commit/377b697efc3d3439f7631c79b83289bf1856fef6))
+
 ## [1.4.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.0...v1.4.1) (2021-03-31)
 
 
