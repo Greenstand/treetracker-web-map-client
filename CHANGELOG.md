@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.3...v1.6.4) (2021-04-02)
+
+
+### Bug Fixes
+
+* extra slash ([6cdc0d0](https://github.com/Greenstand/treetracker-web-map-client/commit/6cdc0d0a016af6a37f38421db156298a5e26fbd7))
+
 ## [1.6.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.2...v1.6.3) (2021-04-02)
 
 
