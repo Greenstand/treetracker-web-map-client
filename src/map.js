@@ -897,6 +897,62 @@ var initialize = function() {
   googleSat.addTo(map);
   */
 
+    window.L.TileLayer.FreeTown = window.L.TileLayer.extend({
+    getTileUrl: function(coords) {
+      const y = Math.pow(2, coords.z) - coords.y - 1;
+      const url = `https://treetracker-map-tiles.nyc3.cdn.digitaloceanspaces.com/freetown/${coords.z}/${coords.x}/${y}.png`;
+      if (coords.z == 10 && coords.x == 474 && y < 537 && y > 534) {
+        return url;
+      } else if (coords.z == 11 && coords.x > 947 && coords.x < 950 && y > 1070 && y < 1073) {
+        return url;
+      } else if (coords.z == 12 && coords.x > 1895 && coords.x < 1899 && y > 2142 && y < 2146) {
+        return url;
+      } else if (coords.z == 13 && coords.x > 3792 && coords.x < 3798 && y > 4286 && y < 4291) {
+        return url;
+      } else if (coords.z == 14 && coords.x > 7585 && coords.x < 7595 && y > 8574 && y < 8581) {
+        return url;
+      } else if (coords.z == 15 && coords.x > 15172 && coords.x < 15190 && y > 17149 && y < 17161) {
+        return url;
+      } else if (coords.z == 16 && coords.x > 30345 && coords.x < 30379 && y > 34300 && y < 34322) {
+        return url;
+      } else if (coords.z == 17 && coords.x > 60692 && coords.x < 60758 && y > 68602 && y < 68643) {
+        return url;
+      } else if (coords.z == 18 && coords.x > 121385 && coords.x < 121516 && y > 137206 && y < 137286) {
+        return url;
+      }
+      return '/';
+    }
+  });
+
+  window.L.tileLayer.freeTown = function() {
+      return new window.L.TileLayer.FreeTown();
+  }
+
+  window.L.tileLayer.freeTown('', {
+    maxZoom: 20,
+    tileSize: window.L.point(256, 256)
+  }).addTo(map);
+
+  axios.get('https://treetracker-map-features.fra1.digitaloceanspaces.com/freetown_catchments.geojson')
+    .then(response => {
+      expect(response)
+        .property("data")
+        .property("features")
+        .a(expect.any(Array));
+      const data = response.data.features;
+      const style = {
+        color: 'green',
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0
+      };
+      window.L.geoJSON(
+        data, {
+          style: style
+        }
+      ).addTo(map);
+    });
+
   //if isn't cases like wallet, org, then use tile
   if(!token && (mapName === undefined || mapName === null || mapName === "freetown") && !treeid && !userid && !wallet){
     const isFreetown = mapName === "freetown";
