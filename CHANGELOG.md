@@ -1,3 +1,11 @@
+## [1.6.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.1...v1.6.2) (2021-04-02)
+
+
+### Bug Fixes
+
+* restore https://github.com/Greenstand/treetracker-web-map-api/pull/300/files ([8f8cc8c](https://github.com/Greenstand/treetracker-web-map-client/commit/8f8cc8c56f4f084f1fe48b88a0800d0b51628287))
+* restore https://github.com/Greenstand/treetracker-web-map-api/pull/304/files ([6c545c8](https://github.com/Greenstand/treetracker-web-map-client/commit/6c545c84bd5b9ebc7fda5f1dace70a420b353c23))
+
 ## [1.6.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.0...v1.6.1) (2021-04-01)
 
 
