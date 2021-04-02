@@ -963,14 +963,14 @@ var initialize = function() {
       throw new Error("Tile server url isn't set");
     }
     new window.L.tileLayer(
-      baseURL_def + `${isFreetown?"freetown":""}/{z}/{x}/{y}.png`,
+      baseURL_def + `${isFreetown?"/freetown":""}/{z}/{x}/{y}.png`,
       {
         minZoom: 16,
         maxZoom: 20,
       }
     ).addTo(map);
     utfGridLayer = new window.L.utfGrid(
-      baseURL_def + `${isFreetown?"freetown":""}/{z}/{x}/{y}.grid.json`,
+      baseURL_def + `${isFreetown?"/freetown":""}/{z}/{x}/{y}.grid.json`,
       {
         minZoom: 16,
         maxZoom: 20,
