@@ -991,6 +991,16 @@ var initialize = function() {
       if (e.data) {
         console.log('click', e.data);
         const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+        if(e.data.zoom_to){
+          log.info("found zoom to:", e.data.zoom_to);
+          const [lon, lat] = JSON.parse(e.data.zoom_to).coordinates;
+          //NOTE do cluster click
+          map.setView([lat, lon], map.getZoom() + 2);
+        }else{
+          map.setView([lat, lon], map.getZoom() + 2);
+        }
+        //quit, before, the code below is for openning the tree panel
+        return;
   //      map.panTo(e.latlng);
   //      map.setView(e.latlng, map.getZoom() + 2);
   //      points.forEach(function(point, i) {
@@ -1014,10 +1024,6 @@ var initialize = function() {
   //        });
   //      });
         //expect(e.data).property("id").a("number");
-        
-        //NOTE do cluster click
-        map.setView([lat, lon], map.getZoom() + 2);
-        return;
 
         //load points from utf cache
         //TODO this might not be the best way to load the points
