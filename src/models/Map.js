@@ -53,6 +53,47 @@ export default class Map{
         maxZoom: this.maxZoom,
       }
     );
+    this.layerUtfGrid.on('click', (e) => {
+      log.debug("click:", e);
+      if (e.data) {
+        const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+        if(e.data.zoom_to){
+          log.info("found zoom to:", e.data.zoom_to);
+          const [lon, lat] = JSON.parse(e.data.zoom_to).coordinates;
+          //NOTE do cluster click
+          this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+        }else{
+          this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+        }
+      }
+    });
+
+    this.layerUtfGrid.on('mouseover', function (e) {
+      log.debug("mouseover:", e);
+//      const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+//      markerHighlight = new window.L.marker(
+//        [lat, lon],
+//        {
+//            icon: new window.L.DivIcon({
+//              className: "greenstand-cluster-highlight",
+//              html: `
+//                <div class="greenstand-cluster-highlight-box"  >
+//                <div></div>
+//                </div>
+//              `,
+//              iconSize: [32, 32],
+//            }),
+//        }
+//      );
+//      markerHighlight.payload = {
+//        id: e.data.id
+//      };
+//      markerHighlight.addTo(map);
+    });
+    this.layerUtfGrid.on('mouseout', function (e) {
+      log.debug("e:", e);
+//      this.map.removeLayer(markerHighlight);
+    });
     this.layerUtfGrid.addTo(this.map);
 
     this.map.on("load", () => {
