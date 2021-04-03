@@ -13,6 +13,7 @@ export default class Map{
       minZoom: 2,
       maxZoom: 20,
       initialCenter: [20, 0],
+      tileServerUrl: process.env.REACT_APP_TILE_SERVER_URL,
     }, ...options};
 
     Object.keys(options).forEach(key => {
@@ -34,6 +35,25 @@ export default class Map{
       type: 'satellite'
     });
     this.layerGoogle.addTo(this.map);
+
+    //tile 
+    this.layerTile = new this.L.tileLayer(
+      `${this.tileServerUrl}{z}/{x}/{y}.png`,
+      {
+        minZoom: this.minZoom,
+        maxZoom: this.maxZoom,
+      }
+    );
+    this.layerTile.addTo(this.map);
+
+    this.layerUtfGrid = new this.L.utfGrid(
+      `${this.tileServerUrl}{z}/{x}/{y}.grid.json`,
+      {
+        minZoom: this.minZoom,
+        maxZoom: this.maxZoom,
+      }
+    );
+    this.layerUtfGrid.addTo(this.map);
 
     this.map.on("load", () => {
       log.info("map loaded");
