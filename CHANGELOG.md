@@ -1,3 +1,10 @@
+## [1.6.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.4...v1.6.5) (2021-04-03)
+
+
+### Bug Fixes
+
+* wrong selected icon position ([32cf20e](https://github.com/Greenstand/treetracker-web-map-client/commit/32cf20e697ceec2057bdd449b726d92891966a06))
+
 ## [1.6.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.3...v1.6.4) (2021-04-02)
 
 
