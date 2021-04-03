@@ -208,6 +208,15 @@ var initMarkers = function(viewportBounds, zoomLevel) {
   //disable loading icon anyway
   getApp().loadingB(false);
 
+
+  //disable to use tile totally
+  if(true){
+    log.warn("quit, use tile server instead, totally");
+    clearOverlays(markers);
+    getApp().loadingB(false);
+    getApp().loaded();
+    return;
+  }
   //for tile server version, if zoom level > 15, and it isn't cases like
   //map_name, wallet, then do not request for points, just let the tile
   //server works.
@@ -965,14 +974,14 @@ var initialize = function() {
     new window.L.tileLayer(
       baseURL_def + `${isFreetown?"freetown/":""}{z}/{x}/{y}.png`,
       {
-        minZoom: 16,
+        minZoom: 2,
         maxZoom: 20,
       }
     ).addTo(map);
     utfGridLayer = new window.L.utfGrid(
       baseURL_def + `${isFreetown?"freetown/":""}{z}/{x}/{y}.grid.json`,
       {
-        minZoom: 16,
+        minZoom: 2,
         maxZoom: 20,
       }
     );
