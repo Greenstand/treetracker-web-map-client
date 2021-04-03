@@ -15,6 +15,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import getLogo from "./models/logo";
 import log from "loglevel";
 import Timeline from "./components/Timeline";
+import Map from "./models/Map";
 
 
 const MOBILE_WIDTH = 960;
@@ -362,7 +363,7 @@ function App() {
   }
 
   function loaded(){
-    log.debug("loaded");
+    log.warn("loaded");
     setLoading(false);
   }
 
@@ -429,19 +430,32 @@ function App() {
   injectApp();
 
 
+//  React.useEffect(() => {
+//    log.debug("useEffect 1");
+//    const script = document.createElement('script');
+//    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
+//    script.id = 'googleMaps';
+//    document.body.appendChild(script);
+//    //map.initialize();
+//    injectApp();
+//    const map = load();
+//    mapRef.current.map = map;
+//    expect(mapRef)
+//      .property("current").defined();
+//    expect(map).property("rerender").defined();
+//  }, []);
+
+  //load map
   React.useEffect(() => {
-    log.debug("useEffect 1");
+    log.info("load map...");
     const script = document.createElement('script');
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
     script.id = 'googleMaps';
     document.body.appendChild(script);
-    //map.initialize();
-    injectApp();
-    const map = load();
-    mapRef.current.map = map;
-    expect(mapRef)
-      .property("current").defined();
-    expect(map).property("rerender").defined();
+    const map = new Map({
+      onLoad: loaded,
+    });
+    map.mount(mapRef.current);
   }, []);
 
   /*
