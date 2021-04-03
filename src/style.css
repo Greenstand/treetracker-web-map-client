@@ -221,7 +221,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translate(-50%, -50%);
+  /*transform: translate(-50%, -50%);*/
   font-family: Roboto, Arial, sans-serif;
   font-size: 14px;
 }
@@ -264,5 +264,4 @@ body {
   /*transform: translate(-50%, -50%);*/
   font-family: Roboto, Arial, sans-serif;
   font-size: 14px;
-  transform: translate(-50%, -50%);
 }
