@@ -265,3 +265,23 @@ body {
   font-family: Roboto, Arial, sans-serif;
   font-size: 14px;
 }
+
+/* new version */
+
+.greenstand-cluster-highlight{
+  z-index: 999 !important;
+  margin-left: 0px !important;
+  margin-top: 0px !important;
+}
+
+.greenstand-cluster-highlight-box {
+  background: url(./images/cluster_63px_highlight.png);
+  width: 63px;
+  height: 63px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+}

@@ -22,6 +22,14 @@ export default class Map{
     log.info("options:", options);
   }
 
+  static formatClusterText(count){
+    if(count > 1000){
+      return `${Math.round(count/1000)}K`;
+    }else{
+      return count;
+    }
+  }
+
   mount(domElement){
     const mapOptions = {
       minZoom: this.minZoom,
@@ -68,31 +76,30 @@ export default class Map{
       }
     });
 
-    this.layerUtfGrid.on('mouseover', function (e) {
+    this.layerUtfGrid.on('mouseover', (e) => {
       log.debug("mouseover:", e);
-//      const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
-//      markerHighlight = new window.L.marker(
-//        [lat, lon],
-//        {
-//            icon: new window.L.DivIcon({
-//              className: "greenstand-cluster-highlight",
-//              html: `
-//                <div class="greenstand-cluster-highlight-box"  >
-//                <div></div>
-//                </div>
-//              `,
-//              iconSize: [32, 32],
-//            }),
-//        }
-//      );
+      const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+      this.layerHighlight = new this.L.marker(
+        [lat, lon],
+        {
+            icon: new this.L.DivIcon({
+              className: "greenstand-cluster-highlight",
+              html: `
+                <div class="greenstand-cluster-highlight-box"  >
+                <div>${Map.formatClusterText(e.data.count)}</div>
+                </div>
+              `,
+            }),
+        }
+      );
 //      markerHighlight.payload = {
 //        id: e.data.id
 //      };
-//      markerHighlight.addTo(map);
+      this.layerHighlight.addTo(this.map);
     });
-    this.layerUtfGrid.on('mouseout', function (e) {
+    this.layerUtfGrid.on('mouseout', (e) => {
       log.debug("e:", e);
-//      this.map.removeLayer(markerHighlight);
+      this.map.removeLayer(this.layerHighlight);
     });
     this.layerUtfGrid.addTo(this.map);
 
