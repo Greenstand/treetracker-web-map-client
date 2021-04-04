@@ -64,15 +64,7 @@ export default class Map{
     this.layerUtfGrid.on('click', (e) => {
       log.debug("click:", e);
       if (e.data) {
-        const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
-        if(e.data.zoom_to){
-          log.info("found zoom to:", e.data.zoom_to);
-          const [lon, lat] = JSON.parse(e.data.zoom_to).coordinates;
-          //NOTE do cluster click
-          this.map.flyTo([lat, lon], this.map.getZoom() + 2);
-        }else{
-          this.map.flyTo([lat, lon], this.map.getZoom() + 2);
-        }
+        this.clickMarker(e.data);
       }
     });
 
@@ -88,9 +80,10 @@ export default class Map{
 //        id: e.data.id
 //      };
     });
+
     this.layerUtfGrid.on('mouseout', (e) => {
       log.debug("e:", e);
-      this.map.removeLayer(this.layerHighlight);
+      this.unHighlightMarker();
     });
     this.layerUtfGrid.addTo(this.map);
 
@@ -118,6 +111,23 @@ export default class Map{
       }
     );
     this.layerHighlight.addTo(this.map);
+  }
+
+  unHighlightMarker(){
+    this.map.removeLayer(this.layerHighlight);
+  }
+
+  clickMarker(data){
+    this.unHighlightMarker();
+    const [lon, lat] = JSON.parse(data.latlon).coordinates;
+    if(data.zoom_to){
+      log.info("found zoom to:", data.zoom_to);
+      const [lon, lat] = JSON.parse(data.zoom_to).coordinates;
+      //NOTE do cluster click
+      this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+    }else{
+      this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+    }
   }
 
 }
