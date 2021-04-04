@@ -285,3 +285,9 @@ body {
   font-family: Roboto, Arial, sans-serif;
   font-size: 14px;
 }
+
+.greenstand-cluster-highlight-box.small {
+  background: url(./images/cluster_46px_highlight.png);
+  width: 46px;
+  height: 46px;
+}

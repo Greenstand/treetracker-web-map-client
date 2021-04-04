@@ -79,23 +79,14 @@ export default class Map{
     this.layerUtfGrid.on('mouseover', (e) => {
       log.debug("mouseover:", e);
       const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
-      this.layerHighlight = new this.L.marker(
-        [lat, lon],
-        {
-            icon: new this.L.DivIcon({
-              className: "greenstand-cluster-highlight",
-              html: `
-                <div class="greenstand-cluster-highlight-box"  >
-                <div>${Map.formatClusterText(e.data.count)}</div>
-                </div>
-              `,
-            }),
-        }
-      );
+      this.highlightMarker({
+        lat,
+        lon,
+        count: e.data.count,
+      });
 //      markerHighlight.payload = {
 //        id: e.data.id
 //      };
-      this.layerHighlight.addTo(this.map);
     });
     this.layerUtfGrid.on('mouseout', (e) => {
       log.debug("e:", e);
@@ -110,6 +101,23 @@ export default class Map{
     });
 
     this.map.setView(this.initialCenter, this.minZoom);
+  }
+
+  highlightMarker(data){
+    this.layerHighlight = new this.L.marker(
+      [data.lat, data.lon],
+      {
+          icon: new this.L.DivIcon({
+            className: "greenstand-cluster-highlight",
+            html: `
+              <div class="greenstand-cluster-highlight-box ${data.count > 1000? '':'small'}"  >
+              <div>${Map.formatClusterText(data.count)}</div>
+              </div>
+            `,
+          }),
+      }
+    );
+    this.layerHighlight.addTo(this.map);
   }
 
 }
