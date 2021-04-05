@@ -8,12 +8,14 @@ export default class Map{
 
   constructor(options){
 
+    //default
     options = {...{
       L: window.L,
       minZoom: 2,
       maxZoom: 20,
       initialCenter: [20, 0],
       tileServerUrl: process.env.REACT_APP_TILE_SERVER_URL,
+      debug: true,
     }, ...options};
 
     Object.keys(options).forEach(key => {
@@ -37,7 +39,8 @@ export default class Map{
     }
     this.map = this.L.map(domElement, mapOptions);
 
-    //google satillite map
+
+    //google satellite map
     this.layerGoogle = this.L.gridLayer.googleMutant({
       maxZoom: this.maxZoom,
       type: 'satellite'
@@ -92,6 +95,23 @@ export default class Map{
       expect(this.onLoad).defined();
       this.onLoad && this.onLoad();
     });
+
+    //debug
+    this.L.GridLayer.GridDebug = this.L.GridLayer.extend({
+      createTile: function (coords) {
+        const tile = document.createElement('div');
+        tile.style.outline = '1px solid green';
+        tile.style.fontWeight = 'bold';
+        tile.style.fontSize = '14pt';
+        tile.style.color = 'white';
+        tile.innerHTML = [coords.z, coords.x, coords.y].join('/');
+        return tile;
+      },
+    });
+    this.L.gridLayer.gridDebug = (opts) => {
+      return new this.L.GridLayer.GridDebug(opts);
+    };
+    this.map.addLayer(this.L.gridLayer.gridDebug());
 
     this.map.setView(this.initialCenter, this.minZoom);
   }
