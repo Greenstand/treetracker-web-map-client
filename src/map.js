@@ -645,7 +645,7 @@ function getHandleVariable(name, url) {
   let results = regex.exec(url);
   log.log(results);
   if (!results) return null;
-  if (!results[1] || getValidInitialPostion() !== null) return "";
+  if (!results[1]) return "";
   return results[1];
 }
 
@@ -856,10 +856,10 @@ var initialize = function() {
   //  }
   //  releaseTile(tile) {}
   //}
-  var mapInitialPosition = getValidInitialPostion() || [20, 0, initialZoom];
+
   var mapOptions = {
-    zoom: +mapInitialPosition[2],
-    center: window.L.latLng( +mapInitialPosition[0], +mapInitialPosition[1]),
+    zoom: initialZoom,
+    center: window.L.latLng( 20, 0 ),
     minZoom: minZoom,
     //    mapTypeId: "hybrid",
     //    mapTypeControl: false,
@@ -868,11 +868,18 @@ var initialize = function() {
     //    backgroundColor: theme.palette.grey.A200,
     zoomControl: false,
   };
+
+  const focus = getQueryStringValue("focus");
+  if(focus && focus.endsWith('z') && focus.split(',').length === 3 && focus.split(',').every(item => parseFloat(item) !== NaN)) {
+    const data = focus.split(',');
+    mapOptions.zoom = parseFloat(data[2]);
+    mapOptions.center = window.L.latLng(parseFloat(data[0]), parseFloat(data[1]))
+  }
+
   if(mapName != null && !!mapConfig[mapName]) {
     mapOptions.zoom = mapConfig[mapName].zoom;
     mapOptions.center = mapConfig[mapName].center;
   }
-
 
   map = window.L.map('map-canvas', mapOptions);
   
@@ -1329,23 +1336,12 @@ var initialize = function() {
 //window.google.maps.event.addDomListener(window, "load", initialize);
 initialize();
 
-function getValidInitialPostion() {
-  if (!window.location.pathname.endsWith('z') || !window.location.pathname.startsWith('/@')) {
-    return null;
-  }
-  const arr = window.location.pathname.substring(2, window.location.pathname.length - 1).split(',');
-  if (arr.length !== 3 || arr.some(item => isNaN(item))) {
-    return null;
-  }
-  return arr;
-}
-
 function onMapMove() {
-  const z = map._zoom;
-  const bounds = map.getBounds();
-  const {lat, lng} = bounds.getCenter();
-  //TODO: this cannot replace the query string
-  //window.history.replaceState(null, '', `@${lat},${lng},${z}z`);
+  const z = map.getZoom();
+  const {lat, lng} = map.getBounds().getCenter();
+  const currentUrlParams = new URLSearchParams(window.location.search);
+  currentUrlParams.set('focus', `${lat},${lng},${z}z`);
+  window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${currentUrlParams}`));
 }
 
 function getNextPoint(point) {
