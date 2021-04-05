@@ -5,6 +5,10 @@ const scale = 1;
 
 
 describe.only("Main", () => {
+  
+  before(() => {
+    cy.viewport(1440, 754);
+  });
 
   it("", () => {
     cy.intercept(/2\/2\/1\.png$/, {fixture: "tile/2-2-1.png"});
@@ -12,6 +16,8 @@ describe.only("Main", () => {
     cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
     cy.intercept(/\d+\/\d+\/\d+\.grid.json$/, {fixture: "tile/blank.grid.json"});
     cy.visit("http://localhost:3000");
+    cy.wait(2000);
+    cy.get("#map-canvas").trigger("click", 771,420);
   });
 });
 

@@ -65,7 +65,7 @@ export default class Map{
       }
     );
     this.layerUtfGrid.on('click', (e) => {
-      log.debug("click:", e);
+      log.warn("click:", e);
       if (e.data) {
         this.clickMarker(e.data);
       }
@@ -134,7 +134,11 @@ export default class Map{
   }
 
   unHighlightMarker(){
-    this.map.removeLayer(this.layerHighlight);
+    if(this.map.hasLayer(this.layerHighlight)){
+      this.map.removeLayer(this.layerHighlight);
+    }else{
+      log.warn("try to remove nonexisting layer"); 
+    }
   }
 
   clickMarker(data){
