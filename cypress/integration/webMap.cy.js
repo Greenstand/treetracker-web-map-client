@@ -4,7 +4,18 @@ const scale = 1;
 
 
 
-describe.only("Spin case", () => {
+describe.only("Main", () => {
+
+  it("", () => {
+    cy.intercept(/2\/2\/1\.png$/, {fixture: "tile/2-2-1.png"});
+    cy.intercept(/2\/2\/1\.grid.json$/, {fixture: "tile/2-2-1.grid.json"});
+    cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
+    cy.intercept(/\d+\/\d+\/\d+\.grid.json$/, {fixture: "tile/blank.grid.json"});
+    cy.visit("http://localhost:3000");
+  });
+});
+
+describe.skip("Spin case", () => {
 
   let data = JSON.parse(`{"data":[{"type":"cluster","id":6632615,"centroid":{"type":"Point","coordinates":[0,0]},"region_type":5,"count":"158"}],"zoomTargets":[{"region_id":6632615,"most_populated_subregion_id":6632420,"total":"100","zoom_level":4,"centroid":{"type":"Point","coordinates":[0,0]}}]}`);
 
