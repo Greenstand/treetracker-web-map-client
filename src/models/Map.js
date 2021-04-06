@@ -3,6 +3,8 @@
  */
 import  log from "loglevel";
 import expect from "expect-runtime";
+import Requester from "./Requester";
+import {getInitialBounds} from "../mapTools";
 
 export default class Map{
 
@@ -15,15 +17,22 @@ export default class Map{
       maxZoom: 20,
       initialCenter: [20, 0],
       tileServerUrl: process.env.REACT_APP_TILE_SERVER_URL,
+      apiServerUrl: process.env.REACT_APP_API,
+      width: window.innerWidth,
+      height: window.innerHeight,
       debug: true,
     }, ...options};
 
     Object.keys(options).forEach(key => {
       this[key] = options[key];
     });
-    log.info("options:", options);
+    //log.warn("options:", options);
+
+    //requester
+    this.requester = new Requester();
   }
 
+  /***************************** static ****************************/
   static formatClusterText(count){
     if(count > 1000){
       return `${Math.round(count/1000)}K`;
@@ -31,8 +40,52 @@ export default class Map{
       return count;
     }
   }
+  static getClusterRadius(zoom) {
+    switch (zoom) {
+      case 1:
+        return 10;
+      case 2:
+        return 8;
+      case 3:
+        return 6;
+      case 4:
+        return 4;
+      case 5:
+        return 0.8;
+      case 6:
+        return 0.75;
+      case 7:
+        return 0.3;
+      case 8:
+        return 0.099;
+      case 9:
+        return 0.095;
+      case 10:
+        return 0.05;
+      case 11:
+        return 0.03;
+      case 12:
+        return 0.02;
+      case 13:
+        return 0.008;
+      case 14:
+        return 0.005;
+      case 15:
+        return 0.004;
+      case 16:
+        return 0.003;
+      case 17:
+      case 18:
+      case 19:
+        return 0.0;
+      default:
+        return 0;
+    }
+  }
 
-  mount(domElement){
+  /***************************** methods ***************************/
+
+  async mount(domElement){
     const mapOptions = {
       minZoom: this.minZoom,
       center: this.initialCenter,
@@ -114,6 +167,12 @@ export default class Map{
     this.map.addLayer(this.L.gridLayer.gridDebug());
 
     this.map.setView(this.initialCenter, this.minZoom);
+
+    //jump to initial view
+    const initialView = await this.getInitialView();
+    if(initialView){
+      this.map.flyTo(initialView.center, initialView.zoomLevel);
+    }
   }
 
   highlightMarker(data){
@@ -153,5 +212,55 @@ export default class Map{
       this.map.flyTo([lat, lon], this.map.getZoom() + 2);
     }
   }
+
+  async getInitialView(){
+    if(this.userid){
+      log.warn("try to get initial bounds");
+      const response = await this.requester.request({
+        url: `${this.apiServerUrl}/trees?clusterRadius=${Map.getClusterRadius(10)}&zoom_level=10&${this.getFilterParameters()}`,
+      });
+      const view = getInitialBounds(
+        response.data.map(i => {
+          if(i.type === "cluster"){
+            const c = JSON.parse(i.centroid);
+            return {
+              lat: c.coordinates[1],
+              lng: c.coordinates[0],
+            };
+          }else if(i.type === "point"){
+            return {
+              lat: i.lat,
+              lng: i.lon,
+            };
+          }
+        }),
+        this.width,
+        this.height,
+      );
+      return view;
+    }
+  }
+
+  getFilters(){
+    const filters = {};
+    if(this.userid){
+      filters.userid = this.userid;
+    }
+    return filters;
+  }
+
+  getFilterParameters(){
+    const filter = this.getFilters();
+    const queryUrl = Object.keys(filter).reduce((a,c) => {
+      return `${c}=${filter[c]}` + (a && `&${a}` || "");
+    }, "");
+    return queryUrl;
+  }
+
+//  getClusterRadius(zoomLevel){
+//    //old code
+//    //var clusterRadius = getQueryStringValue("clusterRadius") || getClusterRadius(queryZoomLevel);
+//    return Map.getClusterRadius(zoomLevel);
+//  }
 
 }

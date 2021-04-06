@@ -10,7 +10,7 @@ describe.only("Main", () => {
     cy.viewport(1440, 754);
   });
 
-  it("", () => {
+  it("basic", () => {
     cy.intercept(/2\/2\/1\.png$/, {fixture: "tile/2-2-1.png"});
     cy.intercept(/2\/2\/1\.grid.json$/, {fixture: "tile/2-2-1.grid.json"});
     cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
@@ -18,6 +18,17 @@ describe.only("Main", () => {
     cy.visit("http://localhost:3000");
     cy.wait(2000);
     cy.get("#map-canvas").trigger("click", 771,420);
+  });
+
+  it.only("userid=1", () => {
+    cy.intercept(/2\/2\/1\.png$/, {fixture: "tile/2-2-1.png"});
+    cy.intercept(/2\/2\/1\.grid.json$/, {fixture: "tile/2-2-1.grid.json"});
+    cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
+    cy.intercept(/\d+\/\d+\/\d+\.grid.json$/, {fixture: "tile/blank.grid.json"});
+    cy.intercept(/clusterRadius=0.05&zoom_level=10&userid=1$/, {
+      fixture: "tile/zoom_level=10&userid=1"
+    });
+    cy.visit("http://localhost:3000/?userid=1");
   });
 });
 

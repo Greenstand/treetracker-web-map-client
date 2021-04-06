@@ -452,8 +452,12 @@ function App() {
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
     script.id = 'googleMaps';
     document.body.appendChild(script);
+    const parameters = window.location.search && 
+      window.location.search.slice(1).split("&").reduce((a,c) => {const [key, value] = c.split("="); a[key] = value; return a  }, {}) ||
+      {};
     const map = new Map({
       onLoad: loaded,
+      ...parameters,
     });
     map.mount(mapRef.current);
   }, []);
@@ -516,7 +520,7 @@ function App() {
         hasNext={hasNext}
         hasPrev={hasPrev}
       />
-      <div className={`${classes.mapContainer} ${isLoading?"":classes.mapLoaded}`} id="map-canvas" ref={mapRef}/>
+      <div onClick={e => console.warn("click:",e, e.screenX, e.clientX, e.clientY)} className={`${classes.mapContainer} ${isLoading?"":classes.mapLoaded}`} id="map-canvas" ref={mapRef}/>
       <Fade in={isLoading} timeout={{apear:0,exit: 1000}}>
         <Grid container className={classes.loadingContainer} >
           <Grid item>
