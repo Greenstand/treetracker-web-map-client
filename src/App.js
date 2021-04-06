@@ -448,6 +448,8 @@ function App() {
   //load map
   React.useEffect(() => {
     log.info("load map...");
+    //disalbe waiting for loading
+    loaded();
     const script = document.createElement('script');
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
     script.id = 'googleMaps';

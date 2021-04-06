@@ -98,11 +98,32 @@ export default class Map{
       maxZoom: this.maxZoom,
       type: 'satellite'
     });
+    this.layerGoogle.on("load", async () => {
+      log.warn("google layer loaded");
+      //jump to initial view
+      const initialView = await this.getInitialView();
+      if(initialView){
+        this.map.flyTo(initialView.center, initialView.zoomLevel);
+      }
+
+      //fire load event
+      this.onLoad && this.onLoad();
+
+      //load tile
+      this.loadTileServer();
+    });
+
     this.layerGoogle.addTo(this.map);
 
+    this.map.setView(this.initialCenter, this.minZoom);
+
+  }
+
+  loadTileServer(){
     //tile 
+    const filterParameters = this.getFilterParameters();
     this.layerTile = new this.L.tileLayer(
-      `${this.tileServerUrl}{z}/{x}/{y}.png`,
+      `${this.tileServerUrl}{z}/{x}/{y}.png${filterParameters && "?" + filterParameters}`,
       {
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
@@ -111,7 +132,7 @@ export default class Map{
     this.layerTile.addTo(this.map);
 
     this.layerUtfGrid = new this.L.utfGrid(
-      `${this.tileServerUrl}{z}/{x}/{y}.grid.json`,
+      `${this.tileServerUrl}{z}/{x}/{y}.grid.json${filterParameters && "?" + filterParameters}`,
       {
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
@@ -143,12 +164,9 @@ export default class Map{
     });
     this.layerUtfGrid.addTo(this.map);
 
-    this.map.on("load", () => {
-      log.info("map loaded");
-      expect(this.onLoad).defined();
-      this.onLoad && this.onLoad();
-    });
+  }
 
+  loadDebugLayer(){
     //debug
     this.L.GridLayer.GridDebug = this.L.GridLayer.extend({
       createTile: function (coords) {
@@ -165,15 +183,8 @@ export default class Map{
       return new this.L.GridLayer.GridDebug(opts);
     };
     this.map.addLayer(this.L.gridLayer.gridDebug());
-
-    this.map.setView(this.initialCenter, this.minZoom);
-
-    //jump to initial view
-    const initialView = await this.getInitialView();
-    if(initialView){
-      this.map.flyTo(initialView.center, initialView.zoomLevel);
-    }
   }
+
 
   highlightMarker(data){
     this.layerHighlight = new this.L.marker(
@@ -217,7 +228,7 @@ export default class Map{
     if(this.userid){
       log.warn("try to get initial bounds");
       const response = await this.requester.request({
-        url: `${this.apiServerUrl}/trees?clusterRadius=${Map.getClusterRadius(10)}&zoom_level=10&${this.getFilterParameters()}`,
+        url: `${this.apiServerUrl}trees?clusterRadius=${Map.getClusterRadius(10)}&zoom_level=10&${this.getFilterParameters()}`,
       });
       const view = getInitialBounds(
         response.data.map(i => {
