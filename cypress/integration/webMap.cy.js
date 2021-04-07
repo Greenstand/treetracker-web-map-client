@@ -12,15 +12,34 @@ describe.only("Main", () => {
 
   it("basic", () => {
     cy.intercept(/2\/2\/1\.png$/, {fixture: "tile/2-2-1.png"});
-    cy.intercept(/2\/2\/1\.grid.json$/, {fixture: "tile/2-2-1.grid.json"});
+    cy.intercept(/2\/2\/1\.grid.json$/, {fixture: "tile/2-2-1.grid.json"})
+      .as("level2");
+    cy.intercept(/4\/8\/8\.png$/, {fixture: "tile/4-8-8.png"});
+    cy.intercept(/4\/8\/8\.grid.json$/, {fixture: "tile/4-8-8.grid.json"})
+      .as("level4");
+    cy.intercept(/6\/34\/34\.png$/, {fixture: "tile/6-34-34.png"});
+    cy.intercept(/6\/34\/34\.grid.json$/, {fixture: "tile/6-34-34.grid.json"})
+      .as("level6");
+    cy.intercept(/8\/139\/139\.png$/, {fixture: "tile/8-139-139.png"});
+    cy.intercept(/8\/139\/139\.grid.json$/, {fixture: "tile/8-139-139.grid.json"})
+      .as("level8");
     cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
     cy.intercept(/\d+\/\d+\/\d+\.grid.json$/, {fixture: "tile/blank.grid.json"});
     cy.visit("http://localhost:3000");
-    cy.wait(2000);
+    cy.wait("@level2", {timeout:1000*30});
     cy.get("#map-canvas").trigger("click", 771,420);
+    cy.wait("@level4", {timeout: 1000*30});
+    cy.get("#map-canvas").trigger("click", 523,448);
+    cy.wait("@level6", {timeout: 1000*30});
+    cy.get("#map-canvas").trigger("click", 636,526);
+    cy.wait("@level8", {timeout: 1000*30});
+    cy.get("#map-canvas").trigger("click", 636,526);
+
+    
+
   });
 
-  it.only("userid=1", () => {
+  it.skip("userid=1", () => {
     cy.intercept(/2\/2\/1\.png$/, {fixture: "tile/2-2-1.png"});
     cy.intercept(/2\/2\/1\.grid.json$/, {fixture: "tile/2-2-1.grid.json"});
     cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});

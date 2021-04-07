@@ -112,11 +112,11 @@ export default class Map{
       //load tile
       this.loadTileServer();
     });
-
     this.layerGoogle.addTo(this.map);
 
-    this.map.setView(this.initialCenter, this.minZoom);
+    this.loadDebugLayer();
 
+    this.map.setView(this.initialCenter, this.minZoom);
   }
 
   loadTileServer(){
