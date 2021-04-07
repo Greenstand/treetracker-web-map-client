@@ -26,6 +26,7 @@ describe.only("Main", () => {
     cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
     cy.intercept(/\d+\/\d+\/\d+\.grid.json$/, {fixture: "tile/blank.grid.json"});
     cy.visit("http://localhost:3000");
+    cy.pause();
     cy.wait("@level2", {timeout:1000*30});
     cy.get("#map-canvas").trigger("click", 771,420);
     cy.wait("@level4", {timeout: 1000*30});

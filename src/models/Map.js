@@ -92,13 +92,20 @@ export default class Map{
     }
     this.map = this.L.map(domElement, mapOptions);
 
+    this.map.on("moveend", e => {
+      log.warn("move end", e);
+    });
+
+    this.map.on("zoomend", e => {
+      log.warn("zoom end", e);
+    });
 
     //google satellite map
     this.layerGoogle = this.L.gridLayer.googleMutant({
       maxZoom: this.maxZoom,
       type: 'satellite'
     });
-    this.layerGoogle.on("load", async () => {
+    this.layerGoogle.once("load", async () => {
       log.warn("google layer loaded");
       //jump to initial view
       const initialView = await this.getInitialView();
