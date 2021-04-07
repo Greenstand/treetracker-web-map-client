@@ -92,13 +92,6 @@ export default class Map{
     }
     this.map = this.L.map(domElement, mapOptions);
 
-    this.map.on("moveend", e => {
-      log.warn("move end", e);
-    });
-
-    this.map.on("zoomend", e => {
-      log.warn("zoom end", e);
-    });
 
     //google satellite map
     this.layerGoogle = this.L.gridLayer.googleMutant({
@@ -107,10 +100,29 @@ export default class Map{
     });
     this.layerGoogle.once("load", async () => {
       log.warn("google layer loaded");
-      //jump to initial view
-      const initialView = await this.getInitialView();
-      if(initialView){
-        this.map.flyTo(initialView.center, initialView.zoomLevel);
+
+      /*
+       * Backgrond is ready, now load the map, the logic is:
+       * If there is a filter, then try to zoom in and set the zoom is
+       * appropriate for the filter, then load the tile.
+       * But if there is a bounds ( maybe the browser was refreshed or jump
+       * to the map by a shared link), then jump the bounds directly, 
+       * regardless of the initial view for filter.
+       */
+      if(this.bounds){
+        const [southWestLng, southWestLat, northEastLng, northEastLat] = 
+          this.bounds.split(",");
+        log.warn("fly to bounds:", this.bounds);
+        this.map.flyToBounds([
+          [southWestLat, southWestLng],
+          [northEastLat, northEastLng]
+        ]);
+      }else{
+        //jump to initial view
+        const initialView = await this.getInitialView();
+        if(initialView){
+          this.map.flyTo(initialView.center, initialView.zoomLevel);
+        }
       }
 
       //fire load event
@@ -118,6 +130,11 @@ export default class Map{
 
       //load tile
       this.loadTileServer();
+
+      this.map.on("moveend", e => {
+        log.warn("move end", e);
+        this.updateUrl();
+      });
     });
     this.layerGoogle.addTo(this.map);
 
@@ -280,5 +297,18 @@ export default class Map{
 //    //var clusterRadius = getQueryStringValue("clusterRadius") || getClusterRadius(queryZoomLevel);
 //    return Map.getClusterRadius(zoomLevel);
 //  }
+
+  updateUrl(){
+    log.warn("update url");
+    window.history.pushState('treetrakcer', '', `/?${this.getFilterParameters()}&bounds=${this.getCurrentBounds()}`);
+  }
+
+  getCurrentBounds(){
+    return this.map.getBounds().toBBoxString();
+  }
+
+  getLeafletMap(){
+    return this.map;
+  }
 
 }

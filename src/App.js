@@ -462,6 +462,7 @@ function App() {
       ...parameters,
     });
     map.mount(mapRef.current);
+    mapRef.current.map = map;
   }, []);
 
   /*
