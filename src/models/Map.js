@@ -183,9 +183,6 @@ export default class Map{
         lat,
         lon,
       });
-//      markerHighlight.payload = {
-//        id: e.data.id
-//      };
     });
 
     this.layerUtfGrid.on('mouseout', (e) => {
@@ -228,6 +225,7 @@ export default class Map{
                 <div></div>
                 </div>
               `,
+              iconSize: [32, 32],
             }),
         }
       );
