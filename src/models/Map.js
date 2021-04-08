@@ -151,6 +151,9 @@ export default class Map{
       {
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
+        //close to avoid too many requests
+        updateWhenZooming: false,
+        updateWhenIdle: false,
       }
     );
     this.layerTile.addTo(this.map);
@@ -160,6 +163,9 @@ export default class Map{
       {
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
+        //close to avoid too many requests
+        updateWhenZooming: false,
+        updateWhenIdle: false,
       }
     );
     this.layerUtfGrid.on('click', (e) => {
@@ -173,9 +179,9 @@ export default class Map{
       log.debug("mouseover:", e);
       const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
       this.highlightMarker({
+        ...e.data,
         lat,
         lon,
-        count: e.data.count,
       });
 //      markerHighlight.payload = {
 //        id: e.data.id
@@ -211,19 +217,37 @@ export default class Map{
 
 
   highlightMarker(data){
-    this.layerHighlight = new this.L.marker(
-      [data.lat, data.lon],
-      {
-          icon: new this.L.DivIcon({
-            className: "greenstand-cluster-highlight",
-            html: `
-              <div class="greenstand-cluster-highlight-box ${data.count > 1000? '':'small'}"  >
-              <div>${Map.formatClusterText(data.count)}</div>
-              </div>
-            `,
-          }),
-      }
-    );
+    if(data.type === "point"){
+      this.layerHighlight = new this.L.marker(
+        [data.lat, data.lon],
+        {
+            icon: new this.L.DivIcon({
+              className: "greenstand-point-highlight",
+              html: `
+                <div class="greenstand-point-highlight-box"  >
+                <div></div>
+                </div>
+              `,
+            }),
+        }
+      );
+    }else if(data.type === "cluster"){
+      this.layerHighlight = new this.L.marker(
+        [data.lat, data.lon],
+        {
+            icon: new this.L.DivIcon({
+              className: "greenstand-cluster-highlight",
+              html: `
+                <div class="greenstand-cluster-highlight-box ${data.count > 1000? '':'small'}"  >
+                <div>${Map.formatClusterText(data.count)}</div>
+                </div>
+              `,
+            }),
+        }
+      );
+    }else{
+      throw new Error("wrong type:", data);
+    }
     this.layerHighlight.addTo(this.map);
   }
 
@@ -238,13 +262,18 @@ export default class Map{
   clickMarker(data){
     this.unHighlightMarker();
     const [lon, lat] = JSON.parse(data.latlon).coordinates;
-    if(data.zoom_to){
-      log.info("found zoom to:", data.zoom_to);
-      const [lon, lat] = JSON.parse(data.zoom_to).coordinates;
-      //NOTE do cluster click
-      this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+    if(data.type === "point"){
+    }else if(data.type === "cluster"){
+      if(data.zoom_to){
+        log.info("found zoom to:", data.zoom_to);
+        const [lon, lat] = JSON.parse(data.zoom_to).coordinates;
+        //NOTE do cluster click
+        this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+      }else{
+        this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+      }
     }else{
-      this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+      throw new Error("do not support type:", data.type);
     }
   }
 
