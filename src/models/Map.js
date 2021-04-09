@@ -341,7 +341,7 @@ export default class Map{
   }
 
   async getInitialView(){
-    if(this.userid){
+    if(this.userid || this.wallet){
       log.warn("try to get initial bounds");
       const response = await this.requester.request({
         url: `${this.apiServerUrl}trees?clusterRadius=${Map.getClusterRadius(10)}&zoom_level=10&${this.getFilterParameters()}`,
@@ -372,6 +372,9 @@ export default class Map{
     const filters = {};
     if(this.userid){
       filters.userid = this.userid;
+    }
+    if(this.wallet){
+      filters.wallet = this.wallet;
     }
     return filters;
   }

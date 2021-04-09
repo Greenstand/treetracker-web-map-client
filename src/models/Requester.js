@@ -12,6 +12,7 @@ export default class Requester{
   }
 
   async request(options){
+    log.info("request:", options);
     //before request, cancel previous one
     this.source && this.source.cancel("clean previous request");
     this.source = CancelToken.source();
