@@ -21,6 +21,7 @@ export default class Map{
       width: window.innerWidth,
       height: window.innerHeight,
       debug: true,
+      moreEffect: false,
     }, ...options};
 
     Object.keys(options).forEach(key => {
@@ -123,16 +124,26 @@ export default class Map{
         const [southWestLng, southWestLat, northEastLng, northEastLat] = 
           this.bounds.split(",");
         log.warn("fly to bounds:", this.bounds);
-//        this.map.flyToBounds([
-        this.map.fitBounds([
-          [southWestLat, southWestLng],
-          [northEastLat, northEastLng]
-        ]);
+        if(this.moreEffect){
+          this.map.flyToBounds([
+            [southWestLat, southWestLng],
+            [northEastLat, northEastLng]
+          ]);
+        }else{
+          this.map.fitBounds([
+            [southWestLat, southWestLng],
+            [northEastLat, northEastLng]
+          ]);
+        }
       }else{
         //jump to initial view
         const initialView = await this.getInitialView();
         if(initialView){
-          this.map.flyTo(initialView.center, initialView.zoomLevel);
+          if(this.moreEffect){
+            this.map.flyTo(initialView.center, initialView.zoomLevel);
+          }else{
+            this.map.setView(initialView.center, initialView.zoomLevel);
+          }
         }
       }
 
