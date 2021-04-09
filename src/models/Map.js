@@ -173,11 +173,12 @@ export default class Map{
       log.warn("click:", e);
       if (e.data) {
         const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
-        this.clickMarker({
+        const data = {
           ...e.data,
           lat,
           lon,
-        });
+        };
+        this.clickMarker(data);
       }
     });
 
@@ -267,6 +268,7 @@ export default class Map{
     this.unHighlightMarker();
     const [lon, lat] = JSON.parse(data.latlon).coordinates;
     if(data.type === "point"){
+      this.selectMarker(data);
       this.onClickTree && this.onClickTree(data);
     }else if(data.type === "cluster"){
       if(data.zoom_to){
@@ -279,6 +281,37 @@ export default class Map{
       }
     }else{
       throw new Error("do not support type:", data.type);
+    }
+  }
+
+  selectMarker(data){
+    log.info("change tree mark selected");
+    //before set the selected tree icon, remote if any
+    this.unselectMarker();
+    
+    //set the selected marker
+    this.layerSelected = new this.L.marker(
+      [data.lat, data.lon],
+      {
+        icon: new window.L.DivIcon({
+          className: "greenstand-point-selected",
+          html: `
+            <div class="greenstand-point-selected-box"  >
+            <div></div>
+            </div>
+          `,
+          iconSize: [32, 32],
+        }),
+      }
+    );
+    this.layerSelected.addTo(this.map);
+  }
+
+  unselectMarker(){
+    if(this.map.hasLayer(this.layerSelected)){
+      this.map.removeLayer(this.layerSelected);
+    }else{
+      log.warn("try to remove nonexisting layer selected"); 
     }
   }
 
@@ -343,6 +376,34 @@ export default class Map{
 
   getLeafletMap(){
     return this.map;
+  }
+
+  goNextPoint(){
+    log.info("go next tree");
+  }
+
+  goPrevPoint(){
+    log.info("go previous tree");
+  }
+
+  /*
+   * To get all the points on the map, (tree markers), now, the way to
+   * achieve this is that go through the utf grid and get all data.
+   */
+  getPoints(){
+    const points = [];
+    //fetch all the point data in the cache
+    const itemList = Object.values(this.utfGridLayer._cache).map(e => e.data).filter(e => Object.keys(e).length > 0).reduce((a,c) => a.concat(Object.values(c)),[])
+    log.info("loaded data in utf cache:", itemList.length);
+
+    //filter the duplicate points
+    const itemMap = {};
+    itemList.forEach(e => itemMap[e.id] = e);
+
+    //update the global points 
+    points = Object.values(itemMap);
+    log.warn("find points:", points.length);
+    return points;
   }
 
 }
