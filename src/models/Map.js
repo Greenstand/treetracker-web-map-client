@@ -83,6 +83,16 @@ export default class Map{
     }
   }
 
+  static parseUtfData(utfData){
+    const [lon, lat] = JSON.parse(utfData.latlon).coordinates;
+    const data = {
+      ...utfData,
+      lat,
+      lon,
+    };
+    return data;
+  }
+
   /***************************** methods ***************************/
 
   async mount(domElement){
@@ -172,24 +182,13 @@ export default class Map{
     this.layerUtfGrid.on('click', (e) => {
       log.warn("click:", e);
       if (e.data) {
-        const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
-        const data = {
-          ...e.data,
-          lat,
-          lon,
-        };
-        this.clickMarker(data);
+        this.clickMarker(Map.parseUtfData(e.data));
       }
     });
 
     this.layerUtfGrid.on('mouseover', (e) => {
       log.debug("mouseover:", e);
-      const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
-      this.highlightMarker({
-        ...e.data,
-        lat,
-        lon,
-      });
+      this.highlightMarker(Map.parseUtfData(e.data));
     });
 
     this.layerUtfGrid.on('mouseout', (e) => {
@@ -266,7 +265,6 @@ export default class Map{
 
   clickMarker(data){
     this.unHighlightMarker();
-    const [lon, lat] = JSON.parse(data.latlon).coordinates;
     if(data.type === "point"){
       this.selectMarker(data);
       this.onClickTree && this.onClickTree(data);
@@ -277,7 +275,7 @@ export default class Map{
         //NOTE do cluster click
         this.map.flyTo([lat, lon], this.map.getZoom() + 2);
       }else{
-        this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+        this.map.flyTo([data.lat, data.lon], this.map.getZoom() + 2);
       }
     }else{
       throw new Error("do not support type:", data.type);
@@ -304,6 +302,7 @@ export default class Map{
         }),
       }
     );
+    this.layerSelected.payload = data;
     this.layerSelected.addTo(this.map);
   }
 
@@ -380,10 +379,58 @@ export default class Map{
 
   goNextPoint(){
     log.info("go next tree");
+    const currentPoint = this.layerSelected.payload;
+    expect(currentPoint).match({
+      lat: expect.any(Number),
+    });
+    const points = this.getPoints();
+    const index = points.reduce((a,c,i) => {
+      if(c.id === currentPoint.id){
+        return i;
+      }else{
+        return a;
+      }
+    },-1);
+    if(index !== -1){
+      if(index === points.length - 1){
+        log.info("no more next");
+        return false;
+      }else{
+        const nextPoint = points[index + 1];
+        this.clickMarker(nextPoint);
+      }
+    }else{
+      log.error("can not find the point:", currentPoint, points);
+      throw new Error("can not find the point");
+    }
   }
 
   goPrevPoint(){
     log.info("go previous tree");
+    const currentPoint = this.layerSelected.payload;
+    expect(currentPoint).match({
+      lat: expect.any(Number),
+    });
+    const points = this.getPoints();
+    const index = points.reduce((a,c,i) => {
+      if(c.id === currentPoint.id){
+        return i;
+      }else{
+        return a;
+      }
+    },-1);
+    if(index !== -1){
+      if(index === 0){
+        log.info("no more previous");
+        return false;
+      }else{
+        const prevPoint = points[index - 1];
+        this.clickMarker(prevPoint);
+      }
+    }else{
+      log.error("can not find the point:", currentPoint, points);
+      throw new Error("can not find the point");
+    }
   }
 
   /*
@@ -391,9 +438,8 @@ export default class Map{
    * achieve this is that go through the utf grid and get all data.
    */
   getPoints(){
-    const points = [];
     //fetch all the point data in the cache
-    const itemList = Object.values(this.utfGridLayer._cache).map(e => e.data).filter(e => Object.keys(e).length > 0).reduce((a,c) => a.concat(Object.values(c)),[])
+    const itemList = Object.values(this.layerUtfGrid._cache).map(e => e.data).filter(e => Object.keys(e).length > 0).reduce((a,c) => a.concat(Object.values(c)),[]).map(data => Map.parseUtfData(data));
     log.info("loaded data in utf cache:", itemList.length);
 
     //filter the duplicate points
@@ -401,7 +447,7 @@ export default class Map{
     itemList.forEach(e => itemMap[e.id] = e);
 
     //update the global points 
-    points = Object.values(itemMap);
+    const points = Object.values(itemMap);
     log.warn("find points:", points.length);
     return points;
   }
