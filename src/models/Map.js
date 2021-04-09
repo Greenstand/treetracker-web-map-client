@@ -133,7 +133,7 @@ export default class Map{
           this.map.fitBounds([
             [southWestLat, southWestLng],
             [northEastLat, northEastLng]
-          ]);
+          ], {animate: false});
         }
       }else{
         //jump to initial view
@@ -142,7 +142,7 @@ export default class Map{
           if(this.moreEffect){
             this.map.flyTo(initialView.center, initialView.zoomLevel);
           }else{
-            this.map.setView(initialView.center, initialView.zoomLevel);
+            this.map.setView(initialView.center, initialView.zoomLevel, {animate: false});
           }
         }
       }
@@ -284,9 +284,17 @@ export default class Map{
         log.info("found zoom to:", data.zoom_to);
         const [lon, lat] = JSON.parse(data.zoom_to).coordinates;
         //NOTE do cluster click
-        this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+        if(this.moreEffect){
+          this.map.flyTo([lat, lon], this.map.getZoom() + 2);
+        }else{
+          this.map.setView([lat, lon], this.map.getZoom() + 2, {animate: false});
+        }
       }else{
-        this.map.flyTo([data.lat, data.lon], this.map.getZoom() + 2);
+        if(this.moreEffect){
+          this.map.flyTo([data.lat, data.lon], this.map.getZoom() + 2);
+        }else{
+          this.map.setView([data.lat, data.lon], this.map.getZoom() + 2, {animate: false});
+        }
       }
     }else{
       throw new Error("do not support type:", data.type);
