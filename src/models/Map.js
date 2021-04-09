@@ -113,7 +113,8 @@ export default class Map{
         const [southWestLng, southWestLat, northEastLng, northEastLat] = 
           this.bounds.split(",");
         log.warn("fly to bounds:", this.bounds);
-        this.map.flyToBounds([
+//        this.map.flyToBounds([
+        this.map.fitBounds([
           [southWestLat, southWestLng],
           [northEastLat, northEastLng]
         ]);
@@ -152,8 +153,8 @@ export default class Map{
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
         //close to avoid too many requests
-        updateWhenZooming: false,
-        updateWhenIdle: false,
+        updateWhenZooming: true,
+        updateWhenIdle: true,
       }
     );
     this.layerTile.addTo(this.map);
@@ -171,7 +172,12 @@ export default class Map{
     this.layerUtfGrid.on('click', (e) => {
       log.warn("click:", e);
       if (e.data) {
-        this.clickMarker(e.data);
+        const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+        this.clickMarker({
+          ...e.data,
+          lat,
+          lon,
+        });
       }
     });
 
@@ -261,6 +267,7 @@ export default class Map{
     this.unHighlightMarker();
     const [lon, lat] = JSON.parse(data.latlon).coordinates;
     if(data.type === "point"){
+      this.onClickTree && this.onClickTree(data);
     }else if(data.type === "cluster"){
       if(data.zoom_to){
         log.info("found zoom to:", data.zoom_to);

@@ -258,25 +258,17 @@ function App() {
   const [timelineEnabled, setTimelineEnabled] = React.useState(true);
 
   function showPanel(tree){
+    expect(tree).match({
+      lat: expect.any(Number),
+      lon: expect.any(Number),
+    });
     log.log("show panel...");
     setSidePanelState("show");
     setTree(tree);
     //consider the visible of the point
     const {map} = mapRef.current;
-    const mapLeaflet = map.getMap();
-    let left,top;
-    if(map.checkUsingTile()){
-      const point = map.getPoints()[map.getCurrentIndex()];
-      log.warn("current point:", point);
-      const {x, y} = mapLeaflet.latLngToContainerPoint([point.lat, point.lon]);
-      left = x;
-      top = y;
-    }else{
-      const marker = map.getMarkerByPointId()[tree.id]
-      const {x, y} = mapLeaflet.latLngToContainerPoint(marker.getLatLng());
-      left = x;
-      top =y;
-    }
+    const leafletMap = map.getLeafletMap();
+    const {x: left , y: top} = leafletMap.latLngToContainerPoint([tree.lat, tree.lon]);
     log.log("top:", top, "left:", left);
     expect(top).number();
     expect(left).number();
@@ -316,13 +308,13 @@ function App() {
         const x = left - leftCenter;
         const y = top - topCenter;
         log.log("pant by x,y:", x, y);
-        map.getMap().panBy(window.L.point(x,y));
+        leafletMap.panBy([x,y]);
       }
     }else{
       log.info("there is no marker");
     }
-    setHasNext(map.hasNextPoint());
-    setHasPrev(map.hasPrevPoint());
+    setHasNext(true);
+    setHasPrev(true);
   }
 
   function showPanelWithoutTree(){
@@ -459,6 +451,7 @@ function App() {
       {};
     const map = new Map({
       onLoad: loaded,
+      onClickTree: showPanel,
       ...parameters,
     });
     map.mount(mapRef.current);
