@@ -109,70 +109,93 @@ export default class Map{
         position: 'bottomright'
     });
     this.control.addTo(this.map);
+    this.map.setView(this.initialCenter, this.minZoom);
 
+    //load google map
+    await this.loadGoogleSatellite();
 
-    //google satellite map
+    /*
+     * The logic is:
+     * If there is a filter, then try to zoom in and set the zoom is
+     * appropriate for the filter, then load the tile.
+     * But if there is a bounds ( maybe the browser was refreshed or jump
+     * to the map by a shared link), then jump the bounds directly, 
+     * regardless of the initial view for filter.
+     */
+    if(this.bounds){
+      await this.gotoBounds(this.bounds);
+    }else{
+      await this.loadInitialView();
+    }
+
+    //fire load event
+    this.onLoad && this.onLoad();
+
+    //load tile
+    if(this.treeid){
+      log.info("treeid mode do not need tile server");
+    }else{
+      await this.loadTileServer();
+    }
+
+    //mount event
+    this.map.on("moveend", e => {
+      log.warn("move end", e);
+      this.updateUrl();
+    });
+
+    await this.loadDebugLayer();
+
+    if(this.treeid){
+      await this.loadTree(this.treeid);
+    }
+
+  }
+
+  async loadGoogleSatellite(){
+    log.warn("load google satellite map");
     this.layerGoogle = this.L.gridLayer.googleMutant({
       maxZoom: this.maxZoom,
       type: 'satellite'
     });
-    this.layerGoogle.once("load", async () => {
-      log.warn("google layer loaded");
-
-      /*
-       * Backgrond is ready, now load the map, the logic is:
-       * If there is a filter, then try to zoom in and set the zoom is
-       * appropriate for the filter, then load the tile.
-       * But if there is a bounds ( maybe the browser was refreshed or jump
-       * to the map by a shared link), then jump the bounds directly, 
-       * regardless of the initial view for filter.
-       */
-      if(this.bounds){
-        const [southWestLng, southWestLat, northEastLng, northEastLat] = 
-          this.bounds.split(",");
-        log.warn("fly to bounds:", this.bounds);
-        if(this.moreEffect){
-          this.map.flyToBounds([
-            [southWestLat, southWestLng],
-            [northEastLat, northEastLng]
-          ]);
-        }else{
-          this.map.fitBounds([
-            [southWestLat, southWestLng],
-            [northEastLat, northEastLng]
-          ], {animate: false});
-        }
-      }else{
-        //jump to initial view
-        const initialView = await this.getInitialView();
-        if(initialView){
-          if(this.moreEffect){
-            this.map.flyTo(initialView.center, initialView.zoomLevel);
-          }else{
-            this.map.setView(initialView.center, initialView.zoomLevel, {animate: false});
-          }
-        }
-      }
-
-      //fire load event
-      this.onLoad && this.onLoad();
-
-      //load tile
-      this.loadTileServer();
-
-      this.map.on("moveend", e => {
-        log.warn("move end", e);
-        this.updateUrl();
+    this.layerGoogle.addTo(this.map);
+    //wait loaded
+    await new Promise((res, _rej) => {
+      this.layerGoogle.once("load", async () => {
+        log.warn("google layer loaded");
+        res();
       });
     });
-    this.layerGoogle.addTo(this.map);
-
-    this.loadDebugLayer();
-
-    this.map.setView(this.initialCenter, this.minZoom);
   }
 
-  loadTileServer(){
+  async gotoBounds(bounds){
+    const [southWestLng, southWestLat, northEastLng, northEastLat] = 
+      bounds.split(",");
+    log.warn("go to bounds:", this.bounds);
+    if(this.moreEffect){
+      this.map.flyToBounds([
+        [southWestLat, southWestLng],
+        [northEastLat, northEastLng]
+      ]);
+      log.warn("waiting bound load...");
+      await new Promise((res, _rej) => {
+        const boundFinished = () => {
+          log.warn("fire bound finished");
+          this.map.off("moveend");
+          res();
+        }
+        this.map.on("moveend", boundFinished);
+      });
+    }else{
+      this.map.fitBounds([
+        [southWestLat, southWestLng],
+        [northEastLat, northEastLng]
+      ], {animate: false});
+      //no effect, return directly
+    }
+  }
+
+  async loadTileServer(){
     //tile 
     const filterParameters = this.getFilterParameters();
     this.layerTile = new this.L.tileLayer(
@@ -217,7 +240,7 @@ export default class Map{
 
   }
 
-  loadDebugLayer(){
+  async loadDebugLayer(){
     //debug
     this.L.GridLayer.GridDebug = this.L.GridLayer.extend({
       createTile: function (coords) {
@@ -234,6 +257,20 @@ export default class Map{
       return new this.L.GridLayer.GridDebug(opts);
     };
     this.map.addLayer(this.L.gridLayer.gridDebug());
+  }
+
+  async loadTree(treeid){
+    const res = await this.requester.request({
+      url: `${this.apiServerUrl}tree?tree_id=${treeid}`,
+    });
+    const {lat, lon, id} = res;
+    const data = {
+      id,
+      lat: parseFloat(lat),
+      lon: parseFloat(lon),
+    }
+    this.selectMarker(data);
+    this.onClickTree && this.onClickTree(data);
   }
 
 
@@ -340,13 +377,14 @@ export default class Map{
     }
   }
 
-  async getInitialView(){
+  async loadInitialView(){
+    let view;
     if(this.userid || this.wallet){
       log.warn("try to get initial bounds");
       const response = await this.requester.request({
         url: `${this.apiServerUrl}trees?clusterRadius=${Map.getClusterRadius(10)}&zoom_level=10&${this.getFilterParameters()}`,
       });
-      const view = getInitialBounds(
+      view = getInitialBounds(
         response.data.map(i => {
           if(i.type === "cluster"){
             const c = JSON.parse(i.centroid);
@@ -364,7 +402,36 @@ export default class Map{
         this.width,
         this.height,
       );
-      return view;
+    }else if(this.treeid){
+      const res = await this.requester.request({
+        url: `${this.apiServerUrl}tree?tree_id=${this.treeid}`,
+      });
+      const {lat, lon} = res;
+      view = {
+        center: {
+          lat,
+          lon,
+        },
+        zoomLevel: 16,
+      }
+    }
+
+    //jump to initial view
+    if(view){
+      if(this.moreEffect){
+        this.map.flyTo(view.center, view.zoomLevel);
+        log.warn("waiting initial view load...");
+        await new Promise((res, _rej) => {
+          const finished = () => {
+            log.warn("fire initial view finished");
+            this.map.off("moveend");
+            res();
+          }
+          this.map.on("moveend", finished);
+        });
+      }else{
+        this.map.setView(view.center, view.zoomLevel, {animate: false});
+      }
     }
   }
 
@@ -375,6 +442,9 @@ export default class Map{
     }
     if(this.wallet){
       filters.wallet = this.wallet;
+    }
+    if(this.treeid){
+      filters.treeid = this.treeid;
     }
     return filters;
   }
