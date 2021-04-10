@@ -237,6 +237,10 @@ export default class Map{
       log.debug("e:", e);
       this.unHighlightMarker();
     });
+
+    this.layerUtfGrid.on("load", (e) => {
+      log.info("grid loaded");
+    });
     this.layerUtfGrid.addTo(this.map);
 
   }

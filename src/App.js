@@ -15,6 +15,10 @@ import Snackbar from "@material-ui/core/Snackbar";
 import getLogo from "./models/logo";
 import log from "loglevel";
 import Timeline from "./components/Timeline";
+import 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import "leaflet-utfgrid/L.UTFGrid-min.js";
+import 'leaflet.gridlayer.googlemutant';
 import Map from "./models/Map";
 
 
