@@ -240,6 +240,19 @@ export default class Map{
 
   }
 
+  async unloadTileServer(){
+    if(this.map.hasLayer(this.layerTile)){
+      this.map.removeLayer(this.layerTile);
+    }else{
+      log.warn("try to remove nonexisting tile layer"); 
+    }
+    if(this.map.hasLayer(this.layerUtfGrid)){
+      this.map.removeLayer(this.layerUtfGrid);
+    }else{
+      log.warn("try to remove nonexisting grid layer"); 
+    }
+  }
+
   async loadDebugLayer(){
     //debug
     this.L.GridLayer.GridDebug = this.L.GridLayer.extend({
@@ -446,6 +459,9 @@ export default class Map{
     if(this.treeid){
       filters.treeid = this.treeid;
     }
+    if(this.timeline){
+      filters.timeline = this.timeline;
+    }
     return filters;
   }
 
@@ -554,6 +570,13 @@ export default class Map{
     log.warn("find points:", points.length);
     log.warn("find points:", points);
     return points;
+  }
+
+  async rerender(){
+    log.info("rerender");
+    log.info("reload tile");
+    this.unloadTileServer();
+    this.loadTileServer();
   }
 
 }
