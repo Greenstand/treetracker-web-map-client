@@ -579,4 +579,13 @@ export default class Map{
     this.loadTileServer();
   }
 
+  /*
+   * reset the config of map instance
+   */
+  config(options){
+    Object.keys(options).forEach(key => {
+      this[key] = options[key];
+    });
+  }
+
 }

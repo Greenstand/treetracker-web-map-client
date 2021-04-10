@@ -240,6 +240,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function getParameters(){
+  const parameters = window.location.search && 
+    window.location.search.slice(1).split("&").reduce((a,c) => {const [key, value] = c.split("="); a[key] = value; return a  }, {}) ||
+    {};
+  log.info("getParameters:", parameters);
+  return parameters;
+}
+
 function App() {
   log.warn("Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   const classes = useStyles();
@@ -448,9 +456,7 @@ function App() {
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
     script.id = 'googleMaps';
     document.body.appendChild(script);
-    const parameters = window.location.search && 
-      window.location.search.slice(1).split("&").reduce((a,c) => {const [key, value] = c.split("="); a[key] = value; return a  }, {}) ||
-      {};
+    const parameters = getParameters();
     const map = new Map({
       onLoad: loaded,
       onClickTree: showPanel,
@@ -480,6 +486,11 @@ function App() {
     log.warn("date changed:", date);
     window.history.pushState('page2', '', `/?timeline=${date.join("_")}`);
     const {map} = mapRef.current;
+    //refresh the url parameter
+    const parameters = getParameters();
+    map.config({
+      ...parameters,
+    });
     map.rerender();
   }
 
