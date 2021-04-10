@@ -583,7 +583,7 @@ export default class Map{
   /*
    * reset the config of map instance
    */
-  setFilter(filters){
+  setFilters(filters){
     this.filters = filters;
   }
 
