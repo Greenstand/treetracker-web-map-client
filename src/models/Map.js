@@ -468,7 +468,11 @@ export default class Map{
    */
   getPoints(){
     //fetch all the point data in the cache
-    const itemList = Object.values(this.layerUtfGrid._cache).map(e => e.data).filter(e => Object.keys(e).length > 0).reduce((a,c) => a.concat(Object.values(c)),[]).map(data => Map.parseUtfData(data));
+    const itemList = Object.values(this.layerUtfGrid._cache)
+      .map(e => e.data).filter(e => Object.keys(e).length > 0)
+      .reduce((a,c) => a.concat(Object.values(c)),[])
+      .map(data => Map.parseUtfData(data))
+      .filter(data => data.type === "point");
     log.info("loaded data in utf cache:", itemList.length);
 
     //filter the duplicate points
@@ -478,6 +482,7 @@ export default class Map{
     //update the global points 
     const points = Object.values(itemMap);
     log.warn("find points:", points.length);
+    log.warn("find points:", points);
     return points;
   }
 

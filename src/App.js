@@ -352,6 +352,8 @@ function App() {
   function handleSidePanelClose(){
     log.debug("handleSidePanelClose");
     setSidePanelState("none");
+    const {map} = mapRef.current;
+    map.unselectMarker();
   }
 
   function loaded(){
