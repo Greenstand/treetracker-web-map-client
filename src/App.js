@@ -460,7 +460,7 @@ function App() {
     const map = new Map({
       onLoad: loaded,
       onClickTree: showPanel,
-      ...parameters,
+      filters: parameters,
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;
@@ -488,7 +488,7 @@ function App() {
     const {map} = mapRef.current;
     //refresh the url parameter
     const parameters = getParameters();
-    map.config({
+    map.setFilters({
       ...parameters,
     });
     map.rerender();
@@ -498,6 +498,11 @@ function App() {
     setTimelineDate(undefined);
     window.history.pushState('page2', '', `/`);
     const {map} = mapRef.current;
+    //refresh the url parameter
+    const parameters = getParameters();
+    map.setFilters({
+      ...parameters,
+    });
     map.rerender();
   }
 

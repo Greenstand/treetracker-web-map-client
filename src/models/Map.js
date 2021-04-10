@@ -22,6 +22,7 @@ export default class Map{
       height: window.innerHeight,
       debug: true,
       moreEffect: false,
+      filters: {},
     }, ...options};
 
     Object.keys(options).forEach(key => {
@@ -122,8 +123,8 @@ export default class Map{
      * to the map by a shared link), then jump the bounds directly, 
      * regardless of the initial view for filter.
      */
-    if(this.bounds){
-      await this.gotoBounds(this.bounds);
+    if(this.filters.bounds){
+      await this.gotoBounds(this.filters.bounds);
     }else{
       await this.loadInitialView();
     }
@@ -132,7 +133,7 @@ export default class Map{
     this.onLoad && this.onLoad();
 
     //load tile
-    if(this.treeid){
+    if(this.filters.treeid){
       log.info("treeid mode do not need tile server");
     }else{
       await this.loadTileServer();
@@ -146,8 +147,8 @@ export default class Map{
 
     await this.loadDebugLayer();
 
-    if(this.treeid){
-      await this.loadTree(this.treeid);
+    if(this.filters.treeid){
+      await this.loadTree(this.filters.treeid);
     }
 
   }
@@ -171,7 +172,7 @@ export default class Map{
   async gotoBounds(bounds){
     const [southWestLng, southWestLat, northEastLng, northEastLat] = 
       bounds.split(",");
-    log.warn("go to bounds:", this.bounds);
+    log.warn("go to bounds:", bounds);
     if(this.moreEffect){
       this.map.flyToBounds([
         [southWestLat, southWestLng],
@@ -392,7 +393,7 @@ export default class Map{
 
   async loadInitialView(){
     let view;
-    if(this.userid || this.wallet){
+    if(this.filters.userid || this.filters.wallet){
       log.warn("try to get initial bounds");
       const response = await this.requester.request({
         url: `${this.apiServerUrl}trees?clusterRadius=${Map.getClusterRadius(10)}&zoom_level=10&${this.getFilterParameters()}`,
@@ -415,9 +416,9 @@ export default class Map{
         this.width,
         this.height,
       );
-    }else if(this.treeid){
+    }else if(this.filters.treeid){
       const res = await this.requester.request({
-        url: `${this.apiServerUrl}tree?tree_id=${this.treeid}`,
+        url: `${this.apiServerUrl}tree?tree_id=${this.filters.treeid}`,
       });
       const {lat, lon} = res;
       view = {
@@ -450,17 +451,17 @@ export default class Map{
 
   getFilters(){
     const filters = {};
-    if(this.userid){
-      filters.userid = this.userid;
+    if(this.filters.userid){
+      filters.userid = this.filters.userid;
     }
-    if(this.wallet){
-      filters.wallet = this.wallet;
+    if(this.filters.wallet){
+      filters.wallet = this.filters.wallet;
     }
-    if(this.treeid){
-      filters.treeid = this.treeid;
+    if(this.filters.treeid){
+      filters.treeid = this.filters.treeid;
     }
-    if(this.timeline){
-      filters.timeline = this.timeline;
+    if(this.filters.timeline){
+      filters.timeline = this.filters.timeline;
     }
     return filters;
   }
@@ -582,10 +583,8 @@ export default class Map{
   /*
    * reset the config of map instance
    */
-  config(options){
-    Object.keys(options).forEach(key => {
-      this[key] = options[key];
-    });
+  setFilter(filters){
+    this.filters = filters;
   }
 
 }
