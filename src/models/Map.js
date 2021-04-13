@@ -239,9 +239,59 @@ export default class Map{
     });
 
     this.layerUtfGrid.on("load", (e) => {
-      log.info("grid loaded");
+      log.info("all grid loaded");
     });
+
+    this.layerUtfGrid.on("tileunload", (e) => {
+      log.warn("tile unload:", e);
+      e.tile.cancelRequest();
+    });
+
+    this.layerUtfGrid.on("tileloadstart", (e) => {
+      //log.warn("tile tileloadstart:", e);
+    });
+
+    this.layerUtfGrid.on("tileload", (e) => {
+      //log.warn("tile load:", e);
+    });
+
     this.layerUtfGrid.addTo(this.map);
+
+    //try
+    // Select the node that will be observed for mutations
+    // Options for the observer (which mutations to observe)
+    const config = { 
+      attributes: false, 
+      childList: true, 
+      subtree: true,
+    };
+
+    // Callback function to execute when mutations are observed
+    const callback = function(mutationsList, observer) {
+      console.log("mutationList:", mutationsList.length);
+      // Use traditional 'for loops' for IE 11
+      for(const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          console.log("mutation:", mutation);
+          console.log('A child node has been added or removed.');
+          for(const removedNode of mutation.removedNodes){
+            console.log("cancel request");
+            removedNode.cancelRequest && removedNode.cancelRequest();
+          }
+        }
+        else if (mutation.type === 'attributes') {
+          console.log('The ' + mutation.attributeName + ' attribute was modified.');
+        }
+      }
+    };
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(
+      this.layerUtfGrid._container,
+      config);
 
   }
 

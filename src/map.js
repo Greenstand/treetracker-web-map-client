@@ -9,7 +9,7 @@ import log from "loglevel";
 import {mapConfig} from "./mapConfig";
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import "leaflet-utfgrid/L.UTFGrid-min.js";
+//import "leaflet-utfgrid/L.UTFGrid-min.js";
 import 'leaflet.gridlayer.googlemutant';
 
 const CancelToken = axios.CancelToken;
