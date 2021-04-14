@@ -15,6 +15,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import getLogo from "./models/logo";
 import log from "loglevel";
 import Timeline from "./components/Timeline";
+import {parseMapName} from "./utils";
 
 
 const MOBILE_WIDTH = 960;
@@ -478,7 +479,8 @@ function App() {
   React.useEffect(() => {
     log.debug("init timeline");
     //if there are any other filter, like wallet, then close the timeline
-    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|map_name=)/)){
+    // or if the SubDomain is freetown.treetracker also hide timeline 
+    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|map_name=)/) || parseMapName(window.location.hostname)==='freetown'){
       setTimelineEnabled(false);
       return;
     }
