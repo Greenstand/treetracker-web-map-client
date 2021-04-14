@@ -155,12 +155,14 @@ export default class Map{
 
   async loadGoogleSatellite(){
     log.warn("load google satellite map");
-    this.layerGoogle = this.L.gridLayer.googleMutant({
-      maxZoom: this.maxZoom,
-      type: 'satellite'
-    });
+    this.layerGoogle = this.L.tileLayer(
+      'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+        maxZoom: this.maxZoom,
+        //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+        //'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        subdomains:['mt0','mt1','mt2','mt3']
+      });
     this.layerGoogle.addTo(this.map);
-    //wait loaded
     await new Promise((res, _rej) => {
       this.layerGoogle.once("load", async () => {
         log.warn("google layer loaded");
