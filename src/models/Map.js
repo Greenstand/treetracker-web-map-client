@@ -415,12 +415,13 @@ export default class Map{
 
   async loadInitialView(){
     let view;
-    if(this.filters.userid || this.filters.wallet){
-      log.warn("try to get initial bounds");
+    const calculateInitialView = async () => {
+      const url = `${this.apiServerUrl}trees?clusterRadius=${Map.getClusterRadius(10)}&zoom_level=10&${this.getFilterParameters()}`;
+      log.info("calculate initial view with url:", url);
       const response = await this.requester.request({
-        url: `${this.apiServerUrl}trees?clusterRadius=${Map.getClusterRadius(10)}&zoom_level=10&${this.getFilterParameters()}`,
+        url,
       });
-      view = getInitialBounds(
+      const view = getInitialBounds(
         response.data.map(i => {
           if(i.type === "cluster"){
             const c = JSON.parse(i.centroid);
@@ -438,6 +439,11 @@ export default class Map{
         this.width,
         this.height,
       );
+      return view;
+    }
+    if(this.filters.userid || this.filters.wallet){
+      log.warn("try to get initial bounds");
+      view = await calculateInitialView();
     }else if(this.filters.treeid){
       const res = await this.requester.request({
         url: `${this.apiServerUrl}tree?tree_id=${this.filters.treeid}`,
@@ -462,6 +468,8 @@ export default class Map{
           },
           zoomLevel: zoom,
         }
+      }else{
+        view = await calculateInitialView();
       }
     }
 
