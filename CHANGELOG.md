@@ -1,3 +1,10 @@
+## [1.6.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.5...v1.6.6) (2021-04-14)
+
+
+### Bug Fixes
+
+* restore city namp on the map ([9f03928](https://github.com/Greenstand/treetracker-web-map-client/commit/9f039289d2a0855fde6d4d40e09249ac3a6de0da))
+
 # [1.1.0](https://github.com/adriana-carmo/treetracker-web-map-client/compare/v1.0.1...v1.1.0) (2021-04-14)
 
 
