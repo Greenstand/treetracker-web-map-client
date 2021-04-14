@@ -5,6 +5,7 @@ import  log from "loglevel";
 import expect from "expect-runtime";
 import Requester from "./Requester";
 import {getInitialBounds} from "../mapTools";
+import {mapConfig} from "../mapConfig";
 
 export default class Map{
 
@@ -449,6 +450,19 @@ export default class Map{
         },
         zoomLevel: 16,
       }
+    }else if(this.filters.map_name){
+      log.info("to init org map");
+      if(mapConfig[this.filters.map_name]){
+        const {zoom, center} = mapConfig[this.filters.map_name];
+        log.info("there is setting for map init view:", zoom, center);
+        view = {
+          center: {
+            lat: center.lat,
+            lon: center.lng,
+          },
+          zoomLevel: zoom,
+        }
+      }
     }
 
     //jump to initial view
@@ -483,6 +497,9 @@ export default class Map{
     }
     if(this.filters.timeline){
       filters.timeline = this.filters.timeline;
+    }
+    if(this.filters.map_name){
+      filters.map_name = this.filters.map_name;
     }
     return filters;
   }
