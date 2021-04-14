@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "1.4.0",
+  "version": "1.6.5",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -12,6 +12,7 @@
     "expect-runtime": "^0.4.0",
     "leaflet": "^1.7.1",
     "leaflet-utfgrid": "^0.3.0",
+    "leaflet.gridlayer.googlemutant": "^0.12.1",
     "loglevel": "^1.7.0",
     "moment": "^2.29.1",
     "react": "^16.13.1",
@@ -45,7 +46,10 @@
     "@cypress/webpack-preprocessor": "^5.4.3",
     "axios": "^0.21.1",
     "cypress": "^6.2.1",
-    "cypress-react-unit-test": "^4.16.9"
+    "cypress-react-unit-test": "^4.16.9",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "husky": "^4.0.0"
   },
   "proxy": "http://127.0.0.1:3001"
 }

@@ -1,3 +1,67 @@
+## [1.6.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.4...v1.6.5) (2021-04-03)
+
+
+### Bug Fixes
+
+* wrong selected icon position ([32cf20e](https://github.com/Greenstand/treetracker-web-map-client/commit/32cf20e697ceec2057bdd449b726d92891966a06))
+
+## [1.6.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.3...v1.6.4) (2021-04-02)
+
+
+### Bug Fixes
+
+* extra slash ([6cdc0d0](https://github.com/Greenstand/treetracker-web-map-client/commit/6cdc0d0a016af6a37f38421db156298a5e26fbd7))
+
+## [1.6.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.2...v1.6.3) (2021-04-02)
+
+
+### Bug Fixes
+
+* missed slash ([1e8d6a4](https://github.com/Greenstand/treetracker-web-map-client/commit/1e8d6a47bc8cfecc59df39d58d16c509bd11da92))
+
+## [1.6.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.1...v1.6.2) (2021-04-02)
+
+
+### Bug Fixes
+
+* restore https://github.com/Greenstand/treetracker-web-map-api/pull/300/files ([8f8cc8c](https://github.com/Greenstand/treetracker-web-map-client/commit/8f8cc8c56f4f084f1fe48b88a0800d0b51628287))
+* restore https://github.com/Greenstand/treetracker-web-map-api/pull/304/files ([6c545c8](https://github.com/Greenstand/treetracker-web-map-client/commit/6c545c84bd5b9ebc7fda5f1dace70a420b353c23))
+
+## [1.6.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.0...v1.6.1) (2021-04-01)
+
+
+### Bug Fixes
+
+* remove the map bounds url update for now ([87fda83](https://github.com/Greenstand/treetracker-web-map-client/commit/87fda83281339ee141fa88d39d937dea3a519c0d))
+
+# [1.6.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.5.0...v1.6.0) (2021-04-01)
+
+
+### Features
+
+* fix two point problem ([36b840b](https://github.com/Greenstand/treetracker-web-map-client/commit/36b840b98e886caeebdb81d0ecc5156631aeee2b))
+
+# [1.5.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.2...v1.5.0) (2021-04-01)
+
+
+### Features
+
+* freetown map use special tile ([e25976c](https://github.com/Greenstand/treetracker-web-map-client/commit/e25976c0c0e36e2015538d0cbaafcf06d13d33e1))
+
+## [1.4.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.1...v1.4.2) (2021-04-01)
+
+
+### Bug Fixes
+
+* incorrectly displaying icons in some zoomlevel ([377b697](https://github.com/Greenstand/treetracker-web-map-client/commit/377b697efc3d3439f7631c79b83289bf1856fef6))
+
+## [1.4.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.4.0...v1.4.1) (2021-03-31)
+
+
+### Bug Fixes
+
+* do not load tile server ([863aba6](https://github.com/Greenstand/treetracker-web-map-client/commit/863aba668370b7174e1506667a63cb92592b4807))
+
 # [1.4.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.3.0...v1.4.0) (2021-03-25)
 
 

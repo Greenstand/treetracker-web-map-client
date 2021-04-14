@@ -1,4 +1,4 @@
-name: Frontend Prod CI/CD Pipeline
+name: Deploy to Prod Env
 
 on:
   workflow_dispatch:
@@ -19,6 +19,8 @@ jobs:
       !contains(github.event.head_commit.message, 'skip-ci')
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.inputs.git-tag }}
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
@@ -31,7 +33,7 @@ jobs:
     #   working-directory: ${{ env.project-directory }}
     # define the endpoints for PROD in github secrets
     - name: build frontend project
-      run: ${{ secrets.PROD_APP_ENDPOINTS }} npm run build
+      run: ${{ secrets.PROD_APP_ENDPOINTS }} CI= npm run build
       working-directory: ${{ env.project-directory }}
     - uses: actions/upload-artifact@v2
       with:

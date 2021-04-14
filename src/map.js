@@ -10,6 +10,7 @@ import {mapConfig} from "./mapConfig";
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import "leaflet-utfgrid/L.UTFGrid-min.js";
+import 'leaflet.gridlayer.googlemutant';
 
 const CancelToken = axios.CancelToken;
 let source;
@@ -577,7 +578,7 @@ function changeTreeMarkSelected() {
             <div></div>
             </div>
           `,
-          iconSize: [32, 32],
+          //iconSize: [32, 32],
         }),
     }
   );
@@ -644,7 +645,7 @@ function getHandleVariable(name, url) {
   let results = regex.exec(url);
   log.log(results);
   if (!results) return null;
-  if (!results[1]) return "";
+  if (!results[1] || getValidInitialPostion() !== null) return "";
   return results[1];
 }
 
@@ -855,11 +856,10 @@ var initialize = function() {
   //  }
   //  releaseTile(tile) {}
   //}
-
-
+  var mapInitialPosition = getValidInitialPostion() || [20, 0, initialZoom];
   var mapOptions = {
-    zoom: initialZoom,
-    center: window.L.latLng( 20, 0 ),
+    zoom: +mapInitialPosition[2],
+    center: window.L.latLng( +mapInitialPosition[0], +mapInitialPosition[1]),
     minZoom: minZoom,
     //    mapTypeId: "hybrid",
     //    mapTypeControl: false,
@@ -882,6 +882,11 @@ var initialize = function() {
   }).addTo(map);
 
   //google satillite map
+  window.L.gridLayer.googleMutant({
+    maxZoom: 20,
+    type: 'satellite'
+  }).addTo(map);
+  /*
   const googleSat = window.L.tileLayer(
     'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
       maxZoom: 20,
@@ -890,9 +895,67 @@ var initialize = function() {
       subdomains:['mt0','mt1','mt2','mt3']
     });
   googleSat.addTo(map);
+  */
+
+    window.L.TileLayer.FreeTown = window.L.TileLayer.extend({
+    getTileUrl: function(coords) {
+      const y = Math.pow(2, coords.z) - coords.y - 1;
+      const url = `https://treetracker-map-tiles.nyc3.cdn.digitaloceanspaces.com/freetown/${coords.z}/${coords.x}/${y}.png`;
+      if (coords.z == 10 && coords.x == 474 && y < 537 && y > 534) {
+        return url;
+      } else if (coords.z == 11 && coords.x > 947 && coords.x < 950 && y > 1070 && y < 1073) {
+        return url;
+      } else if (coords.z == 12 && coords.x > 1895 && coords.x < 1899 && y > 2142 && y < 2146) {
+        return url;
+      } else if (coords.z == 13 && coords.x > 3792 && coords.x < 3798 && y > 4286 && y < 4291) {
+        return url;
+      } else if (coords.z == 14 && coords.x > 7585 && coords.x < 7595 && y > 8574 && y < 8581) {
+        return url;
+      } else if (coords.z == 15 && coords.x > 15172 && coords.x < 15190 && y > 17149 && y < 17161) {
+        return url;
+      } else if (coords.z == 16 && coords.x > 30345 && coords.x < 30379 && y > 34300 && y < 34322) {
+        return url;
+      } else if (coords.z == 17 && coords.x > 60692 && coords.x < 60758 && y > 68602 && y < 68643) {
+        return url;
+      } else if (coords.z == 18 && coords.x > 121385 && coords.x < 121516 && y > 137206 && y < 137286) {
+        return url;
+      }
+      return '/';
+    }
+  });
+
+  window.L.tileLayer.freeTown = function() {
+      return new window.L.TileLayer.FreeTown();
+  }
+
+  window.L.tileLayer.freeTown('', {
+    maxZoom: 20,
+    tileSize: window.L.point(256, 256)
+  }).addTo(map);
+
+  axios.get('https://treetracker-map-features.fra1.digitaloceanspaces.com/freetown_catchments.geojson')
+    .then(response => {
+      expect(response)
+        .property("data")
+        .property("features")
+        .a(expect.any(Array));
+      const data = response.data.features;
+      const style = {
+        color: 'green',
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0
+      };
+      window.L.geoJSON(
+        data, {
+          style: style
+        }
+      ).addTo(map);
+    });
 
   //if isn't cases like wallet, org, then use tile
-  if(!token && (mapName === undefined || mapName === "freetown") && !treeid && !userid && !wallet){
+  if(!token && (mapName === undefined || mapName === null || mapName === "freetown") && !treeid && !userid && !wallet){
+    const isFreetown = mapName === "freetown";
     log.info("use tile server");
     isUsingTile = true;
     var baseURL_def = process.env.REACT_APP_TILE_SERVER_URL;
@@ -900,16 +963,16 @@ var initialize = function() {
       throw new Error("Tile server url isn't set");
     }
     new window.L.tileLayer(
-      baseURL_def + '{z}/{x}/{y}.png',
+      baseURL_def + `${isFreetown?"freetown/":""}{z}/{x}/{y}.png`,
       {
         minZoom: 16,
         maxZoom: 20,
       }
     ).addTo(map);
     utfGridLayer = new window.L.utfGrid(
-      baseURL_def + '{z}/{x}/{y}.grid.json',
+      baseURL_def + `${isFreetown?"freetown/":""}{z}/{x}/{y}.grid.json`,
       {
-        minZoom: 15,
+        minZoom: 16,
         maxZoom: 20,
       }
     );
@@ -1123,6 +1186,9 @@ var initialize = function() {
   //    }
   //  });
 
+  // Update URL with bounding box
+  map.on('moveend', onMapMove);
+
 
   map.on("moveend load", function() {
     log.log('IDLE');
@@ -1173,7 +1239,19 @@ var initialize = function() {
             app.showMessage(`Could not find any trees associated with userid ${userid}`);
             return;
           }
-          if (data.length === 0) {
+          /* if variable has word Token and does not return data, 
+          redirect to wallet with the same content*/
+          if(treeQueryParameters.indexOf("token") >=0 && data.length === 0){
+            
+            var queryUrl = window.location.href.replace("token","wallet");
+         
+            log.log(queryUrl);
+            
+            //redirects the page with wallet in the query instead of token
+            window.location.href = queryUrl;
+          }
+          /* if it is not token and does not return data, show the message */
+          else if (data.length === 0) {
             //            showAlert();
             app.loaded();
             app.showMessage(`Could not find any data `);
@@ -1250,6 +1328,25 @@ var initialize = function() {
 
 //window.google.maps.event.addDomListener(window, "load", initialize);
 initialize();
+
+function getValidInitialPostion() {
+  if (!window.location.pathname.endsWith('z') || !window.location.pathname.startsWith('/@')) {
+    return null;
+  }
+  const arr = window.location.pathname.substring(2, window.location.pathname.length - 1).split(',');
+  if (arr.length !== 3 || arr.some(item => isNaN(item))) {
+    return null;
+  }
+  return arr;
+}
+
+function onMapMove() {
+  const z = map._zoom;
+  const bounds = map.getBounds();
+  const {lat, lng} = bounds.getCenter();
+  //TODO: this cannot replace the query string
+  //window.history.replaceState(null, '', `@${lat},${lng},${z}z`);
+}
 
 function getNextPoint(point) {
   expect(point).property("id").number();
