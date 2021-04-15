@@ -410,13 +410,25 @@ function App() {
     });
   }
 
-  function handleArrowClick(){
+  function handleFindNearestAt(placement){
+    log.info("handle find nearest:", placement);
+    expect(placement).oneOf(["north", "south", "west", "east", "in"]);
+    if(placement === "in"){
+      hideArrow();
+    }else{
+      showArrow(placement);
+    }
+  }
+
+  async function handleArrowClick(){
     const {map} = mapRef.current;
-    expect(map).defined()
-      .property("getMapModel")
-      .defined();
-    const {getMapModel} = map;
-    getMapModel().gotoNearest();
+    hideArrow();
+    const nearest = await map.getNearest();
+    if(nearest){
+      map.goto(nearest);
+    }else{
+      log.warn("can not find nearest:", nearest);
+    }
   }
 
   function injectApp(){
@@ -464,6 +476,7 @@ function App() {
     const map = new Map({
       onLoad: loaded,
       onClickTree: showPanel,
+      onFindNearestAt: handleFindNearestAt,
       filters: parameters,
     });
     map.mount(mapRef.current);

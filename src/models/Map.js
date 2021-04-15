@@ -34,6 +34,8 @@ export default class Map{
 
     //requester
     this.requester = new Requester();
+    //request nearest trees
+    this.requesterNearest = new Requester();
   }
 
   /***************************** static ****************************/
@@ -147,7 +149,6 @@ export default class Map{
       this.updateUrl();
     });
 
-    await this.loadDebugLayer();
 
     if(this.filters.treeid){
       await this.loadTree(this.filters.treeid);
@@ -156,6 +157,7 @@ export default class Map{
     //load freetown special map
     await this.loadFreetownLayer();
 
+    await this.loadDebugLayer();
   }
 
   async loadGoogleSatellite(){
@@ -247,6 +249,7 @@ export default class Map{
 
     this.layerUtfGrid.on("load", (e) => {
       log.info("all grid loaded");
+      this.checkArrow();
     });
 
     this.layerUtfGrid.on("tileunload", (e) => {
@@ -263,6 +266,43 @@ export default class Map{
     });
 
     this.layerUtfGrid.addTo(this.map);
+
+    //bind the finding marker function
+    this.layerUtfGrid.hasMarkerInCurrentView = () => {
+      //waiting layer is ready
+      let isLoading = this.layerUtfGrid.isLoading();
+      log.warn("utf layer is loading:", isLoading);
+      if(isLoading){
+        log.error("can not handle the grid utf check when loading, cancel!")
+        return false;
+      }
+      const begin = Date.now();
+      let found = false;
+      let count = 0;
+      let countNoChar = 0;
+      const {x,y} = this.map.getSize();
+      me: for(let y1 = 0; y1 < y; y1 += 10){
+        for(let x1 = 0; x1 < x; x1 +=10){
+          count++;
+          const tileChar = this.layerUtfGrid._objectForEvent({latlng:this.map.containerPointToLatLng([x1,y1])})._tileCharCode;
+          if(!tileChar){
+            countNoChar++;
+            //log.warn("can not fond char on!:", x1, y1);
+            continue;
+          }
+          const m = tileChar.match(/\d+:\d+:\d+:(\d+)/);
+          if(!m) throw new Error("Wrong char:" + tileChar);
+          if(m[1] !== "32"){
+            log.log("find:", tileChar, "at:", x1,y1);
+            found = true;
+            break me;
+          }
+        }
+      }
+      log.warn("Take time:%d, count:%d,%d,found:%s", Date.now() - begin, count, countNoChar, found);
+      return found;
+    }
+
 
 
   }
@@ -640,63 +680,177 @@ export default class Map{
   async loadFreetownLayer(){
     log.info("load freetown layer");
     this.L.TileLayer.FreeTown = this.L.TileLayer.extend({
-    getTileUrl: function(coords) {
-      const y = Math.pow(2, coords.z) - coords.y - 1;
-      const url = `https://treetracker-map-tiles.nyc3.cdn.digitaloceanspaces.com/freetown/${coords.z}/${coords.x}/${y}.png`;
-      if (coords.z == 10 && coords.x == 474 && y < 537 && y > 534) {
-        return url;
-      } else if (coords.z == 11 && coords.x > 947 && coords.x < 950 && y > 1070 && y < 1073) {
-        return url;
-      } else if (coords.z == 12 && coords.x > 1895 && coords.x < 1899 && y > 2142 && y < 2146) {
-        return url;
-      } else if (coords.z == 13 && coords.x > 3792 && coords.x < 3798 && y > 4286 && y < 4291) {
-        return url;
-      } else if (coords.z == 14 && coords.x > 7585 && coords.x < 7595 && y > 8574 && y < 8581) {
-        return url;
-      } else if (coords.z == 15 && coords.x > 15172 && coords.x < 15190 && y > 17149 && y < 17161) {
-        return url;
-      } else if (coords.z == 16 && coords.x > 30345 && coords.x < 30379 && y > 34300 && y < 34322) {
-        return url;
-      } else if (coords.z == 17 && coords.x > 60692 && coords.x < 60758 && y > 68602 && y < 68643) {
-        return url;
-      } else if (coords.z == 18 && coords.x > 121385 && coords.x < 121516 && y > 137206 && y < 137286) {
-        return url;
+      getTileUrl: function(coords) {
+        const y = Math.pow(2, coords.z) - coords.y - 1;
+        const url = `https://treetracker-map-tiles.nyc3.cdn.digitaloceanspaces.com/freetown/${coords.z}/${coords.x}/${y}.png`;
+        if (coords.z == 10 && coords.x == 474 && y < 537 && y > 534) {
+          return url;
+        } else if (coords.z == 11 && coords.x > 947 && coords.x < 950 && y > 1070 && y < 1073) {
+          return url;
+        } else if (coords.z == 12 && coords.x > 1895 && coords.x < 1899 && y > 2142 && y < 2146) {
+          return url;
+        } else if (coords.z == 13 && coords.x > 3792 && coords.x < 3798 && y > 4286 && y < 4291) {
+          return url;
+        } else if (coords.z == 14 && coords.x > 7585 && coords.x < 7595 && y > 8574 && y < 8581) {
+          return url;
+        } else if (coords.z == 15 && coords.x > 15172 && coords.x < 15190 && y > 17149 && y < 17161) {
+          return url;
+        } else if (coords.z == 16 && coords.x > 30345 && coords.x < 30379 && y > 34300 && y < 34322) {
+          return url;
+        } else if (coords.z == 17 && coords.x > 60692 && coords.x < 60758 && y > 68602 && y < 68643) {
+          return url;
+        } else if (coords.z == 18 && coords.x > 121385 && coords.x < 121516 && y > 137206 && y < 137286) {
+          return url;
+        }
+        return '/';
       }
-      return '/';
-    }
-  });
+    });
 
-  this.L.tileLayer.freeTown = () => {
+    this.L.tileLayer.freeTown = () => {
       return new this.L.TileLayer.FreeTown();
+    }
+
+    this.L.tileLayer.freeTown(
+      '', 
+      {
+        maxZoom: this.maxZoom,
+        tileSize: this.L.point(256, 256)
+      }
+    ).addTo(this.map);
+
+    axios.get('https://treetracker-map-features.fra1.digitaloceanspaces.com/freetown_catchments.geojson')
+      .then(response => {
+        expect(response)
+          .property("data")
+          .property("features")
+          .a(expect.any(Array));
+        const data = response.data.features;
+        const style = {
+          color: 'green',
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0
+        };
+        this.L.geoJSON(
+          data, {
+            style: style
+          }
+        ).addTo(this.map);
+      });
   }
 
-  this.L.tileLayer.freeTown(
-    '', 
-    {
-      maxZoom: this.maxZoom,
-      tileSize: this.L.point(256, 256)
+  async checkArrow(){
+    log.info("check arrow...");
+    if(this.layerUtfGrid.hasMarkerInCurrentView()){
+      log.info("found marker");
+    }else{
+      log.info("no marker");
+      const nearest = await this.getNearest();
+      const placement = this.calculatePlacement(nearest);
+      this.onFindNearestAt && this.onFindNearestAt(placement);
     }
-  ).addTo(this.map);
+  }
 
-  axios.get('https://treetracker-map-features.fra1.digitaloceanspaces.com/freetown_catchments.geojson')
-    .then(response => {
-      expect(response)
-        .property("data")
-        .property("features")
-        .a(expect.any(Array));
-      const data = response.data.features;
-      const style = {
-        color: 'green',
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0
-      };
-      this.L.geoJSON(
-        data, {
-          style: style
-        }
-      ).addTo(this.map);
+  async getNearest(){
+    const center = this.map.getCenter();
+    log.log("current center:", center);
+    const zoom_level = this.map.getZoom();
+    const res = await this.requester.request({
+      url: `${this.apiServerUrl}nearest?zoom_level=${zoom_level}&lat=${center.lat}&lng=${center.lng}`,
     });
+    let {nearest} = res;
+    nearest = nearest? {
+      lat: nearest.coordinates[1],
+      lng: nearest.coordinates[0],
+    }:
+    undefined;
+    log.log("get nearest:", nearest);
+    return nearest;
+  }
+
+  /*
+   * Given a point, calculate the where is it relative to the map view
+   * return:
+   *  west | east | north | south | in (the point is in the map view)
+   */
+  calculatePlacement(location){
+    const center = this.map.getCenter();
+    log.info("calculate location", location, " to center:", center);
+    //find it
+    //get nearest markers
+    expect(location.lat).number();
+    expect(location.lng).number();
+    let result;
+    if(!this.map.getBounds().contains({
+      lat: location.lat,
+      lng: location.lng,
+    })){
+      log.log("out of bounds, display arrow");
+      const dist = {
+        lat: location.lat,
+        lng: location.lng,
+      };
+      const distanceLat = window.L.CRS.EPSG3857.distance(
+        center,
+        window.L.latLng(
+          dist.lat,
+          center.lng
+        ),
+      );
+      log.log("distanceLat:", distanceLat);
+      expect(distanceLat).number();
+      const distanceLng = window.L.CRS.EPSG3857.distance(
+        center,
+        window.L.latLng(
+          center.lat,
+          dist.lng,
+        ),
+      );
+      log.log("distanceLng:", distanceLng);
+      expect(distanceLng).number();
+      log.log("dist:", dist);
+      log.log("center:", center, center.lat);
+      if(dist.lat > center.lat){
+        log.log("On the north");
+        if(distanceLat > distanceLng){
+          log.log("On the north");
+          result = "north";
+        }else{
+          if(dist.lng > center.lng){
+            log.log("On the east");
+            result = "east";
+          }else{
+            log.log("On the west");
+            result = "west";
+          }
+        }
+      }else{
+        log.log("On the south");
+        if(distanceLat > distanceLng){
+          log.log("On the south");
+          result = "south";
+        }else{
+          if(dist.lng > center.lng){
+            log.log("On the east");
+            result = "east";
+          }else{
+            log.log("On the west");
+            result = "west";
+          }
+        }
+      }
+
+    }else{
+      result = "in";
+    }
+    log.info("placement:", result);
+    expect(result).oneOf(["north", "south", "west", "east", "in"]);
+    return result;
+  }
+
+  goto(location){
+    log.info("goto:", location);
+    this.map.panTo(location);
   }
 
 }
