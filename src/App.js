@@ -392,6 +392,10 @@ function App() {
     });
   }
 
+  function handleError(error){
+    showMessage(error.message);
+  }
+
   function showArrow(direction){
     log.debug("show arrow:", direction);
     expect(direction).oneOf(["north", "south", "west", "east"]);
@@ -477,6 +481,7 @@ function App() {
       onLoad: loaded,
       onClickTree: showPanel,
       onFindNearestAt: handleFindNearestAt,
+      onError: handleError,
       filters: parameters,
     });
     map.mount(mapRef.current);

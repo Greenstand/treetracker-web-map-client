@@ -8,6 +8,9 @@ import {getInitialBounds} from "../mapTools";
 import {mapConfig} from "../mapConfig";
 import axios from "axios";
 
+class MapError extends Error{
+}
+
 export default class Map{
 
   constructor(options){
@@ -127,37 +130,45 @@ export default class Map{
      * to the map by a shared link), then jump the bounds directly, 
      * regardless of the initial view for filter.
      */
-    if(this.filters.bounds){
-      await this.gotoBounds(this.filters.bounds);
-    }else{
-      await this.loadInitialView();
+    try{
+      if(this.filters.bounds){
+        await this.gotoBounds(this.filters.bounds);
+      }else{
+        await this.loadInitialView();
+      }
+
+      //fire load event
+      this.onLoad && this.onLoad();
+
+      //load tile
+      if(this.filters.treeid){
+        log.info("treeid mode do not need tile server");
+      }else{
+        await this.loadTileServer();
+      }
+
+      //mount event
+      this.map.on("moveend", e => {
+        log.warn("move end", e);
+        this.updateUrl();
+      });
+
+
+      if(this.filters.treeid){
+        await this.loadTree(this.filters.treeid);
+      }
+
+      //load freetown special map
+      await this.loadFreetownLayer();
+
+      await this.loadDebugLayer();
+    }catch(e){
+      log.error("get error when load:", e);
+      if(e instanceof MapError){
+        log.error("map error:", e);
+        this.onError && this.onError(e);
+      }
     }
-
-    //fire load event
-    this.onLoad && this.onLoad();
-
-    //load tile
-    if(this.filters.treeid){
-      log.info("treeid mode do not need tile server");
-    }else{
-      await this.loadTileServer();
-    }
-
-    //mount event
-    this.map.on("moveend", e => {
-      log.warn("move end", e);
-      this.updateUrl();
-    });
-
-
-    if(this.filters.treeid){
-      await this.loadTree(this.filters.treeid);
-    }
-
-    //load freetown special map
-    await this.loadFreetownLayer();
-
-    await this.loadDebugLayer();
   }
 
   async loadGoogleSatellite(){
@@ -465,21 +476,26 @@ export default class Map{
       const response = await this.requester.request({
         url,
       });
+      const items = response.data.map(i => {
+        if(i.type === "cluster"){
+          const c = JSON.parse(i.centroid);
+          return {
+            lat: c.coordinates[1],
+            lng: c.coordinates[0],
+          };
+        }else if(i.type === "point"){
+          return {
+            lat: i.lat,
+            lng: i.lon,
+          };
+        }
+      });
+      if(items.length === 0){
+        log.info("Can not find data");
+        throw new MapError("Can not find any data");
+      }
       const view = getInitialBounds(
-        response.data.map(i => {
-          if(i.type === "cluster"){
-            const c = JSON.parse(i.centroid);
-            return {
-              lat: c.coordinates[1],
-              lng: c.coordinates[0],
-            };
-          }else if(i.type === "point"){
-            return {
-              lat: i.lat,
-              lng: i.lon,
-            };
-          }
-        }),
+        items,
         this.width,
         this.height,
       );
