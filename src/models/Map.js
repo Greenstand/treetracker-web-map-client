@@ -26,7 +26,7 @@ export default class Map{
       width: window.innerWidth,
       height: window.innerHeight,
       debug: true,
-      moreEffect: false,
+      moreEffect: true,
       filters: {},
     }, ...options};
 
