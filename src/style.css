@@ -291,3 +291,8 @@ body {
   width: 46px;
   height: 46px;
 }
+
+.debug-icon {
+  background: red;
+  border-radius: 50%;
+}

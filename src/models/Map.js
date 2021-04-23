@@ -225,8 +225,8 @@ export default class Map{
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
         //close to avoid too many requests
-        updateWhenZooming: true,
-        updateWhenIdle: true,
+        updateWhenZooming: false,
+        //updateWhenIdle: true,
       }
     );
     this.layerTile.addTo(this.map);
@@ -238,7 +238,7 @@ export default class Map{
         maxZoom: this.maxZoom,
         //close to avoid too many requests
         updateWhenZooming: false,
-        updateWhenIdle: false,
+        //updateWhenIdle: false,
       }
     );
     this.layerUtfGrid.on('click', (e) => {
@@ -348,6 +348,35 @@ export default class Map{
       return new this.L.GridLayer.GridDebug(opts);
     };
     this.map.addLayer(this.L.gridLayer.gridDebug());
+
+
+    //debug marker
+    const locations = [
+      [0,0],
+//      [66.51326044401628,90.0000000003387],
+//      [85.05112874755162,179.9999996159564],
+//      [47.98992166812654,54.84375000033869],
+//      [85.05112874735956,179.9999996159564],
+//      [-54.84375000033869,85.05112874735956,-179.9999996159564,47.98992166812654],
+//      [-90,85.0511287798066,-180,66.51326044311185],
+      //tile 2,2,1
+        [0,0],
+        [66.51326044311185,90],
+        [-33.13755119215213,-35.15624999906868],
+        [77.15716252285503,125.1562500009313],
+      //tile 2,1,0
+        [47.98992166905786,-125.1562500009314],
+        [85.05112874829089,35.15624999906871],
+      //test
+        [ 77.157162522661, -125.15625],
+        [80.87282721505686, 35.15625],
+    ];
+    const debugIcon = this.L.divIcon({className: 'debug-icon'});
+    locations.forEach(l => {
+      this.L.marker(l,{
+        icon: debugIcon,
+      }).bindTooltip(l.join(",")).addTo(this.map);
+    });
   }
 
   async loadTree(treeid){
