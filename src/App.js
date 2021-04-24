@@ -20,6 +20,7 @@ import 'leaflet/dist/leaflet.css';
 import "Leaflet.UTFGrid/L.UTFGrid.js";
 import 'leaflet.gridlayer.googlemutant';
 import Map from "./models/Map";
+import {parseMapName} from "./utils";
 
 
 const MOBILE_WIDTH = 960;
@@ -532,7 +533,8 @@ function App() {
   React.useEffect(() => {
     log.debug("init timeline");
     //if there are any other filter, like wallet, then close the timeline
-    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|map_name=)/)){
+    // or if the SubDomain is freetown.treetracker also hide timeline 
+    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|map_name=)/) || parseMapName(window.location.hostname)==='freetown'){
       setTimelineEnabled(false);
       return;
     }
