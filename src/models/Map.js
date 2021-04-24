@@ -25,7 +25,7 @@ export default class Map{
       apiServerUrl: process.env.REACT_APP_API,
       width: window.innerWidth,
       height: window.innerHeight,
-      debug: true,
+      debug: false,
       moreEffect: true,
       filters: {},
     }, ...options};
@@ -161,7 +161,9 @@ export default class Map{
       //load freetown special map
       await this.loadFreetownLayer();
 
-      await this.loadDebugLayer();
+      if(this.debug){
+        await this.loadDebugLayer();
+      }
     }catch(e){
       log.error("get error when load:", e);
       if(e instanceof MapError){
