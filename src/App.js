@@ -15,6 +15,11 @@ import Snackbar from "@material-ui/core/Snackbar";
 import getLogo from "./models/logo";
 import log from "loglevel";
 import Timeline from "./components/Timeline";
+import 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import "Leaflet.UTFGrid/L.UTFGrid.js";
+import 'leaflet.gridlayer.googlemutant';
+import Map from "./models/Map";
 import {parseMapName} from "./utils";
 
 
@@ -240,6 +245,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function getParameters(){
+  const parameters = window.location.search && 
+    window.location.search.slice(1).split("&").reduce((a,c) => {const [key, value] = c.split("="); a[key] = value; return a  }, {}) ||
+    {};
+  log.info("getParameters:", parameters);
+  return parameters;
+}
+
 function App() {
   log.warn("Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   const classes = useStyles();
@@ -258,25 +271,17 @@ function App() {
   const [timelineEnabled, setTimelineEnabled] = React.useState(true);
 
   function showPanel(tree){
+    expect(tree).match({
+      lat: expect.any(Number),
+      lon: expect.any(Number),
+    });
     log.log("show panel...");
     setSidePanelState("show");
     setTree(tree);
     //consider the visible of the point
     const {map} = mapRef.current;
-    const mapLeaflet = map.getMap();
-    let left,top;
-    if(map.checkUsingTile()){
-      const point = map.getPoints()[map.getCurrentIndex()];
-      log.warn("current point:", point);
-      const {x, y} = mapLeaflet.latLngToContainerPoint([point.lat, point.lon]);
-      left = x;
-      top = y;
-    }else{
-      const marker = map.getMarkerByPointId()[tree.id]
-      const {x, y} = mapLeaflet.latLngToContainerPoint(marker.getLatLng());
-      left = x;
-      top =y;
-    }
+    const leafletMap = map.getLeafletMap();
+    const {x: left , y: top} = leafletMap.latLngToContainerPoint([tree.lat, tree.lon]);
     log.log("top:", top, "left:", left);
     expect(top).number();
     expect(left).number();
@@ -316,13 +321,13 @@ function App() {
         const x = left - leftCenter;
         const y = top - topCenter;
         log.log("pant by x,y:", x, y);
-        map.getMap().panBy(window.L.point(x,y));
+        leafletMap.panBy([x,y]);
       }
     }else{
       log.info("there is no marker");
     }
-    setHasNext(map.hasNextPoint());
-    setHasPrev(map.hasPrevPoint());
+    setHasNext(true);
+    setHasPrev(true);
   }
 
   function showPanelWithoutTree(){
@@ -360,10 +365,12 @@ function App() {
   function handleSidePanelClose(){
     log.debug("handleSidePanelClose");
     setSidePanelState("none");
+    const {map} = mapRef.current;
+    map.unselectMarker();
   }
 
   function loaded(){
-    log.debug("loaded");
+    log.warn("loaded");
     setLoading(false);
   }
 
@@ -386,6 +393,10 @@ function App() {
     });
   }
 
+  function handleError(error){
+    showMessage(error.message);
+  }
+
   function showArrow(direction){
     log.debug("show arrow:", direction);
     expect(direction).oneOf(["north", "south", "west", "east"]);
@@ -404,13 +415,25 @@ function App() {
     });
   }
 
-  function handleArrowClick(){
+  function handleFindNearestAt(placement){
+    log.info("handle find nearest:", placement);
+    expect(placement).oneOf(["north", "south", "west", "east", "in"]);
+    if(placement === "in"){
+      hideArrow();
+    }else{
+      showArrow(placement);
+    }
+  }
+
+  async function handleArrowClick(){
     const {map} = mapRef.current;
-    expect(map).defined()
-      .property("getMapModel")
-      .defined();
-    const {getMapModel} = map;
-    getMapModel().gotoNearest();
+    hideArrow();
+    const nearest = await map.getNearest();
+    if(nearest){
+      map.goto(nearest);
+    }else{
+      log.warn("can not find nearest:", nearest);
+    }
   }
 
   function injectApp(){
@@ -430,19 +453,40 @@ function App() {
   injectApp();
 
 
+//  React.useEffect(() => {
+//    log.debug("useEffect 1");
+//    const script = document.createElement('script');
+//    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
+//    script.id = 'googleMaps';
+//    document.body.appendChild(script);
+//    //map.initialize();
+//    injectApp();
+//    const map = load();
+//    mapRef.current.map = map;
+//    expect(mapRef)
+//      .property("current").defined();
+//    expect(map).property("rerender").defined();
+//  }, []);
+
+  //load map
   React.useEffect(() => {
-    log.debug("useEffect 1");
+    log.info("load map...");
+    //disalbe waiting for loading
+    loaded();
     const script = document.createElement('script');
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
     script.id = 'googleMaps';
     document.body.appendChild(script);
-    //map.initialize();
-    injectApp();
-    const map = load();
+    const parameters = getParameters();
+    const map = new Map({
+      onLoad: loaded,
+      onClickTree: showPanel,
+      onFindNearestAt: handleFindNearestAt,
+      onError: handleError,
+      filters: parameters,
+    });
+    map.mount(mapRef.current);
     mapRef.current.map = map;
-    expect(mapRef)
-      .property("current").defined();
-    expect(map).property("rerender").defined();
   }, []);
 
   /*
@@ -465,6 +509,11 @@ function App() {
     log.warn("date changed:", date);
     window.history.pushState('page2', '', `/?timeline=${date.join("_")}`);
     const {map} = mapRef.current;
+    //refresh the url parameter
+    const parameters = getParameters();
+    map.setFilters({
+      ...parameters,
+    });
     map.rerender();
   }
 
@@ -472,6 +521,11 @@ function App() {
     setTimelineDate(undefined);
     window.history.pushState('page2', '', `/`);
     const {map} = mapRef.current;
+    //refresh the url parameter
+    const parameters = getParameters();
+    map.setFilters({
+      ...parameters,
+    });
     map.rerender();
   }
 
@@ -504,7 +558,7 @@ function App() {
         hasNext={hasNext}
         hasPrev={hasPrev}
       />
-      <div className={`${classes.mapContainer} ${isLoading?"":classes.mapLoaded}`} id="map-canvas" ref={mapRef}/>
+      <div onClick={e => console.warn("click:",e, e.screenX, e.clientX, e.clientY)} className={`${classes.mapContainer} ${isLoading?"":classes.mapLoaded}`} id="map-canvas" ref={mapRef}/>
       <Fade in={isLoading} timeout={{apear:0,exit: 1000}}>
         <Grid container className={classes.loadingContainer} >
           <Grid item>

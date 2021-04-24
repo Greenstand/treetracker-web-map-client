@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "type": "cluster",
+      "id": 2111723,
+      "centroid": "{\"type\":\"Point\",\"coordinates\":[-60.0235919726489,-3.15687595340239]}",
+      "region_type": 3,
+      "count": "2"
+    },
+    {
+      "type": "cluster",
+      "id": 2252597,
+      "centroid": "{\"type\":\"Point\",\"coordinates\":[-0.022495885777767,0.008385137471871]}",
+      "region_type": 3,
+      "count": "101"
+    },
+    {
+      "type": "cluster",
+      "id": 3770895,
+      "centroid": "{\"type\":\"Point\",\"coordinates\":[-105.253964948373,36.679351849817]}",
+      "region_type": 3,
+      "count": "15"
+    },
+    {
+      "type": "cluster",
+      "id": 3796396,
+      "centroid": "{\"type\":\"Point\",\"coordinates\":[-122.040272401775,37.4002128960657]}",
+      "region_type": 3,
+      "count": "1654"
+    },
+    {
+      "type": "cluster",
+      "id": 3796397,
+      "centroid": "{\"type\":\"Point\",\"coordinates\":[-121.927400488244,37.4002128960657]}",
+      "region_type": 3,
+      "count": "1408"
+    },
+    {
+      "type": "cluster",
+      "id": 3815778,
+      "centroid": "{\"type\":\"Point\",\"coordinates\":[-87.5113012463898,37.9408009048017]}",
+      "region_type": 3,
+      "count": "1"
+    },
+    {
+      "type": "cluster",
+      "id": 3912204,
+      "centroid": "{\"type\":\"Point\",\"coordinates\":[-73.9438611252675,40.7330411931952]}",
+      "region_type": 3,
+      "count": "3"
+    }
+  ]
+}
