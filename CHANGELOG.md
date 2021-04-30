@@ -1,3 +1,39 @@
+# [1.7.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.6...v1.7.0) (2021-04-30)
+
+
+### Bug Fixes
+
+* restore village name ([546b5e0](https://github.com/Greenstand/treetracker-web-map-client/commit/546b5e01fb55b6a5a4c48fbae6ab04401a3f9dd2))
+
+
+### Features
+
+* add fixture for cy ([09beae1](https://github.com/Greenstand/treetracker-web-map-client/commit/09beae1c78383b82a2f85150348ccb4c195c2039))
+* add freetown special layer ([e95f49f](https://github.com/Greenstand/treetracker-web-map-client/commit/e95f49fcb0bd18f6767a1ced88dc1237c05ba20e))
+* can calculate org map initial view ([3c35918](https://github.com/Greenstand/treetracker-web-map-client/commit/3c35918fea90d66acefb25d44aa8adc4510b6356))
+* can click and show tree panel ([89b09c4](https://github.com/Greenstand/treetracker-web-map-client/commit/89b09c49d45cb51271330cd28cec5aa85ce07250))
+* can click cluster and zoom in ([7a54536](https://github.com/Greenstand/treetracker-web-map-client/commit/7a54536eb34e99212e1ed68074b9a061e76b675e))
+* can click cluster to zoom in ([5d35578](https://github.com/Greenstand/treetracker-web-map-client/commit/5d355780af697bbc8e669bb36bcda9a24788ff53))
+* can click next/prev ([83fe63f](https://github.com/Greenstand/treetracker-web-map-client/commit/83fe63ff3657f4ec3953e543aae466ac595f4aee))
+* can dispay error message ([c6c49d9](https://github.com/Greenstand/treetracker-web-map-client/commit/c6c49d926c5b64083c2a0b72908277adc0401aa2))
+* can display cluster highlight ([e34eb79](https://github.com/Greenstand/treetracker-web-map-client/commit/e34eb7967d05c8d89c4ae7015e38213e3d0415b9))
+* can display first cluster tile ([8e751f6](https://github.com/Greenstand/treetracker-web-map-client/commit/8e751f6112d502057adc4e0e22ac67b503ebc1fc))
+* can display free highlight ([a22c6b1](https://github.com/Greenstand/treetracker-web-map-client/commit/a22c6b1bd2a3636e230f5f05fbaa25022ed8d07f))
+* can display single tree ([a8b37f0](https://github.com/Greenstand/treetracker-web-map-client/commit/a8b37f0e213093c7887692d00c57eb4740d504d3))
+* can highlight cluster ([3f5f055](https://github.com/Greenstand/treetracker-web-map-client/commit/3f5f0551c654484e39200e7797d894683fdd8ed9))
+* can load bounds from url ([322f40e](https://github.com/Greenstand/treetracker-web-map-client/commit/322f40ef9605898790ba3afecb196f562cf2bff2))
+* can load cluster ([120b6d7](https://github.com/Greenstand/treetracker-web-map-client/commit/120b6d77d560d90a4899a918be4785aee4b75720))
+* can load map(google) ([f9a6780](https://github.com/Greenstand/treetracker-web-map-client/commit/f9a6780a8d34f4790e1cc62e83addd0f27a10520))
+* can select the tree marker ([b9eeaaa](https://github.com/Greenstand/treetracker-web-map-client/commit/b9eeaaa8cb7e31befe4dfdd021cf5b3ff5596e47))
+* can show nearest arrow, and click ([eb1e4ab](https://github.com/Greenstand/treetracker-web-map-client/commit/eb1e4abb6efbc3b34376dc519d30e431f3ac349e))
+* can use zoome_target ([15b85af](https://github.com/Greenstand/treetracker-web-map-client/commit/15b85af6ac789f805a2375d2fe14096f8b9112cf))
+* can zoom in by click cluster ([ee1fb2c](https://github.com/Greenstand/treetracker-web-map-client/commit/ee1fb2ca3c063e5b673feaecfe5937cbce6539d4))
+* can zoom in cluster ([bb62de6](https://github.com/Greenstand/treetracker-web-map-client/commit/bb62de68a2e8dc7de8c6fd2ae779ca9cd2bfc10f))
+* control ([5f4979e](https://github.com/Greenstand/treetracker-web-map-client/commit/5f4979ed31f58860e1b763637e1b16a6ced7b1ae))
+* display two kind of cluster icon ([6b4a911](https://github.com/Greenstand/treetracker-web-map-client/commit/6b4a911288f2b669da6029520b4fa39b54625f95))
+* moreEffect config ([0115899](https://github.com/Greenstand/treetracker-web-map-client/commit/01158997b1d356297a7f82923b8be7218641cadf))
+* tile debugger ([e879d4f](https://github.com/Greenstand/treetracker-web-map-client/commit/e879d4ffb586efdd9f5d361af31d0f4a188fedf1))
+
 ## [1.6.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.5...v1.6.6) (2021-04-14)
 
 
