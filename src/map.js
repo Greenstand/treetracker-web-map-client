@@ -9,7 +9,7 @@ import log from "loglevel";
 import {mapConfig} from "./mapConfig";
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import "leaflet-utfgrid/L.UTFGrid-min.js";
+//import "leaflet-utfgrid/L.UTFGrid-min.js";
 import 'leaflet.gridlayer.googlemutant';
 
 const CancelToken = axios.CancelToken;
@@ -208,6 +208,15 @@ var initMarkers = function(viewportBounds, zoomLevel) {
   //disable loading icon anyway
   getApp().loadingB(false);
 
+
+  //disable to use tile totally
+  if(true){
+    log.warn("quit, use tile server instead, totally");
+    clearOverlays(markers);
+    getApp().loadingB(false);
+    getApp().loaded();
+    return;
+  }
   //for tile server version, if zoom level > 15, and it isn't cases like
   //map_name, wallet, then do not request for points, just let the tile
   //server works.
@@ -963,14 +972,14 @@ var initialize = function() {
     new window.L.tileLayer(
       baseURL_def + `${isFreetown?"freetown/":""}{z}/{x}/{y}.png`,
       {
-        minZoom: 16,
+        minZoom: 2,
         maxZoom: 20,
       }
     ).addTo(map);
     utfGridLayer = new window.L.utfGrid(
       baseURL_def + `${isFreetown?"freetown/":""}{z}/{x}/{y}.grid.json`,
       {
-        minZoom: 16,
+        minZoom: 2,
         maxZoom: 20,
       }
     );
@@ -979,6 +988,17 @@ var initialize = function() {
       console.log("e:", e);
       if (e.data) {
         console.log('click', e.data);
+        const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+        if(e.data.zoom_to){
+          log.info("found zoom to:", e.data.zoom_to);
+          const [lon, lat] = JSON.parse(e.data.zoom_to).coordinates;
+          //NOTE do cluster click
+          map.setView([lat, lon], map.getZoom() + 2);
+        }else{
+          map.setView([lat, lon], map.getZoom() + 2);
+        }
+        //quit, before, the code below is for openning the tree panel
+        return;
   //      map.panTo(e.latlng);
   //      map.setView(e.latlng, map.getZoom() + 2);
   //      points.forEach(function(point, i) {
@@ -1036,7 +1056,7 @@ var initialize = function() {
         
         //set the selected marker
         const markerSelected = new window.L.marker(
-          [e.data.lat, e.data.lon],
+          [lat, lon],
           {
               icon: new window.L.DivIcon({
                 className: "greenstand-point-selected",
@@ -1066,17 +1086,14 @@ var initialize = function() {
     console.warn("utf:", utfGridLayer);
     utfGridLayer.on('mouseover', function (e) {
       console.log("e:", e);
-      expect(e.data).match({
-        lat: expect.any(Number),
-        lon: expect.any(Number),
-      });
+      const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
       markerHighlight = new window.L.marker(
-        [e.data.lat, e.data.lon],
+        [lat, lon],
         {
             icon: new window.L.DivIcon({
-              className: "greenstand-point-highlight",
+              className: "greenstand-cluster-highlight",
               html: `
-                <div class="greenstand-point-highlight-box"  >
+                <div class="greenstand-cluster-highlight-box"  >
                 <div></div>
                 </div>
               `,
@@ -1091,10 +1108,6 @@ var initialize = function() {
     });
     utfGridLayer.on('mouseout', function (e) {
       console.log("e:", e);
-      expect(e.data).match({
-        lat: expect.any(Number),
-        lon: expect.any(Number),
-      });
       map.removeLayer(markerHighlight);
     });
 

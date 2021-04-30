@@ -4,7 +4,55 @@ const scale = 1;
 
 
 
-describe.only("Spin case", () => {
+describe.only("Main", () => {
+  
+  before(() => {
+    cy.viewport(1440, 754);
+  });
+
+  it("basic", () => {
+    cy.intercept(/2\/2\/1\.png$/, {fixture: "tile/2-2-1.png"});
+    cy.intercept(/2\/2\/1\.grid.json$/, {fixture: "tile/2-2-1.grid.json"})
+      .as("level2");
+    cy.intercept(/4\/8\/8\.png$/, {fixture: "tile/4-8-8.png"});
+    cy.intercept(/4\/8\/8\.grid.json$/, {fixture: "tile/4-8-8.grid.json"})
+      .as("level4");
+    cy.intercept(/6\/34\/34\.png$/, {fixture: "tile/6-34-34.png"});
+    cy.intercept(/6\/34\/34\.grid.json$/, {fixture: "tile/6-34-34.grid.json"})
+      .as("level6");
+    cy.intercept(/8\/139\/139\.png$/, {fixture: "tile/8-139-139.png"});
+    cy.intercept(/8\/139\/139\.grid.json$/, {fixture: "tile/8-139-139.grid.json"})
+      .as("level8");
+    cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
+    cy.intercept(/\d+\/\d+\/\d+\.grid.json$/, {fixture: "tile/blank.grid.json"});
+    cy.visit("http://localhost:3000");
+    cy.pause();
+    cy.wait("@level2", {timeout:1000*30});
+    cy.get("#map-canvas").trigger("click", 771,420);
+    cy.wait("@level4", {timeout: 1000*30});
+    cy.get("#map-canvas").trigger("click", 523,448);
+    cy.wait("@level6", {timeout: 1000*30});
+    cy.get("#map-canvas").trigger("click", 636,526);
+    cy.wait("@level8", {timeout: 1000*30});
+    cy.get("#map-canvas").trigger("click", 636,526);
+
+    
+
+  });
+
+  it.skip("userid=1", () => {
+    cy.intercept(/2\/2\/1\.png$/, {fixture: "tile/2-2-1.png"});
+    cy.intercept(/2\/2\/1\.grid.json$/, {fixture: "tile/2-2-1.grid.json"});
+    cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
+    cy.intercept(/\d+\/\d+\/\d+\.grid.json$/, {fixture: "tile/blank.grid.json"});
+    cy.intercept(/clusterRadius=0.05&zoom_level=10&userid=1$/, {
+      fixture: "tile/zoom_level=10&userid=1"
+    });
+    cy.visit("http://localhost:3000/?userid=1");
+  });
+});
+
+describe.skip("Spin case", () => {
 
   let data = JSON.parse(`{"data":[{"type":"cluster","id":6632615,"centroid":{"type":"Point","coordinates":[0,0]},"region_type":5,"count":"158"}],"zoomTargets":[{"region_id":6632615,"most_populated_subregion_id":6632420,"total":"100","zoom_level":4,"centroid":{"type":"Point","coordinates":[0,0]}}]}`);
 
