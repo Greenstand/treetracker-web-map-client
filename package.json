@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "Leaflet.UTFGrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
     "expect-runtime": "^0.4.0",
     "leaflet": "^1.7.1",
     "leaflet.gridlayer.googlemutant": "^0.12.1",
@@ -17,8 +18,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "source-map-explorer": "^2.5.0",
-    "Leaflet.UTFGrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git"
+    "source-map-explorer": "^2.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
