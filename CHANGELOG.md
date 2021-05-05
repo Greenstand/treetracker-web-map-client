@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.7.0...v1.7.1) (2021-05-05)
+
+
+### Bug Fixes
+
+* change round to floor, to keep consistant with tile server ([9848351](https://github.com/Greenstand/treetracker-web-map-client/commit/98483518071978684519e919a5459386148ec289))
+
 # [1.7.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.6.6...v1.7.0) (2021-04-30)
 
 
