@@ -44,7 +44,7 @@ export default class Map{
   /***************************** static ****************************/
   static formatClusterText(count){
     if(count > 1000){
-      return `${Math.round(count/1000)}K`;
+      return `${Math.floor(count/1000)}K`;
     }else{
       return count;
     }
