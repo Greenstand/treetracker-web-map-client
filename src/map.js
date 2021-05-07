@@ -882,18 +882,22 @@ var initialize = function() {
   }).addTo(map);
 
   //google satillite map
-//  window.L.gridLayer.googleMutant({
-//    maxZoom: 20,
-//    type: 'satellite'
-//  }).addTo(map);
-  const googleSat = window.L.tileLayer(
-    'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-      maxZoom: 20,
-//      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-//      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      subdomains:['mt0','mt1','mt2','mt3']
-    });
+  const googleSat = window.L.gridLayer.googleMutant({
+    maxZoom: 20,
+    type: 'hybrid'
+  });
+  googleSat.on("tileerror", function(e){
+    console.error("tileerror:", e);
+  });
   googleSat.addTo(map);
+//  const googleSat = window.L.tileLayer(
+//    'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+//      maxZoom: 20,
+////      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+////      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+//      subdomains:['mt0','mt1','mt2','mt3']
+//    });
+//  googleSat.addTo(map);
 
     window.L.TileLayer.FreeTown = window.L.TileLayer.extend({
     getTileUrl: function(coords) {
