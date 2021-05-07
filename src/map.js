@@ -81,6 +81,8 @@ let markerHighlight = undefined;
 let isUsingTile = false;
 let utfGridLayer;
 
+let freetownGeoJson;
+
 if(process.env.REACT_APP_API){
   treetrackerApiUrl = process.env.REACT_APP_API;
 }else{
@@ -944,11 +946,11 @@ var initialize = function() {
         opacity: 1,
         fillOpacity: 0
       };
-      window.L.geoJSON(
+      freetownGeoJson = window.L.geoJSON(
         data, {
           style: style
         }
-      ).addTo(map);
+      );
     });
 
   //if isn't cases like wallet, org, then use tile
@@ -1155,6 +1157,24 @@ var initialize = function() {
   map.on("zoomend", function() {
     log.debug("zoomend");
     fetchMarkers = true;
+
+    //check freetown geo json
+    if(!freetownGeoJson){
+      log.debug("geo json not load");
+    }else{
+      const zoomLevel = map.getZoom();
+      if(zoomLevel > 12){
+        log.debug("should show geo json");
+        if(!map.hasLayer(freetownGeoJson)){
+          map.addLayer(freetownGeoJson);
+        }
+      }else{
+        log.debug("should hide geo json");
+        if(map.hasLayer(freetownGeoJson)){
+          map.removeLayer(freetownGeoJson);
+        }
+      }
+    }
   });
 
   /*
