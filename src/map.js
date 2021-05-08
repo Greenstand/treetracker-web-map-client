@@ -2,8 +2,6 @@ import * as mapTools from "./mapTools";
 import MapModel from "./MapModel";
 import expect from "expect-runtime";
 import axios from "axios";
-import {sentryDSN} from "./config";
-import {theme} from "./App";
 import {parseMapName} from "./utils";
 import log from "loglevel";
 import {mapConfig} from "./mapConfig";
@@ -34,7 +32,7 @@ function load(
 const YES = "YES";
 const NO = "NO";
 var map = undefined; //Leaflet Map object
-var mc = undefined; //Marker Clusterer
+//var mc = undefined; //Marker Clusterer
 var markers = []; //All the markers
 var mapModel = undefined;
 var token;
