@@ -60,98 +60,6 @@ In .eslintrc.json, there is a set of rules with status **off or warn**. Whenever
 
 **For more information about rules:** https://eslint.org/docs/2.0.0/rules/
 
-**Indention** 2 Spaces for indentation
-
-**Semicolon** Use semicolons at the end of each line
-
-**Characters** 80 characters per line
-
-**Equal Equal (eqeqeq)** Good practice to use the type-safe equality operators === and !== instead of their regular counterparts == and !=
-
-**Quotes** Use single quotes unless you are writing JSON
-
-```js
-const foo = "bar";
-```
-
-**Braces** Opening braces go on the same line as the statement
-
-```js
-if (true) {
-  console.log("here");
-}
-```
-
-**Variable declaration** Declare one Variable per statement
-
-```js
-const dog = ["bark", "woof"];
-let cat = ["meow", "sleep"];
-```
-
-**Variable, properties and function names** Use lowerCamelCase for variables, properties and function names
-
-```js
-const adminUser = db.query("SELECT * From users ...");
-```
-
-**Class names** Use UpperCamelCase for class names
-
-```js
-class Dog {
-  bark() {
-    console.log("woof");
-  }
-}
-```
-
-**Descriptive conditions** Make sure to have a descriptive name that tells the use and meaning of the code
-
-```js
-const isValidPassword =
-  password.length >= 4 && /^(?=.*\d).{4,}$/.test(password);
-```
-
-**Object/Array creation** Use trailing commas and put short declarations on a single line. Only quote keys when your interpreter complains:
-
-```js
-var a = ["hello", "world"];
-var b = {
-  good: "code",
-  "is generally": "pretty"
-};
-```
-
-### How to test the rules
-
-In package.json there is a topic called scripts that contains many scripts to run.
-To validate the rules manually, you must run:
-
-```
-lint
-```
-
-You will be able to run through this shortcut in VSCode
-![IDE VSCode](./public/images/VSCode_NPM_Script.png)
-
-To fix automatic rules
-
-```
-lint:fix
-```
-
-## Code style guide
-
-We follow the Airbnb JavaScript style guide. The superficial aspects of this style are enforced by a pre-commit hook in the project that runs [Prettier](https://prettier.io/) when you commit a change.
-
-If you are using VSCode as your IDE, please follow [this guide](https://www.digitalocean.com/community/tutorials/how-to-format-code-with-prettier-in-visual-studio-code) to set up Prettier and automatically format your code on file save.
-
-### Rules
-
-In .eslintrc.json, there is a set of rules with status **off or warn**. Whenever you are developing a new file or an existing file try to correct some warnings, because in the future the rules will be activated.
-
-**For more information about rules:** https://eslint.org/docs/2.0.0/rules/
-
 **Airbnb Style Guide:** https://airbnb.io/javascript/
 
 <sub><sup>**Indention:** 2 Spaces for indentation</sup></sub>
@@ -214,11 +122,11 @@ var b = {
 
 ### How to test the rules
 
-In package.json there is a topic called scripts that contains many scripts to run.
-To validate the rules manually, you must run:
+In package.json, there is a topic called **scripts** that contains many scripts to be executed.
+To validate the rules manually, you must run and check that there is no error in your development:
 
 ```
-lint
+npm run eslint
 ```
 
 You will be able to run through this shortcut in VSCode
