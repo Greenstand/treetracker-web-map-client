@@ -25,7 +25,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress:open": "cypress open",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:only-errors": "eslint --report-unused-disable-directives --quiet .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "prettier-fix": "prettier ./ --write"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,13 +49,20 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@cypress/webpack-preprocessor": "^5.4.3",
     "axios": "^0.21.1",
     "cypress": "^6.2.1",
     "cypress-react-unit-test": "^4.16.9",
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "husky": "^4.0.0"
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.13.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^4.0.0",
+    "prettier": "^2.1.2"
   },
   "proxy": "http://127.0.0.1:3001"
 }
