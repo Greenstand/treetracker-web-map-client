@@ -2,7 +2,7 @@ import log from "loglevel";
 import React from "react";
 import AccessTime from "@material-ui/icons/AccessTime";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Grid";
+//import Box from "@material-ui/core/Grid";
 import {withStyles, makeStyles} from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Slider from '@material-ui/core/Slider';

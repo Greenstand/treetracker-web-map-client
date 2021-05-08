@@ -49,6 +49,7 @@ export default class Map{
       return count;
     }
   }
+  
   static getClusterRadius(zoom) {
     switch (zoom) {
       case 1:
