@@ -40,6 +40,7 @@ var mapModel = undefined;
 var token;
 var mapName;
 var treeid;
+var treeName;
 var userid;
 var donor;
 var wallet;
@@ -155,6 +156,8 @@ function getTreeQueryParametersFromRequestedFilters(){
     queryUrl = queryUrl + "&map_name=" + mapName;
   } else if (treeid != null) {
     queryUrl = queryUrl + "&treeid=" + treeid;
+  } else if (treeName != null) {
+    queryUrl = queryUrl + "&tree_name=" + treeName;
   } else if (userid != null) {
     queryUrl = queryUrl + "&userid=" + userid;
   } else if (flavor != null) {
@@ -193,6 +196,7 @@ var initMarkers = function(viewportBounds, zoomLevel) {
       (token != null ||
         mapName != null ||
         treeid != null ||
+        treeName != null ||
         userid !== null) &&
       firstRender == true
     )
@@ -478,7 +482,7 @@ var initMarkers = function(viewportBounds, zoomLevel) {
         //loader.classList.remove("active");
         getApp().loaded();
         firstRender = false;
-        if (treeid != null) {
+        if (treeid != null || treeName != null) {
           selectedTreeMarker = {
             payload: points[0],
           }
@@ -792,6 +796,7 @@ var initialize = function() {
   token = getQueryStringValue("token") || null;
   mapName = getQueryStringValue("map_name") || parseMapName(window.location.hostname) || null;
   treeid = getQueryStringValue("treeid") || null;
+  treeName = getQueryStringValue("tree_name") || null;
   userid = getQueryStringValue("userid") || null;
   flavor = getQueryStringValue("flavor") || null;
   donor = getQueryStringValue("donor") || null;
@@ -958,7 +963,7 @@ var initialize = function() {
     });
 
   //if isn't cases like wallet, org, then use tile
-  if(!token && (mapName === undefined || mapName === null || mapName === "freetown") && !treeid && !userid && !wallet){
+  if(!token && (mapName === undefined || mapName === null || mapName === "freetown") && !treeid && !treeName && !userid && !wallet){
     const isFreetown = mapName === "freetown";
     log.info("use tile server");
     isUsingTile = true;
