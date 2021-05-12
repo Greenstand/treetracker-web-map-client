@@ -1,3 +1,11 @@
+## [1.7.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.7.1...v1.7.2) (2021-05-12)
+
+
+### Bug Fixes
+
+* fix files with ESLint and Prettier rules ([c4ef7c2](https://github.com/Greenstand/treetracker-web-map-client/commit/c4ef7c2dd2dc7465449f630e990dbb4af1b584da))
+* fix files with ESLint and Prettier rules ([46e4288](https://github.com/Greenstand/treetracker-web-map-client/commit/46e4288254943736fa6ab51b88f8838ac618b3d3))
+
 ## [1.7.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.7.0...v1.7.1) (2021-05-05)
 
 
