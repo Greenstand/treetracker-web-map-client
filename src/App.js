@@ -1,9 +1,7 @@
 import React from 'react';
 import expect from "expect-runtime";
 import Grid from '@material-ui/core/Grid';
-import {makeStyles} from "@material-ui/core/styles";
-import { ThemeProvider } from '@material-ui/core/styles'
-import {createMuiTheme}		from '@material-ui/core/styles'
+import { makeStyles, ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import load from "./map";
 import SidePanel from "./components/SidePanel";
 import * as mapTools from "./mapTools";
