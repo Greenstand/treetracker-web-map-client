@@ -7,7 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Check from '@material-ui/icons/CheckCircle';
 import Face from '@material-ui/icons/Face';
-import TagFaces from '@material-ui/icons/TagFaces';
+import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import Fingerprint from '@material-ui/icons/Fingerprint';
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
@@ -447,7 +447,7 @@ function SidePanel(props){
                 <Grid item className={classes.detailIconBox} >
                   <Tooltip title="Tree ID">
                     <Avatar className={`${classes.detailIcon} ${classes.name}`} >
-                      <TagFaces/>
+                      <SentimentSatisfiedAltIcon/>
                     </Avatar>
                   </Tooltip>
                 </Grid>

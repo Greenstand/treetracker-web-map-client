@@ -439,7 +439,7 @@ describe.only("three words", () => {
       "token_uuid": null,
       "wallet": null,
       "attributes": {},
-      "name": "one_two_tree",
+      "name": "one_two_three",
     }
 
   it.skip("case: treeid=1", () => {
