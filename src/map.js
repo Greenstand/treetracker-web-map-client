@@ -884,14 +884,40 @@ var initialize = function() {
   }).addTo(map);
 
   //google satillite map
-  const googleSat = window.L.gridLayer.googleMutant({
-    maxZoom: 20,
-    type: 'hybrid'
-  });
-  googleSat.on("tileerror", function(e){
-    console.error("tileerror:", e);
-  });
-  googleSat.addTo(map);
+//  const googleSat = window.L.gridLayer.googleMutant({
+//    maxZoom: 20,
+//    type: 'hybrid'
+//  });
+////  googleSat.on("tileload", function(e){
+////    console.warn("loaded:", e);
+////  });
+////  googleSat.on("tileerror", function(e){
+////    console.error("tileerror:", e);
+////  });
+//  googleSat.addTo(map);
+
+//  axios.get('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+//    .then(response => {
+//      expect(response)
+//        .property("data")
+//        .property("features")
+//        .a(expect.any(Array));
+//      const data = response.data.features;
+//      const style = {
+//        color: 'green',
+//        weight: 1,
+//        opacity: 1,
+//        fillOpacity: 0
+//      };
+//      const layer = window.L.geoJSON(
+//        data, {
+//          style: style
+//        }
+//      );
+//      map.addLayer(layer);
+//    });
+
+
 //  const googleSat = window.L.tileLayer(
 //    'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
 //      maxZoom: 20,
@@ -899,7 +925,99 @@ var initialize = function() {
 ////      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 //      subdomains:['mt0','mt1','mt2','mt3']
 //    });
+////  googleSat.on("tileload", function(e){
+////    console.warn("loaded:", e);
+////  });
+////  googleSat.on("tileerror", function(e){
+////    console.error("tileerror:", e);
+////  });
 //  googleSat.addTo(map);
+  const GoogleLayer = window.L.TileLayer.extend({
+    createTile: function (coords, done) {
+      var tile = document.createElement('img');
+
+      window.L.DomEvent.on(tile, 'load', window.L.Util.bind(this._tileOnLoad, this, done, tile));
+      window.L.DomEvent.on(tile, 'error', window.L.Util.bind(this._tileOnError, this, done, tile));
+
+      if (this.options.crossOrigin || this.options.crossOrigin === '') {
+        tile.crossOrigin = this.options.crossOrigin === true ? '' : this.options.crossOrigin;
+      }
+
+      /*
+     Alt tag is set to empty string to keep screen readers from reading URL and for compliance reasons
+     http://www.w3.org/TR/WCAG20-TECHS/H67
+     */
+      tile.alt = '';
+
+      /*
+     Set role="presentation" to force screen readers to ignore this
+     https://www.w3.org/TR/wai-aria/roles#textalternativecomputation
+     */
+      tile.setAttribute('role', 'presentation');
+
+
+      //filter out blank pic for freetown
+      if(
+        (
+          coords.z === 12 && 
+          (coords.x <= 1895 && coords.x >= 1889) &&
+          (coords.y >= 1944 && coords.y <= 1956)
+        ) || (
+          coords.z === 13 && 
+          (coords.x <= 3791 && coords.x >= 3779) &&
+          (coords.y >= 3894 && coords.y <= 3909)
+        ) || (
+          coords.z === 14 && 
+          (coords.x <= 7583 && coords.x >= 7563) &&
+          (coords.y >= 7897 && coords.y <= 7817)
+        ) || (
+          coords.z === 15 && 
+          (coords.x <= 15167 && coords.x >= 14967) &&
+          (coords.y >= 15600 && coords.y <= 15620)
+        )
+      ){
+        tile.src = "https://khms0.googleapis.com/kh?v=903&hl=en&x=3792&y=3905&z=13";
+      }else{
+        tile.src = this.getTileUrl(coords);
+      }
+
+      return tile;
+    },
+  });
+
+  //using the new google tile pic used by the plugin googleMutant
+  //  https://khms0.googleapis.com/kh?v=903&hl=en&x=238&y=244&z=9
+//  const googleSat = window.L.tileLayer(
+  const googleSat = new GoogleLayer(
+    'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+//    'http://{s}.googleapis.com/kh?v=903&hl=en&x={x}&y={y}&z={z}',{
+      maxZoom: 20,
+//      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+//      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      subdomains:['mt0','mt1','mt2','mt3']
+//      subdomains:['khms0','khms1','khms2','khms3']
+    });
+  googleSat.on("tileerror", function(e){
+    console.error("tileerror:", e);
+    //replace with ocean image
+    //e.tile.src = "http://mt1.google.com/vt/lyrs=s,h&x=3792&y=3905&z=13";
+    e.tile.src = "https://khms0.googleapis.com/kh?v=903&hl=en&x=3792&y=3905&z=13";
+  });
+
+  googleSat.addTo(map);
+
+    const GridDebug = window.L.GridLayer.extend({
+      createTile: function (coords) {
+        const tile = document.createElement('div');
+        tile.style.outline = '1px solid green';
+        tile.style.fontWeight = 'bold';
+        tile.style.fontSize = '14pt';
+        tile.style.color = 'white';
+        tile.innerHTML = [coords.z, coords.x, coords.y].join('/');
+        return tile;
+      },
+    });
+    //map.addLayer(new GridDebug());
 
     window.L.TileLayer.FreeTown = window.L.TileLayer.extend({
     getTileUrl: function(coords) {
