@@ -1017,7 +1017,7 @@ var initialize = function() {
         return tile;
       },
     });
-    map.addLayer(new GridDebug());
+    //map.addLayer(new GridDebug());
 
     window.L.TileLayer.FreeTown = window.L.TileLayer.extend({
     getTileUrl: function(coords) {
