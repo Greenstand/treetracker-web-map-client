@@ -969,7 +969,7 @@ var initialize = function() {
         ) || (
           coords.z === 14 && 
           (coords.x <= 7583 && coords.x >= 7563) &&
-          (coords.y >= 7897 && coords.y <= 7817)
+          (coords.y >= 7800 && coords.y <= 7817)
         ) || (
           coords.z === 15 && 
           (coords.x <= 15167 && coords.x >= 14967) &&
@@ -1017,7 +1017,7 @@ var initialize = function() {
         return tile;
       },
     });
-    //map.addLayer(new GridDebug());
+    map.addLayer(new GridDebug());
 
     window.L.TileLayer.FreeTown = window.L.TileLayer.extend({
     getTileUrl: function(coords) {
