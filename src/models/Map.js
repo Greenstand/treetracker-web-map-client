@@ -819,25 +819,56 @@ export default class Map{
       }
     ).addTo(this.map);
 
-    axios.get('https://treetracker-map-features.fra1.digitaloceanspaces.com/freetown_catchments.geojson')
-      .then(response => {
-        expect(response)
-          .property("data")
-          .property("features")
-          .a(expect.any(Array));
-        const data = response.data.features;
-        const style = {
-          color: 'green',
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0
-        };
-        this.L.geoJSON(
-          data, {
-            style: style
+    const data = await new Promise((res, rej) => {
+      axios.get('https://treetracker-map-features.fra1.digitaloceanspaces.com/freetown_catchments.geojson')
+        .then(response => {
+          log.info("Begin load freetown geojson");
+          expect(response)
+            .property("data")
+            .property("features")
+            .a(expect.any(Array));
+          const data = response.data.features;
+          res(data);
+        }).catch(e => {
+          log.error("get error when load geojson", e);
+          rej(e);
+        });
+
+    });
+
+    const style = {
+      color: 'green',
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0
+    };
+
+    this.layerFreetownGeoJson = this.L.geoJSON(
+      data, {
+        style: style
+      }
+    );
+
+    this.map.on("zoomend", () => {
+      log.debug("zoomend for geojson");
+      //check freetown geo json
+      if(!this.layerFreetownGeoJson){
+        log.debug("geo json not load");
+      }else{
+        const zoomLevel = this.map.getZoom();
+        if(zoomLevel > 12){
+          log.debug("should show geo json");
+          if(!this.map.hasLayer(this.layerFreetownGeoJson)){
+            this.map.addLayer(this.layerFreetownGeoJson);
           }
-        ).addTo(this.map);
-      });
+        }else{
+          log.debug("should hide geo json");
+          if(this.map.hasLayer(this.layerFreetownGeoJson)){
+            this.map.removeLayer(this.layerFreetownGeoJson);
+          }
+        }
+      }
+    });
   }
 
   async checkArrow(){
