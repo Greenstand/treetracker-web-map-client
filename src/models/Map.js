@@ -175,8 +175,61 @@ export default class Map{
   }
 
   async loadGoogleSatellite(){
+    const GoogleLayer = window.L.TileLayer.extend({
+      createTile: function (coords, done) {
+        var tile = document.createElement('img');
+
+        window.L.DomEvent.on(tile, 'load', window.L.Util.bind(this._tileOnLoad, this, done, tile));
+        window.L.DomEvent.on(tile, 'error', window.L.Util.bind(this._tileOnError, this, done, tile));
+
+        if (this.options.crossOrigin || this.options.crossOrigin === '') {
+          tile.crossOrigin = this.options.crossOrigin === true ? '' : this.options.crossOrigin;
+        }
+
+        /*
+     Alt tag is set to empty string to keep screen readers from reading URL and for compliance reasons
+     http://www.w3.org/TR/WCAG20-TECHS/H67
+     */
+        tile.alt = '';
+
+        /*
+     Set role="presentation" to force screen readers to ignore this
+     https://www.w3.org/TR/wai-aria/roles#textalternativecomputation
+     */
+        tile.setAttribute('role', 'presentation');
+
+
+        //filter out blank pic for freetown
+        if(
+          (
+            coords.z === 12 && 
+            (coords.x <= 1895 && coords.x >= 1889) &&
+            (coords.y >= 1944 && coords.y <= 1956)
+          ) || (
+            coords.z === 13 && 
+            (coords.x <= 3791 && coords.x >= 3779) &&
+            (coords.y >= 3894 && coords.y <= 3909)
+          ) || (
+            coords.z === 14 && 
+            (coords.x <= 7583 && coords.x >= 7563) &&
+            (coords.y >= 7800 && coords.y <= 7817)
+          ) || (
+            coords.z === 15 && 
+            (coords.x <= 15167 && coords.x >= 14967) &&
+            (coords.y >= 15600 && coords.y <= 15620)
+          )
+        ){
+          tile.src = "https://khms0.googleapis.com/kh?v=903&hl=en&x=3792&y=3905&z=13";
+        }else{
+          tile.src = this.getTileUrl(coords);
+        }
+
+        return tile;
+      },
+    });
+
     log.warn("load google satellite map");
-    this.layerGoogle = this.L.tileLayer(
+    this.layerGoogle = new GoogleLayer(
       'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
         maxZoom: this.maxZoom,
         //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
