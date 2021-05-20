@@ -1,3 +1,11 @@
+# [1.8.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.7.2...v1.8.0) (2021-05-20)
+
+
+### Features
+
+* merge control the display of geojson in freetown, merge from old version ([2df2ade](https://github.com/Greenstand/treetracker-web-map-client/commit/2df2aded5c9372b9b97138f6c12c6387397481ec))
+* merge ocean black box fixing from old version to new ([b7b8151](https://github.com/Greenstand/treetracker-web-map-client/commit/b7b81515e98687ef896b2658532cd917881aefaa))
+
 ## [1.7.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.7.1...v1.7.2) (2021-05-12)
 
 
