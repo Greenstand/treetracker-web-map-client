@@ -882,8 +882,12 @@ export default class Map{
     }else{
       log.info("no marker");
       const nearest = await this.getNearest();
-      const placement = this.calculatePlacement(nearest);
-      this.onFindNearestAt && this.onFindNearestAt(placement);
+      if(nearest){
+        const placement = this.calculatePlacement(nearest);
+        this.onFindNearestAt && this.onFindNearestAt(placement);
+      }else{
+        log.warn("Can't get the nearest:", nearest);
+      }
     }
   }
 
@@ -894,6 +898,10 @@ export default class Map{
     const res = await this.requester.request({
       url: `${this.apiServerUrl}nearest?zoom_level=${zoom_level}&lat=${center.lat}&lng=${center.lng}`,
     });
+    if(!res){
+      log.warn("Return undefined trying to get nearest, the api return null");
+      return;
+    }
     let {nearest} = res;
     nearest = nearest? {
       lat: nearest.coordinates[1],
