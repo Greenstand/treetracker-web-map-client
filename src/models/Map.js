@@ -234,7 +234,8 @@ export default class Map{
         maxZoom: this.maxZoom,
         //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
         //'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        subdomains:['mt0','mt1','mt2','mt3']
+        subdomains:['mt0','mt1','mt2','mt3'],
+        zIndex: 2,
       });
     this.layerGoogle.addTo(this.map);
     await new Promise((res, _rej) => {
@@ -283,7 +284,8 @@ export default class Map{
         //close to avoid too many requests
         updateWhenZooming: false,
         //updateWhenIdle: true,
-      }
+        zIndex: 99999,
+      },
     );
     this.layerTile.addTo(this.map);
 
@@ -295,6 +297,7 @@ export default class Map{
         //close to avoid too many requests
         updateWhenZooming: false,
         //updateWhenIdle: false,
+        zIndex: 9,
       }
     );
     this.layerUtfGrid.on('click', (e) => {
@@ -815,7 +818,8 @@ export default class Map{
       '', 
       {
         maxZoom: this.maxZoom,
-        tileSize: this.L.point(256, 256)
+        tileSize: this.L.point(256, 256),
+        zIndex: 4,
       }
     ).addTo(this.map);
 
