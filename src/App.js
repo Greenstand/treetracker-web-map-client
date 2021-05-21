@@ -15,7 +15,7 @@ import log from "loglevel";
 import Timeline from "./components/Timeline";
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import "Leaflet.UTFGrid/L.UTFGrid.js";
+import "leaflet-utfgrid/L.UTFGrid.js";
 import 'leaflet.gridlayer.googlemutant';
 import Map from "./models/Map";
 import {parseMapName} from "./utils";
