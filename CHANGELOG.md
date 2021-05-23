@@ -1,3 +1,13 @@
+## [1.8.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.0...v1.8.1) (2021-05-23)
+
+
+### Bug Fixes
+
+* sort out utf lib name; ([75adc6a](https://github.com/Greenstand/treetracker-web-map-client/commit/75adc6a09f05572daad0dd05945279f7f1e72b1f))
+* sort out utf lib name; ([779eebf](https://github.com/Greenstand/treetracker-web-map-client/commit/779eebfdfdac04c048939ceda4377620f8e29129))
+* the aerial image would cover the cluster points ([6bf609e](https://github.com/Greenstand/treetracker-web-map-client/commit/6bf609ee2902389ee4b51ef064cc290cb6bf8eb9))
+* the aerial image would cover the cluster points ([45eda86](https://github.com/Greenstand/treetracker-web-map-client/commit/45eda86f786bf9a97a03f5db692b3ace81c2f788))
+
 # [1.8.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.7.2...v1.8.0) (2021-05-20)
 
 
