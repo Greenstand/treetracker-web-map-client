@@ -234,7 +234,8 @@ export default class Map{
         maxZoom: this.maxZoom,
         //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
         //'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        subdomains:['mt0','mt1','mt2','mt3']
+        subdomains:['mt0','mt1','mt2','mt3'],
+        zIndex: 2,
       });
     this.layerGoogle.addTo(this.map);
     await new Promise((res, _rej) => {
@@ -283,7 +284,8 @@ export default class Map{
         //close to avoid too many requests
         updateWhenZooming: false,
         //updateWhenIdle: true,
-      }
+        zIndex: 99999,
+      },
     );
     this.layerTile.addTo(this.map);
 
@@ -295,6 +297,7 @@ export default class Map{
         //close to avoid too many requests
         updateWhenZooming: false,
         //updateWhenIdle: false,
+        zIndex: 9,
       }
     );
     this.layerUtfGrid.on('click', (e) => {
@@ -815,7 +818,8 @@ export default class Map{
       '', 
       {
         maxZoom: this.maxZoom,
-        tileSize: this.L.point(256, 256)
+        tileSize: this.L.point(256, 256),
+        zIndex: 4,
       }
     ).addTo(this.map);
 
@@ -878,8 +882,12 @@ export default class Map{
     }else{
       log.info("no marker");
       const nearest = await this.getNearest();
-      const placement = this.calculatePlacement(nearest);
-      this.onFindNearestAt && this.onFindNearestAt(placement);
+      if(nearest){
+        const placement = this.calculatePlacement(nearest);
+        this.onFindNearestAt && this.onFindNearestAt(placement);
+      }else{
+        log.warn("Can't get the nearest:", nearest);
+      }
     }
   }
 
@@ -890,6 +898,10 @@ export default class Map{
     const res = await this.requester.request({
       url: `${this.apiServerUrl}nearest?zoom_level=${zoom_level}&lat=${center.lat}&lng=${center.lng}`,
     });
+    if(!res){
+      log.warn("Return undefined trying to get nearest, the api return null");
+      return;
+    }
     let {nearest} = res;
     nearest = nearest? {
       lat: nearest.coordinates[1],
