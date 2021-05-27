@@ -797,6 +797,10 @@ var initialize = function() {
   mapName = getQueryStringValue("map_name") || parseMapName(window.location.hostname) || null;
   treeid = getQueryStringValue("treeid") || null;
   treeName = getQueryStringValue("tree_name") || null;
+  //do not use map_name mode if tree name is set
+  if(treeName){
+    mapName = null;
+  }
   userid = getQueryStringValue("userid") || null;
   flavor = getQueryStringValue("flavor") || null;
   donor = getQueryStringValue("donor") || null;
