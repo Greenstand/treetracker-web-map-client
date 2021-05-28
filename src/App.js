@@ -275,6 +275,7 @@ function App() {
     });
     log.log("show panel...");
     setSidePanelState("show");
+    setTimelineEnabled(false);
     setTree(tree);
     //consider the visible of the point
     const {map} = mapRef.current;
@@ -363,6 +364,7 @@ function App() {
   function handleSidePanelClose(){
     log.debug("handleSidePanelClose");
     setSidePanelState("none");
+    setTimelineEnabled(true);
     const {map} = mapRef.current;
     map.unselectMarker();
   }
@@ -532,7 +534,8 @@ function App() {
     log.debug("init timeline");
     //if there are any other filter, like wallet, then close the timeline
     // or if the SubDomain is freetown.treetracker also hide timeline 
-    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|map_name=)/) || parseMapName(window.location.hostname)==='freetown'){
+    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|tree_name=|map_name=)/) || 
+    parseMapName(window.location.hostname)==='freetown'){
       setTimelineEnabled(false);
       return;
     }
