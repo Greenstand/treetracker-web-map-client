@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.1...v1.8.2) (2021-05-29)
+
+
+### Bug Fixes
+
+* 60 issue - show timeline icon when sidepanel is open ([532bede](https://github.com/Greenstand/treetracker-web-map-client/commit/532bede376c6505b143053b31e83d5f8b75775b4))
+
 ## [1.8.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.0...v1.8.1) (2021-05-23)
 
 
