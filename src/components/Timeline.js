@@ -1,6 +1,11 @@
 import log from "loglevel";
 import React from "react";
+import Button from '@material-ui/core/Button';
 import AccessTime from "@material-ui/icons/AccessTime";
+import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
+import AccessTimeTwoTone from '@material-ui/icons/AccessTimeTwoTone';
+import HistoryTwoToneIcon from '@material-ui/icons/HistoryTwoTone';
+import TimelineRoundedIcon from '@material-ui/icons/TimelineRounded';
 import Grid from "@material-ui/core/Grid";
 //import Box from "@material-ui/core/Grid";
 import {withStyles, makeStyles} from "@material-ui/core/styles";
@@ -33,7 +38,7 @@ const TimelineSlider = withStyles({
   thumb: {
     height: 24,
     width: 24,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff', //white
     border: '2px solid currentColor',
     marginTop: -8,
     marginLeft: -12,
@@ -80,6 +85,12 @@ ValueLabelComponent.propTypes = {
 
 const useStyles = makeStyles(theme => ({
   root: {
+    // background: 'linear-gradient(90deg, #020024 0%, #090979 35%, #f3f5f5 100%)',
+    // border: 0,
+    // borderRadius: 3,
+    // color: 'white',
+    // height: 30,
+    // padding: '0 30px',
     zIndex: 9,
     position: "fixed",
     bottom: 15,
@@ -88,12 +99,28 @@ const useStyles = makeStyles(theme => ({
       left: -5,
     },
   },
+  imageButton: {
+    // position: 'absolute',
+    //  left: 10,
+    //  right: 10,
+    //  top: 10,
+    //  bottom: 10,
+    //  display: 'flex',
+    color: '#', 
+    alignItems: 'center',
+    width: "30px",
+    height: "30px",
+    padding: "3px",
+    justifyContent: 'center',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center 50%',
+    //color: theme.palette.common.white,
+  },
   box1: {
     width: theme.spacing(80),
     flexWrap: "nowrap",
   },
   box2: {
-//    width: theme.spacing(10),
     padding: theme.spacing(2),
     marginTop: -21,
   },
@@ -168,10 +195,22 @@ function Timeline(props){
           <Grid item  className={classes.box2} >
             <Tooltip title="Timeline" >
               <IconButton onClick={handleClick} >
-                {slide?
-                  <HighlightOff fontSize="large" color="primary" />
+              {slide?
+                  //<HighlightOff fontSize="large" color="primary" />
+                  <Button
+                    variant="contained"
+                    color="default"
+                    className={classes.button}
+                    startIcon={<HighlightOff fontSize="large" className={classes.imageButton} />}
+                  />
                   :
-                  <AccessTime fontSize="large" color="primary" />
+                  //<TimelapseTwoToneIcon fontSize="large" color="primary" />
+                  <Button
+                    variant="contained"
+                    backgroundcolor='green'
+                    className={classes.button}
+                    startIcon={<HistoryTwoToneIcon fontSize="large" className={classes.imageButton} />}
+                  />
                 }
               </IconButton>
             </Tooltip>
