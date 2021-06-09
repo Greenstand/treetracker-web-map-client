@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.2...v1.9.0) (2021-06-09)
+
+
+### Features
+
+* support: freetown.treetracker.org ([4a54e69](https://github.com/Greenstand/treetracker-web-map-client/commit/4a54e692cd80643ad38fd3827b7ebe5d7bc22b80))
+
 ## [1.8.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.1...v1.8.2) (2021-05-29)
 
 
