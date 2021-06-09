@@ -144,6 +144,8 @@ export default class Map{
       //load tile
       if(this.filters.treeid){
         log.info("treeid mode do not need tile server");
+      }else if(this.filters.tree_name){
+        log.info("tree name mode do not need tile server");
       }else{
         await this.loadTileServer();
       }
@@ -156,7 +158,13 @@ export default class Map{
 
 
       if(this.filters.treeid){
+        log.info("load tree by id");
         await this.loadTree(this.filters.treeid);
+      }
+
+      if(this.filters.tree_name){
+        log.info("load tree by name");
+        await this.loadTree(undefined, this.filters.tree_name);
       }
 
       //load freetown special map
@@ -438,10 +446,19 @@ export default class Map{
     });
   }
 
-  async loadTree(treeid){
-    const res = await this.requester.request({
-      url: `${this.apiServerUrl}tree?tree_id=${treeid}`,
-    });
+  async loadTree(treeid, treeName){
+    let res;
+    if(treeid){
+      res = await this.requester.request({
+        url: `${this.apiServerUrl}tree?tree_id=${treeid}`,
+      });
+    }else if(treeName){
+      res = await this.requester.request({
+        url: `${this.apiServerUrl}tree?tree_name=${treeName}`,
+      });
+    }else{
+      log.error("do not support");
+    }
     const {lat, lon, id} = res;
     const data = {
       id,

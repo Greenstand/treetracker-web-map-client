@@ -4,7 +4,7 @@ const scale = 1;
 
 
 
-describe.only("Main", () => {
+describe("Main", () => {
   
   before(() => {
     cy.viewport(1440, 754);
@@ -26,7 +26,6 @@ describe.only("Main", () => {
     cy.intercept(/\d+\/\d+\/\d+\.png$/, {fixture: "tile/blank.png"});
     cy.intercept(/\d+\/\d+\/\d+\.grid.json$/, {fixture: "tile/blank.grid.json"});
     cy.visit("http://localhost:3000");
-    cy.pause();
     cy.wait("@level2", {timeout:1000*30});
     cy.get("#map-canvas").trigger("click", 771,420);
     cy.wait("@level4", {timeout: 1000*30});
@@ -52,7 +51,7 @@ describe.only("Main", () => {
   });
 });
 
-describe.skip("Spin case", () => {
+describe("Spin case", () => {
 
   let data = JSON.parse(`{"data":[{"type":"cluster","id":6632615,"centroid":{"type":"Point","coordinates":[0,0]},"region_type":5,"count":"158"}],"zoomTargets":[{"region_id":6632615,"most_populated_subregion_id":6632420,"total":"100","zoom_level":4,"centroid":{"type":"Point","coordinates":[0,0]}}]}`);
 
@@ -108,7 +107,7 @@ describe.skip("Spin case", () => {
     cy.wait("@requestTrees");
   });
 
-  it.only("load", () => {
+  it("load", () => {
     cy.intercept(/\/trees\?.*zoom_level=(2|4|6|8|10|12|14).*/, req => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -137,7 +136,7 @@ describe.skip("Spin case", () => {
 
 });
 
-describe.skip("Web Map", () => {
+describe("Web Map", () => {
   
   before(() => {
     //cy.viewport("iphone-6");
@@ -303,7 +302,7 @@ describe.skip("Web Map", () => {
     cy.get("img[src*='greenstand_logo']");
   });
 
-  it.only("ZoomIn", () => {
+  it("ZoomIn", () => {
     cy.visit("http://localhost:3000");
     cy.contains(/\dK/, {timeout: 1000*30});
     //draw the map
@@ -425,3 +424,87 @@ describe.skip("Web Map", () => {
 
 });
 
+describe.only("three words", () => {
+  const treeSummary = 
+      {
+        "type": "point",
+        "id": 1,
+        "lat": "8.376115",
+        "lon": "-13.126036666666668"
+      };
+
+  const treeInfo = {
+      "id": 1,
+      "time_created": "2021-01-12T11:31:53.000Z",
+      "time_updated": "2021-01-12T11:31:53.000Z",
+      "missing": false,
+      "priority": false,
+      "cause_of_death_id": null,
+      "planter_id": 3356,
+      "primary_location_id": null,
+      "settings_id": null,
+      "override_settings_id": null,
+      "dead": 0,
+      "photo_id": null,
+      "image_url": "https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.01.12.13.32.44_8.376115_-13.126036666666668_59d4eee2-20d3-4498-b071-80fafaa96d68_IMG_20210112_113147_1548552425882643025.jpg",
+      "certificate_id": null,
+      "estimated_geometric_location": "0101000020E610000042DCC2E087402AC0F111312592C02040",
+      "lat": "8.376115",
+      "lon": "-13.126036666666668",
+      "gps_accuracy": null,
+      "active": true,
+      "planter_photo_url": "https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.01.12.13.24.46_8.378525_-13.127123333333335_9989f325-c5af-4a32-91a8-054bc3996267_IMG_20210112_093119_6316728530127104360.jpg",
+      "planter_identifier": "076995843",
+      "device_id": null,
+      "sequence": null,
+      "note": "2",
+      "verified": false,
+      "uuid": "194ca958-9e18-4f6a-b427-5f9a3a995e7c",
+      "approved": true,
+      "status": "planted",
+      "cluster_regions_assigned": true,
+      "species_id": null,
+      "planting_organization_id": 178,
+      "payment_id": null,
+      "contract_id": null,
+      "token_issued": false,
+      "morphology": "seedling",
+      "age": "new_tree",
+      "species": null,
+      "capture_approval_tag": "simple_leaf",
+      "rejection_reason": null,
+      "matching_hash": null,
+      "device_identifier": "413497f62d8b9467",
+      "images": null,
+      "domain_specific_data": null,
+      "token_id": null,
+      "species_name": null,
+      "first_name": "Anonymoust",
+      "last_name": "Planter",
+      "user_image_url": null,
+      "token_uuid": null,
+      "wallet": null,
+      "attributes": {},
+      "name": "one_two_three",
+    }
+
+  it.skip("case: treeid=1", () => {
+    //https://dev-k8s.treetracker.org/webmap/trees?clusterRadius=0.05&zoom_level=10&treeid=766857
+    cy.intercept(/.*\/trees\?.*treeid=1/, {
+      data: [
+        treeSummary
+    ]});
+
+    cy.intercept(/.*\/tree\?tree_id=1/, treeInfo);
+    cy.visit("http://localhost:3000/?treeid=1");
+    cy.contains("#1");
+  });
+
+  it("case: tree_name=1_2_3", () => {
+    cy.intercept(/.*\/tree\?(tree_name=one_two_three|tree_id=1)/, treeInfo);
+
+    cy.visit("http://localhost:3000/?tree_name=one_two_three");
+    cy.contains("one_two_three");
+  });
+
+});
