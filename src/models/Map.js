@@ -609,9 +609,12 @@ export default class Map{
     if(this.filters.userid || this.filters.wallet){
       log.warn("try to get initial bounds");
       view = await calculateInitialView();
-    }else if(this.filters.treeid){
+    }else if(this.filters.treeid || this.filters.tree_name){
+      const {treeid, tree_name} = this.filters;
+      const url = `${this.apiServerUrl}tree?${treeid? "tree_id=" + treeid : "tree_name=" + tree_name}`;
+      log.info("url to load tree:", url);
       const res = await this.requester.request({
-        url: `${this.apiServerUrl}tree?tree_id=${this.filters.treeid}`,
+        url,
       });
       const {lat, lon} = res;
       view = {
