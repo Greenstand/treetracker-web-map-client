@@ -1,3 +1,15 @@
+# [1.10.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.9.0...v1.10.0) (2021-06-10)
+
+
+### Bug Fixes
+
+* tree name case can not zoom in ([7dbe64c](https://github.com/Greenstand/treetracker-web-map-client/commit/7dbe64cf77d5c5d6e5cb6d987fa8084e571af1ba))
+
+
+### Features
+
+* can reqeust ?tree_name=xxx now ([fe8a4e9](https://github.com/Greenstand/treetracker-web-map-client/commit/fe8a4e9601d99a7af02d6421ff33e2a79713d53c))
+
 # [1.9.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.2...v1.9.0) (2021-06-09)
 
 
