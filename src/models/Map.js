@@ -616,6 +616,10 @@ export default class Map{
       const res = await this.requester.request({
         url,
       });
+      log.warn("res:", res);
+      if(!res){
+        throw new MapError("Can not find any data");
+      }
       const {lat, lon} = res;
       view = {
         center: {
