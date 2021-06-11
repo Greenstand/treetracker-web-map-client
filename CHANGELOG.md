@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.0...v1.10.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* handle no tree case ([cbd3d76](https://github.com/Greenstand/treetracker-web-map-client/commit/cbd3d7633f51dfc7f47654af82dd37c4f2c33a45))
+
 # [1.10.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.9.0...v1.10.0) (2021-06-10)
 
 
