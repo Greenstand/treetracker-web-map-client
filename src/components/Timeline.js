@@ -1,23 +1,14 @@
 import log from "loglevel";
 import React from "react";
-import Button from '@material-ui/core/Button';
-import AccessTime from "@material-ui/icons/AccessTime";
-import TimelineTwoToneIcon from '@material-ui/icons/TimelineTwoTone';
 import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
-import HourglassFullTwoToneIcon from '@material-ui/icons/HourglassFullTwoTone';
-import AccessTimeTwoTone from '@material-ui/icons/AccessTimeTwoTone';
 import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
-import HistoryTwoToneIcon from '@material-ui/icons/HistoryTwoTone';
-import TimelineRoundedIcon from '@material-ui/icons/TimelineRounded';
 import Grid from "@material-ui/core/Grid";
-//import Box from "@material-ui/core/Grid";
 import {withStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Slider from '@material-ui/core/Slider';
 import moment from "moment";
 import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
-import HighlightOff from "@material-ui/icons/HighlightOff";
 
 const TimelineSlider = withStyles({
   root: {
@@ -98,25 +89,20 @@ const useStyles = makeStyles(theme => ({
     zIndex: 9,
     position: "fixed",
     bottom: 0,
-     //left: 23,
     [theme.breakpoints.down('xs')]: {
       left: -5,
     },
   },
   box1: {
- // background: '#7D3C98', //purple
-  pointerEvents: "none",
-  width: theme.spacing(80),
-  flexWrap: "nowrap",
+    pointerEvents: "none",
+    width: theme.spacing(80),
+    flexWrap: "nowrap",
   },
   box2: {
-    //background: '#F4D03F', //yellow
     pointerEvents: "all",
     padding: theme.spacing(1),
-    //marginTop: -10,
   },
   box3: {
-    //background: '#85c232',
     pointerEvents: "all",
     minWidth: theme.spacing(120),
     [theme.breakpoints.down('xs')]: {
