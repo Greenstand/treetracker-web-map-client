@@ -39,8 +39,8 @@ const TimelineSlider = withStyles({
     },
   },
   thumb: {
-    height: 18,
-    width: 18,
+    height: 24,
+    width: 24,
     backgroundColor: '#fff', //white
     border: '2px solid currentColor',
     marginTop: -8,
@@ -88,7 +88,6 @@ ValueLabelComponent.propTypes = {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    background: 'rgb(2,0,36)',
     background: 'linear-gradient(90deg, rgba(2,0,36,0.70) 10%, rgba(11,11,94,0.41360294117647056) 19%, rgba(203,209,209,0) 37%)',
     height: '57px',
     width: '40%',
