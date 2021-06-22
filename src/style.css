@@ -114,9 +114,51 @@ body {
   background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHN0eWxlPi5zdDB7ZmlsbDojZmZmfTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTMxOS4xIDIxN2MyMC4yIDIwLjIgMTkuOSA1My4yLS42IDczLjdzLTUzLjUgMjAuOC03My43LjZsLTE5MC0xOTBjLTIwLjEtMjAuMi0xOS44LTUzLjIuNy03My43UzEwOSA2LjggMTI5LjEgMjdsMTkwIDE5MHoiLz48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMzE5LjEgMjkwLjVjMjAuMi0yMC4yIDE5LjktNTMuMi0uNi03My43cy01My41LTIwLjgtNzMuNy0uNmwtMTkwIDE5MGMtMjAuMiAyMC4yLTE5LjkgNTMuMi42IDczLjdzNTMuNSAyMC44IDczLjcuNmwxOTAtMTkweiIvPjwvc3ZnPg==);
 }
 
+/* Customize CSS of leaflet */
 .leaflet-control {
   animation-name: slideInFromBottom;
   animation-duration: 1s;
+}
+
+.leaflet-control-attribution {
+  line-height: 13px;
+  float: right;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding-left: 3px;
+  display: table-row;
+  font-size: 10px;
+  color: #000;
+  background: #fff;
+  overflow: hidden;
+  /* position: absolute; */
+  bottom: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+  border: 0;
+  color: #333;
+}
+
+.leaflet-bar {
+  box-shadow: 0 1px 5px rgb(0 0 0 / 65%);
+  border-radius: 4px;
+}
+
+.leaflet-control-zoom-out {
+  font: bold 18px 'Lucida Console', Monaco, monospace;
+  /* text-indent: 1px; */
+  margin-bottom: 10px;
+}
+
+/* .leaflet-right .leaflet-control {
+  margin-right: 10px;
+}*/
+
+.leaflet-bottom .leaflet-control {
+  margin-bottom: 0px;
 }
 
 @keyframes slideInFromBottom {
@@ -323,4 +365,6 @@ body {
   font-family: Roboto, arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
+  justify-content: center;
+  align-items: center;
 }

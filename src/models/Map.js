@@ -232,10 +232,10 @@ export default class Map{
     this.layerGoogle = new GoogleLayer(
       'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
         maxZoom: this.maxZoom,
-        //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-        //'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ',
+        // 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         subdomains:['mt0','mt1','mt2','mt3'],
-        zIndex: 2,
+        zIndex: 0,
       });
     this.layerGoogle.addTo(this.map);
     await new Promise((res, _rej) => {
