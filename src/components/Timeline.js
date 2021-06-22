@@ -2,13 +2,16 @@ import log from "loglevel";
 import React from "react";
 import Button from '@material-ui/core/Button';
 import AccessTime from "@material-ui/icons/AccessTime";
+import TimelineTwoToneIcon from '@material-ui/icons/TimelineTwoTone';
 import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
+import HourglassFullTwoToneIcon from '@material-ui/icons/HourglassFullTwoTone';
 import AccessTimeTwoTone from '@material-ui/icons/AccessTimeTwoTone';
+import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
 import HistoryTwoToneIcon from '@material-ui/icons/HistoryTwoTone';
 import TimelineRoundedIcon from '@material-ui/icons/TimelineRounded';
 import Grid from "@material-ui/core/Grid";
 //import Box from "@material-ui/core/Grid";
-import {withStyles, makeStyles} from "@material-ui/core/styles";
+import {withStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Slider from '@material-ui/core/Slider';
 import moment from "moment";
@@ -36,8 +39,8 @@ const TimelineSlider = withStyles({
     },
   },
   thumb: {
-    height: 24,
-    width: 24,
+    height: 18,
+    width: 18,
     backgroundColor: '#fff', //white
     border: '2px solid currentColor',
     marginTop: -8,
@@ -85,47 +88,38 @@ ValueLabelComponent.propTypes = {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // background: 'linear-gradient(90deg, #020024 0%, #090979 35%, #f3f5f5 100%)',
-    // border: 0,
-    // borderRadius: 3,
-    // color: 'white',
-    // height: 30,
-    // padding: '0 30px',
+    background: 'rgb(2,0,36)',
+    background: 'linear-gradient(90deg, rgba(2,0,36,0.70) 10%, rgba(11,11,94,0.41360294117647056) 19%, rgba(203,209,209,0) 37%)',
+    height: '57px',
+    width: '40%',
+    color: "#ffff", //white Timeline
+    //'user-select': "none",
+    pointerEvents: "none",
+
     zIndex: 9,
     position: "fixed",
-    bottom: 15,
-    left: 23,
+    bottom: 0,
+     //left: 23,
     [theme.breakpoints.down('xs')]: {
       left: -5,
     },
   },
-  imageButton: {
-    // position: 'absolute',
-    //  left: 10,
-    //  right: 10,
-    //  top: 10,
-    //  bottom: 10,
-    //  display: 'flex',
-    color: '#', 
-    alignItems: 'center',
-    width: "30px",
-    height: "30px",
-    padding: "3px",
-    justifyContent: 'center',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center 50%',
-    //color: theme.palette.common.white,
-  },
   box1: {
-    width: theme.spacing(80),
-    flexWrap: "nowrap",
+ // background: '#7D3C98', //purple
+  pointerEvents: "none",
+  width: theme.spacing(80),
+  flexWrap: "nowrap",
   },
   box2: {
-    padding: theme.spacing(2),
-    marginTop: -21,
+    //background: '#F4D03F', //yellow
+    pointerEvents: "all",
+    padding: theme.spacing(1),
+    //marginTop: -10,
   },
   box3: {
-    minWidth: theme.spacing(140),
+    //background: '#85c232',
+    pointerEvents: "all",
+    minWidth: theme.spacing(120),
     [theme.breakpoints.down('xs')]: {
       minWidth: theme.spacing(40),
     },
@@ -158,10 +152,18 @@ function Timeline(props){
 
   function handleClick(){
     setSlide(!slide);
+
+    /* Hidden the Timeline title  */
+    document.getElementById("txtTimeline").style.display= 'none';
+       
     if(slide){
+      /* Show up the Timeline title */
+      document.getElementById("txtTimeline").style.display= '';
+    
       setValue([0, dayRange]);
       props.onClose && props.onClose();
     }
+    
   }
 
 
@@ -191,31 +193,23 @@ function Timeline(props){
           container
           alignItems="center"
           className={classes.box1}
-        >
+        > 
           <Grid item  className={classes.box2} >
-            <Tooltip title="Timeline" >
-              <IconButton onClick={handleClick} >
+          
+            <Tooltip title="Timeline">
+              <IconButton id="iconButton" onClick={handleClick} >
               {slide?
-                  //<HighlightOff fontSize="large" color="primary" />
-                  <Button
-                    variant="contained"
-                    color="default"
-                    className={classes.button}
-                    startIcon={<HighlightOff fontSize="large" className={classes.imageButton} />}
-                  />
-                  :
-                  //<TimelapseTwoToneIcon fontSize="large" color="primary" />
-                  <Button
-                    variant="contained"
-                    backgroundcolor='green'
-                    className={classes.button}
-                    startIcon={<HistoryTwoToneIcon fontSize="large" className={classes.imageButton} />}
-                  />
-                }
+                <CancelTwoToneIcon fontSize="large" color="primary" />
+                :
+                <TimelapseTwoToneIcon fontSize="large" color="primary" />
+              }
               </IconButton>
             </Tooltip>
+
           </Grid>
+
           <Grid item  className={classes.box3} >
+          <span id="txtTimeline" className="text">Timeline</span>
             {slide &&
               <TimelineSlider
               min={0}
@@ -233,6 +227,7 @@ function Timeline(props){
             }
           </Grid>
         </Grid>
+        
       </div>
     </>
   );
