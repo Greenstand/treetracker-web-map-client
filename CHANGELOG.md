@@ -1,3 +1,36 @@
+## [1.10.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.0...v1.10.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* handle no tree case ([cbd3d76](https://github.com/Greenstand/treetracker-web-map-client/commit/cbd3d7633f51dfc7f47654af82dd37c4f2c33a45))
+
+# [1.10.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.9.0...v1.10.0) (2021-06-10)
+
+
+### Bug Fixes
+
+* tree name case can not zoom in ([7dbe64c](https://github.com/Greenstand/treetracker-web-map-client/commit/7dbe64cf77d5c5d6e5cb6d987fa8084e571af1ba))
+
+
+### Features
+
+* can reqeust ?tree_name=xxx now ([fe8a4e9](https://github.com/Greenstand/treetracker-web-map-client/commit/fe8a4e9601d99a7af02d6421ff33e2a79713d53c))
+
+# [1.9.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.2...v1.9.0) (2021-06-09)
+
+
+### Features
+
+* support: freetown.treetracker.org ([4a54e69](https://github.com/Greenstand/treetracker-web-map-client/commit/4a54e692cd80643ad38fd3827b7ebe5d7bc22b80))
+
+## [1.8.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.1...v1.8.2) (2021-05-29)
+
+
+### Bug Fixes
+
+* 60 issue - show timeline icon when sidepanel is open ([532bede](https://github.com/Greenstand/treetracker-web-map-client/commit/532bede376c6505b143053b31e83d5f8b75775b4))
+
 ## [1.8.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.0...v1.8.1) (2021-05-23)
 
 
