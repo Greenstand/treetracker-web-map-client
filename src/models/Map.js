@@ -119,6 +119,7 @@ export default class Map{
     });
     this.control.addTo(this.map);
     this.map.setView(this.initialCenter, this.minZoom);
+    this.map.attributionControl.setPrefix('')
 
     //load google map
     await this.loadGoogleSatellite();
@@ -229,14 +230,14 @@ export default class Map{
     });
 
     log.warn("load google satellite map");
-    this.layerGoogle = new GoogleLayer(
-      'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-        maxZoom: this.maxZoom,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ',
-        // 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        subdomains:['mt0','mt1','mt2','mt3'],
-        zIndex: 0,
-      });
+     this.layerGoogle = new GoogleLayer(
+       'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+         maxZoom: this.maxZoom,
+         attribution: '<a href="HTTP://map.google.com" target=”_blank”>Map data &nbsp; © Google</a> ' +
+          '&nbsp<a href="HTTP://greenstand.org" target=”_blank”>© Greenstand.</a>',
+         subdomains:['mt0','mt1','mt2','mt3'],
+         zIndex: 0,
+       });
     this.layerGoogle.addTo(this.map);
     await new Promise((res, _rej) => {
       this.layerGoogle.once("load", async () => {
