@@ -285,7 +285,7 @@ export default class Map{
     //tile 
     const filterParameters = this.getFilterParameters();
     this.layerTile = new this.L.tileLayer(
-      `${this.tileServerUrl}/{z}/{x}/{y}.png${filterParameters && "?" + filterParameters}`,
+      `${this.tileServerUrl}{z}/{x}/{y}.png${filterParameters && "?" + filterParameters}`,
       {
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
@@ -298,7 +298,7 @@ export default class Map{
     this.layerTile.addTo(this.map);
 
     this.layerUtfGrid = new this.L.utfGrid(
-      `${this.tileServerUrl}/{z}/{x}/{y}.grid.json${filterParameters && "?" + filterParameters}`,
+      `${this.tileServerUrl}{z}/{x}/{y}.grid.json${filterParameters && "?" + filterParameters}`,
       {
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
