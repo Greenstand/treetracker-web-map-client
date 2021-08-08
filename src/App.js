@@ -166,7 +166,7 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     height: "100%",
-  }, 
+  },
   arrowBox: {
     height: "100%",
     justifyContent: "space-between",
@@ -174,7 +174,7 @@ const useStyles = makeStyles(theme => ({
   },
   arrow: {
     color: "white",
-    fontSize: 36, 
+    fontSize: 36,
   },
   closeButton: {
     position: "absolute",
@@ -214,7 +214,6 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     userSelect: "none",
-    pointerEvents: "none",
     position: "absolute",
     right: 60,
     bottom: 20,
@@ -244,7 +243,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getParameters(){
-  const parameters = window.location.search && 
+  const parameters = window.location.search &&
     window.location.search.slice(1).split("&").reduce((a,c) => {const [key, value] = c.split("="); a[key] = value; return a  }, {}) ||
     {};
   log.info("getParameters:", parameters);
@@ -347,7 +346,7 @@ function App() {
     try{
       map.goPrevPoint();
     }catch(e){
-      //failed, it's possible, when user move the map quickly, and the 
+      //failed, it's possible, when user move the map quickly, and the
       //side panel arrow button status is stale
       log.warn("go prev failed", e);
     }
@@ -362,7 +361,7 @@ function App() {
     try{
       map.goNextPoint();
     }catch(e){
-      //failed, it's possible, when user move the map quickly, and the 
+      //failed, it's possible, when user move the map quickly, and the
       //side panel arrow button status is stale
       log.warn("go next failed", e);
     }
@@ -540,8 +539,8 @@ function App() {
   React.useEffect(() => {
     log.debug("init timeline");
     //if there are any other filter, like wallet, then close the timeline
-    // or if the SubDomain is freetown.treetracker also hide timeline 
-    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|tree_name=|map_name=)/) || 
+    // or if the SubDomain is freetown.treetracker also hide timeline
+    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|tree_name=|map_name=)/) ||
     parseMapName(window.location.hostname)==='freetown'){
       setTimelineEnabled(false);
       return;
@@ -556,12 +555,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SidePanel 
-        tree={tree} 
-        state={sidePanelState} 
+      <SidePanel
+        tree={tree}
+        state={sidePanelState}
         onClose={handleSidePanelClose}
         onShow={showPanelWithoutTree}
-        onNext={handleNext} 
+        onNext={handleNext}
         onPrevious={handlePrev}
         hasNext={hasNext}
         hasPrev={hasPrev}
@@ -575,7 +574,9 @@ function App() {
         </Grid>
       </Fade>
       <div className={`${classes.logo} ${logoLoaded?classes.logoLoaded:""}`}>
-        <img alt="logo" src={logoSrc} />
+        <a href="https://greenstand.org/" target="_blank" rel="noopener noreferrer">
+          <img alt="logo" src={logoSrc} />
+        </a>
       </div>
       {timelineEnabled &&
         <Timeline
@@ -590,9 +591,9 @@ function App() {
         </MuiAlert>
       </Snackbar>
       {arrow.direction &&
-        <div 
-          id="arrow"  
-          className={`${arrow.direction || ''}`} 
+        <div
+          id="arrow"
+          className={`${arrow.direction || ''}`}
           style={
             (sidePanelState === "show") && (arrow.direction === "west")?
             {left: `${SidePanel.WIDTH + 10}px`}
