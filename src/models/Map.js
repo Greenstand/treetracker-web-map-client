@@ -22,6 +22,7 @@ export default class Map{
       maxZoom: 20,
       initialCenter: [20, 0],
       tileServerUrl: process.env.REACT_APP_TILE_SERVER_URL,
+      tileServerSubdomains: process.env.REACT_APP_TILE_SERVER_SUBDOMAINS.split(","),
       apiServerUrl: process.env.REACT_APP_API,
       width: window.innerWidth,
       height: window.innerHeight,
@@ -293,6 +294,7 @@ export default class Map{
         updateWhenZooming: false,
         //updateWhenIdle: true,
         zIndex: 99999,
+        subdomains: this.tileServerSubdomains,
       },
     );
     this.layerTile.addTo(this.map);
@@ -306,6 +308,7 @@ export default class Map{
         updateWhenZooming: false,
         //updateWhenIdle: false,
         zIndex: 9,
+        subdomains: this.tileServerSubdomains,
       }
     );
     this.layerUtfGrid.on('click', (e) => {
