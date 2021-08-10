@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.3...v1.11.0) (2021-08-10)
+
+
+### Features
+
+* support tile subdomain ([c592a5c](https://github.com/Greenstand/treetracker-web-map-client/commit/c592a5c044375d0fa15b6bf499a15a349b340e6b))
+
 ## [1.10.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.2...v1.10.3) (2021-08-10)
 
 
