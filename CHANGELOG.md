@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.2...v1.10.3) (2021-08-10)
+
+
+### Bug Fixes
+
+* slash problem ([63dfc79](https://github.com/Greenstand/treetracker-web-map-client/commit/63dfc79b4bb1fc9073c3fcd56533059494ccc0bb))
+
 ## [1.10.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.1...v1.10.2) (2021-08-07)
 
 
