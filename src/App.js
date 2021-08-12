@@ -19,6 +19,7 @@ import "leaflet-utfgrid/L.UTFGrid.js";
 import 'leaflet.gridlayer.googlemutant';
 import Map from "./models/Map";
 import {parseMapName} from "./utils";
+import Logo from "./components/Logo";
 
 
 const MOBILE_WIDTH = 960;
@@ -573,11 +574,10 @@ function App() {
           </Grid>
         </Grid>
       </Fade>
-      <div className={`${classes.logo} ${logoLoaded?classes.logoLoaded:""}`}>
-        <a href="https://greenstand.org/" target="_blank" rel="noopener noreferrer">
-          <img alt="logo" src={logoSrc} />
-        </a>
-      </div>
+      <Logo
+        logoLoaded={logoLoaded}
+        logoSrc={logoSrc}
+      />
       {timelineEnabled &&
         <Timeline
           onDateChange={handleDateChange}
