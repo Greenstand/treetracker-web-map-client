@@ -34,11 +34,15 @@ const useStyles = makeStyles(theme => ({
 
 function Logo(props){
   const classes = useStyles();
+  const isGreenstandLogo = props.logoSrc === require("../images/logo_floating_map.svg")
   return (
     <div className={`${classes.logo} ${props.logoLoaded?classes.logoLoaded:""}`}>
-      <a href="https://greenstand.org/" target="_blank" rel="noopener noreferrer">
-        <img alt="logo" src={props.logoSrc} />
-      </a>
+      {isGreenstandLogo
+        ? <a href="https://greenstand.org/" target="_blank" rel="noopener noreferrer">
+            <img alt="logo" src={props.logoSrc} />
+          </a>
+        : <img alt="logo" src={props.logoSrc} />
+      }
     </div>
   );
 }
