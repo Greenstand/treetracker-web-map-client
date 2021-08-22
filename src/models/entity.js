@@ -2,6 +2,7 @@
  * get entity, edit the DOM
  */
 import axios from "axios";
+
 const treetrackerApiUrl = process.env.REACT_APP_API || "/api/web/";
 
 let isLoadingMarkers = false;

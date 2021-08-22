@@ -1,5 +1,6 @@
-import entity from "./entity";
 import axios from "axios";
+
+import entity from "./entity";
 
 jest.mock("axios");
 
