@@ -1,6 +1,7 @@
+import response from "../../cypress/fixtures/tile/zoom_level=10&userid=1.json";
 import Map from "./Map";
 import Requester from "./Requester";
-import response from "../../cypress/fixtures/tile/zoom_level=10&userid=1.json";
+
 jest.mock("./Requester");
 
 describe("Map", () => {
