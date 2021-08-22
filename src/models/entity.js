@@ -5,9 +5,6 @@ import axios from "axios";
 
 const treetrackerApiUrl = process.env.REACT_APP_API || "/api/web/";
 
-let isLoadingMarkers = false;
-
-
 const entity = {
   name: "entity",
   getById: async function(id){
