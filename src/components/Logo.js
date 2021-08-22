@@ -25,10 +25,6 @@ const useStyles = makeStyles(theme => ({
   logoLoaded: {
     transform: "translate(0, 0)",
     opacity: 1,
-//    [theme.breakpoints.down("sm")]: {
-//      transform: "translate(0, 0)",
-//      opacity: 1,
-//    },
   },
 }));
 

@@ -10,7 +10,7 @@ import LoaderB from "./components/LoaderB";
 import Fade from "@material-ui/core/Fade";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
-import getLogo from "./models/logo";
+import getLogoSrc from "./models/logo";
 import log from "loglevel";
 import Timeline from "./components/Timeline";
 import 'leaflet';
@@ -212,34 +212,6 @@ const useStyles = makeStyles(theme => ({
     height: "100vh",
     justifyContent: "center",
     alignItems: "center",
-  },
-  logo: {
-    userSelect: "none",
-    position: "absolute",
-    right: 60,
-    bottom: 20,
-    opacity: 0,
-    transform: "translate(0, 40px)",
-    transition: "all 1s",
-    "& img": {
-      maxWidth: 250,
-    },
-    [theme.breakpoints.down("sm")]: {
-      transform: "translate(0, -20px)",
-      right: 10,
-      top: 10,
-      "& img": {
-        width: "45vw",
-      },
-    },
-  },
-  logoLoaded: {
-    transform: "translate(0, 0)",
-    opacity: 1,
-//    [theme.breakpoints.down("sm")]: {
-//      transform: "translate(0, 0)",
-//      opacity: 1,
-//    },
   },
 }));
 
@@ -500,16 +472,12 @@ function App() {
    * Deal with the logo, loading the logo first, for case like wallet, need to
    * fetch possible logo url in DB
    */
-  async function loadLogo(){
-    log.debug("load logo");
-    const src = await getLogo(window.location.href);
-    setLogoSrc(src);
-    setLogoLoaded(true);
-  }
-
   React.useEffect(() => {
-    log.debug("useEffect 2");
-    loadLogo();
+    log.debug("loading logo");
+    getLogoSrc(window.location.href).then(src => {
+      setLogoSrc(src);
+      setLogoLoaded(true);
+    })
   }, []);
 
   function handleDateChange(date){
