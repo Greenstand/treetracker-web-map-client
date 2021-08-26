@@ -1,3 +1,15 @@
+# [1.12.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.2...v1.12.0) (2021-08-26)
+
+
+### Bug Fixes
+
+* link to greenstand when greenstand logo ([0ea356d](https://github.com/Greenstand/treetracker-web-map-client/commit/0ea356d02b9fea731911701486606cbbde4270c5))
+
+
+### Features
+
+* greenstand logo is a link ([5a65387](https://github.com/Greenstand/treetracker-web-map-client/commit/5a653870311aa5c240b88692095be336aad5c71f))
+
 ## [1.11.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.1...v1.11.2) (2021-08-26)
 
 
