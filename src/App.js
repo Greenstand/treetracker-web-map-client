@@ -10,7 +10,7 @@ import LoaderB from "./components/LoaderB";
 import Fade from "@material-ui/core/Fade";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
-import getLogo from "./models/logo";
+import getLogoSrc from "./models/logo";
 import log from "loglevel";
 import Timeline from "./components/Timeline";
 import 'leaflet';
@@ -19,6 +19,7 @@ import "leaflet-utfgrid/L.UTFGrid.js";
 import 'leaflet.gridlayer.googlemutant';
 import Map from "./models/Map";
 import {parseMapName} from "./utils";
+import Logo from "./components/Logo";
 
 
 const MOBILE_WIDTH = 960;
@@ -166,7 +167,7 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     height: "100%",
-  }, 
+  },
   arrowBox: {
     height: "100%",
     justifyContent: "space-between",
@@ -174,7 +175,7 @@ const useStyles = makeStyles(theme => ({
   },
   arrow: {
     color: "white",
-    fontSize: 36, 
+    fontSize: 36,
   },
   closeButton: {
     position: "absolute",
@@ -212,39 +213,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  logo: {
-    userSelect: "none",
-    pointerEvents: "none",
-    position: "absolute",
-    right: 60,
-    bottom: 20,
-    opacity: 0,
-    transform: "translate(0, 40px)",
-    transition: "all 1s",
-    "& img": {
-      maxWidth: 250,
-    },
-    [theme.breakpoints.down("sm")]: {
-      transform: "translate(0, -20px)",
-      right: 10,
-      top: 10,
-      "& img": {
-        width: "45vw",
-      },
-    },
-  },
-  logoLoaded: {
-    transform: "translate(0, 0)",
-    opacity: 1,
-//    [theme.breakpoints.down("sm")]: {
-//      transform: "translate(0, 0)",
-//      opacity: 1,
-//    },
-  },
 }));
 
 function getParameters(){
-  const parameters = window.location.search && 
+  const parameters = window.location.search &&
     window.location.search.slice(1).split("&").reduce((a,c) => {const [key, value] = c.split("="); a[key] = value; return a  }, {}) ||
     {};
   log.info("getParameters:", parameters);
@@ -347,7 +319,7 @@ function App() {
     try{
       map.goPrevPoint();
     }catch(e){
-      //failed, it's possible, when user move the map quickly, and the 
+      //failed, it's possible, when user move the map quickly, and the
       //side panel arrow button status is stale
       log.warn("go prev failed", e);
     }
@@ -362,7 +334,7 @@ function App() {
     try{
       map.goNextPoint();
     }catch(e){
-      //failed, it's possible, when user move the map quickly, and the 
+      //failed, it's possible, when user move the map quickly, and the
       //side panel arrow button status is stale
       log.warn("go next failed", e);
     }
@@ -500,16 +472,12 @@ function App() {
    * Deal with the logo, loading the logo first, for case like wallet, need to
    * fetch possible logo url in DB
    */
-  async function loadLogo(){
-    log.debug("load logo");
-    const src = await getLogo(window.location.href);
-    setLogoSrc(src);
-    setLogoLoaded(true);
-  }
-
   React.useEffect(() => {
-    log.debug("useEffect 2");
-    loadLogo();
+    log.debug("loading logo");
+    getLogoSrc(window.location.href).then(src => {
+      setLogoSrc(src);
+      setLogoLoaded(true);
+    })
   }, []);
 
   function handleDateChange(date){
@@ -540,8 +508,8 @@ function App() {
   React.useEffect(() => {
     log.debug("init timeline");
     //if there are any other filter, like wallet, then close the timeline
-    // or if the SubDomain is freetown.treetracker also hide timeline 
-    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|tree_name=|map_name=)/) || 
+    // or if the SubDomain is freetown.treetracker also hide timeline
+    if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|tree_name=|map_name=)/) ||
     parseMapName(window.location.hostname)==='freetown'){
       setTimelineEnabled(false);
       return;
@@ -556,12 +524,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SidePanel 
-        tree={tree} 
-        state={sidePanelState} 
+      <SidePanel
+        tree={tree}
+        state={sidePanelState}
         onClose={handleSidePanelClose}
         onShow={showPanelWithoutTree}
-        onNext={handleNext} 
+        onNext={handleNext}
         onPrevious={handlePrev}
         hasNext={hasNext}
         hasPrev={hasPrev}
@@ -574,9 +542,10 @@ function App() {
           </Grid>
         </Grid>
       </Fade>
-      <div className={`${classes.logo} ${logoLoaded?classes.logoLoaded:""}`}>
-        <img alt="logo" src={logoSrc} />
-      </div>
+      <Logo
+        logoLoaded={logoLoaded}
+        logoSrc={logoSrc}
+      />
       {timelineEnabled &&
         <Timeline
           onDateChange={handleDateChange}
@@ -590,9 +559,9 @@ function App() {
         </MuiAlert>
       </Snackbar>
       {arrow.direction &&
-        <div 
-          id="arrow"  
-          className={`${arrow.direction || ''}`} 
+        <div
+          id="arrow"
+          className={`${arrow.direction || ''}`}
           style={
             (sidePanelState === "show") && (arrow.direction === "west")?
             {left: `${SidePanel.WIDTH + 10}px`}
