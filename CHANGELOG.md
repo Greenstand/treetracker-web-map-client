@@ -1,3 +1,11 @@
+## [1.11.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.0...v1.11.1) (2021-08-26)
+
+
+### Bug Fixes
+
+* copyright pattern ([5f3f714](https://github.com/Greenstand/treetracker-web-map-client/commit/5f3f7149f3ce358e2960e67d4d220a3bc06e5a22))
+* layout Google copyright ([ab1402f](https://github.com/Greenstand/treetracker-web-map-client/commit/ab1402f0c2835c8b58d976b75172657ccedcb4e3))
+
 # [1.11.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.3...v1.11.0) (2021-08-10)
 
 
