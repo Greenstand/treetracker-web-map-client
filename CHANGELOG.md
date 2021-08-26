@@ -1,3 +1,11 @@
+## [1.11.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.1...v1.11.2) (2021-08-26)
+
+
+### Bug Fixes
+
+* axios not a dev dependency ([ce15302](https://github.com/Greenstand/treetracker-web-map-client/commit/ce15302bd91c0ffdaaf4084615477b3b36bcd5b2))
+* entity tests ([6ca4a3f](https://github.com/Greenstand/treetracker-web-map-client/commit/6ca4a3f5571527a5f6e3e9b26620e307872c66da))
+
 ## [1.11.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.0...v1.11.1) (2021-08-26)
 
 
