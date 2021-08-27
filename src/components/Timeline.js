@@ -65,7 +65,7 @@ function ValueLabelComponent(props) {
   const classes = useStylesTooltip();
 
   return (
-    <Tooltip open={open} classes={{popper:classes.popper}} enterTouchDelay={0} placement="top" title={value}>
+    <Tooltip open={open} classes={{popper:classes.popper}} enterTouchDelay={0} placement={props.index === 0 ? "top" : "bottom"} title={value}>
       {children}
     </Tooltip>
   );
@@ -80,7 +80,7 @@ ValueLabelComponent.propTypes = {
 const useStyles = makeStyles(theme => ({
   root: {
     background: 'linear-gradient(90deg, rgba(2,0,36,0.70) 10%, rgba(11,11,94,0.41360294117647056) 19%, rgba(203,209,209,0) 37%)',
-    height: '57px',
+    height: '75px',
     width: '40%',
     color: "#ffff", //white Timeline
     //'user-select': "none",
@@ -88,9 +88,10 @@ const useStyles = makeStyles(theme => ({
 
     zIndex: 9,
     position: "fixed",
-    bottom: 0,
+    bottom: 13,
     [theme.breakpoints.down('xs')]: {
       left: -5,
+      bottom: 40,
     },
   },
   box1: {
