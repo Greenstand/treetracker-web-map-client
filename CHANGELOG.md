@@ -1,3 +1,31 @@
+# [1.12.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.2...v1.12.0) (2021-08-26)
+
+
+### Bug Fixes
+
+* link to greenstand when greenstand logo ([0ea356d](https://github.com/Greenstand/treetracker-web-map-client/commit/0ea356d02b9fea731911701486606cbbde4270c5))
+
+
+### Features
+
+* greenstand logo is a link ([5a65387](https://github.com/Greenstand/treetracker-web-map-client/commit/5a653870311aa5c240b88692095be336aad5c71f))
+
+## [1.11.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.1...v1.11.2) (2021-08-26)
+
+
+### Bug Fixes
+
+* axios not a dev dependency ([ce15302](https://github.com/Greenstand/treetracker-web-map-client/commit/ce15302bd91c0ffdaaf4084615477b3b36bcd5b2))
+* entity tests ([6ca4a3f](https://github.com/Greenstand/treetracker-web-map-client/commit/6ca4a3f5571527a5f6e3e9b26620e307872c66da))
+
+## [1.11.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.0...v1.11.1) (2021-08-26)
+
+
+### Bug Fixes
+
+* copyright pattern ([5f3f714](https://github.com/Greenstand/treetracker-web-map-client/commit/5f3f7149f3ce358e2960e67d4d220a3bc06e5a22))
+* layout Google copyright ([ab1402f](https://github.com/Greenstand/treetracker-web-map-client/commit/ab1402f0c2835c8b58d976b75172657ccedcb4e3))
+
 # [1.11.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.3...v1.11.0) (2021-08-10)
 
 

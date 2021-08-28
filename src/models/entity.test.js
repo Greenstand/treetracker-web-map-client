@@ -1,15 +1,13 @@
-import entity from "./entity";
 import axios from "axios";
+
+import entity from "./entity";
 
 jest.mock("axios");
 
 describe("entity", () => {
 
-  beforeEach(async () => {
-  });
-
   afterAll(() => {
-    jest.clearAllMock();
+    jest.clearAllMocks();
   });
 
   it("getById(1)", async () => {
@@ -22,7 +20,7 @@ describe("entity", () => {
       },
     }));
     const e = await entity.getById(1);
-    expect(axios.get).toHaveBeenCalledWith("/entities/1");
+    expect(axios.get).toHaveBeenCalledWith(`${process.env.REACT_APP_API}entities/1`);
     expect(e).toMatchObject({
       id: 1,
       name: "Zaven",
@@ -40,7 +38,7 @@ describe("entity", () => {
       }],
     }));
     const e = await entity.getByWallet("Zaven");
-    expect(axios.get).toHaveBeenCalledWith("/entities?wallet=Zaven");
+    expect(axios.get).toHaveBeenCalledWith(`${process.env.REACT_APP_API}entities?wallet=Zaven`);
     expect(e).toMatchObject([{
       id: 1,
       name: "Zaven",
@@ -58,7 +56,7 @@ describe("entity", () => {
       }],
     }));
     const e = await entity.getByMapName("freetown");
-    expect(axios.get).toHaveBeenCalledWith("/entities?map_name=freetown");
+    expect(axios.get).toHaveBeenCalledWith(`${process.env.REACT_APP_API}entities?map_name=freetown`);
     expect(e).toMatchObject([{
       id: 1,
       name: "freetown",
