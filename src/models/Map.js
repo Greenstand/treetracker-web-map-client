@@ -1,12 +1,13 @@
 /*
  * The main model for the treetracker model
  */
-import  log from "loglevel";
-import expect from "expect-runtime";
-import Requester from "./Requester";
-import {getInitialBounds} from "../mapTools";
-import {mapConfig} from "../mapConfig";
 import axios from "axios";
+import expect from "expect-runtime";
+import  log from "loglevel";
+
+import {mapConfig} from "../mapConfig";
+import {getInitialBounds} from "../mapTools";
+import Requester from "./Requester";
 
 class MapError extends Error{
 }
@@ -15,8 +16,8 @@ export default class Map{
 
   constructor(options){
 
-    //default
-    options = {...{
+    // default
+    const mapOptions = {...{
       L: window.L,
       minZoom: 2,
       maxZoom: 20,
@@ -31,26 +32,22 @@ export default class Map{
       filters: {},
     }, ...options};
 
-    Object.keys(options).forEach(key => {
-      this[key] = options[key];
+    Object.keys(mapOptions).forEach(key => {
+      this[key] = mapOptions[key];
     });
-    //log.warn("options:", options);
 
-    //requester
+    // requester
     this.requester = new Requester();
-    //request nearest trees
-    this.requesterNearest = new Requester();
   }
 
-  /***************************** static ****************************/
+  /** *************************** static *************************** */
   static formatClusterText(count){
     if(count > 1000){
       return `${Math.floor(count/1000)}K`;
-    }else{
-      return count;
     }
+    return count;
   }
-  
+
   static getClusterRadius(zoom) {
     switch (zoom) {
       case 1:
@@ -96,16 +93,14 @@ export default class Map{
 
   static parseUtfData(utfData){
     const [lon, lat] = JSON.parse(utfData.latlon).coordinates;
-    const data = {
+    return {
       ...utfData,
       lat,
       lon,
     };
-    return data;
   }
 
-  /***************************** methods ***************************/
-
+  /** *************************** methods ************************** */
   async mount(domElement){
     const mapOptions = {
       minZoom: this.minZoom,
@@ -114,7 +109,7 @@ export default class Map{
     }
     this.map = this.L.map(domElement, mapOptions);
 
-    //control
+    // control
     this.control = this.L.control.zoom({
         position: 'bottomright'
     });
@@ -122,7 +117,7 @@ export default class Map{
     this.map.setView(this.initialCenter, this.minZoom);
     this.map.attributionControl.setPrefix('')
 
-    //load google map
+    // load google map
     await this.loadGoogleSatellite();
 
     /*
@@ -130,7 +125,7 @@ export default class Map{
      * If there is a filter, then try to zoom in and set the zoom is
      * appropriate for the filter, then load the tile.
      * But if there is a bounds ( maybe the browser was refreshed or jump
-     * to the map by a shared link), then jump the bounds directly, 
+     * to the map by a shared link), then jump the bounds directly,
      * regardless of the initial view for filter.
      */
     try{
@@ -140,10 +135,12 @@ export default class Map{
         await this.loadInitialView();
       }
 
-      //fire load event
-      this.onLoad && this.onLoad();
+      // fire load event
+      if (this.onLoad) {
+        this.onLoad();
+      }
 
-      //load tile
+      // load tile
       if(this.filters.treeid){
         log.info("treeid mode do not need tile server");
       }else if(this.filters.tree_name){
@@ -152,7 +149,7 @@ export default class Map{
         await this.loadTileServer();
       }
 
-      //mount event
+      // mount event
       this.map.on("moveend", e => {
         log.warn("move end", e);
         this.updateUrl();
@@ -169,7 +166,7 @@ export default class Map{
         await this.loadTree(undefined, this.filters.tree_name);
       }
 
-      //load freetown special map
+      // load freetown special map
       await this.loadFreetownLayer();
 
       if(this.debug){
@@ -179,15 +176,17 @@ export default class Map{
       log.error("get error when load:", e);
       if(e instanceof MapError){
         log.error("map error:", e);
-        this.onError && this.onError(e);
+        if (this.onError) {
+          this.onError(e);
+        }
       }
     }
   }
 
   async loadGoogleSatellite(){
     const GoogleLayer = window.L.TileLayer.extend({
-      createTile: function (coords, done) {
-        var tile = document.createElement('img');
+      createTile (coords, done) {
+        const tile = document.createElement('img');
 
         window.L.DomEvent.on(tile, 'load', window.L.Util.bind(this._tileOnLoad, this, done, tile));
         window.L.DomEvent.on(tile, 'error', window.L.Util.bind(this._tileOnError, this, done, tile));
@@ -197,34 +196,34 @@ export default class Map{
         }
 
         /*
-     Alt tag is set to empty string to keep screen readers from reading URL and for compliance reasons
-     http://www.w3.org/TR/WCAG20-TECHS/H67
-     */
+          Alt tag is set to empty string to keep screen readers from reading URL and for compliance reasons
+          http://www.w3.org/TR/WCAG20-TECHS/H67
+        */
         tile.alt = '';
 
         /*
-     Set role="presentation" to force screen readers to ignore this
-     https://www.w3.org/TR/wai-aria/roles#textalternativecomputation
-     */
+          Set role="presentation" to force screen readers to ignore this
+          https://www.w3.org/TR/wai-aria/roles#textalternativecomputation
+        */
         tile.setAttribute('role', 'presentation');
 
 
-        //filter out blank pic for freetown
+        // filter out blank pic for freetown
         if(
           (
-            coords.z === 12 && 
+            coords.z === 12 &&
             (coords.x <= 1895 && coords.x >= 1889) &&
             (coords.y >= 1944 && coords.y <= 1956)
           ) || (
-            coords.z === 13 && 
+            coords.z === 13 &&
             (coords.x <= 3791 && coords.x >= 3779) &&
             (coords.y >= 3894 && coords.y <= 3909)
           ) || (
-            coords.z === 14 && 
+            coords.z === 14 &&
             (coords.x <= 7583 && coords.x >= 7563) &&
             (coords.y >= 7800 && coords.y <= 7817)
           ) || (
-            coords.z === 15 && 
+            coords.z === 15 &&
             (coords.x <= 15167 && coords.x >= 14967) &&
             (coords.y >= 15600 && coords.y <= 15620)
           )
@@ -248,7 +247,7 @@ export default class Map{
          zIndex: 0,
        });
     this.layerGoogle.addTo(this.map);
-    await new Promise((res, _rej) => {
+    await new Promise((res) => {
       this.layerGoogle.once("load", async () => {
         log.warn("google layer loaded");
         res();
@@ -257,7 +256,7 @@ export default class Map{
   }
 
   async gotoBounds(bounds){
-    const [southWestLng, southWestLat, northEastLng, northEastLat] = 
+    const [southWestLng, southWestLat, northEastLng, northEastLat] =
       bounds.split(",");
     log.warn("go to bounds:", bounds);
     if(this.moreEffect){
@@ -266,7 +265,7 @@ export default class Map{
         [northEastLat, northEastLng]
       ]);
       log.warn("waiting bound load...");
-      await new Promise((res, _rej) => {
+      await new Promise((res) => {
         const boundFinished = () => {
           log.warn("fire bound finished");
           this.map.off("moveend");
@@ -279,21 +278,22 @@ export default class Map{
         [southWestLat, southWestLng],
         [northEastLat, northEastLng]
       ], {animate: false});
-      //no effect, return directly
+      // no effect, return directly
     }
   }
 
   async loadTileServer(){
-    //tile 
+    // tile
     const filterParameters = this.getFilterParameters();
+    const filterParametersString = filterParameters ? `?${filterParameters}` : "";
     this.layerTile = new this.L.tileLayer(
-      `${this.tileServerUrl}{z}/{x}/{y}.png${filterParameters && "?" + filterParameters}`,
+      `${this.tileServerUrl}{z}/{x}/{y}.png${filterParametersString}`,
       {
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
-        //close to avoid too many requests
+        // close to avoid too many requests
         updateWhenZooming: false,
-        //updateWhenIdle: true,
+        // updateWhenIdle: true,
         zIndex: 99999,
         subdomains: this.tileServerSubdomains,
       },
@@ -301,13 +301,13 @@ export default class Map{
     this.layerTile.addTo(this.map);
 
     this.layerUtfGrid = new this.L.utfGrid(
-      `${this.tileServerUrl}{z}/{x}/{y}.grid.json${filterParameters && "?" + filterParameters}`,
+      `${this.tileServerUrl}{z}/{x}/{y}.grid.json${filterParametersString}`,
       {
         minZoom: this.minZoom,
         maxZoom: this.maxZoom,
-        //close to avoid too many requests
+        // close to avoid too many requests
         updateWhenZooming: false,
-        //updateWhenIdle: false,
+        // updateWhenIdle: false,
         zIndex: 9,
         subdomains: this.tileServerSubdomains,
       }
@@ -329,7 +329,7 @@ export default class Map{
       this.unHighlightMarker();
     });
 
-    this.layerUtfGrid.on("load", (e) => {
+    this.layerUtfGrid.on("load", () => {
       log.info("all grid loaded");
       this.checkArrow();
     });
@@ -339,20 +339,20 @@ export default class Map{
       e.tile.cancelRequest();
     });
 
-    this.layerUtfGrid.on("tileloadstart", (e) => {
-      //log.warn("tile tileloadstart:", e);
+    this.layerUtfGrid.on("tileloadstart", () => {
+      // log.warn("tile tileloadstart:", e);
     });
 
-    this.layerUtfGrid.on("tileload", (e) => {
-      //log.warn("tile load:", e);
+    this.layerUtfGrid.on("tileload", () => {
+      // log.warn("tile load:", e);
     });
 
     this.layerUtfGrid.addTo(this.map);
 
-    //bind the finding marker function
+    // bind the finding marker function
     this.layerUtfGrid.hasMarkerInCurrentView = () => {
-      //waiting layer is ready
-      let isLoading = this.layerUtfGrid.isLoading();
+      // waiting layer is ready
+      const isLoading = this.layerUtfGrid.isLoading();
       log.warn("utf layer is loading:", isLoading);
       if(isLoading){
         log.error("can not handle the grid utf check when loading, cancel!")
@@ -365,15 +365,15 @@ export default class Map{
       const {x,y} = this.map.getSize();
       me: for(let y1 = 0; y1 < y; y1 += 10){
         for(let x1 = 0; x1 < x; x1 +=10){
-          count++;
+          count += 1;
           const tileChar = this.layerUtfGrid._objectForEvent({latlng:this.map.containerPointToLatLng([x1,y1])})._tileCharCode;
           if(!tileChar){
-            countNoChar++;
-            //log.warn("can not fond char on!:", x1, y1);
+            countNoChar += 1;
+            // log.warn("can not fond char on!:", x1, y1);
             continue;
           }
           const m = tileChar.match(/\d+:\d+:\d+:(\d+)/);
-          if(!m) throw new Error("Wrong char:" + tileChar);
+          if(!m) throw new Error(`Wrong char: ${tileChar}`);
           if(m[1] !== "32"){
             log.log("find:", tileChar, "at:", x1,y1);
             found = true;
@@ -393,19 +393,19 @@ export default class Map{
     if(this.map.hasLayer(this.layerTile)){
       this.map.removeLayer(this.layerTile);
     }else{
-      log.warn("try to remove nonexisting tile layer"); 
+      log.warn("try to remove nonexisting tile layer");
     }
     if(this.map.hasLayer(this.layerUtfGrid)){
       this.map.removeLayer(this.layerUtfGrid);
     }else{
-      log.warn("try to remove nonexisting grid layer"); 
+      log.warn("try to remove nonexisting grid layer");
     }
   }
 
   async loadDebugLayer(){
-    //debug
+    // debug
     this.L.GridLayer.GridDebug = this.L.GridLayer.extend({
-      createTile: function (coords) {
+      createTile (coords) {
         const tile = document.createElement('div');
         tile.style.outline = '1px solid green';
         tile.style.fontWeight = 'bold';
@@ -421,7 +421,7 @@ export default class Map{
     this.map.addLayer(this.L.gridLayer.gridDebug());
 
 
-    //debug marker
+    // debug marker
     const locations = [
       [0,0],
 //      [66.51326044401628,90.0000000003387],
@@ -430,15 +430,15 @@ export default class Map{
 //      [85.05112874735956,179.9999996159564],
 //      [-54.84375000033869,85.05112874735956,-179.9999996159564,47.98992166812654],
 //      [-90,85.0511287798066,-180,66.51326044311185],
-      //tile 2,2,1
+      // tile 2,2,1
         [0,0],
         [66.51326044311185,90],
         [-33.13755119215213,-35.15624999906868],
         [77.15716252285503,125.1562500009313],
-      //tile 2,1,0
+      // tile 2,1,0
         [47.98992166905786,-125.1562500009314],
         [85.05112874829089,35.15624999906871],
-      //test
+      // test
         [ 77.157162522661, -125.15625],
         [80.87282721505686, 35.15625],
     ];
@@ -470,7 +470,9 @@ export default class Map{
       lon: parseFloat(lon),
     }
     this.selectMarker(data);
-    this.onClickTree && this.onClickTree(data);
+    if (this.onClickTree) {
+      this.onClickTree(data);
+    }
   }
 
 
@@ -514,31 +516,31 @@ export default class Map{
     if(this.map.hasLayer(this.layerHighlight)){
       this.map.removeLayer(this.layerHighlight);
     }else{
-      log.warn("try to remove nonexisting layer"); 
+      log.warn("try to remove nonexisting layer");
     }
   }
 
   clickMarker(data){
     this.unHighlightMarker();
-    if(data.type === "point"){
+    if (data.type === "point") {
       this.selectMarker(data);
-      this.onClickTree && this.onClickTree(data);
-    }else if(data.type === "cluster"){
+      if (this.onClickTree) {
+        this.onClickTree(data);
+      }
+    } else if(data.type === "cluster") {
       if(data.zoom_to){
         log.info("found zoom to:", data.zoom_to);
         const [lon, lat] = JSON.parse(data.zoom_to).coordinates;
-        //NOTE do cluster click
+        // NOTE do cluster click
         if(this.moreEffect){
           this.map.flyTo([lat, lon], this.map.getZoom() + 2);
         }else{
           this.map.setView([lat, lon], this.map.getZoom() + 2, {animate: false});
         }
-      }else{
-        if(this.moreEffect){
+      } else if (this.moreEffect) {
           this.map.flyTo([data.lat, data.lon], this.map.getZoom() + 2);
-        }else{
+      } else {
           this.map.setView([data.lat, data.lon], this.map.getZoom() + 2, {animate: false});
-        }
       }
     }else{
       throw new Error("do not support type:", data.type);
@@ -547,10 +549,10 @@ export default class Map{
 
   selectMarker(data){
     log.info("change tree mark selected");
-    //before set the selected tree icon, remote if any
+    // before set the selected tree icon, remote if any
     this.unselectMarker();
-    
-    //set the selected marker
+
+    // set the selected marker
     this.layerSelected = new this.L.marker(
       [data.lat, data.lon],
       {
@@ -573,7 +575,7 @@ export default class Map{
     if(this.map.hasLayer(this.layerSelected)){
       this.map.removeLayer(this.layerSelected);
     }else{
-      log.warn("try to remove nonexisting layer selected"); 
+      log.warn("try to remove nonexisting layer selected");
     }
   }
 
@@ -598,17 +600,17 @@ export default class Map{
             lng: i.lon,
           };
         }
+        return null;
       });
       if(items.length === 0){
         log.info("Can not find data");
         throw new MapError("Can not find any data");
       }
-      const view = getInitialBounds(
+      return getInitialBounds(
         items,
         this.width,
         this.height,
       );
-      return view;
     }
     if(this.filters.userid || this.filters.wallet){
       log.warn("try to get initial bounds");
@@ -649,12 +651,12 @@ export default class Map{
       }
     }
 
-    //jump to initial view
+    // jump to initial view
     if(view){
       if(this.moreEffect){
         this.map.flyTo(view.center, view.zoomLevel);
         log.warn("waiting initial view load...");
-        await new Promise((res, _rej) => {
+        await new Promise((res) => {
           const finished = () => {
             log.warn("fire initial view finished");
             this.map.off("moveend");
@@ -776,7 +778,7 @@ export default class Map{
    * achieve this is that go through the utf grid and get all data.
    */
   getPoints(){
-    //fetch all the point data in the cache
+    // fetch all the point data in the cache
     const itemList = Object.values(this.layerUtfGrid._cache)
       .map(e => e.data).filter(e => Object.keys(e).length > 0)
       .reduce((a,c) => a.concat(Object.values(c)),[])
@@ -784,11 +786,11 @@ export default class Map{
       .filter(data => data.type === "point");
     log.info("loaded data in utf cache:", itemList.length);
 
-    //filter the duplicate points
+    // filter the duplicate points
     const itemMap = {};
     itemList.forEach(e => itemMap[e.id] = e);
 
-    //update the global points 
+    // update the global points
     const points = Object.values(itemMap);
     log.warn("find points:", points.length);
     log.warn("find points:", points);
@@ -843,7 +845,7 @@ export default class Map{
     }
 
     this.L.tileLayer.freeTown(
-      '', 
+      '',
       {
         maxZoom: this.maxZoom,
         tileSize: this.L.point(256, 256),
@@ -859,8 +861,7 @@ export default class Map{
             .property("data")
             .property("features")
             .a(expect.any(Array));
-          const data = response.data.features;
-          res(data);
+          res(response.data.features);
         }).catch(e => {
           log.error("get error when load geojson", e);
           rej(e);
@@ -883,7 +884,7 @@ export default class Map{
 
     this.map.on("zoomend", () => {
       log.debug("zoomend for geojson");
-      //check freetown geo json
+      // check freetown geo json
       if(!this.layerFreetownGeoJson){
         log.debug("geo json not load");
       }else{
@@ -912,7 +913,9 @@ export default class Map{
       const nearest = await this.getNearest();
       if(nearest){
         const placement = this.calculatePlacement(nearest);
-        this.onFindNearestAt && this.onFindNearestAt(placement);
+        if (this.onFindNearestAt) {
+          this.onFindNearestAt(placement);
+        }
       }else{
         log.warn("Can't get the nearest:", nearest);
       }
@@ -948,8 +951,8 @@ export default class Map{
   calculatePlacement(location){
     const center = this.map.getCenter();
     log.info("calculate location", location, " to center:", center);
-    //find it
-    //get nearest markers
+    // find it
+    // get nearest markers
     expect(location.lat).number();
     expect(location.lng).number();
     let result;
