@@ -83,7 +83,7 @@
         "no-useless-return": "warn",
         "no-lonely-if": "warn",
         "no-undef-init": "warn",
-        "react/prop-types": "warn",
+        "react/prop-types": "off",
         "no-labels": "warn",
         "no-constant-condition": "warn",
         "no-unneeded-ternary": "warn",
