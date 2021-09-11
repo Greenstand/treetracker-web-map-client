@@ -1,4 +1,3 @@
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,11 +8,9 @@ import Snackbar from "@material-ui/core/Snackbar";
 import {makeStyles} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
 import Close from "@material-ui/icons/Close";
-import Code from "@material-ui/icons/Code";
-import Email from "@material-ui/icons/Email";
-import ShareIcon from "@material-ui/icons/Share";
+import MaterialShareIcon from "@material-ui/icons/Share";
+import ShareIcon from "./ShareIcon";
 import log from "loglevel";
 import React from "react"
 
@@ -54,7 +51,9 @@ function Share(props){
     window.open(`https://www.facebook.com/dialog/share?app_id=87741124305&href=${props.shareUrl}&display=popup`);
   }
 
-  const mailString = `mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this link to check it! ${props.shareUrl}`;
+  function handleEmail() {
+    window.open(`mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this link to check it! ${props.shareUrl}`, '_self');
+  }
 
   function handleEmbed(){
     setIsOpen(false);
@@ -105,7 +104,7 @@ function Share(props){
         <IconButton
           onClick={handleClick}
         >
-          <ShareIcon/>
+          <MaterialShareIcon/>
         </IconButton>
       </Tooltip>
       <Dialog
@@ -125,80 +124,26 @@ function Share(props){
           </Grid>
         </DialogTitle>
         <Grid container justify="center" className={classes.box1} >
-          <Grid item className={classes.box2} >
-            <Grid container direction="column" alignItems="center" >
-              <Grid item>
-                <IconButton
-                  id="EmbedButton"
-                  onClick={handleEmbed}
-                >
-                  <Avatar>
-                    <Code/>
-                  </Avatar>
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography variant="button" >
-                  Embed
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item className={classes.box2} >
-            <Grid container direction="column" alignItems="center" >
-              <Grid item>
-                <IconButton
-                  onClick={handleTwitter}
-                >
-                  <Avatar
-                    src="https://dadior.s3-ap-northeast-1.amazonaws.com/twitter2.svg"
-                  />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography variant="button" >
-                  Twitter
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item className={classes.box2} >
-            <Grid container direction="column" alignItems="center" >
-              <Grid item>
-                <IconButton
-                  onClick={handleFaceBook}
-                >
-                  <Avatar
-                    src="https://dadior.s3-ap-northeast-1.amazonaws.com/facebook.svg"
-                  />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography variant="button" >
-                  Facebook
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item className={classes.box2} >
-            <Grid container direction="column" alignItems="center" >
-              <Grid item>
-                <a href={mailString} >
-                  <IconButton
-                  >
-                    <Avatar>
-                      <Email/>
-                    </Avatar>
-                  </IconButton>
-                </a>
-              </Grid>
-              <Grid item>
-                <Typography variant="button" >
-                  Email
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
+          <ShareIcon
+            name="Embed"
+            iconSrc="Embed"
+            clickHandler={handleEmbed}
+          />
+          <ShareIcon
+            name="Twitter"
+            iconSrc="https://dadior.s3-ap-northeast-1.amazonaws.com/twitter2.svg"
+            clickHandler={handleTwitter}
+          />
+          <ShareIcon
+            name="Facebook"
+            iconSrc="https://dadior.s3-ap-northeast-1.amazonaws.com/facebook.svg"
+            clickHandler={handleFaceBook}
+          />
+          <ShareIcon
+            name="Email"
+            iconSrc="Email"
+            clickHandler={handleEmail}
+          />
         </Grid>
       </Dialog>
       <Dialog
