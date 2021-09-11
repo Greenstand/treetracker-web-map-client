@@ -1,25 +1,25 @@
-import React from 'react';
-import expect from "expect-runtime";
-import Grid from '@material-ui/core/Grid';
-import { makeStyles, ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import load from "./map";
-import SidePanel from "./components/SidePanel";
-import * as mapTools from "./mapTools";
-import Loader from "./components/Loader";
-import LoaderB from "./components/LoaderB";
-import Fade from "@material-ui/core/Fade";
-import MuiAlert from "@material-ui/lab/Alert";
-import Snackbar from "@material-ui/core/Snackbar";
-import getLogoSrc from "./models/logo";
-import log from "loglevel";
-import Timeline from "./components/Timeline";
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import "leaflet-utfgrid/L.UTFGrid.js";
 import 'leaflet.gridlayer.googlemutant';
+
+import Fade from "@material-ui/core/Fade";
+import Grid from '@material-ui/core/Grid';
+import Snackbar from "@material-ui/core/Snackbar";
+import { createMuiTheme,makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import MuiAlert from "@material-ui/lab/Alert";
+import expect from "expect-runtime";
+import log from "loglevel";
+import React from 'react';
+
+import Loader from "./components/Loader";
+import LoaderB from "./components/LoaderB";
+import Logo from "./components/Logo";
+import SidePanel from "./components/SidePanel";
+import Timeline from "./components/Timeline";
+import getLogoSrc from "./models/logo";
 import Map from "./models/Map";
 import {parseMapName} from "./utils";
-import Logo from "./components/Logo";
 
 
 const MOBILE_WIDTH = 960;
