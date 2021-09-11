@@ -50,20 +50,6 @@ const theme = createMuiTheme({
 
 log.info("theme:", theme);
 
-function shortenLargeNumber(number) {
-  var units = ["K", "M"],
-    decimal;
-
-  for (var i = units.length - 1; i >= 0; i--) {
-    decimal = Math.pow(1000, i + 1);
-
-    if (number <= -decimal || number >= decimal) {
-      return +(number / decimal).toFixed(0) + units[i];
-    }
-  }
-  return number;
-}
-
 const useStyles = makeStyles(theme => ({
   mapContainer: {
     transform: "scale(1.02)",
@@ -223,7 +209,7 @@ function App() {
     setSidePanelState("show");
     setTimelineEnabled(false);
     setTree(tree);
-    //consider the visible of the point
+    // consider the visible of the point
     const {map} = mapRef.current;
     const leafletMap = map.getLeafletMap();
     const {x: left , y: top} = leafletMap.latLngToContainerPoint([tree.lat, tree.lon]);
@@ -245,7 +231,7 @@ function App() {
         top > 0 &&
         top < clientHeight;
       if((isOutOfViewport || isCoveredBySidePanel) && clientWidth > MOBILE_WIDTH){
-        //move to right center
+        // move to right center
         const print = JSON.stringify(map);
         log.log("print:", print);
         log.log("con,sole:", map);
@@ -264,8 +250,6 @@ function App() {
         log.log("pant by x,y:", x, y);
         leafletMap.panBy([x,y]);
       }
-    }else{
-      log.info("there is no marker");
     }
     setHasNext(true);
     setHasPrev(true);
@@ -282,8 +266,8 @@ function App() {
     try{
       map.goPrevPoint();
     }catch(e){
-      //failed, it's possible, when user move the map quickly, and the
-      //side panel arrow button status is stale
+      // failed, it's possible, when user move the map quickly, and the
+      // side panel arrow button status is stale
       log.warn("go prev failed", e);
     }
   }
@@ -297,8 +281,8 @@ function App() {
     try{
       map.goNextPoint();
     }catch(e){
-      //failed, it's possible, when user move the map quickly, and the
-      //side panel arrow button status is stale
+      // failed, it's possible, when user move the map quickly, and the
+      // side panel arrow button status is stale
       log.warn("go next failed", e);
     }
   }
@@ -349,7 +333,7 @@ function App() {
 
   function hideArrow(){
     log.debug("hide arrow");
-    //to avoid useless refresh of this component, check current arrow object
+    // to avoid useless refresh of this component, check current arrow object
     if(arrow.direction === undefined){
       return;
     }
@@ -394,10 +378,10 @@ function App() {
 
   injectApp();
 
-  //load map
+  // load map
   React.useEffect(() => {
     log.info("load map...");
-    //disalbe waiting for loading
+    // disable waiting for loading
     loaded();
     const script = document.createElement('script');
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
@@ -431,7 +415,7 @@ function App() {
     log.warn("date changed:", date);
     window.history.pushState('page2', '', `/?timeline=${date.join("_")}`);
     const {map} = mapRef.current;
-    //refresh the url parameter
+    // refresh the url parameter
     const parameters = getParameters();
     map.setFilters({
       ...parameters,
@@ -443,7 +427,7 @@ function App() {
     setTimelineDate(undefined);
     window.history.pushState('page2', '', `/`);
     const {map} = mapRef.current;
-    //refresh the url parameter
+    // refresh the url parameter
     const parameters = getParameters();
     map.setFilters({
       ...parameters,
@@ -454,7 +438,7 @@ function App() {
   /* init timeline date */
   React.useEffect(() => {
     log.debug("init timeline");
-    //if there are any other filter, like wallet, then close the timeline
+    // if there are any other filter, like wallet, then close the timeline
     // or if the SubDomain is freetown.treetracker also hide timeline
     if(window.location.search.match(/(wallet=|userid=|treeid=|flavor=|token=|tree_name=|map_name=)/) ||
     parseMapName(window.location.hostname)==='freetown'){
@@ -518,8 +502,8 @@ function App() {
         >
           <div className="round">
             <div id="cta">
-              <span className="arrow primera next "></span>
-              <span className="arrow segunda next "></span>
+              <span className="arrow primera next "/>
+              <span className="arrow segunda next "/>
             </div>
           </div>
         </div>
