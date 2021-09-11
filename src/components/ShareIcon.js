@@ -1,11 +1,12 @@
-import React from "react";
+import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Code from "@material-ui/icons/Code";
 import Email from "@material-ui/icons/Email";
+import LinkIcon from '@material-ui/icons/Link';
+import React from "react";
 
 const useStyles = makeStyles(theme => ({
   gridContainer:{
@@ -30,6 +31,10 @@ function ShareIcon (props) {
                 case "Email":
                   return <Avatar>
                     <Email/>
+                  </Avatar>
+                case "Link":
+                  return <Avatar>
+                    <LinkIcon/>
                   </Avatar>
                 default:
                   return <Avatar src={props.iconSrc}/>

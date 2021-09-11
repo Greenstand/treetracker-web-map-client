@@ -10,9 +10,10 @@ import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import Close from "@material-ui/icons/Close";
 import MaterialShareIcon from "@material-ui/icons/Share";
-import ShareIcon from "./ShareIcon";
 import log from "loglevel";
 import React from "react"
+
+import ShareIcon from "./ShareIcon";
 
 const useStyles = makeStyles(theme => ({
   box1:{
@@ -55,6 +56,19 @@ function Share(props){
     window.open(`mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this link to check it! ${props.shareUrl}`, '_self');
   }
 
+  function showMessage(text){
+    setMessage(text);
+    setMessageOpen(true);
+  }
+
+  function handleCopyLink() {
+    if (navigator && navigator.clipboard) {
+      navigator.clipboard.writeText(props.shareUrl).then(() => {
+        showMessage("Link has been copied!");
+      });
+    }
+  }
+
   function handleEmbed(){
     setIsOpen(false);
     setEmbedOpen(true);
@@ -71,11 +85,6 @@ function Share(props){
   React.useEffect(() => {
     setEmbedCode(`<iframe width="560" height="315" src="${props.shareUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
   }, []);
-
-  function showMessage(text){
-    setMessage(text);
-    setMessageOpen(true);
-  }
 
   function handleCopy(){
     log.log("copy...");
@@ -124,6 +133,11 @@ function Share(props){
           </Grid>
         </DialogTitle>
         <Grid container justify="center" className={classes.box1} >
+          <ShareIcon
+            name="Link"
+            iconSrc="Link"
+            clickHandler={handleCopyLink}
+          />
           <ShareIcon
             name="Embed"
             iconSrc="Embed"
