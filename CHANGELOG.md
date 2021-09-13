@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.12.0...v1.13.0) (2021-09-13)
+
+
+### Features
+
+* add link share icon ([76cef14](https://github.com/Greenstand/treetracker-web-map-client/commit/76cef1410c69aed4bd98ecee3f56a71fdaa7e578))
+
 # [1.12.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.2...v1.12.0) (2021-08-26)
 
 
