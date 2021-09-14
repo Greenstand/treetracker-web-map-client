@@ -10,7 +10,7 @@ assignees: ''
 ---
 Some hints for building components:
 
-* Please check the pin items in the `web map` channel on slack to get the design resource.
+* Design resource: https://www.figma.com/file/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A11584
 * A tutorial of how to use the Cypress component tool to build components: 
   https://github.com/Greenstand/treetracker-wallet-web#how-to-build-a-component
 * We are using MaterialUI to build the app: https://material-ui.com/
