@@ -5,6 +5,7 @@ const useStyles = makeStyles(theme => ({
   logo: {
     userSelect: "none",
     position: "absolute",
+    height: 50,
     right: 60,
     bottom: 20,
     opacity: 0,
