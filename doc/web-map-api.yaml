@@ -143,6 +143,18 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
+  '/trees/{treeId}':
+    parameters:
+      - schema:
+          type: string
+        name: treeId
+        in: path
+        required: true
+    get:
+      summary: get tree info
+      tags: []
+      responses: {}
+      operationId: get-trees-treeId
 components:
   schemas:
     User:
