@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.13.0...v1.14.0) (2021-09-15)
+
+
+### Features
+
+* add information card component ([2eec513](https://github.com/Greenstand/treetracker-web-map-client/commit/2eec513fc937b7a5665ecb4f2065ad51b8f9591c))
+
 # [1.13.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.12.0...v1.13.0) (2021-09-13)
 
 
