@@ -5,144 +5,6 @@ info:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  '/users/{userId}':
-    parameters:
-      - schema:
-          type: integer
-        name: userId
-        in: path
-        required: true
-        description: Id of an existing user.
-    get:
-      summary: Get User Info by User ID
-      tags: []
-      responses:
-        '200':
-          description: User Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Get User Alice Smith:
-                  value:
-                    id: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    signUpDate: '2019-08-24'
-        '404':
-          description: User Not Found
-      operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
-    patch:
-      summary: Update User Information
-      operationId: patch-users-userId
-      responses:
-        '200':
-          description: User Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Updated User Rebecca Baker:
-                  value:
-                    id: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createDate: '2019-08-24'
-        '404':
-          description: User Not Found
-        '409':
-          description: Email Already Taken
-      description: Update the information of an existing user.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                  description: 'If a new email is given, the user''s email verified property will be set to false.'
-                dateOfBirth:
-                  type: string
-            examples:
-              Update First Name:
-                value:
-                  firstName: Rebecca
-              Update Email:
-                value:
-                  email: rebecca@gmail.com
-              Update Last Name & Date of Birth:
-                value:
-                  lastName: Baker
-                  dateOfBirth: '1985-10-02'
-        description: Patch user properties to update.
-  /user:
-    post:
-      summary: Create New User
-      operationId: post-user
-      responses:
-        '200':
-          description: User Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                New User Bob Fellow:
-                  value:
-                    id: 12
-                    firstName: Bob
-                    lastName: Fellow
-                    email: bob.fellow@gmail.com
-                    dateOfBirth: '1996-08-24'
-                    emailVerified: false
-                    createDate: '2020-11-18'
-        '400':
-          description: Missing Required Information
-        '409':
-          description: Email Already Taken
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                dateOfBirth:
-                  type: string
-                  format: date
-              required:
-                - firstName
-                - lastName
-                - email
-                - dateOfBirth
-            examples:
-              Create User Bob Fellow:
-                value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
-        description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
   '/trees/{treeId}':
     parameters:
       - schema:
@@ -155,46 +17,136 @@ paths:
       tags: []
       responses: {}
       operationId: get-trees-treeId
+  /trees/featured:
+    get:
+      summary: get featured tree list
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/tree'
+      operationId: get-trees-featured
+      description: this is some good trees bookmarked by admin
+  /countries/leader:
+    get:
+      summary: leader board of country
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/country'
+      operationId: get-countries-leader
+      description: a board of leader country
 components:
   schemas:
-    User:
-      title: User
-      type: object
+    tree:
       description: ''
-      x-examples:
-        Alice Smith:
-          id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
+      type: object
       properties:
         id:
-          type: integer
-          description: Unique identifier for the given user.
-        firstName:
+          type: number
+        photo_url:
           type: string
-        lastName:
-          type: string
-        email:
-          type: string
-          format: email
-        dateOfBirth:
-          type: string
-          format: date
-          example: '1997-10-31'
-        emailVerified:
+          minLength: 1
+        verified:
           type: boolean
-          description: Set to true if the user's email has been verified.
-        createDate:
+        token_id:
           type: string
-          format: date
-          description: The date that the user was created.
+          minLength: 1
+        impact_manager_id:
+          type: string
+          minLength: 1
+        impact_producer_id:
+          type: string
+          minLength: 1
+        created_at:
+          type: string
+          minLength: 1
+        lat:
+          type: number
+        lon:
+          type: number
+        species:
+          type: string
+          minLength: 1
+        planter_id:
+          type: number
       required:
         - id
-        - firstName
-        - lastName
-        - email
-        - emailVerified
+        - photo_url
+        - verified
+        - token_id
+        - impact_manager_id
+        - impact_producer_id
+        - created_at
+        - lat
+        - lon
+        - species
+        - planter_id
+      x-examples:
+        example-tree:
+          id: 933042
+          photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.19.09.49.19_-4.881696978000001_38.37997515399998_47fc629b-27e9-4b58-b31a-3a35e5bbc3f0_IMG_20210518_121452_1024002290.jpg'
+          verified: true
+          token_id: d4bb294b-8c75-4e0f-af43-1cd9a35e1033
+          impact_manager_id: 8599f832-145e-11ec-82a8-0242ac130003
+          impact_producer_id: a0b6b70e-145e-11ec-82a8-0242ac130003
+          created_at: '5/18/2021, 5:14:48 PM'
+          lat: -4.881696978000001
+          lon: 38.37997515399998
+          species: Markhamia lutea
+          planter_id: 5
+          value:
+            id: 933042
+            photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.19.09.49.19_-4.881696978000001_38.37997515399998_47fc629b-27e9-4b58-b31a-3a35e5bbc3f0_IMG_20210518_121452_1024002290.jpg'
+            verified: true
+            token_id: d4bb294b-8c75-4e0f-af43-1cd9a35e1033
+            impact_manager_id: 8599f832-145e-11ec-82a8-0242ac130003
+            impact_producer_id: a0b6b70e-145e-11ec-82a8-0242ac130003
+            created_at: '5/18/2021, 5:14:48 PM'
+            lat: -4.881696978000001
+            lon: 38.37997515399998
+            species: Markhamia lutea
+            planter_id: 5
+      title: ''
+    country:
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        planted:
+          type: number
+        id:
+          type: string
+          minLength: 1
+        continent:
+          type: string
+          minLength: 1
+      required:
+        - name
+        - planted
+        - id
+        - continent
+      x-examples:
+        example-country:
+          name: Tanzania
+          planted: 100000
+          id: ef883620-15d8-11ec-9c2b-0242ac130003
+          continent: Africa
+          value:
+            name: Tanzania
+            planted: 100000
+            id: ef883620-15d8-11ec-9c2b-0242ac130003
+            continent: Africa
