@@ -51,6 +51,31 @@ npm start
 
 4. Open the web map in the browser with URL: http://localhost:3000
 
+
+## API
+
+We got another team working on the API endpoint, so the API spec is evolving. This is the current API specification:
+
+[API spec](/doc/web-map-api.yaml)
+
+To check the doc in a convenient way, please import it to some API tools like: http://editor.swagger.io/ or Postman.
+
+### Using our mock API server
+
+To develop without relying on the work of API team, we set up a mock API server for developing.
+
+The development mock API server is here: [mock server](https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io).
+
+So you can invoke the API: `/trees/[treeId]` by: `https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/trees/[treeId]`.
+
+### Config
+
+The config for setting the API server is an env variable:
+
+```
+REACT_APP_API_WALLET=https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/
+```
+
 ## Code style guide
 
 We follow the Airbnb JavaScript style guide. The superficial aspects of this style are enforced by a pre-commit hook in the project that runs [Prettier](https://prettier.io/) when you commit a change.

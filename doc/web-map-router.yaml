@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: web-map-router
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  '/trees/{treeId}':
+    parameters:
+      - schema:
+          type: string
+          example: '123'
+        name: treeId
+        in: path
+        required: true
+        description: the tree id
+    get:
+      summary: A single tree page
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-trees-treeId
+      description: 'https://www.figma.com/proto/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A9975&scaling=min-zoom&page-id=2497%3A9322&starting-point-node-id=2497%3A11570'
+  /root:
+    get:
+      summary: the root/index/home page
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-home
+      description: 'Please not, the real path should just be ''/'' because the editor do not allow empty path, so we added a ''root'' text here'
+    parameters: []
+  /top:
+    get:
+      summary: top page
+      tags: []
+      responses: {}
+      operationId: get-top
+      description: |-
+        The first page, with featured and leader board section.
+        https://www.figma.com/proto/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A11584&scaling=min-zoom&page-id=2497%3A9322&starting-point-node-id=2497%3A11570
+  /top#featured:
+    get:
+      summary: top->featured
+      tags: []
+      responses: {}
+      operationId: get-top#featured
+      description: the anchor to the featured trees
+  /top#leader:
+    get:
+      summary: top->leader
+      tags: []
+      responses: {}
+      operationId: get-top#leader
+      description: the anchor to leader board section of top page
+  '/planters/{planterId}':
+    parameters:
+      - schema:
+          type: string
+          example: '6'
+        name: planterId
+        in: path
+        required: true
+        description: planter id
+    get:
+      summary: the planter page
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-planters-planterId
+      description: 'https://www.figma.com/proto/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A11189&scaling=min-zoom&page-id=2497%3A9322&starting-point-node-id=2497%3A11082'
+  '/organizations/{orgName}':
+    parameters:
+      - schema:
+          type: string
+          example: freetown
+        name: orgName
+        in: path
+        required: true
+        description: the name of the organization
+    get:
+      summary: the organization page
+      tags: []
+      responses: {}
+      operationId: get-organizations-orgName
+      description: 'https://www.figma.com/proto/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A10098&scaling=min-zoom&page-id=2497%3A9322&starting-point-node-id=2497%3A10098&show-proto-sidebar=1'
+  '/countries/{name}':
+    parameters:
+      - schema:
+          type: string
+          example: china
+        name: name
+        in: path
+        required: true
+        description: country name
+    get:
+      summary: the country page
+      tags: []
+      responses: {}
+      operationId: get-countries-name
+components:
+  schemas: {}
