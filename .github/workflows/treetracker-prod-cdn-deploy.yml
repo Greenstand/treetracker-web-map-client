@@ -6,7 +6,6 @@ on:
       git-tag:
         description: "Branch/hash/tag"
         required: true
-        default: 'master'
 
 env: 
   project-directory: ./

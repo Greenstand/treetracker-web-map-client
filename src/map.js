@@ -882,11 +882,14 @@ var initialize = function() {
 
 
   map = window.L.map('map-canvas', mapOptions);
+  map.attributionControl.setPrefix('YOUR_ATTRIBUTION')
   
   //control
   window.L.control.zoom({
       position: 'bottomright'
   }).addTo(map);
+
+  
 
   //google satillite map
 //  window.L.gridLayer.googleMutant({

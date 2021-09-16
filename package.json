@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "1.7.2",
+  "version": "1.14.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -9,16 +9,17 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.21.1",
     "expect-runtime": "^0.4.0",
     "leaflet": "^1.7.1",
+    "leaflet-utfgrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
     "leaflet.gridlayer.googlemutant": "^0.12.1",
     "loglevel": "^1.7.0",
     "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "source-map-explorer": "^2.5.0",
-    "Leaflet.UTFGrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git"
+    "source-map-explorer": "^2.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,7 +53,6 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@cypress/webpack-preprocessor": "^5.4.3",
-    "axios": "^0.21.1",
     "cypress": "^6.2.1",
     "cypress-react-unit-test": "^4.16.9",
     "eslint": "^6.6.0",
