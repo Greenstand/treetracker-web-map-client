@@ -5,7 +5,6 @@ const useStyles = makeStyles(theme => ({
   logo: {
     userSelect: "none",
     position: "absolute",
-    height: 50,
     right: 60,
     bottom: 20,
     opacity: 0,
@@ -15,11 +14,13 @@ const useStyles = makeStyles(theme => ({
       maxWidth: 250,
     },
     [theme.breakpoints.down("sm")]: {
+      pointerEvents: "none",
       transform: "translate(0, -20px)",
       right: 10,
       top: 10,
       "& img": {
         width: "45vw",
+        pointerEvents: "auto",
       },
     },
   },
