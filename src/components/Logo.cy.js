@@ -20,6 +20,5 @@ describe("Logo", () => {
     cy.get("a")
       .should("exist")
       .should("have.attr", "href", "https://greenstand.org/")
-      cy.viewport(800, 500)
   })
 });
