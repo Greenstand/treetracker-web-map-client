@@ -28,9 +28,9 @@ npm start
 
 3. Open the web map in the browser with URL: http://localhost:3000
 
-## the Workflow with Github
+## Workflow with Github
 
-* Feel free to pick tasks that interests you in the `issue` page, and leave some comment on it if you are going to work on it. 
+* Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it. 
 
 * We tag issues with:
   * `good first issue`: easy and good for getting started.
@@ -120,6 +120,11 @@ The config for setting the API server is an env variable, by using `.env`:
 REACT_APP_API_NEW=https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/
 ```
 
+
+## UI design resource
+
+Our Figma design resource is here: https://www.figma.com/file/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A9322
+
 ## Code style guide
 
 We use [Prettier](https://prettier.io/), [Eslint](https://eslint.org/) along with [husky](https://typicode.github.io/husky/#/) to style our code.
@@ -187,7 +192,7 @@ chore: run tests on travis ci
 fix(server): send cors headers
 ```
 
-### Other resource from Greenstand
+## Other resource from Greenstand
 
 We have more tech guides and handbook here:
 
