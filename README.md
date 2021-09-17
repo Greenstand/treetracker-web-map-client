@@ -125,6 +125,40 @@ REACT_APP_API_NEW=https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/
 
 Our Figma design resource is here: https://www.figma.com/file/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A9322
 
+## Test
+
+### Glossary
+
+* Unit test: tests against a single class, object, function or file, covering the most small unit in codebase.
+
+* Integration test: test a single piece of functionality in the app, like: a page, a module, a API endpoint.
+
+* End to End test: test the real app like a human being, against real app/environment.
+
+### Philosophy
+
+We encourage Test Driven Development, with tool like Cypress, especially the component tool of Cypress, and the [intercept](https://docs.cypress.io/api/commands/intercept) API, it's been pretty easy to mock and build the case for tests, so we can write the test case first, let the case fail and then implement the real code. 
+
+### Unit test
+
+It's a good practice to code in TDD, but we don't force to write unit test for every unit.
+
+Could use Cypress component test to cover component units. And Jest test to cover model file and utilities function.
+
+### Integration test
+
+We require integration test for every page.
+
+For the front end, every unique page/route is a unit of functionality. 
+
+Use Cypress with intercept API to cover page tests.
+
+### E2E test
+
+We will implement few E2E test to cover most basic workflow, like: visit the root of the website, then jump into the detailed pages.
+
+Use Cypress to cover E2E tests.
+
 ## Code style guide
 
 We use [Prettier](https://prettier.io/), [Eslint](https://eslint.org/) along with [husky](https://typicode.github.io/husky/#/) to style our code.
