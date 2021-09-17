@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
       top: 10,
       "& img": {
         width: "45vw",
-        pointerEvents: "auto",
       },
     },
   },
