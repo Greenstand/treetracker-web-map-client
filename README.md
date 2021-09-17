@@ -30,25 +30,25 @@ npm start
 
 ## Workflow with Github
 
-* Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it. 
+1. Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it. 
 
-* We tag issues with:
-  * `good first issue`: easy and good for getting started.
-  * `medium`: medium difficulty or needs more work.
-  * `challenge`: hardest or big tasks, or needs some special skill or tricky or even hack in some way.
-  * `documentation`: writing job, sometimes it's good for new dev to learn and do some simple job.
-  * `bug`: just bug.
-  * `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
-  * `high-priority`: urgent problem, like some crucial bug or feature.
-  * We also tag issue with other aspects like the skill needed, the device related and so on.
+1. We tag issues with:
+    * `good first issue`: easy and good for getting started.
+    * `medium`: medium difficulty or needs more work.
+    * `challenge`: hardest or big tasks, or needs some special skill or tricky or even hack in some way.
+    * `documentation`: writing job, sometimes it's good for new dev to learn and do some simple job.
+    * `bug`: just bug.
+    * `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
+    * `high-priority`: urgent problem, like some crucial bug or feature.
+    * We also tag issue with other aspects like the skill needed, the device related and so on.
 
-* Fork the repo.
+1. Fork the repo.
 
-* Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
+1. Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
 
-* Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
+1. Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
 
-* If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
+1. If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
 
 More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
 
