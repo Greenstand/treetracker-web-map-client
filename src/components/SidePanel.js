@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Check from '@material-ui/icons/CheckCircle';
 import Face from '@material-ui/icons/Face';
+import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import Fingerprint from '@material-ui/icons/Fingerprint';
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
@@ -214,6 +215,13 @@ const useStyles = makeStyles(theme => ({
     height: 18,
     background: "#212121",
     fontSize: 15,
+  },
+  name: {
+    width: 18,
+    height: 18,
+    fontSize: 15,
+    background: "#fff",
+    color: "black",
   },
   skeleton: {
     height: "100%",
@@ -434,6 +442,20 @@ function SidePanel(props){
                 <Item title="Tree ID" prefix="#" value={tree.id} />
               </Grid>
             </Grid>
+            {treeDetail && treeDetail.name &&
+              <Grid container className={classes.infoItem} >
+                <Grid item className={classes.detailIconBox} >
+                  <Tooltip title="Tree ID">
+                    <Avatar className={`${classes.detailIcon} ${classes.name}`} >
+                      <SentimentSatisfiedAltIcon/>
+                    </Avatar>
+                  </Tooltip>
+                </Grid>
+                <Grid item>
+                  <Item title="Name" prefix="" value={treeDetail.name} />
+                </Grid>
+              </Grid>
+            }
             {!treeDetail &&
               <Grid container className={classes.skeleton} >
                 <Skeleton width="100%" animation="wave" />

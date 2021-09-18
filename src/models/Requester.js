@@ -4,7 +4,7 @@
 import axios from "axios";
 import log from "loglevel";
 
-const CancelToken = axios.CancelToken;
+const {CancelToken} = axios;
 
 export default class Requester{
   constructor(){
@@ -13,8 +13,10 @@ export default class Requester{
 
   async request(options){
     log.info("request:", options);
-    //before request, cancel previous one
-    this.source && this.source.cancel("clean previous request");
+    // before request, cancel previous one
+    if (this.source) {
+      this.source.cancel("clean previous request");
+    }
     this.source = CancelToken.source();
     try{
       const response = await axios.request({
@@ -25,14 +27,12 @@ export default class Requester{
     }catch(e){
       log.warn("get error when request", e);
       if(axios.isCancel(e)){
-        //change to handle cancel
+        // change to handle cancel
         log.log("request canceled because of:", e.message);
-      }else{
-        log.log("request failed", e);
-        throw e;
+        return null;
       }
+      log.log("request failed", e);
+      throw e;
     }
   }
-
-  
 }

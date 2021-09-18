@@ -1,32 +1,12 @@
-# Treetracker Web
-
-## Current Milestones and Issue Topics
-
-Developers please see current milestones here:  
-https://github.com/Greenstand/treetracker-web-map/milestones
-
-Big picture UX/UI challenges are tracked at:  
-https://github.com/Greenstand/treetracker-web-map/issues?q=is%3Aissue+is%3Aopen+label%3AUX%2FUI
-
-&nbsp;
-&nbsp;
+# Treetracker Web Map Site
 
 ## Project Description
 
-Displays location and details of all trees that have been tracked.
+Displays location and details of all trees that have been tracked in [Greenstand](http://greenstand.org).
 
-Live map is at [www.treetracker.org](https://www.treetracker.org)
-
-For more details see the [Tree Tracker Web Map Wiki] (https://github.com/Greenstand/treetracker-web-map-client/wiki)
-
-&nbsp;
-&nbsp;
+Live site is at [www.treetracker.org](https://www.treetracker.org)
 
 ## Development Environment Quick Start
-
-### Using online DB (Recommended)
-
-#### Frontend Only
 
 1. Make sure all npm modules are installed for client.
 
@@ -34,151 +14,148 @@ For more details see the [Tree Tracker Web Map Wiki] (https://github.com/Greenst
 npm i
 ```
 
-2. Open .env from the project root. It should contain only the following lines
-
-```
-REACT_APP_API=https://dev-k8s.treetracker.org/webmap/
-```
-
-3. Start the client
+2. Start the client
 
 ```
 npm start
 ```
 
-4. Open the web map in the browser with URL: http://localhost:3000
+3. Open the web map in the browser with URL: http://localhost:3000
+
+### How to Build Components
+
+We recommend using Cypress's component tool to build components separately:
+
+To run Cypress unit/component tests:
+
+```
+npm run cyu
+```
+
+[Video tutorial for building component](https://loom.com/share/c750be68ecec4a9b99cb6921d2d2e041)
+
+
+### How to Build Pages/Routes
+
+Glossary: 
+  * Page/Route: every unique path of url on the app is a page or route, like a single tree page: `http://map.treetracker/trees/123`.
+
+#### We need to build integration test for every page
+
+We need to build Cypress integration test for every page/route, the integration tests would be run in CI when merge code and deploy to protect app from breaking. 
+
+Also, integration tests bring some benefits for the development workflow, by mocking API requests, we can separately develop every single page, if you'd like to practice Test Driven Develop, you can mock the API and write the tests first, then implement the real page later.
+
+#### To run Cypress integration test
+
+```
+npm run cy
+```
+
+### How to mock the API
+
+[Video tutorial for mock the API](https://www.loom.com/share/48554f0f67314ea78925a627b2142e1b)
+
+
+## The API
+
+### The current map API
+
+This repo is the client/site project of treetracker web map, it connects to our server-side api online directly, to get more information about the server side, visit our repo [here](https://github.com/Greenstand/treetracker-web-map-api)
+
+### The in-progress API
+
+On current stage, we got another team working on the new API endpoint, eventually, these API will combine with the map API above to provide a unified API service. The new API spec is evolving, his is the newest API specification:
+
+[/doc/web-map-api.yaml](/doc/web-map-api.yaml)
+
+To check the doc in a convenient way, please import it to some API tools like: http://editor.swagger.io/ or Postman.
+
+#### Using our mock API server
+
+To develop without relying on the in-progress work of API team, we set up a mock API server.
+
+The development mock API server is here: [mock server](https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io).
+
+So you can invoke the API: `/trees/[treeId]` by: `https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/trees/[treeId]`.
+
+### Config
+
+The config for setting the API server is an env variable, by using `.env`:
+
+```
+REACT_APP_API_NEW=https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/
+```
 
 ## Code style guide
 
-We follow the Airbnb JavaScript style guide. The superficial aspects of this style are enforced by a pre-commit hook in the project that runs [Prettier](https://prettier.io/) when you commit a change.
+We use [Prettier](https://prettier.io/), [Eslint](https://eslint.org/) along with [husky](https://typicode.github.io/husky/#/) to style our code.
 
-If you are using VSCode as your IDE, please follow [this guide](https://www.digitalocean.com/community/tutorials/how-to-format-code-with-prettier-in-visual-studio-code) to set up Prettier and automatically format your code on file save.
+### Prettier
 
-### Rules
+Prettier reformats the code, but does not do code rule checking. If you are using VSCode as your IDE, please follow [this guide](https://www.digitalocean.com/community/tutorials/how-to-format-code-with-prettier-in-visual-studio-code) to set up Prettier and automatically format your code on file save.
 
-In .eslintrc.json, there is a set of rules with status **off or warn**. Whenever you are developing a new file or an existing file try to correct some warnings, because in the future the rules will be activated.
+You can find the Prettier rules in the .prettierrc file.
 
-**For more information about rules:** https://eslint.org/docs/2.0.0/rules/
+### Eslint
 
-**Airbnb Style Guide:** https://airbnb.io/javascript/
-
-<sub><sup>**Indention:** 2 Spaces for indentation</sup></sub>
-<sub><sup>**Semicolon:** Use semicolons at the end of each line</sup></sub>
-<sub><sup>**Characters:** 80 characters per line</sup></sub>
-<sub><sup>**Equal Equal (eqeqeq):** Good practice to use the type-safe equality operators === and !== instead of their regular counterparts == and !=</sup></sub>
-<sub><sup>**Quotes:** Use single quotes unless you are writing JSON</sup></sub>
-
-```js
-const foo = "bar";
-```
-
-<sub><sup>**Braces:** Opening braces go on the same line as the statement</sup></sub>
-
-```js
-if (true) {
-  console.log("here");
-}
-```
-
-<sup><sub>**Variable declaration:** Declare one Variable per statement</sup></sub>
-
-```js
-const dog = ["bark", "woof"];
-let cat = ["meow", "sleep"];
-```
-
-<sup><sub>**Variable, properties and function names:** Use lowerCamelCase for variables, properties and function names</sup></sub>
-
-```js
-const adminUser = db.query("SELECT * From users ...");
-```
-
-<sup><sub>**Class names:** Use UpperCamelCase for class names</sup></sub>
-
-```js
-class Dog {
-  bark() {
-    console.log("woof");
-  }
-}
-```
-
-<sup><sub>**Descriptive conditions:** Make sure to have a descriptive name that tells the use and meaning of the code</sup></sub>
-
-```js
-const isValidPassword =
-  password.length >= 4 && /^(?=.*\d).{4,}$/.test(password);
-```
-
-<sup><sub>**Object/Array creation:** Use trailing commas and put short declarations on a single line. Only quote keys when your interpreter complains:</sup></sub>
-
-```js
-var a = ["hello", "world"];
-var b = {
-  good: "code",
-  "is generally": "pretty"
-};
-```
-
-### How to test the rules
-
-In package.json, there is a topic called **scripts** that contains many scripts to be executed.
-To validate the rules manually, you must run and check that there is no error in your development:
+To check the coding rules we use Eslint. To validate the rules manually, you must run:
 
 ```
-npm run eslint
+npm run lint
 ```
 
-You will be able to run through this shortcut in VSCode
-![IDE VSCode](./public/images/VSCode_NPM_Script.png)
-
-To fix automatic rules
+To fix automatic rules run:
 
 ```
-lint:fix
+npm run lint:fix
 ```
 
-### How to test
+In .eslintrc.js, there is a set of rules with status **off or warn**. Whenever you are developing a new file or an existing file try to correct some warnings, because in the future the rules will be activated.
 
-We use Jest to build tests.
+Once the rules are activated, you can't make a commit until you fix the lint errors!
 
-1. To test client
+You can find the Eslint rules in the .eslintrc.js file.
+
+### husky
+
+With husky we can use any git hook. Git Hooks are actions that can be executed if a certain Git event occurs. For example when a developer makes a 'git commit' or a 'git push'.
+To add a command to a pre-commit hook or create a new one, use:
 
 ```
-npm test
+npx husky add .husky/pre-commit "<your command>"
 ```
 
-### Alternative development environment for MS Windows (Works on Linux and Mac also)
+.husky folder contains all our hooks. E.g.:
 
-On Windows, the easiest way to develop and debug Node.js applications is using Visual Studio Code.
-It comes with Node.js support out of the box.
+```
+npx pretty-quick --staged
+```
 
-https://code.visualstudio.com/docs
+The [pretty-quick](https://www.npmjs.com/package/pretty-quick) npm package runs Prettier on your changed files.
 
-&nbsp;
-&nbsp;
+### Commit Message and PR Title Format
 
-## Clustering Basics
+We use [commitlint](https://github.com/conventional-changelog/commitlint), to format out commit messages. Commitlint checks if your commit messages meet the conventional commit format.
 
-For performance and UX purposes, since this map needs to deal with an enormous amount of trees, a clustering strategy is used to group those trees, showing information in a way that is more digestible for the end-user.
+You need to use a proper commit message format or you will not be able to commit your changes! husky checks your commit messages before every commit.
 
-Although this feature is already implemented, performance optimizations are a work in progress.
+Your commit messages will need to follow the [Conventional Commits](https://www.conventionalcommits.org/) format, for example:
 
-### Overriding clustering and map initial zoom for testing
+```
+feat: add new button
+```
 
-When there is a need to tweak the clusterization behavior, the **cluster radius** and **zoom** can be overridden specifying query strings.
-For example, if you need to load the map with an initial zoom level of 15, and a radius of 0.001 you will access it like this:
+```
+chore: run tests on travis ci
+```
 
-dev.treetracker.org?**zoom=15&clusterRadius=0.001**
+```
+fix(server): send cors headers
+```
 
-To find the correct value for the cluster radius in a given zoom level, play with some ranges between 0.1 and 0.00025. However, feel free to experiment however you like.
+### Other resource from Greenstand
 
-When these values are overridden, you can zoom and drag the map freely, while keeping the same clusterization behaviors.
+We have more tech guides and handbook here:
 
-Another useful tool to use in conjunction with this is the web browser's console (in Chrome or Firefox, hit F12 to open it). Whenever the map is updated, current zoom level and cluster radius used will be output to the console, so you have a better idea of what is going on.
-
-Future:
-
-- Filters and Statistics
-- View photo together with tree data
-- View planter profile.
+[Greenstand engineer handbook](https://greenstand.gitbook.io/engineering/)

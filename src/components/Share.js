@@ -1,21 +1,19 @@
-import React from "react"
-import IconButton from "@material-ui/core/IconButton";
-import ShareIcon from "@material-ui/icons/Share";
+import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import Close from "@material-ui/icons/Close";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import Email from "@material-ui/icons/Email";
-import {makeStyles} from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
-import Code from "@material-ui/icons/Code";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
+import {makeStyles} from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip";
+import Close from "@material-ui/icons/Close";
+import MaterialShareIcon from "@material-ui/icons/Share";
 import log from "loglevel";
+import React from "react"
+
+import ShareIcon from "./ShareIcon";
 
 const useStyles = makeStyles(theme => ({
   box1:{
@@ -54,7 +52,22 @@ function Share(props){
     window.open(`https://www.facebook.com/dialog/share?app_id=87741124305&href=${props.shareUrl}&display=popup`);
   }
 
-  const mailString = `mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this linke to check it! ${props.shareUrl}`;
+  function handleEmail() {
+    window.open(`mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this link to check it! ${props.shareUrl}`, '_self');
+  }
+
+  function showMessage(text){
+    setMessage(text);
+    setMessageOpen(true);
+  }
+
+  function handleCopyLink() {
+    if (navigator && navigator.clipboard) {
+      navigator.clipboard.writeText(props.shareUrl).then(() => {
+        showMessage("Link has been copied!");
+      });
+    }
+  }
 
   function handleEmbed(){
     setIsOpen(false);
@@ -70,19 +83,19 @@ function Share(props){
   }
 
   React.useEffect(() => {
-    setEmbedCode(`<iframe width="560" height="315" src="${props.shareUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
+    setEmbedCode(`<iframe width="560" height="315" src="${props.shareUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
   }, []);
 
   function handleCopy(){
     log.log("copy...");
-    var copyTextarea = document.getElementById('EmbedCode');
+    const copyTextarea = document.getElementById('EmbedCode');
     copyTextarea.focus();
     copyTextarea.select();
 
     try {
-      var successful = document.execCommand('copy');
-      var msg = successful ? 'successful' : 'unsuccessful';
-      log.log('Copying text command was ' + msg);
+      const successful = document.execCommand('copy');
+      const msg = successful ? 'successful' : 'unsuccessful';
+      log.log(`Copying text command was ${msg}`);
     } catch (err) {
       log.log('Oops, unable to copy');
     }
@@ -94,18 +107,13 @@ function Share(props){
     setMessage("");
   }
 
-  function showMessage(text){
-    setMessage(text);
-    setMessageOpen(true);
-  }
-
   return(
     <>
       <Tooltip title="share tree" >
         <IconButton
           onClick={handleClick}
         >
-          <ShareIcon/>
+          <MaterialShareIcon/>
         </IconButton>
       </Tooltip>
       <Dialog
@@ -125,80 +133,31 @@ function Share(props){
           </Grid>
         </DialogTitle>
         <Grid container justify="center" className={classes.box1} >
-          <Grid item className={classes.box2} >
-            <Grid container direction="column" alignItems="center" >
-              <Grid item>
-                <IconButton 
-                  id="EmbedButton"
-                  onClick={handleEmbed}
-                >
-                  <Avatar>
-                    <Code/>
-                  </Avatar>
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography variant="button" >
-                  Embed
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item className={classes.box2} >
-            <Grid container direction="column" alignItems="center" >
-              <Grid item>
-                <IconButton 
-                  onClick={handleTwitter}
-                >
-                  <Avatar
-                    src="https://dadior.s3-ap-northeast-1.amazonaws.com/twitter2.svg" 
-                  />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography variant="button" >
-                  Twitter
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item className={classes.box2} >
-            <Grid container direction="column" alignItems="center" >
-              <Grid item>
-                <IconButton 
-                  onClick={handleFaceBook}
-                >
-                  <Avatar
-                    src="https://dadior.s3-ap-northeast-1.amazonaws.com/facebook.svg" 
-                  />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography variant="button" >
-                  Facebook
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item className={classes.box2} >
-            <Grid container direction="column" alignItems="center" >
-              <Grid item>
-                <a href={mailString} >
-                  <IconButton 
-                  >
-                    <Avatar>
-                      <Email/>
-                    </Avatar>
-                  </IconButton>
-                </a>
-              </Grid>
-              <Grid item>
-                <Typography variant="button" >
-                  Email
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
+          <ShareIcon
+            name="Link"
+            iconSrc="Link"
+            clickHandler={handleCopyLink}
+          />
+          <ShareIcon
+            name="Embed"
+            iconSrc="Embed"
+            clickHandler={handleEmbed}
+          />
+          <ShareIcon
+            name="Twitter"
+            iconSrc="https://dadior.s3-ap-northeast-1.amazonaws.com/twitter2.svg"
+            clickHandler={handleTwitter}
+          />
+          <ShareIcon
+            name="Facebook"
+            iconSrc="https://dadior.s3-ap-northeast-1.amazonaws.com/facebook.svg"
+            clickHandler={handleFaceBook}
+          />
+          <ShareIcon
+            name="Email"
+            iconSrc="Email"
+            clickHandler={handleEmail}
+          />
         </Grid>
       </Dialog>
       <Dialog

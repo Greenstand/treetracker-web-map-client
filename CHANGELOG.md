@@ -1,3 +1,117 @@
+# [1.14.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.13.0...v1.14.0) (2021-09-15)
+
+
+### Features
+
+* add information card component ([2eec513](https://github.com/Greenstand/treetracker-web-map-client/commit/2eec513fc937b7a5665ecb4f2065ad51b8f9591c))
+
+# [1.13.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.12.0...v1.13.0) (2021-09-13)
+
+
+### Features
+
+* add link share icon ([76cef14](https://github.com/Greenstand/treetracker-web-map-client/commit/76cef1410c69aed4bd98ecee3f56a71fdaa7e578))
+
+# [1.12.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.2...v1.12.0) (2021-08-26)
+
+
+### Bug Fixes
+
+* link to greenstand when greenstand logo ([0ea356d](https://github.com/Greenstand/treetracker-web-map-client/commit/0ea356d02b9fea731911701486606cbbde4270c5))
+
+
+### Features
+
+* greenstand logo is a link ([5a65387](https://github.com/Greenstand/treetracker-web-map-client/commit/5a653870311aa5c240b88692095be336aad5c71f))
+
+## [1.11.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.1...v1.11.2) (2021-08-26)
+
+
+### Bug Fixes
+
+* axios not a dev dependency ([ce15302](https://github.com/Greenstand/treetracker-web-map-client/commit/ce15302bd91c0ffdaaf4084615477b3b36bcd5b2))
+* entity tests ([6ca4a3f](https://github.com/Greenstand/treetracker-web-map-client/commit/6ca4a3f5571527a5f6e3e9b26620e307872c66da))
+
+## [1.11.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.11.0...v1.11.1) (2021-08-26)
+
+
+### Bug Fixes
+
+* copyright pattern ([5f3f714](https://github.com/Greenstand/treetracker-web-map-client/commit/5f3f7149f3ce358e2960e67d4d220a3bc06e5a22))
+* layout Google copyright ([ab1402f](https://github.com/Greenstand/treetracker-web-map-client/commit/ab1402f0c2835c8b58d976b75172657ccedcb4e3))
+
+# [1.11.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.3...v1.11.0) (2021-08-10)
+
+
+### Features
+
+* support tile subdomain ([c592a5c](https://github.com/Greenstand/treetracker-web-map-client/commit/c592a5c044375d0fa15b6bf499a15a349b340e6b))
+
+## [1.10.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.2...v1.10.3) (2021-08-10)
+
+
+### Bug Fixes
+
+* slash problem ([63dfc79](https://github.com/Greenstand/treetracker-web-map-client/commit/63dfc79b4bb1fc9073c3fcd56533059494ccc0bb))
+
+## [1.10.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.1...v1.10.2) (2021-08-07)
+
+
+### Bug Fixes
+
+* slash problem ([6ba345e](https://github.com/Greenstand/treetracker-web-map-client/commit/6ba345eda825b5e73a5a5db78c7fd9b7d80fdb8a))
+
+## [1.10.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.10.0...v1.10.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* handle no tree case ([cbd3d76](https://github.com/Greenstand/treetracker-web-map-client/commit/cbd3d7633f51dfc7f47654af82dd37c4f2c33a45))
+
+# [1.10.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.9.0...v1.10.0) (2021-06-10)
+
+
+### Bug Fixes
+
+* tree name case can not zoom in ([7dbe64c](https://github.com/Greenstand/treetracker-web-map-client/commit/7dbe64cf77d5c5d6e5cb6d987fa8084e571af1ba))
+
+
+### Features
+
+* can reqeust ?tree_name=xxx now ([fe8a4e9](https://github.com/Greenstand/treetracker-web-map-client/commit/fe8a4e9601d99a7af02d6421ff33e2a79713d53c))
+
+# [1.9.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.2...v1.9.0) (2021-06-09)
+
+
+### Features
+
+* support: freetown.treetracker.org ([4a54e69](https://github.com/Greenstand/treetracker-web-map-client/commit/4a54e692cd80643ad38fd3827b7ebe5d7bc22b80))
+
+## [1.8.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.1...v1.8.2) (2021-05-29)
+
+
+### Bug Fixes
+
+* 60 issue - show timeline icon when sidepanel is open ([532bede](https://github.com/Greenstand/treetracker-web-map-client/commit/532bede376c6505b143053b31e83d5f8b75775b4))
+
+## [1.8.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.8.0...v1.8.1) (2021-05-23)
+
+
+### Bug Fixes
+
+* sort out utf lib name; ([75adc6a](https://github.com/Greenstand/treetracker-web-map-client/commit/75adc6a09f05572daad0dd05945279f7f1e72b1f))
+* sort out utf lib name; ([779eebf](https://github.com/Greenstand/treetracker-web-map-client/commit/779eebfdfdac04c048939ceda4377620f8e29129))
+* the aerial image would cover the cluster points ([6bf609e](https://github.com/Greenstand/treetracker-web-map-client/commit/6bf609ee2902389ee4b51ef064cc290cb6bf8eb9))
+* the aerial image would cover the cluster points ([45eda86](https://github.com/Greenstand/treetracker-web-map-client/commit/45eda86f786bf9a97a03f5db692b3ace81c2f788))
+
+# [1.8.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.7.2...v1.8.0) (2021-05-20)
+
+
+### Features
+
+* merge control the display of geojson in freetown, merge from old version ([2df2ade](https://github.com/Greenstand/treetracker-web-map-client/commit/2df2aded5c9372b9b97138f6c12c6387397481ec))
+* merge ocean black box fixing from old version to new ([b7b8151](https://github.com/Greenstand/treetracker-web-map-client/commit/b7b81515e98687ef896b2658532cd917881aefaa))
+
 ## [1.7.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.7.1...v1.7.2) (2021-05-12)
 
 

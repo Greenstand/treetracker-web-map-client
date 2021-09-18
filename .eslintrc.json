@@ -8,7 +8,7 @@
     "extends": [
         "airbnb-base",
         "prettier",
-        "eslint:recommended", 
+        "eslint:recommended",
         "plugin:react/recommended"
     ],
     "parser": "babel-eslint",
@@ -48,11 +48,11 @@
         "import/newline-after-import": "warn",
         "import/no-mutable-exports": "warn",
         "no-plusplus":"warn",
-        "no-continue":"off",   
+        "no-continue":"off",
         "comma-dangle": 0,
         "react/jsx-uses-vars": "warn",
-        "react/display-name": "warn",    
-        "react/react-in-jsx-scope" : 0,    
+        "react/display-name": "warn",
+        "react/react-in-jsx-scope" : 0,
         "no-console": "warn",
         "no-unexpected-multiline": "warn",
         "spaced-comment": ["warn", "always", { "block": { "balanced": true } }],
@@ -83,11 +83,11 @@
         "no-useless-return": "warn",
         "no-lonely-if": "warn",
         "no-undef-init": "warn",
-        "react/prop-types": "warn",
+        "react/prop-types": "off",
         "no-labels": "warn",
         "no-constant-condition": "warn",
         "no-unneeded-ternary": "warn",
-        "max-classes-per-file": "warn"        
+        "max-classes-per-file": ["warn", 2]
     },
     "settings": {
             "react": {
