@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
       maxWidth: 250,
     },
     [theme.breakpoints.down("sm")]: {
+      pointerEvents: "none",
       transform: "translate(0, -20px)",
       right: 10,
       top: 10,
