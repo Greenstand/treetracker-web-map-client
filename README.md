@@ -120,6 +120,13 @@ The config for setting the API server is an env variable, by using `.env`:
 REACT_APP_API_NEW=https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/
 ```
 
+## The route/URL spec
+
+For convenience, we also use openAPI protocol to present the URL spec:
+
+[/doc/web-map-router.yaml](/doc/web-map-router.yaml)
+
+Please import to http://editor.swagger.io to view it.
 
 ## UI design resource
 
