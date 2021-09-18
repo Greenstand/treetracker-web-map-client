@@ -203,10 +203,8 @@ components:
           id: 5
           photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg'
           name: Issa H
-          value:
-            id: 5
-            photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg'
-            name: Issa H
+          tree_planted: 981
+          tree_reject_rate: 0.01
       properties:
         id:
           type: number
@@ -216,6 +214,10 @@ components:
         name:
           type: string
           minLength: 1
+        tree_planted:
+          type: number
+        tree_reject_rate:
+          type: number
       required:
         - id
         - photo_url
