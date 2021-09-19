@@ -1,15 +1,14 @@
-import log from "loglevel";
-import React from "react";
-import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
-import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
 import Grid from "@material-ui/core/Grid";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Slider from '@material-ui/core/Slider';
+import { makeStyles,withStyles } from "@material-ui/core/styles";
+import Tooltip from '@material-ui/core/Tooltip';
+import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
+import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
+import log from "loglevel";
 import moment from "moment";
 import PropTypes from 'prop-types';
-import Tooltip from '@material-ui/core/Tooltip';
-import { useTheme } from '@material-ui/core';
+import React from "react";
 
 const TimelineSlider = withStyles({
   root: {
@@ -33,7 +32,7 @@ const TimelineSlider = withStyles({
   thumb: {
     height: 24,
     width: 24,
-    backgroundColor: '#fff', //white
+    backgroundColor: '#fff', // white
     border: '2px solid currentColor',
     marginTop: -8,
     marginLeft: -12,
@@ -84,7 +83,7 @@ const useStyles = makeStyles(theme => ({
     height: '75px',
     width: '40%',
     color: "white",
-    //'user-select': "none",
+    // 'user-select': "none",
     pointerEvents: "none",
     zIndex: 9,
     position: "fixed",
@@ -134,8 +133,6 @@ function textvalue(begin, end){
 
 function Timeline(props){
   const classes = useStyles();
-  const theme = useTheme()
-  console.log('foo bar theme' + JSON.stringify(theme))
   const [slide, setSlide] = React.useState(false);
 
   function handleClick(){
