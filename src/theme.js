@@ -1,14 +1,11 @@
 /*
  * Material-UI Theme for the entire application
  */
-import {createTheme} from "@material-ui/core/styles";
-
-const PRIMARY = "#8bc34a"
-const SECONDARY = "#ffca28"
+import {createTheme} from '@material-ui/core/styles';
 
 const theme = createTheme({
-  spacing		: 4,
-  typography		: {
+  spacing: 4,
+  typography: {
     fontFamily: [
       'Roboto',
       'Lato',
@@ -19,11 +16,18 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: PRIMARY,
+      main: '#FFFFFF',
     },
     secondary: {
-      main: SECONDARY,
-    }
+      main: '#61892F',
+    },
+    textPrimary: {
+      main: '#373A3E',
+    },
+    textSecondary: {
+      main: '#848484'
+    },
+    lightGreen: '#86C232',
   },
 });
 
