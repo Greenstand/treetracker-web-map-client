@@ -156,7 +156,7 @@ function getInitialBounds (locations, width, height){
 const TILE_SIZE = 256;
 // The mapping between latitude, longitude and pixels is defined by the web
 // mercator projection.
-function project(latLng: google.maps.LatLng) {
+function project(latLng= google.maps.LatLng) {
   let siny = Math.sin((latLng.lat * Math.PI) / 180);
 
   // Truncating to 0.9999 effectively limits latitude to 89.189. This is
