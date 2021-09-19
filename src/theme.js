@@ -1,12 +1,12 @@
 /*
  * Material-UI Theme for the entire application
  */
-import {createMuiTheme} from "@material-ui/core/styles";
+import {createTheme} from "@material-ui/core/styles";
 
 const PRIMARY = "#8bc34a"
 const SECONDARY = "#ffca28"
 
-const theme = createMuiTheme({
+const theme = createTheme({
   spacing		: 4,
   typography		: {
     fontFamily: [
