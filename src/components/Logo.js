@@ -1,44 +1,24 @@
-import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
+import React from "react";
 
-const useStyles = makeStyles(theme => ({
+import logo from "../images/greenstand_logo_full.png";
+
+const useStyles = makeStyles(() => ({
   logo: {
     userSelect: "none",
-    position: "absolute",
-    right: 60,
-    bottom: 20,
-    opacity: 0,
-    transform: "translate(0, 40px)",
-    transition: "all 1s",
     "& img": {
-      maxWidth: 250,
+      maxWidth: 149,
     },
-    [theme.breakpoints.down("sm")]: {
-      transform: "translate(0, -20px)",
-      right: 10,
-      top: 10,
-      "& img": {
-        width: "45vw",
-      },
-    },
-  },
-  logoLoaded: {
-    transform: "translate(0, 0)",
-    opacity: 1,
   },
 }));
 
-function Logo(props){
+function Logo(){
   const classes = useStyles();
-  const isGreenstandLogo = props.logoSrc === require("../images/logo_floating_map.svg")
   return (
-    <div className={`${classes.logo} ${props.logoLoaded?classes.logoLoaded:""}`}>
-      {isGreenstandLogo
-        ? <a href="https://greenstand.org/" target="_blank" rel="noopener noreferrer">
-            <img alt="logo" src={props.logoSrc} />
-          </a>
-        : <img alt="logo" src={props.logoSrc} />
-      }
+    <div className={`${classes.logo}`}>
+      <a href="https://greenstand.org/" target="_blank" rel="noopener noreferrer">
+        <img alt="logo" src={logo} />
+      </a>
     </div>
   );
 }

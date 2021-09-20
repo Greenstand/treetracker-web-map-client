@@ -17,7 +17,6 @@ import LoaderB from "./components/LoaderB";
 import Logo from "./components/Logo";
 import SidePanel from "./components/SidePanel";
 import Timeline from "./components/Timeline";
-import getLogoSrc from "./models/logo";
 import Map from "./models/Map";
 import {parseMapName} from "./utils";
 
@@ -193,10 +192,8 @@ function App() {
   const mapRef = React.useRef(null);
   const [isLoading, setLoading] = React.useState(true);
   const [isLoadingB, setLoadingB] = React.useState(false);
-  const [logoLoaded, setLogoLoaded] = React.useState(false);
   const [message, setMessage] = React.useState({open: false, message:""});
   const [arrow, setArrow] = React.useState({});
-  const [logoSrc, setLogoSrc] = React.useState(undefined);
   const [timelineDate, setTimelineDate] = React.useState(undefined);
   const [timelineEnabled, setTimelineEnabled] = React.useState(true);
 
@@ -399,18 +396,6 @@ function App() {
     mapRef.current.map = map;
   }, []);
 
-  /*
-   * Deal with the logo, loading the logo first, for case like wallet, need to
-   * fetch possible logo url in DB
-   */
-  React.useEffect(() => {
-    log.debug("loading logo");
-    getLogoSrc(window.location.href).then(src => {
-      setLogoSrc(src);
-      setLogoLoaded(true);
-    })
-  }, []);
-
   function handleDateChange(date){
     log.warn("date changed:", date);
     window.history.pushState('page2', '', `/?timeline=${date.join("_")}`);
@@ -473,10 +458,6 @@ function App() {
           </Grid>
         </Grid>
       </Fade>
-      <Logo
-        logoLoaded={logoLoaded}
-        logoSrc={logoSrc}
-      />
       {timelineEnabled &&
         <Timeline
           onDateChange={handleDateChange}
