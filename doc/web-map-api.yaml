@@ -89,6 +89,67 @@ paths:
               schema:
                 $ref: '#/components/schemas/organization'
       operationId: get-organizations-orgId
+  '/organizations/{orgId}/planters/summary':
+    parameters:
+      - schema:
+          type: string
+        name: orgId
+        in: path
+        required: true
+    get:
+      summary: Get the summary info of a planter under a org
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  total:
+                    type: number
+                required:
+                  - total
+                x-examples:
+                  example-1:
+                    total: 100
+              examples:
+                example-summary:
+                  total: 100
+      operationId: get-organizations-orgId-planters-sumarry
+  '/organizations/{orgId}/trees/summary':
+    parameters:
+      - schema:
+          type: string
+        name: orgId
+        in: path
+        required: true
+    get:
+      summary: get trees summary info under a org
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  total:
+                    type: number
+                required:
+                  - total
+                x-examples:
+                  example-1:
+                    total: 1000000
+              examples:
+                example-summary:
+                  total: 0
+      operationId: get-organizations-orgId-trees-summary
+      description: ''
 components:
   schemas:
     tree:
@@ -231,6 +292,24 @@ components:
     organization:
       description: ''
       type: object
+      x-examples:
+        example-org:
+          id: 1
+          name: 180Earth
+          photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
+          location: 'Shirimatunda, Tanzania'
+          created_at: 'November 11, 2019'
+          about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
+          mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
+          value:
+            id: 1
+            name: 180Earth
+            photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
+            area: Shirimatunda
+            country: Tanzania
+            created_at: 'November 11, 2019'
+            about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
+            mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
       properties:
         id:
           type: number
@@ -240,10 +319,7 @@ components:
         photo_url:
           type: string
           minLength: 1
-        area:
-          type: string
-          minLength: 1
-        country:
+        location:
           type: string
           minLength: 1
         created_at:
@@ -259,27 +335,7 @@ components:
         - id
         - name
         - photo_url
-        - area
-        - country
+        - location
         - created_at
         - about
         - mission
-      x-examples:
-        example-org:
-          id: 1
-          name: 180Earth
-          photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
-          area: Shirimatunda
-          country: Tanzania
-          created_at: 'November 11, 2019'
-          about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
-          mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
-          value:
-            id: 1
-            name: 180Earth
-            photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
-            area: Shirimatunda
-            country: Tanzania
-            created_at: 'November 11, 2019'
-            about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
-            mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
