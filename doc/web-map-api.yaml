@@ -205,6 +205,8 @@ components:
           name: Issa H
           tree_planted: 981
           tree_reject_rate: 0.01
+          about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
+          mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
       properties:
         id:
           type: number
@@ -218,6 +220,10 @@ components:
           type: number
         tree_reject_rate:
           type: number
+        about:
+          type: string
+        location:
+          type: string
       required:
         - id
         - photo_url
