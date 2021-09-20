@@ -39,7 +39,7 @@ import log from "loglevel";
 const CancelToken = axios.CancelToken;
 let source;
 
-const treetrackerApiUrl = process.env.REACT_APP_API;
+const treetrackerApiUrl = process.env.NEXT_PUBLIC_API;
 
 const WIDTH = 396;
 const MAX_WIDTH = 480;

@@ -3,7 +3,7 @@
  */
 import axios from "axios";
 
-const treetrackerApiUrl = process.env.REACT_APP_API || "/api/web/";
+const treetrackerApiUrl = process.env.NEXT_PUBLIC_API || "/api/web/";
 
 const entity = {
   name: "entity",

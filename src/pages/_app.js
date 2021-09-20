@@ -1,5 +1,5 @@
-import '../src/style.css';
-import Layout from '../src/components/Layout';
+import '../style.css';
+import Layout from '../components/Layout';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const PRIMARY = '#8bc34a';

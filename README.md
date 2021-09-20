@@ -46,7 +46,7 @@ REACT_APP_API=https://dev-k8s.treetracker.org/webmap/
 3. Start the client
 
 ```
-npm start
+npm run dev
 ```
 
 4. Open the web map in the browser with URL: http://localhost:3000

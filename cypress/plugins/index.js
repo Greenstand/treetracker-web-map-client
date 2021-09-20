@@ -19,33 +19,8 @@
 //  // `on` is used to hook into various events Cypress emits
 //  // `config` is the resolved Cypress config
 //}
-const webpackPreprocessor = require("@cypress/webpack-preprocessor");
-const findWebpack = require("find-webpack");
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
 
-module.exports = (on, config) => {
-  require("cypress-react-unit-test/plugins/react-scripts")(on, config);
-  // IMPORTANT to return the config object
-  // with the any changed environment variables
-  //  on("file:preprocessor", webpackPreprocessor(options));
-  //  return config;
-
-  const webpackOptions = findWebpack.getWebpackOptions();
-  const cleanOptions = {
-    reactScripts: true,
-  };
-
-  findWebpack.cleanForCypress(cleanOptions, webpackOptions);
-  /*
-   * NOTE, set devtool to false to disable the map source when test,
-   * it speed up the test, if need to debug the code in Chrome, set
-   * this to true
-   */
-  webpackOptions.devtool = false;
-
-  const options = {
-    webpackOptions,
-    watchOptions: {},
-  };
-
-  on("file:preprocessor", webpackPreprocessor(options));
-};
+module.exports = (on) => {
+  on('file:preprocessor', webpackPreprocessor())
+}
