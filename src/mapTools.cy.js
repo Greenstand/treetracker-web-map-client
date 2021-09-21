@@ -1,6 +1,6 @@
 import * as mapTools from "./mapTools";
 import React from "react";
-import {mount} from "cypress-react-unit-test";
+import {mount} from "@cypress/react";
 import expectRuntime from "expect-runtime";
 
 const TILE_SIZE = 256;

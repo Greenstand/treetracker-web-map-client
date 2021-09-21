@@ -1,4 +1,4 @@
-import { mount } from "cypress-react-unit-test";
+import { mount } from "@cypress/react";
 import React from "react";
 import Share from "./Share";
 

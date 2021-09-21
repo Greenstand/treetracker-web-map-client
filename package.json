@@ -54,17 +54,22 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@cypress/react": "^5.10.0",
+    "@cypress/webpack-dev-server": "^1.6.0",
     "@cypress/webpack-preprocessor": "^5.4.3",
     "@svgr/webpack": "^5.5.0",
-    "cypress": "^6.2.1",
+    "cypress": "^8.4.1",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.13.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "html-webpack-plugin": "^4.5.2",
     "husky": "^4.0.0",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "webpack": "^4.46.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "proxy": "http://127.0.0.1:3001"
 }
