@@ -1,14 +1,14 @@
-import log from "loglevel";
-import React from "react";
-import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
-import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
 import Grid from "@material-ui/core/Grid";
-import {withStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Slider from '@material-ui/core/Slider';
+import { makeStyles,withStyles } from "@material-ui/core/styles";
+import Tooltip from '@material-ui/core/Tooltip';
+import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
+import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
+import log from "loglevel";
 import moment from "moment";
 import PropTypes from 'prop-types';
-import Tooltip from '@material-ui/core/Tooltip';
+import React from "react";
 
 const TimelineSlider = withStyles({
   root: {
@@ -32,7 +32,7 @@ const TimelineSlider = withStyles({
   thumb: {
     height: 24,
     width: 24,
-    backgroundColor: '#fff', //white
+    backgroundColor: '#fff', // white
     border: '2px solid currentColor',
     marginTop: -8,
     marginLeft: -12,
@@ -82,10 +82,9 @@ const useStyles = makeStyles(theme => ({
     background: 'linear-gradient(90deg, rgba(2,0,36,0.70) 10%, rgba(11,11,94,0.41360294117647056) 19%, rgba(203,209,209,0) 37%)',
     height: '75px',
     width: '40%',
-    color: "#ffff", //white Timeline
-    //'user-select': "none",
+    color: "white",
+    // 'user-select': "none",
     pointerEvents: "none",
-
     zIndex: 9,
     position: "fixed",
     bottom: 13,
@@ -141,15 +140,15 @@ function Timeline(props){
 
     /* Hidden the Timeline title  */
     document.getElementById("txtTimeline").style.display= 'none';
-       
+
     if(slide){
       /* Show up the Timeline title */
       document.getElementById("txtTimeline").style.display= '';
-    
+
       setValue([0, dayRange]);
       props.onClose && props.onClose();
     }
-    
+
   }
 
 
@@ -175,19 +174,19 @@ function Timeline(props){
   return(
     <>
       <div className={classes.root} >
-        <Grid 
+        <Grid
           container
           alignItems="center"
           className={classes.box1}
-        > 
+        >
           <Grid item  className={classes.box2} >
-          
+
             <Tooltip title="Timeline">
               <IconButton id="iconButton" onClick={handleClick} >
               {slide?
-                <CancelTwoToneIcon fontSize="large" color="primary" />
+                <CancelTwoToneIcon fontSize="large" color="secondary" />
                 :
-                <TimelapseTwoToneIcon fontSize="large" color="primary" />
+                <TimelapseTwoToneIcon fontSize="large" color="secondary" />
               }
               </IconButton>
             </Tooltip>
@@ -213,7 +212,7 @@ function Timeline(props){
             }
           </Grid>
         </Grid>
-        
+
       </div>
     </>
   );

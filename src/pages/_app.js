@@ -2,28 +2,11 @@ import '../style.css';
 import Layout from '../components/Layout';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-const PRIMARY = '#8bc34a';
-const SECONDARY = '#ffca28';
-const theme = createMuiTheme({
-  spacing: 4,
-  typography: {
-    fontFamily: ['Roboto', 'Lato', 'Helvetica', 'Arial', 'sans-serif'].join(
-      ',',
-    ),
-  },
-  palette: {
-    primary: {
-      main: PRIMARY,
-    },
-    secondary: {
-      main: SECONDARY,
-    },
-  },
-});
+import appTheme from "../theme";
 
 function TreetrackerApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={appTheme}>
       <Layout>
         <Component {...pageProps} />
       </Layout>
