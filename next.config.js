@@ -1,11 +1,9 @@
-module.exports = {
-  reactStrictMode: true,
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ["@svgr/webpack"]
-    });
+const withImages = require('next-images')
 
-    return config;
-  },
-  };
+module.exports = {
+   ...withImages(),
+   future: {
+      webpack5: true,
+   },
+
+}
