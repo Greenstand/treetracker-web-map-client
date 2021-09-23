@@ -25,7 +25,7 @@ npm i
 2. Start the client
 
 ```
-npm start
+npm run dev
 ```
 
 3. Open the web map in the browser with URL: http://localhost:3000
