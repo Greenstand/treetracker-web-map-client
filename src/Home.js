@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import App from "./App";
 import backgroundImage from "./images/bg.png";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +7,10 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import Navbar from "./components/Navbar";
+import log from "loglevel";
+import dynamic from "next/dynamic";
+
+const App = dynamic(() => import('./App'), { ssr: true });
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -99,7 +102,9 @@ function Home(){
             </Grid>
           </Grid>
           <Grid item className={classes.right} >
-            <App/>
+            <div>
+              <App/>
+            </div>
           </Grid>
         </Grid>
       </Grid>
