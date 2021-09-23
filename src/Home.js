@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import log from "loglevel";
 import dynamic from "next/dynamic";
 
-const App = dynamic(() => import('./App'), { ssr: true });
+const App = dynamic(() => import('./App'), { ssr: false });
 
 const useStyles = makeStyles(theme => ({
   root: {
