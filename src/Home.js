@@ -6,6 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import Paper from "@material-ui/core/Paper";
+import Navbar from "./components/Navbar";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,7 +73,9 @@ function Home(){
   return(
     <Grid container className={classes.root} >
       <Grid item className={classes.nav} >
-        The navigation
+        <Paper>
+          <Navbar/>
+        </Paper>
       </Grid>
       <Grid item className={classes.mainItem} >
         <Grid container className={classes.main} >
