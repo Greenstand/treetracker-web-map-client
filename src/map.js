@@ -79,8 +79,8 @@ let markerHighlight = undefined;
 let isUsingTile = false;
 let utfGridLayer;
 
-if(process.env.REACT_APP_API){
-  treetrackerApiUrl = process.env.REACT_APP_API;
+if(process.env.NEXT_PUBLIC_API){
+  treetrackerApiUrl = process.env.NEXT_PUBLIC_API;
 }else{
   log.warn("Did not set REACT_APP_API");
 }
@@ -966,7 +966,7 @@ var initialize = function() {
     const isFreetown = mapName === "freetown";
     log.info("use tile server");
     isUsingTile = true;
-    var baseURL_def = process.env.REACT_APP_TILE_SERVER_URL;
+    var baseURL_def = process.env.NEXT_PUBLIC_TILE_SERVER_URL;
     if(!baseURL_def){
       throw new Error("Tile server url isn't set");
     }

@@ -6,7 +6,7 @@ import 'leaflet.gridlayer.googlemutant';
 import Fade from "@material-ui/core/Fade";
 import Grid from '@material-ui/core/Grid';
 import Snackbar from "@material-ui/core/Snackbar";
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
 import expect from "expect-runtime";
 import log from "loglevel";
@@ -14,13 +14,10 @@ import React from 'react';
 
 import Loader from "./components/Loader";
 import LoaderB from "./components/LoaderB";
-import Logo from "./components/Logo";
 import SidePanel from "./components/SidePanel";
 import Timeline from "./components/Timeline";
 import Map from "./models/Map";
 import {parseMapName} from "./utils";
-
-import appTheme from "./theme";
 
 const MOBILE_WIDTH = 960;
 
@@ -157,7 +154,7 @@ function getParameters(){
   return parameters;
 }
 
-function App() {
+function MapComponent() {
   log.warn("Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   const classes = useStyles();
   const [sidePanelState, setSidePanelState] = React.useState("none");
@@ -226,7 +223,7 @@ function App() {
     setHasNext(true);
     setHasPrev(true);
   }
-
+  
   function showPanelWithoutTree(){
     log.debug("showPanelWithoutTree");
     showPanelWithoutTree(true);
@@ -414,7 +411,7 @@ function App() {
   },[]);
 
   return (
-    <ThemeProvider theme={appTheme}>
+    <>
       <SidePanel
         tree={tree}
         state={sidePanelState}
@@ -471,8 +468,7 @@ function App() {
           </Grid>
         </Grid>
       }
-    </ThemeProvider>
+    </>
   );
 }
-
-export default App;
+export default MapComponent;
