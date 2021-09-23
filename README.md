@@ -12,6 +12,8 @@ For the new web map site development, we are working on the branch: web-map-site
 
 The current version online is still deployed from master.
 
+So, for issues, the issue for the new web map site, should use the branch: `web-map-site`, the issue for the current version online, like fix bug, add tiny features, should use `master`, generally, we will freeze new big feature on the `master` branch.
+
 ## Development Environment Quick Start
 
 1. Make sure all npm modules are installed for client.
