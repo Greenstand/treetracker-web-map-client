@@ -1,6 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
-import Image from "next/image"
 
 import logo from "../images/greenstand_logo_full.png";
 
@@ -18,7 +17,7 @@ function Logo(){
   return (
     <div className={`${classes.logo}`}>
       <a href="https://greenstand.org/" target="_blank" rel="noopener noreferrer">
-        <Image alt="logo" src={logo} />
+        <img alt="logo" src={logo} />
       </a>
     </div>
   );

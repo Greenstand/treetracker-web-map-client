@@ -14,7 +14,6 @@ import React from 'react';
 
 import Loader from "./components/Loader";
 import LoaderB from "./components/LoaderB";
-import Logo from "./components/Logo";
 import SidePanel from "./components/SidePanel";
 import Timeline from "./components/Timeline";
 import Map from "./models/Map";
