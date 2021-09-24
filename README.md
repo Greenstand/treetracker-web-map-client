@@ -168,6 +168,17 @@ We will implement few E2E test to cover most basic workflow, like: visit the roo
 
 Use Cypress to cover E2E tests.
 
+### test file structure
+
+* Put all component tests into place where next to the test target, by naming the same file with suffix: `.cy.js`;
+
+* Put unit tests into place where next to the test target, by naming the same file name  with suffix: `.test.js`;
+
+* Put all integration tests into `/cypress/integration/integration` folderwith suffix: `.cy.js`;
+
+* Put all e2e tests into `/cypress/integration/e2e/` folder with suffix: `.cy.js`;
+
+
 ## Code style guide
 
 We use [Prettier](https://prettier.io/), [Eslint](https://eslint.org/) along with [husky](https://typicode.github.io/husky/#/) to style our code.
