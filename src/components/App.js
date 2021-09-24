@@ -12,12 +12,12 @@ import expect from "expect-runtime";
 import log from "loglevel";
 import React from 'react';
 
-import Loader from "./components/Loader";
-import LoaderB from "./components/LoaderB";
-import SidePanel from "./components/SidePanel";
-import Timeline from "./components/Timeline";
-import Map from "./models/Map";
-import {parseMapName} from "./utils";
+import Loader from "./Loader";
+import LoaderB from "./LoaderB";
+import SidePanel from "./SidePanel";
+import Timeline from "./Timeline";
+import Map from "../models/Map";
+import {parseMapName} from "../models/utils";
 
 const MOBILE_WIDTH = 960;
 

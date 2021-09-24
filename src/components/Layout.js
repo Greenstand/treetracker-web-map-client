@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import dynamic from "next/dynamic";
 
-const App = dynamic(() => import('../App'), { ssr: false });
+const App = dynamic(() => import('./App'), { ssr: false });
 
 const useStyles = makeStyles(theme => ({
   root: {
