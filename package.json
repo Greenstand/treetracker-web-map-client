@@ -32,6 +32,8 @@
     "eject": "react-scripts eject",
     "lint": "npm run eslint",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "cy": "cypress open",
+    "cyu": "cypress open-ct",
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:only-errors": "eslint --report-unused-disable-directives --quiet .",
     "eslint:fix": "npm run eslint -- --fix",
