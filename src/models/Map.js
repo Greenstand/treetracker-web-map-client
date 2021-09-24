@@ -5,8 +5,8 @@ import axios from "axios";
 import expect from "expect-runtime";
 import  log from "loglevel";
 
-import {mapConfig} from "../mapConfig";
-import {getInitialBounds} from "../mapTools";
+import {mapConfig} from "./mapConfig";
+import {getInitialBounds} from "./mapTools";
 import Requester from "./Requester";
 
 class MapError extends Error{
