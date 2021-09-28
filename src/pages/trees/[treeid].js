@@ -1,9 +1,20 @@
+import React from "react";
 import { useRouter } from 'next/router'
 import log from "loglevel";
+import {useMapContext} from "../../mapContext";
 
 const Tree = ({tree}) => {
   const router = useRouter()
   const { treeid } = router.query
+
+  const mapContext = useMapContext();
+
+  log.warn("map:", mapContext);
+
+  React.useEffect(() => {
+    //manipulate the map
+    mapContext.map.flyTo(tree.lat, tree.lon, 16);
+  }, [] );
 
   return (
     <div style={{color:"white"}}>
