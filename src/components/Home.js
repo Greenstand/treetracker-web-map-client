@@ -38,11 +38,6 @@ const useStyles = makeStyles(theme => ({
 
 function Home(){
   const classes = useStyles();
-  const router = useRouter() 
-
-  function handleClick(){
-    router.push("/top");
-  }
 
   return(
             <Grid container className={classes.pageContainer} >
@@ -57,9 +52,11 @@ function Home(){
                   Learn more
                 </Button>
                 <Box sx={{width: 20}} component="span" />
-                <Button onClick={handleClick} variant="contained" className={classes.button} >
-                  Let&apos;s Find a Tree
-                </Button>
+                <Link href="/top" passHref>
+                  <Button variant="contained" className={classes.button} >
+                    Let&apos;s Find a Tree
+                  </Button>
+                </Link>
               </Grid>
             </Grid>
   );
