@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Top(){
   return (
-    <div style={{color: "white"}} >
+    <div  >
       <h1>top page</h1>
       <h2>featured trees</h2>
       <ul>

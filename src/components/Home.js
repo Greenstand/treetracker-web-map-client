@@ -6,9 +6,16 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Link from "next/link";
 import { useRouter } from 'next/router';
+import backgroundImage from "../images/bg.png"
 
 const useStyles = makeStyles(theme => ({
   pageContainer: {
+    background: `center / cover no-repeat url(${backgroundImage})`,
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+  },
+  contentContainer: {
     color: "white",
     width: "75%",
     margin: "0 auto",
@@ -40,7 +47,8 @@ function Home(){
   const classes = useStyles();
 
   return(
-            <Grid container className={classes.pageContainer} >
+    <Grid className={classes.pageContainer}>
+            <Grid container className={classes.contentContainer} >
               <Typography variant="h4" className={classes.welcome} >
                 Welcome to TreeTracker
               </Typography>
@@ -59,6 +67,7 @@ function Home(){
                 </Link>
               </Grid>
             </Grid>
+      </Grid>
   );
 }
 

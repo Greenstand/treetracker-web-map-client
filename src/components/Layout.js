@@ -1,6 +1,5 @@
 import Navbar from "./Navbar";
 import { makeStyles } from "@material-ui/core/styles";
-import backgroundImage from "../images/bg.png"
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import dynamic from "next/dynamic";
@@ -31,10 +30,8 @@ const useStyles = makeStyles(theme => ({
     width: "50%",
     height: "100%",
     overflow: "hidden",
-    background: `center / cover no-repeat url(${backgroundImage})`,
-    display: "flex",
-    alignItems: "center",
-    zIndex: 999
+    zIndex: 999,
+    background: "gray",
   },
   right: {
     width: "50%",
@@ -46,7 +43,7 @@ export default function Layout({ children }) {
   return (
     <Grid container className={classes.root} >
       <Grid item className={classes.nav} >
-        <Paper>
+        <Paper elevation={4} >
           <Navbar/>
         </Paper>
       </Grid>
