@@ -1,10 +1,11 @@
-import entity from "./entity";
-import {parseDomain} from "./utils";
-import {parseMapName} from "../utils";
 import log from "loglevel";
 
+import {parseMapName} from "../utils";
+import entity from "./entity";
+import {parseDomain} from "./utils";
+
 export default async function(url){
-  let src = require("../images/logo_floating_map.svg");
+  let src;
   const m = url.match(/.*wallet=(.\S+)/);
   log.log("m:", m);
   let wallet;
@@ -22,8 +23,8 @@ export default async function(url){
       src = entities[0].logo_url;
     }
   }
-  
-  //map name
+
+  // map name
   const domain = parseDomain(url);
   if(domain){
     const mapName = parseMapName(domain);
@@ -35,7 +36,7 @@ export default async function(url){
     }
   }
 
-  //map name case2
+  // map name case2
   {
     const m = url.match(/.*map_name=(.\S+)/);
     log.log("m:", m);
