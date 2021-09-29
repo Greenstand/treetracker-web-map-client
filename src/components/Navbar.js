@@ -3,13 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import logo from '../images/greenstand_logo_full.png';
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Menu,
-  MenuItem,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Button, Menu, MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   navContainer: {

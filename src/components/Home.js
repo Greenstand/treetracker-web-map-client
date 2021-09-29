@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import backgroundImage from "../images/bg.png"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,
     display: "flex",
@@ -21,32 +21,31 @@ const useStyles = makeStyles(theme => ({
     margin: "0 auto",
   },
   welcome: {
-    fontFamily: "Montserrat !important",
-    fontSize: "20px !important",
-    fontStyle: "normal !important",
-    fontWeight: "700 !important",
-    lineHeight: "26px !important",
-    letterSpacing: "0em !important",
-    textAlign: "left !important",
+    fontFamily: 'Montserrat !important',
+    fontSize: '20px !important',
+    fontStyle: 'normal !important',
+    fontWeight: '700 !important',
+    lineHeight: '26px !important',
+    letterSpacing: '0em !important',
+    textAlign: 'left !important',
   },
   slogan: {
-    fontFamily: "Montserrat !important",
-    fontSize: "40px !important",
-    fontStyle: "normal !important",
-    fontWeight: "700 !important",
-    lineHeight: "63px !important",
-    letterSpacing: "0em !important",
-    textAlign: "left !important",
+    fontFamily: 'Montserrat !important',
+    fontSize: '40px !important',
+    fontStyle: 'normal !important',
+    fontWeight: '700 !important',
+    lineHeight: '63px !important',
+    letterSpacing: '0em !important',
+    textAlign: 'left !important',
   },
   button: {
-    background: "#86C232",
+    background: '#86C232',
   },
 }));
 
-function Home(){
+function Home() {
   const classes = useStyles();
-
-  return(
+return(
     <Grid className={classes.pageContainer}>
             <Grid container className={classes.contentContainer} >
               <Typography variant="h4" className={classes.welcome} >

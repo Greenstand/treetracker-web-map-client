@@ -6,25 +6,25 @@ import dynamic from "next/dynamic";
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: '100vh',
   },
   nav: {
     height: theme.spacing(18),
-    width: "100%",
-    background: "white",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    background: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     zIndex: 999,
   },
   mainItem: {
-    height: "100%",
+    height: '100%',
   },
   main: {
-    width: "100vw",
-    height: "100%",
+    width: '100vw',
+    height: '100%',
   },
   left: {
     width: "50%",
@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     background: "gray",
   },
   right: {
-    width: "50%",
+    width: '50%',
   },
 }));
 
@@ -47,17 +47,17 @@ export default function Layout({ children }) {
           <Navbar/>
         </Paper>
       </Grid>
-      <Grid item className={classes.mainItem} >
-        <Grid container className={classes.main} >
-        <Grid item className={classes.left} >
-           {children}
-           </Grid>
-      <Grid item className={classes.right} >
+      <Grid item className={classes.mainItem}>
+        <Grid container className={classes.main}>
+          <Grid item className={classes.left}>
+            {children}
+          </Grid>
+          <Grid item className={classes.right}>
             <div>
-              <App/>
+              <App />
             </div>
           </Grid>
-      </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
