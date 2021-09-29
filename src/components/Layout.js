@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     width: "50%",
     height: "100%",
     overflow: "hidden",
-    zIndex: 999
+    zIndex: 999,
+    background: "gray",
   },
   right: {
     width: "50%",
@@ -42,7 +43,7 @@ export default function Layout({ children }) {
   return (
     <Grid container className={classes.root} >
       <Grid item className={classes.nav} >
-        <Paper>
+        <Paper elevation={4} >
           <Navbar/>
         </Paper>
       </Grid>

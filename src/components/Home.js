@@ -4,6 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import Link from "next/link";
+import { useRouter } from 'next/router';
 import backgroundImage from "../images/bg.png"
 
 const useStyles = makeStyles(theme => ({
@@ -43,6 +45,7 @@ const useStyles = makeStyles(theme => ({
 
 function Home(){
   const classes = useStyles();
+
   return(
     <Grid className={classes.pageContainer}>
             <Grid container className={classes.contentContainer} >
@@ -57,9 +60,11 @@ function Home(){
                   Learn more
                 </Button>
                 <Box sx={{width: 20}} component="span" />
-                <Button variant="contained" className={classes.button} >
-                  Let&apos;s Find a Tree
-                </Button>
+                <Link href="/top" passHref>
+                  <Button variant="contained" className={classes.button} >
+                    Let&apos;s Find a Tree
+                  </Button>
+                </Link>
               </Grid>
             </Grid>
       </Grid>
