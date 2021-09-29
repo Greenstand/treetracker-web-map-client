@@ -12,12 +12,13 @@ import expect from 'expect-runtime';
 import log from 'loglevel';
 import React from 'react';
 
-import Loader from './Loader';
-import LoaderB from './LoaderB';
-import SidePanel from './SidePanel';
-import Timeline from './Timeline';
-import Map from '../models/Map';
-import { parseMapName } from '../models/utils';
+import Loader from "./Loader";
+import LoaderB from "./LoaderB";
+import SidePanel from "./SidePanel";
+import Timeline from "./Timeline";
+import Map from "../models/Map";
+import {parseMapName} from "../models/utils";
+import {useMapContext} from "../mapContext";
 
 const MOBILE_WIDTH = 960;
 
@@ -176,6 +177,7 @@ function MapComponent() {
   const [arrow, setArrow] = React.useState({});
   const [timelineDate, setTimelineDate] = React.useState(undefined);
   const [timelineEnabled, setTimelineEnabled] = React.useState(true);
+  const mapContext = useMapContext();
 
   function showPanel(tree) {
     expect(tree).match({
@@ -375,6 +377,8 @@ function MapComponent() {
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;
+    //update context
+    mapContext.setMap(map);
   }, []);
 
   function handleDateChange(date) {

@@ -1105,4 +1105,10 @@ export default class Map {
     log.info('goto:', location);
     this.map.panTo(location);
   }
+
+  flyTo(lat, lon, zoomLevel){
+    log.info("fly to:", lat, lon, zoomLevel);
+    this.map.flyTo([lat, lon], zoomLevel);
+  }
+
 }

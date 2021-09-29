@@ -1,9 +1,8 @@
-import Navbar from './Navbar';
-import { makeStyles } from '@material-ui/core/styles';
-import backgroundImage from '../images/bg.png';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import dynamic from 'next/dynamic';
+import Navbar from "./Navbar";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import dynamic from "next/dynamic";
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
@@ -28,13 +27,11 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
   left: {
-    width: '50%',
-    height: '100%',
-    overflow: 'hidden',
-    background: `center / cover no-repeat url(${backgroundImage})`,
-    display: 'flex',
-    alignItems: 'center',
+    width: "50%",
+    height: "100%",
+    overflow: "hidden",
     zIndex: 999,
+    background: "gray",
   },
   right: {
     width: '50%',
@@ -44,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Layout({ children }) {
   const classes = useStyles();
   return (
-    <Grid container className={classes.root}>
-      <Grid item className={classes.nav}>
-        <Paper>
-          <Navbar />
+    <Grid container className={classes.root} >
+      <Grid item className={classes.nav} >
+        <Paper elevation={4} >
+          <Navbar/>
         </Paper>
       </Grid>
       <Grid item className={classes.mainItem}>
