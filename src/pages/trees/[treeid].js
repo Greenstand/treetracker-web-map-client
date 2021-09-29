@@ -3,7 +3,6 @@ import log from "loglevel";
 import {useMapContext} from "../../mapContext";
 
 const Tree = ({tree}) => {
-  const router = useRouter()
 
   const mapContext = useMapContext();
 
