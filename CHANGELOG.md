@@ -1,3 +1,19 @@
+# [1.15.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.14.0...v1.15.0) (2021-09-29)
+
+
+### Bug Fixes
+
+* build github actions ([a6a135c](https://github.com/Greenstand/treetracker-web-map-client/commit/a6a135c0a88b5f57e8d4d225457d050a6cc3f6d3))
+* changes to mobile logo click event ([3c0a640](https://github.com/Greenstand/treetracker-web-map-client/commit/3c0a640e3456c2cfb13bcc5cbb9382c7e40a07c4))
+* changes to zoom on mobile issue ([c516ab7](https://github.com/Greenstand/treetracker-web-map-client/commit/c516ab76a0bd9a5bf2b784d2a7dc32aff3085b84))
+* zoom on mobile issue ([5e120e1](https://github.com/Greenstand/treetracker-web-map-client/commit/5e120e156357c6e32a5c411ee03c29b1b130584b))
+* zoom on movile issue ([9bbb7f5](https://github.com/Greenstand/treetracker-web-map-client/commit/9bbb7f53086fd80f4249c169b8433b1fd6a56f32))
+
+
+### Features
+
+* map logo has a frame and also displays 'powered by greenstand' ([ce20439](https://github.com/Greenstand/treetracker-web-map-client/commit/ce20439f2fbeb196023ce641fc40d2bfaeb837c4))
+
 # [1.14.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.13.0...v1.14.0) (2021-09-15)
 
 
