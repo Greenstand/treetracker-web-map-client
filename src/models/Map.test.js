@@ -1,36 +1,35 @@
-import response from "../../cypress/fixtures/tile/zoom_level=10&userid=1.json";
-import Map from "./Map";
-import Requester from "./Requester";
+import response from '../../cypress/fixtures/tile/zoom_level=10&userid=1.json';
+import Map from './Map';
+import Requester from './Requester';
 
-jest.mock("./Requester");
+jest.mock('./Requester');
 
-describe("Map", () => {
-
+describe('Map', () => {
   beforeEach(() => {
     Requester.mockClear();
-  })
+  });
 
-  it("loadInitialView", async () => {
+  it('loadInitialView', async () => {
     const request = jest.fn(() => response);
     Requester.mockImplementation(() => ({
       request,
     }));
     const view = {};
     const map = new Map({
-      userid: "1",
+      userid: '1',
       width: 1440,
       height: 510,
       moreEffect: false,
       filters: {
-        wallet: "mayeda",
+        wallet: 'mayeda',
       },
       map: {
         setView: jest.fn((center, zoomLevel, animate) => {
           view.center = center;
           view.zoomLevel = zoomLevel;
           view.animate = animate;
-        })
-      }
+        }),
+      },
     });
     expect(Requester).toHaveBeenCalledTimes(1);
 
@@ -44,5 +43,4 @@ describe("Map", () => {
       zoomLevel: 3,
     });
   });
-
 });

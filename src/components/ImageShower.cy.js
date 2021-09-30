@@ -1,22 +1,24 @@
-import React from "react";
-import { mount } from "@cypress/react";
-import ImageShower from "./ImageShower";
+import React from 'react';
+import { mount } from '@cypress/react';
+import ImageShower from './ImageShower';
 
-describe("ImageShower", () => {
-  it("ImageShower", () => {
-    function Test(){
+describe('ImageShower', () => {
+  it('ImageShower', () => {
+    function Test() {
       const [isOpen, setOpen] = React.useState(false);
-      return(
+      return (
         <>
           <button onClick={() => setOpen(true)}>show</button>
-          <ImageShower open={isOpen} src="xxxx" title="xxxxx" onClose={() => setOpen(false)}/>
+          <ImageShower
+            open={isOpen}
+            src="xxxx"
+            title="xxxxx"
+            onClose={() => setOpen(false)}
+          />
         </>
       );
     }
-    mount(<Test/>);
-    cy.contains("show")
-      .click();
+    mount(<Test />);
+    cy.contains('show').click();
   });
 });
-
-

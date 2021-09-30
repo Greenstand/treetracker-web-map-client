@@ -4,7 +4,6 @@ import React from 'react';
 import logo from '../images/greenstand_logo_full.png';
 import Logo from './Logo';
 
-
 describe('Logo', () => {
   it('it shows logo', () => {
     mount(<Logo />);

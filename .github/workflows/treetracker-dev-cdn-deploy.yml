@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       git-tag:
-        description: "Branch/hash/tag"
+        description: 'Branch/hash/tag'
         required: true
         default: 'master'
 
-env: 
+env:
   project-directory: ./
 
 jobs:
@@ -18,27 +18,27 @@ jobs:
     if: |
       !contains(github.event.head_commit.message, 'skip-ci')
     steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.inputs.git-tag }}
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-    - name: npm clean install
-      run: npm ci
-      working-directory: ${{ env.project-directory }}
-    # - name: run ESLint
-    #   run: npm run lint
-    #   working-directory: ${{ env.project-directory }}
-    # define the endpoints for DEV in github secrets
-    - name: build frontend project
-      run: ${{ secrets.DEV_APP_ENDPOINTS }} CI= npm run build
-      working-directory: ${{ env.project-directory }}
-    - uses: actions/upload-artifact@v2
-      with:
-        name: frontend-bundle
-        path: build
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.git-tag }}
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: npm clean install
+        run: npm ci
+        working-directory: ${{ env.project-directory }}
+      # - name: run ESLint
+      #   run: npm run lint
+      #   working-directory: ${{ env.project-directory }}
+      # define the endpoints for DEV in github secrets
+      - name: build frontend project
+        run: ${{ secrets.DEV_APP_ENDPOINTS }} CI= npm run build
+        working-directory: ${{ env.project-directory }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: frontend-bundle
+          path: build
     # - name: run React tests
     #   run: npm test
     #   working-directory: ${{ env.project-directory }}
@@ -48,23 +48,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: frontend
     if: |
-      github.repository == "Greenstand/${{ github.event.repository.name }}"   
+      github.repository == "Greenstand/${{ github.event.repository.name }}"
     steps:
-    - uses: actions/checkout@v2
-    - name: Download bundled frontend resources
-      uses: actions/download-artifact@v2
-      with:
-        name: frontend-bundle
-        path: build
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.DEV_AWS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET }}
-        aws-region: us-east-1
-    - name: Copy front end resources to s3 bucket
-      run: |
-        aws s3 sync build s3://${{ secrets.DEV_CDN_S3_BUCKET }} --delete
-    - name: Invalidate cloudfront caches
-      run: |
-        aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_CDN_DISTRIBUTION_ID }} --paths "/*"
+      - uses: actions/checkout@v2
+      - name: Download bundled frontend resources
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-bundle
+          path: build
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEV_AWS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET }}
+          aws-region: us-east-1
+      - name: Copy front end resources to s3 bucket
+        run: |
+          aws s3 sync build s3://${{ secrets.DEV_CDN_S3_BUCKET }} --delete
+      - name: Invalidate cloudfront caches
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_CDN_DISTRIBUTION_ID }} --paths "/*"

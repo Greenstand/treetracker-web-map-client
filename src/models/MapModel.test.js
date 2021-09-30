@@ -1,10 +1,9 @@
-import MapModel from "./MapModel";
-import axios from "axios";
+import MapModel from './MapModel';
+import axios from 'axios';
 
-jest.mock("axios");
+jest.mock('axios');
 
-describe("MapModel", () => {
-
+describe('MapModel', () => {
   beforeEach(async () => {
     //mock jQuery
     global.$ = () => ({
@@ -18,7 +17,8 @@ describe("MapModel", () => {
       maps: {
         geometry: {
           spherical: {
-            computeDistanceBetween: jest.fn()
+            computeDistanceBetween: jest
+              .fn()
               .mockReturnValueOnce(800)
               .mockReturnValueOnce(0),
           },
@@ -34,25 +34,25 @@ describe("MapModel", () => {
     global.google = undefined;
   });
 
-  it.skip("checkArrow", async () => {
+  it.skip('checkArrow', async () => {
     axios.get = jest.fn(() => ({
       status: 200,
       data: {
         nearest: {
-          type: "cluster",
-          coordinates: [0, 20]
+          type: 'cluster',
+          coordinates: [0, 20],
         },
       },
     }));
-    const mapModel = new MapModel("/api/web/");
-    jest.spyOn(mapModel, "showArrow");
+    const mapModel = new MapModel('/api/web/');
+    jest.spyOn(mapModel, 'showArrow');
     expect(mapModel).toBeInstanceOf(MapModel);
     mapModel.markers = [];
     mapModel.map = {
       getCenter: () => ({
         lat: () => 0,
         lng: () => 0,
-        toJSON: () => ({lat:0,lng:0}),
+        toJSON: () => ({ lat: 0, lng: 0 }),
       }),
       getBounds: () => ({
         contains: () => false,
@@ -64,17 +64,18 @@ describe("MapModel", () => {
       expect.stringMatching(/\/api\/web\/nearest\?zoom_level=15&lat=0&lng=0/),
       expect.anything(),
     );
-    expect(mapModel.showArrow).toHaveBeenCalledWith("north");
+    expect(mapModel.showArrow).toHaveBeenCalledWith('north');
   });
 
-  describe("Simulate slow API request, and previous request was canceled", () => {
+  describe('Simulate slow API request, and previous request was canceled', () => {
     let cancel = jest.fn();
 
     beforeEach(() => {
-      axios.get = jest.fn()
+      axios.get = jest
+        .fn()
         //slow api
         .mockImplementationOnce(() => {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             setTimeout(() => {
               resolve(true);
             }, 10000);
@@ -84,29 +85,27 @@ describe("MapModel", () => {
           status: 200,
           data: {
             nearest: {
-              type: "cluster",
-              coordinates: [0, 20]
+              type: 'cluster',
+              coordinates: [0, 20],
             },
           },
-      }));
+        }));
       //mock axios cancel
-      axios.CancelToken = jest.fn()
-        .mockImplementation((newFn) => {
-          newFn(cancel);
-        });
+      axios.CancelToken = jest.fn().mockImplementation((newFn) => {
+        newFn(cancel);
+      });
     });
 
-
-    it.skip("", (done) => {
-      const mapModel = new MapModel("/api/web");
-      jest.spyOn(mapModel, "showArrow");
+    it.skip('', (done) => {
+      const mapModel = new MapModel('/api/web');
+      jest.spyOn(mapModel, 'showArrow');
       expect(mapModel).toBeInstanceOf(MapModel);
       mapModel.markers = [];
       mapModel.map = {
         getCenter: () => ({
           lat: () => 0,
           lng: () => 0,
-          toJSON: () => ({lat:0,lng:0}),
+          toJSON: () => ({ lat: 0, lng: 0 }),
         }),
         getBounds: () => ({
           contains: () => false,
@@ -115,63 +114,60 @@ describe("MapModel", () => {
       };
       mapModel.checkArrow();
       setTimeout(() => {
-        mapModel.checkArrow()
-          .then(() => {
-            expect(cancel).toHaveBeenCalledTimes(1);
-            done();
-          });
+        mapModel.checkArrow().then(() => {
+          expect(cancel).toHaveBeenCalledTimes(1);
+          done();
+        });
       }, 10);
-//      expect(axios.get).toHaveBeenCalledWith(
-//        expect.stringMatching(/\/api\/web\/nearest\?zoom_level=15&lat=0&lng=0/)
-//      );
-//      expect(mapModel.showArrow).toHaveBeenCalledWith("north");
+      //      expect(axios.get).toHaveBeenCalledWith(
+      //        expect.stringMatching(/\/api\/web\/nearest\?zoom_level=15&lat=0&lng=0/)
+      //      );
+      //      expect(mapModel.showArrow).toHaveBeenCalledWith("north");
     });
   });
 
-
-
-//  it("module defined", async () => {
-//    console.log("entity:", entity);
-//    expect(entity).toMatchObject({
-//      name: "entity",
-//    });
-//    expect(entity.getById).toBeDefined();
-//    expect(entity.getByWallet).toBeDefined();
-//  });
-//
-//  it("getById(1)", async () => {
-//    axios.get = jest.fn(() => ({
-//      status: 200,
-//      data: {
-//        id: 1,
-//        name: "Zaven",
-//        logoUrl: "http://logo",
-//      },
-//    }));
-//    const e = await entity.getById(1);
-//    expect(axios.get).toHaveBeenCalledWith("/api/web/entities/1");
-//    expect(e).toMatchObject({
-//      id: 1,
-//      name: "Zaven",
-//      logoUrl: "http://logo",
-//    });
-//  });
-//
-//  it("getByWallet('Zaven')", async () => {
-//    axios.get = jest.fn(() => ({
-//      status: 200,
-//      data: [{
-//        id: 1,
-//        name: "Zaven",
-//        logoUrl: "http://logo",
-//      }],
-//    }));
-//    const e = await entity.getByWallet("Zaven");
-//    expect(axios.get).toHaveBeenCalledWith("/api/web/entities?wallet=Zaven");
-//    expect(e).toMatchObject([{
-//      id: 1,
-//      name: "Zaven",
-//      logoUrl: "http://logo",
-//    }]);
-//  });
+  //  it("module defined", async () => {
+  //    console.log("entity:", entity);
+  //    expect(entity).toMatchObject({
+  //      name: "entity",
+  //    });
+  //    expect(entity.getById).toBeDefined();
+  //    expect(entity.getByWallet).toBeDefined();
+  //  });
+  //
+  //  it("getById(1)", async () => {
+  //    axios.get = jest.fn(() => ({
+  //      status: 200,
+  //      data: {
+  //        id: 1,
+  //        name: "Zaven",
+  //        logoUrl: "http://logo",
+  //      },
+  //    }));
+  //    const e = await entity.getById(1);
+  //    expect(axios.get).toHaveBeenCalledWith("/api/web/entities/1");
+  //    expect(e).toMatchObject({
+  //      id: 1,
+  //      name: "Zaven",
+  //      logoUrl: "http://logo",
+  //    });
+  //  });
+  //
+  //  it("getByWallet('Zaven')", async () => {
+  //    axios.get = jest.fn(() => ({
+  //      status: 200,
+  //      data: [{
+  //        id: 1,
+  //        name: "Zaven",
+  //        logoUrl: "http://logo",
+  //      }],
+  //    }));
+  //    const e = await entity.getByWallet("Zaven");
+  //    expect(axios.get).toHaveBeenCalledWith("/api/web/entities?wallet=Zaven");
+  //    expect(e).toMatchObject([{
+  //      id: 1,
+  //      name: "Zaven",
+  //      logoUrl: "http://logo",
+  //    }]);
+  //  });
 });
