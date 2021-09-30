@@ -10,8 +10,11 @@ const Tree = ({tree}) => {
 
   React.useEffect(() => {
     //manipulate the map
-    mapContext.map.flyTo(tree.lat, tree.lon, 16);
-  }, [] );
+    if(mapContext.map){
+      mapContext.map.flyTo(tree.lat, tree.lon, 16);
+    }
+
+  }, [mapContext.map] );
 
   return (
     <div style={{color:"white"}}>
