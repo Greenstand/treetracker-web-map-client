@@ -13,7 +13,6 @@ const Tree = ({tree}) => {
     if(mapContext.map){
       mapContext.map.flyTo(tree.lat, tree.lon, 16);
     }
-
   }, [mapContext.map] );
 
   return (
@@ -29,8 +28,12 @@ export async function getServerSideProps({params}) {
   log.warn("params:", params);
   log.warn("host:", process.env.NEXT_PUBLIC_API_NEW);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_NEW}/trees/${params.treeid}`);
+  const url = `${process.env.NEXT_PUBLIC_API_NEW}/trees/${params.treeid}`;
+  log.warn("url:", url);
+
+  const res = await fetch(url);
   const tree = await res.json();
+  log.warn("response:", tree);
 
   return {
     props: {

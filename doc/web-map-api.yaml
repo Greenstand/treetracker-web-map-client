@@ -150,6 +150,100 @@ paths:
                   total: 0
       operationId: get-organizations-orgId-trees-summary
       description: ''
+  '/mock/trees/933042':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                a-tree:
+                  $ref: '#/components/examples/tree933042'
+  '/mock/trees/932946':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                a-tree:
+                  $ref: '#/components/examples/tree932946'
+  '/mock/trees/featured':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                trees:
+                  value:
+                    trees:
+                      - id: '932946'
+                        photo_url: >-
+                          https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg
+                        verified: true
+                        token_id: c488301f-1117-48c3-8866-3c38f28d3f25
+                        created_at: '5/17/2021, 9:31:17 PM'
+                        lat: -4.882294219999999
+                        lon: 38.380733454
+                        species: eucalyptus
+                        planter_id: 5
+                        organization_id: 1
+                      - id: 933042
+                        photo_url: >-
+                          https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.19.09.49.19_-4.881696978000001_38.37997515399998_47fc629b-27e9-4b58-b31a-3a35e5bbc3f0_IMG_20210518_121452_1024002290.jpg
+                        verified: true
+                        token_id: d4bb294b-8c75-4e0f-af43-1cd9a35e1033
+                        created_at: '5/18/2021, 5:14:48 PM'
+                        lat: -4.881696978000001
+                        lon: 38.37997515399998
+                        species: Markhamia lutea
+                        planter_id: 5
+                        organization_id: 1
+  '/mock/countries/leader':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    countries:
+                    - name: Tanzania
+                      planted: 100000
+                      id: ef883620-15d8-11ec-9c2b-0242ac130003
+                      continent: Africa
+                    - name: Uganda
+                      planted: 90000
+                      id: 2c11ab8a-1606-11ec-9621-0242ac130002
+                      continent: Africa
+                    - name: China
+                      planted: 70000
+                      id: 44c79810-1606-11ec-9621-0242ac130002
+                      continent: Asia
+                    - name: Unitied States
+                      planted: 60000
+                      id: 5da2d57a-1606-11ec-9621-0242ac130002
+                      continent: North America
+  '/mock/planters/5':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                a-planter:
+                  $ref: '#/components/examples/planter5'
+  '/mock/organizations/1':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                a-org:
+                  $ref: '#/components/examples/org1'
 components:
   schemas:
     tree:
@@ -338,3 +432,55 @@ components:
         - created_at
         - about
         - mission
+  examples:
+    tree933042:
+      value:
+        id: 933042
+        photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.19.09.49.19_-4.881696978000001_38.37997515399998_47fc629b-27e9-4b58-b31a-3a35e5bbc3f0_IMG_20210518_121452_1024002290.jpg'
+        verified: true
+        token_id: d4bb294b-8c75-4e0f-af43-1cd9a35e1033
+        impact_manager_id: 8599f832-145e-11ec-82a8-0242ac130003
+        impact_producer_id: a0b6b70e-145e-11ec-82a8-0242ac130003
+        created_at: '5/18/2021, 5:14:48 PM'
+        lat: -4.881696978000001
+        lon: 38.37997515399998
+        species: Markhamia lutea
+        planter_id: 5
+    tree932946:
+      value:
+        id: 932946
+        photo_url: >-
+          https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg
+        verified: true
+        token_id: c488301f-1117-48c3-8866-3c38f28d3f25
+        created_at: 5/17/2021, 9:31:17 PM
+        lat: -4.882294219999999
+        lon: 38.380733454
+        species: eucalyptus
+        planter_id: 5
+        organization_id: 1
+    planter5:
+      value:
+        id: 5
+        photo_url: >-
+          https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg
+        name: Issa H
+    org1:
+      value:
+        id: 1
+        name: 180Earth
+        photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
+        area: Shirimatunda
+        country: Tanzania
+        created_at: 'November 11, 2019'
+        about: >-
+          Greenway is a Youth-Driven Environmental Protection Organization providing
+          alternative solutions to single-use plastic and planting carbon-sucking trees
+          for socio-economic development and reducing climate crisis. Our social work
+          includes reforestation, landscape restoration, climate education, awareness
+          campaign, conducting research, outreach activities, and collaborating with key
+          stakeholders to implement sustainable solutions.
+        mission: >-
+          To combat climate change, desertification, land degradation, carbon emission
+          by inspiring healthier communities affected by severe climate disorder and
+          modestly reducing pollution by 2050.
