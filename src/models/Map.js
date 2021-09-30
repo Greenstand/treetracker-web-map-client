@@ -109,13 +109,8 @@ export default class Map {
       center: this.initialCenter,
       zoomControl: false,
     };
+    
     this.map = this.L.map(domElement, mapOptions);
-
-    // control
-    this.control = this.L.control.zoom({
-      position: 'bottomright',
-    });
-    this.control.addTo(this.map);
     this.map.setView(this.initialCenter, this.minZoom);
     this.map.attributionControl.setPrefix('');
 
