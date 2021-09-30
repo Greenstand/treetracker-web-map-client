@@ -38,7 +38,8 @@
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:only-errors": "eslint --report-unused-disable-directives --quiet .",
     "eslint:fix": "npm run eslint -- --fix",
-    "prettier-fix": "prettier ./ --write"
+    "prettier-fix": "prettier ./ --write",
+    "mock-server": "prism mock ./doc/web-map-api.yaml"
   },
   "eslintConfig": {
     "extends": "react-app"

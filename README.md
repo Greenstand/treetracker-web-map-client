@@ -28,7 +28,13 @@ npm i
 npm run dev
 ```
 
-3. Open the web map in the browser with URL: http://localhost:3000
+3. Start the mock API server
+
+```
+npm run mock-server
+```
+
+4. Open the web map in the browser with URL: http://localhost:3000
 
 ## Workflow with Github
 
@@ -110,9 +116,10 @@ To check the doc in a convenient way, please import it to some API tools like: h
 
 To develop without relying on the in-progress work of API team, we set up a mock API server.
 
-The development mock API server is here: [mock server](https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io).
+We use [prism](https://github.com/stoplightio/prism/blob/master/docs/guides/01-mocking.md) to mock the API, it read our openAPI spec, and convert to a rest API server.
 
-So you can invoke the API: `/trees/[treeId]` by: `https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/trees/[treeId]`.
+So if we need to change the mock response, we can modify the mock example in the [spec](/doc/web-map-api.yaml) and restart the mock server.
+
 
 ### Config
 
