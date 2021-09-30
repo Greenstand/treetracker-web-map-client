@@ -40,7 +40,7 @@ paths:
                 type: object
                 properties: {}
       operationId: get-home
-      description: 'Please not, the real path should just be ''/'' because the editor do not allow empty path, so we added a ''root'' text here'
+      description: "Please not, the real path should just be '/' because the editor do not allow empty path, so we added a 'root' text here"
     parameters: []
   /top:
     get:

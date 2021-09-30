@@ -210,22 +210,22 @@ paths:
                 example:
                   value:
                     countries:
-                    - name: Tanzania
-                      planted: 100000
-                      id: ef883620-15d8-11ec-9c2b-0242ac130003
-                      continent: Africa
-                    - name: Uganda
-                      planted: 90000
-                      id: 2c11ab8a-1606-11ec-9621-0242ac130002
-                      continent: Africa
-                    - name: China
-                      planted: 70000
-                      id: 44c79810-1606-11ec-9621-0242ac130002
-                      continent: Asia
-                    - name: Unitied States
-                      planted: 60000
-                      id: 5da2d57a-1606-11ec-9621-0242ac130002
-                      continent: North America
+                      - name: Tanzania
+                        planted: 100000
+                        id: ef883620-15d8-11ec-9c2b-0242ac130003
+                        continent: Africa
+                      - name: Uganda
+                        planted: 90000
+                        id: 2c11ab8a-1606-11ec-9621-0242ac130002
+                        continent: Africa
+                      - name: China
+                        planted: 70000
+                        id: 44c79810-1606-11ec-9621-0242ac130002
+                        continent: Asia
+                      - name: Unitied States
+                        planted: 60000
+                        id: 5da2d57a-1606-11ec-9621-0242ac130002
+                        continent: North America
   '/mock/planters/5':
     get:
       responses:
