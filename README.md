@@ -124,7 +124,7 @@ npm run mock-server
 
 We use [prism](https://github.com/stoplightio/prism/blob/master/docs/guides/01-mocking.md) to mock the API, it read our openAPI spec, and convert to a rest API server.
 
-So if we need to change the mock response, we can modify the mock example in the [spec](/doc/web-map-api.yaml) and restart the mock server.
+So if we need to change the mock response, we can modify the mock example in the [spec](/doc/web-map-api.yaml) (those API prefixed with /mock is just for mock purpose) and restart the mock server.
 
 
 ### Config
