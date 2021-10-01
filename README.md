@@ -116,6 +116,12 @@ To check the doc in a convenient way, please import it to some API tools like: h
 
 To develop without relying on the in-progress work of API team, we set up a mock API server.
 
+To start the mock API server:
+
+```
+npm run mock-server
+```
+
 We use [prism](https://github.com/stoplightio/prism/blob/master/docs/guides/01-mocking.md) to mock the API, it read our openAPI spec, and convert to a rest API server.
 
 So if we need to change the mock response, we can modify the mock example in the [spec](/doc/web-map-api.yaml) and restart the mock server.
