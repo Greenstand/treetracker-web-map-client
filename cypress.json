@@ -2,5 +2,6 @@
   "baseUrl": "http://localhost:3000",
   "testFiles": "**/*.cy.{js,jsx,ts,tsx}",
   "componentFolder": "src",
-  "nodeVersion": "system"
+  "nodeVersion": "system",
+  "integrationFolder": "cypress/tests"
 }
