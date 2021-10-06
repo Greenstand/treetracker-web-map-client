@@ -8,7 +8,7 @@ Live site is at [www.treetracker.org](https://www.treetracker.org)
 
 **NOTE**
 
-For the new web map site development, we are working on the branch: web-map-site, now we have set it as default branch. 
+For the new web map site development, we are working on the branch: web-map-site, now we have set it as default branch.
 
 The current version online is still deployed from master.
 
@@ -38,17 +38,18 @@ npm run mock-server
 
 ## Workflow with Github
 
-1. Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it. 
+1. Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it.
 
 1. We tag issues with:
-    * `good first issue`: easy and good for getting started.
-    * `medium`: medium difficulty or needs more work.
-    * `challenge`: hardest or big tasks, or needs some special skill or tricky or even hack in some way.
-    * `documentation`: writing job, sometimes it's good for new dev to learn and do some simple job.
-    * `bug`: just bug.
-    * `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
-    * `high-priority`: urgent problem, like some crucial bug or feature.
-    * We also tag issue with other aspects like the skill needed, the device related and so on.
+
+   - `good first issue`: easy and good for getting started.
+   - `medium`: medium difficulty or needs more work.
+   - `challenge`: hardest or big tasks, or needs some special skill or tricky or even hack in some way.
+   - `documentation`: writing job, sometimes it's good for new dev to learn and do some simple job.
+   - `bug`: just bug.
+   - `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
+   - `high-priority`: urgent problem, like some crucial bug or feature.
+   - We also tag issue with other aspects like the skill needed, the device related and so on.
 
 1. Fork the repo.
 
@@ -59,7 +60,6 @@ npm run mock-server
 1. If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
 
 More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
-
 
 ## Guide for development
 
@@ -75,15 +75,15 @@ npm run cyu
 
 [Video tutorial for building component](https://loom.com/share/c750be68ecec4a9b99cb6921d2d2e041)
 
-
 ### How to Build Pages/Routes
 
-Glossary: 
-  * Page/Route: every unique path of url on the app is a page or route, like a single tree page: `http://map.treetracker/trees/123`.
+Glossary:
+
+- Page/Route: every unique path of url on the app is a page or route, like a single tree page: `http://map.treetracker/trees/123`.
 
 #### We need to build integration test for every page
 
-We need to build Cypress integration test for every page/route, the integration tests would be run in CI when merge code and deploy to protect app from breaking. 
+We need to build Cypress integration test for every page/route, the integration tests would be run in CI when merge code and deploy to protect app from breaking.
 
 Also, integration tests bring some benefits for the development workflow, by mocking API requests, we can separately develop every single page, if you'd like to practice Test Driven Develop, you can mock the API and write the tests first, then implement the real page later.
 
@@ -97,6 +97,13 @@ npm run cy
 
 [Video tutorial for mock the API](https://www.loom.com/share/48554f0f67314ea78925a627b2142e1b)
 
+### Setup for WSL users
+
+In order to launch Cypress in WSL you will need to have an X-Server running on Windows. [This guide](https://dev.to/nickymeuleman/using-graphical-user-interfaces-like-cypress-in-wsl2-249j) outlines the steps necessary to configure your WSL shell to work with an X-server. If this still isn't working try launching vcxsrv.exe from the command line like this:
+
+```bat
+"" "C:\Program Files\VcXsrv\vcxsrv.exe" :0 -multiwindow -clipboard -wgl -ac`
+```
 
 ## The API
 
@@ -126,7 +133,6 @@ We use [prism](https://github.com/stoplightio/prism/blob/master/docs/guides/01-m
 
 So if we need to change the mock response, we can modify the mock example in the [spec](/doc/web-map-api.yaml) (those API prefixed with /mock is just for mock purpose) and restart the mock server.
 
-
 ### Config
 
 The config for setting the API server is an env variable, by using `.env`:
@@ -151,15 +157,15 @@ Our Figma design resource is here: https://www.figma.com/file/XdYFdjlsHvxehlrkPV
 
 ### Glossary
 
-* Unit test: tests against a single class, object, function or file, covering the most small unit in codebase.
+- Unit test: tests against a single class, object, function or file, covering the most small unit in codebase.
 
-* Integration test: test a single piece of functionality in the app, like: a page, a module, a API endpoint.
+- Integration test: test a single piece of functionality in the app, like: a page, a module, a API endpoint.
 
-* End to End test: test the real app like a human being, against real app/environment.
+- End to End test: test the real app like a human being, against real app/environment.
 
 ### Philosophy
 
-We encourage Test Driven Development, with tool like Cypress, especially the component tool of Cypress, and the [intercept](https://docs.cypress.io/api/commands/intercept) API, it's been pretty easy to mock and build the case for tests, so we can write the test case first, let the case fail and then implement the real code. 
+We encourage Test Driven Development, with tool like Cypress, especially the component tool of Cypress, and the [intercept](https://docs.cypress.io/api/commands/intercept) API, it's been pretty easy to mock and build the case for tests, so we can write the test case first, let the case fail and then implement the real code.
 
 ### Unit test
 
@@ -171,7 +177,7 @@ Could use Cypress component test to cover component units. And Jest test to cove
 
 We require integration test for every page.
 
-For the front end, every unique page/route is a unit of functionality. 
+For the front end, every unique page/route is a unit of functionality.
 
 Use Cypress with intercept API to cover page tests.
 
@@ -183,14 +189,13 @@ Use Cypress to cover E2E tests.
 
 ### test file structure
 
-* Put all component tests into place where next to the test target, by naming the same file with suffix: `.cy.js`;
+- Put all component tests into place where next to the test target, by naming the same file with suffix: `.cy.js`;
 
-* Put unit tests into place where next to the test target, by naming the same file name  with suffix: `.test.js`;
+- Put unit tests into place where next to the test target, by naming the same file name with suffix: `.test.js`;
 
-* Put all integration tests into `/cypress/integration/integration` folderwith suffix: `.cy.js`;
+- Put all integration tests into `/cypress/integration/integration` folderwith suffix: `.cy.js`;
 
-* Put all e2e tests into `/cypress/integration/e2e/` folder with suffix: `.cy.js`;
-
+- Put all e2e tests into `/cypress/integration/e2e/` folder with suffix: `.cy.js`;
 
 ## Code style guide
 
