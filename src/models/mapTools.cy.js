@@ -1,7 +1,19 @@
-import * as mapTools from './mapTools';
-import React from 'react';
 import { mount } from '@cypress/react';
 import expectRuntime from 'expect-runtime';
+import React from 'react';
+
+import * as mapTools from './mapTools';
+
+const google = {
+  maps: {
+    geometry: {
+      spherical: {
+        computeDistanceBetween: () => 0,
+      },
+    },
+    LatLng: () => 0,
+  },
+};
 
 const TILE_SIZE = 256;
 // The mapping between latitude, longitude and pixels is defined by the web
