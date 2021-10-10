@@ -1,9 +1,10 @@
-import Link from 'next/link';
+import { AppBar, Button, Menu, MenuItem, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
 import Image from 'next/image';
+import React, { useState } from 'react';
+
 import logo from '../images/greenstand_logo_full.png';
-import { AppBar, Toolbar, Button, Menu, MenuItem } from '@material-ui/core';
+import Link from './Link';
 
 const useStyles = makeStyles((theme) => ({
   navContainer: {
