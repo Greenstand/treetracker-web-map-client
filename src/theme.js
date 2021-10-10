@@ -9,6 +9,16 @@ const theme = createTheme({
     fontFamily: ['Roboto', 'Lato', 'Helvetica', 'Arial', 'sans-serif'].join(
       ',',
     ),
+    subtitle1: {
+      fontSize: 36,
+      fontWeight: 700,
+      color: '#474B4F'
+    },
+    subtitle2: {
+      fontSize: 24,
+      fontWeight: 700,
+      color: '#474B4F',
+    }
   },
   palette: {
     primary: {

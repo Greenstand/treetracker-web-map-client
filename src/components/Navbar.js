@@ -78,8 +78,8 @@ function Navbar() {
             Blog
           </Button>
         </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
+        <Link href="/" passHref>
+          <Button className={classes.buttonStyle} variant="text" component="a">
             Contact Us
           </Button>
         </Link>
