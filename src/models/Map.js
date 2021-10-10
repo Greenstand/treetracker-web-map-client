@@ -109,7 +109,7 @@ export default class Map {
       center: this.initialCenter,
       zoomControl: false,
     };
-    
+
     this.map = this.L.map(domElement, mapOptions);
     this.map.setView(this.initialCenter, this.minZoom);
     this.map.attributionControl.setPrefix('');
