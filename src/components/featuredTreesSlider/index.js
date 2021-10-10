@@ -3,8 +3,7 @@ import { Grid, Button } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useStyles } from './style.js'; // the style file
-import Link from '../Link'; 
-
+import Link from '../Link';
 
 function FeaturedTreesSlider() {
   const classes = useStyles();
