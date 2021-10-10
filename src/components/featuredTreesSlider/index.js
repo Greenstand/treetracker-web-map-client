@@ -3,6 +3,8 @@ import { Grid, Button } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useStyles } from './style.js'; // the style file
+import Link from '../Link'; 
+
 
 function FeaturedTreesSlider() {
   const classes = useStyles();
@@ -63,14 +65,14 @@ function FeaturedTreesSlider() {
       </Button>
       <Grid ref={sliderRef} className={classes.SliderImgContainer}>
         {trees.map((tree, index) => (
-          <div key={index} className={classes.Card}>
+          <Link href={`/trees/${tree.id}`} key={index} className={classes.Card}>
             <img className={classes.Img} src={tree.photo_url} />
             <div className={classes.Title}>
               <p style={{ padding: '0 8px' }}>
                 {tree.species} - {tree.id}
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </Grid>
       <Button className={classes.GoLeft} onClick={() => scrollHandler(-500)}>
