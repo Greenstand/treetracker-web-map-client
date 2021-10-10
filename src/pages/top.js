@@ -1,10 +1,12 @@
-import Link from 'next/link';
+import FeaturedTreesSlider from '../components/featuredTreesSlider';
+import Link from '../components/Link';
 
 export default function Top() {
   return (
     <div>
       <h1>top page</h1>
       <h2>featured trees</h2>
+      <FeaturedTreesSlider />
       <ul>
         <li>
           <Link href="/trees/933042">tree 933042</Link>
