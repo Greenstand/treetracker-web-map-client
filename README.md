@@ -64,6 +64,12 @@ So, for issues, the issue for the new web map site, should use the branch: `web-
    npm run mock-server
    ```
 
+   Alternatively you can start the dev server and mock API server with [ concurrently ](https://www.npmjs.com/package/concurrently) using this command:
+
+   ```
+   npm run dev:mock
+   ```
+
 4. Open the web map in the browser with URL: http://localhost:3000
 
 **Setup for WSL users**
