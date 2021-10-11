@@ -363,8 +363,12 @@ function MapComponent() {
     // disable waiting for loading
     loaded();
     const script = document.createElement('script');
-    script.src =
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
+    
+    const  key = 'AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE'; // greenstand
+    //const  key = 'AIzaSyCXH8F5JDUMnerdzcOhHOp44vCTPX9Y9-A'; // mine
+    
+    script.src = 
+      `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=geometry`;
     script.id = 'googleMaps';
     document.body.appendChild(script);
     const parameters = getParameters();
