@@ -1,7 +1,7 @@
-import { mount } from '@cypress/react';
 import React from 'react';
 
 import logo from '../images/greenstand_logo_full.png';
+import { mountWithTheme as mount } from '../models/test-utils';
 import Logo from './Logo';
 
 describe('Logo', () => {

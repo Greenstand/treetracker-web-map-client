@@ -1,8 +1,8 @@
-import { mount } from '@cypress/react';
 import expectRuntime from 'expect-runtime';
 import React from 'react';
 
 import * as mapTools from './mapTools';
+import { mountWithTheme as mount } from './test-utils';
 
 const google = {
   maps: {
