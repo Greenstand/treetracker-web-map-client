@@ -5,7 +5,7 @@ import axios from 'axios';
 import expect from 'expect-runtime';
 import log from 'loglevel';
 
-import { mapConfig } from './mapConfig';
+import { mapConfig, mapStyles } from './mapConfig';
 import { getInitialBounds } from './mapTools';
 import Requester from './Requester';
 
@@ -109,13 +109,20 @@ export default class Map {
       center: this.initialCenter,
       zoomControl: false,
     };
-    
+
     this.map = this.L.map(domElement, mapOptions);
     this.map.setView(this.initialCenter, this.minZoom);
     this.map.attributionControl.setPrefix('');
 
+    this.L.gridLayer
+      .googleMutant({
+        type: 'hybrid',
+        styles: mapStyles,
+      })
+      .addTo(this.map);
+
     // load google map
-    await this.loadGoogleSatellite();
+    // await this.loadGoogleSatellite();
 
     /*
      * The logic is:
