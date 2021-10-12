@@ -46,6 +46,8 @@ So, for issues, the issue for the new web map site, should use the branch: `web-
 
 ## Development Environment Quick Start
 
+This project must be installed and used with Node v16. [Node Version Manager](https://github.com/nvm-sh/nvm) is an excellent tool for quickly installing and selecting Node releases.
+
 1. Make sure all npm modules are installed for client.
 
    ```
