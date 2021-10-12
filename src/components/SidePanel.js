@@ -466,7 +466,7 @@ function SidePanel(props){
             {treeDetail &&
               <>
                 <List icon={AccessTime} tooltip="Create date" >
-                  <Item title="Created at" value={new Date(treeDetail.time_created).toLocaleString("en-US")} />
+                  <Item title="Created at" value={new Date(treeDetail.time_created).toLocaleString("en-GB")} />
                 </List>
                 <List
                   icon={Face}
