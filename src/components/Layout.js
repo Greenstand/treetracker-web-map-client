@@ -1,5 +1,4 @@
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import dynamic from 'next/dynamic';
 
@@ -7,59 +6,46 @@ import Navbar from './Navbar';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     height: '100vh',
-  },
-  nav: {
-    height: theme.spacing(18),
-    width: '100%',
-    background: 'white',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000,
-  },
-  mainItem: {
-    height: '100%',
+    flexDirection: 'column',
   },
   main: {
     width: '100vw',
-    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    flexGrow: 1,
+    overflow: 'hidden',
   },
   left: {
     width: '50%',
     height: '100%',
-    overflow: 'hidden',
     zIndex: 999,
     background: 'gray',
+    overflowY: 'auto',
   },
   right: {
     width: '50%',
+    zIndex: 998,
+    background: 'gray',
   },
 }));
 
 export default function Layout({ children }) {
   const classes = useStyles();
   return (
-    <Grid container className={classes.root}>
-      <Grid item className={classes.nav}>
-        <Paper elevation={4}>
-          <Navbar />
-        </Paper>
-      </Grid>
-      <Grid item className={classes.mainItem}>
-        <Grid container className={classes.main}>
-          <Grid item className={classes.left}>
-            {children}
-          </Grid>
-          <Grid item className={classes.right}>
-            <div>
-              <App />
-            </div>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+    <Box className={classes.root}>
+      <Navbar />
+      <Box className={classes.main}>
+        <Box className={classes.left}>{children}</Box>
+        <Box className={classes.right}>
+          <div>
+            <App />
+          </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }
