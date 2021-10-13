@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   organizationPage: {
     overflowY: 'scroll',
     background: 'white',
-    height: '100%',
     padding: '12px 20px',
   },
   backButton: {
@@ -39,15 +38,31 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     height: 332,
     marginBottom: theme.spacing(4),
-    '& img': {
+    '& img:nth-of-type(1)': {
       width: '100%',
       height: '100%',
+    },
+    '& img:nth-of-type(2)': {
+      position: 'absolute',
+      width: 100,
+      height: 100,
+      left: 10,
+      bottom: 10,
     },
   },
 }));
 
 export default function Organization({ organization }) {
   const classes = useStyles();
+  const {
+    name,
+    area,
+    country,
+    created_at,
+    about,
+    mission,
+    photo_url,
+  } = organization;
   return (
     <Box className={classes.organizationPage}>
       <Box display="flex" justifyContent="spaceBetween">
@@ -60,60 +75,36 @@ export default function Organization({ organization }) {
         </Button>
         <Box>{/* search button */}</Box>
       </Box>
-      <Typography variant="subtitle1">
-        Greenway International Foundation
-      </Typography>
+      <Typography variant="subtitle1">{name}</Typography>
       <Box className={classes.badgeWrapper}>
         <VerifiedBadge verified={true} badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Planters" />
       </Box>
       <Box className={classes.info}>
         <CalendarTodayIcon fontSize="small" />
-        Planter since November 11, 2019
+        Planter since {created_at}
       </Box>
       <Box className={classes.info}>
         <LocationOnIcon fontSize="small" />
-        Shirimatunda, Tanzania
+        {area}, {country}
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.imgContainer}>
         <img src={placeholder} />
+        <img src={photo_url} />
       </Box>
       <Typography variant="subtitle2" gutterBottom>
         About the Organization
       </Typography>
-      <Typography variant="body2">
-        Velit nostrud velit laboris in ullamco consequat. Consequat culpa labore
-        laboris magna in aute nulla commodo labore qui aute esse do. Eiusmod
-        ipsum qui labore velit deserunt amet laboris mollit cupidatat anim
-        aliqua. Nostrud proident tempor nisi ut exercitation nulla id commodo
-        consectetur. Nulla aliqua voluptate cupidatat cillum. Reprehenderit
-        exercitation reprehenderit dolor velit proident dolore culpa. Incididunt
-        sint aliqua sint dolor voluptate officia nulla non Lorem.
-      </Typography>
-      <br />
-      <Typography variant="body2" gutterBottom>
-        Velit nostrud velit laboris in ullamco consequat. Consequat culpa labore
-        laboris magna in aute nulla commodo labore qui aute esse do. Eiusmod
-        ipsum qui labore velit deserunt amet laboris mollit cupidatat anim
-        aliqua. Nostrud proident tempor nisi ut exercitation nulla id commodo
-        consectetur. Nulla aliqua voluptate cupidatat cillum. Reprehenderit
-        exercitation reprehenderit dolor velit proident dolore culpa. Incididunt
-        sint aliqua sint dolor voluptate officia nulla non Lorem.
-      </Typography>
+      <Typography variant="body2">{about}</Typography>
       <br />
       <Typography variant="subtitle2" gutterBottom>
         Mission
       </Typography>
       <Typography variant="body2" gutterBottom>
-        Velit nostrud velit laboris in ullamco consequat. Consequat culpa labore
-        laboris magna in aute nulla commodo labore qui aute esse do. Eiusmod
-        ipsum qui labore velit deserunt amet laboris mollit cupidatat anim
-        aliqua. Nostrud proident tempor nisi ut exercitation nulla id commodo
-        consectetur. Nulla aliqua voluptate cupidatat cillum. Reprehenderit
-        exercitation reprehenderit dolor velit proident dolore culpa. Incididunt
-        sint aliqua sint dolor voluptate officia nulla non Lorem.
+        {mission}
       </Typography>
+      <br />
       <Typography variant="subtitle2" gutterBottom>
         Check out the planting effort in action
       </Typography>
@@ -122,8 +113,9 @@ export default function Organization({ organization }) {
 }
 
 export async function getServerSideProps({ params }) {
-  //api call to fetch organization information
-  const organization = params.organizationid;
+  const url = `${process.env.NEXT_PUBLIC_API_NEW}/organizations/${params.organizationid}`;
+  const res = await fetch(url);
+  const organization = await res.json();
 
   return {
     props: {
