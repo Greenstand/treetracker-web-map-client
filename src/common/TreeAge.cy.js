@@ -4,9 +4,9 @@ import TreeAge from './TreeAge';
 
 describe('TreeAge', () => {
   it('TreeAge', () => {
-    const treeAgeValue = "8 Years";
+    const treeAgeValue = '8 Years';
     function Test() {
-      return (<TreeAge treeAge={treeAgeValue} />);
+      return <TreeAge treeAge={treeAgeValue} />;
     }
     mount(<Test />);
   });
