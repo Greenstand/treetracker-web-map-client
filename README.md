@@ -1,3 +1,33 @@
+**Table of Contents**
+
+- [Treetracker Web Map Site](#treetracker-web-map-site)
+	- [Project Description](#project-description)
+	- [Development Environment Quick Start](#development-environment-quick-start)
+	- [Workflow with Github](#workflow-with-github)
+	- [Test Driven Development](#test-driven-development)
+		- [Glossary](#glossary)
+		- [Test File Naming Conventions](#test-file-naming-conventions)
+	- [How to Build Components](#how-to-build-components)
+		- [Adding Material UI Theme to Component Tests](#adding-material-ui-theme-to-component-tests)
+		- [Using Correct Link Component](#using-correct-link-component)
+	- [How to Build Pages/Routes](#how-to-build-pagesroutes)
+		- [Integration Tests](#integration-tests)
+		- [How to mock the API](#how-to-mock-the-api)
+		- [Mocking API calls in NextJs SSR functions](#mocking-api-calls-in-nextjs-ssr-functions)
+	- [The API](#the-api)
+		- [The current map API](#the-current-map-api)
+		- [The in-progress API](#the-in-progress-api)
+		- [Using our mock API server](#using-our-mock-api-server)
+		- [Config](#config)
+	- [The route/URL spec](#the-routeurl-spec)
+	- [UI design resource](#ui-design-resource)
+	- [Code style guide](#code-style-guide)
+		- [Prettier](#prettier)
+		- [Eslint](#eslint)
+		- [husky](#husky)
+		- [Commit Message and PR Title Format](#commit-message-and-pr-title-format)
+	- [Other resource from Greenstand](#other-resource-from-greenstand)
+
 # Treetracker Web Map Site
 
 ## Project Description
@@ -16,58 +46,94 @@ So, for issues, the issue for the new web map site, should use the branch: `web-
 
 ## Development Environment Quick Start
 
+This project must be installed and used with Node v16. [Node Version Manager](https://github.com/nvm-sh/nvm) is an excellent tool for quickly installing and selecting Node releases.
+
 1. Make sure all npm modules are installed for client.
 
-```
-npm i
-```
+   ```
+   npm i
+   ```
 
 2. Start the client
 
-```
-npm run dev
-```
+   ```
+   npm run dev
+   ```
 
 3. Start the mock API server
 
-```
-npm run mock-server
-```
+   ```
+   npm run mock-server
+   ```
+
+   Alternatively you can start the dev server and mock API server with [ concurrently ](https://www.npmjs.com/package/concurrently) using this command:
+
+   ```
+   npm run dev:mock
+   ```
 
 4. Open the web map in the browser with URL: http://localhost:3000
 
+**Setup for WSL users**
+
+In order to launch Cypress in WSL you will need to have an X-Server running on Windows. [This guide](https://dev.to/nickymeuleman/using-graphical-user-interfaces-like-cypress-in-wsl2-249j) outlines the steps necessary to configure your WSL shell to work with an X-server. If this still isn't working try launching vcxsrv.exe from the command line like this:
+
+```bat
+"" "C:\Program Files\VcXsrv\vcxsrv.exe" :0 -multiwindow -clipboard -wgl -ac`
+```
+
 ## Workflow with Github
 
-1. Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it.
+1.  Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it.
 
-1. We tag issues with:
+2.  We tag issues with:
 
-   - `good first issue`: easy and good for getting started.
-   - `medium`: medium difficulty or needs more work.
-   - `challenge`: hardest or big tasks, or needs some special skill or tricky or even hack in some way.
-   - `documentation`: writing job, sometimes it's good for new dev to learn and do some simple job.
-   - `bug`: just bug.
-   - `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
-   - `high-priority`: urgent problem, like some crucial bug or feature.
-   - We also tag issue with other aspects like the skill needed, the device related and so on.
+    - `good first issue`: easy and good for getting started.
+    - `medium`: medium difficulty or needs more work.
+    - `challenge`: hardest or big tasks, or needs some special skill or tricky or even hack in some way.
+    - `documentation`: writing job, sometimes it's good for new dev to learn and do some simple job.
+    - `bug`: just bug.
+    - `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
+    - `high-priority`: urgent problem, like some crucial bug or feature.
+    - We also tag issue with other aspects like the skill needed, the device related and so on.
 
-1. Fork the repo.
+3.  Fork the repo.
 
-1. Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
+4.  Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
 
-1. Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
+5.  Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
 
-1. If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
+6.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
 
 More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
 
-## Guide for development
+## Test Driven Development
 
-### How to Build Components
+We encourage Test Driven Development, with tool like Cypress, especially the component tool of Cypress, and the [intercept](https://docs.cypress.io/api/commands/intercept) API, it's been pretty easy to mock and build the case for tests, so we can write the test case first, let the case fail and then implement the real code.
 
-We recommend using Cypress's component tool to build components separately:
+### Glossary
 
-To run Cypress unit/component tests:
+- Unit test: tests against a single class, object, function or file, covering the most small unit in codebase. It's a good practice to code in TDD, but we don't enforce writing a unit test for every unit. Use Cypress component-testing to cover component units and Jest test to cover model file and utility functions.
+
+- Integration test: test a single piece of functionality in the app, like: a page, a module, an API endpoint. We require integration test for every page. Use Cypress for page integration tests
+
+- End to End test: test the real app like a human being, against real app/environment. We will implement few E2E test to cover most basic workflow, like: visit the root of the website, then jump into the detailed pages. Use Cypress to cover E2E tests.
+
+### Test File Naming Conventions
+
+- Component test files should be in the same directory as the test target and have the same name as the test target file with the suffix: `.cy.js`.
+
+- Unit test files should be in the same directory as the test target and have the same name as the test target file with the suffix: `.test.js`.
+
+- Put all integration tests into `/cypress/tests/integration` directory with suffix: `.cy.js`;
+
+- Put all e2e tests into `/cypress/tests/e2e/` directory with suffix: `.cy.js`;
+
+## How to Build Components
+
+We recommend using Cypress's component testing tool to build components in isolation:
+
+**To run Cypress unit/component tests:**
 
 ```
 npm run cyu
@@ -75,34 +141,71 @@ npm run cyu
 
 [Video tutorial for building component](https://loom.com/share/c750be68ecec4a9b99cb6921d2d2e041)
 
-### How to Build Pages/Routes
+### Adding Material UI Theme to Component Tests
+
+When developing component tests use the custom `mountWithTheme` function found in `src/models/test-utils.js` instead of the mount function in the `@cypress/react` library. This will include the material-ui theme configuration when rendering your test component in cypress.
+
+### Using Correct Link Component
+
+Do not use `next/link` or `@material-ui/core/Link`. Instead use the custom Link component in `src/components/Link`. This component will ensure that an anchor tag is created with the appropriate href value for SEO purposes.
+
+## How to Build Pages/Routes
 
 Glossary:
 
 - Page/Route: every unique path of url on the app is a page or route, like a single tree page: `http://map.treetracker/trees/123`.
 
-#### We need to build integration test for every page
+### Integration Tests
 
-We need to build Cypress integration test for every page/route, the integration tests would be run in CI when merge code and deploy to protect app from breaking.
+We need to build Cypress integration tests for every page/route. The integration tests will be run in CI when merging code and deploying to protect the app from breaking.
 
-Also, integration tests bring some benefits for the development workflow, by mocking API requests, we can separately develop every single page, if you'd like to practice Test Driven Develop, you can mock the API and write the tests first, then implement the real page later.
+Also, integration tests bring some benefits for the development workflow - by mocking API requests we can separately develop every single page. If you'd like to practice Test Driven Development, you can mock the API and write the tests first, then implement the real page later.
 
-#### To run Cypress integration test
+**To run Cypress integration tests:**
 
 ```
 npm run cy
 ```
 
+**Note**
+
+Cypress will initialize a Nextjs dev server when run in integration mode. This means you do not need to run a local dev/production server before starting cypress.
+
+Cypress Integration testing also includes the `cypress-watch-and-reload` plugin which will restart any loaded tests when you save any changes inside the `src` directory.
+
 ### How to mock the API
 
 [Video tutorial for mock the API](https://www.loom.com/share/48554f0f67314ea78925a627b2142e1b)
 
-### Setup for WSL users
+### Mocking API calls in NextJs SSR functions
 
-In order to launch Cypress in WSL you will need to have an X-Server running on Windows. [This guide](https://dev.to/nickymeuleman/using-graphical-user-interfaces-like-cypress-in-wsl2-249j) outlines the steps necessary to configure your WSL shell to work with an X-server. If this still isn't working try launching vcxsrv.exe from the command line like this:
+API calls made inside nextJs serverless functions like `getServerSideProps()` can be mocked with the nock task we have added to cypress. The following example provides a mock response at the address being fetched during SSR.
 
-```bat
-"" "C:\Program Files\VcXsrv\vcxsrv.exe" :0 -multiwindow -clipboard -wgl -ac`
+```js
+beforeEach(() => {
+  cy.task('clearNock'); // This will clear any mocks that have been set
+});
+
+it('getServerSideProps returns mock', () => {
+  const path = `/trees/${tree.id}`;
+  const testData = {
+    // expected data here
+  };
+
+  cy.task('nock', {
+    hostname: 'http://127.0.0.1:4010/mock',
+    method: 'GET',
+    path,
+    statusCode: 200,
+    body: {
+      ...testData,
+      status: 200,
+    },
+  });
+
+  cy.visit(path);
+  cy.contains(testData.someValue);
+});
 ```
 
 ## The API
@@ -119,7 +222,7 @@ On current stage, we got another team working on the new API endpoint, eventuall
 
 To check the doc in a convenient way, please import it to some API tools like: http://editor.swagger.io/ or Postman.
 
-#### Using our mock API server
+### Using our mock API server
 
 To develop without relying on the in-progress work of API team, we set up a mock API server.
 
@@ -152,50 +255,6 @@ Please import to http://editor.swagger.io to view it.
 ## UI design resource
 
 Our Figma design resource is here: https://www.figma.com/file/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A9322
-
-## Test
-
-### Glossary
-
-- Unit test: tests against a single class, object, function or file, covering the most small unit in codebase.
-
-- Integration test: test a single piece of functionality in the app, like: a page, a module, a API endpoint.
-
-- End to End test: test the real app like a human being, against real app/environment.
-
-### Philosophy
-
-We encourage Test Driven Development, with tool like Cypress, especially the component tool of Cypress, and the [intercept](https://docs.cypress.io/api/commands/intercept) API, it's been pretty easy to mock and build the case for tests, so we can write the test case first, let the case fail and then implement the real code.
-
-### Unit test
-
-It's a good practice to code in TDD, but we don't force to write unit test for every unit.
-
-Could use Cypress component test to cover component units. And Jest test to cover model file and utilities function.
-
-### Integration test
-
-We require integration test for every page.
-
-For the front end, every unique page/route is a unit of functionality.
-
-Use Cypress with intercept API to cover page tests.
-
-### E2E test
-
-We will implement few E2E test to cover most basic workflow, like: visit the root of the website, then jump into the detailed pages.
-
-Use Cypress to cover E2E tests.
-
-### test file structure
-
-- Put all component tests into place where next to the test target, by naming the same file with suffix: `.cy.js`;
-
-- Put unit tests into place where next to the test target, by naming the same file name with suffix: `.test.js`;
-
-- Put all integration tests into `/cypress/integration/integration` folderwith suffix: `.cy.js`;
-
-- Put all e2e tests into `/cypress/integration/e2e/` folder with suffix: `.cy.js`;
 
 ## Code style guide
 

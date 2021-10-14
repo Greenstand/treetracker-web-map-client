@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount } from '@cypress/react';
+
+import { mountWithTheme as mount } from '../models/test-utils';
 import TreeAge from './TreeAge';
 
 describe('TreeAge', () => {

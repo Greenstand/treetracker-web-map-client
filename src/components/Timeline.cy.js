@@ -1,5 +1,6 @@
-import { mount } from '@cypress/react';
 import React from 'react';
+
+import { mountWithTheme as mount } from '../models/test-utils';
 import Timeline from './Timeline';
 
 describe('Timeline', () => {
