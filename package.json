@@ -22,7 +22,8 @@
 		"lint:fix": "npm run eslint:fix && npm run prettier:fix",
 		"mock-server": "prism mock ./doc/web-map-api.yaml",
 		"prettier-fix": "prettier ./ --write",
-		"test": "react-scripts test"
+		"test": "react-scripts test",
+		"prepare": "husky install"
 	},
 	"browserslist": {
 		"production": [
@@ -79,11 +80,18 @@
 		"eslint-plugin-prettier": "^3.2.0",
 		"eslint-plugin-simple-import-sort": "^7.0.0",
 		"html-webpack-plugin": "^4.5.2",
-		"husky": "^4.0.0",
+		"husky": "^7.0.0",
+		"lint-staged": "^11.2.3",
 		"nock": "^13.1.3",
 		"prettier": "^2.1.2",
 		"webpack": "^4.46.0",
 		"webpack-dev-server": "^3.11.2"
 	},
-	"proxy": "http://127.0.0.1:3001"
+	"proxy": "http://127.0.0.1:3001",
+	"lint-staged": {
+		"*.js": [
+			"eslint --cache --fix",
+			"prettier --write"
+		]
+	}
 }

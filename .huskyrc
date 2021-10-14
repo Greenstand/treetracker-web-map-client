@@ -1,1 +1,0 @@
-{"hooks":{"pre-commit": "npm run lint && npm run prettier-fix", "commit-msg":"commitlint -E HUSKY_GIT_PARAMS" }}
