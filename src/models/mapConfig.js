@@ -9,4 +9,4 @@ const mapConfig = {
   },
 };
 
-export { mapConfig };
+export default mapConfig;

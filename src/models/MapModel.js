@@ -85,14 +85,15 @@ class MapModel {
       const begin = Date.now();
       let count = 0;
       let countNoChar = 0;
+      // eslint-disable-next-line no-restricted-syntax
       me: for (let y1 = 0; y1 < y; y1 += 10) {
         for (let x1 = 0; x1 < x; x1 += 10) {
-          count++;
+          count += 1;
           const tileChar = utfGridLayer._objectForEvent({
             latlng: mymap.containerPointToLatLng([x1, y1]),
           })._tileCharCode;
           if (!tileChar) {
-            countNoChar++;
+            countNoChar += 1;
             // log.warn("can not fond char on!:", x1, y1);
             continue;
           }

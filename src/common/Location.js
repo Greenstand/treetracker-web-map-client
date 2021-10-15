@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     position: 'absolute',
     zIndex: 1,

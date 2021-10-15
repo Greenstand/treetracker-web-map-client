@@ -54,7 +54,7 @@ const TimelineSlider = withStyles({
   },
 })(Slider);
 
-const useStylesTooltip = makeStyles((theme) => ({
+const useStylesTooltip = makeStyles(() => ({
   popper: {
     opacity: 0.5,
   },
@@ -145,6 +145,7 @@ function textvalue(begin, end) {
 function Timeline(props) {
   const classes = useStyles();
   const [slide, setSlide] = React.useState(false);
+  const [value, setValue] = React.useState([0, dayRange]);
 
   function handleClick() {
     setSlide(!slide);
@@ -161,16 +162,15 @@ function Timeline(props) {
     }
   }
 
-  const [value, setValue] = React.useState([0, dayRange]);
-  console.warn('value:', value);
+  // console.warn('value:', value);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleChangeCommitted = (e, value) => {
-    log.debug('trigger change commit:', value);
-    props.onDateChange && props.onDateChange(value.map((e) => valuetext(e)));
+  const handleChangeCommitted = (unusedEvent, newValue) => {
+    log.debug('trigger change commit:', newValue);
+    props.onDateChange && props.onDateChange(newValue.map((e) => valuetext(e)));
   };
 
   React.useEffect(() => {

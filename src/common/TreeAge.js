@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AccessTime from '@material-ui/icons/AccessTime';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexDirection: 'row',

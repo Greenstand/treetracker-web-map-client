@@ -5,7 +5,7 @@ import axios from 'axios';
 import expect from 'expect-runtime';
 import log from 'loglevel';
 
-import { mapConfig } from './mapConfig';
+import mapConfig from './mapConfig';
 import { getInitialBounds } from './mapTools';
 import Requester from './Requester';
 
@@ -378,6 +378,7 @@ export default class Map {
       let count = 0;
       let countNoChar = 0;
       const { x, y } = this.map.getSize();
+      // eslint-disable-next-line no-restricted-syntax
       me: for (let y1 = 0; y1 < y; y1 += 10) {
         for (let x1 = 0; x1 < x; x1 += 10) {
           count += 1;
@@ -764,6 +765,7 @@ export default class Map {
       log.error('can not find the point:', currentPoint, points);
       throw new Error('can not find the point');
     }
+    return null;
   }
 
   goPrevPoint() {
@@ -790,6 +792,7 @@ export default class Map {
       log.error('can not find the point:', currentPoint, points);
       throw new Error('can not find the point');
     }
+    return null;
   }
 
   /*
@@ -808,7 +811,9 @@ export default class Map {
 
     // filter the duplicate points
     const itemMap = {};
-    itemList.forEach((e) => (itemMap[e.id] = e));
+    itemList.forEach((e) => {
+      itemMap[e.id] = e;
+    });
 
     // update the global points
     const points = Object.values(itemMap);
@@ -835,13 +840,13 @@ export default class Map {
     log.info('load freetown layer');
     this.L.TileLayer.FreeTown = this.L.TileLayer.extend({
       getTileUrl(coords) {
-        const y = Math.pow(2, coords.z) - coords.y - 1;
+        const y = 2 ** coords.z - coords.y - 1;
         const url = `https://treetracker-map-tiles.nyc3.cdn.digitaloceanspaces.com/freetown/${coords.z}/${coords.x}/${y}.png`;
-        if (coords.z == 10 && coords.x == 474 && y < 537 && y > 534) {
+        if (coords.z === 10 && coords.x === 474 && y < 537 && y > 534) {
           return url;
         }
         if (
-          coords.z == 11 &&
+          coords.z === 11 &&
           coords.x > 947 &&
           coords.x < 950 &&
           y > 1070 &&
@@ -850,7 +855,7 @@ export default class Map {
           return url;
         }
         if (
-          coords.z == 12 &&
+          coords.z === 12 &&
           coords.x > 1895 &&
           coords.x < 1899 &&
           y > 2142 &&
@@ -859,7 +864,7 @@ export default class Map {
           return url;
         }
         if (
-          coords.z == 13 &&
+          coords.z === 13 &&
           coords.x > 3792 &&
           coords.x < 3798 &&
           y > 4286 &&
@@ -868,7 +873,7 @@ export default class Map {
           return url;
         }
         if (
-          coords.z == 14 &&
+          coords.z === 14 &&
           coords.x > 7585 &&
           coords.x < 7595 &&
           y > 8574 &&
@@ -877,7 +882,7 @@ export default class Map {
           return url;
         }
         if (
-          coords.z == 15 &&
+          coords.z === 15 &&
           coords.x > 15172 &&
           coords.x < 15190 &&
           y > 17149 &&
@@ -886,7 +891,7 @@ export default class Map {
           return url;
         }
         if (
-          coords.z == 16 &&
+          coords.z === 16 &&
           coords.x > 30345 &&
           coords.x < 30379 &&
           y > 34300 &&
@@ -895,7 +900,7 @@ export default class Map {
           return url;
         }
         if (
-          coords.z == 17 &&
+          coords.z === 17 &&
           coords.x > 60692 &&
           coords.x < 60758 &&
           y > 68602 &&
@@ -904,7 +909,7 @@ export default class Map {
           return url;
         }
         if (
-          coords.z == 18 &&
+          coords.z === 18 &&
           coords.x > 121385 &&
           coords.x < 121516 &&
           y > 137206 &&
@@ -1005,7 +1010,7 @@ export default class Map {
     });
     if (!res) {
       log.warn('Return undefined trying to get nearest, the api return null');
-      return;
+      return null;
     }
     let { nearest } = res;
     nearest = nearest

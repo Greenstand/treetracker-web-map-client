@@ -20,12 +20,10 @@ import Check from '@material-ui/icons/CheckCircle';
 import Face from '@material-ui/icons/Face';
 import Fingerprint from '@material-ui/icons/Fingerprint';
 // import Eco from "@material-ui/icons/Eco";
-import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import InsertPhoto from '@material-ui/icons/InsertPhoto';
 import Nature from '@material-ui/icons/Nature';
 // import Explore from "@material-ui/icons/Explore";
 import Place from '@material-ui/icons/Place';
-import Public from '@material-ui/icons/Public';
 import Search from '@material-ui/icons/Search';
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -47,6 +45,15 @@ const MAX_WIDTH = 480;
 const HEIGHT = 520;
 
 const NONE = '--';
+
+function domainSpecificData(treeDetail, property) {
+  if (!treeDetail || !treeDetail.domain_specific_data) return undefined;
+  return treeDetail.domain_specific_data[property];
+}
+function attribute(treeDetail, property) {
+  if (!treeDetail || !treeDetail.attributes) return undefined;
+  return treeDetail.attributes[property];
+}
 
 const useStyles = makeStyles((theme) => ({
   placeholder: {
@@ -298,7 +305,7 @@ function SidePanel(props) {
         })
         .catch((thrown) => {
           if (axios.isCancel(thrown)) {
-            console.log('Request canceled', thrown.message);
+            // console.log('Request canceled', thrown.message);
           } else {
             throw thrown;
           }
@@ -719,16 +726,6 @@ function List(props) {
       </Grid>
     </Grid>
   );
-}
-
-function domainSpecificData(treeDetail, property) {
-  if (!treeDetail || !treeDetail.domain_specific_data) return;
-  return treeDetail.domain_specific_data[property];
-}
-
-function attribute(treeDetail, property) {
-  if (!treeDetail || !treeDetail.attributes) return;
-  return treeDetail.attributes[property];
 }
 
 SidePanel.WIDTH = WIDTH;

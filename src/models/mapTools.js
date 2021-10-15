@@ -66,14 +66,16 @@ function getAngleLat(north, south) {
  *
  *
  */
-function getInitialBounds(locations, width, height) {
-  expect(locations).lengthOf.above(0);
+function getInitialBounds(rawLocations, width, height) {
+  expect(rawLocations).lengthOf.above(0);
   // convert
+  const locations = rawLocations.map((location) => ({
+    ...location,
+    lat: parseFloat(location.lat),
+    lng: parseFloat(location.lng),
+  }));
+
   locations.forEach((location) => {
-    location.lat = parseFloat(location.lat);
-    location.lng = parseFloat(location.lng);
-  });
-  locations.every((location) => {
     expect(location).property('lat').number();
     expect(location).property('lng').number();
   });
@@ -96,9 +98,11 @@ function getInitialBounds(locations, width, height) {
   }
 
   const bounds = new window.L.latLngBounds();
-  for (const location of locations) {
+
+  locations.forEach((location) => {
     bounds.extend(location);
-  }
+  });
+
   log.log('bounds:', bounds);
   const center = {
     lat: bounds.getCenter().lat,
@@ -136,21 +140,19 @@ function getInitialBounds(locations, width, height) {
   return result;
 }
 
-const TILE_SIZE = 256;
-// The mapping between latitude, longitude and pixels is defined by the web
-// mercator projection.
-function project(latLng /* =google.maps.LatLng */) {
-  let siny = Math.sin((latLng.lat * Math.PI) / 180);
-
-  // Truncating to 0.9999 effectively limits latitude to 89.189. This is
-  // about a third of a tile past the edge of the world tile.
-  siny = Math.min(Math.max(siny, -0.9999), 0.9999);
-
-  return window.L.point(
-    TILE_SIZE * (0.5 + latLng.lng / 360),
-    TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)),
-  );
-}
+// const TILE_SIZE = 256;
+// // The mapping between latitude, longitude and pixels is defined by the web
+// // mercator projection.
+// function project(latLng /* =google.maps.LatLng */) {
+//   let siny = Math.sin((latLng.lat * Math.PI) / 180);
+//   // Truncating to 0.9999 effectively limits latitude to 89.189. This is
+//   // about a third of a tile past the edge of the world tile.
+//   siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+//   return window.L.point(
+//     TILE_SIZE * (0.5 + latLng.lng / 360),
+//     TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)),
+//   );
+// }
 
 function getLatLngCoordinateByPixel(top, left, map) {
   expect(top).number();
@@ -161,7 +163,7 @@ function getLatLngCoordinateByPixel(top, left, map) {
     map.getBounds().getSouthWest().lng,
   );
   const northWestPixel = map.getProjection().fromLatLngToPoint(northWest);
-  const pixelSize = Math.pow(2, -map.getZoom());
+  const pixelSize = 2 ** -map.getZoom();
   const result = window.L.point(
     northWestPixel.x + left * pixelSize,
     northWestPixel.y + top * pixelSize,
@@ -182,7 +184,7 @@ function getPixelCoordinateByLatLng(lat, lng, map) {
   const northWestPixel = map.getProjection().fromLatLngToPoint(northWest);
   const target = window.L.latLng(lat, lng);
   const targetPixel = map.getProjection().fromLatLngToPoint(target);
-  const pixelSize = Math.pow(2, -map.getZoom());
+  const pixelSize = 2 ** -map.getZoom();
   const result = {
     top: (targetPixel.y - northWestPixel.y) / pixelSize,
     left: (targetPixel.x - northWestPixel.x) / pixelSize,

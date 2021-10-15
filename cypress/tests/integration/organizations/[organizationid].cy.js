@@ -22,8 +22,8 @@ describe('Organizations', () => {
         // inject serverside props into test
         Object.defineProperty(win, '__NEXT_DATA__', {
           set(o) {
-            o.props.pageProps.organization = organization;
             nextData = o;
+            nextData.props.pageProps.organization = organization;
           },
           get() {
             return nextData;

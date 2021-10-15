@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-new */
 import expectRuntime from 'expect-runtime';
 import React from 'react';
 
@@ -53,12 +55,13 @@ describe('mapTools', () => {
             },
           );
           // marker
-          const marker = new window.google.maps.Marker({
+          new window.google.maps.Marker({
             position: chicago,
             map,
           });
           window.google.maps.event.addListener(map, 'idle', () => {
             try {
+              // eslint-disable-next-line no-bitwise
               const scale = 1 << map.getZoom();
               const worldCoordinate = project(chicago);
               const pixelCoordinate = new google.maps.Point(
@@ -150,14 +153,14 @@ describe('Test getPixelCoordinateByLatLng', () => {
             },
           );
           // marker
-          const marker = new window.google.maps.Marker({
+          new window.google.maps.Marker({
             position: chicago,
             map,
           });
           window.google.maps.event.addListener(map, 'idle', () => {
             // calculate the corner
             try {
-              const bounds = map.getBounds();
+              map.getBounds();
               const northWest = new window.google.maps.LatLng(
                 map.getBounds().getNorthEast().lat(),
                 map.getBounds().getSouthWest().lng(),

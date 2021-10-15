@@ -1,6 +1,6 @@
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet-utfgrid/L.UTFGrid.js';
+import 'leaflet-utfgrid/L.UTFGrid';
 import 'leaflet.gridlayer.googlemutant';
 
 import Fade from '@material-ui/core/Fade';
@@ -148,6 +148,7 @@ function getParameters() {
         .split('&')
         .reduce((a, c) => {
           const [key, value] = c.split('=');
+          // eslint-disable-next-line no-param-reassign
           a[key] = value;
           return a;
         }, {})) ||
@@ -179,59 +180,57 @@ function MapComponent() {
   const [timelineEnabled, setTimelineEnabled] = React.useState(true);
   const mapContext = useMapContext();
 
-  function showPanel(tree) {
-    expect(tree).match({
+  function showPanel(newTree) {
+    expect(newTree).match({
       lat: expect.any(Number),
       lon: expect.any(Number),
     });
     log.log('show panel...');
     setSidePanelState('show');
     setTimelineEnabled(false);
-    setTree(tree);
+    setTree(newTree);
     // consider the visible of the point
     const { map } = mapRef.current;
     const leafletMap = map.getLeafletMap();
     const { x: left, y: top } = leafletMap.latLngToContainerPoint([
-      tree.lat,
-      tree.lon,
+      newTree.lat,
+      newTree.lon,
     ]);
     log.log('top:', top, 'left:', left);
     expect(top).number();
     expect(left).number();
-    if (true) {
-      log.log('the point at:', top, left);
-      expect(SidePanel).property('WIDTH').number();
-      const { clientWidth, clientHeight } = mapRef.current;
-      expect(clientWidth).above(0);
-      expect(clientHeight).above(0);
-      const isOutOfViewport =
-        left < 0 || top < 0 || left > clientWidth || top > clientHeight;
-      const isCoveredBySidePanel =
-        left > 0 && left < SidePanel.WIDTH && top > 0 && top < clientHeight;
-      if (
-        (isOutOfViewport || isCoveredBySidePanel) &&
-        clientWidth > MOBILE_WIDTH
-      ) {
-        // move to right center
-        const print = JSON.stringify(map);
-        log.log('print:', print);
-        log.log('con,sole:', map);
-        const mapElement = mapRef.current;
-        expect(mapElement).property('clientWidth').defined();
-        const containerWidth = mapElement.clientWidth;
-        const containerHeight = mapElement.clientHeight;
-        expect(containerWidth).above(0);
-        expect(containerHeight).above(0);
-        const topCenter = containerHeight / 2;
-        const leftCenter =
-          (containerWidth - SidePanel.WIDTH) / 2 + SidePanel.WIDTH;
-        expect(topCenter).above(0);
-        expect(leftCenter).above(0);
-        const x = left - leftCenter;
-        const y = top - topCenter;
-        log.log('pant by x,y:', x, y);
-        leafletMap.panBy([x, y]);
-      }
+    log.log('the point at:', top, left);
+    expect(SidePanel).property('WIDTH').number();
+    const { clientWidth, clientHeight } = mapRef.current;
+    expect(clientWidth).above(0);
+    expect(clientHeight).above(0);
+    const isOutOfViewport =
+      left < 0 || top < 0 || left > clientWidth || top > clientHeight;
+    const isCoveredBySidePanel =
+      left > 0 && left < SidePanel.WIDTH && top > 0 && top < clientHeight;
+    if (
+      (isOutOfViewport || isCoveredBySidePanel) &&
+      clientWidth > MOBILE_WIDTH
+    ) {
+      // move to right center
+      const print = JSON.stringify(map);
+      log.log('print:', print);
+      log.log('con,sole:', map);
+      const mapElement = mapRef.current;
+      expect(mapElement).property('clientWidth').defined();
+      const containerWidth = mapElement.clientWidth;
+      const containerHeight = mapElement.clientHeight;
+      expect(containerWidth).above(0);
+      expect(containerHeight).above(0);
+      const topCenter = containerHeight / 2;
+      const leftCenter =
+        (containerWidth - SidePanel.WIDTH) / 2 + SidePanel.WIDTH;
+      expect(topCenter).above(0);
+      expect(leftCenter).above(0);
+      const x = left - leftCenter;
+      const y = top - topCenter;
+      log.log('pant by x,y:', x, y);
+      leafletMap.panBy([x, y]);
     }
     setHasNext(true);
     setHasPrev(true);
@@ -280,9 +279,9 @@ function MapComponent() {
     setLoading(false);
   }
 
-  function loadingB(isLoading) {
+  function loadingB(newIsLoading) {
     log.debug('loadingB');
-    setLoadingB(isLoading);
+    setLoadingB(newIsLoading);
   }
 
   function handleMessageClose() {
@@ -443,6 +442,7 @@ function MapComponent() {
       />
       <div
         onClick={(e) =>
+          // leaving this lint warning as a reminder to remove this debugging feature
           console.warn('click:', e, e.screenX, e.clientX, e.clientY)
         }
         className={`${classes.mapContainer} ${

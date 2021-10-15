@@ -4,9 +4,9 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+// eslint-disable-next-line react/display-name
 const NextComposed = React.forwardRef((props, ref) => {
   const { as, href, ...other } = props;
-
   return (
     <NextLink href={href} as={as}>
       <a ref={ref} {...other} />
