@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 .next
+.vs
+
 
 # testing
 /coverage
@@ -25,3 +27,4 @@ yarn-error.log*
 
 /cypress/videos
 /cypress/screenshots
+

@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AccessTime from '@material-ui/icons/AccessTime'
+import AccessTime from '@material-ui/icons/AccessTime';
 import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#61892F',
     borderRadius: '16px',
     width: '169px',
-    height: '99px'
+    height: '99px',
   },
   clock: {
     position: 'static',
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: '0',
     marginRight: '24px',
   },
-  ageLabel:{
+  ageLabel: {
     position: 'static',
     left: '0px',
     top: '0px',
@@ -44,16 +44,16 @@ const useStyles = makeStyles((theme) => ({
     flex: 'none',
     order: '0',
     flexGrow: '0',
-    margin: '8px 0px'
+    margin: '8px 0px',
   },
-  ageValue:{
-    position: 'static',  
+  ageValue: {
+    position: 'static',
     left: '0px',
     top: '27px',
     fontFamily: 'Lato',
     fontStyle: 'normal',
     fontWeight: 800,
-    fontSize: '20px',    
+    fontSize: '20px',
     lineHeight: '24px',
     display: 'flex',
     alignItems: 'center',
@@ -63,11 +63,11 @@ const useStyles = makeStyles((theme) => ({
     flex: 'none',
     order: '1',
     flexGrow: '0',
-    margin: '8px 0px'
-  }
-}))
+    margin: '8px 0px',
+  },
+}));
 
-function TreeAge({ treeAge }){
+function TreeAge({ treeAge }) {
   const classes = useStyles();
   return (
     <Box className={classes.container}>
@@ -77,7 +77,7 @@ function TreeAge({ treeAge }){
         <p className={classes.ageValue}>{treeAge}</p>
       </Box>
     </Box>
-  )
+  );
 }
 
 export default TreeAge;
