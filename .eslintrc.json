@@ -2,7 +2,8 @@
   "env": {
     "node": true,
     "mocha": true,
-    "commonjs": true
+    "commonjs": true,
+    "jest": true
   },
   "plugins": [
     "react",
@@ -15,19 +16,19 @@
     "airbnb-base",
     "prettier",
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:cypress/recommended",
+    "plugin:@next/next/recommended"
   ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "modules": true,
-      "experimentalObjectRestSpread": true
-    }
-  },
+  "parser": "@babel/eslint-parser",
+  "ignorePatterns": [
+    "**/.next/**",
+    "**/public/**",
+    "**/dist/**",
+    "package-lock.json"
+  ],
   "rules": {
+    "prettier/prettier": "error",
     "simple-import-sort/imports": "warn",
     "no-underscore-dangle": "off",
     "no-undef": "off",
@@ -40,13 +41,23 @@
     "global-require": "off",
     "radix": "off",
     "no-await-in-loop": "off",
-    "class-methods-use-this": "warn",
+    "class-methods-use-this": [
+      "warn",
+      {
+        "exceptMethods": ["render"]
+      }
+    ],
     "no-return-await": "warn",
     "no-new-wrappers": "warn",
     "prefer-destructuring": "warn",
     "no-shadow": "warn",
     "import/order": "warn",
-    "no-unused-expressions": "warn",
+    "no-unused-expressions": [
+      "warn",
+      {
+        "allowShortCircuit": true
+      }
+    ],
     "import/no-extraneous-dependencies": [
       "warn",
       { "devDependencies": ["**/*.{test,cy}.{js,ts,jsx,tsx}", "cypress/**"] }
@@ -79,7 +90,7 @@
     "array-callback-return": "warn",
     "no-new": "warn",
     "no-bitwise": "warn",
-    "new-cap": "warn",
+    "new-cap": ["warn", { "newIsCapExceptionPattern": "\\.L\\.." }],
     "no-restricted-globals": "warn",
     "block-scoped-var": "warn",
     "eqeqeq": "warn",
@@ -93,7 +104,7 @@
     "no-lonely-if": "warn",
     "no-undef-init": "warn",
     "react/prop-types": "off",
-    "no-labels": "warn",
+    "no-labels": ["error", { "allowLoop": true }],
     "no-constant-condition": "warn",
     "no-unneeded-ternary": "warn",
     "max-classes-per-file": ["warn", 2]

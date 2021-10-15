@@ -22,6 +22,7 @@
 		"lint:fix": "npm run eslint:fix && npm run prettier:fix",
 		"mock-server": "prism mock ./doc/web-map-api.yaml",
 		"prettier-fix": "prettier ./ --write",
+		"prettier": "prettier ./ -c",
 		"test": "react-scripts test",
 		"prepare": "husky install"
 	},
@@ -36,9 +37,6 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
-	},
-	"eslintConfig": {
-		"extends": "react-app"
 	},
 	"dependencies": {
 		"@material-ui/core": "^4.12.3",
@@ -65,11 +63,15 @@
 		"source-map-explorer": "^2.5.0"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.15.8",
+		"@babel/eslint-parser": "^7.15.8",
+		"@babel/preset-react": "^7.14.5",
 		"@commitlint/cli": "^11.0.0",
 		"@commitlint/config-conventional": "^11.0.0",
 		"@cypress/react": "^5.10.0",
 		"@cypress/webpack-dev-server": "^1.6.0",
 		"@cypress/webpack-preprocessor": "^5.4.3",
+		"@next/eslint-plugin-next": "^11.1.2",
 		"@svgr/webpack": "^5.5.0",
 		"concurrently": "^6.3.0",
 		"cypress": "^8.4.1",
@@ -93,8 +95,7 @@
 	"proxy": "http://127.0.0.1:3001",
 	"lint-staged": {
 		"*.js": [
-			"eslint --cache --fix",
-			"prettier --write"
+			"eslint --cache --fix"
 		]
 	}
 }
