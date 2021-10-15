@@ -14,9 +14,9 @@ function VerifiedBadge({ verified, badgeName }) {
   return (
     <Chip
       className={classes.chip}
-      color={!verified ? 'primary' : 'secondary'}
+      color={!verified ? 'gray' : 'secondary'}
       size="small"
-      icon={<CheckIcon />}
+      icon={!verified ? null : <CheckIcon />}
       label={badgeName}
       disabled={!verified}
     />
