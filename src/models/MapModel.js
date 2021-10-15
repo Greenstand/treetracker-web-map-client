@@ -1,10 +1,11 @@
 /*
  * The module to handle greenstand map
  */
-import expect from 'expect-runtime';
-import axios from 'axios';
-import log from 'loglevel';
 import 'leaflet';
+
+import axios from 'axios';
+import expect from 'expect-runtime';
+import log from 'loglevel';
 
 class MapModel {
   constructor(options) {
@@ -41,7 +42,7 @@ class MapModel {
   async checkArrow() {
     log.log('check arrow');
     const mymap = this._map;
-    var utfGridLayer = Object.values(mymap._layers).reduce(
+    const utfGridLayer = Object.values(mymap._layers).reduce(
       (a, c) => (c._url && c._url.match(/grid.json$/) ? c : a),
       undefined,
     );
@@ -49,7 +50,7 @@ class MapModel {
 
     let found = false;
 
-    //check zoom level
+    // check zoom level
     log.warn('zoom level:', mymap.getZoom());
     //    expect(utfGridLayer).property("options").property("minZoom").defined();
     if (
@@ -59,9 +60,9 @@ class MapModel {
     ) {
       log.warn('no utf or out of utf layer range, use old way');
       if (
-        //no markers
+        // no markers
         this._markers.length === 0 ||
-        //all markers out of bounds
+        // all markers out of bounds
         this._markers.every(
           (marker) => !this._map.getBounds().contains(marker.getLatLng()),
         )
@@ -73,8 +74,8 @@ class MapModel {
     } else {
       log.warn('utf calculating');
 
-      //waiting layer is ready
-      let isLoading = utfGridLayer.isLoading();
+      // waiting layer is ready
+      const isLoading = utfGridLayer.isLoading();
       log.warn('utf layer is loading:', isLoading);
       if (isLoading) {
         log.error('can not handle the grid utif check, cancel!');
@@ -92,11 +93,11 @@ class MapModel {
           })._tileCharCode;
           if (!tileChar) {
             countNoChar++;
-            //log.warn("can not fond char on!:", x1, y1);
+            // log.warn("can not fond char on!:", x1, y1);
             continue;
           }
           const m = tileChar.match(/\d+:\d+:\d+:(\d+)/);
-          if (!m) throw new Error('Wrong char:' + tileChar);
+          if (!m) throw new Error(`Wrong char:${tileChar}`);
           if (m[1] !== '32') {
             log.log('find:', tileChar, 'at:', x1, y1);
             found = true;
@@ -113,12 +114,12 @@ class MapModel {
       );
     }
     if (!found) {
-      //no markers, need to find nearest
+      // no markers, need to find nearest
       const center = this._map.getCenter();
       const nearest = await this.getNearest();
       if (nearest) {
-        //find it
-        //get nearest markers
+        // find it
+        // get nearest markers
         expect(nearest.lat).number();
         expect(nearest.lng).number();
         if (
@@ -151,28 +152,24 @@ class MapModel {
             if (distanceLat > distanceLng) {
               log.log('On the north');
               this.showArrow('north');
+            } else if (dist.lng > center.lng) {
+              log.log('On the east');
+              this.showArrow('east');
             } else {
-              if (dist.lng > center.lng) {
-                log.log('On the east');
-                this.showArrow('east');
-              } else {
-                log.log('On the west');
-                this.showArrow('west');
-              }
+              log.log('On the west');
+              this.showArrow('west');
             }
           } else {
             log.log('On the south');
             if (distanceLat > distanceLng) {
               log.log('On the south');
               this.showArrow('south');
+            } else if (dist.lng > center.lng) {
+              log.log('On the east');
+              this.showArrow('east');
             } else {
-              if (dist.lng > center.lng) {
-                log.log('On the east');
-                this.showArrow('east');
-              } else {
-                log.log('On the west');
-                this.showArrow('west');
-              }
+              log.log('On the west');
+              this.showArrow('west');
             }
           }
         } else {
@@ -224,8 +221,8 @@ class MapModel {
   }
 
   async getNearest() {
-    //try to cancel previous request if any
-    //await this._source.cancel("cancel prevous nearest request");
+    // try to cancel previous request if any
+    // await this._source.cancel("cancel prevous nearest request");
     if (this._cancelAxios) {
       log.log('cancel');
       this._cancelAxios('cancel previous nearest request');
@@ -234,8 +231,7 @@ class MapModel {
     log.log('current center:', center);
     const zoom_level = this._map.getZoom();
     const res = await axios.get(
-      this.apiUrl +
-        `nearest?zoom_level=${zoom_level}&lat=${center.lat}&lng=${center.lng}`,
+      `${this.apiUrl}nearest?zoom_level=${zoom_level}&lat=${center.lat}&lng=${center.lng}`,
       {
         cancelToken: new axios.CancelToken((c) => {
           this._cancelAxios = c;

@@ -21,9 +21,8 @@ export default class Map {
         maxZoom: 20,
         initialCenter: [20, 0],
         tileServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_URL,
-        tileServerSubdomains: process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(
-          ',',
-        ),
+        tileServerSubdomains:
+          process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
         apiServerUrl: process.env.NEXT_PUBLIC_API,
         width: window.innerWidth,
         height: window.innerHeight,
@@ -267,12 +266,8 @@ export default class Map {
   }
 
   async gotoBounds(bounds) {
-    const [
-      southWestLng,
-      southWestLat,
-      northEastLng,
-      northEastLat,
-    ] = bounds.split(',');
+    const [southWestLng, southWestLat, northEastLng, northEastLat] =
+      bounds.split(',');
     log.warn('go to bounds:', bounds);
     if (this.moreEffect) {
       this.map.flyToBounds([
@@ -440,9 +435,7 @@ export default class Map {
         return tile;
       },
     });
-    this.L.gridLayer.gridDebug = (opts) => {
-      return new this.L.GridLayer.GridDebug(opts);
-    };
+    this.L.gridLayer.gridDebug = (opts) => new this.L.GridLayer.GridDebug(opts);
     this.map.addLayer(this.L.gridLayer.gridDebug());
 
     // debug marker
@@ -620,7 +613,8 @@ export default class Map {
             lat: c.coordinates[1],
             lng: c.coordinates[0],
           };
-        } else if (i.type === 'point') {
+        }
+        if (i.type === 'point') {
           return {
             lat: i.lat,
             lng: i.lon,
@@ -640,7 +634,7 @@ export default class Map {
     } else if (this.filters.treeid || this.filters.tree_name) {
       const { treeid, tree_name } = this.filters;
       const url = `${this.apiServerUrl}tree?${
-        treeid ? 'tree_id=' + treeid : 'tree_name=' + tree_name
+        treeid ? `tree_id=${treeid}` : `tree_name=${tree_name}`
       }`;
       log.info('url to load tree:', url);
       const res = await this.requester.request({
@@ -716,9 +710,10 @@ export default class Map {
 
   getFilterParameters() {
     const filter = this.getFilters();
-    const queryUrl = Object.keys(filter).reduce((a, c) => {
-      return `${c}=${filter[c]}` + ((a && `&${a}`) || '');
-    }, '');
+    const queryUrl = Object.keys(filter).reduce(
+      (a, c) => `${c}=${filter[c]}${(a && `&${a}`) || ''}`,
+      '',
+    );
     return queryUrl;
   }
 
@@ -755,18 +750,16 @@ export default class Map {
     const index = points.reduce((a, c, i) => {
       if (c.id === currentPoint.id) {
         return i;
-      } else {
-        return a;
       }
+      return a;
     }, -1);
     if (index !== -1) {
       if (index === points.length - 1) {
         log.info('no more next');
         return false;
-      } else {
-        const nextPoint = points[index + 1];
-        this.clickMarker(nextPoint);
       }
+      const nextPoint = points[index + 1];
+      this.clickMarker(nextPoint);
     } else {
       log.error('can not find the point:', currentPoint, points);
       throw new Error('can not find the point');
@@ -783,18 +776,16 @@ export default class Map {
     const index = points.reduce((a, c, i) => {
       if (c.id === currentPoint.id) {
         return i;
-      } else {
-        return a;
       }
+      return a;
     }, -1);
     if (index !== -1) {
       if (index === 0) {
         log.info('no more previous');
         return false;
-      } else {
-        const prevPoint = points[index - 1];
-        this.clickMarker(prevPoint);
       }
+      const prevPoint = points[index - 1];
+      this.clickMarker(prevPoint);
     } else {
       log.error('can not find the point:', currentPoint, points);
       throw new Error('can not find the point');
@@ -843,12 +834,13 @@ export default class Map {
   async loadFreetownLayer() {
     log.info('load freetown layer');
     this.L.TileLayer.FreeTown = this.L.TileLayer.extend({
-      getTileUrl: function (coords) {
+      getTileUrl(coords) {
         const y = Math.pow(2, coords.z) - coords.y - 1;
         const url = `https://treetracker-map-tiles.nyc3.cdn.digitaloceanspaces.com/freetown/${coords.z}/${coords.x}/${y}.png`;
         if (coords.z == 10 && coords.x == 474 && y < 537 && y > 534) {
           return url;
-        } else if (
+        }
+        if (
           coords.z == 11 &&
           coords.x > 947 &&
           coords.x < 950 &&
@@ -856,7 +848,8 @@ export default class Map {
           y < 1073
         ) {
           return url;
-        } else if (
+        }
+        if (
           coords.z == 12 &&
           coords.x > 1895 &&
           coords.x < 1899 &&
@@ -864,7 +857,8 @@ export default class Map {
           y < 2146
         ) {
           return url;
-        } else if (
+        }
+        if (
           coords.z == 13 &&
           coords.x > 3792 &&
           coords.x < 3798 &&
@@ -872,7 +866,8 @@ export default class Map {
           y < 4291
         ) {
           return url;
-        } else if (
+        }
+        if (
           coords.z == 14 &&
           coords.x > 7585 &&
           coords.x < 7595 &&
@@ -880,7 +875,8 @@ export default class Map {
           y < 8581
         ) {
           return url;
-        } else if (
+        }
+        if (
           coords.z == 15 &&
           coords.x > 15172 &&
           coords.x < 15190 &&
@@ -888,7 +884,8 @@ export default class Map {
           y < 17161
         ) {
           return url;
-        } else if (
+        }
+        if (
           coords.z == 16 &&
           coords.x > 30345 &&
           coords.x < 30379 &&
@@ -896,7 +893,8 @@ export default class Map {
           y < 34322
         ) {
           return url;
-        } else if (
+        }
+        if (
           coords.z == 17 &&
           coords.x > 60692 &&
           coords.x < 60758 &&
@@ -904,7 +902,8 @@ export default class Map {
           y < 68643
         ) {
           return url;
-        } else if (
+        }
+        if (
           coords.z == 18 &&
           coords.x > 121385 &&
           coords.x < 121516 &&
@@ -917,9 +916,7 @@ export default class Map {
       },
     });
 
-    this.L.tileLayer.freeTown = () => {
-      return new this.L.TileLayer.FreeTown();
-    };
+    this.L.tileLayer.freeTown = () => new this.L.TileLayer.FreeTown();
 
     this.L.tileLayer
       .freeTown('', {
@@ -956,7 +953,7 @@ export default class Map {
     };
 
     this.layerFreetownGeoJson = this.L.geoJSON(data, {
-      style: style,
+      style,
     });
 
     this.map.on('zoomend', () => {
@@ -1064,28 +1061,24 @@ export default class Map {
         if (distanceLat > distanceLng) {
           log.log('On the north');
           result = 'north';
+        } else if (dist.lng > center.lng) {
+          log.log('On the east');
+          result = 'east';
         } else {
-          if (dist.lng > center.lng) {
-            log.log('On the east');
-            result = 'east';
-          } else {
-            log.log('On the west');
-            result = 'west';
-          }
+          log.log('On the west');
+          result = 'west';
         }
       } else {
         log.log('On the south');
         if (distanceLat > distanceLng) {
           log.log('On the south');
           result = 'south';
+        } else if (dist.lng > center.lng) {
+          log.log('On the east');
+          result = 'east';
         } else {
-          if (dist.lng > center.lng) {
-            log.log('On the east');
-            result = 'east';
-          } else {
-            log.log('On the west');
-            result = 'west';
-          }
+          log.log('On the west');
+          result = 'west';
         }
       }
     } else {

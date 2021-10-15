@@ -9,9 +9,9 @@ module.exports = async (on, config) => {
   const handleNextRequests = app.getRequestHandler();
   await app.prepare();
 
-  const customServer = new http.Server(async (req, res) => {
-    return handleNextRequests(req, res);
-  });
+  const customServer = new http.Server(async (req, res) =>
+    handleNextRequests(req, res),
+  );
 
   await new Promise((resolve, reject) => {
     customServer.listen(3000, (err) => {

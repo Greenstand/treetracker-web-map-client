@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const NextComposed = React.forwardRef(function NextComposed(props, ref) {
+const NextComposed = React.forwardRef((props, ref) => {
   const { as, href, ...other } = props;
 
   return (

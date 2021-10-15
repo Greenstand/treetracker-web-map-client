@@ -1,9 +1,9 @@
 function scale(source) {
   const max = 100;
   const min = 15;
-  //0 -> 0
-  //1 -> 1
-  //100000 ->
+  // 0 -> 0
+  // 1 -> 1
+  // 100000 ->
   let result;
   if (source > 99999) {
     result = max;
@@ -16,9 +16,9 @@ function scale(source) {
 function scaleFontSize(source) {
   const max = 20;
   const min = 12;
-  //0 -> 0
-  //1 -> 1
-  //100000 ->
+  // 0 -> 0
+  // 1 -> 1
+  // 100000 ->
   let result;
   if (source > 9999) {
     result = max;

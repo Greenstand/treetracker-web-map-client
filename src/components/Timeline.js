@@ -122,14 +122,12 @@ const dayRange = Math.round(
   moment.duration(moment().diff(moment('2015-01-01'))).as('d'),
 );
 
-const marks = ['2015', '2017', '2019', '2021'].map((e) => {
-  return {
-    label: e,
-    value: Math.round(
-      moment.duration(moment(`${e}-01-01`).diff(moment(`2015-01-01`))).as('d'),
-    ),
-  };
-});
+const marks = ['2015', '2017', '2019', '2021'].map((e) => ({
+  label: e,
+  value: Math.round(
+    moment.duration(moment(`${e}-01-01`).diff(moment(`2015-01-01`))).as('d'),
+  ),
+}));
 
 function valuetext(value) {
   return moment('2015-01-01').add(value, 'days').format('YYYY-MM-DD');

@@ -1,42 +1,43 @@
-import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Paper from '@material-ui/core/Paper';
+import Slide from '@material-ui/core/Slide';
+import { makeStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import Check from '@material-ui/icons/CheckCircle';
-import Face from '@material-ui/icons/Face';
-import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
-import Fingerprint from '@material-ui/icons/Fingerprint';
+import AccessTime from '@material-ui/icons/AccessTime';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
 import ArrowRight from '@material-ui/icons/ArrowRight';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import AccessTime from '@material-ui/icons/AccessTime';
-import Nature from '@material-ui/icons/Nature';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Slide from '@material-ui/core/Slide';
-import expect from 'expect-runtime';
-import Tooltip from '@material-ui/core/Tooltip';
-//import Explore from "@material-ui/icons/Explore";
-import Place from '@material-ui/icons/Place';
-//import Eco from "@material-ui/icons/Eco";
+import Check from '@material-ui/icons/CheckCircle';
+import Face from '@material-ui/icons/Face';
+import Fingerprint from '@material-ui/icons/Fingerprint';
+// import Eco from "@material-ui/icons/Eco";
 import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
-import Public from '@material-ui/icons/Public';
 import InsertPhoto from '@material-ui/icons/InsertPhoto';
+import Nature from '@material-ui/icons/Nature';
+// import Explore from "@material-ui/icons/Explore";
+import Place from '@material-ui/icons/Place';
+import Public from '@material-ui/icons/Public';
 import Search from '@material-ui/icons/Search';
+import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
+import Skeleton from '@material-ui/lab/Skeleton';
+import axios from 'axios';
+import expect from 'expect-runtime';
+import log from 'loglevel';
+import React from 'react';
+
 import ImageShower from './ImageShower';
 import Share from './Share';
-import axios from 'axios';
-import Skeleton from '@material-ui/lab/Skeleton';
-import log from 'loglevel';
 
-const CancelToken = axios.CancelToken;
+const { CancelToken } = axios;
 let source;
 
 const treetrackerApiUrl = process.env.NEXT_PUBLIC_API;
@@ -85,10 +86,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 40,
     fontWeight: 700,
     fontFamily: 'roboto',
-    //color: "#d4d4d4",
+    // color: "#d4d4d4",
     color: '#bebcbc',
     letterSpacing: '1px',
-    //textShadow: "1px 1px 2px #ffffff, -1px -1px 1px #4d4c4c",
+    // textShadow: "1px 1px 2px #ffffff, -1px -1px 1px #4d4c4c",
     background: theme.palette.grey.A200,
     height: HEIGHT,
     [theme.breakpoints.down('sm')]: {
@@ -243,9 +244,7 @@ function SidePanel(props) {
   expect(state).oneOf(['none', 'show', 'hide']);
   const { hasPrev = true } = props;
   const { hasNext = true } = props;
-  const [isTreePictureLoaded, setTreePictureLoaded] = React.useState(
-    tree ? false : true,
-  );
+  const [isTreePictureLoaded, setTreePictureLoaded] = React.useState(!tree);
   const [isBasePictureShown, setBasePictureShown] = React.useState(false);
   const [isLeafPictureShown, setLeafPictureShown] = React.useState(false);
   const [treeDetail, setTreeDetail] = React.useState(undefined);
@@ -292,12 +291,12 @@ function SidePanel(props) {
         })
         .then((r) => {
           setTreeDetail(r.data);
-          //if there isn't image, close load spin
+          // if there isn't image, close load spin
           if (!r.data.image_url) {
             setTreePictureLoaded(true);
           }
         })
-        .catch(function (thrown) {
+        .catch((thrown) => {
           if (axios.isCancel(thrown)) {
             console.log('Request canceled', thrown.message);
           } else {
@@ -353,12 +352,9 @@ function SidePanel(props) {
             </Paper>
           </div>
           <Card
-            className={
-              classes.card +
-              ` ${
-                isTreePictureLoaded ? 'treePictureLoaded' : 'treePictureLoading'
-              }`
-            }
+            className={`${classes.card} ${
+              isTreePictureLoaded ? 'treePictureLoaded' : 'treePictureLoading'
+            }`}
           >
             {!isTreePictureLoaded && (
               <LinearProgress className={classes.progress} />
@@ -446,7 +442,7 @@ function SidePanel(props) {
                       </Grid>
                       <Grid item>
                         <Typography variant="subtitle1">
-                          Tree Verified{/*TODO wallet: token issued*/}
+                          Tree Verified{/* TODO wallet: token issued */}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -712,7 +708,7 @@ function List(props) {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.infoItem + ' list-root'}>
+    <Grid container className={`${classes.infoItem} list-root`}>
       <Grid item className={classes.detailIconBox}>
         <Tooltip title={props.tooltip}>
           <props.icon className={classes.detailIcon} />

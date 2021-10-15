@@ -21,7 +21,7 @@ function go(direction, location, degree) {
   } else if (direction === 'south') {
     result.lat -= degree;
   }
-  //correct
+  // correct
   if (direction === 'east' || direction === 'west') {
     if (result.lng > 180) {
       result.lng = (result.lng % 180) - 180;
@@ -68,7 +68,7 @@ function getAngleLat(north, south) {
  */
 function getInitialBounds(locations, width, height) {
   expect(locations).lengthOf.above(0);
-  //convert
+  // convert
   locations.forEach((location) => {
     location.lat = parseFloat(location.lat);
     location.lng = parseFloat(location.lng);
@@ -96,7 +96,7 @@ function getInitialBounds(locations, width, height) {
   }
 
   const bounds = new window.L.latLngBounds();
-  for (let location of locations) {
+  for (const location of locations) {
     bounds.extend(location);
   }
   log.log('bounds:', bounds);
@@ -104,9 +104,9 @@ function getInitialBounds(locations, width, height) {
     lat: bounds.getCenter().lat,
     lng: bounds.getCenter().lng,
   };
-  //cal zoom
+  // cal zoom
   let zoom;
-  var GLOBE_WIDTH = 256; // a constant in Google's map projection
+  const GLOBE_WIDTH = 256; // a constant in Google's map projection
   {
     const west = bounds.getSouthWest().lng;
     const east = bounds.getNorthEast().lng;
@@ -126,7 +126,7 @@ function getInitialBounds(locations, width, height) {
     log.log('zoom2:', zoom2);
   }
   log.log('height:', height, 'width:', width);
-  const zoomFinal = Math.min(zoom, zoom2) - 1; /* to give some padding*/
+  const zoomFinal = Math.min(zoom, zoom2) - 1; /* to give some padding */
   log.log('zoom final:', zoomFinal);
   const result = {
     center,

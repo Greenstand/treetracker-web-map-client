@@ -12,13 +12,13 @@ const theme = createTheme({
     subtitle1: {
       fontSize: 36,
       fontWeight: 700,
-      color: '#474B4F'
+      color: '#474B4F',
     },
     subtitle2: {
       fontSize: 24,
       fontWeight: 700,
       color: '#474B4F',
-    }
+    },
   },
   palette: {
     primary: {

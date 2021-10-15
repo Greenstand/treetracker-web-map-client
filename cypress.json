@@ -1,16 +1,14 @@
 {
-	"baseUrl": "http://localhost:3000",
-	"testFiles": "**/*.cy.{js,jsx,ts,tsx}",
-	"componentFolder": "src",
-	"nodeVersion": "system",
-	"integrationFolder": "cypress/tests",
-	"cypress-watch-and-reload": {
-		"watch": [
-			"src/**"
-		]
-	},
-	"component": {
-		"pluginsFile": "cypress/plugins/components-testing.js",
-		"supportFile": "cypress/support/components-testing.js"
-	}
+  "baseUrl": "http://localhost:3000",
+  "testFiles": "**/*.cy.{js,jsx,ts,tsx}",
+  "componentFolder": "src",
+  "nodeVersion": "system",
+  "integrationFolder": "cypress/tests",
+  "cypress-watch-and-reload": {
+    "watch": ["src/**"]
+  },
+  "component": {
+    "pluginsFile": "cypress/plugins/components-testing.js",
+    "supportFile": "cypress/support/components-testing.js"
+  }
 }

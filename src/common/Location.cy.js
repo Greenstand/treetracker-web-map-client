@@ -1,5 +1,6 @@
-import React from 'react';
 import { mount } from '@cypress/react';
+import React from 'react';
+
 import Location from './Location';
 
 const info = {
