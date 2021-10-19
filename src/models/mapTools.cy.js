@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-new */
 import expectRuntime from 'expect-runtime';
 import React from 'react';
 
@@ -52,13 +54,14 @@ describe('mapTools', () => {
               center: chicago,
             },
           );
-          //marker
-          const marker = new window.google.maps.Marker({
+          // marker
+          new window.google.maps.Marker({
             position: chicago,
             map,
           });
-          window.google.maps.event.addListener(map, 'idle', function () {
+          window.google.maps.event.addListener(map, 'idle', () => {
             try {
+              // eslint-disable-next-line no-bitwise
               const scale = 1 << map.getZoom();
               const worldCoordinate = project(chicago);
               const pixelCoordinate = new google.maps.Point(
@@ -88,7 +91,7 @@ describe('mapTools', () => {
               );
               console.log('pixel coordinate 2:', pixelCoordinate2);
 
-              //put a marker on position, with pixel coordinate 20,20
+              // put a marker on position, with pixel coordinate 20,20
               const mapDiv = document.getElementById('map-canvas');
               expectRuntime(mapDiv).defined();
               const width = mapDiv.clientWidth;
@@ -103,7 +106,7 @@ describe('mapTools', () => {
                 map,
               );
               new window.google.maps.Marker({
-                position: position,
+                position,
                 map,
               });
             } catch (e) {
@@ -149,15 +152,15 @@ describe('Test getPixelCoordinateByLatLng', () => {
               center: chicago,
             },
           );
-          //marker
-          const marker = new window.google.maps.Marker({
+          // marker
+          new window.google.maps.Marker({
             position: chicago,
             map,
           });
-          window.google.maps.event.addListener(map, 'idle', function () {
-            //calculate the corner
+          window.google.maps.event.addListener(map, 'idle', () => {
+            // calculate the corner
             try {
-              const bounds = map.getBounds();
+              map.getBounds();
               const northWest = new window.google.maps.LatLng(
                 map.getBounds().getNorthEast().lat(),
                 map.getBounds().getSouthWest().lng(),
@@ -172,30 +175,30 @@ describe('Test getPixelCoordinateByLatLng', () => {
                 map,
               );
               console.log('Result:', result);
-              //check, the north west corner shoud be the 0,0 corner of the HTML div
+              // check, the north west corner shoud be the 0,0 corner of the HTML div
               expectRuntime(result).match({
                 top: 0,
                 left: 0,
               });
-              //a point that is located at the point on the above and left of the north west corner
+              // a point that is located at the point on the above and left of the north west corner
               result = mapTools.getPixelCoordinateByLatLng(
                 northWest.lat() + 0.001,
                 northWest.lng() - 0.001,
                 map,
               );
               console.log('Result:', result);
-              //check, the north west corner shoud be the 0,0 corner of the HTML div
+              // check, the north west corner shoud be the 0,0 corner of the HTML div
               expectRuntime(result.top).below(0);
               expectRuntime(result.left).below(0);
 
-              //a point that is located at the point on the below and right of the east south corner
+              // a point that is located at the point on the below and right of the east south corner
               result = mapTools.getPixelCoordinateByLatLng(
                 eastSouth.lat() - 0.001,
                 eastSouth.lng() + 0.001,
                 map,
               );
               console.log('Result:', result);
-              //check, the north west corner shoud be the 0,0 corner of the HTML div
+              // check, the north west corner shoud be the 0,0 corner of the HTML div
               const div = document.getElementById('map-canvas');
               console.log('dive:', div.clientHeight, div.clientWidth);
               expectRuntime(result.top).above(div.clientHeight);

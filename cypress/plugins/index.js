@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const nock = require('nock');
 const http = require('http');
 const next = require('next');
@@ -9,9 +10,9 @@ module.exports = async (on, config) => {
   const handleNextRequests = app.getRequestHandler();
   await app.prepare();
 
-  const customServer = new http.Server(async (req, res) => {
-    return handleNextRequests(req, res);
-  });
+  const customServer = new http.Server(async (req, res) =>
+    handleNextRequests(req, res),
+  );
 
   await new Promise((resolve, reject) => {
     customServer.listen(3000, (err) => {
@@ -19,7 +20,7 @@ module.exports = async (on, config) => {
         return reject(err);
       }
       console.log('> Ready on http://localhost:3000');
-      resolve();
+      return resolve();
     });
   });
 
@@ -47,8 +48,8 @@ module.exports = async (on, config) => {
 
       // add one-time network stub like
       // nock('https://icanhazdadjoke.com').get('/').reply(200, ...)
-      method = method.toLowerCase();
-      nock(hostname)[method](path).reply(statusCode, body);
+      const methodString = method.toLowerCase();
+      nock(hostname)[methodString](path).reply(statusCode, body);
 
       return null;
     },

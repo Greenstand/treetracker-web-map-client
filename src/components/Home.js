@@ -8,7 +8,7 @@ import React from 'react';
 import backgroundImage from '../images/bg.png';
 import Link from './Link';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,
     display: 'flex',

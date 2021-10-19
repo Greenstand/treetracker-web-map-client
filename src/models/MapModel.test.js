@@ -1,18 +1,19 @@
-import MapModel from './MapModel';
 import axios from 'axios';
+
+import MapModel from './MapModel';
 
 jest.mock('axios');
 
 describe('MapModel', () => {
   beforeEach(async () => {
-    //mock jQuery
+    // mock jQuery
     global.$ = () => ({
       addClass: jest.fn(),
       removeClass: jest.fn(),
       css: jest.fn(),
       show: jest.fn(),
     });
-    //mock google map
+    // mock google map
     global.google = {
       maps: {
         geometry: {
@@ -68,19 +69,20 @@ describe('MapModel', () => {
   });
 
   describe('Simulate slow API request, and previous request was canceled', () => {
-    let cancel = jest.fn();
+    const cancel = jest.fn();
 
     beforeEach(() => {
       axios.get = jest
         .fn()
-        //slow api
-        .mockImplementationOnce(() => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(true);
-            }, 10000);
-          });
-        })
+        // slow api
+        .mockImplementationOnce(
+          () =>
+            new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(true);
+              }, 10000);
+            }),
+        )
         .mockImplementationOnce(() => ({
           status: 200,
           data: {
@@ -90,7 +92,7 @@ describe('MapModel', () => {
             },
           },
         }));
-      //mock axios cancel
+      // mock axios cancel
       axios.CancelToken = jest.fn().mockImplementation((newFn) => {
         newFn(cancel);
       });

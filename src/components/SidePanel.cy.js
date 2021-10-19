@@ -74,8 +74,8 @@ describe('SidePanel', () => {
     }
     mount(<Test />);
     cy.contains('Dadior');
-    //is loading
-    //cy.get(".treePictureLoading");
+    // is loading
+    // cy.get(".treePictureLoading");
     cy.get('.treePictureLoaded', { timeout: 1000 * 30 });
     cy.get("button[title='previous tree']").should('not.exist');
     cy.get("button[title='next tree']").click();
@@ -145,7 +145,7 @@ describe('SidePanel', () => {
     cy.get('.treePictureLoading').should('not.exist');
     cy.get("img[alt='tree planted']").should('not.exist');
 
-    //close it
+    // close it
     cy.get("div[title='hide']").click();
     cy.contains('Dadior').should('not.visible');
     cy.get("div[title='show']").click();

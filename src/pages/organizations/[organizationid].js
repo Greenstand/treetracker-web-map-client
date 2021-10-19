@@ -1,9 +1,10 @@
-import VerifiedBadge from '../../components/VerifiedBadge';
-import { Button, Box, Divider, Typography, Chip } from '@material-ui/core';
+import { Box, Button, Divider, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import { makeStyles } from '@material-ui/core/styles';
+
+import VerifiedBadge from '../../components/VerifiedBadge';
 import placeholder from '../../images/organizationsPlaceholder.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,15 +55,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Organization({ organization }) {
   const classes = useStyles();
-  const {
-    name,
-    area,
-    country,
-    created_at,
-    about,
-    mission,
-    photo_url,
-  } = organization;
+  const { name, area, country, created_at, about, mission, photo_url } =
+    organization;
   return (
     <Box className={classes.organizationPage}>
       <Box display="flex" justifyContent="spaceBetween">

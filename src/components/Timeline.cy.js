@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 
 import { mountWithTheme as mount } from '../models/test-utils';
@@ -10,11 +11,11 @@ describe('Timeline', () => {
 
   it('SidePanel shown and turn to next page', () => {
     function Test() {
-      const [treeIndex, setTreeIndex] = React.useState(0);
+      // const [treeIndex, setTreeIndex] = React.useState(0);
 
-      function handleNext() {
-        setTreeIndex(treeIndex + 1);
-      }
+      // function handlext() {
+      //   setTreeIndex(treeIndex + 1);
+      // }
 
       return (
         <div style={{ background: 'gray', height: '1000px' }}>

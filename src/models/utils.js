@@ -1,16 +1,14 @@
 function parseDomain(url) {
-  const matcher = url.match(/^https?\:\/\/([^\/]*)\/?.*$/);
+  const matcher = url.match(/^https?:\/\/([^/]*)\/?.*$/);
   if (matcher) {
     const domainWithPort = matcher[1];
-    const matcher2 = domainWithPort.match(/^(.*)\:\d+$/);
+    const matcher2 = domainWithPort.match(/^(.*):\d+$/);
     if (matcher2) {
       return matcher2[1];
-    } else {
-      return domainWithPort;
     }
-  } else {
-    return undefined;
+    return domainWithPort;
   }
+  return undefined;
 }
 
 function parseMapName(domain) {
@@ -23,7 +21,7 @@ function parseMapName(domain) {
       return undefined;
     }
     const sub = domain.match(/([^.]+)/g);
-    //discard primary domain
+    // discard primary domain
     sub.pop();
     sub.pop();
     if (
@@ -35,12 +33,10 @@ function parseMapName(domain) {
       sub[0] !== 'ready'
     ) {
       return sub[0];
-    } else {
-      return undefined;
     }
-  } else {
-    throw new Error(`the domain is wrong :${domain}`);
+    return undefined;
   }
+  throw new Error(`the domain is wrong :${domain}`);
 }
 
 export { parseDomain, parseMapName };

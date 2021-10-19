@@ -1,8 +1,9 @@
-import Navbar from './Navbar';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import dynamic from 'next/dynamic';
+
+import Navbar from './Navbar';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 

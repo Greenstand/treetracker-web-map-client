@@ -1,5 +1,6 @@
-import React from 'react';
 import log from 'loglevel';
+import React from 'react';
+
 import { useMapContext } from '../../mapContext';
 
 const Tree = ({ tree }) => {
@@ -8,7 +9,7 @@ const Tree = ({ tree }) => {
   log.warn('map:', mapContext);
 
   React.useEffect(() => {
-    //manipulate the map
+    // manipulate the map
     if (mapContext.map) {
       mapContext.map.flyTo(tree.lat, tree.lon, 16);
     }

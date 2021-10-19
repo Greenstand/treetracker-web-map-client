@@ -1,8 +1,9 @@
 import '../style.css';
-import Layout from '../components/Layout';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { MapContextProvider } from '../mapContext';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+
+import Layout from '../components/Layout';
+import { MapContextProvider } from '../mapContext';
 import appTheme from '../theme';
 
 function TreetrackerApp({ Component, pageProps }) {

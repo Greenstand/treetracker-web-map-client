@@ -54,7 +54,7 @@ const TimelineSlider = withStyles({
   },
 })(Slider);
 
-const useStylesTooltip = makeStyles((theme) => ({
+const useStylesTooltip = makeStyles(() => ({
   popper: {
     opacity: 0.5,
   },
@@ -122,14 +122,12 @@ const dayRange = Math.round(
   moment.duration(moment().diff(moment('2015-01-01'))).as('d'),
 );
 
-const marks = ['2015', '2017', '2019', '2021'].map((e) => {
-  return {
-    label: e,
-    value: Math.round(
-      moment.duration(moment(`${e}-01-01`).diff(moment(`2015-01-01`))).as('d'),
-    ),
-  };
-});
+const marks = ['2015', '2017', '2019', '2021'].map((e) => ({
+  label: e,
+  value: Math.round(
+    moment.duration(moment(`${e}-01-01`).diff(moment(`2015-01-01`))).as('d'),
+  ),
+}));
 
 function valuetext(value) {
   return moment('2015-01-01').add(value, 'days').format('YYYY-MM-DD');
@@ -147,6 +145,7 @@ function textvalue(begin, end) {
 function Timeline(props) {
   const classes = useStyles();
   const [slide, setSlide] = React.useState(false);
+  const [value, setValue] = React.useState([0, dayRange]);
 
   function handleClick() {
     setSlide(!slide);
@@ -163,16 +162,15 @@ function Timeline(props) {
     }
   }
 
-  const [value, setValue] = React.useState([0, dayRange]);
-  console.warn('value:', value);
+  // console.warn('value:', value);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleChangeCommitted = (e, value) => {
-    log.debug('trigger change commit:', value);
-    props.onDateChange && props.onDateChange(value.map((e) => valuetext(e)));
+  const handleChangeCommitted = (unusedEvent, newValue) => {
+    log.debug('trigger change commit:', newValue);
+    props.onDateChange && props.onDateChange(newValue.map((e) => valuetext(e)));
   };
 
   React.useEffect(() => {

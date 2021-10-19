@@ -1,9 +1,9 @@
-import React from 'react';
+import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AccessTime from '@material-ui/icons/AccessTime';
-import { Box } from '@material-ui/core';
+import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexDirection: 'row',
