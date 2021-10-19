@@ -305,7 +305,7 @@ The [pretty-quick](https://www.npmjs.com/package/pretty-quick) npm package runs 
 
 ### Commit Message and PR Title Format
 
-We use [commitlint](https://github.com/conventional-changelog/commitlint), to format out commit messages. Commitlint checks if your commit messages meet the conventional commit format.
+We use [commitlint](https://github.com/conventional-changelog/commitlint), to format our commit messages. Commitlint checks if your commit messages meet the conventional commit format.
 
 You need to use a proper commit message format or you will not be able to commit your changes! husky checks your commit messages before every commit.
 
