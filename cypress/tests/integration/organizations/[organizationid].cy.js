@@ -1,7 +1,7 @@
 const organization = {
   id: 1,
   name: '180Earth',
-  photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png',
+  // photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png',
   area: 'Shirimatunda',
   country: 'Tanzania',
   created_at: 'November 11, 2019',
@@ -16,19 +16,23 @@ beforeEach(() => {
 });
 
 describe('Organizations', () => {
-  it('organization test', () => {
-    // Start from the index page
-
+  const imageFixturePath = `images/organization.png`;
+  return it(`organization test`, () => {
     const path = `/organizations/${organization.id}`;
-    cy.task('nock', {
-      hostname: 'http://127.0.0.1:4010/mock',
-      method: 'GET',
-      path,
-      statusCode: 200,
-      body: {
-        ...organization,
-        status: 200,
-      },
+    cy.fixture(imageFixturePath).then((image) => {
+      const blob = Cypress.Blob.base64StringToBlob(image, 'images/png');
+      const photo_url = Cypress.Blob.createObjectURL(blob);
+      cy.task('nock', {
+        hostname: 'http://127.0.0.1:4010/mock',
+        method: 'GET',
+        path,
+        statusCode: 200,
+        body: {
+          ...organization,
+          photo_url,
+          status: 200,
+        },
+      });
     });
 
     cy.visit(path, {
