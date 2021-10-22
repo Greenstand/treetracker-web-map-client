@@ -59,7 +59,7 @@ function Home() {
             Learn more
           </Button>
           <Box sx={{ width: 20 }} component="span" />
-          <Link href="/top" passHref>
+          <Link href="/top">
             <Button variant="contained" className={classes.button}>
               Let&apos;s Find a Tree
             </Button>

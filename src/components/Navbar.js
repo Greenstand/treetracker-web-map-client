@@ -79,7 +79,7 @@ function Navbar() {
             Blog
           </Button>
         </Link>
-        <Link href="/" passHref>
+        <Link href="/">
           <Button className={classes.buttonStyle} variant="text" component="a">
             Contact Us
           </Button>
