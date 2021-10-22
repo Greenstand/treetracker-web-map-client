@@ -148,7 +148,7 @@ export default class Map {
       // mount event
       this.map.on('moveend', (e) => {
         log.warn('move end', e);
-        this.updateUrl();
+        // this.updateUrl();
       });
 
       if (this.filters.treeid) {
@@ -724,14 +724,14 @@ export default class Map {
   //    return Map.getClusterRadius(zoomLevel);
   //  }
 
-  updateUrl() {
-    log.warn('update url');
-    window.history.pushState(
-      'treetrakcer',
-      '',
-      `/?${this.getFilterParameters()}&bounds=${this.getCurrentBounds()}`,
-    );
-  }
+  // updateUrl() {
+  //   log.warn('update url');
+  //   window.history.pushState(
+  //     'treetrakcer',
+  //     '',
+  //     `/?${this.getFilterParameters()}&bounds=${this.getCurrentBounds()}`,
+  //   );
+  // }
 
   getCurrentBounds() {
     return this.map.getBounds().toBBoxString();
