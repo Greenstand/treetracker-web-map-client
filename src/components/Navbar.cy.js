@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { mountWithTheme as mount } from '../models/test-utils';
+import { mountWithThemeAndRouter as mount } from '../models/test-utils';
 import Navbar from './Navbar';
 
 describe('Navbar tests', () => {
