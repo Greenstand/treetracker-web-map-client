@@ -11,6 +11,7 @@
 		- [Adding Material UI Theme to Component Tests](#adding-material-ui-theme-to-component-tests)
 		- [Using Correct Link Component](#using-correct-link-component)
 		- [Mocking NextJs Router in Component Tests](#mocking-nextjs-router-in-component-tests)
+		- [Mocking Static Images](#mocking-static-images)
 	- [How to Build Pages/Routes](#how-to-build-pagesroutes)
 		- [Integration Tests](#integration-tests)
 		- [How to mock the API](#how-to-mock-the-api)
@@ -154,6 +155,18 @@ Do not use `next/link` or `@material-ui/core/Link`. Instead use the custom Link 
 
 Use the custom `mountWithThemeAndRouter` function found in `src/models/test-utils.js` instead of the `mountWithTheme` function. This will include a basic router context mock to allow component tests to pass.
 
+### Mocking Static Images
+
+If your component uses a static image file then you will need to mock it in your component tests. Place the following code in your test file. Replace the fixture value with the path to an example image in the `cypress/fixtures` directory.
+
+```js
+beforeEach(() => {
+  cy.intercept('/_next/**', {
+    fixture: 'images/greenstand_logo_full.png',
+  });
+});
+```
+
 ## How to Build Pages/Routes
 
 Glossary:
@@ -169,7 +182,9 @@ Also, integration tests bring some benefits for the development workflow - by mo
 **To run Cypress integration tests:**
 
 ```
+
 npm run cy
+
 ```
 
 **Note**
