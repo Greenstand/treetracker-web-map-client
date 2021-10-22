@@ -1,7 +1,13 @@
 import React from 'react';
 
-import { mountWithTheme as mount } from '../models/test-utils';
+import { mountWithThemeAndRouter as mount } from '../models/test-utils';
 import Navbar from './Navbar';
+
+beforeEach(() => {
+  cy.intercept('/_next/**', {
+    fixture: 'images/greenstand_logo_full.png',
+  });
+});
 
 describe('Navbar tests', () => {
   it('navbar-mobile', () => {
