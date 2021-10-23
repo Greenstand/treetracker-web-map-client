@@ -276,6 +276,8 @@ Please import to http://editor.swagger.io to view it.
 
 Our Figma design resource is here: https://www.figma.com/file/XdYFdjlsHvxehlrkPVYq0l/Greenstand-Webmap?node-id=2497%3A9322
 
+Make sure you are logged in to Figma so that you can inspect the style details in Figma's editor.
+
 ## Code style guide
 
 We use [Prettier](https://prettier.io/), [Eslint](https://eslint.org/) along with [husky](https://typicode.github.io/husky/#/) to style our code.
