@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.15.0...v1.16.0) (2021-10-24)
+
+
+### Features
+
+* date format ([84e7f92](https://github.com/Greenstand/treetracker-web-map-client/commit/84e7f9287f5a4722098dd6ced279cd3e6f0927ea))
+
 # [1.15.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.14.0...v1.15.0) (2021-09-29)
 
 
