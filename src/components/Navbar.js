@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '0 20px',
+    zIndex: 1000,
   },
   toolbar: {
     gap: 25,
@@ -46,7 +47,7 @@ function Navbar() {
   };
   const classes = useStyles();
   return (
-    <AppBar className={classes.navContainer} color="primary">
+    <AppBar className={classes.navContainer} color="primary" position="static">
       <Image src={logo} width={180} height={30} />
       <Toolbar variant="dense" className={classes.toolbar}>
         <Link href="/">
@@ -79,7 +80,7 @@ function Navbar() {
             Blog
           </Button>
         </Link>
-        <Link href="/" passHref>
+        <Link href="/">
           <Button className={classes.buttonStyle} variant="text" component="a">
             Contact Us
           </Button>

@@ -9,7 +9,6 @@ import placeholder from '../../images/organizationsPlaceholder.png';
 
 const useStyles = makeStyles((theme) => ({
   organizationPage: {
-    overflowY: 'scroll',
     background: 'white',
     padding: '12px 20px',
   },

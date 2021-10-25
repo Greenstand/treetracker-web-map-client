@@ -1,7 +1,7 @@
 const organization = {
   id: 1,
   name: '180Earth',
-  photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png',
+  // photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png',
   area: 'Shirimatunda',
   country: 'Tanzania',
   created_at: 'November 11, 2019',
@@ -11,25 +11,32 @@ const organization = {
     'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.',
 };
 
-describe('Organizations', () => {
-  it('organization test', () => {
-    // Start from the index page
-    cy.visit('http://localhost:3000/organizations/1', {
-      failOnStatusCode: false,
-      onBeforeLoad: (win) => {
-        let nextData;
+beforeEach(() => {
+  cy.task('clearNock');
+});
 
-        // inject serverside props into test
-        Object.defineProperty(win, '__NEXT_DATA__', {
-          set(o) {
-            nextData = o;
-            nextData.props.pageProps.organization = organization;
-          },
-          get() {
-            return nextData;
-          },
-        });
-      },
+describe('Organizations', () => {
+  const imageFixturePath = `images/organization.png`;
+  return it(`organization test`, () => {
+    const path = `/organizations/${organization.id}`;
+    cy.fixture(imageFixturePath).then((image) => {
+      const blob = Cypress.Blob.base64StringToBlob(image, 'images/png');
+      const photo_url = Cypress.Blob.createObjectURL(blob);
+      cy.task('nock', {
+        hostname: 'http://127.0.0.1:4010/mock',
+        method: 'GET',
+        path,
+        statusCode: 200,
+        body: {
+          ...organization,
+          photo_url,
+          status: 200,
+        },
+      });
+    });
+
+    cy.visit(path, {
+      failOnStatusCode: false,
     });
 
     cy.url().should('include', '/organizations');
