@@ -6,6 +6,10 @@ import Logo from './Logo';
 
 describe('Logo', () => {
   it('it shows logo', () => {
+    cy.intercept('/_next/**', {
+      fixture: 'images/greenstand_logo_full.png',
+    });
+
     mount(<Logo />);
     cy.get('a > img').should('be.visible').should('have.attr', 'src', logo);
     cy.get('a')
