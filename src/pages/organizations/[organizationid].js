@@ -1,20 +1,13 @@
-import { Box, Button, Divider, Typography } from '@material-ui/core';
+import { Box, Divider, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
+import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import placeholder from '../../images/organizationsPlaceholder.png';
 
 const useStyles = makeStyles((theme) => ({
-  organizationPage: {
-    background: 'white',
-    padding: '12px 20px',
-  },
-  backButton: {
-    textTransform: 'none',
-  },
   info: {
     display: 'flex',
     alignItems: 'center',
@@ -56,18 +49,9 @@ export default function Organization({ organization }) {
   const classes = useStyles();
   const { name, area, country, created_at, about, mission, photo_url } =
     organization;
+
   return (
-    <Box className={classes.organizationPage}>
-      <Box display="flex" justifyContent="spaceBetween">
-        <Button
-          className={classes.backButton}
-          color="textPrimary"
-          startIcon={<ArrowBackIosIcon />}
-        >
-          Back
-        </Button>
-        <Box>{/* search button */}</Box>
-      </Box>
+    <PageWrapper>
       <Typography variant="subtitle1">{name}</Typography>
       <Box className={classes.badgeWrapper}>
         <VerifiedBadge verified={true} badgeName="Verified Planter" />
@@ -101,7 +85,7 @@ export default function Organization({ organization }) {
       <Typography variant="subtitle2" gutterBottom>
         Check out the planting effort in action
       </Typography>
-    </Box>
+    </PageWrapper>
   );
 }
 
