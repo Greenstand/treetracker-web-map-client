@@ -7,10 +7,14 @@ export default function Top() {
       <h2>featured trees</h2>
       <ul>
         <li>
-          <Link href="/trees/933042">tree 933042</Link>
+          <Link href="/trees/933042" color="inherit">
+            tree 933042
+          </Link>
         </li>
         <li>
-          <Link href="/trees/932946">tree 932946</Link>
+          <Link href="/trees/932946" color="inherit">
+            tree 932946
+          </Link>
         </li>
       </ul>
     </div>
