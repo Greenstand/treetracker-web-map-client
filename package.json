@@ -55,7 +55,8 @@
 		"prop-types": "^15.7.2",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"source-map-explorer": "^2.5.0"
+		"source-map-explorer": "^2.5.0",
+		"treetracker-web-map-core": "github:dadiorchen/treetracker-web-map-core#basic"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.15.8",
