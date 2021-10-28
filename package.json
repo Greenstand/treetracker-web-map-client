@@ -95,10 +95,5 @@
 		"webpack": "^5.58.2",
 		"webpack-dev-server": "^3.11.2"
 	},
-	"proxy": "http://127.0.0.1:3001",
-	"lint-staged": {
-		"*.js": [
-			"eslint --cache --fix"
-		]
-	}
+	"proxy": "http://127.0.0.1:3001"
 }

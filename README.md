@@ -1,34 +1,35 @@
 **Table of Contents**
 
 - [Treetracker Web Map Site](#treetracker-web-map-site)
-	- [Project Description](#project-description)
-	- [Development Environment Quick Start](#development-environment-quick-start)
-	- [Workflow with Github](#workflow-with-github)
-	- [Test Driven Development](#test-driven-development)
-		- [Glossary](#glossary)
-		- [Test File Naming Conventions](#test-file-naming-conventions)
-	- [How to Build Components](#how-to-build-components)
-		- [Adding Material UI Theme to Component Tests](#adding-material-ui-theme-to-component-tests)
-		- [Using Correct Link Component](#using-correct-link-component)
-		- [Mocking NextJs Router in Component Tests](#mocking-nextjs-router-in-component-tests)
-		- [Mocking Static Images](#mocking-static-images)
-	- [How to Build Pages/Routes](#how-to-build-pagesroutes)
-		- [Integration Tests](#integration-tests)
-		- [How to mock the API](#how-to-mock-the-api)
-		- [Mocking API calls in NextJs SSR functions](#mocking-api-calls-in-nextjs-ssr-functions)
-	- [The API](#the-api)
-		- [The current map API](#the-current-map-api)
-		- [The in-progress API](#the-in-progress-api)
-		- [Using our mock API server](#using-our-mock-api-server)
-		- [Config](#config)
-	- [The route/URL spec](#the-routeurl-spec)
-	- [UI design resource](#ui-design-resource)
-	- [Code style guide](#code-style-guide)
-		- [Prettier](#prettier)
-		- [Eslint](#eslint)
-		- [husky](#husky)
-		- [Commit Message and PR Title Format](#commit-message-and-pr-title-format)
-	- [Other resource from Greenstand](#other-resource-from-greenstand)
+  - [Project Description](#project-description)
+  - [Development Environment Quick Start](#development-environment-quick-start)
+  - [Workflow with Github](#workflow-with-github)
+  - [Test Driven Development](#test-driven-development)
+    - [Glossary](#glossary)
+    - [Test File Naming Conventions](#test-file-naming-conventions)
+  - [How to Build Components](#how-to-build-components)
+    - [Adding Material UI Theme to Component Tests](#adding-material-ui-theme-to-component-tests)
+    - [Using Correct Link Component](#using-correct-link-component)
+    - [Mocking NextJs Router in Component Tests](#mocking-nextjs-router-in-component-tests)
+    - [Mocking Static Images](#mocking-static-images)
+  - [How to Build Pages/Routes](#how-to-build-pagesroutes)
+    - [Integration Tests](#integration-tests)
+    - [How to mock the API](#how-to-mock-the-api)
+    - [Mocking API calls in NextJs SSR functions](#mocking-api-calls-in-nextjs-ssr-functions)
+  - [The API](#the-api)
+    - [The current map API](#the-current-map-api)
+    - [The in-progress API](#the-in-progress-api)
+    - [Using our mock API server](#using-our-mock-api-server)
+    - [Config](#config)
+  - [The route/URL spec](#the-routeurl-spec)
+  - [UI design resource](#ui-design-resource)
+  - [Code style guide](#code-style-guide)
+    - [Prettier](#prettier)
+    - [Eslint](#eslint)
+    - [husky](#husky)
+    - [Lint-Staged](#lint-staged)
+    - [Commit Message and PR Title Format](#commit-message-and-pr-title-format)
+  - [Other resource from Greenstand](#other-resource-from-greenstand)
 
 # Treetracker Web Map Site
 
@@ -318,20 +319,11 @@ You can find the Eslint rules in the .eslintrc.js file.
 
 ### husky
 
-With husky we can use any git hook. Git Hooks are actions that can be executed if a certain Git event occurs. For example when a developer makes a 'git commit' or a 'git push'.
-To add a command to a pre-commit hook or create a new one, use:
+With husky we can use any git hook. Git Hooks are actions that can be executed if a certain Git event occurs. For example when a developer makes a 'git commit' or a 'git push'. Pre-commit hooks are listed in `.husky/pre-commit`
 
-```
-npx husky add .husky/pre-commit "<your command>"
-```
+### Lint-Staged
 
-.husky folder contains all our hooks. E.g.:
-
-```
-npx pretty-quick --staged
-```
-
-The [pretty-quick](https://www.npmjs.com/package/pretty-quick) npm package runs Prettier on your changed files.
+[Lint-staged](https://github.com/okonet/lint-staged) is used with husky to run actions exclusively on staged files. This allows us to lint staged files and automatically add fixes to the commit.
 
 ### Commit Message and PR Title Format
 
