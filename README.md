@@ -345,6 +345,25 @@ chore: run tests on travis ci
 fix(server): send cors headers
 ```
 
+# Troubleshooting
+
+## Can not install Cypress in some area.
+
+In some area like China, there might be some problem with installing the Cypress, throws error log like this:
+
+```
+npm ERR! URL: https://download.cypress.io/desktop/8.6.0?platform=darwin&arch=x64
+npm ERR! Error: read ECONNRESET
+```
+
+To sole this problem, download the zip file directly from Cypress CDN following guide here: https://docs.cypress.io/guides/getting-started/installing-cypress#Direct-download
+
+Then install the project with a env variable:
+
+```
+CYPRESS_INSTALL_BINARY=[path/to/Cypress/zip/file] npm ci
+```
+
 ## Other resource from Greenstand
 
 We have more tech guides and handbook here:
