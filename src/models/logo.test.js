@@ -1,12 +1,12 @@
 import entity from "./entity";
-import getLogo from "./logo.js";
+import getLogo from "./logo";
 
 jest.mock("./entity");
 
 
 
 describe("Logo", () => {
-  let logoCustomer = "http://zaven.com/logo.svg";
+  const logoCustomer = "http://zaven.com/logo.svg";
 
   beforeEach(async () => {
   });
