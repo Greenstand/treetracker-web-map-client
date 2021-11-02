@@ -7,26 +7,15 @@
   },
   "extends": [
     "airbnb-base",
-    "prettier",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:cypress/recommended",
-    "plugin:@next/next/recommended"
-  ],
-  "ignorePatterns": [
-    "**/.next/**",
-    "**/public/**",
-    "**/dist/**",
-    "package-lock.json"
+    "plugin:@next/next/recommended",
+    "prettier"
   ],
   "parser": "@babel/eslint-parser",
-  "plugins": [
-    "react",
-    "prettier",
-    "simple-import-sort",
-    "import",
-    "eslint-plugin-import"
-  ],
+  "plugins": ["react", "simple-import-sort", "import", "eslint-plugin-import"],
+  "reportUnusedDisableDirectives": true,
   "rules": {
     "array-callback-return": "warn",
     "block-scoped-var": "warn",
@@ -111,7 +100,6 @@
     "prefer-const": "warn",
     "prefer-destructuring": "warn",
     "prefer-template": "warn",
-    "prettier/prettier": "error",
     "radix": "off",
     "react/display-name": "warn",
     "react/jsx-uses-vars": "warn",
@@ -132,7 +120,7 @@
   "settings": {
     "react": {
       "pragma": "React",
-      "version": "17.0.2"
+      "version": "^16.13.1"
     }
   }
 }

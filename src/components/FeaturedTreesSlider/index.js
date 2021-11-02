@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { Grid, Button } from '@material-ui/core';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { Button, Grid } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { useStyles } from './style.js'; // the style file
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import React, { useRef, useState } from 'react';
+
 import Link from '../Link';
+import { useStyles } from './style.js'; // the style file
 
 function FeaturedTreesSlider() {
   const classes = useStyles();
