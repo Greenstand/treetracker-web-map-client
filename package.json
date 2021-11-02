@@ -12,6 +12,7 @@
 		"dev:mock": "concurrently \"npm run mock-server\" \"npm run dev\"",
 		"cy": "cypress open",
 		"cyu": "cypress open-ct",
+		"cyux": "rm -rf .next/; npm run cyu",
 		"cypress:open": "cypress open",
 		"cypress:run": "cypress run",
 		"eject": "react-scripts eject",
@@ -90,6 +91,7 @@
 		"lint-staged": "^11.2.3",
 		"nock": "^13.1.3",
 		"prettier": "^2.4.1",
+		"webfontloader": "^1.6.28",
 		"webpack": "^5.58.2",
 		"webpack-dev-server": "^3.11.2"
 	},
