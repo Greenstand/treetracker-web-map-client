@@ -1,28 +1,9 @@
-# [1.11.0](https://github.com/mmayeda/treetracker-web-map-client/compare/v1.10.2...v1.11.0) (2021-10-20)
-
-
-### Bug Fixes
-
-* axios not a dev dependency ([ce15302](https://github.com/mmayeda/treetracker-web-map-client/commit/ce15302bd91c0ffdaaf4084615477b3b36bcd5b2))
-* build github actions ([a6a135c](https://github.com/mmayeda/treetracker-web-map-client/commit/a6a135c0a88b5f57e8d4d225457d050a6cc3f6d3))
-* changes to mobile logo click event ([3c0a640](https://github.com/mmayeda/treetracker-web-map-client/commit/3c0a640e3456c2cfb13bcc5cbb9382c7e40a07c4))
-* changes to zoom on mobile issue ([c516ab7](https://github.com/mmayeda/treetracker-web-map-client/commit/c516ab76a0bd9a5bf2b784d2a7dc32aff3085b84))
-* copyright pattern ([5f3f714](https://github.com/mmayeda/treetracker-web-map-client/commit/5f3f7149f3ce358e2960e67d4d220a3bc06e5a22))
-* entity tests ([6ca4a3f](https://github.com/mmayeda/treetracker-web-map-client/commit/6ca4a3f5571527a5f6e3e9b26620e307872c66da))
-* layout Google copyright ([ab1402f](https://github.com/mmayeda/treetracker-web-map-client/commit/ab1402f0c2835c8b58d976b75172657ccedcb4e3))
-* link to greenstand when greenstand logo ([0ea356d](https://github.com/mmayeda/treetracker-web-map-client/commit/0ea356d02b9fea731911701486606cbbde4270c5))
-* slash problem ([63dfc79](https://github.com/mmayeda/treetracker-web-map-client/commit/63dfc79b4bb1fc9073c3fcd56533059494ccc0bb))
-* zoom on mobile issue ([5e120e1](https://github.com/mmayeda/treetracker-web-map-client/commit/5e120e156357c6e32a5c411ee03c29b1b130584b))
-* zoom on movile issue ([9bbb7f5](https://github.com/mmayeda/treetracker-web-map-client/commit/9bbb7f53086fd80f4249c169b8433b1fd6a56f32))
+# [1.16.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.15.0...v1.16.0) (2021-10-24)
 
 
 ### Features
 
-* add information card component ([2eec513](https://github.com/mmayeda/treetracker-web-map-client/commit/2eec513fc937b7a5665ecb4f2065ad51b8f9591c))
-* add link share icon ([76cef14](https://github.com/mmayeda/treetracker-web-map-client/commit/76cef1410c69aed4bd98ecee3f56a71fdaa7e578))
-* greenstand logo is a link ([5a65387](https://github.com/mmayeda/treetracker-web-map-client/commit/5a653870311aa5c240b88692095be336aad5c71f))
-* map logo has a frame and also displays 'powered by greenstand' ([ce20439](https://github.com/mmayeda/treetracker-web-map-client/commit/ce20439f2fbeb196023ce641fc40d2bfaeb837c4))
-* support tile subdomain ([c592a5c](https://github.com/mmayeda/treetracker-web-map-client/commit/c592a5c044375d0fa15b6bf499a15a349b340e6b))
+* date format ([84e7f92](https://github.com/Greenstand/treetracker-web-map-client/commit/84e7f9287f5a4722098dd6ced279cd3e6f0927ea))
 
 # [1.15.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.14.0...v1.15.0) (2021-09-29)
 
