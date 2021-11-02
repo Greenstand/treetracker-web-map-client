@@ -7,6 +7,7 @@ import  log from "loglevel";
 
 import {mapConfig} from "../mapConfig";
 import {getInitialBounds} from "../mapTools";
+import {boundsToString} from "../utils";
 import Requester from "./Requester";
 
 class MapError extends Error{
@@ -705,12 +706,8 @@ export default class Map{
 //  }
 
   updateUrl(){
-    log.warn("update url");
-    window.history.pushState('treetrakcer', '', `/?${this.getFilterParameters()}&bounds=${this.getCurrentBounds()}`);
-  }
-
-  getCurrentBounds(){
-    return this.map.getBounds().toBBoxString();
+    log.info("update url");
+    window.history.pushState('treetrakcer', '', `/?${this.getFilterParameters()}&bounds=${boundsToString(this.map.getBounds())}`);
   }
 
   getLeafletMap(){

@@ -8,12 +8,12 @@ function parseMapName(domain){
       return undefined;
     }
     const sub = domain.match(/([^.]+)/g);
-    //discard primary domain
+    // discard primary domain
     sub.pop();
     sub.pop();
     if(
-      sub.length > 0 && 
-      sub[0] !== "test" && 
+      sub.length > 0 &&
+      sub[0] !== "test" &&
       sub[0] !== "dev" &&
       sub[0] !== "wallet" &&
       sub[0] !== "map" &&
@@ -28,5 +28,14 @@ function parseMapName(domain){
   }
 }
 
+const roundNumber = function (number, places) {
+  return Number(`${Math.round(+(number + "e+" + places))}e-${places}`);
+}
 
-export {parseMapName}
+const boundsToString = function (bounds) {
+  return [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()].map(bound => {
+    return roundNumber(bound, 6);
+  }).join(",");
+}
+
+export {parseMapName, roundNumber, boundsToString}
