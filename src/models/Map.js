@@ -726,11 +726,14 @@ export default class Map {
 
   updateUrl() {
     log.warn('update url');
-    window.history.pushState(
-      'treetrakcer',
-      '',
-      `/?${this.getFilterParameters()}&bounds=${this.getCurrentBounds()}`,
-    );
+
+    const updateUrlPath = `${window.location.protocol}//${
+      window.location.host
+    }${
+      window.location.pathname
+    }?${this.getFilterParameters()}&bounds=${this.getCurrentBounds()}`;
+
+    window.history.replaceState('treetracker', '', updateUrlPath);
   }
 
   getCurrentBounds() {
