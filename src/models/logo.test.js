@@ -6,7 +6,6 @@ jest.mock("./entity");
 
 
 describe("Logo", () => {
-  let logoOriginal = "/img/logo_floating_map.svg";
   let logoCustomer = "http://zaven.com/logo.svg";
 
   beforeEach(async () => {
@@ -15,8 +14,8 @@ describe("Logo", () => {
 
   it("getLogo('http://localhost:3000') should return Greenstand logo", async () => {
     const logo = await getLogo("http://localhost:3000");
-    //in this case, should return a object, cuz we can use a src string for local image
-    expect(typeof logo).toBe("object");
+    // getLogo returns an undefined src if there is no provided wallet or map in the url query params
+    expect(typeof logo).toBe("undefined");
   });
 
   it("getLogo('http://localhost:3000/?wallet=Zaven", async () => {
