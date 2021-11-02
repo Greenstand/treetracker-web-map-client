@@ -80,8 +80,16 @@ This project must be installed and used with Node v16. [Node Version Manager](ht
 
 In order to launch Cypress in WSL you will need to have an X-Server running on Windows. [This guide](https://dev.to/nickymeuleman/using-graphical-user-interfaces-like-cypress-in-wsl2-249j) outlines the steps necessary to configure your WSL shell to work with an X-server. If this still isn't working try launching vcxsrv.exe from the command line like this:
 
+WSL 1
+
 ```bat
-"" "C:\Program Files\VcXsrv\vcxsrv.exe" :0 -multiwindow -clipboard -wgl -ac`
+start "" "C:\Program Files\VcXsrv\vcxsrv.exe" :0 -multiwindow -clipboard -wgl`
+```
+
+WSL 2
+
+```bat
+start "" "C:\Program Files\VcXsrv\vcxsrv.exe" :0 -multiwindow -clipboard -wgl -ac`
 ```
 
 ## Workflow with Github
