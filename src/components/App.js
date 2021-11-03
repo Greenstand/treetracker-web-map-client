@@ -11,9 +11,9 @@ import MuiAlert from '@material-ui/lab/Alert';
 import expect from 'expect-runtime';
 import log from 'loglevel';
 import React from 'react';
+import Map from 'treetracker-web-map-core/src/Map';
 
 import { useMapContext } from '../mapContext';
-import Map from '../models/Map';
 import { parseMapName } from '../models/utils';
 import Loader from './Loader';
 import LoaderB from './LoaderB';
