@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
     display: 'flex',
@@ -23,8 +23,9 @@ const useStyles = makeStyles(() => ({
     width: '50%',
     height: '100%',
     zIndex: 999,
-    background: 'gray',
+    background: theme.palette.background.default,
     overflowY: 'auto',
+    display: 'flex',
   },
   right: {
     width: '50%',

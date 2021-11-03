@@ -30,7 +30,8 @@ const theme = createTheme({
     },
     h4: {
       fontFamily: 'Montserrat',
-      fontWeight: 700,
+      fontSize: '20px',
+      fontWeight: 400,
     },
     h5: {
       fontFamily: 'Montserrat',
@@ -52,6 +53,9 @@ const theme = createTheme({
     },
   },
   palette: {
+    background: {
+      default: '#FFFFFF',
+    },
     primary: {
       main: '#FFFFFF',
     },
