@@ -53,6 +53,29 @@ module.exports = async (on, config) => {
 
       return null;
     },
+    async nocks({ hostname, routes }) {
+      nock.activate();
+
+      let scope = nock(hostname);
+
+      for (const route of routes) {
+        const { method, path, statusCode, body } = route;
+
+        console.log(
+          'nock will: %s %s%s respond with %d %o',
+          method,
+          hostname,
+          path,
+          statusCode,
+          body,
+        );
+
+        const methodString = method.toLowerCase();
+        scope = scope[methodString](path).reply(statusCode, body);
+      }
+
+      return null;
+    },
   });
 
   return config;
