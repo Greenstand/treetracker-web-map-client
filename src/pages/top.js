@@ -32,5 +32,4 @@ export async function getServerSideProps() {
       trees: data.trees,
     },
   };
-  return { props: {} };
 }
