@@ -74,12 +74,7 @@ export default function Tree({ tree, planter, organization }) {
       <div>
         Planter:
         {planter.first_name}
-        <Image
-          src={planter.photo_url}
-          layout="fill"
-          objectPosition="center"
-          objectFit="cover"
-        />
+        <Image src={planter.photo_url} width="100px" height="100px" />
       </div>
       <div>
         Organization:

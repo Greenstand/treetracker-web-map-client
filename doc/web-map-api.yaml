@@ -211,28 +211,9 @@ paths:
                   value:
                     trees:
                       - $ref: 'examples/trees/186734.json'
-                      - id: '932946'
-                        photo_url: >-
-                          https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg
-                        verified: true
-                        token_id: c488301f-1117-48c3-8866-3c38f28d3f25
-                        created_at: '5/17/2021, 9:31:17 PM'
-                        lat: -4.882294219999999
-                        lon: 38.380733454
-                        species: eucalyptus
-                        planter_id: 5
-                        organization_id: 1
-                      - id: 933042
-                        photo_url: >-
-                          https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.19.09.49.19_-4.881696978000001_38.37997515399998_47fc629b-27e9-4b58-b31a-3a35e5bbc3f0_IMG_20210518_121452_1024002290.jpg
-                        verified: true
-                        token_id: d4bb294b-8c75-4e0f-af43-1cd9a35e1033
-                        created_at: '5/18/2021, 5:14:48 PM'
-                        lat: -4.881696978000001
-                        lon: 38.37997515399998
-                        species: Markhamia lutea
-                        planter_id: 5
-                        organization_id: 1
+                      - $ref: 'examples/trees/186735.json'
+                      - $ref: 'examples/trees/186736.json'
+                      - $ref: 'examples/trees/186737.json'
   '/mock/countries/leader':
     get:
       responses:
