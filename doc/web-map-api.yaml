@@ -268,15 +268,22 @@ paths:
               examples:
                 a-planter:
                   $ref: '#/components/examples/planter5'
+  '/mock/planters/940':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/planters/940.json'
   '/mock/organizations/1':
     get:
       responses:
         '200':
           content:
             application/json:
-              examples:
-                a-org:
-                  $ref: '#/components/examples/org1'
+              example:
+                $ref: 'examples/organizations/1.json'
 components:
   schemas:
     tree:

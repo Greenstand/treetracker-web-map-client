@@ -28,7 +28,7 @@
   "status": "planted",
   "cluster_regions_assigned": true,
   "species_id": null,
-  "planting_organization_id": 13,
+  "planting_organization_id": 1,
   "payment_id": null,
   "contract_id": null,
   "token_issued": false,
