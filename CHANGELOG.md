@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.0...v1.16.1) (2021-11-04)
+
+
+### Bug Fixes
+
+* timeline problem ([2a6a863](https://github.com/Greenstand/treetracker-web-map-client/commit/2a6a8632a2ade4745e8d0b35dda41bd0fed0128f))
+
 # [1.16.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.15.0...v1.16.0) (2021-10-24)
 
 
