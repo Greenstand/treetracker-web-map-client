@@ -122,7 +122,7 @@ const marks = ['2015',  '2017',  '2019',  '2021'].map(e => {
 });
 
 function valuetext(value) {
-  return moment('2015-01-01').add(value, "days").format("DD-MM-YYYY");
+  return moment('2015-01-01').add(value, "days").format("YYYY-MM-DD");
 }
 
 function textvalue(begin, end){
