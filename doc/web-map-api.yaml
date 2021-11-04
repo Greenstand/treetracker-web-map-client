@@ -175,7 +175,31 @@ paths:
           content:
             application/json:
               example:
-                $ref: 'tree186734.json'
+                $ref: 'examples/trees/186734.json'
+  '/mock/trees/186735':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/trees/186735.json'
+  '/mock/trees/186736':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/trees/186736.json'
+  '/mock/trees/186737':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/trees/186737.json'
   '/mock/trees/featured':
     get:
       responses:
@@ -186,7 +210,7 @@ paths:
                 trees:
                   value:
                     trees:
-                      - $ref: 'tree186734.json'
+                      - $ref: 'examples/trees/186734.json'
                       - id: '932946'
                         photo_url: >-
                           https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg
