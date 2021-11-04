@@ -65,26 +65,16 @@ export default function Tree({ tree, planter, organization }) {
 
   const TreeImage = () => (
     <Box className={classes.imageContainer}>
-      {tree?.photo_url && (
-        <Image
-          src={photo_url}
-          layout="fill"
-          objectPosition="center"
-          objectFit="cover"
-        />
-      )}
-
+      <Image
+        src={photo_url}
+        layout="fill"
+        objectPosition="center"
+        objectFit="cover"
+      />
       <div>
         Planter:
         {planter.first_name}
-        {planter?.photo_url && (
-          <Image
-            src={planter.photo_url}
-            layout="fill"
-            objectPosition="center"
-            objectFit="cover"
-          />
-        )}
+        <Image src={planter.photo_url} width="100px" height="100px" />
       </div>
       <div>
         Organization:
