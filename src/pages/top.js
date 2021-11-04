@@ -1,3 +1,4 @@
+import Typography from '@material-ui/core/Typography';
 import log from 'loglevel';
 
 import Link from '../components/Link';
@@ -10,7 +11,9 @@ export default function Top({ trees, countries }) {
       <ul>
         {trees.map((tree) => (
           <li key={tree.id}>
-            <Link href={`/trees/${tree.id}`}>tree {tree.id}</Link>
+            <Link href={`/trees/${tree.id}`}>
+              <Typography color="secondary">tree {tree.id}</Typography>
+            </Link>
           </li>
         ))}
       </ul>
