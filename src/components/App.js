@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MuiAlert from '@material-ui/lab/Alert';
 import expect from 'expect-runtime';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 import React from 'react';
 import Map from 'treetracker-web-map-core/src/Map';
 
@@ -179,6 +180,7 @@ function MapComponent() {
   const [timelineDate, setTimelineDate] = React.useState(undefined);
   const [timelineEnabled, setTimelineEnabled] = React.useState(true);
   const mapContext = useMapContext();
+  const router = useRouter();
 
   function showPanel(newTree) {
     expect(newTree).match({
@@ -340,6 +342,11 @@ function MapComponent() {
     }
   }
 
+  function handleClickTree(tree) {
+    log.warn('click tree:', tree);
+    router.push(`/trees/${tree.id}`);
+  }
+
   function injectApp() {
     log.trace('inject app');
     if (mapRef.current) {
@@ -369,7 +376,7 @@ function MapComponent() {
     const parameters = getParameters();
     const map = new Map({
       onLoad: loaded,
-      onClickTree: showPanel,
+      onClickTree: handleClickTree,
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
       filters: parameters,

@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Tree({ tree }) {
+export default function Tree({ tree, planter, organization }) {
   const classes = useStyles();
   const mapContext = useMapContext();
 
@@ -71,6 +71,25 @@ export default function Tree({ tree }) {
         objectPosition="center"
         objectFit="cover"
       />
+      <div>
+        Planter:
+        {planter.first_name}
+        <Image
+          src={planter.photo_url}
+          layout="fill"
+          objectPosition="center"
+          objectFit="cover"
+        />
+      </div>
+      <div>
+        Organization:
+        {organization.name}
+        <Image src={organization.photo_url} width="100px" height="100px" />
+      </div>
+      <div>planted on: ${tree.time_created}</div>
+      <div>
+        lat,lon: ${tree.lat},${tree.lon}
+      </div>
     </Box>
   );
 
@@ -90,16 +109,36 @@ export async function getServerSideProps({ params }) {
   log.warn('params:', params);
   log.warn('host:', process.env.NEXT_PUBLIC_API_NEW);
 
-  const url = `${process.env.NEXT_PUBLIC_API_NEW}/trees/${params.treeid}`;
-  log.warn('url:', url);
+  const props = {};
+  {
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/trees/${params.treeid}`;
+    log.warn('url:', url);
 
-  const res = await fetch(url);
-  const tree = await res.json();
-  log.warn('response:', tree);
+    const res = await fetch(url);
+    const tree = await res.json();
+    log.warn('response:', tree);
+    props.tree = tree;
+  }
+  {
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/planters/${props.tree.planter_id}`;
+    log.warn('url:', url);
+
+    const res = await fetch(url);
+    const planter = await res.json();
+    log.warn('response:', planter);
+    props.planter = planter;
+  }
+  {
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/organizations/${props.tree.planting_organization_id}`;
+    log.warn('url:', url);
+
+    const res = await fetch(url);
+    const organization = await res.json();
+    log.warn('response:', organization);
+    props.organization = organization;
+  }
 
   return {
-    props: {
-      tree,
-    },
+    props,
   };
 }
