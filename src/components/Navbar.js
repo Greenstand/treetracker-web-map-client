@@ -48,7 +48,9 @@ function Navbar() {
   const classes = useStyles();
   return (
     <AppBar className={classes.navContainer} color="primary" position="static">
-      <a href="https://greenstand.org/"><Image src={logo} width={180} height={30} /></a>
+      <Link href="https://greenstand.org/">
+        <Image src={logo} width={180} height={30} />
+      </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
         <Link href="/">
           <Button className={classes.buttonStyle} variant="text">
