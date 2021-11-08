@@ -365,6 +365,7 @@ function MapComponent() {
 
   // load map
   React.useEffect(() => {
+    if (mapContext.map) return;
     log.info('load map...');
     // disable waiting for loading
     loaded();
