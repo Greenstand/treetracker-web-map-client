@@ -6,6 +6,7 @@ import { makeStyles } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import Location from '../../components/common/Location';
 import Time from '../../components/common/Time';
@@ -108,11 +109,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Planter({ planter }) {
   const mapContext = useMapContext();
 
-  const [display, setDisplay] = React.useState('planter');
+  const [display, setDisplay] = useState('planter');
 
   const classes = useStyles();
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function reload() {
       // manipulate the map
       const { map } = mapContext;

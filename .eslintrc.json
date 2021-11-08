@@ -10,11 +10,10 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:cypress/recommended",
-    "plugin:@next/next/recommended",
+    "next",
     "prettier"
   ],
-  "parser": "@babel/eslint-parser",
-  "plugins": ["react", "simple-import-sort", "import", "eslint-plugin-import"],
+  "plugins": ["react", "simple-import-sort", "import"],
   "reportUnusedDisableDirectives": true,
   "rules": {
     "array-callback-return": "warn",
@@ -32,12 +31,16 @@
     "eqeqeq": "warn",
     "func-names": "off",
     "global-require": "off",
-    "import/extensions": "warn",
+    "import/extensions": ["error", "never", { "json": "alwayss" }],
     "import/newline-after-import": "warn",
     "import/no-extraneous-dependencies": [
       "warn",
       {
-        "devDependencies": ["**/*.{test,cy}.{js,ts,jsx,tsx}", "cypress/**"]
+        "devDependencies": [
+          "**/*.{test,cy}.{js,ts,jsx,tsx}",
+          "cypress/**",
+          "**/test-utils.js"
+        ]
       }
     ],
     "import/no-mutable-exports": "warn",
@@ -77,7 +80,7 @@
     "no-return-assign": "warn",
     "no-return-await": "warn",
     "no-shadow": "warn",
-    "no-undef": "off",
+    "no-undef": "error",
     "no-undef-init": "warn",
     "no-underscore-dangle": "off",
     "no-unexpected-multiline": "warn",
@@ -89,7 +92,7 @@
         "allowShortCircuit": true
       }
     ],
-    "no-unused-vars": "warn",
+    "no-unused-vars": "error",
     "no-use-before-define": "warn",
     "no-useless-escape": "warn",
     "no-useless-return": "warn",
@@ -120,7 +123,12 @@
   "settings": {
     "react": {
       "pragma": "React",
-      "version": "^16.13.1"
+      "version": "^17.0.2"
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["src", "node_modules"]
+      }
     }
   }
 }
