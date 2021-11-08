@@ -1,7 +1,7 @@
 /*
  * Material-UI Theme for the entire application
  */
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   spacing: 4,
