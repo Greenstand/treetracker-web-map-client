@@ -1,7 +1,6 @@
-import { AppBar, Button, Menu, MenuItem, Toolbar } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Button, Menu, MenuItem, Toolbar } from '@mui/material';
+import { makeStyles } from '@mui/material/styles';
 import Image from 'next/image';
 import React, { useState } from 'react';
 

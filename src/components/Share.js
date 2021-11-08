@@ -1,15 +1,15 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Tooltip from '@material-ui/core/Tooltip';
-import Close from '@material-ui/icons/Close';
-import MaterialShareIcon from '@material-ui/icons/Share';
+import Close from '@mui/icons-material/Close';
+import MaterialShareIcon from '@mui/icons-material/Share';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import { makeStyles } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
 import log from 'loglevel';
 import React from 'react';
 

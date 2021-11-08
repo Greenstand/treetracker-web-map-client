@@ -1,8 +1,7 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import AccessTime from '@material-ui/icons/AccessTime';
+import AccessTime from '@mui/icons-material/AccessTime';
+import Box from '@mui/material/Box';
+import { makeStyles } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import Image from 'next/image';
 import React from 'react';

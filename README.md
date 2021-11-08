@@ -160,7 +160,7 @@ When developing component tests use the custom `mountWithTheme` function found i
 
 ### Using Correct Link Component
 
-Do not use `next/link` or `@material-ui/core/Link`. Instead use the custom Link component in `src/components/Link`. This component will ensure that an anchor tag is created with the appropriate href value for SEO purposes. If your component uses this Link component then you will need to include router mocking for component tests to pass.
+Do not use `next/link` or `@mui/material/Link`. Instead use the custom Link component in `src/components/Link`. This component will ensure that an anchor tag is created with the appropriate href value for SEO purposes. If your component uses this Link component then you will need to include router mocking for component tests to pass.
 
 ### Mocking NextJs Router in Component Tests
 

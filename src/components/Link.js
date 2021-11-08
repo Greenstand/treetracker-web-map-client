@@ -1,4 +1,4 @@
-import MuiLink from '@material-ui/core/Link';
+import MuiLink from '@mui/material/Link';
 import clsx from 'clsx';
 import NextLink from 'next/link';
 import React from 'react';

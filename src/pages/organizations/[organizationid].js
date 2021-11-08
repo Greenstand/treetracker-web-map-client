@@ -1,8 +1,7 @@
-import { Avatar,Box, Divider, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { TextureSharp, ThreeSixty } from '@material-ui/icons';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Avatar, Box, Divider, Typography } from '@mui/material';
+import { makeStyles } from '@mui/material/styles';
 import log from 'loglevel';
 
 import PageWrapper from '../../components/PageWrapper';

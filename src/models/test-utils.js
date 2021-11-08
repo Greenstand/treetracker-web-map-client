@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { mount } from '@cypress/react';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material';
 import { RouterContext } from 'next/dist/next-server/lib/router-context';
 import * as React from 'react';
 

@@ -1,10 +1,10 @@
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Slider from '@material-ui/core/Slider';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
-import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
-import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
+import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
+import TimelapseTwoToneIcon from '@mui/icons-material/TimelapseTwoTone';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Slider from '@mui/material/Slider';
+import { makeStyles, withStyles } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import log from 'loglevel';
 import moment from 'moment';
 import PropTypes from 'prop-types';

@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';

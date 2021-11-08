@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/material/styles';
 import React from 'react';
 
 import logo from '../images/greenstand_logo_full.png';

@@ -1,10 +1,9 @@
 import 'leaflet/dist/leaflet.css';
 
-import Fade from '@material-ui/core/Fade';
-import Grid from '@material-ui/core/Grid';
-import Snackbar from '@material-ui/core/Snackbar';
-import { makeStyles } from '@material-ui/core/styles';
-import MuiAlert from '@material-ui/lab/Alert';
+import Alert from '@mui/material/Alert';
+import Fade from '@mui/material/Fade';
+import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
 import expect from 'expect-runtime';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
@@ -483,9 +482,9 @@ function MapComponent() {
         autoHideDuration={10000}
         onClose={handleMessageClose}
       >
-        <MuiAlert onClose={handleMessageClose} severity="warning">
+        <Alert onClose={handleMessageClose} severity="warning">
           {message.message}
-        </MuiAlert>
+        </Alert>
       </Snackbar>
       {arrow.direction && (
         <div
