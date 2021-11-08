@@ -45,7 +45,7 @@ export default function Tree({ tree, planter, organization }) {
 
   React.useEffect(() => {
     // manipulate the map
-    if (mapContext.map) {
+    if (mapContext.map && tree?.lat && tree?.lon) {
       mapContext.map.flyTo(tree.lat, tree.lon, 16);
     }
   }, [mapContext.map]);
@@ -65,30 +65,37 @@ export default function Tree({ tree, planter, organization }) {
 
   const TreeImage = () => (
     <Box className={classes.imageContainer}>
-      <Image
-        src={photo_url}
-        layout="fill"
-        objectPosition="center"
-        objectFit="cover"
-      />
-      <div>
-        Planter:
-        {planter.first_name}
+      {tree?.photo_url && (
         <Image
-          src={planter.photo_url}
+          src={photo_url}
           layout="fill"
           objectPosition="center"
           objectFit="cover"
         />
+      )}
+
+      <div>
+        Planter:
+        {planter.first_name}
+        {planter?.photo_url && (
+          <Image
+            src={planter.photo_url}
+            layout="fill"
+            objectPosition="center"
+            objectFit="cover"
+          />
+        )}
       </div>
       <div>
         Organization:
         {organization.name}
-        <Image src={organization.photo_url} width="100px" height="100px" />
+        {organization?.photo_url && (
+          <Image src={organization.photo_url} width="100px" height="100px" />
+        )}
       </div>
-      <div>planted on: ${tree.time_created}</div>
+      <div>planted on: {tree.time_created}</div>
       <div>
-        lat,lon: ${tree.lat},${tree.lon}
+        lat,lon: {tree.lat},{tree.lon}
       </div>
     </Box>
   );
