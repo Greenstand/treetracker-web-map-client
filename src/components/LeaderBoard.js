@@ -79,8 +79,9 @@ const useStyles = makeStyles(() => ({
         left: '0pxl',
         top: '-140px',
         borderRadius: '16px',
-        background: '#F8F0E3',
-        position: 'relative'
+        background: '#F0F0F0',
+        position: 'relative',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)',
 
     },
     rank: {
@@ -89,8 +90,6 @@ const useStyles = makeStyles(() => ({
         paddingLeft: '30px',
         padding: '10px',
         fontFamily: 'Montserrat',
-
-
     },
     sliderRail: {
         height: '45px',
@@ -113,7 +112,7 @@ const useStyles = makeStyles(() => ({
         background: '#FF000000',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     flagContainer: {
         left: '70px',
