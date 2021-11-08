@@ -1,7 +1,7 @@
 import AccessTime from '@mui/icons-material/AccessTime';
 import Box from '@mui/material/Box';
-import { makeStyles } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
 import log from 'loglevel';
 import Image from 'next/image';
 import React from 'react';

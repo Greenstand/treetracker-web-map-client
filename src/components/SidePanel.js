@@ -24,9 +24,9 @@ import IconButton from '@mui/material/IconButton';
 import LinearProgress from '@mui/material/LinearProgress';
 import Paper from '@mui/material/Paper';
 import Slide from '@mui/material/Slide';
-import { makeStyles } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 import expect from 'expect-runtime';
 import log from 'loglevel';
@@ -419,7 +419,7 @@ function SidePanel(props) {
                           <Avatar
                             id="planter-img"
                             className={`${classes.avatar} ${classes.avatarLogo}`}
-                            src={require('../images/greenstand_logo.svg')}
+                            src="/images/greenstand_logo.svg"
                           />
                         )}
                       </>

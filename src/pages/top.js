@@ -1,6 +1,7 @@
 import { makeStyles } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import React from 'react';
 
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';

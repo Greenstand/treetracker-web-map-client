@@ -2,6 +2,7 @@ import '../style.css';
 
 import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
+import React from 'react';
 
 import Layout from '../components/Layout';
 import { MapContextProvider } from '../mapContext';

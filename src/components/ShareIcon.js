@@ -4,8 +4,8 @@ import LinkIcon from '@mui/icons-material/Link';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import { makeStyles } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({

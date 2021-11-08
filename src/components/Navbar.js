@@ -1,12 +1,14 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Button, Menu, MenuItem, Toolbar } from '@mui/material';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
 import iconLogo from '../images/greenstand_logo.svg';
 import logo from '../images/greenstand_logo_full.png';
 import Link from './Link';
+
+const logo = '/images/greenstand_logo_full.png';
 
 const useStyles = makeStyles((theme) => ({
   navContainer: {

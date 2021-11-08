@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import dynamic from 'next/dynamic';
+import React from 'react';
 
 import Navbar from './Navbar';
 

@@ -1,3 +1,4 @@
+import React from 'react';
 // The context to handle the map
 
 const MapContext = React.createContext({

@@ -3,12 +3,14 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Avatar, Box, Divider, Typography } from '@mui/material';
 import { makeStyles } from '@mui/material/styles';
 import log from 'loglevel';
+import React from 'react';
 
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
+
 
 const useStyles = makeStyles((theme) => ({
   info: {

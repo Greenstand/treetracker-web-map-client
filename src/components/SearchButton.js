@@ -1,6 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import Fab from '@mui/material/Fab';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
+import React from 'react';
 
 const useStyles = makeStyles(() => ({
   fab: {

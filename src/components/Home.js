@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { makeStyles } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
-import backgroundImage from '../images/bg.png';
 import Link from './Link';
 
+const backgroundImage = '/images/bg.png';
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,

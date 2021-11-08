@@ -1,6 +1,7 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { ButtonBase } from '@mui/material';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
+import React from 'react';
 
 const useStyles = makeStyles(() => ({
   backButton: {

@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
+import React from 'react';
 
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';

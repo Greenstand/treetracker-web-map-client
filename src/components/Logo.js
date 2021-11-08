@@ -1,7 +1,7 @@
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
-import logo from '../images/greenstand_logo_full.png';
+const logo = '/images/greenstand_logo_full.png';
 
 const useStyles = makeStyles(() => ({
   logo: {

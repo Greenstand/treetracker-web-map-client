@@ -1,6 +1,6 @@
 import CheckIcon from '@mui/icons-material/Check';
 import { Chip } from '@mui/material';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 const useStyles = makeStyles(() => ({

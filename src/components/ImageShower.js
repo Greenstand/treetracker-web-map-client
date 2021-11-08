@@ -1,7 +1,7 @@
 import Close from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 const useStyles = makeStyles(() => ({

@@ -2,7 +2,7 @@
  * this loading icon is for that when user click cluster, if it take to
  * long time to show the points, then use this to give better response to user
  */
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
