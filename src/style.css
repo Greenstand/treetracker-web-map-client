@@ -263,3 +263,14 @@ a:hover {
   width: 46px;
   height: 46px;
 }
+
+.greenstand-point-highlight-box {
+  background: url(./images/pin_29px_highlight.png);
+  width: 29px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+}
