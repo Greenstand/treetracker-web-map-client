@@ -150,6 +150,20 @@ paths:
                   total: 0
       operationId: get-organizations-orgId-trees-summary
       description: ''
+  '/mock/trees/query/planter_id=940&limit=4':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                trees:
+                  value:
+                    trees:
+                      - $ref: 'examples/trees/186734.json'
+                      - $ref: 'examples/trees/186735.json'
+                      - $ref: 'examples/trees/186736.json'
+                      - $ref: 'examples/trees/186737.json'
   '/mock/trees/933042':
     get:
       responses:
@@ -257,6 +271,33 @@ paths:
             application/json:
               example:
                 $ref: 'examples/planters/940.json'
+  '/mock/planters/940/trees':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/planters/940/trees.json'
+  '/mock/planters/940/organizations':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/planters/940/organizations.json'
+  '/mock/organizations/query/planter_id=940':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                organizations:
+                  value:
+                    organizations:
+                      - $ref: 'examples/organizations/1.json'
   '/mock/organizations/1':
     get:
       responses:
@@ -265,6 +306,18 @@ paths:
             application/json:
               example:
                 $ref: 'examples/organizations/1.json'
+  '/mock/species/query/planter_id=940':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                species:
+                  value:
+                    species:
+                      - $ref: 'examples/species/1.json'
+                      - $ref: 'examples/species/2.json'
 components:
   schemas:
     tree:
