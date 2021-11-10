@@ -5,6 +5,7 @@ import log from 'loglevel';
 import Image from 'next/image';
 import React from 'react';
 
+import Link from '../../components/Link';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
@@ -65,26 +66,27 @@ export default function Tree({ tree, planter, organization }) {
 
   const TreeImage = () => (
     <Box className={classes.imageContainer}>
-      {tree?.photo_url && (
-        <Image
-          src={photo_url}
-          layout="fill"
-          objectPosition="center"
-          objectFit="cover"
-        />
-      )}
-
+      {/*
+      <Image
+        src={photo_url}
+        layout="fill"
+        objectPosition="center"
+        objectFit="cover"
+      />
+      */}
+      <Image
+        src={photo_url}
+        width={200}
+        height={100}
+        objectPosition="center"
+        objectFit="cover"
+      />
       <div>
-        Planter:
+        <Link href={`/planters/${planter.id}`} as={`/planters/${planter.id}`}>
+          Planter:
+        </Link>
         {planter.first_name}
-        {planter?.photo_url && (
-          <Image
-            src={planter.photo_url}
-            layout="fill"
-            objectPosition="center"
-            objectFit="cover"
-          />
-        )}
+        <Image src={planter.photo_url} width="100px" height="100px" />
       </div>
       <div>
         Organization:
