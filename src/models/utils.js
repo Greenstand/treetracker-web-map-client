@@ -1,3 +1,7 @@
+import { catchClause } from '@babel/types';
+
+const log = require('loglevel');
+
 function parseDomain(url) {
   const matcher = url.match(/^https?:\/\/([^/]*)\/?.*$/);
   if (matcher) {
@@ -39,4 +43,22 @@ function parseMapName(domain) {
   throw new Error(`the domain is wrong :${domain}`);
 }
 
-export { parseDomain, parseMapName };
+/*
+  to request the default API server
+*/
+async function requestAPI(url) {
+  try {
+    let urlFull = `${process.env.NEXT_PUBLIC_API_NEW}${url}`;
+    // TODO remove test code
+    urlFull = urlFull.replace(/\?/, '/query/');
+    log.warn('url:', urlFull);
+    const res = await fetch(urlFull);
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    log.error(error);
+    throw error;
+  }
+}
+
+export { parseDomain, parseMapName, requestAPI };
