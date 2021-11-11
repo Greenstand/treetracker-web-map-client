@@ -159,6 +159,7 @@ paths:
               examples:
                 trees:
                   value:
+                    total: 20
                     trees:
                       - $ref: 'examples/trees/186734.json'
                       - $ref: 'examples/trees/186735.json'
@@ -296,6 +297,7 @@ paths:
               examples:
                 organizations:
                   value:
+                    total: 2
                     organizations:
                       - $ref: 'examples/organizations/1.json'
   '/mock/organizations/1':
