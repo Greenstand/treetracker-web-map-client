@@ -2,10 +2,12 @@ import { Box, Divider, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import log from 'loglevel';
 
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import placeholder from '../../images/organizationsPlaceholder.png';
+import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles((theme) => ({
   info: {
@@ -46,10 +48,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Organization({ organization }) {
+  const mapContext = useMapContext();
   const classes = useStyles();
   const { name, area, country, created_at, about, mission, photo_url } =
     organization;
 
+  React.useEffect(() => {
+    async function reload() {
+      // manipulate the map
+      const { map } = mapContext;
+      if (map && organization) {
+        // map.flyTo(tree.lat, tree.lon, 16);
+        map.setFilters({
+          map_name: organization.name,
+        });
+        // TODO why I must try/catche this?
+        try {
+          await map.loadInitialView();
+          map.rerender();
+        } catch (e) {
+          log.error('rendering map:', e);
+        }
+      } else {
+        log.warn('no data:', map, organization);
+      }
+    }
+    reload();
+  }, [mapContext.map]);
   return (
     <PageWrapper>
       <Typography variant="subtitle1">{name}</Typography>
