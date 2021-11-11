@@ -55,7 +55,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "source-map-explorer": "^2.5.2",
-    "treetracker-web-map-core": "github:dadiorchen/treetracker-web-map-core#basic"
+    "treetracker-web-map-core": "github:Greenstand/treetracker-web-map-core"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",

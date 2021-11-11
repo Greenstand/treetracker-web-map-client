@@ -1,7 +1,4 @@
-import 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet-utfgrid/L.UTFGrid';
-import 'leaflet.gridlayer.googlemutant';
 
 import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
@@ -381,6 +378,14 @@ function MapComponent() {
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
       filters: parameters,
+    });
+    map.on('moveEnd', () => {
+      log.warn('update url');
+      window.history.pushState(
+        'treetrakcer',
+        '',
+        `${window.location.pathname}?bounds=${map.getCurrentBounds()}`,
+      );
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;
