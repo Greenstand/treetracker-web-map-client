@@ -18,6 +18,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
 
+
 // make styles for component with material-ui
 const useStyles = makeStyles((theme) => ({
   root: {
