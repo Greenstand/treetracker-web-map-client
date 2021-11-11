@@ -274,3 +274,35 @@ a:hover {
   font-family: Roboto, Arial, sans-serif;
   font-size: 14px;
 }
+
+.not-found {
+  width: 100%;
+  text-align: center;
+  font-family: 'Arial';
+}
+
+.not-found h1 {
+  font-size: 4rem;
+}
+
+.not-found-link {
+  font-weight: bold;
+  color: #fff;
+  background-color: #86c232;
+  padding: 8px 7px;
+  border-radius: 5px;
+  border-top: 10px;
+}
+
+.not-found a:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+.not-found-background {
+  background-image: url(./images/notfound.svg);
+  width: auto;
+  height: 500px;
+  background-position: center;
+  background-size: cover;
+}
