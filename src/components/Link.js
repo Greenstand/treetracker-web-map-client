@@ -1,7 +1,6 @@
 import MuiLink from '@material-ui/core/Link';
 import clsx from 'clsx';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 
 // eslint-disable-next-line react/display-name
@@ -26,11 +25,10 @@ function LinkComponent(props) {
     ...other
   } = props;
 
-  const router = useRouter();
   const pathname = typeof href === 'string' ? href : href.pathname;
 
   const className = clsx(classNameProps, {
-    [activeClassName]: router.pathname === pathname && activeClassName,
+    [activeClassName]: pathname && activeClassName,
   });
 
   if (naked) {
