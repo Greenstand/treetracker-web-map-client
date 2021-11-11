@@ -16,10 +16,11 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "eject": "react-scripts eject",
-    "eslint:only-errors": "eslint --quiet .",
     "lint": "eslint .",
-    "lint:fix": "prettier . --write; eslint . --fix",
+    "lint:fix": "eslint . --fix --cache",
+    "lint:errors": "eslint . --quiet --cache",
     "prettier": "prettier ./ --write",
+    "format": "npm run prettier; npm run lint:fix",
     "mock-server": "prism mock ./doc/web-map-api.yaml",
     "test": "jest --watch",
     "prepare": "is-ci || husky install"

@@ -1,4 +1,6 @@
 module.exports = {
-  '*.{js,jsx,ts,tsx,html,css}': ['prettier --write', 'eslint --fix'],
-  '*.{md,json,yml,yaml}': ['prettier --write'],
+  // format all file types recognized by prettier
+  '*': ['prettier --ignore-unknown --write'],
+  // lint javascript after formatting
+  '*.{js,jsx}': ['eslint --fix --cache'],
 };
