@@ -1,13 +1,15 @@
-import { Box, Divider, Typography } from '@material-ui/core';
+import { Avatar,Box, Divider, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { TextureSharp, ThreeSixty } from '@material-ui/icons';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import log from 'loglevel';
 
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
-import placeholder from '../../images/organizationsPlaceholder.png';
+// import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
+import * as utils from '../../models/utils';
 
 const useStyles = makeStyles((theme) => ({
   info: {
@@ -50,8 +52,16 @@ const useStyles = makeStyles((theme) => ({
 export default function Organization({ organization }) {
   const mapContext = useMapContext();
   const classes = useStyles();
-  const { name, area, country, created_at, about, mission, photo_url } =
-    organization;
+  const {
+    name,
+    area,
+    country,
+    created_at,
+    about,
+    mission,
+    photo_url,
+    logo_url,
+  } = organization;
 
   React.useEffect(() => {
     async function reload() {
@@ -92,9 +102,44 @@ export default function Organization({ organization }) {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.imgContainer}>
-        <img src={placeholder} />
         <img src={photo_url} />
+        <img src={logo_url} />
       </Box>
+      <div>
+        <h5>Tree planted: {organization?.featuredTrees?.total} </h5>
+        <h5>featured tree</h5>
+        <div>
+          {organization?.featuredTrees?.trees?.map((tree) => (
+            <div key={tree.id}>
+              <Avatar src={tree.photo_url} />
+              <h5>{tree.name}</h5>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h5>Associated planters: {organization?.associatedPlanters?.total} </h5>
+        <h5>featured planters</h5>
+        <div>
+          {organization?.associatedPlanters?.planters?.map((planter) => (
+            <div key={planter.id}>
+              <Avatar src={planter.photo_url} />
+              <h5>{planter.name}</h5>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h5>Species: {organization?.species?.total} </h5>
+        <h5>featured species</h5>
+        <div>
+          {organization?.species?.species?.map((species) => (
+            <div key={species.id}>
+              <p>{species.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
       <Typography variant="subtitle2" gutterBottom>
         About the Organization
       </Typography>
@@ -118,6 +163,23 @@ export async function getServerSideProps({ params }) {
   const url = `${process.env.NEXT_PUBLIC_API_NEW}/organizations/${params.organizationid}`;
   const res = await fetch(url);
   const organization = await res.json();
+  const props = { organization };
+
+  {
+    const { featured_trees, associated_planters, species } =
+      props.organization.links;
+    props.organization.featuredTrees = await utils.requestAPI(featured_trees);
+    props.organization.associatedPlanters = await utils.requestAPI(
+      associated_planters,
+    );
+    props.organization.species = await utils.requestAPI(species);
+    log.warn(
+      'get trees: %d, planters: %d, species: %d',
+      props.organization.featuredTrees.total,
+      props.organization.associatedPlanters.total,
+      props.organization.species.total,
+    );
+  }
 
   return {
     props: {
