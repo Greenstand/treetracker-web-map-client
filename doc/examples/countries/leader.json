@@ -1,0 +1,24 @@
+{
+  "countries": [
+    {
+      "id": 6632386,
+      "name": "Tanzania",
+      "planted": 100000
+    },
+    {
+      "id": 6632375,
+      "name": "Uganda",
+      "planted": 90000
+    },
+    {
+      "id": 6632544,
+      "name": "China",
+      "planted": 70000
+    },
+    {
+      "id": 6632357,
+      "name": "United States",
+      "planted": 60000
+    }
+  ]
+}
