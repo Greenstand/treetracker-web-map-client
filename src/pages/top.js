@@ -39,7 +39,7 @@ export default function Top({ trees, countries }) {
       {countries.map((country) => (
         <li key={country.id}>
           <a onClick={() => handleCountryClick(country.id)}>
-            {country.name} planted: {country.planted}
+            {country.name} planted: {country.planted} (click to nav the map)
           </a>
         </li>
       ))}
