@@ -165,6 +165,21 @@ paths:
                       - $ref: 'examples/trees/186735.json'
                       - $ref: 'examples/trees/186736.json'
                       - $ref: 'examples/trees/186737.json'
+  '/mock/trees/query/organization_id=1&limit=4':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                trees:
+                  value:
+                    total: 200
+                    trees:
+                      - $ref: 'examples/trees/186734.json'
+                      - $ref: 'examples/trees/186735.json'
+                      - $ref: 'examples/trees/186736.json'
+                      - $ref: 'examples/trees/186737.json'
   '/mock/trees/933042':
     get:
       responses:
@@ -235,26 +250,40 @@ paths:
         '200':
           content:
             application/json:
-              examples:
-                example:
-                  value:
-                    countries:
-                      - name: Tanzania
-                        planted: 100000
-                        id: ef883620-15d8-11ec-9c2b-0242ac130003
-                        continent: Africa
-                      - name: Uganda
-                        planted: 90000
-                        id: 2c11ab8a-1606-11ec-9621-0242ac130002
-                        continent: Africa
-                      - name: China
-                        planted: 70000
-                        id: 44c79810-1606-11ec-9621-0242ac130002
-                        continent: Asia
-                      - name: Unitied States
-                        planted: 60000
-                        id: 5da2d57a-1606-11ec-9621-0242ac130002
-                        continent: North America
+              example:
+                $ref: 'examples/countries/leader.json'
+  '/mock/countries/6632544':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/countries/6632544.json'
+  '/mock/countries/6632386':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/countries/6632386.json'
+  '/mock/countries/6632375':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/countries/6632375.json'
+  '/mock/countries/6632357':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/countries/6632357.json'
   '/mock/planters/5':
     get:
       responses:
@@ -288,6 +317,18 @@ paths:
             application/json:
               example:
                 $ref: 'examples/planters/940/organizations.json'
+  '/mock/planters/query/organization_id=1&limit=4':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                organizations:
+                  value:
+                    total: 20
+                    planters:
+                      - $ref: 'examples/planters/940.json'
   '/mock/organizations/query/planter_id=940':
     get:
       responses:
@@ -317,6 +358,20 @@ paths:
               examples:
                 species:
                   value:
+                    total: 2
+                    species:
+                      - $ref: 'examples/species/1.json'
+                      - $ref: 'examples/species/2.json'
+  '/mock/species/query/organization_id=1':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                species:
+                  value:
+                    total: 20
                     species:
                       - $ref: 'examples/species/1.json'
                       - $ref: 'examples/species/2.json'
