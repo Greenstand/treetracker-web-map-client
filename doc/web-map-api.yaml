@@ -2,8 +2,12 @@ openapi: 3.0.0
 info:
   title: web map api
   version: '1.0'
+  description: 'The information API of Greenstand for web map client, wallet app or others'
+  contact:
+    name: Greenstand Web Map API
+    url: 'http://env.treetracker.org/web-map-api'
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://env.treetracker.org/web-map-api'
 paths:
   '/trees/{treeId}':
     parameters:
@@ -15,16 +19,15 @@ paths:
     get:
       summary: get tree info
       tags: []
+      operationId: get-trees-treeId
       responses:
         '200':
           description: OK
           content:
-            application/json: null
-          example:
-            value:
-              name: China
-      operationId: get-trees-treeId
-      description: ''
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tree'
+      description: get single tree object by id
   /trees:
     parameters: []
     get:
@@ -33,12 +36,6 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            application/json: null
-          example:
-            value:
-              name: China
-        '':
           content:
             application/json:
               schema:
@@ -191,7 +188,8 @@ paths:
                   - countries
       operationId: get-countries-leader
       description: |-
-        get country by query, if given the 'lat' and 'lon', we can query db by SQL: 
+        get country by query, currently, we use it to get the country name of a tree/location.
+        if given the 'lat' and 'lon', we can query db by SQL: 
         ```
         SELECT region.* FROM region, region_type
         WHERE region.type_id = region_type.id
@@ -244,15 +242,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/country'
       operationId: get-countries-leader
-      description: |-
-        get country by query, if given the 'lat' and 'lon', we can query db by SQL: 
-        ```
-        SELECT region.* FROM region, region_type
-        WHERE region.type_id = region_type.id
-        AND ST_Contains(region.geom, ST_GeomFromText('POINT (-13.215865333333333 8.34645033333333)',4326)) 
-        AND  region_type.id = region.type_id AND region_type.type = 'country'
-        ```
-        To get the country from the `region` table. 
+      description: I suppose the countryId is the key of table `region`
       parameters:
         - schema:
             type: number
@@ -620,6 +610,7 @@ paths:
                       - $ref: examples/tokens/2.json
                       - $ref: examples/tokens/3.json
                       - $ref: examples/tokens/4.json
+          description: ''
   /mock/tokens/1:
     get:
       responses:
