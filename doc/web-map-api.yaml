@@ -23,6 +23,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/tree'
       operationId: get-trees-treeId
+      description: get tree info
   /trees/featured:
     get:
       summary: get featured tree list
@@ -150,7 +151,7 @@ paths:
                   total: 0
       operationId: get-organizations-orgId-trees-summary
       description: ''
-  '/mock/trees/query/planter_id=940&limit=4':
+  /mock/trees/query/planter_id=940&limit=4:
     get:
       responses:
         '200':
@@ -161,11 +162,11 @@ paths:
                   value:
                     total: 20
                     trees:
-                      - $ref: 'examples/trees/186734.json'
-                      - $ref: 'examples/trees/186735.json'
-                      - $ref: 'examples/trees/186736.json'
-                      - $ref: 'examples/trees/186737.json'
-  '/mock/trees/query/organization_id=1&limit=4':
+                      - $ref: examples/trees/186734.json
+                      - $ref: examples/trees/186735.json
+                      - $ref: examples/trees/186736.json
+                      - $ref: examples/trees/186737.json
+  /mock/trees/query/organization_id=1&limit=4:
     get:
       responses:
         '200':
@@ -176,11 +177,11 @@ paths:
                   value:
                     total: 200
                     trees:
-                      - $ref: 'examples/trees/186734.json'
-                      - $ref: 'examples/trees/186735.json'
-                      - $ref: 'examples/trees/186736.json'
-                      - $ref: 'examples/trees/186737.json'
-  '/mock/trees/933042':
+                      - $ref: examples/trees/186734.json
+                      - $ref: examples/trees/186735.json
+                      - $ref: examples/trees/186736.json
+                      - $ref: examples/trees/186737.json
+  /mock/trees/933042:
     get:
       responses:
         '200':
@@ -189,7 +190,7 @@ paths:
               examples:
                 a-tree:
                   $ref: '#/components/examples/tree933042'
-  '/mock/trees/932946':
+  /mock/trees/932946:
     get:
       responses:
         '200':
@@ -198,39 +199,39 @@ paths:
               examples:
                 a-tree:
                   $ref: '#/components/examples/tree932946'
-  '/mock/trees/186734':
+  /mock/trees/186734:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/trees/186734.json'
-  '/mock/trees/186735':
+                $ref: examples/trees/186734.json
+  /mock/trees/186735:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/trees/186735.json'
-  '/mock/trees/186736':
+                $ref: examples/trees/186735.json
+  /mock/trees/186736:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/trees/186736.json'
-  '/mock/trees/186737':
+                $ref: examples/trees/186736.json
+  /mock/trees/186737:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/trees/186737.json'
-  '/mock/trees/featured':
+                $ref: examples/trees/186737.json
+  /mock/trees/featured:
     get:
       responses:
         '200':
@@ -240,51 +241,51 @@ paths:
                 trees:
                   value:
                     trees:
-                      - $ref: 'examples/trees/186734.json'
-                      - $ref: 'examples/trees/186735.json'
-                      - $ref: 'examples/trees/186736.json'
-                      - $ref: 'examples/trees/186737.json'
-  '/mock/countries/leader':
+                      - $ref: examples/trees/186734.json
+                      - $ref: examples/trees/186735.json
+                      - $ref: examples/trees/186736.json
+                      - $ref: examples/trees/186737.json
+  /mock/countries/leader:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/countries/leader.json'
-  '/mock/countries/6632544':
+                $ref: examples/countries/leader.json
+  /mock/countries/6632544:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/countries/6632544.json'
-  '/mock/countries/6632386':
+                $ref: examples/countries/6632544.json
+  /mock/countries/6632386:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/countries/6632386.json'
-  '/mock/countries/6632375':
+                $ref: examples/countries/6632386.json
+  /mock/countries/6632375:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/countries/6632375.json'
-  '/mock/countries/6632357':
+                $ref: examples/countries/6632375.json
+  /mock/countries/6632357:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/countries/6632357.json'
-  '/mock/planters/5':
+                $ref: examples/countries/6632357.json
+  /mock/planters/5:
     get:
       responses:
         '200':
@@ -293,31 +294,31 @@ paths:
               examples:
                 a-planter:
                   $ref: '#/components/examples/planter5'
-  '/mock/planters/940':
+  /mock/planters/940:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/planters/940.json'
-  '/mock/planters/940/trees':
+                $ref: examples/planters/940.json
+  /mock/planters/940/trees:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/planters/940/trees.json'
-  '/mock/planters/940/organizations':
+                $ref: examples/planters/940/trees.json
+  /mock/planters/940/organizations:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/planters/940/organizations.json'
-  '/mock/planters/query/organization_id=1&limit=4':
+                $ref: examples/planters/940/organizations.json
+  /mock/planters/query/organization_id=1&limit=4:
     get:
       responses:
         '200':
@@ -328,8 +329,8 @@ paths:
                   value:
                     total: 20
                     planters:
-                      - $ref: 'examples/planters/940.json'
-  '/mock/organizations/query/planter_id=940':
+                      - $ref: examples/planters/940.json
+  /mock/organizations/query/planter_id=940:
     get:
       responses:
         '200':
@@ -340,16 +341,16 @@ paths:
                   value:
                     total: 2
                     organizations:
-                      - $ref: 'examples/organizations/1.json'
-  '/mock/organizations/1':
+                      - $ref: examples/organizations/1.json
+  /mock/organizations/1:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/organizations/1.json'
-  '/mock/species/query/planter_id=940':
+                $ref: examples/organizations/1.json
+  /mock/species/query/planter_id=940:
     get:
       responses:
         '200':
@@ -360,9 +361,9 @@ paths:
                   value:
                     total: 2
                     species:
-                      - $ref: 'examples/species/1.json'
-                      - $ref: 'examples/species/2.json'
-  '/mock/species/query/organization_id=1':
+                      - $ref: examples/species/1.json
+                      - $ref: examples/species/2.json
+  /mock/species/query/organization_id=1:
     get:
       responses:
         '200':
@@ -373,9 +374,9 @@ paths:
                   value:
                     total: 20
                     species:
-                      - $ref: 'examples/species/1.json'
-                      - $ref: 'examples/species/2.json'
-  '/mock/transactions/query/token=1':
+                      - $ref: examples/species/1.json
+                      - $ref: examples/species/2.json
+  /mock/transactions/query/token=1:
     get:
       responses:
         '200':
@@ -386,9 +387,9 @@ paths:
                   value:
                     total: 3
                     transactions:
-                      - $ref: 'examples/transactions/1.json'
-                      - $ref: 'examples/transactions/2.json'
-  '/mock/tokens/query/wallet=180Earth&withPlanter=true&withCapture=true':
+                      - $ref: examples/transactions/1.json
+                      - $ref: examples/transactions/2.json
+  /mock/tokens/query/wallet=180Earth&withPlanter=true&withCapture=true:
     get:
       responses:
         '200':
@@ -399,50 +400,50 @@ paths:
                   value:
                     total: 1
                     tokens:
-                      - $ref: 'examples/tokens/1.json'
-                      - $ref: 'examples/tokens/2.json'
-                      - $ref: 'examples/tokens/3.json'
-                      - $ref: 'examples/tokens/4.json'
-  '/mock/tokens/1':
+                      - $ref: examples/tokens/1.json
+                      - $ref: examples/tokens/2.json
+                      - $ref: examples/tokens/3.json
+                      - $ref: examples/tokens/4.json
+  /mock/tokens/1:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/tokens/1.json'
-  '/mock/tokens/2':
+                $ref: examples/tokens/1.json
+  /mock/tokens/2:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/tokens/2.json'
-  '/mock/tokens/3':
+                $ref: examples/tokens/2.json
+  /mock/tokens/3:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/tokens/3.json'
-  '/mock/tokens/4':
+                $ref: examples/tokens/3.json
+  /mock/tokens/4:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/tokens/4.json'
-  '/mock/wallets/180Earth':
+                $ref: examples/tokens/4.json
+  /mock/wallets/180Earth:
     get:
       responses:
         '200':
           content:
             application/json:
               example:
-                $ref: 'examples/wallets/180Earth.json'
+                $ref: examples/wallets/180Earth.json
 components:
   schemas:
     tree:
@@ -648,11 +649,10 @@ components:
     tree932946:
       value:
         id: 932946
-        photo_url: >-
-          https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg
+        photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg'
         verified: true
         token_id: c488301f-1117-48c3-8866-3c38f28d3f25
-        created_at: 5/17/2021, 9:31:17 PM
+        created_at: '5/17/2021, 9:31:17 PM'
         lat: -4.882294219999999
         lon: 38.380733454
         species: eucalyptus
@@ -661,8 +661,7 @@ components:
     planter5:
       value:
         id: 5
-        photo_url: >-
-          https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg
+        photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg'
         name: Issa H
     org1:
       value:
@@ -672,14 +671,5 @@ components:
         area: Shirimatunda
         country: Tanzania
         created_at: 'November 11, 2019'
-        about: >-
-          Greenway is a Youth-Driven Environmental Protection Organization providing
-          alternative solutions to single-use plastic and planting carbon-sucking trees
-          for socio-economic development and reducing climate crisis. Our social work
-          includes reforestation, landscape restoration, climate education, awareness
-          campaign, conducting research, outreach activities, and collaborating with key
-          stakeholders to implement sustainable solutions.
-        mission: >-
-          To combat climate change, desertification, land degradation, carbon emission
-          by inspiring healthier communities affected by severe climate disorder and
-          modestly reducing pollution by 2050.
+        about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
+        mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
