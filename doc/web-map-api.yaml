@@ -375,6 +375,19 @@ paths:
                     species:
                       - $ref: 'examples/species/1.json'
                       - $ref: 'examples/species/2.json'
+  '/mock/transactions/query/token=1':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                transactions:
+                  value:
+                    total: 3
+                    transactions:
+                      - $ref: 'examples/transactions/1.json'
+                      - $ref: 'examples/transactions/2.json'
   '/mock/tokens/query/wallet=180Earth&withPlanter=true&withCapture=true':
     get:
       responses:
@@ -390,6 +403,38 @@ paths:
                       - $ref: 'examples/tokens/2.json'
                       - $ref: 'examples/tokens/3.json'
                       - $ref: 'examples/tokens/4.json'
+  '/mock/tokens/1':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/tokens/1.json'
+  '/mock/tokens/2':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/tokens/2.json'
+  '/mock/tokens/3':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/tokens/3.json'
+  '/mock/tokens/4':
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: 'examples/tokens/4.json'
   '/mock/wallets/180Earth':
     get:
       responses:
