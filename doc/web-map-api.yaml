@@ -27,7 +27,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/tree'
-      description: get single tree object by id
+      description: get single tree object by tree id
   /trees:
     parameters: []
     get:
