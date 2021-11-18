@@ -54,6 +54,41 @@ paths:
                   $ref: '#/components/schemas/country'
       operationId: get-countries-leader
       description: a board of leader country
+  /countries:
+    get:
+      summary: get countries
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/country'
+      operationId: get-countries-leader
+      description: |-
+        get country by query, if given the 'lat' and 'lon', we can query db by SQL: 
+        ```
+        SELECT region.* FROM region, region_type
+        WHERE region.type_id = region_type.id
+        AND ST_Contains(region.geom, ST_GeomFromText('POINT (-13.215865333333333 8.34645033333333)',4326)) 
+        AND  region_type.id = region.type_id AND region_type.type = 'country'
+        ```
+        To get the country from the `region` table. 
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: lat
+          description: the latitude of the location
+        - schema:
+            type: number
+          in: query
+          name: lon
+          description: the longitude of the location
+    parameters: []
   '/planters/{planterId}':
     parameters:
       - schema:
@@ -497,13 +532,19 @@ components:
           type: number
         gps_accuracy:
           type: number
-        uuid:
+        capture_id:
           type: string
-          description: The capture_id actually
+          description: 'In the public.trees table, it''s the uuid column'
         capture_approval_tag:
           type: string
         domain_specific_data:
           type: object
+        morphology:
+          type: string
+        rejection_reason:
+          type: string
+        age:
+          type: string
       required:
         - id
         - photo_url
@@ -517,34 +558,20 @@ components:
     country:
       description: ''
       type: object
+      x-examples:
+        example-1:
+          id: 1
       properties:
+        id:
+          type: number
         name:
           type: string
-          minLength: 1
-        planted:
-          type: number
-        id:
+          description: the name of the country
+        centroid:
           type: string
-          minLength: 1
-        continent:
-          type: string
-          minLength: 1
+          description: like POINT (-13.215865333333333 8.34645033333333)
       required:
-        - name
-        - planted
         - id
-        - continent
-      x-examples:
-        example-country:
-          name: Tanzania
-          planted: 100000
-          id: ef883620-15d8-11ec-9c2b-0242ac130003
-          continent: Africa
-          value:
-            name: Tanzania
-            planted: 100000
-            id: ef883620-15d8-11ec-9c2b-0242ac130003
-            continent: Africa
     planter:
       description: ''
       type: object
