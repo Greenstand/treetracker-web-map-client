@@ -19,7 +19,7 @@ paths:
     get:
       summary: get tree info
       tags: []
-      operationId: get-trees-treeId
+      operationId: trees-treeId
       responses:
         '200':
           description: OK
@@ -52,8 +52,10 @@ paths:
                     type: integer
                   limit:
                     type: integer
-      operationId: get-trees-treeId
-      description: 'query trees by filters like trees belongs to a planter, also consider pagination'
+      operationId: trees
+      description: |-
+        query trees by filters like trees belongs to a planter, also consider pagination
+        Please note, we just return valid tree, so filter all tree by `active = true`
       parameters:
         - schema:
             type: integer
@@ -108,7 +110,10 @@ paths:
                   - trees
               examples: {}
       operationId: get-trees-featured
-      description: 'this is some good trees bookmarked by admin, short time we will consider use a static table/file to pick up and store these tree id somewhere.'
+      description: |-
+        this is some good trees bookmarked by admin, short time we will consider use a static table/file to pick up and store these tree id somewhere.
+
+        The use case for this is that on the welcome page of web map site, we will show a gallery of beautiful trees.
   /countries/leader:
     get:
       summary: leader board of country
@@ -146,7 +151,7 @@ paths:
                   - countries
       operationId: get-countries-leader
       description: |-
-        a board of leader country, we will query the DB with SQL like this:
+        a board of leader country, we will show the leader board on the welcome page of web map site. we will query the DB with SQL like this:
         ```
         SELECT
           count(trees.*),region.name
@@ -242,7 +247,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/country'
       operationId: get-countries-leader
-      description: I suppose the countryId is the key of table `region`
+      description: |-
+        I suppose the countryId is the key of table `region`
+
+        Use case, we need by click a country name(id), then move the map to the centre of the country
       parameters:
         - schema:
             type: number
