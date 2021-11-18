@@ -23,7 +23,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/tree'
       operationId: get-trees-treeId
-      description: get tree info
+      description: ''
   /trees/featured:
     get:
       summary: get featured tree list
@@ -447,7 +447,7 @@ paths:
 components:
   schemas:
     tree:
-      description: ''
+      description: a single tree object
       type: object
       x-examples:
         example-tree:
@@ -481,43 +481,38 @@ components:
           type: number
         photo_url:
           type: string
-          minLength: 1
         verified:
           type: boolean
         token_id:
           type: string
-          minLength: 1
-        impact_manager_id:
-          type: string
-          minLength: 1
-        impact_producer_id:
-          type: string
-          minLength: 1
         created_at:
           type: string
-          minLength: 1
         lat:
           type: number
         lon:
           type: number
-        species:
-          type: string
-          minLength: 1
+        species_id:
+          type: number
         planter_id:
           type: number
-        organization_id:
+        gps_accuracy:
           type: number
+        uuid:
+          type: string
+          description: The capture_id actually
+        capture_approval_tag:
+          type: string
+        domain_specific_data:
+          type: object
       required:
         - id
         - photo_url
         - verified
         - token_id
-        - impact_manager_id
-        - impact_producer_id
         - created_at
         - lat
         - lon
-        - species
+        - species_id
         - planter_id
     country:
       description: ''
