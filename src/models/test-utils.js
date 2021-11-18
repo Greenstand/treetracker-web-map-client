@@ -1,7 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { mount } from '@cypress/react';
 import { ThemeProvider } from '@mui/material';
-import { RouterContext } from 'next/dist/next-server/lib/router-context';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 import * as React from 'react';
 
 import appTheme from '../theme';
@@ -29,6 +28,6 @@ export function mountWithTheme(element) {
 
 export function mountWithThemeAndRouter(children, config = mockRouter) {
   return mountWithTheme(
-    <RouterContext.Provider value={config}>{children}</RouterContext.Provider>,
+    <MemoryRouterProvider value={config}>{children}</MemoryRouterProvider>,
   );
 }
