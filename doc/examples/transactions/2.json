@@ -1,0 +1,9 @@
+{
+  "id": 2,
+  "token_id": 2,
+  "source_wallet_id": 2,
+  "destination_wallet_id": 1,
+  "source_wallet_name": "orange",
+  "destination_wallet_name": "apple",
+  "processed_at": "2018-03-28"
+}
