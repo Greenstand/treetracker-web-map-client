@@ -19,11 +19,70 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/tree'
+            application/json: null
+          example:
+            value:
+              name: China
       operationId: get-trees-treeId
       description: ''
+  /trees:
+    parameters: []
+    get:
+      summary: get tree list by query parameters
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json: null
+          example:
+            value:
+              name: China
+        '':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: total count of trees satifiying the query condition
+                  trees:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/tree'
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+      operationId: get-trees-treeId
+      description: 'query trees by filters like trees belongs to a planter, also consider pagination'
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+          in: query
+          name: planter_id
+          description: Filter by planter id
+        - schema:
+            type: integer
+          in: query
+          name: organization_id
+          description: Filter by org id
+        - schema:
+            type: string
+          in: query
   /trees/featured:
     get:
       summary: get featured tree list
@@ -34,11 +93,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/tree'
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    total: 1
+                    trees: []
+                properties:
+                  total:
+                    type: number
+                  trees:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/tree'
+                required:
+                  - total
+                  - trees
+              examples: {}
       operationId: get-trees-featured
-      description: this is some good trees bookmarked by admin
+      description: 'this is some good trees bookmarked by admin, short time we will consider use a static table/file to pick up and store these tree id somewhere.'
   /countries/leader:
     get:
       summary: leader board of country
@@ -48,12 +121,47 @@ paths:
           description: OK
           content:
             application/json:
+              examples: {}
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/country'
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    total: 1
+                    countries: []
+                properties:
+                  total:
+                    type: number
+                  countries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        count:
+                          type: integer
+                          description: the count of planted tree in this country
+                required:
+                  - total
+                  - countries
       operationId: get-countries-leader
-      description: a board of leader country
+      description: |-
+        a board of leader country, we will query the DB with SQL like this:
+        ```
+        SELECT
+          count(trees.*),region.name
+        FROM
+          trees
+        RIGHT JOIN region ON 
+        st_contains(region.geom,trees.estimated_geometric_location)
+        where region.type_id = 10
+        group by region.name;
+        ```
+
+        But it's slow so we consider pre-query the db and store the result somewhere.
   /countries:
     get:
       summary: get countries
@@ -64,9 +172,23 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/country'
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    total: 1
+                    countries: []
+                properties:
+                  total:
+                    type: number
+                    description: total result of countries
+                  countries:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/country'
+                required:
+                  - total
+                  - countries
       operationId: get-countries-leader
       description: |-
         get country by query, if given the 'lat' and 'lon', we can query db by SQL: 
@@ -89,6 +211,65 @@ paths:
           name: lon
           description: the longitude of the location
     parameters: []
+  '/countries/{countryId}':
+    get:
+      summary: get one country
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    total: 1
+                    countries: []
+                properties:
+                  total:
+                    type: number
+                    description: total result of countries
+                  countries:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/country'
+                required:
+                  - total
+                  - countries
+        '':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/country'
+      operationId: get-countries-leader
+      description: |-
+        get country by query, if given the 'lat' and 'lon', we can query db by SQL: 
+        ```
+        SELECT region.* FROM region, region_type
+        WHERE region.type_id = region_type.id
+        AND ST_Contains(region.geom, ST_GeomFromText('POINT (-13.215865333333333 8.34645033333333)',4326)) 
+        AND  region_type.id = region.type_id AND region_type.type = 'country'
+        ```
+        To get the country from the `region` table. 
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: lat
+          description: the latitude of the location
+        - schema:
+            type: number
+          in: query
+          name: lon
+          description: the longitude of the location
+    parameters:
+      - schema:
+          type: string
+        name: countryId
+        in: path
+        required: true
   '/planters/{planterId}':
     parameters:
       - schema:
