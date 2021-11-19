@@ -277,7 +277,7 @@ paths:
         in: path
         required: true
     get:
-      summary: get planter info
+      summary: get planter by id
       tags: []
       responses:
         '200':
@@ -340,7 +340,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: get organization by id
       tags: []
       responses:
         '200':
@@ -351,67 +351,94 @@ paths:
                 $ref: '#/components/schemas/organization'
       operationId: get-organizations-orgId
       description: Ge organization by id
-  '/organizations/{orgId}/planters/summary':
-    parameters:
-      - schema:
-          type: string
-        name: orgId
-        in: path
-        required: true
+  /organizations:
     get:
-      summary: Get the summary info of a planter under a org
-      tags: []
+      summary: get organization list by query parameters
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+          in: query
+          name: planter_id
+          description: Filter by planter id
+        - schema:
+            type: string
+          in: query
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                description: ''
                 type: object
                 properties:
                   total:
-                    type: number
-                required:
-                  - total
-                x-examples:
-                  example-1:
-                    total: 100
-              examples:
-                example-summary:
-                  total: 100
-      operationId: get-organizations-orgId-planters-sumarry
-  '/organizations/{orgId}/trees/summary':
-    parameters:
-      - schema:
-          type: string
-        name: orgId
-        in: path
-        required: true
+                    type: integer
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  planters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/organization'
+  /species:
     get:
-      summary: get trees summary info under a org
-      tags: []
+      summary: get species list by filter/parameters
+      operationId: get-species
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                description: ''
                 type: object
                 properties:
                   total:
-                    type: number
-                required:
-                  - total
-                x-examples:
-                  example-1:
-                    total: 1000000
-              examples:
-                example-summary:
-                  total: 0
-      operationId: get-organizations-orgId-trees-summary
-      description: ''
+                    type: integer
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  planters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/species'
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+          in: query
+          name: organization_id
+          description: Filter by org id
+        - schema:
+            type: string
+          in: query
+          name: planter_id
+          description: Filter by planter id
+      description: 'mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don''t know if it is too resource consumming to query DB'
   /mock/trees/query/planter_id=940&limit=4:
     get:
       responses:
@@ -563,22 +590,6 @@ paths:
             application/json:
               example:
                 $ref: examples/planters/940.json
-  /mock/planters/940/trees:
-    get:
-      responses:
-        '200':
-          content:
-            application/json:
-              example:
-                $ref: examples/planters/940/trees.json
-  /mock/planters/940/organizations:
-    get:
-      responses:
-        '200':
-          content:
-            application/json:
-              example:
-                $ref: examples/planters/940/organizations.json
   /mock/planters/query/organization_id=1&limit=4:
     get:
       responses:
@@ -819,6 +830,9 @@ components:
           description: 'Seba says he might be able to populate this field, may be manually in the early stage'
         created_at:
           type: string
+        location?:
+          type: string
+          description: 'I don''t know if we can provide this infomation, the city/country of the planter, could be removed if impossible'
         links:
           type: object
           properties:
@@ -867,29 +881,64 @@ components:
         name:
           type: string
           minLength: 1
+        logo_url:
+          type: string
         photo_url:
           type: string
           minLength: 1
-        location:
+          description: 'kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage'
+        location?:
           type: string
           minLength: 1
+          description: 'I don''t know if we can provide this infomation, the city/country of the org, could be removed if impossible'
         created_at:
           type: string
           minLength: 1
         about:
           type: string
           minLength: 1
+          description: 'Seba says he might be able to populate this field, may be manually in the early stage'
         mission:
           type: string
           minLength: 1
+          description: 'Seba says he might be able to populate this field, may be manually in the early stage'
+        links:
+          type: object
+          properties:
+            featured_trees:
+              type: string
+              description: |-
+                Try HATEOAS here, in the app I'm using:
+                /trees?organization_id=1&limit=4
+            associated_planters:
+              type: string
+              description: |-
+                Try HATEOAS here, in the app I'm using:
+                /planters?organization_id=1&limit=4
+            species:
+              type: string
+              description: |-
+                Try HATEOAS here, in the app I'm using:
+                /species?organization_id=1
       required:
         - id
         - name
         - photo_url
-        - location
+        - location?
         - created_at
         - about
         - mission
+    species:
+      title: species
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        count:
+          type: integer
+          description: 'It would be great if we can display how many trees in this species has been planted by org or planter, but I don''t know if it is too resource consumming to query DB'
   examples:
     tree933042:
       value:
