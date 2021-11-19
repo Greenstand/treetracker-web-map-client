@@ -9,7 +9,7 @@ info:
 servers:
   - url: 'http://env.treetracker.org/web-map-api'
 paths:
-  '/trees/{treeId}':
+  '/trees/{treeId}.':
     parameters:
       - schema:
           type: string
@@ -114,7 +114,7 @@ paths:
         this is some good trees bookmarked by admin, short time we will consider use a static table/file to pick up and store these tree id somewhere.
 
         The use case for this is that on the welcome page of web map site, we will show a gallery of beautiful trees.
-  /countries/leader:
+  /countries/leaderboard:
     get:
       summary: leader board of country
       tags: []
@@ -151,7 +151,7 @@ paths:
                   - countries
       operationId: get-countries-leader
       description: |-
-        a board of leader country, we will show the leader board on the welcome page of web map site. we will query the DB with SQL like this:
+        Top planting-tree countries (leader board), we will show the leader board on the welcome page of web map site. we will query the DB with SQL like this:
         ```
         SELECT
           count(trees.*),region.name
@@ -163,7 +163,8 @@ paths:
         group by region.name;
         ```
 
-        But it's slow so we consider pre-query the db and store the result somewhere.
+        But it's slow so seba and I consider pre-query the db and store the result somewhere.
+    parameters: []
   /countries:
     get:
       summary: get countries
@@ -248,7 +249,7 @@ paths:
                 $ref: '#/components/schemas/country'
       operationId: get-countries-leader
       description: |-
-        I suppose the countryId is the key of table `region`
+        I suppose the countryId is the key of table `region` and type_id = 'country'
 
         Use case, we need by click a country name(id), then move the map to the centre of the country
       parameters:
@@ -286,6 +287,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/planter'
       operationId: get-planters-planterId
+      description: get planter object by id
+  /planters:
+    get:
+      summary: get planter list by query parameter
+      operationId: get-planters
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  planters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/planter'
+      description: ''
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+          in: query
+          name: organization_id
+          description: Filter by org id
+        - schema:
+            type: string
+          in: query
   '/organizations/{orgId}':
     parameters:
       - schema:
@@ -304,6 +350,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/organization'
       operationId: get-organizations-orgId
+      description: Ge organization by id
   '/organizations/{orgId}/planters/summary':
     parameters:
       - schema:
@@ -753,38 +800,47 @@ components:
       required:
         - id
     planter:
-      description: ''
+      description: the planter ojbect
       type: object
-      x-examples:
-        example-planter:
-          id: 5
-          photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg'
-          name: Issa H
-          tree_planted: 981
-          tree_reject_rate: 0.01
-          about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
-          mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
+      x-examples: {}
       properties:
         id:
           type: number
         photo_url:
           type: string
           minLength: 1
-        name:
+        first_name:
           type: string
           minLength: 1
-        tree_planted:
-          type: number
-        tree_reject_rate:
-          type: number
+        last_name:
+          type: string
         about:
           type: string
-        location:
+          description: 'Seba says he might be able to populate this field, may be manually in the early stage'
+        created_at:
           type: string
+        links:
+          type: object
+          properties:
+            featured_trees:
+              type: string
+              description: |-
+                Try HATEOAS here, in the app I'm using:
+                /trees?planter_id=940&limit=4
+            associated_organizations:
+              type: string
+              description: |-
+                Try HATEOAS here, in the app I'm using:
+                /organizations?planter_id=940
+            species:
+              type: string
+              description: |-
+                Try HATEOAS here, in the app I'm using:
+                /species?planter_id=940
       required:
         - id
         - photo_url
-        - name
+        - first_name
     organization:
       description: ''
       type: object
