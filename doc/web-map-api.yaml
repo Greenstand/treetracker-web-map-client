@@ -389,7 +389,7 @@ paths:
                     type: integer
                   limit:
                     type: integer
-                  planters:
+                  organizations:
                     type: array
                     items:
                       $ref: '#/components/schemas/organization'
@@ -411,7 +411,7 @@ paths:
                     type: integer
                   limit:
                     type: integer
-                  planters:
+                  species:
                     type: array
                     items:
                       $ref: '#/components/schemas/species'
@@ -439,6 +439,124 @@ paths:
           name: planter_id
           description: Filter by planter id
       description: 'mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don''t know if it is too resource consumming to query DB'
+  /transactions:
+    get:
+      summary: get transaction list by filter/parameters
+      operationId: get-transactions
+      description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  transactions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/transaction'
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: string
+          in: query
+          name: token_id
+          description: Filter by token id
+        - schema:
+            type: string
+          in: query
+          name: wallet_id
+          description: Filter by wallet id
+  '/tokens/{tokenId}':
+    get:
+      summary: get token by id
+      operationId: get-tokens-tokenId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+  /tokens:
+    get:
+      summary: get token list by filter/parameters
+      operationId: get-tokens
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  tokens:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/token'
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: string
+          in: query
+          name: wallet
+          description: 'Filter by wallet, the value can be wallet name or wallet id'
+        - schema:
+            type: boolean
+          in: query
+          name: withCapture
+          description: 'if we need show a token list, it''s usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher'
+        - schema:
+            type: string
+          in: query
+          name: withPlanter
+          description: 'if we need show a token list, it''s usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher'
+  '/wallets/{walletIdOrName}':
+    get:
+      summary: get wallet by id or name
+      operationId: get-wallets-walletIdOrName
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/wallet'
   /mock/trees/query/planter_id=940&limit=4:
     get:
       responses:
@@ -783,16 +901,6 @@ components:
           type: string
         age:
           type: string
-      required:
-        - id
-        - photo_url
-        - verified
-        - token_id
-        - created_at
-        - lat
-        - lon
-        - species_id
-        - planter_id
     country:
       description: ''
       type: object
@@ -808,8 +916,6 @@ components:
         centroid:
           type: string
           description: like POINT (-13.215865333333333 8.34645033333333)
-      required:
-        - id
     planter:
       description: the planter ojbect
       type: object
@@ -819,10 +925,8 @@ components:
           type: number
         photo_url:
           type: string
-          minLength: 1
         first_name:
           type: string
-          minLength: 1
         last_name:
           type: string
         about:
@@ -851,10 +955,6 @@ components:
               description: |-
                 Try HATEOAS here, in the app I'm using:
                 /species?planter_id=940
-      required:
-        - id
-        - photo_url
-        - first_name
     organization:
       description: ''
       type: object
@@ -880,27 +980,21 @@ components:
           type: number
         name:
           type: string
-          minLength: 1
         logo_url:
           type: string
         photo_url:
           type: string
-          minLength: 1
           description: 'kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage'
         location?:
           type: string
-          minLength: 1
           description: 'I don''t know if we can provide this infomation, the city/country of the org, could be removed if impossible'
         created_at:
           type: string
-          minLength: 1
         about:
           type: string
-          minLength: 1
           description: 'Seba says he might be able to populate this field, may be manually in the early stage'
         mission:
           type: string
-          minLength: 1
           description: 'Seba says he might be able to populate this field, may be manually in the early stage'
         links:
           type: object
@@ -920,14 +1014,6 @@ components:
               description: |-
                 Try HATEOAS here, in the app I'm using:
                 /species?organization_id=1
-      required:
-        - id
-        - name
-        - photo_url
-        - location?
-        - created_at
-        - about
-        - mission
     species:
       title: species
       type: object
@@ -939,6 +1025,89 @@ components:
         count:
           type: integer
           description: 'It would be great if we can display how many trees in this species has been planted by org or planter, but I don''t know if it is too resource consumming to query DB'
+    transaction:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          id: 1
+          token_id: 1
+          source_wallet_id: 1
+          destination_wallet_id: 2
+          source_wallet_name: apple
+          destination_wallet_name: orange
+          processed_at: '2018-02-28'
+      properties:
+        id:
+          type: string
+        token_id:
+          type: string
+        source_wallet_id:
+          type: string
+        destination_wallet_id:
+          type: string
+        source_wallet_name:
+          type: string
+          description: 'it is a pretty common use case that we need to display the wallet name in the frontend, so we''d better join and return the name of wallet'
+        destination_wallet_name:
+          type: string
+        processed_at:
+          type: string
+        claim:
+          type: boolean
+          description: if possible
+        transfer_id:
+          type: string
+    token:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          id: 1
+          wallet_id: 0248f77a-1531-11ec-82a8-0242ac130003
+          capture_id: 186734
+          capture_photo_url: 'https://treetracker-dev-images.s3.eu-central-1.amazonaws.com/2020.10.19.09.50.38_-5.508172399749922_38.98146973686408_6bebe71e-5369-4ae0-8c47-9eeff6599fb0_IMG_20201019_094615_7537040365910944885.jpg'
+          planter_id: 940
+          planter_first_name: 'Sebastian '
+          planter_last_name: Gaertner
+          planter_photo_url: 'https://treetracker-dev-images.s3.eu-central-1.amazonaws.com/2020.10.19.09.47.53_-5.508107173727935_38.981361706266256_39f0cc9d-0f13-4547-8142-150f15cabb67_IMG_20201019_094513_6614320100195503436.jpg'
+          created_at: '2018-01-01'
+      properties:
+        id:
+          type: number
+        wallet_id:
+          type: string
+        capture_id:
+          type: number
+        capture_photo_url:
+          type: string
+        planter_id:
+          type: number
+        planter_first_name:
+          type: string
+        planter_last_name:
+          type: string
+        planter_photo_url:
+          type: string
+        created_at:
+          type: string
+    wallet:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          id: 0248f77a-1531-11ec-82a8-0242ac130003
+          name: 180Earth
+          token_in_wallet: 22
+          photo_url: '''https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        photo_url:
+          type: string
+          description: it would be great if we can set a wallet avatar and show it on the wallet page
   examples:
     tree933042:
       value:
