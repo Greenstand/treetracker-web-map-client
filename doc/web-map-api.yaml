@@ -54,8 +54,8 @@ paths:
                     type: integer
       operationId: trees
       description: |-
-        query trees by filters like trees belongs to a planter, also consider pagination
-        Please note, we just return valid tree, so filter all tree by `active = true`
+        query trees by filters like planter, also consider pagination
+        I think filter all tree by `active = true` is by default 
       parameters:
         - schema:
             type: integer
@@ -64,8 +64,8 @@ paths:
           description: 'The start offset of the list, if missing, default is 0'
         - schema:
             type: integer
-            minimum: -15
             maximum: 1000
+            minimum: 0
           in: query
           name: limit
           description: 'The limit length of the return list, if missing, default is 20'
@@ -103,9 +103,9 @@ paths:
                       $ref: '#/components/schemas/tree'
       operationId: get-trees-featured
       description: |-
-        this is some good trees bookmarked by admin, short time we will consider use a static table/file to pick up and store these tree id somewhere.
+        this is some good trees bookmarked by admin, short term we will consider using a static table/file to pick up and store these tree id somewhere.
 
-        The use case for this is that on the welcome page of web map site, we will show a gallery of beautiful trees.
+        The use case for this is that on the welcome page of web map site, we want to show a gallery of beautiful trees.
   /countries/leaderboard:
     get:
       summary: leader board of country
@@ -119,10 +119,6 @@ paths:
               schema:
                 description: ''
                 type: object
-                x-examples:
-                  example-1:
-                    total: 1
-                    countries: []
                 properties:
                   total:
                     type: number
@@ -138,12 +134,9 @@ paths:
                         count:
                           type: integer
                           description: the count of planted tree in this country
-                required:
-                  - total
-                  - countries
       operationId: get-countries-leader
       description: |-
-        Top planting-tree countries (leader board), we will show the leader board on the welcome page of web map site. we will query the DB with SQL like this:
+        Top planting-tree countries (leader board), we will show the leader board on the welcome page of web map site. we can query the DB with SQL like this (provided by Seb):
         ```
         SELECT
           count(trees.*),region.name
@@ -159,7 +152,7 @@ paths:
     parameters: []
   /countries:
     get:
-      summary: get countries
+      summary: get countries by coordinates
       tags: []
       responses:
         '200':
@@ -185,8 +178,8 @@ paths:
                   - total
                   - countries
       operationId: get-countries-leader
-      description: |-
-        get country by query, currently, we use it to get the country name of a tree/location.
+      description: |
+        get country by coordinates, currently, we use it to get the country name of a tree/location.
         if given the 'lat' and 'lon', we can query db by SQL: 
         ```
         SELECT region.* FROM region, region_type
@@ -194,7 +187,6 @@ paths:
         AND ST_Contains(region.geom, ST_GeomFromText('POINT (-13.215865333333333 8.34645033333333)',4326)) 
         AND  region_type.id = region.type_id AND region_type.type = 'country'
         ```
-        To get the country from the `region` table. 
       parameters:
         - schema:
             type: number
