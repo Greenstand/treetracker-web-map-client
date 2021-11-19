@@ -176,7 +176,7 @@ paths:
                 required:
                   - total
                   - countries
-      operationId: get-countries-leader
+      operationId: get-countries
       description: |
         get country by coordinates, currently, we use it to get the country name of a tree/location.
         if given the 'lat' and 'lon', we can query db by SQL: 
@@ -210,10 +210,6 @@ paths:
               schema:
                 description: ''
                 type: object
-                x-examples:
-                  example-1:
-                    total: 1
-                    countries: []
                 properties:
                   total:
                     type: number
@@ -222,19 +218,13 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/country'
-                required:
-                  - total
-                  - countries
-        '':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/country'
       operationId: get-countries-leader
       description: |-
+        get country by id, in some case I use this to fetch the center point and move the map view to go to country
+
         I suppose the countryId is the key of table `region` and type_id = 'country'
 
-        Use case, we need by click a country name(id), then move the map to the centre of the country
+        No need to return get big column like metadata and multipolygon
       parameters:
         - schema:
             type: number
@@ -270,7 +260,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/planter'
       operationId: get-planters-planterId
-      description: get planter object by id
+      description: |-
+        get planter object by id
+
+        'about' property: Seba says he might be able to populate this field, may be manually in the early stage
+        'location?' property: I don't know if we can provide this infomation, the city/country of the planter, could be removed if impossible
   /planters:
     get:
       summary: get planter list by query parameter
@@ -333,7 +327,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/organization'
       operationId: get-organizations-orgId
-      description: Ge organization by id
+      description: |-
+        Ge organization by id
+
+        about some fields:
+        'photo_url' property:kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage
+
+        'location?': I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible
+
+        'about':Seba says he might be able to populate this field, may be manually in the early stage 
+
+        mission: Seba says he might be able to populate this field, may be manually in the early stage
   /organizations:
     get:
       summary: get organization list by query parameters
@@ -424,9 +428,9 @@ paths:
       description: 'mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don''t know if it is too resource consumming to query DB'
   /transactions:
     get:
-      summary: get transaction list by filter/parameters
+      summary: get token transaction list by filter/parameters
       operationId: get-transactions
-      description: ''
+      description: 'about returning wallet name, it is a pretty common use case that we need to display the wallet name in the frontend, so we''d better join and return the name of wallet'
       responses:
         '200':
           description: OK
@@ -540,6 +544,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/wallet'
+      description: 'about retunning photo_url,it would be great if we can set a wallet avatar and show it on the wallet page, maybe we can create the column, and just pick some good case to manualy fill some photo into'
   /mock/trees/query/planter_id=940&limit=4:
     get:
       responses:
