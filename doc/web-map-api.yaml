@@ -94,10 +94,6 @@ paths:
               schema:
                 description: ''
                 type: object
-                x-examples:
-                  example-1:
-                    total: 1
-                    trees: []
                 properties:
                   total:
                     type: number
@@ -105,10 +101,6 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/tree'
-                required:
-                  - total
-                  - trees
-              examples: {}
       operationId: get-trees-featured
       description: |-
         this is some good trees bookmarked by admin, short time we will consider use a static table/file to pick up and store these tree id somewhere.
@@ -840,32 +832,7 @@ components:
     tree:
       description: a single tree object
       type: object
-      x-examples:
-        example-tree:
-          id: 933042
-          photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.19.09.49.19_-4.881696978000001_38.37997515399998_47fc629b-27e9-4b58-b31a-3a35e5bbc3f0_IMG_20210518_121452_1024002290.jpg'
-          verified: true
-          token_id: d4bb294b-8c75-4e0f-af43-1cd9a35e1033
-          impact_manager_id: 8599f832-145e-11ec-82a8-0242ac130003
-          impact_producer_id: a0b6b70e-145e-11ec-82a8-0242ac130003
-          created_at: '5/18/2021, 5:14:48 PM'
-          lat: -4.881696978000001
-          lon: 38.37997515399998
-          species: Markhamia lutea
-          planter_id: 5
-          value:
-            id: 933042
-            photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.19.09.49.19_-4.881696978000001_38.37997515399998_47fc629b-27e9-4b58-b31a-3a35e5bbc3f0_IMG_20210518_121452_1024002290.jpg'
-            verified: true
-            token_id: d4bb294b-8c75-4e0f-af43-1cd9a35e1033
-            impact_manager_id: 8599f832-145e-11ec-82a8-0242ac130003
-            impact_producer_id: a0b6b70e-145e-11ec-82a8-0242ac130003
-            created_at: '5/18/2021, 5:14:48 PM'
-            lat: -4.881696978000001
-            lon: 38.37997515399998
-            species: Markhamia lutea
-            planter_id: 5
-            organization_id: 1
+      x-examples: {}
       title: ''
       properties:
         id:
@@ -904,9 +871,7 @@ components:
     country:
       description: ''
       type: object
-      x-examples:
-        example-1:
-          id: 1
+      x-examples: {}
       properties:
         id:
           type: number
@@ -967,14 +932,6 @@ components:
           created_at: 'November 11, 2019'
           about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
           mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
-          value:
-            id: 1
-            name: 180Earth
-            photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
-            location: 'Shirimatunda, Tanzania'
-            created_at: 'November 11, 2019'
-            about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
-            mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
       properties:
         id:
           type: number
