@@ -115,7 +115,6 @@ paths:
           description: OK
           content:
             application/json:
-              examples: {}
               schema:
                 description: ''
                 type: object
