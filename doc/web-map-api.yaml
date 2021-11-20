@@ -533,6 +533,7 @@ paths:
           in: query
           name: withPlanter
           description: 'if we need show a token list, it''s usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher'
+      description: ''
   '/wallets/{walletIdOrName}':
     get:
       summary: get wallet by id or name
