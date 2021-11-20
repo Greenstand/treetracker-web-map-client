@@ -63,6 +63,8 @@ This project must be installed and used with Node v16. [Node Version Manager](ht
    npm run dev
    ```
 
+  NOTE: There is a bug running the project, need some manually steps to work around it, check this [issue](https://github.com/Greenstand/treetracker-web-map-core/issues/23)
+  
 3. Start the mock API server
 
    ```
