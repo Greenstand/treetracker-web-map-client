@@ -1,4 +1,4 @@
-import { parseDomain, parseMapName } from './utils';
+import { parseDomain, parseMapName, requestAPI } from './utils';
 
 describe('parseMapName', () => {
   it('freetown.treetracker.org should return freetown', () => {
@@ -76,5 +76,15 @@ describe('parseDomain', () => {
     expect(parseDomain('https://treetracker.org/?wallet=xxxx')).toBe(
       'treetracker.org',
     );
+  });
+});
+
+describe('requestAPI', () => {
+  it('should the request failed (code 404) with a wrong URL end point.', async () => {
+    try {
+      await requestAPI('wrong_end_point');
+    } catch (ex) {
+      expect(ex.message).toBe('Request failed with status code 404');
+    }
   });
 });

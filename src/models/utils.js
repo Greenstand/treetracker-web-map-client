@@ -1,4 +1,5 @@
 import { catchClause } from '@babel/types';
+import axios from 'axios';
 
 const log = require('loglevel');
 
@@ -49,15 +50,12 @@ function parseMapName(domain) {
 async function requestAPI(url) {
   try {
     let urlFull = `${process.env.NEXT_PUBLIC_API_NEW}${url}`;
-    // TODO remove test code
     urlFull = urlFull.replace(/\?/, '/query/');
-    log.warn('url:', urlFull);
-    const res = await fetch(urlFull);
-    const result = await res.json();
-    return result;
-  } catch (error) {
-    log.error(error);
-    throw error;
+
+    const res = await axios(urlFull);
+    return res.data;
+  } catch (ex) {
+    throw new Error(ex.message);
   }
 }
 
