@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import log from 'loglevel';
 
@@ -5,9 +6,29 @@ import Link from '../components/Link';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
+// create style object for use in this component
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3, 4),
+  },
+  title: {
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: '32px',
+    lineHeight: '39px',
+    /* identical to box height */
+    display: 'flex',
+    alignItems: 'center',
+    color: '#474B4F',
+  },
+}));
+
 export default function Top({ trees, countries }) {
   // use map context to get the map
   const mapContext = useMapContext();
+
+  const classes = useStyles();
 
   async function handleCountryClick(countryId) {
     log.debug('handleCountryClick', countryId);
@@ -23,9 +44,10 @@ export default function Top({ trees, countries }) {
   }
 
   return (
-    <div>
-      <h1>top page</h1>
-      <h2>Featured Trees</h2>
+    <div className={classes.root}>
+      <Typography variant="h2" className={classes.title}>
+        Featured Trees
+      </Typography>
       <ul>
         {trees.map((tree) => (
           <li key={tree.id}>
