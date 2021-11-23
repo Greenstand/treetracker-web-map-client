@@ -24,14 +24,31 @@ const useStyles = makeStyles((theme) => ({
     '&>*': {
       marginBottom: theme.spacing(5),
     },
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+      padding: '1rem',
+      boxSizing: 'border-box',
+      overflow: 'hidden',
+      marginTop: '15vh',
+      justifyContent: 'flex-start',
+    },
   },
   buttonsContainer: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
-  welcome: {},
-  slogan: {},
+  welcome: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.8rem',
+    },
+  },
+  slogan: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.9rem',
+      lineHeight: '2.5rem',
+    },
+  },
   button: {
     textTransform: 'none',
     marginRight: 20,

@@ -1,8 +1,11 @@
 import { AppBar, Button, Menu, MenuItem, Toolbar } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import MenuIcon from '@material-ui/icons/Menu';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
+import iconLogo from '../images/greenstand_logo.svg';
 import logo from '../images/greenstand_logo_full.png';
 import Link from './Link';
 
@@ -17,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     padding: '0 20px',
     zIndex: 1000,
+    [theme.breakpoints.down('sm')]: {
+      padding: '0',
+      alignItems: 'flex-end',
+    },
   },
   toolbar: {
     gap: 25,
@@ -24,12 +31,17 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  logo: {
+    paddingLeft: '1rem',
+    paddingBottom: '.5rem',
+  },
   buttonStyle: {
     fontSize: '16px',
     textTransform: 'none',
   },
   menuButton: {
     display: 'none',
+    padding: 0,
     [theme.breakpoints.down('sm')]: {
       display: 'block',
     },
@@ -37,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Navbar() {
+  const theme = useTheme();
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -48,8 +62,12 @@ function Navbar() {
   const classes = useStyles();
   return (
     <AppBar className={classes.navContainer} color="primary" position="static">
-      <Link href="/">
-        <Image src={logo} width={180} height={30} />
+      <Link href="/" className={classes.logo}>
+        <Image
+          src={isMobileScreen ? iconLogo : logo}
+          width={isMobileScreen ? 24 : 180}
+          height={30}
+        />
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
         <Link href="/">
@@ -95,7 +113,7 @@ function Navbar() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        Menu
+        <MenuIcon fontSize="large" />
       </Button>
       <Menu
         id="basic-menu"
