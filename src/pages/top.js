@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import log from 'loglevel';
 
+import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import Link from '../components/Link';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
@@ -48,15 +49,7 @@ export default function Top({ trees, countries }) {
       <Typography variant="h2" className={classes.title}>
         Featured Trees
       </Typography>
-      <ul>
-        {trees.map((tree) => (
-          <li key={tree.id}>
-            <Link href={`/trees/${tree.id}`}>
-              <Typography color="secondary">tree {tree.id}</Typography>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <FeaturedTreesSlider trees={trees} />
       <h2>Check out the global leaders in the tree planting effort</h2>
       {countries.map((country) => (
         <li key={country.id}>
