@@ -6,53 +6,11 @@ import React, { useRef, useState } from 'react';
 import Link from '../Link';
 import { useStyles } from './style.js'; // the style file
 
-function FeaturedTreesSlider() {
+function FeaturedTreesSlider(props) {
   const classes = useStyles();
   const sliderRef = useRef();
 
-  // fake data
-  const trees = [
-    {
-      id: '115059',
-      photo_url: 'https://picsum.photos/id/10/208',
-      species: 'Palm Tree',
-    },
-    {
-      id: '115059',
-      photo_url: 'https://picsum.photos/id/1037/208',
-      species: 'Palm Tree',
-    },
-    {
-      id: '115059',
-      photo_url: 'https://picsum.photos/id/106/208',
-      species: 'Palm Tree',
-    },
-    {
-      id: '115059',
-      photo_url: 'https://picsum.photos/id/107/208',
-      species: 'Palm Tree',
-    },
-    {
-      id: '115059',
-      photo_url: 'https://picsum.photos/id/108/208',
-      species: 'Palm Tree',
-    },
-    {
-      id: '115059',
-      photo_url: 'https://picsum.photos/id/109/208',
-      species: 'Palm Tree',
-    },
-    {
-      id: '115059',
-      photo_url: 'https://picsum.photos/id/111/208',
-      species: 'Palm Tree',
-    },
-    {
-      id: '115059',
-      photo_url: 'https://picsum.photos/id/112/208',
-      species: 'Palm Tree',
-    },
-  ];
+  const { trees } = props;
 
   const scrollHandler = (num) => {
     sliderRef.current.scrollLeft += num;
