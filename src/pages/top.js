@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import log from 'loglevel';
 
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
+import LeaderBoard from '../components/LeaderBoard';
 import Link from '../components/Link';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
@@ -19,6 +20,16 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '32px',
     lineHeight: '39px',
     /* identical to box height */
+    display: 'flex',
+    alignItems: 'center',
+    color: '#474B4F',
+  },
+  title2: {
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: '32px',
+    lineHeight: '39px',
     display: 'flex',
     alignItems: 'center',
     color: '#474B4F',
@@ -50,14 +61,13 @@ export default function Top({ trees, countries }) {
         Featured Trees
       </Typography>
       <FeaturedTreesSlider trees={trees} />
-      <h2>Check out the global leaders in the tree planting effort</h2>
-      {countries.map((country) => (
-        <li key={country.id}>
-          <a onClick={() => handleCountryClick(country.id)}>
-            {country.name} planted: {country.planted} (click to nav the map)
-          </a>
-        </li>
-      ))}
+      <Typography variant="h2" className={classes.title2}>
+        Check out the global leaders in the tree planting effort
+      </Typography>
+      <LeaderBoard
+        countries={countries}
+        handleCountryClick={handleCountryClick}
+      />
     </div>
   );
 }
