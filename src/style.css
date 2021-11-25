@@ -44,12 +44,12 @@ body {
 
 #arrow.south {
   bottom: 10px;
-  left: 50%;
+  left: 75%;
 }
 
 #arrow.north {
-  top: 10px;
-  left: 50%;
+  top: 10vh;
+  left: 75%;
 }
 
 #arrow.east {
@@ -59,7 +59,7 @@ body {
 
 #arrow.west {
   top: 50%;
-  left: 10px;
+  left: 50%;
 }
 
 .round {
