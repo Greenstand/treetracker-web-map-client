@@ -1,11 +1,16 @@
 import { Avatar, Button, Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import log from 'loglevel';
 import Image from 'next/image';
 
 import Location from '../../components/common/Location';
 import Time from '../../components/common/Time';
+import FeaturedTreesSlider from '../../components/FeaturedTreesSlider';
+import InformationCard1 from '../../components/InformationCard1';
 import Link from '../../components/Link';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -44,10 +49,66 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     color: '#474B4F',
   },
+  title3: {
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: '24px',
+    lineHeight: '29px',
+    display: 'flex',
+    alignItems: 'center',
+    color: '#474B4F',
+    marginTop: theme.spacing(10),
+  },
+  title4: {
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: '24px',
+    lineHeight: '29px',
+    display: 'flex',
+    alignItems: 'center',
+    color: '#474B4F',
+    marginTop: theme.spacing(28),
+  },
+  treeSlider: {
+    marginTop: theme.spacing(10),
+  },
+  speciesBox: {
+    marginTop: theme.spacing(10),
+  },
+  divider: {
+    marginLeft: theme.spacing(-10),
+    marginRight: theme.spacing(-10),
+    width: '100%',
+  },
+  title5: {
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: '28px',
+    lineHeight: '34px',
+    display: 'flex',
+    alignItems: 'center',
+    color: '#474B4F',
+  },
+  text1: {
+    fontFamily: 'Lato',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '20px',
+    lineHeight: '28px',
+    display: 'flex',
+    alignItems: 'center',
+    letterSpacing: '0.04em',
+    color: '#474B4F',
+  },
 }));
 
 export default function Planter({ planter }) {
   const mapContext = useMapContext();
+
+  const [display, setDisplay] = React.useState('planter');
 
   const classes = useStyles();
 
@@ -69,6 +130,10 @@ export default function Planter({ planter }) {
     reload();
   }, [mapContext.map]);
 
+  function handleCardClick(who) {
+    setDisplay(who);
+  }
+
   return (
     <PageWrapper className={classes.root}>
       <Typography variant="h6" className={classes.title}>
@@ -82,6 +147,8 @@ export default function Planter({ planter }) {
         <Location entityLocation="Shirimatunda,Tanzania" />
         <Time entityName={planter.created_time} />
       </Box>
+      <Box mt={1} />
+      <Divider className={classes.divider} />
       <Box
         style={{ height: '672px' /* TODO hard code */ }}
         className={classes.imageContainer}
@@ -93,37 +160,85 @@ export default function Planter({ planter }) {
           objectFit="cover"
         />
       </Box>
-      <Typography variant="h6">
-        Tree planted: {planter.featuredTrees.total}
+      <Grid container>
+        <Grid item>
+          <Card onClick={() => handleCardClick('planter')}>
+            <Typography
+              variant="h6"
+              color={display === 'planter' ? 'secondary' : ''}
+            >
+              Tree planted: {planter.featuredTrees.total}
+            </Typography>
+          </Card>
+        </Grid>
+        <Grid item>
+          <Box width={8} />
+        </Grid>
+        <Grid item>
+          <Card onClick={() => handleCardClick('org')}>
+            <Typography
+              variant="h6"
+              color={display === 'org' ? 'secondary' : ''}
+            >
+              Associated Organizations: {planter.associatedOrganizations.total}
+            </Typography>
+          </Card>
+        </Grid>
+      </Grid>
+      {display === 'planter' && (
+        <>
+          <Typography variant="h3" className={classes.title3}>
+            Explore some trees planted by <strong>{planter.first_name}</strong>
+          </Typography>
+          <Box className={classes.treeSlider}>
+            <FeaturedTreesSlider trees={planter.featuredTrees.trees} />
+          </Box>
+        </>
+      )}
+      {display === 'org' &&
+        planter.associatedOrganizations.organizations.map((org) => (
+          <div key={org.id}>
+            <Link href={`/organizations/${org.id}`}>
+              <InformationCard1
+                entityName={org.name}
+                entityType={'Planting Organization'}
+                buttonText={'Meet the Organization'}
+                cardImageSrc={org?.logo_url}
+              />
+            </Link>
+          </div>
+        ))}
+      <Typography variant="h6" className={classes.title4}>
+        Species of trees planted
       </Typography>
-      {planter.featuredTrees.trees.map((tree) => (
-        <div key={tree.id}>
-          <Typography variant="h6">{tree.name}</Typography>
-          <Avatar alt={tree.name} src={tree.photo_url} />
-        </div>
-      ))}
-      <Typography variant="h6">
-        Associated Organizations: {planter.associatedOrganizations.total}
+      <Box className={classes.speciesBox}>
+        {planter.species.species.map((species) => (
+          <div key={species.id}>
+            <Typography variant="subtitle2">{species.name}</Typography>
+            <Typography variant="body1">count: {species.count}</Typography>
+          </div>
+        ))}
+      </Box>
+      <Box mt={10} />
+      <Divider className={classes.divider} />
+      <Box mt={20} />
+      <Typography variant="h6" className={classes.title5}>
+        About
       </Typography>
-      {planter.associatedOrganizations.organizations.map((org) => (
-        <div key={org.id}>
-          <Link href={`/organizations/${org.id}`}>
-            <Typography variant="h6">{org.name}</Typography>
-            <Avatar alt={org.name} src={org.photo_url} />
-          </Link>
-        </div>
-      ))}
-      <Typography variant="h6">Species of trees planted</Typography>
-      {planter.species.species.map((species) => (
-        <div key={species.id}>
-          <Typography variant="subtitle2">{species.name}</Typography>
-          <Typography variant="body1">count: {species.count}</Typography>
-        </div>
-      ))}
-      <Typography variant="h6">About</Typography>
-      <Typography variant="body1">{planter.about}</Typography>
-      <Typography variant="h6">Mission</Typography>
-      <Typography variant="body1">{planter.mission}</Typography>
+      <Box mt={7} />
+      <Typography variant="body1" className={classes.text1}>
+        {planter.about}
+      </Typography>
+      <Box mt={16} />
+      <Typography variant="h6" className={classes.title5}>
+        Mission
+      </Typography>
+      <Box mt={7} />
+      <Typography variant="body1" className={classes.text1}>
+        {planter.mission}
+      </Typography>
+      <Box mt={20} />
+      <Divider className={classes.divider} />
     </PageWrapper>
   );
 }
