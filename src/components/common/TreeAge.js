@@ -1,6 +1,5 @@
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import AccessTime from '@material-ui/icons/AccessTime';
 import React from 'react';
 
 const useStyles = makeStyles(() => ({
@@ -67,13 +66,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function TreeAge({ treeAge }) {
+function TreeAge({ treeAge, title, icon }) {
   const classes = useStyles();
   return (
     <Box className={classes.container}>
-      <AccessTime className={classes.clock} />
+      {icon}
       <Box>
-        <p className={classes.ageLabel}>Age</p>
+        <p className={classes.ageLabel}>{title}</p>
         <p className={classes.ageValue}>{treeAge}</p>
       </Box>
     </Box>

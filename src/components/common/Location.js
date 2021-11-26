@@ -5,7 +5,6 @@ import React from 'react';
 
 const useStyles = makeStyles(() => ({
   container: {
-    position: 'absolute',
     zIndex: 1,
     justifyContent: 'space-between',
   },

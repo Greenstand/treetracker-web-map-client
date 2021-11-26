@@ -1,16 +1,20 @@
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import AccessTime from '@material-ui/icons/AccessTime';
 import log from 'loglevel';
 import Image from 'next/image';
 import React from 'react';
 
+import TreeAge from '../../components/common/TreeAge';
+import InformationCard1 from '../../components/InformationCard1';
 import Link from '../../components/Link';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -34,6 +38,29 @@ const useStyles = makeStyles(() => ({
       marginRight: 8,
     },
   },
+  informationCard: {
+    marginTop: theme.spacing(10),
+    width: '100%',
+  },
+  title2: {
+    marginTop: theme.spacing(26),
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: '28px',
+    lineHeight: '34px',
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#585B5D',
+  },
+  tabBox: {
+    marginTop: theme.spacing(9),
+    display: 'flex',
+    '& div': {
+      marginRight: theme.spacing(2),
+    },
+  },
 }));
 
 export default function Tree({ tree, planter, organization }) {
@@ -41,8 +68,6 @@ export default function Tree({ tree, planter, organization }) {
   const mapContext = useMapContext();
 
   log.warn('map:', mapContext);
-  const { verified, token_id, photo_url } = tree;
-  const isTokenIssued = Boolean(token_id);
 
   React.useEffect(() => {
     // manipulate the map
@@ -53,52 +78,28 @@ export default function Tree({ tree, planter, organization }) {
 
   const Title = () => (
     <Typography className={classes.title} variant="h2">
-      {tree.species} - {tree.id}
+      Tree{/* tree.species */} - #{tree.id}
     </Typography>
   );
 
   const Badges = () => (
     <Box className={classes.badges}>
-      <VerifiedBadge verified={verified} badgeName="Tree Verified" />
-      <VerifiedBadge verified={isTokenIssued} badgeName="Token Issued" />
+      <VerifiedBadge verified={tree.approved} badgeName="Tree Verified" />
+      <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
     </Box>
   );
 
   const TreeImage = () => (
-    <Box className={classes.imageContainer}>
-      {/*
+    <Box
+      style={{ height: '672px' /* TODO hard code */ }}
+      className={classes.imageContainer}
+    >
       <Image
-        src={photo_url}
+        src={tree.photo_url}
         layout="fill"
         objectPosition="center"
         objectFit="cover"
       />
-      */}
-      <Image
-        src={photo_url}
-        width={200}
-        height={100}
-        objectPosition="center"
-        objectFit="cover"
-      />
-      <div>
-        <Link href={`/planters/${planter.id}`} as={`/planters/${planter.id}`}>
-          Planter:
-        </Link>
-        {planter.first_name}
-        <Image src={planter.photo_url} width="100px" height="100px" />
-      </div>
-      <div>
-        Organization:
-        {organization.name}
-        {organization?.photo_url && (
-          <Image src={organization.photo_url} width="100px" height="100px" />
-        )}
-      </div>
-      <div>planted on: {tree.time_created}</div>
-      <div>
-        lat,lon: {tree.lat},{tree.lon}
-      </div>
     </Box>
   );
 
@@ -110,6 +111,68 @@ export default function Tree({ tree, planter, organization }) {
       </Typography>
       <Badges />
       <TreeImage />
+      <Box className={classes.informationCard}>
+        <Link href={`/planters/${planter.id}`} as={`/planters/${planter.id}`}>
+          <InformationCard1
+            entityName={`${planter.first_name} ${planter.last_name}`}
+            entityType={'Planter'}
+            buttonText={'Meet the Planter'}
+            cardImageSrc={planter?.photo_url}
+          />
+        </Link>
+      </Box>
+      <Box className={classes.informationCard}>
+        <Link
+          href={`/organizations/${organization.id}`}
+          as={`/organizations/${organization.id}`}
+        >
+          <InformationCard1
+            entityName={organization.name}
+            entityType={'Planting Organization'}
+            buttonText={'Meet the Organization'}
+            cardImageSrc={organization?.photo_url}
+          />
+        </Link>
+      </Box>
+      <Typography variant="h4" className={classes.title2}>
+        Tree Info
+      </Typography>
+      <Box className={classes.tabBox}>
+        <TreeAge
+          treeAge={tree.time_created}
+          title={'Planted on'}
+          icon={<AccessTime />}
+        />
+        <TreeAge
+          treeAge={'Tanzania'}
+          title={'Located in'}
+          icon={<AccessTime />}
+        />
+        {tree.age && (
+          <TreeAge treeAge={tree.age} title={'Age'} icon={<AccessTime />} />
+        )}
+        {tree.gps_accuracy && (
+          <TreeAge
+            treeAge={tree.gps_accuracy}
+            title={'GPS Accuracy'}
+            icon={<AccessTime />}
+          />
+        )}
+        {tree.lat && tree.lon && (
+          <TreeAge
+            treeAge={`${tree.lat},${tree.lon}`}
+            title={'Latitude, Longitude'}
+            icon={<AccessTime />}
+          />
+        )}
+        {tree.token_id && (
+          <TreeAge
+            treeAge={tree.token_id}
+            title={'Token ID'}
+            icon={<AccessTime />}
+          />
+        )}
+      </Box>
     </PageWrapper>
   );
 }

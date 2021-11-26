@@ -5,7 +5,6 @@ import React from 'react';
 const useStyles = makeStyles((theme) => ({
   container: {
     boxSizing: 'border-box',
-    maxWidth: 322,
     height: 220,
     padding: '25px 30px',
     background:
