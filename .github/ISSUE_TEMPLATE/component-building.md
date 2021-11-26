@@ -16,6 +16,8 @@ Some hints for building components:
 - A tutorial of how to use the Cypress component tool to build components:
   https://github.com/Greenstand/treetracker-wallet-web#how-to-build-a-component
 - We are using MaterialUI to build the app: https://material-ui.com/
+- Please mount the component with `import { mountWithTheme as mount } from '../../models/test-utils';` to get our theme imported.
+- Please use MaterialUI `theme.spacing(x)` as possible as we can, so the component is more responsive
 - When you are ready to raise PR for the component, please attach the screenshot of the component for review.
 - Please read our [readme](https://github.com/Greenstand/treetracker-web-map-client#treetracker-web) for more information/guide/tutorial.
 - Here is [an engineering book](https://greenstand.gitbook.io/engineering/) in Greenstand.
