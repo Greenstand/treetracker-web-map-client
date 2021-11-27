@@ -9,7 +9,7 @@ import expect from 'expect-runtime';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
 import React from 'react';
-import Map from 'treetracker-web-map-core/src/Map';
+import { Map } from 'treetracker-web-map-core';
 
 import { useMapContext } from '../mapContext';
 import { parseMapName } from '../models/utils';
