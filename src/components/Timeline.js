@@ -10,7 +10,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const TimelineSlider = withStyles({
+const TimelineSlider = withStyles(Slider, {
   root: {
     color: '#85c232',
     height: 8,
@@ -52,9 +52,9 @@ const TimelineSlider = withStyles({
     height: 8,
     borderRadius: 4,
   },
-})(Slider);
+});
 
-const useStylesTooltip = makeStyles(() => ({
+const useStylesTooltip = makeStyles()(() => ({
   popper: {
     opacity: 0.5,
   },
