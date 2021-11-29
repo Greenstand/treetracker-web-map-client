@@ -47,7 +47,7 @@ function InformationCard1({
   buttonText,
   cardImageSrc,
 }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box
       className={classes.container}

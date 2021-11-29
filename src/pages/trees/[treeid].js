@@ -63,7 +63,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Tree({ tree, planter, organization }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const mapContext = useMapContext();
 
   log.warn('map:', mapContext);

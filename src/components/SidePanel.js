@@ -246,7 +246,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function SidePanel(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const { tree, state } = props;
   expect(state).oneOf(['none', 'show', 'hide']);
   const { hasPrev = true } = props;
@@ -701,7 +701,7 @@ function SidePanel(props) {
 }
 
 function Item(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   if (!props.value) return null;
   return (
     <Typography className={classes.item} variant="body1">
@@ -712,7 +712,7 @@ function Item(props) {
 }
 
 function List(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Grid container className={`${classes.infoItem} list-root`}>

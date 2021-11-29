@@ -7,7 +7,7 @@ import Link from '../Link';
 import { useStyles } from './style'; // the style file
 
 function FeaturedTreesSlider(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const sliderRef = useRef();
 
   const { trees } = props;

@@ -29,7 +29,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function Share(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isEmbedOpen, setEmbedOpen] = React.useState(false);
   const [embedCode, setEmbedCode] = React.useState('');

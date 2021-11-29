@@ -29,6 +29,6 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Loader() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return <div className={classes.loader}></div>;
 }

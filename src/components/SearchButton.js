@@ -14,7 +14,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export default function SearchButton() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Fab aria-label="search" color="primary" className={classes.fab}>
       <SearchIcon fontSize="large" className={classes.icon} />

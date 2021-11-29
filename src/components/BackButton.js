@@ -16,7 +16,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export default function BackButton() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <ButtonBase className={classes.backButton} color="textPrimary">
       <ArrowBackIosIcon fontSize="inherit" className={classes.icon} />

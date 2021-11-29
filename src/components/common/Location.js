@@ -24,7 +24,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 function Location({ entityLocation }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box className={classes.container}>
       <div>

@@ -68,7 +68,7 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <AppBar className={classes.navContainer} color="primary" position="static">
       <Link href="/" className={classes.logo}>

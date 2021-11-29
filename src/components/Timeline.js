@@ -143,7 +143,7 @@ function textvalue(begin, end) {
 }
 
 function Timeline(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [slide, setSlide] = React.useState(false);
   const [value, setValue] = React.useState([0, dayRange]);
 

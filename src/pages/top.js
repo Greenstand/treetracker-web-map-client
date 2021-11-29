@@ -40,7 +40,7 @@ export default function Top({ trees, countries }) {
   // use map context to get the map
   const mapContext = useMapContext();
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   async function handleCountryClick(countryId) {
     log.debug('handleCountryClick', countryId);

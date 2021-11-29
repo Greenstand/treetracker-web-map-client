@@ -10,7 +10,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 function VerifiedBadge({ verified, badgeName }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Chip
       className={classes.chip}

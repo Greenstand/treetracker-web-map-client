@@ -165,7 +165,7 @@ function getParameters() {
 
 function MapComponent() {
   log.warn('Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [sidePanelState, setSidePanelState] = React.useState('none');
   const [tree, setTree] = React.useState(undefined);
   const [hasNext, setHasNext] = React.useState(false);

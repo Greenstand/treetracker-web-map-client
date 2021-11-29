@@ -15,7 +15,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function ShareIcon(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Grid item className={classes.gridContainer}>

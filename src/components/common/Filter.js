@@ -64,7 +64,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function Filter() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <form>
       <Box className={classes.title}>

@@ -51,7 +51,7 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Organization({ organization }) {
   const mapContext = useMapContext();
-  const classes = useStyles();
+  const { classes } = useStyles();
   const {
     name,
     area,

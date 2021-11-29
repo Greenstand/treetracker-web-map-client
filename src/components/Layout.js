@@ -42,7 +42,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Layout({ children }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box className={classes.root}>
       <Navbar />

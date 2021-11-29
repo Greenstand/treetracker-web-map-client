@@ -160,7 +160,7 @@ function LeaderBoard(props) {
       'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg';
   }
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Grid>

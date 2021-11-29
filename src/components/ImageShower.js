@@ -18,7 +18,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 function ImageShower(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   if (!props.open) {
     return null;
   }

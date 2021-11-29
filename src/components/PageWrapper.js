@@ -26,7 +26,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export default function PageWrapper({ children, className, ...otherProps }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box className={classes.pageContainer}>
       <Box className={classes.top}>

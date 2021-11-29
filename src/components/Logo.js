@@ -13,7 +13,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 function Logo() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <div className={`${classes.logo}`}>
       <a

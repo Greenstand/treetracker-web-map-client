@@ -60,7 +60,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Home() {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const Buttons = () => (
     <Box className={classes.buttonsContainer}>
