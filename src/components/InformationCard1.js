@@ -1,8 +1,8 @@
 import { Box, Button, CardMedia } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   container: {
     boxSizing: 'border-box',
     height: 220,

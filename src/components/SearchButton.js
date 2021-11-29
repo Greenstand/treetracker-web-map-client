@@ -1,9 +1,9 @@
 import SearchIcon from '@mui/icons-material/Search';
 import Fab from '@mui/material/Fab';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   fab: {
     height: 48,
     width: 48,

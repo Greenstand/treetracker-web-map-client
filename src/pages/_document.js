@@ -29,7 +29,6 @@ class MyDocument extends Document {
 }
 
 export default withEmotionCache({
-  /** If you have a custom document pass it instead */
   Document: MyDocument,
   /**
    * Every emotion cache used in the app should be provided.

@@ -5,10 +5,10 @@ import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   gridContainer: {
     padding: theme.spacing(2),
   },

@@ -1,8 +1,8 @@
 import AccessTime from '@mui/icons-material/AccessTime';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
 import log from 'loglevel';
+import { makeStyles } from 'models/makeStyles';
 import Image from 'next/image';
 import React from 'react';
 
@@ -13,7 +13,7 @@ import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',

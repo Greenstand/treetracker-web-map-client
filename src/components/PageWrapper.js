@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   pageContainer: {
     margin: '12px 24px',
     display: 'flex',

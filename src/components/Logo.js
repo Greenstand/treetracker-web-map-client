@@ -1,9 +1,9 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
 const logo = '/images/greenstand_logo_full.png';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   logo: {
     userSelect: 'none',
     '& img': {

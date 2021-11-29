@@ -1,7 +1,7 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   '@keyframes spin': {
     from: {
       transform: 'rotate(0deg)',

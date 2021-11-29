@@ -1,8 +1,8 @@
 import { Avatar, Box, Grid } from '@mui/material';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   rectangle69: {
     position: 'relative',
     height: '168px',

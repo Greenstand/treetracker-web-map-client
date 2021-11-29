@@ -4,8 +4,8 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
-import { makeStyles, withStyles } from '@mui/styles';
 import log from 'loglevel';
+import { makeStyles, withStyles } from 'models/makeStyles';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -83,7 +83,7 @@ ValueLabelComponent.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   root: {
     background:
       'linear-gradient(90deg, rgba(2,0,36,0.70) 10%, rgba(11,11,94,0.41360294117647056) 19%, rgba(203,209,209,0) 37%)',

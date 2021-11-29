@@ -9,13 +9,13 @@ import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
-import { makeStyles } from '@mui/styles';
 import log from 'loglevel';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
 import ShareIcon from './ShareIcon';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   box1: {
     padding: theme.spacing(4),
   },

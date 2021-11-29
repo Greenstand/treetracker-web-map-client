@@ -1,9 +1,9 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { ButtonBase } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   backButton: {
     textTransform: 'none',
     fontSize: 16,

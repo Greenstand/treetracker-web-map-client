@@ -1,16 +1,15 @@
-import { makeStyles } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
-import Link from '../components/Link';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
 // create style object for use in this component
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   root: {
     padding: theme.spacing(3, 4),
   },

@@ -1,9 +1,9 @@
 import CheckIcon from '@mui/icons-material/Check';
 import { Chip } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   chip: {
     borderRadius: '4px',
   },

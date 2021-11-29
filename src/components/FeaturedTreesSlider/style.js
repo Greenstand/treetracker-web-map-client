@@ -1,6 +1,6 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   SliderContainer: {
     position: 'relative',
     width: '100%',

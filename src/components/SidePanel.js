@@ -26,10 +26,10 @@ import Paper from '@mui/material/Paper';
 import Slide from '@mui/material/Slide';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 import expect from 'expect-runtime';
 import log from 'loglevel';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
 import ImageShower from './ImageShower';
@@ -55,7 +55,7 @@ function attribute(treeDetail, property) {
   return treeDetail.attributes[property];
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   placeholder: {
     position: 'absolute',
     height: '100vh',

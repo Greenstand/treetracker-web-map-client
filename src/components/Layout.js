@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from 'models/makeStyles';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   root: {
     height: '100vh',
     display: 'flex',
