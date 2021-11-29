@@ -16,8 +16,6 @@ import iconLogo from '../images/greenstand_logo.svg';
 import logo from '../images/greenstand_logo_full.png';
 import Link from './Link';
 
-const logo = '/images/greenstand_logo_full.png';
-
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
     backgroundColor: '#ffffff',
