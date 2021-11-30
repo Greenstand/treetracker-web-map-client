@@ -1,15 +1,23 @@
-import { AppBar, Button, Menu, MenuItem, Toolbar } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import {
+  AppBar,
+  Button,
+  Menu,
+  MenuItem,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import { makeStyles } from 'models/makeStyles';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-import iconLogo from '../images/greenstand_logo.svg';
-import logo from '../images/greenstand_logo_full.png';
 import Link from './Link';
 
-const useStyles = makeStyles((theme) => ({
+const iconLogo = '/images/greenstand_logo.svg';
+const logo = '/images/greenstand_logo_full.png';
+
+const useStyles = makeStyles()((theme) => ({
   navContainer: {
     backgroundColor: '#ffffff',
     height: 72,
@@ -59,7 +67,7 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <AppBar className={classes.navContainer} color="primary" position="static">
       <Link href="/" className={classes.logo}>

@@ -1,13 +1,13 @@
-import { Button, Grid } from '@material-ui/core';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import React, { useRef, useState } from 'react';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Button, Grid } from '@mui/material';
+import React, { useRef } from 'react';
 
 import Link from '../Link';
-import { useStyles } from './style.js'; // the style file
+import { useStyles } from './style'; // the style file
 
 function FeaturedTreesSlider(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const sliderRef = useRef();
 
   const { trees } = props;

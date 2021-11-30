@@ -1,13 +1,13 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-import backgroundImage from '../images/bg.png';
 import Link from './Link';
 
-const useStyles = makeStyles((theme) => ({
+const backgroundImage = '/images/bg.png';
+const useStyles = makeStyles()((theme) => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,
     height: '100%',
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home() {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const Buttons = () => (
     <Box className={classes.buttonsContainer}>

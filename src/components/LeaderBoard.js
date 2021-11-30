@@ -1,8 +1,8 @@
-import { Avatar, Box, Card, CardContent,Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, Box, Grid } from '@mui/material';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   rectangle69: {
     position: 'relative',
     height: '168px',
@@ -160,7 +160,7 @@ function LeaderBoard(props) {
       'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg';
   }
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Grid>

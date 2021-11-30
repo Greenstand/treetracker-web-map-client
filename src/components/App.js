@@ -1,12 +1,12 @@
 import 'leaflet/dist/leaflet.css';
 
-import Fade from '@material-ui/core/Fade';
-import Grid from '@material-ui/core/Grid';
-import Snackbar from '@material-ui/core/Snackbar';
-import { makeStyles } from '@material-ui/core/styles';
-import MuiAlert from '@material-ui/lab/Alert';
+import Alert from '@mui/material/Alert';
+import Fade from '@mui/material/Fade';
+import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
 import expect from 'expect-runtime';
 import log from 'loglevel';
+import { makeStyles } from 'models/makeStyles';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Map } from 'treetracker-web-map-core';
@@ -20,7 +20,7 @@ import Timeline from './Timeline';
 
 const MOBILE_WIDTH = 960;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   mapContainer: {
     transform: 'scale(1.02)',
     transition: 'all 2s',
@@ -164,7 +164,7 @@ function getParameters() {
 
 function MapComponent() {
   log.warn('Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [sidePanelState, setSidePanelState] = React.useState('none');
   const [tree, setTree] = React.useState(undefined);
   const [hasNext, setHasNext] = React.useState(false);
@@ -483,9 +483,9 @@ function MapComponent() {
         autoHideDuration={10000}
         onClose={handleMessageClose}
       >
-        <MuiAlert onClose={handleMessageClose} severity="warning">
+        <Alert onClose={handleMessageClose} severity="warning">
           {message.message}
-        </MuiAlert>
+        </Alert>
       </Snackbar>
       {arrow.direction && (
         <div

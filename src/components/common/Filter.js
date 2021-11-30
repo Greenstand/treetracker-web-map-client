@@ -1,13 +1,13 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
+import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   title: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Filter() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <form>
       <Box className={classes.title}>

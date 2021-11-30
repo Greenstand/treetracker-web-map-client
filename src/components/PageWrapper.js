@@ -1,11 +1,12 @@
-import { Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box } from '@mui/material';
 import clsx from 'clsx';
+import { makeStyles } from 'models/makeStyles';
+import React from 'react';
 
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   pageContainer: {
     margin: '12px 24px',
     display: 'flex',
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function PageWrapper({ children, className, ...otherProps }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box className={classes.pageContainer}>
       <Box className={classes.top}>

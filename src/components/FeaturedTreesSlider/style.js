@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'models/makeStyles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()(() => ({
   SliderContainer: {
     position: 'relative',
     width: '100%',

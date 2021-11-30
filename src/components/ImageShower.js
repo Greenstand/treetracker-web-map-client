@@ -1,10 +1,10 @@
-import Dialog from '@material-ui/core/Dialog';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Close from '@material-ui/icons/Close';
+import Close from '@mui/icons-material/Close';
+import Dialog from '@mui/material/Dialog';
+import IconButton from '@mui/material/IconButton';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   closeIcon: {
     position: 'fixed',
     top: 20,
@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function ImageShower(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   if (!props.open) {
     return null;
   }

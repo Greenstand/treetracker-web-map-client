@@ -2,10 +2,10 @@
  * this loading icon is for that when user click cluster, if it take to
  * long time to show the points, then use this to give better response to user
  */
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   '@keyframes spin': {
     from: {
       transform: 'rotate(0deg)',
@@ -31,6 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LoaderB() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return <div className={classes.loader}></div>;
 }

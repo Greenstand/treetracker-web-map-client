@@ -1,20 +1,34 @@
+// eslint-disable-next-line import/extensions
 import '../style.css';
 
-import { ThemeProvider } from '@material-ui/core/styles';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
+import { ThemeProvider } from '@mui/material/styles';
+import React from 'react';
 
 import Layout from '../components/Layout';
 import { MapContextProvider } from '../mapContext';
 import appTheme from '../theme';
 
+let muiCache;
+
+export const createMuiCache = () =>
+  (muiCache = createCache({
+    key: 'mui',
+    prepend: true,
+  }));
+
 function TreetrackerApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={appTheme}>
-      <MapContextProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </MapContextProvider>
-    </ThemeProvider>
+    <CacheProvider value={muiCache ?? createMuiCache()}>
+      <ThemeProvider theme={appTheme}>
+        <MapContextProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </MapContextProvider>
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
 

@@ -1,9 +1,9 @@
-import { Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import { Box } from '@mui/material';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   container: {
     zIndex: 1,
     justifyContent: 'space-between',
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Location({ entityLocation }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box className={classes.container}>
       <div>

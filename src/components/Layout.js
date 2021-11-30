@@ -1,12 +1,13 @@
-import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+import { makeStyles } from 'models/makeStyles';
 import dynamic from 'next/dynamic';
+import React from 'react';
 
 import Navbar from './Navbar';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   root: {
     height: '100vh',
     display: 'flex',
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Layout({ children }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box className={classes.root}>
       <Navbar />

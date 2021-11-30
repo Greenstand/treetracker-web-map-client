@@ -1,8 +1,9 @@
-import { ButtonBase } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { ButtonBase } from '@mui/material';
+import { makeStyles } from 'models/makeStyles';
+import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   backButton: {
     textTransform: 'none',
     fontSize: 16,
@@ -15,7 +16,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function BackButton() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <ButtonBase className={classes.backButton} color="textPrimary">
       <ArrowBackIosIcon fontSize="inherit" className={classes.icon} />

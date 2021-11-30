@@ -1,9 +1,9 @@
-import { Avatar,Box, Divider, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { TextureSharp, ThreeSixty } from '@material-ui/icons';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Avatar, Box, Divider, Typography } from '@mui/material';
 import log from 'loglevel';
+import { makeStyles } from 'models/makeStyles';
+import React from 'react';
 
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -11,7 +11,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   info: {
     display: 'flex',
     alignItems: 'center',
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Organization({ organization }) {
   const mapContext = useMapContext();
-  const classes = useStyles();
+  const { classes } = useStyles();
   const {
     name,
     area,

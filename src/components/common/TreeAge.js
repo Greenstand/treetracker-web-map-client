@@ -1,8 +1,8 @@
-import { Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box } from '@mui/material';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   container: {
     display: 'flex',
     flexDirection: 'row',
@@ -67,7 +67,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function TreeAge({ treeAge, title, icon }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box className={classes.container}>
       {icon}

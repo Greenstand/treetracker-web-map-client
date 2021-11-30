@@ -1,11 +1,12 @@
-import { Avatar, Button, Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import { makeStyles } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import Location from '../../components/common/Location';
 import Time from '../../components/common/Time';
@@ -16,6 +17,7 @@ import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
+
 
 // make styles for component with material-ui
 const useStyles = makeStyles((theme) => ({
@@ -108,11 +110,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Planter({ planter }) {
   const mapContext = useMapContext();
 
-  const [display, setDisplay] = React.useState('planter');
+  const [display, setDisplay] = useState('planter');
 
   const classes = useStyles();
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function reload() {
       // manipulate the map
       const { map } = mapContext;

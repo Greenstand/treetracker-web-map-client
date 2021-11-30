@@ -1,8 +1,9 @@
-import Fab from '@material-ui/core/Fab';
-import { makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@mui/icons-material/Search';
+import Fab from '@mui/material/Fab';
+import { makeStyles } from 'models/makeStyles';
+import React from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()(() => ({
   fab: {
     height: 48,
     width: 48,
@@ -13,7 +14,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function SearchButton() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Fab aria-label="search" color="primary" className={classes.fab}>
       <SearchIcon fontSize="large" className={classes.icon} />

@@ -1,7 +1,4 @@
-import { catchClause } from '@babel/types';
 import axios from 'axios';
-
-const log = require('loglevel');
 
 function parseDomain(url) {
   const matcher = url.match(/^https?:\/\/([^/]*)\/?.*$/);

@@ -1,4 +1,4 @@
-import AccessTime from '@material-ui/icons/AccessTime';
+import AccessTime from '@mui/icons-material/AccessTime';
 import React from 'react';
 
 import { mountWithTheme as mount } from '../../models/test-utils';

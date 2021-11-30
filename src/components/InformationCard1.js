@@ -1,8 +1,8 @@
-import { Box, Button, CardMedia } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box, Button, CardMedia } from '@mui/material';
+import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   container: {
     boxSizing: 'border-box',
     height: 220,
@@ -47,7 +47,7 @@ function InformationCard1({
   buttonText,
   cardImageSrc,
 }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Box
       className={classes.container}

@@ -1,16 +1,16 @@
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Slider from '@material-ui/core/Slider';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
-import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
-import TimelapseTwoToneIcon from '@material-ui/icons/TimelapseTwoTone';
+import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
+import TimelapseTwoToneIcon from '@mui/icons-material/TimelapseTwoTone';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Slider from '@mui/material/Slider';
+import Tooltip from '@mui/material/Tooltip';
 import log from 'loglevel';
+import { makeStyles, withStyles } from 'models/makeStyles';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const TimelineSlider = withStyles({
+const TimelineSlider = withStyles(Slider, {
   root: {
     color: '#85c232',
     height: 8,
@@ -52,9 +52,9 @@ const TimelineSlider = withStyles({
     height: 8,
     borderRadius: 4,
   },
-})(Slider);
+});
 
-const useStylesTooltip = makeStyles(() => ({
+const useStylesTooltip = makeStyles()(() => ({
   popper: {
     opacity: 0.5,
   },
@@ -83,7 +83,7 @@ ValueLabelComponent.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   root: {
     background:
       'linear-gradient(90deg, rgba(2,0,36,0.70) 10%, rgba(11,11,94,0.41360294117647056) 19%, rgba(203,209,209,0) 37%)',
@@ -143,7 +143,7 @@ function textvalue(begin, end) {
 }
 
 function Timeline(props) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [slide, setSlide] = React.useState(false);
   const [value, setValue] = React.useState([0, dayRange]);
 
