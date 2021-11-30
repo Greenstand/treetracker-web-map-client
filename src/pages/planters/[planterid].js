@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from 'models/makeStyles';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import Image from 'next/image';
@@ -17,7 +17,6 @@ import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
-
 
 // make styles for component with material-ui
 const useStyles = makeStyles((theme) => ({
@@ -155,12 +154,7 @@ export default function Planter({ planter }) {
         style={{ height: '672px' /* TODO hard code */ }}
         className={classes.imageContainer}
       >
-        <Image
-          src={planter.photo_url}
-          layout="fill"
-          objectPosition="center"
-          objectFit="cover"
-        />
+        <Image src={planter.photo_url} height={672} width={500} />
       </Box>
       <Grid container>
         <Grid item>
