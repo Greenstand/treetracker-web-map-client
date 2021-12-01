@@ -48,6 +48,7 @@ function LinkComponent(props) {
       className={className}
       ref={innerRef}
       href={href}
+      sx={{ textDecoration: 'none' }}
       {...other}
     />
   );
