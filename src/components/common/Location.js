@@ -1,7 +1,7 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { Box } from '@mui/material';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const useStyles = makeStyles()(() => ({
   container: {
@@ -23,15 +23,27 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-function Location({ entityLocation }) {
+function Location({ coordinates }) {
   const { classes } = useStyles();
+
+  const [location, setLocation] = useState(null);
+
+  async function getLocation() {
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/location/lat=${coordinates.latitude}long=${coordinates.longitude}`;
+    const res = await fetch(url);
+    setLocation(await res.json());
+  }
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
   return (
     <Box className={classes.container}>
       <div>
         <div className={classes.entityLocation}>
-          {' '}
           <LocationOnOutlinedIcon className={classes.LocationOnOutlinedIcon} />
-          {entityLocation}
+          {location == null ? null : `${location.city}, ${location.country}`}
         </div>
       </div>
     </Box>

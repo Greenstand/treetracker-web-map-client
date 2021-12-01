@@ -3,12 +3,12 @@ import React from 'react';
 
 import Location from './Location';
 
-const info = {
-  entityLocation: 'Shirimatunda,Tanzania',
-};
-
 describe('Location', () => {
   it('Location', () => {
-    mount(<Location {...info} />);
+    const coordinates = {
+      latitude: 6.45407,
+      longitude: 3.39467,
+    };
+    mount(<Location coordinates={coordinates} />);
   });
 });
