@@ -378,10 +378,9 @@ function MapComponent() {
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
       filters: parameters,
-      //tileServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_URL,
-      // tileServerSubdomains: process.env.NEXT_PUBLIC_E_SERVER_SUBDOMAINS.split(","),
-      tileServerUrl: 'https://{s}.treetracker.org/tiles/new/',
-      tileServerSubdomains: ['dev-k8s'],
+      tileServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_URL,
+      tileServerSubdomains:
+        process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
     });
     map.on('moveEnd', () => {
       log.warn('update url');

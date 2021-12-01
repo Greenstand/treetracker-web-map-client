@@ -8,7 +8,6 @@ import React from 'react';
 
 import TreeAge from '../../components/common/TreeAge';
 import InformationCard1 from '../../components/InformationCard1';
-import Link from '../../components/Link';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
@@ -111,27 +110,22 @@ export default function Tree({ tree, planter, organization }) {
       <Badges />
       <TreeImage />
       <Box className={classes.informationCard}>
-        <Link href={`/planters/${planter.id}`} as={`/planters/${planter.id}`}>
-          <InformationCard1
-            entityName={`${planter.first_name} ${planter.last_name}`}
-            entityType={'Planter'}
-            buttonText={'Meet the Planter'}
-            cardImageSrc={planter?.photo_url}
-          />
-        </Link>
+        <InformationCard1
+          entityName={`${planter.first_name} ${planter.last_name}`}
+          entityType={'Planter'}
+          buttonText={'Meet the Planter'}
+          cardImageSrc={planter?.photo_url}
+          link={`/planters/${planter.id}`}
+        />
       </Box>
       <Box className={classes.informationCard}>
-        <Link
-          href={`/organizations/${organization.id}`}
-          as={`/organizations/${organization.id}`}
-        >
-          <InformationCard1
-            entityName={organization.name}
-            entityType={'Planting Organization'}
-            buttonText={'Meet the Organization'}
-            cardImageSrc={organization?.photo_url}
-          />
-        </Link>
+        <InformationCard1
+          entityName={organization.name}
+          entityType={'Planting Organization'}
+          buttonText={'Meet the Organization'}
+          cardImageSrc={organization?.photo_url}
+          link={`/organizations/${organization.id}`}
+        />
       </Box>
       <Typography variant="h4" className={classes.title2}>
         Tree Info
