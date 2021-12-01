@@ -1,6 +1,7 @@
 import { Box, Button, CardMedia } from '@mui/material';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
+import Link from './Link';
 
 const useStyles = makeStyles()((theme) => ({
   container: {
@@ -46,6 +47,7 @@ function InformationCard1({
   entityType,
   buttonText,
   cardImageSrc,
+  link,
 }) {
   const { classes } = useStyles();
   return (
@@ -73,9 +75,11 @@ function InformationCard1({
           <div className={classes.entityName}>{entityName}</div>
         </Box>
       </div>
-      <Button className={classes.button} fullWidth={true}>
-        {buttonText}
-      </Button>
+      <Link href={link}>
+        <Button className={classes.button} fullWidth={true}>
+          {buttonText}
+        </Button>
+      </Link>
     </Box>
   );
 }

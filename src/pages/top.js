@@ -1,4 +1,5 @@
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
@@ -12,6 +13,8 @@ import * as utils from '../models/utils';
 const useStyles = makeStyles()((theme) => ({
   root: {
     padding: theme.spacing(3, 4),
+    maxWidth: "100%",
+    boxSizing: "border-box",
   },
   title: {
     fontFamily: 'Montserrat',
@@ -60,7 +63,9 @@ export default function Top({ trees, countries }) {
       <Typography variant="h2" className={classes.title}>
         Featured Trees
       </Typography>
-      <FeaturedTreesSlider trees={trees} />
+      <Box>
+        <FeaturedTreesSlider trees={trees} />
+      </Box>
       <Typography variant="h2" className={classes.title2}>
         Check out the global leaders in the tree planting effort
       </Typography>

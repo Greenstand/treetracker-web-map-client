@@ -23,15 +23,17 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-function Time({ entityName }) {
+function Time({ date }) {
   const { classes } = useStyles();
+  const monthName = date.toLocaleString('default', { month: 'long' });
+  const created = ` ${monthName} ${date.getDate()}, ${date.getFullYear()}`;
+
   return (
     <Box className={classes.container}>
       <div>
         <div className={classes.entityName}>
-          {' '}
           <CalendarToday className={classes.CalendarToday} />
-          {entityName}
+          {created}
         </div>
       </div>
     </Box>

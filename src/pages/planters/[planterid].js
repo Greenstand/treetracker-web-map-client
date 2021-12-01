@@ -2,7 +2,8 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import { makeStyles } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
+import { makeStyles } from '../../models/makeStyles';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import Image from 'next/image';
@@ -12,15 +13,15 @@ import Location from '../../components/common/Location';
 import Time from '../../components/common/Time';
 import FeaturedTreesSlider from '../../components/FeaturedTreesSlider';
 import InformationCard1 from '../../components/InformationCard1';
-import Link from '../../components/Link';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
+import moment from 'moment';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 
 // make styles for component with material-ui
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -144,12 +145,12 @@ export default function Planter({ planter }) {
       </Box>
       <Box className={classes.box1}>
         <Location entityLocation="Shirimatunda,Tanzania" />
-        <Time entityName={planter.created_time} />
+        <Time date={moment(planter.created_time).toDate()} />
       </Box>
       <Box mt={1} />
       <Divider className={classes.divider} />
-      <Box
-        style={{ height: '672px' /* TODO hard code */ }}
+      {/* <Box
+        style={{ height: '672px'  }}
         className={classes.imageContainer}
       >
         <Image
@@ -158,7 +159,8 @@ export default function Planter({ planter }) {
           objectPosition="center"
           objectFit="cover"
         />
-      </Box>
+      </Box> */}
+      <Avatar src={planter.photo_url} variant="rounded" sx={{width: "100%", height: "688px", borderRadius: 6, marginTop: 6, }} />
       <Grid container>
         <Grid item>
           <Card onClick={() => handleCardClick('planter')}>
@@ -197,14 +199,13 @@ export default function Planter({ planter }) {
       {display === 'org' &&
         planter.associatedOrganizations.organizations.map((org) => (
           <div key={org.id}>
-            <Link href={`/organizations/${org.id}`}>
-              <InformationCard1
-                entityName={org.name}
-                entityType={'Planting Organization'}
-                buttonText={'Meet the Organization'}
-                cardImageSrc={org?.logo_url}
-              />
-            </Link>
+            <InformationCard1
+              entityName={org.name}
+              entityType={'Planting Organization'}
+              buttonText={'Meet the Organization'}
+              cardImageSrc={org?.logo_url}
+              link={`/organizations/${org.id}`}
+            />
           </div>
         ))}
       <Typography variant="h6" className={classes.title4}>
