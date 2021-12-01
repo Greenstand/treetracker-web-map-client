@@ -46,6 +46,7 @@ const useStyles = makeStyles()((theme) => ({
   buttonStyle: {
     fontSize: '16px',
     textTransform: 'none',
+    color: theme.palette.textPrimary.main,
   },
   menuButton: {
     display: 'none',
