@@ -6,12 +6,14 @@ import React from 'react';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
 
-const useStyles = makeStyles()(() => ({
+const useStyles = makeStyles()((theme) => ({
   pageContainer: {
-    margin: '12px 24px',
+    padding: theme.spacing(3, 4),
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
+    maxWidth: "100%",
+    boxSizing: "border-box",
   },
   top: {
     display: 'flex',
