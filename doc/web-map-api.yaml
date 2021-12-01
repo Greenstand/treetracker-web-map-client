@@ -55,7 +55,7 @@ paths:
       operationId: trees
       description: |-
         query trees by filters like planter, also consider pagination
-        I think filter all tree by `active = true` is by default 
+        I think filter all tree by `active = true` is by default
       parameters:
         - schema:
             type: integer
@@ -425,12 +425,12 @@ paths:
           in: query
           name: planter_id
           description: Filter by planter id
-      description: 'mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don''t know if it is too resource consumming to query DB'
+      description: "mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don't know if it is too resource consumming to query DB"
   /transactions:
     get:
       summary: get token transaction list by filter/parameters
       operationId: get-transactions
-      description: 'about returning wallet name, it is a pretty common use case that we need to display the wallet name in the frontend, so we''d better join and return the name of wallet'
+      description: "about returning wallet name, it is a pretty common use case that we need to display the wallet name in the frontend, so we'd better join and return the name of wallet"
       responses:
         '200':
           description: OK
@@ -527,12 +527,12 @@ paths:
             type: boolean
           in: query
           name: withCapture
-          description: 'if we need show a token list, it''s usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher'
+          description: "if we need show a token list, it's usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher"
         - schema:
             type: string
           in: query
           name: withPlanter
-          description: 'if we need show a token list, it''s usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher'
+          description: "if we need show a token list, it's usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher"
       description: ''
   '/wallets/{walletIdOrName}':
     get:
@@ -824,6 +824,14 @@ paths:
             application/json:
               example:
                 $ref: examples/wallets/180Earth.json
+  /mock/location/lat=6.45407long=3.39467:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                $ref: examples/location/location1.json
 components:
   schemas:
     tree:
@@ -854,7 +862,7 @@ components:
           type: number
         capture_id:
           type: string
-          description: 'In the public.trees table, it''s the uuid column'
+          description: "In the public.trees table, it's the uuid column"
         capture_approval_tag:
           type: string
         domain_specific_data:
@@ -898,7 +906,7 @@ components:
           type: string
         location?:
           type: string
-          description: 'I don''t know if we can provide this infomation, the city/country of the planter, could be removed if impossible'
+          description: "I don't know if we can provide this infomation, the city/country of the planter, could be removed if impossible"
         links:
           type: object
           properties:
@@ -941,7 +949,7 @@ components:
           description: 'kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage'
         location?:
           type: string
-          description: 'I don''t know if we can provide this infomation, the city/country of the org, could be removed if impossible'
+          description: "I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible"
         created_at:
           type: string
         about:
@@ -978,7 +986,7 @@ components:
           type: string
         count:
           type: integer
-          description: 'It would be great if we can display how many trees in this species has been planted by org or planter, but I don''t know if it is too resource consumming to query DB'
+          description: "It would be great if we can display how many trees in this species has been planted by org or planter, but I don't know if it is too resource consumming to query DB"
     transaction:
       description: ''
       type: object
@@ -1002,7 +1010,7 @@ components:
           type: string
         source_wallet_name:
           type: string
-          description: 'it is a pretty common use case that we need to display the wallet name in the frontend, so we''d better join and return the name of wallet'
+          description: "it is a pretty common use case that we need to display the wallet name in the frontend, so we'd better join and return the name of wallet"
         destination_wallet_name:
           type: string
         processed_at:
@@ -1053,7 +1061,7 @@ components:
           id: 0248f77a-1531-11ec-82a8-0242ac130003
           name: 180Earth
           token_in_wallet: 22
-          photo_url: '''https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
+          photo_url: "'https://180.earth/wp-content/uploads/2020/01/Asset-1.png"
       properties:
         id:
           type: string
