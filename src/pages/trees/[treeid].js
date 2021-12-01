@@ -54,9 +54,10 @@ const useStyles = makeStyles()((theme) => ({
   },
   tabBox: {
     marginTop: theme.spacing(9),
+    flexWrap: "wrap",
     display: 'flex',
     '& div': {
-      marginRight: theme.spacing(2),
+      margin: theme.spacing(1),
     },
   },
 }));
