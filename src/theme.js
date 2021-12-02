@@ -55,6 +55,8 @@ const theme = createTheme({
   palette: {
     background: {
       default: '#FFFFFF',
+      greenBg:
+        'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
     },
     primary: {
       main: '#FFFFFF',

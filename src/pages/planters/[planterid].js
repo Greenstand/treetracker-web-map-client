@@ -1,13 +1,15 @@
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
+//import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '../../models/makeStyles';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
-import Image from 'next/image';
+//import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 
 import Location from '../../components/common/Location';
 import Time from '../../components/common/Time';
@@ -19,6 +21,8 @@ import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
 import moment from 'moment';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import CustomCard from '../../components/common/CustomCard';
+
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -108,7 +112,7 @@ const useStyles = makeStyles()((theme) => ({
 export default function Planter({ planter }) {
   const mapContext = useMapContext();
 
-  const [display, setDisplay] = useState('planter');
+  const [isPlanterTab, setIsPlanterTab] = useState(true);
 
   const classes = useStyles();
 
@@ -130,8 +134,8 @@ export default function Planter({ planter }) {
     reload();
   }, [mapContext.map]);
 
-  function handleCardClick(who) {
-    setDisplay(who);
+  function handleCardClick() {
+    setIsPlanterTab(!isPlanterTab);
   }
 
   return (
@@ -160,33 +164,35 @@ export default function Planter({ planter }) {
           objectFit="cover"
         />
       </Box> */}
-      <Avatar src={planter.photo_url} variant="rounded" sx={{width: "100%", height: "688px", borderRadius: 6, marginTop: 6, }} />
-      <Grid container>
+      <Avatar
+        src={planter.photo_url}
+        variant="rounded"
+        sx={{ width: '100%', height: '688px', borderRadius: 6, marginTop: 6 }}
+      />
+      <Grid container spacing={1}>
         <Grid item>
-          <Card onClick={() => handleCardClick('planter')}>
-            <Typography
-              variant="h6"
-              color={display === 'planter' ? 'secondary' : ''}
-            >
-              Tree planted: {planter.featuredTrees.total}
-            </Typography>
-          </Card>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<ParkOutlinedIcon />}
+            title="Trees Planted"
+            text={planter.featuredTrees.total}
+            disabled={isPlanterTab ? false : true}
+          />
         </Grid>
         <Grid item>
           <Box width={8} />
         </Grid>
         <Grid item>
-          <Card onClick={() => handleCardClick('org')}>
-            <Typography
-              variant="h6"
-              color={display === 'org' ? 'secondary' : ''}
-            >
-              Associated Organizations: {planter.associatedOrganizations.total}
-            </Typography>
-          </Card>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<GroupsOutlinedIcon />}
+            title="Associated Organizations"
+            text={planter.associatedOrganizations.total}
+            disabled={!isPlanterTab ? false : true}
+          />
         </Grid>
       </Grid>
-      {display === 'planter' && (
+      {isPlanterTab && (
         <>
           <Typography variant="h3" className={classes.title3}>
             Explore some trees planted by <strong>{planter.first_name}</strong>
@@ -196,7 +202,7 @@ export default function Planter({ planter }) {
           </Box>
         </>
       )}
-      {display === 'org' &&
+      {!isPlanterTab &&
         planter.associatedOrganizations.organizations.map((org) => (
           <div key={org.id}>
             <InformationCard1
