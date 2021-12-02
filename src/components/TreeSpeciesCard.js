@@ -33,7 +33,7 @@ const TreeSpeciesCard = (props) => {
   const { classes } = useStyles();
   const theme = useTheme();
 
-  const { name, scientificName, count } = props;
+  const { name, count } = props;
 
   return (
     <Card className={classes.root} elevation={0}>
@@ -43,9 +43,6 @@ const TreeSpeciesCard = (props) => {
           sx={{ color: theme.palette.textPrimary.main, fontWeight: 600 }}
         >
           {name}
-        </Typography>
-        <Typography variant="caption" sx={{ color: theme.palette.grey[600] }}>
-          {scientificName}
         </Typography>
       </Box>
       <Box className={classes.countBox}>
