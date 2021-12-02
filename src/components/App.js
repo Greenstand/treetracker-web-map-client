@@ -2,6 +2,7 @@ import 'leaflet/dist/leaflet.css';
 
 import Alert from '@mui/material/Alert';
 import Fade from '@mui/material/Fade';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
 import expect from 'expect-runtime';
@@ -22,14 +23,8 @@ const MOBILE_WIDTH = 960;
 
 const useStyles = makeStyles()((theme) => ({
   mapContainer: {
-    transform: 'scale(1.02)',
-    transition: 'all 2s',
-    position: 'absolute',
-    width: '50%',
-    height: '100%',
   },
   mapLoaded: {
-    transform: 'scale(1)',
   },
   searchBox: {
     position: 'absolute',
@@ -318,12 +313,12 @@ function MapComponent() {
 
   return (
     <>
-      <div
+      <Box
         onClick={(e) =>
           // leaving this lint warning as a reminder to remove this debugging feature
           console.warn('click:', e, e.screenX, e.clientX, e.clientY)
         }
-        className={`${classes.mapContainer} ${classes.mapLoaded}`}
+        sx={{width: "100%", height: "100%"}}
         id="map-canvas"
         ref={mapRef}
       />
@@ -340,11 +335,6 @@ function MapComponent() {
         <div
           id="arrow"
           className={`${arrow.direction || ''}`}
-          style={
-            sidePanelState === 'show' && arrow.direction === 'west'
-              ? { left: `${SidePanel.WIDTH + 10}px` }
-              : {}
-          }
           onClick={handleArrowClick}
         >
           <div className="round">
