@@ -59,10 +59,18 @@ export default function Top({ trees, countries }) {
     map.flyTo(lat, lon, 6);
   }
 
+  function handleFilter(filter) {
+    log.warn('handleFilter', filter);
+    mapContext.map.setFilters({
+      timeline: `${filter.startDate}_${filter.endDate}`,
+    });
+    mapContext.map.rerender();
+  }
+
   return (
     <div className={classes.root}>
       <Box sx={{display: "flex", justifyContent: "flex-end", }}>
-        <Filter />
+        <Filter onFilter={handleFilter} />
       </Box>
       <Typography variant="h2" className={classes.title}>
         Featured Trees
