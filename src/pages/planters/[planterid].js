@@ -20,7 +20,9 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
 import moment from 'moment';
+import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomCard from '../../components/common/CustomCard';
+
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -77,9 +79,6 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: theme.spacing(28),
   },
   treeSlider: {
-    marginTop: theme.spacing(10),
-  },
-  speciesBox: {
     marginTop: theme.spacing(10),
   },
   divider: {
@@ -220,10 +219,12 @@ export default function Planter({ planter }) {
       </Typography>
       <Box className={classes.speciesBox}>
         {planter.species.species.map((species) => (
-          <div key={species.id}>
-            <Typography variant="subtitle2">{species.name}</Typography>
-            <Typography variant="body1">count: {species.count}</Typography>
-          </div>
+          <TreeSpeciesCard
+            key={species.id}
+            name={species.name}
+            scientificName={species.scientificName}
+            count={species.count}
+          />
         ))}
       </Box>
       <Box mt={10} />
