@@ -3,6 +3,9 @@ import 'leaflet/dist/leaflet.css';
 import Alert from '@mui/material/Alert';
 import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import AddIcon from '@mui/icons-material/Add';
 import Snackbar from '@mui/material/Snackbar';
 import expect from 'expect-runtime';
 import log from 'loglevel';
@@ -135,6 +138,23 @@ const useStyles = makeStyles()((theme) => ({
     height: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  mapZoomContainer: {
+    position: 'relative',
+    zIndex: '999',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'end',
+  },
+  zoomButtonContainer: {
+    position: 'absolute',
+    right: '0px',
+    bottom: '80px',
+  },
+  zoomButton: {
+    color: theme.palette.success.main,
+    borderColor: theme.palette.success.main,
+    margin: '5px 10px 5px 5px',
   },
 }));
 
@@ -420,6 +440,18 @@ function MapComponent() {
     map.rerender();
   }
 
+  const mapZoomHandler = (type) => {
+    const { map } = mapContext;
+
+    if (type === 'in') {
+      map.map.zoomIn();
+    }
+
+    if (type === 'out') {
+      map.map.zoomOut();
+    }
+  };
+
   /* init timeline date */
   React.useEffect(() => {
     log.debug('init timeline');
@@ -466,7 +498,32 @@ function MapComponent() {
         }`}
         id="map-canvas"
         ref={mapRef}
-      />
+      >
+        <div className={classes.mapZoomContainer}>
+          <div className={classes.zoomButtonContainer}>
+            <div>
+              <Button
+                className={classes.zoomButton}
+                size="small"
+                variant="outlined"
+                onClick={() => mapZoomHandler('in')}
+              >
+                <AddIcon />
+              </Button>
+            </div>
+            <div>
+              <Button
+                className={classes.zoomButton}
+                size="small"
+                variant="outlined"
+                onClick={() => mapZoomHandler('out')}
+              >
+                <HorizontalRuleIcon />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
       <Fade in={isLoading} timeout={{ apear: 0, exit: 1000 }}>
         <Grid container className={classes.loadingContainer}>
           <Grid item>
