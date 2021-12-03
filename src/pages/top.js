@@ -6,6 +6,7 @@ import React from 'react';
 
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
+import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
@@ -60,6 +61,9 @@ export default function Top({ trees, countries }) {
 
   return (
     <div className={classes.root}>
+      <Box sx={{display: "flex", justifyContent: "flex-end", }}>
+        <Filter />
+      </Box>
       <Typography variant="h2" className={classes.title}>
         Featured Trees
       </Typography>

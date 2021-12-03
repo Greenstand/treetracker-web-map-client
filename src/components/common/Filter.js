@@ -1,11 +1,13 @@
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
+import log from "loglevel";
 
 const useStyles = makeStyles()((theme) => ({
   title: {
@@ -29,13 +31,10 @@ const useStyles = makeStyles()((theme) => ({
   container: {
     marginTop: theme.spacing(12),
   },
+
   row: {
     display: 'flex',
     flexWrap: 'wrap',
-  },
-  textField: {
-    maxWidth: '230px',
-    minWidth: '210px',
   },
   inputLabel: {
     color: theme.palette.textPrimary.main,
@@ -65,10 +64,15 @@ const useStyles = makeStyles()((theme) => ({
 
 function Filter() {
   const { classes } = useStyles();
+
+  function handleSubmit() {
+    log.log('submit');
+  }
   return (
+    <Box sx={{width: 1}}>
     <form>
       <Box className={classes.title}>
-        <Typography className={classes.titleText}>Featured Trees</Typography>
+        <Typography className={classes.titleText}></Typography>
         <Button
           variant="contained"
           color="secondary"
@@ -80,7 +84,7 @@ function Filter() {
       </Box>
 
       <Box className={classes.container}>
-        <Box className={`${classes.row}`}>
+        {/*<Box className={`${classes.row}`}>
           <TextField
             select
             label="Tree Species"
@@ -197,40 +201,54 @@ function Filter() {
           >
             <MenuItem>todo</MenuItem>
           </TextField>
-        </Box>
-        <Box>
-          <Typography className={classes.plantDateTitle}>
-            Planted between
-          </Typography>
-          <Box className={classes.dateFieldContainer}>
-            <TextField
-              label="Start Date"
-              type="date"
-              variant="outlined"
-              size="small"
-              className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
-              color="secondary"
-              InputLabelProps={{
-                shrink: true,
-                className: classes.inputLabel,
-              }}
-            />
-            <TextField
-              label="End Date"
-              type="date"
-              variant="outlined"
-              size="small"
-              className={` ${classes.textField}`}
-              color="secondary"
-              InputLabelProps={{
-                shrink: true,
-                className: classes.inputLabel,
-              }}
-            />
-          </Box>
+        </Box> */}
+        <Grid container >
+          <Grid item xs={12} >
+            <Typography className={classes.plantDateTitle}>
+              Planted between (timeline)
+            </Typography>
+          </Grid>
+          <Grid item container sx={{mt:5}} columnSpacing={{xs: 2}}>
+            <Grid item xs={6} >
+              <TextField
+                label="Start Date"
+                type="date"
+                variant="outlined"
+                size="small"
+                className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
+                color="secondary"
+                InputLabelProps={{
+                  shrink: true,
+                  className: classes.inputLabel,
+                }}
+                sx={{width:1}}
+              />
+            </Grid>
+
+            <Grid item xs={6} >
+              <TextField
+                label="End Date"
+                type="date"
+                variant="outlined"
+                size="small"
+                className={` ${classes.textField}`}
+                color="secondary"
+                InputLabelProps={{
+                  shrink: true,
+                  className: classes.inputLabel,
+                }}
+                sx={{width:1}}
+              />
+              </Grid>
+          </Grid>
+        </Grid>
+        <Box sx={{gap: 2,display: "flex",justifyContent: "end"}}>
+          <Button variant="text" >Cancel</Button>
+          <Button color="primary" variant="contained" >Submit</Button>
         </Box>
       </Box>
     </form>
+    </Box>
   );
 }
 
