@@ -49,9 +49,7 @@ export default function Layout({ children }) {
       <Box className={classes.main}>
         <Box className={classes.left}>{children}</Box>
         <Box className={classes.right}>
-          <div>
-            <App />
-          </div>
+          <App />
         </Box>
       </Box>
     </Box>

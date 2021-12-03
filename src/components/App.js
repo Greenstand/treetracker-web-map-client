@@ -2,6 +2,7 @@ import 'leaflet/dist/leaflet.css';
 
 import Alert from '@mui/material/Alert';
 import Fade from '@mui/material/Fade';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
 import expect from 'expect-runtime';
@@ -22,14 +23,8 @@ const MOBILE_WIDTH = 960;
 
 const useStyles = makeStyles()((theme) => ({
   mapContainer: {
-    transform: 'scale(1.02)',
-    transition: 'all 2s',
-    position: 'absolute',
-    width: '50%',
-    height: '100%',
   },
   mapLoaded: {
-    transform: 'scale(1)',
   },
   searchBox: {
     position: 'absolute',
@@ -117,25 +112,6 @@ const useStyles = makeStyles()((theme) => ({
       marginRight: 5,
     },
   },
-  loadingContainer: {
-    userSelect: 'none',
-    pointerEvents: 'none',
-    position: 'absolute',
-    width: '100%',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.25)',
-  },
-  loadingContainerB: {
-    userSelect: 'none',
-    pointerEvents: 'none',
-    position: 'absolute',
-    width: '100%',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 }));
 
 function getParameters() {
@@ -165,123 +141,14 @@ function getParameters() {
 function MapComponent() {
   log.warn('Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
   const { classes } = useStyles();
-  const [sidePanelState, setSidePanelState] = React.useState('none');
   const [tree, setTree] = React.useState(undefined);
-  const [hasNext, setHasNext] = React.useState(false);
-  const [hasPrev, setHasPrev] = React.useState(false);
   const mapRef = React.useRef(null);
-  const [isLoading, setLoading] = React.useState(true);
-  const [isLoadingB, setLoadingB] = React.useState(false);
   const [message, setMessage] = React.useState({ open: false, message: '' });
   const [arrow, setArrow] = React.useState({});
-  const [timelineDate, setTimelineDate] = React.useState(undefined);
-  const [timelineEnabled, setTimelineEnabled] = React.useState(true);
   const mapContext = useMapContext();
   const router = useRouter();
 
-  function showPanel(newTree) {
-    expect(newTree).match({
-      lat: expect.any(Number),
-      lon: expect.any(Number),
-    });
-    log.log('show panel...');
-    setSidePanelState('show');
-    setTimelineEnabled(false);
-    setTree(newTree);
-    // consider the visible of the point
-    const { map } = mapRef.current;
-    const leafletMap = map.getLeafletMap();
-    const { x: left, y: top } = leafletMap.latLngToContainerPoint([
-      newTree.lat,
-      newTree.lon,
-    ]);
-    log.log('top:', top, 'left:', left);
-    expect(top).number();
-    expect(left).number();
-    log.log('the point at:', top, left);
-    expect(SidePanel).property('WIDTH').number();
-    const { clientWidth, clientHeight } = mapRef.current;
-    expect(clientWidth).above(0);
-    expect(clientHeight).above(0);
-    const isOutOfViewport =
-      left < 0 || top < 0 || left > clientWidth || top > clientHeight;
-    const isCoveredBySidePanel =
-      left > 0 && left < SidePanel.WIDTH && top > 0 && top < clientHeight;
-    if (
-      (isOutOfViewport || isCoveredBySidePanel) &&
-      clientWidth > MOBILE_WIDTH
-    ) {
-      // move to right center
-      const print = JSON.stringify(map);
-      log.log('print:', print);
-      log.log('con,sole:', map);
-      const mapElement = mapRef.current;
-      expect(mapElement).property('clientWidth').defined();
-      const containerWidth = mapElement.clientWidth;
-      const containerHeight = mapElement.clientHeight;
-      expect(containerWidth).above(0);
-      expect(containerHeight).above(0);
-      const topCenter = containerHeight / 2;
-      const leftCenter =
-        (containerWidth - SidePanel.WIDTH) / 2 + SidePanel.WIDTH;
-      expect(topCenter).above(0);
-      expect(leftCenter).above(0);
-      const x = left - leftCenter;
-      const y = top - topCenter;
-      log.log('pant by x,y:', x, y);
-      leafletMap.panBy([x, y]);
-    }
-    setHasNext(true);
-    setHasPrev(true);
-  }
 
-  function showPanelWithoutTree() {
-    log.debug('showPanelWithoutTree');
-    showPanelWithoutTree(true);
-  }
-
-  function handlePrev() {
-    log.debug('prev');
-    const { map } = mapRef.current;
-    try {
-      map.goPrevPoint();
-    } catch (e) {
-      // failed, it's possible, when user move the map quickly, and the
-      // side panel arrow button status is stale
-      log.warn('go prev failed', e);
-    }
-  }
-
-  function handleNext() {
-    log.debug('next');
-    const { map } = mapRef.current;
-    expect(map).defined().property('goNextPoint').a(expect.any(Function));
-    try {
-      map.goNextPoint();
-    } catch (e) {
-      // failed, it's possible, when user move the map quickly, and the
-      // side panel arrow button status is stale
-      log.warn('go next failed', e);
-    }
-  }
-
-  function handleSidePanelClose() {
-    log.debug('handleSidePanelClose');
-    setSidePanelState('none');
-    setTimelineEnabled(true);
-    const { map } = mapRef.current;
-    map.unselectMarker();
-  }
-
-  function loaded() {
-    log.warn('loaded');
-    setLoading(false);
-  }
-
-  function loadingB(newIsLoading) {
-    log.debug('loadingB');
-    setLoadingB(newIsLoading);
-  }
 
   function handleMessageClose() {
     setMessage({
@@ -348,9 +215,9 @@ function MapComponent() {
     log.trace('inject app');
     if (mapRef.current) {
       mapRef.current.app = {
-        showPanel,
-        loaded,
-        loadingB,
+        showPanel: () => {log.warn("mock show")},
+        loaded: () => {log.warn("mock loaded")},
+        loadingB: () => {log.warn("mock load B")},
         showMessage,
         showArrow,
         hideArrow,
@@ -365,7 +232,7 @@ function MapComponent() {
     if (mapContext.map) return;
     log.info('load map...');
     // disable waiting for loading
-    loaded();
+    //loaded();
     const script = document.createElement('script');
     script.src =
       'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
@@ -373,7 +240,7 @@ function MapComponent() {
     document.body.appendChild(script);
     const parameters = getParameters();
     const map = new Map({
-      onLoad: loaded,
+      onLoad: () => {log.warn("mock onload")},
       onClickTree: handleClickTree,
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
@@ -446,41 +313,15 @@ function MapComponent() {
 
   return (
     <>
-      <SidePanel
-        tree={tree}
-        state={sidePanelState}
-        onClose={handleSidePanelClose}
-        onShow={showPanelWithoutTree}
-        onNext={handleNext}
-        onPrevious={handlePrev}
-        hasNext={hasNext}
-        hasPrev={hasPrev}
-      />
-      <div
+      <Box
         onClick={(e) =>
           // leaving this lint warning as a reminder to remove this debugging feature
           console.warn('click:', e, e.screenX, e.clientX, e.clientY)
         }
-        className={`${classes.mapContainer} ${
-          isLoading ? '' : classes.mapLoaded
-        }`}
+        sx={{width: "100%", height: "100%"}}
         id="map-canvas"
         ref={mapRef}
       />
-      <Fade in={isLoading} timeout={{ apear: 0, exit: 1000 }}>
-        <Grid container className={classes.loadingContainer}>
-          <Grid item>
-            <Loader />
-          </Grid>
-        </Grid>
-      </Fade>
-      {timelineEnabled && (
-        <Timeline
-          onDateChange={handleDateChange}
-          date={timelineDate}
-          onClose={handleDateClose}
-        />
-      )}
       <Snackbar
         open={message.open}
         autoHideDuration={10000}
@@ -494,11 +335,6 @@ function MapComponent() {
         <div
           id="arrow"
           className={`${arrow.direction || ''}`}
-          style={
-            sidePanelState === 'show' && arrow.direction === 'west'
-              ? { left: `${SidePanel.WIDTH + 10}px` }
-              : {}
-          }
           onClick={handleArrowClick}
         >
           <div className="round">
@@ -508,13 +344,6 @@ function MapComponent() {
             </div>
           </div>
         </div>
-      )}
-      {isLoadingB && (
-        <Grid container className={classes.loadingContainerB}>
-          <Grid item>
-            <LoaderB />
-          </Grid>
-        </Grid>
       )}
     </>
   );
