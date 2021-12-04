@@ -157,6 +157,8 @@ npm run cyu
 
 [Video tutorial for building component](https://loom.com/share/c750be68ecec4a9b99cb6921d2d2e041)
 
+**NOTE** if you met : `not test found` problem, check this issue for fixing: [issue229](https://github.com/Greenstand/treetracker-web-map-client/issues/229)
+
 ### Adding Material UI Theme to Component Tests
 
 When developing component tests use the custom `mountWithTheme` function found in `src/models/test-utils.js` instead of the mount function in the `@cypress/react` library. This will include the material-ui theme configuration when rendering your test component in cypress.
