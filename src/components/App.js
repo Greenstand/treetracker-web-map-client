@@ -353,7 +353,6 @@ function MapComponent() {
       ) ||
       parseMapName(window.location.hostname) === 'freetown'
     ) {
-      setTimelineEnabled(false);
       return;
     }
     const m = window.location.search.match(
@@ -362,7 +361,6 @@ function MapComponent() {
     if (m) {
       const date = [m[1], m[2]];
       log.warn('init date:', date);
-      setTimelineDate(date);
     }
   }, []);
 
