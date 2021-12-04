@@ -29,7 +29,7 @@ const useStyles = makeStyles()((theme) => ({
       padding: '1rem',
       boxSizing: 'border-box',
       overflow: 'hidden',
-      marginTop: '15vh',
+      paddingTop: '15vh',
       justifyContent: 'flex-start',
     },
   },
@@ -85,6 +85,7 @@ export default function Home() {
           Come explore the global reforestation effort.
         </Typography>
         <Buttons />
+        <Box sx={{ height: 1000 }} />
       </Box>
     </Box>
   );

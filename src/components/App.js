@@ -22,10 +22,8 @@ import Timeline from './Timeline';
 const MOBILE_WIDTH = 960;
 
 const useStyles = makeStyles()((theme) => ({
-  mapContainer: {
-  },
-  mapLoaded: {
-  },
+  mapContainer: {},
+  mapLoaded: {},
   searchBox: {
     position: 'absolute',
     width: 350,
@@ -148,8 +146,6 @@ function MapComponent() {
   const mapContext = useMapContext();
   const router = useRouter();
 
-
-
   function handleMessageClose() {
     setMessage({
       open: false,
@@ -215,9 +211,15 @@ function MapComponent() {
     log.trace('inject app');
     if (mapRef.current) {
       mapRef.current.app = {
-        showPanel: () => {log.warn("mock show")},
-        loaded: () => {log.warn("mock loaded")},
-        loadingB: () => {log.warn("mock load B")},
+        showPanel: () => {
+          log.warn('mock show');
+        },
+        loaded: () => {
+          log.warn('mock loaded');
+        },
+        loadingB: () => {
+          log.warn('mock load B');
+        },
         showMessage,
         showArrow,
         hideArrow,
@@ -240,7 +242,9 @@ function MapComponent() {
     document.body.appendChild(script);
     const parameters = getParameters();
     const map = new Map({
-      onLoad: () => {log.warn("mock onload")},
+      onLoad: () => {
+        log.warn('mock onload');
+      },
       onClickTree: handleClickTree,
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
@@ -275,18 +279,6 @@ function MapComponent() {
     map.rerender();
   }
 
-  function handleDateClose() {
-    setTimelineDate(undefined);
-    window.history.pushState('page2', '', `/`);
-    const { map } = mapRef.current;
-    // refresh the url parameter
-    const parameters = getParameters();
-    map.setFilters({
-      ...parameters,
-    });
-    map.rerender();
-  }
-
   /* init timeline date */
   React.useEffect(() => {
     log.debug('init timeline');
@@ -298,7 +290,6 @@ function MapComponent() {
       ) ||
       parseMapName(window.location.hostname) === 'freetown'
     ) {
-      setTimelineEnabled(false);
       return;
     }
     const m = window.location.search.match(
@@ -307,7 +298,6 @@ function MapComponent() {
     if (m) {
       const date = [m[1], m[2]];
       log.warn('init date:', date);
-      setTimelineDate(date);
     }
   }, []);
 
@@ -318,7 +308,7 @@ function MapComponent() {
           // leaving this lint warning as a reminder to remove this debugging feature
           console.warn('click:', e, e.screenX, e.clientX, e.clientY)
         }
-        sx={{width: "100%", height: "100%"}}
+        sx={{ width: '100%', height: '100%' }}
         id="map-canvas"
         ref={mapRef}
       />

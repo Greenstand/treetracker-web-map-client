@@ -25,3 +25,5 @@ export default function Homepage() {
     </>
   );
 }
+
+Homepage.isBLayout = true;
