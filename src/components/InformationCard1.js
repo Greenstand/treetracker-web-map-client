@@ -27,7 +27,7 @@ const useStyles = makeStyles()((theme) => ({
     fontWeight: 700,
     textTransform: 'none',
     fontSize: '1.25rem',
-    letterSpacing: '2%',
+    letterSpacing: '0.02em',
     lineHeight: theme.spacing(6),
     marginTop: theme.spacing(5),
     color: theme.palette.textPrimary.main,
