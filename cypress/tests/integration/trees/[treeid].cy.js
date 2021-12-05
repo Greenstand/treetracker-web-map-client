@@ -37,17 +37,18 @@ const testImage = (fileName, imageType = 'image/jpg') => {
     cy.fixture(imageFixturePath).then((image) => {
       const blob = Cypress.Blob.base64StringToBlob(image, imageType);
       const url = Cypress.Blob.createObjectURL(blob);
-      cy.task('nock', {
-        hostname: 'http://127.0.0.1:4010/mock',
-        method: 'GET',
-        path,
-        statusCode: 200,
-        body: {
-          ...exampleTreeData,
-          photo_url: url,
-          status: 200,
-        },
-      });
+      Cypress.env('nock') &&
+        cy.task('nock', {
+          hostname: 'http://127.0.0.1:4010/mock',
+          method: 'GET',
+          path,
+          statusCode: 200,
+          body: {
+            ...exampleTreeData,
+            photo_url: url,
+            status: 200,
+          },
+        });
     });
     cy.visit(path);
     cy.contains(`${exampleTreeData.id}`);
@@ -55,7 +56,7 @@ const testImage = (fileName, imageType = 'image/jpg') => {
 };
 
 beforeEach(() => {
-  cy.task('clearNock');
+  Cypress.env('nock') && cy.task('clearNock');
 });
 
 describe('Image cases', () => {
