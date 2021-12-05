@@ -34,17 +34,17 @@ const CustomCard = (props) => {
       sx={{
         background: disabled
           ? theme.palette.grey[300]
-          : theme.palette.background.greenBg,
+          : theme.palette.background.greenGradient,
       }}
     >
       <CardMedia sx={{ padding: theme.spacing(4) }}>
         <Avatar
           sx={{
+            height: 60,
+            width: 60,
             boxShadow: disabled ? '' : '0px 6px 12px 0px #585B5D40',
             backgroundColor: 'white',
-            color: disabled
-              ? theme.palette.textSecondary.main
-              : theme.palette.success.main,
+            color: disabled ? 'textSecondary.main' : 'secondary.main',
           }}
         >
           {icon}
@@ -53,12 +53,10 @@ const CustomCard = (props) => {
       <CardContent
         sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 0 }}
       >
-        <Typography className={classes.title} color="textSecondary">
+        <Typography variant="body1" color="textSecondary">
           {title}
         </Typography>
-        <Typography variant="h5" component="h2">
-          {text}
-        </Typography>
+        <Typography variant="h2">{text}</Typography>
       </CardContent>
     </Card>
   );

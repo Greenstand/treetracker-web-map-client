@@ -298,6 +298,18 @@ Our Figma design resource is here: https://www.figma.com/file/XdYFdjlsHvxehlrkPV
 
 Make sure you are logged in to Figma so that you can inspect the style details in Figma's editor.
 
+## Design Sandbox
+
+To access the projects design sandbox, please run Cypress unit/component tests:
+
+```
+npm run cyu
+```
+
+Open DesignSandbox.cy.js test file in the component test browser. This component will have a color swatch, background gradient swatch, and typography information that matches the project's design file.
+
+Please use colors from MUI's theme when working on the style of the project for better maintainability, at readability. DO NOT write colors manually!
+
 ## Code style guide
 
 We use [Prettier](https://prettier.io/), [Eslint](https://eslint.org/) along with [husky](https://typicode.github.io/husky/#/) to style our code.

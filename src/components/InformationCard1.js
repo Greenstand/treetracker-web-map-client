@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia } from '@mui/material';
+import { Box, Button, CardMedia, Typography } from '@mui/material';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 import Link from './Link';
@@ -8,8 +8,7 @@ const useStyles = makeStyles()((theme) => ({
     boxSizing: 'border-box',
     height: 220,
     padding: '25px 30px',
-    background:
-      'linear-gradient(120.41deg, rgba(255, 122, 0, 0.15) 25.62%, rgba(117, 185, 38, 0.4) 97.96%)',
+    background: theme.palette.background.greenOrangeLightGr,
     borderRadius: '15px',
   },
   contentWrapper: {
@@ -19,10 +18,8 @@ const useStyles = makeStyles()((theme) => ({
   button: {
     height: 45,
     borderRadius: '25px',
-    background:
-      'linear-gradient(90.06deg, rgba(255, 165, 0, 0.45) 0.79%, rgba(117, 185, 38, 0.45) 49.97%, rgba(96, 137, 47, 0.6) 99.95%)',
+    background: theme.palette.background.OrangeGreenGradient,
     boxShadow: '0px 8px 16px rgba(97, 137, 47, 0.25)',
-    fontWeight: 700,
     textTransform: 'none',
   },
   media: {
@@ -77,7 +74,7 @@ function InformationCard1({
       </div>
       <Link href={link}>
         <Button className={classes.button} fullWidth={true}>
-          {buttonText}
+          <Typography variant="h5">{buttonText}</Typography>
         </Button>
       </Link>
     </Box>
