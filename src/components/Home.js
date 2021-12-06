@@ -28,6 +28,7 @@ const useStyles = makeStyles()((theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: '100vw',
       padding: '1rem',
+      paddingTop: '15vh',
       boxSizing: 'border-box',
       overflow: 'hidden',
       justifyContent: 'flex-start',
