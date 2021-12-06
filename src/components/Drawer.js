@@ -100,7 +100,8 @@ function Drawer(props) {
       >
         <Box
           sx={{
-            height: (t) => `calc(100vh - ${t.spacing(18)})`,
+            /*height: (t) => `calc(100vh - ${t.spacing(18)})`,*/
+            height: '60vh',
             backgroundColor: 'white',
             overflowY: 'auto',
           }}
