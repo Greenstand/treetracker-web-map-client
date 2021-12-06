@@ -21,6 +21,7 @@ const useStyles = makeStyles()((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    paddingTop: '15vh',
     '&>*': {
       marginBottom: theme.spacing(5),
     },
@@ -29,7 +30,6 @@ const useStyles = makeStyles()((theme) => ({
       padding: '1rem',
       boxSizing: 'border-box',
       overflow: 'hidden',
-      paddingTop: '15vh',
       justifyContent: 'flex-start',
     },
   },
