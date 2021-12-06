@@ -56,4 +56,11 @@ async function requestAPI(url) {
   }
 }
 
-export { parseDomain, parseMapName, requestAPI };
+//TODO implement real code
+async function getContinent(lat, lon) {
+  return {
+    name: 'Asia',
+  };
+}
+
+export { parseDomain, parseMapName, requestAPI, getContinent };
