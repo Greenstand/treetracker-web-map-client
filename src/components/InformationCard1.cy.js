@@ -8,6 +8,7 @@ const info = {
   entityType: 'Planting Organisation',
   buttonText: 'Meet the Organization',
   cardImageSrc: '/src/images/greenway-international.png',
+  link: 'https://www.google.com',
 };
 
 describe('InformationCard1', () => {

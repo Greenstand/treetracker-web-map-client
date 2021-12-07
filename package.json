@@ -11,6 +11,7 @@
     "dev": "next dev",
     "dev:mock": "concurrently \"npm run mock-server\" \"npm run dev\"",
     "cy": "cypress open",
+    "cy:nock": "cypress open --env nock=true",
     "cyu": "cypress open-ct",
     "cyux": "rm -rf .next/; npm run cyu",
     "cypress:open": "cypress open",

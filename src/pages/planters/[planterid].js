@@ -39,12 +39,6 @@ const useStyles = makeStyles()((theme) => ({
     borderRadius: 16,
     overflow: 'hidden',
   },
-  badges: {
-    marginTop: 8,
-    '&>*': {
-      marginRight: 8,
-    },
-  },
   treeSlider: {
     marginTop: theme.spacing(10),
   },
@@ -89,13 +83,13 @@ export default function Planter({ planter }) {
       <Typography variant="h2" sx={{ color: 'textPrimary.main' }}>
         {planter.first_name} {planter.last_name}
       </Typography>
-      <Box className={classes.badges}>
+      <Box sx={{ display: 'flex', gap: 2 }}>
         <VerifiedBadge verified={true} badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Orgs" />
       </Box>
       <Box className={classes.box1}>
-        <Location entityLocation="Shirimatunda,Tanzania" />
         <Time date={moment(planter.created_time).toDate()} />
+        <Location entityLocation="Shirimatunda,Tanzania" />
       </Box>
       <Box mt={1} />
       <Divider className={classes.divider} />

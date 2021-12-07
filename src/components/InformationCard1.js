@@ -1,26 +1,33 @@
 import { Box, Button, CardMedia, Typography } from '@mui/material';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
+
 import Link from './Link';
 
 const useStyles = makeStyles()((theme) => ({
   container: {
     boxSizing: 'border-box',
-    height: 220,
-    padding: '25px 30px',
     background: theme.palette.background.greenOrangeLightGr,
-    borderRadius: '15px',
+    height: 'fit-content',
+    padding: theme.spacing(6),
+    borderRadius: theme.spacing(4),
   },
   contentWrapper: {
-    gap: '9px',
-    paddingLeft: theme.spacing(2),
+    gap: theme.spacing(1),
+    paddingLeft: theme.spacing(5),
+    justifyContent: 'center',
   },
   button: {
-    height: 45,
-    borderRadius: '25px',
     background: theme.palette.background.OrangeGreenGradient,
+    height: 52,
+    borderRadius: theme.spacing(6),
     boxShadow: '0px 8px 16px rgba(97, 137, 47, 0.25)',
     textTransform: 'none',
+    fontSize: '1.25rem',
+    letterSpacing: '0.02em',
+    lineHeight: theme.spacing(6),
+    marginTop: theme.spacing(5),
+    color: theme.palette.textPrimary.main,
   },
   media: {
     height: 110,
@@ -31,11 +38,13 @@ const useStyles = makeStyles()((theme) => ({
   entityName: {
     fontFamily: theme.typography.fontFamily,
     fontWeight: 700,
-    fontSize: 18,
+    fontSize: '1.75rem',
+    color: theme.palette.textPrimary.main,
   },
   entityType: {
     fontFamily: theme.typography.fontFamily,
-    fontSize: 14,
+    fontSize: '1rem',
+    color: theme.palette.textPrimary.main,
   },
 }));
 

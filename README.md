@@ -118,8 +118,9 @@ start "" "C:\Program Files\VcXsrv\vcxsrv.exe" :0 -multiwindow -clipboard -wgl -a
 4.  Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
 
 5.  Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
+6.  Optional, if you haven't fully conficence about your code, it's always a good idea that create a PR in `draft` status as early as possible, so you can draw others attention on it and give you suggestions. (to do it, just expand the PR button, there is a `draft` selection)
 
-6.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
+7.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
 
 More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
 
@@ -221,9 +222,13 @@ Cypress Integration testing also includes the `cypress-watch-and-reload` plugin 
 
 API calls made inside nextJs serverless functions like `getServerSideProps()` can be mocked with the nock task we have added to cypress. The following example provides a mock response at the address being fetched during SSR.
 
+**Note**
+
+Cypress must start a custom Nextjs server to mock SSR functions. Use `cypress open --env nock=true` or `npm run cy:nock` to start cypress with a Nextjs server (this means you do not need to use `npm run dev` or `npm start`). You can use `Cypress.env('nock')` in your test files to check if the cypress nextjs server is active.
+
 ```js
 beforeEach(() => {
-  cy.task('clearNock'); // This will clear any mocks that have been set
+  Cypress.env('nock') && cy.task('clearNock'); // This will clear any mocks that have been set
 });
 
 it('getServerSideProps returns mock', () => {
@@ -231,17 +236,17 @@ it('getServerSideProps returns mock', () => {
   const testData = {
     // expected data here
   };
-
-  cy.task('nock', {
-    hostname: 'http://127.0.0.1:4010/mock',
-    method: 'GET',
-    path,
-    statusCode: 200,
-    body: {
-      ...testData,
-      status: 200,
-    },
-  });
+  Cypress.env('nock') &&
+    cy.task('nock', {
+      hostname: 'http://127.0.0.1:4010/mock',
+      method: 'GET',
+      path,
+      statusCode: 200,
+      body: {
+        ...testData,
+        status: 200,
+      },
+    });
 
   cy.visit(path);
   cy.contains(testData.someValue);
