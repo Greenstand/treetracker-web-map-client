@@ -10,5 +10,8 @@
   "component": {
     "pluginsFile": "cypress/plugins/components-testing.js",
     "supportFile": "cypress/support/components-testing.js"
+  },
+  "env": {
+    "nock": false
   }
 }

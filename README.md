@@ -222,9 +222,13 @@ Cypress Integration testing also includes the `cypress-watch-and-reload` plugin 
 
 API calls made inside nextJs serverless functions like `getServerSideProps()` can be mocked with the nock task we have added to cypress. The following example provides a mock response at the address being fetched during SSR.
 
+**Note**
+
+Cypress must start a custom Nextjs server to mock SSR functions. Use `cypress open --env nock=true` or `npm run cy:nock` to start cypress with a Nextjs server (this means you do not need to use `npm run dev` or `npm start`). You can use `Cypress.env('nock')` in your test files to check if the cypress nextjs server is active.
+
 ```js
 beforeEach(() => {
-  cy.task('clearNock'); // This will clear any mocks that have been set
+  Cypress.env('nock') && cy.task('clearNock'); // This will clear any mocks that have been set
 });
 
 it('getServerSideProps returns mock', () => {
@@ -232,17 +236,17 @@ it('getServerSideProps returns mock', () => {
   const testData = {
     // expected data here
   };
-
-  cy.task('nock', {
-    hostname: 'http://127.0.0.1:4010/mock',
-    method: 'GET',
-    path,
-    statusCode: 200,
-    body: {
-      ...testData,
-      status: 200,
-    },
-  });
+  Cypress.env('nock') &&
+    cy.task('nock', {
+      hostname: 'http://127.0.0.1:4010/mock',
+      method: 'GET',
+      path,
+      statusCode: 200,
+      body: {
+        ...testData,
+        status: 200,
+      },
+    });
 
   cy.visit(path);
   cy.contains(testData.someValue);
