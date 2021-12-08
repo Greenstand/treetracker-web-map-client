@@ -1,0 +1,33 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: API CI for New Pull Requests
+
+on:
+  pull_request:
+    branches:
+      - web-map-site
+      - main
+
+env:
+  project-directory: ./
+
+jobs:
+  test:
+    name: Run all tests
+    runs-on: ubuntu-latest
+    container: node:16.12.0
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: npm clean install
+        run: npm ci
+        working-directory: ${{ env.project-directory }}
+
+      - name: ESLint
+        run: npm run lint
+        working-directory: ${{ env.project-directory }}
