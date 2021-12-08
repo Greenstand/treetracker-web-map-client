@@ -15,10 +15,14 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export default function BackButton() {
+export default function BackButton({ onBackHandler }) {
   const { classes } = useStyles();
   return (
-    <ButtonBase className={classes.backButton} color="textPrimary">
+    <ButtonBase
+      onClick={onBackHandler}
+      className={classes.backButton}
+      color="textPrimary"
+    >
       <ArrowBackIosIcon fontSize="inherit" className={classes.icon} />
       Back
     </ButtonBase>
