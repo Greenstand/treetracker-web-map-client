@@ -39,38 +39,6 @@ const useStyles = makeStyles()((theme) => ({
     borderRadius: 16,
     overflow: 'hidden',
   },
-  title: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: '36px',
-    lineHeight: '44px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-  },
-  title3: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: '24px',
-    lineHeight: '29px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-    marginTop: theme.spacing(10),
-  },
-  title4: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: '24px',
-    lineHeight: '29px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-    marginTop: theme.spacing(28),
-  },
   treeSlider: {
     marginTop: theme.spacing(10),
   },
@@ -78,27 +46,6 @@ const useStyles = makeStyles()((theme) => ({
     marginLeft: theme.spacing(-10),
     marginRight: theme.spacing(-10),
     width: '100%',
-  },
-  title5: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: '28px',
-    lineHeight: '34px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-  },
-  text1: {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '20px',
-    lineHeight: '28px',
-    display: 'flex',
-    alignItems: 'center',
-    letterSpacing: '0.04em',
-    color: '#474B4F',
   },
 }));
 
@@ -133,7 +80,7 @@ export default function Planter({ planter }) {
 
   return (
     <PageWrapper className={classes.root}>
-      <Typography variant="h6" className={classes.title}>
+      <Typography variant="h2" sx={{ color: 'textPrimary.main' }}>
         {planter.first_name} {planter.last_name}
       </Typography>
       <Box sx={{ display: 'flex', gap: 2 }}>
@@ -166,7 +113,7 @@ export default function Planter({ planter }) {
         <Grid item>
           <CustomCard
             handleClick={handleCardClick}
-            icon={<ParkOutlinedIcon />}
+            icon={<ParkOutlinedIcon fontSize="large" />}
             title="Trees Planted"
             text={planter.featuredTrees.total}
             disabled={isPlanterTab ? false : true}
@@ -178,7 +125,7 @@ export default function Planter({ planter }) {
         <Grid item>
           <CustomCard
             handleClick={handleCardClick}
-            icon={<GroupsOutlinedIcon />}
+            icon={<GroupsOutlinedIcon fontSize="large" />}
             title="Associated Organizations"
             text={planter.associatedOrganizations.total}
             disabled={!isPlanterTab ? false : true}
@@ -187,7 +134,10 @@ export default function Planter({ planter }) {
       </Grid>
       {isPlanterTab && (
         <>
-          <Typography variant="h3" className={classes.title3}>
+          <Typography
+            variant="h4"
+            sx={{ fontSize: 24, color: 'textPrimary.main' }}
+          >
             Explore some trees planted by <strong>{planter.first_name}</strong>
           </Typography>
           <Box className={classes.treeSlider}>
@@ -207,7 +157,7 @@ export default function Planter({ planter }) {
             />
           </div>
         ))}
-      <Typography variant="h6" className={classes.title4}>
+      <Typography variant="h4" sx={{ fontSize: 24, color: 'textPrimary.main' }}>
         Species of trees planted
       </Typography>
       <Box className={classes.speciesBox}>
@@ -223,19 +173,19 @@ export default function Planter({ planter }) {
       <Box mt={10} />
       <Divider className={classes.divider} />
       <Box mt={20} />
-      <Typography variant="h6" className={classes.title5}>
+      <Typography variant="h4" sx={{ color: 'textPrimary.main' }}>
         About
       </Typography>
       <Box mt={7} />
-      <Typography variant="body1" className={classes.text1}>
+      <Typography variant="body1" sx={{ color: 'textPrimary.main' }}>
         {planter.about}
       </Typography>
       <Box mt={16} />
-      <Typography variant="h6" className={classes.title5}>
+      <Typography variant="h4" sx={{ color: 'textPrimary.main' }}>
         Mission
       </Typography>
       <Box mt={7} />
-      <Typography variant="body1" className={classes.text1}>
+      <Typography variant="body1" sx={{ color: 'textPrimary.main' }}>
         {planter.mission}
       </Typography>
       <Box mt={20} />

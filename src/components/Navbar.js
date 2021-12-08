@@ -19,7 +19,7 @@ const logo = '/images/greenstand_logo_full.png';
 
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.palette.background.default,
     height: 72,
     width: '100vw',
     flexDirection: 'row',

@@ -19,9 +19,6 @@ const useStyles = makeStyles()((theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
-  title: {
-    color: '#474B4F',
-  },
   imageContainer: {
     position: 'relative',
     flexGrow: 1,
@@ -42,9 +39,6 @@ const useStyles = makeStyles()((theme) => ({
   },
   title2: {
     marginTop: theme.spacing(26),
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '600',
     fontSize: '28px',
     lineHeight: '34px',
     display: 'flex',
@@ -54,7 +48,7 @@ const useStyles = makeStyles()((theme) => ({
   },
   tabBox: {
     marginTop: theme.spacing(9),
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
     display: 'flex',
     '& div': {
       margin: theme.spacing(1),
@@ -65,6 +59,7 @@ const useStyles = makeStyles()((theme) => ({
 export default function Tree({ tree, planter, organization }) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
+  console.log(tree);
 
   log.warn('map:', mapContext);
 
@@ -76,14 +71,14 @@ export default function Tree({ tree, planter, organization }) {
   }, [mapContext.map]);
 
   const Title = () => (
-    <Typography className={classes.title} variant="h2">
+    <Typography sx={{ color: 'textPrimary.main' }} variant="h2">
       Tree{/* tree.species */} - #{tree.id}
     </Typography>
   );
 
   const Badges = () => (
     <Box className={classes.badges}>
-      <VerifiedBadge verified={tree.approved} badgeName="Tree Verified" />
+      <VerifiedBadge verified={tree.verified} badgeName="Tree Verified" />
       <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
     </Box>
   );
@@ -105,20 +100,15 @@ export default function Tree({ tree, planter, organization }) {
   return (
     <PageWrapper className={classes.root}>
       <Title />
-      <Typography className={classes.title} variant="h4">
+      <Typography
+        sx={{ color: 'textPrimary.main', fontWeight: 300 }}
+        variant="h5"
+      >
         Eco-Peace-Vision
       </Typography>
       <Badges />
       <TreeImage />
-      <Box className={classes.informationCard}>
-        <InformationCard1
-          entityName={`${planter.first_name} ${planter.last_name}`}
-          entityType={'Planter'}
-          buttonText={'Meet the Planter'}
-          cardImageSrc={planter?.photo_url}
-          link={`/planters/${planter.id}`}
-        />
-      </Box>
+
       <Box className={classes.informationCard}>
         <InformationCard1
           entityName={organization.name}
@@ -126,6 +116,15 @@ export default function Tree({ tree, planter, organization }) {
           buttonText={'Meet the Organization'}
           cardImageSrc={organization?.photo_url}
           link={`/organizations/${organization.id}`}
+        />
+      </Box>
+      <Box className={classes.informationCard}>
+        <InformationCard1
+          entityName={`${planter.first_name} ${planter.last_name}`}
+          entityType={'Planter'}
+          buttonText={'Meet the Planter'}
+          cardImageSrc={planter?.photo_url}
+          link={`/planters/${planter.id}`}
         />
       </Box>
       <Typography variant="h4" className={classes.title2}>

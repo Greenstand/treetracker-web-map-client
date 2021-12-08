@@ -2,7 +2,6 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material/styles';
 import { makeStyles } from 'models/makeStyles';
 
 const useStyles = makeStyles()((theme) => ({
@@ -11,8 +10,7 @@ const useStyles = makeStyles()((theme) => ({
     boxSizing: 'border-box',
     borderRadius: theme.spacing(4),
     border: '1px solid',
-    borderColor: theme.palette.grey[600],
-    width: '60%',
+    borderColor: theme.palette.textLight.main,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -20,7 +18,7 @@ const useStyles = makeStyles()((theme) => ({
     marginBottom: theme.spacing(4),
   },
   countBox: {
-    background: theme.palette.grey[600],
+    background: theme.palette.textLight.main,
     color: theme.palette.common.white,
     padding: theme.spacing(5),
     display: 'flex',
@@ -31,23 +29,21 @@ const useStyles = makeStyles()((theme) => ({
 
 const TreeSpeciesCard = (props) => {
   const { classes } = useStyles();
-  const theme = useTheme();
 
   const { name, count } = props;
 
   return (
     <Card className={classes.root} elevation={0}>
       <Box ml={5}>
-        <Typography
-          variant="body1"
-          sx={{ color: theme.palette.textPrimary.main, fontWeight: 600 }}
-        >
+        <Typography variant="h5" sx={{ color: 'textPrimary.main' }}>
           {name}
         </Typography>
       </Box>
       <Box className={classes.countBox}>
         <Typography variant="body1">Count:</Typography>
-        <Typography variant="h6">{count}</Typography>
+        <Typography variant="h5" sx={{ fontSize: 28 }}>
+          {count}
+        </Typography>
       </Box>
     </Card>
   );
