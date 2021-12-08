@@ -20,6 +20,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
 import moment from 'moment';
+import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomCard from '../../components/common/CustomCard';
 
 // make styles for component with material-ui
@@ -37,12 +38,6 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: 20,
     borderRadius: 16,
     overflow: 'hidden',
-  },
-  badges: {
-    marginTop: 8,
-    '&>*': {
-      marginRight: 8,
-    },
   },
   title: {
     fontFamily: 'Montserrat',
@@ -77,9 +72,6 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: theme.spacing(28),
   },
   treeSlider: {
-    marginTop: theme.spacing(10),
-  },
-  speciesBox: {
     marginTop: theme.spacing(10),
   },
   divider: {
@@ -144,13 +136,13 @@ export default function Planter({ planter }) {
       <Typography variant="h6" className={classes.title}>
         {planter.first_name} {planter.last_name}
       </Typography>
-      <Box className={classes.badges}>
+      <Box sx={{ display: 'flex', gap: 2 }}>
         <VerifiedBadge verified={true} badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Orgs" />
       </Box>
       <Box className={classes.box1}>
-        <Location entityLocation="Shirimatunda,Tanzania" />
         <Time date={moment(planter.created_time).toDate()} />
+        <Location entityLocation="Shirimatunda,Tanzania" />
       </Box>
       <Box mt={1} />
       <Divider className={classes.divider} />
@@ -220,10 +212,12 @@ export default function Planter({ planter }) {
       </Typography>
       <Box className={classes.speciesBox}>
         {planter.species.species.map((species) => (
-          <div key={species.id}>
-            <Typography variant="subtitle2">{species.name}</Typography>
-            <Typography variant="body1">count: {species.count}</Typography>
-          </div>
+          <TreeSpeciesCard
+            key={species.id}
+            name={species.name}
+            scientificName={species.scientificName}
+            count={species.count}
+          />
         ))}
       </Box>
       <Box mt={10} />

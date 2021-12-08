@@ -59,7 +59,7 @@ const theme = createTheme({
         'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
     },
     primary: {
-      main: '#FFFFFF',
+      main: '#61892F',
     },
     secondary: {
       main: '#61892F',
