@@ -1,34 +1,26 @@
 import 'leaflet/dist/leaflet.css';
 
-import Alert from '@mui/material/Alert';
-import Fade from '@mui/material/Fade';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import AddIcon from '@mui/icons-material/Add';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import expect from 'expect-runtime';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
 
 import { useMapContext } from '../mapContext';
 import { parseMapName } from '../models/utils';
-import Loader from './Loader';
-import LoaderB from './LoaderB';
-import SidePanel from './SidePanel';
-import Timeline from './Timeline';
 
-const MOBILE_WIDTH = 960;
+// const MOBILE_WIDTH = 960;
 
 const useStyles = makeStyles()((theme) => ({
-  mapContainer: {
-  },
-  mapLoaded: {
-  },
+  mapContainer: {},
+  mapLoaded: {},
   searchBox: {
     position: 'absolute',
     width: 350,
@@ -180,14 +172,16 @@ function getParameters() {
 function MapComponent() {
   log.warn('Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
   const { classes } = useStyles();
-  const [tree, setTree] = React.useState(undefined);
-  const mapRef = React.useRef(null);
-  const [message, setMessage] = React.useState({ open: false, message: '' });
-  const [arrow, setArrow] = React.useState({});
+  // const [tree, setTree] = React.useState(undefined);
+  const mapRef = useRef(null);
+  const [message, setMessage] = useState({ open: false, message: '' });
+  const [arrow, setArrow] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [timelineDate, setTimelineDate] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [timelineEnabled, setTimelineEnabled] = useState(null);
   const mapContext = useMapContext();
   const router = useRouter();
-
-
 
   function handleMessageClose() {
     setMessage({
@@ -254,9 +248,15 @@ function MapComponent() {
     log.trace('inject app');
     if (mapRef.current) {
       mapRef.current.app = {
-        showPanel: () => {log.warn("mock show")},
-        loaded: () => {log.warn("mock loaded")},
-        loadingB: () => {log.warn("mock load B")},
+        showPanel: () => {
+          log.warn('mock show');
+        },
+        loaded: () => {
+          log.warn('mock loaded');
+        },
+        loadingB: () => {
+          log.warn('mock load B');
+        },
         showMessage,
         showArrow,
         hideArrow,
@@ -271,7 +271,7 @@ function MapComponent() {
     if (mapContext.map) return;
     log.info('load map...');
     // disable waiting for loading
-    //loaded();
+    // loaded();
     const script = document.createElement('script');
     script.src =
       'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
@@ -279,7 +279,9 @@ function MapComponent() {
     document.body.appendChild(script);
     const parameters = getParameters();
     const map = new Map({
-      onLoad: () => {log.warn("mock onload")},
+      onLoad: () => {
+        log.warn('mock onload');
+      },
       onClickTree: handleClickTree,
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
@@ -302,6 +304,7 @@ function MapComponent() {
     mapContext.setMap(map);
   }, []);
 
+  // eslint-disable-next-line no-unused-vars
   function handleDateChange(date) {
     log.warn('date changed:', date);
     window.history.pushState('page2', '', `/?timeline=${date.join('_')}`);
@@ -314,6 +317,7 @@ function MapComponent() {
     map.rerender();
   }
 
+  // eslint-disable-next-line no-unused-vars
   function handleDateClose() {
     setTimelineDate(undefined);
     window.history.pushState('page2', '', `/`);
@@ -369,7 +373,7 @@ function MapComponent() {
           // leaving this lint warning as a reminder to remove this debugging feature
           console.warn('click:', e, e.screenX, e.clientX, e.clientY)
         }
-        sx={{width: "100%", height: "100%"}}
+        sx={{ width: '100%', height: '100%' }}
         id="map-canvas"
         ref={mapRef}
       >
@@ -397,7 +401,7 @@ function MapComponent() {
             </div>
           </div>
         </div>
-      </div>
+      </Box>
       <Snackbar
         open={message.open}
         autoHideDuration={10000}
