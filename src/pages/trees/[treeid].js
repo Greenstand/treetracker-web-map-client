@@ -1,9 +1,9 @@
 import AccessTime from '@mui/icons-material/AccessTime';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import TreeImage from 'components/common/TreeImage';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
-import Image from 'next/image';
 import React from 'react';
 
 import TreeAge from '../../components/common/TreeAge';
@@ -54,7 +54,7 @@ const useStyles = makeStyles()((theme) => ({
   },
   tabBox: {
     marginTop: theme.spacing(9),
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
     display: 'flex',
     '& div': {
       margin: theme.spacing(1),
@@ -87,21 +87,6 @@ export default function Tree({ tree, planter, organization }) {
       <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
     </Box>
   );
-
-  const TreeImage = () => (
-    <Box
-      style={{ height: '672px' /* TODO hard code */ }}
-      className={classes.imageContainer}
-    >
-      <Image
-        src={tree.photo_url}
-        layout="fill"
-        objectPosition="center"
-        objectFit="cover"
-      />
-    </Box>
-  );
-
   return (
     <PageWrapper className={classes.root}>
       <Title />
@@ -109,7 +94,11 @@ export default function Tree({ tree, planter, organization }) {
         Eco-Peace-Vision
       </Typography>
       <Badges />
-      <TreeImage />
+      <TreeImage
+        imageUrl={tree.photo_url}
+        timeCreated={tree.time_created}
+        likes={20}
+      />
       <Box className={classes.informationCard}>
         <InformationCard1
           entityName={`${planter.first_name} ${planter.last_name}`}
