@@ -58,8 +58,22 @@ beforeEach(() => {
   cy.task('clearNock');
 });
 
+// mocking api cypress for one(1) image tree.
+
+const testImageTree = () => it('getServerSideProps returns mock', () => {
+    const path = `/trees/186734/`;
+    cy.intercept(path, { fixture: 'tree186734.json' });
+
+    cy.visit('/trees/186734');
+    cy.contains('186734');
+  });
+
 describe('Image cases', () => {
   imageFixtureNames.forEach(testImage);
   testImage('gif', 'image/gif');
   testImage('png', 'image/png');
+});
+
+describe('Image Tree case', () => {
+  testImageTree();
 });
