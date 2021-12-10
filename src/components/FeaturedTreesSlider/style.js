@@ -1,10 +1,15 @@
 import { makeStyles } from 'models/makeStyles';
 
-const useStyles = makeStyles()(() => ({
+const useStyles = makeStyles()((theme) => ({
   SliderContainer: {
     position: 'relative',
     width: '100%',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      position: 'relative',
+      left: theme.spacing(-4),
+      width: '100vw',
+    },
   },
   SliderImgContainer: {
     display: 'flex',
@@ -22,6 +27,9 @@ const useStyles = makeStyles()(() => ({
       overflow: 'none !impornant',
       scrollSnapType: 'none',
     },
+    [theme.breakpoints.down('sm')]: {
+      padding: `2rem ${theme.spacing(4)}`,
+    },
   },
 
   Img: {
@@ -30,6 +38,9 @@ const useStyles = makeStyles()(() => ({
     width: '100%',
     height: '100%',
     minWidth: '208px',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '152px',
+    },
   },
   GoRight: {
     right: '0px',
@@ -47,6 +58,9 @@ const useStyles = makeStyles()(() => ({
     '&:hover': {
       background: '#222629B2',
     },
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   GoLeft: {
     left: '0px',
@@ -63,6 +77,9 @@ const useStyles = makeStyles()(() => ({
     padding: '0',
     '&:hover': {
       background: '#222629B2',
+    },
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
     },
   },
   Title: {
@@ -93,6 +110,10 @@ const useStyles = makeStyles()(() => ({
       '& $Title': {
         opacity: 1,
       },
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '152px',
+      height: '152px',
     },
   },
 }));
