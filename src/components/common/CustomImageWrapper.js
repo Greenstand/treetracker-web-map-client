@@ -27,6 +27,9 @@ const useStyles = makeStyles()((theme) => ({
     borderRadius: '16px',
   },
   wrapperDate: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     width: '177px',
     height: '72px',
     position: 'absolute',
@@ -120,22 +123,19 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
       onMouseLeave={() => handleHoverLeave()}
     >
       {isShown && (
-        <Grid
-          container
-          justifyContent="space-around"
-          alignItems="center"
+        <Box
           className={clsx(classes.commonBackgroundColor, classes.wrapperDate)}
         >
           <CameraAltOutlinedIcon className={classes.commonIconColor} />
-          <Grid item>
+          <Box>
             <Typography variant="caption" color="white">
               Photo taken on
             </Typography>
             <Typography variant="h6" color="white">
               {dayOfWeek}/{month}/{year}
             </Typography>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       )}
       {isShown && (
         <Box
@@ -166,6 +166,7 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
             direction="row"
             justifyContent="center"
             alignItems="center"
+            columnGap={2}
             width={'100%'}
             height={'100%'}
           >
