@@ -49,7 +49,7 @@ describe('TreeImage', () => {
 
     cy.get('.tss-rvai9x-container')
       .trigger('mouseover')
-      .get('.tss-1shtwbt-year')
+      .get('.MuiTypography-h6')
       .contains('1/9/2020');
   });
 });
