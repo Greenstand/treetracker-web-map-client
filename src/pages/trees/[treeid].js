@@ -1,4 +1,8 @@
 import AccessTime from '@mui/icons-material/AccessTime';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import LanguageIcon from '@mui/icons-material/Language';
+import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
+import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
@@ -6,7 +10,7 @@ import { makeStyles } from 'models/makeStyles';
 import Image from 'next/image';
 import React from 'react';
 
-import TreeAge from '../../components/common/TreeAge';
+import TreeTag from '../../components/common/TreeTag';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -131,36 +135,40 @@ export default function Tree({ tree, planter, organization }) {
         Tree Info
       </Typography>
       <Box className={classes.tabBox}>
-        <TreeAge
-          treeAge={tree.time_created}
+        <TreeTag
+          TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
           title={'Planted on'}
-          icon={<AccessTime />}
+          icon={<CalendarTodayIcon />}
         />
-        <TreeAge
-          treeAge={'Tanzania'}
+        <TreeTag
+          TreeTagValue={'Tanzania'}
           title={'Located in'}
-          icon={<AccessTime />}
+          icon={<RoomOutlinedIcon />}
         />
         {tree.age && (
-          <TreeAge treeAge={tree.age} title={'Age'} icon={<AccessTime />} />
+          <TreeTag
+            TreeTagValue={tree.age}
+            title={'Age'}
+            icon={<AccessTime />}
+          />
         )}
         {tree.gps_accuracy && (
-          <TreeAge
-            treeAge={tree.gps_accuracy}
+          <TreeTag
+            TreeTagValue={tree.gps_accuracy}
             title={'GPS Accuracy'}
-            icon={<AccessTime />}
+            icon={<NavigationOutlinedIcon />}
           />
         )}
         {tree.lat && tree.lon && (
-          <TreeAge
-            treeAge={`${tree.lat},${tree.lon}`}
+          <TreeTag
+            TreeTagValue={`${tree.lat}, ${tree.lon}`}
             title={'Latitude, Longitude'}
-            icon={<AccessTime />}
+            icon={<LanguageIcon />}
           />
         )}
         {tree.token_id && (
-          <TreeAge
-            treeAge={tree.token_id}
+          <TreeTag
+            TreeTagValue={tree.token_id}
             title={'Token ID'}
             icon={<AccessTime />}
           />
