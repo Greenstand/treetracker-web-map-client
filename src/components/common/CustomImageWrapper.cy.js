@@ -14,7 +14,7 @@ describe('CustomImageWrapper', () => {
         likes={20}
       />,
     );
-    cy.get('.tss-rvai9x-container')
+    cy.get('.tss-19g14hs-container')
       .trigger('mouseover')
       .get('a')
       .invoke('attr', 'href')
@@ -47,7 +47,7 @@ describe('CustomImageWrapper', () => {
       />,
     );
 
-    cy.get('.tss-rvai9x-container')
+    cy.get('.tss-19g14hs-container')
       .trigger('mouseover')
       .get('.MuiTypography-h6')
       .contains('1/9/2020');
