@@ -2,13 +2,13 @@ import { mountWithTheme as mount } from '../../models/test-utils';
 import React from 'react';
 import data from '../../../cypress/fixtures/tree186734.json';
 
-import TreeImage from './CustomImageWrapper';
+import CustomImageWrapper from './CustomImageWrapper';
 
-describe('TreeImage', () => {
+describe('CustomImageWrapper', () => {
   it('The maximum icon link points to the right location', () => {
     cy.viewport(1440, 700);
     mount(
-      <TreeImage
+      <CustomImageWrapper
         imageUrl={data.image_url}
         timeCreated={data.time_created}
         likes={20}
@@ -24,7 +24,7 @@ describe('TreeImage', () => {
   it('Image renders properly', () => {
     cy.viewport(1440, 700);
     mount(
-      <TreeImage
+      <CustomImageWrapper
         imageUrl={data.image_url}
         timeCreated={data.time_created}
         likes={20}
@@ -40,7 +40,7 @@ describe('TreeImage', () => {
   it('The date renders properly ', () => {
     cy.viewport(1440, 700);
     mount(
-      <TreeImage
+      <CustomImageWrapper
         imageUrl={data.image_url}
         timeCreated={data.time_created}
         likes={20}
