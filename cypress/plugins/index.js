@@ -6,6 +6,10 @@ const next = require('next');
 // start the Next.js server when Cypress starts
 module.exports = async (on, config) => {
   require('cypress-watch-and-reload/plugins')(config);
+
+  // exit if not using nock to mock nextjs ssr functions
+  if (!config.env.nock) return config;
+
   const app = next({ dev: true });
   const handleNextRequests = app.getRequestHandler();
   await app.prepare();

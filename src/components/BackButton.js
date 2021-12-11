@@ -1,6 +1,5 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { ButtonBase } from '@mui/material';
-import { makeStyles } from 'models/makeStyles';
+import { ButtonBase, Typography } from '@mui/material';
 import React from 'react';
 
 const useStyles = makeStyles()(() => ({
@@ -15,10 +14,14 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export default function BackButton() {
+export default function BackButton({ onBackHandler }) {
   const { classes } = useStyles();
   return (
-    <ButtonBase className={classes.backButton} color="textPrimary">
+    <ButtonBase
+      onClick={onBackHandler}
+      className={classes.backButton}
+      color="textPrimary"
+    >
       <ArrowBackIosIcon fontSize="inherit" className={classes.icon} />
       Back
     </ButtonBase>

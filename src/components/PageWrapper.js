@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import clsx from 'clsx';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
@@ -12,8 +13,8 @@ const useStyles = makeStyles()((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
-    maxWidth: "100%",
-    boxSizing: "border-box",
+    maxWidth: '100%',
+    boxSizing: 'border-box',
   },
   top: {
     display: 'flex',
@@ -29,10 +30,16 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function PageWrapper({ children, className, ...otherProps }) {
   const { classes } = useStyles();
+  const router = useRouter();
+
+  const onBackHandler = () => {
+    router.back();
+  };
+
   return (
     <Box className={classes.pageContainer}>
       <Box className={classes.top}>
-        <BackButton />
+        <BackButton onBackHandler={onBackHandler} />
         <SearchButton />
       </Box>
       <Box className={clsx(classes.main, className)} {...otherProps}>

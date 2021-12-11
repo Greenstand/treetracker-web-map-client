@@ -1,13 +1,15 @@
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
+//import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '../../models/makeStyles';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
-import Image from 'next/image';
+//import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 
 import Location from '../../components/common/Location';
 import Time from '../../components/common/Time';
@@ -18,6 +20,8 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
 import moment from 'moment';
+import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import CustomCard from '../../components/common/CustomCard';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -35,48 +39,7 @@ const useStyles = makeStyles()((theme) => ({
     borderRadius: 16,
     overflow: 'hidden',
   },
-  badges: {
-    marginTop: 8,
-    '&>*': {
-      marginRight: 8,
-    },
-  },
-  title: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: '36px',
-    lineHeight: '44px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-  },
-  title3: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: '24px',
-    lineHeight: '29px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-    marginTop: theme.spacing(10),
-  },
-  title4: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: '24px',
-    lineHeight: '29px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-    marginTop: theme.spacing(28),
-  },
   treeSlider: {
-    marginTop: theme.spacing(10),
-  },
-  speciesBox: {
     marginTop: theme.spacing(10),
   },
   divider: {
@@ -84,33 +47,12 @@ const useStyles = makeStyles()((theme) => ({
     marginRight: theme.spacing(-10),
     width: '100%',
   },
-  title5: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: '28px',
-    lineHeight: '34px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-  },
-  text1: {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '20px',
-    lineHeight: '28px',
-    display: 'flex',
-    alignItems: 'center',
-    letterSpacing: '0.04em',
-    color: '#474B4F',
-  },
 }));
 
 export default function Planter({ planter }) {
   const mapContext = useMapContext();
 
-  const [display, setDisplay] = useState('planter');
+  const [isPlanterTab, setIsPlanterTab] = useState(true);
 
   const classes = useStyles();
 
@@ -132,22 +74,22 @@ export default function Planter({ planter }) {
     reload();
   }, [mapContext.map]);
 
-  function handleCardClick(who) {
-    setDisplay(who);
+  function handleCardClick() {
+    setIsPlanterTab(!isPlanterTab);
   }
 
   return (
     <PageWrapper className={classes.root}>
-      <Typography variant="h6" className={classes.title}>
+      <Typography variant="h2" sx={{ color: 'textPrimary.main' }}>
         {planter.first_name} {planter.last_name}
       </Typography>
-      <Box className={classes.badges}>
+      <Box sx={{ display: 'flex', gap: 2 }}>
         <VerifiedBadge verified={true} badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Orgs" />
       </Box>
       <Box className={classes.box1}>
-        <Location entityLocation="Shirimatunda,Tanzania" />
         <Time date={moment(planter.created_time).toDate()} />
+        <Location entityLocation="Shirimatunda,Tanzania" />
       </Box>
       <Box mt={1} />
       <Divider className={classes.divider} />
@@ -162,35 +104,40 @@ export default function Planter({ planter }) {
           objectFit="cover"
         />
       </Box> */}
-      <Avatar src={planter.photo_url} variant="rounded" sx={{width: "100%", height: "688px", borderRadius: 6, marginTop: 6, }} />
-      <Grid container>
+      <Avatar
+        src={planter.photo_url}
+        variant="rounded"
+        sx={{ width: '100%', height: '688px', borderRadius: 6, marginTop: 6 }}
+      />
+      <Grid container spacing={1}>
         <Grid item>
-          <Card onClick={() => handleCardClick('planter')}>
-            <Typography
-              variant="h6"
-              color={display === 'planter' ? 'secondary' : ''}
-            >
-              Tree planted: {planter.featuredTrees.total}
-            </Typography>
-          </Card>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<ParkOutlinedIcon fontSize="large" />}
+            title="Trees Planted"
+            text={planter.featuredTrees.total}
+            disabled={isPlanterTab ? false : true}
+          />
         </Grid>
         <Grid item>
           <Box width={8} />
         </Grid>
         <Grid item>
-          <Card onClick={() => handleCardClick('org')}>
-            <Typography
-              variant="h6"
-              color={display === 'org' ? 'secondary' : ''}
-            >
-              Associated Organizations: {planter.associatedOrganizations.total}
-            </Typography>
-          </Card>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<GroupsOutlinedIcon fontSize="large" />}
+            title="Associated Organizations"
+            text={planter.associatedOrganizations.total}
+            disabled={!isPlanterTab ? false : true}
+          />
         </Grid>
       </Grid>
-      {display === 'planter' && (
+      {isPlanterTab && (
         <>
-          <Typography variant="h3" className={classes.title3}>
+          <Typography
+            variant="h4"
+            sx={{ fontSize: 24, color: 'textPrimary.main' }}
+          >
             Explore some trees planted by <strong>{planter.first_name}</strong>
           </Typography>
           <Box className={classes.treeSlider}>
@@ -198,7 +145,7 @@ export default function Planter({ planter }) {
           </Box>
         </>
       )}
-      {display === 'org' &&
+      {!isPlanterTab &&
         planter.associatedOrganizations.organizations.map((org) => (
           <div key={org.id}>
             <InformationCard1
@@ -210,33 +157,35 @@ export default function Planter({ planter }) {
             />
           </div>
         ))}
-      <Typography variant="h6" className={classes.title4}>
+      <Typography variant="h4" sx={{ fontSize: 24, color: 'textPrimary.main' }}>
         Species of trees planted
       </Typography>
       <Box className={classes.speciesBox}>
         {planter.species.species.map((species) => (
-          <div key={species.id}>
-            <Typography variant="subtitle2">{species.name}</Typography>
-            <Typography variant="body1">count: {species.count}</Typography>
-          </div>
+          <TreeSpeciesCard
+            key={species.id}
+            name={species.name}
+            scientificName={species.scientificName}
+            count={species.count}
+          />
         ))}
       </Box>
       <Box mt={10} />
       <Divider className={classes.divider} />
       <Box mt={20} />
-      <Typography variant="h6" className={classes.title5}>
+      <Typography variant="h4" sx={{ color: 'textPrimary.main' }}>
         About
       </Typography>
       <Box mt={7} />
-      <Typography variant="body1" className={classes.text1}>
+      <Typography variant="body1" sx={{ color: 'textPrimary.main' }}>
         {planter.about}
       </Typography>
       <Box mt={16} />
-      <Typography variant="h6" className={classes.title5}>
+      <Typography variant="h4" sx={{ color: 'textPrimary.main' }}>
         Mission
       </Typography>
       <Box mt={7} />
-      <Typography variant="body1" className={classes.text1}>
+      <Typography variant="body1" sx={{ color: 'textPrimary.main' }}>
         {planter.mission}
       </Typography>
       <Box mt={20} />

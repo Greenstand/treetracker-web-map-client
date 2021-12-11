@@ -12,7 +12,7 @@ const organization = {
 };
 
 beforeEach(() => {
-  cy.task('clearNock');
+  Cypress.env('nock') && cy.task('clearNock');
 });
 
 describe('Organizations', () => {
@@ -22,17 +22,18 @@ describe('Organizations', () => {
     cy.fixture(imageFixturePath).then((image) => {
       const blob = Cypress.Blob.base64StringToBlob(image, 'images/png');
       const photo_url = Cypress.Blob.createObjectURL(blob);
-      cy.task('nock', {
-        hostname: 'http://127.0.0.1:4010/mock',
-        method: 'GET',
-        path,
-        statusCode: 200,
-        body: {
-          ...organization,
-          photo_url,
-          status: 200,
-        },
-      });
+      Cypress.env('nock') &&
+        cy.task('nock', {
+          hostname: 'http://127.0.0.1:4010/mock',
+          method: 'GET',
+          path,
+          statusCode: 200,
+          body: {
+            ...organization,
+            photo_url,
+            status: 200,
+          },
+        });
     });
 
     cy.visit(path, {

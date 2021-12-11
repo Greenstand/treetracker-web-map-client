@@ -55,7 +55,7 @@ const useStyles = makeStyles()((theme) => ({
   },
   findATreeButton: {
     textTransform: 'none',
-    background: theme.palette.success.main,
+    background: theme.palette.secondary.main,
   },
 }));
 
@@ -64,7 +64,7 @@ export default function Home() {
 
   const Buttons = () => (
     <Box className={classes.buttonsContainer}>
-      <Button variant="outlined" color="primary" className={classes.button}>
+      <Button variant="outlined" color="inherit" className={classes.button}>
         Learn more
       </Button>
       <Link href="/top">
