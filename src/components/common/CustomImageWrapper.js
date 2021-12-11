@@ -27,9 +27,6 @@ const useStyles = makeStyles()((theme) => ({
     borderRadius: '16px',
   },
   wrapperDate: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
     width: '177px',
     height: '72px',
     position: 'absolute',
@@ -41,11 +38,6 @@ const useStyles = makeStyles()((theme) => ({
       height: '50px',
       left: '9px',
     },
-  },
-  date: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(0),
   },
   containerOpenWithOutlinedIcon: {
     position: 'absolute',
@@ -79,7 +71,7 @@ const useStyles = makeStyles()((theme) => ({
     backdropFilter: 'blur(30px)',
     borderRadius: '16px',
   },
-  commonWrapper: {
+  link: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -108,7 +100,7 @@ const useStyles = makeStyles()((theme) => ({
 function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
   const { classes } = useStyles();
 
-  const [isShown, setIsShown] = React.useState(true);
+  const [isShown, setIsShown] = React.useState(false);
 
   const createdAt = new Date(timeCreated);
   const dayOfWeek = createdAt.getDay();
@@ -129,22 +121,24 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
     >
       {isShown && (
         <Grid
-          item
+          container
+          justifyContent="space-around"
+          alignItems="center"
           className={clsx(classes.commonBackgroundColor, classes.wrapperDate)}
         >
           <CameraAltOutlinedIcon className={classes.commonIconColor} />
-          <div className={classes.date}>
+          <Grid item>
             <Typography variant="caption" color="white">
               Photo taken on
             </Typography>
             <Typography variant="h6" color="white">
               {dayOfWeek}/{month}/{year}
             </Typography>
-          </div>
+          </Grid>
         </Grid>
       )}
       {isShown && (
-        <Grid
+        <Box
           className={clsx(
             classes.commonBackgroundColor,
             classes.containerOpenWithOutlinedIcon,
@@ -154,24 +148,33 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
             target="_blank"
             rel="noopener noreferrer"
             href={imageUrl}
-            className={classes.commonWrapper}
+            className={classes.link}
           >
             <OpenWithOutlinedIcon className={classes.commonIconColor} />
           </a>
-        </Grid>
+        </Box>
       )}
       {isShown && (
-        <Grid
+        <Box
           className={clsx(
             classes.commonBackgroundColor,
             classes.containerFavorite,
           )}
         >
-          <div className={classes.commonWrapper}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            width={'100%'}
+            height={'100%'}
+          >
             <FavoriteBorderOutlinedIcon className={classes.commonIconColor} />
-            <div className={classes.likes}>{likes}</div>
-          </div>
-        </Grid>
+            <Grid item className={classes.likes}>
+              {likes}
+            </Grid>
+          </Grid>
+        </Box>
       )}
       <img src={imageUrl} alt="tree image" className={classes.image} />
     </Box>
