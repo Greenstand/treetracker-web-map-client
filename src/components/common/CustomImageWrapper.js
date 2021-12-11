@@ -1,7 +1,8 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import clsx from 'clsx';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
@@ -12,7 +13,7 @@ const useStyles = makeStyles()((theme) => ({
     maxWidth: '100%',
     borderRadius: '16px',
     position: 'relative',
-    marginTop: '20px',
+    marginTop: theme.spacing(4),
     [theme.breakpoints.down('md')]: {
       height: '328px',
     },
@@ -25,16 +26,12 @@ const useStyles = makeStyles()((theme) => ({
     objectFit: 'cover',
     borderRadius: '16px',
   },
-  ContainerIcon: {
+  wrapperDate: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
     width: '177px',
     height: '72px',
-    color: `${theme.palette.primary.main}`,
-    background: 'rgba(71, 75, 79, 0.6)',
-    backdropFilter: 'blur(25px)',
-    borderRadius: '16px',
     position: 'absolute',
     zIndex: 3,
     top: '20px',
@@ -45,38 +42,10 @@ const useStyles = makeStyles()((theme) => ({
       left: '9px',
     },
   },
-  dateTitle: {
-    fontSize: '12px',
-    fontFamily: 'Lato',
-    textAlign: 'center',
-    marginBottom: '8px',
-    letterSpacing: '0.04em',
-    padding: 0,
-    [theme.breakpoints.down('lg')]: {
-      fontSize: '9px',
-    },
-  },
-  year: {
-    fontSize: '20px',
-    fontFamily: 'Lato',
-    margin: 0,
-    fontWeight: 800,
-    [theme.breakpoints.down('lg')]: {
-      fontSize: '14px',
-    },
-  },
-  Icon: {
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: '22px',
-    [theme.breakpoints.down('lg')]: {
-      marginRight: '10px',
-    },
-  },
-  ContainerDate: {
+  date: {
     display: 'flex',
     flexDirection: 'column',
-    padding: 0,
+    padding: theme.spacing(0),
   },
   containerOpenWithOutlinedIcon: {
     position: 'absolute',
@@ -84,22 +53,12 @@ const useStyles = makeStyles()((theme) => ({
     right: '24px',
     width: '70px',
     height: '70px',
-    background: 'rgba(71, 75, 79, 0.6)',
-    backdropFilter: 'blur(30px)',
-    borderRadius: '16px',
     zIndex: 3,
     [theme.breakpoints.down('lg')]: {
       width: '50px',
       height: '50px',
+      right: '10px',
     },
-  },
-  openWithOutlinedIcon: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: theme.palette.primary.main,
-    width: '100%',
-    height: '100%',
   },
   containerFavorite: {
     position: 'absolute',
@@ -110,50 +69,35 @@ const useStyles = makeStyles()((theme) => ({
     zIndex: 3,
     cursor: 'pointer',
     [theme.breakpoints.down('lg')]: {
-      width: '40px',
-      height: '26px',
-      bottom: '30px',
+      width: '60px',
+      height: '46px',
+      left: '10px',
     },
   },
-  wrapperFavorite: {
+  commonBackgroundColor: {
     background: 'rgba(71, 75, 79, 0.6)',
     backdropFilter: 'blur(30px)',
-    color: theme.palette.primary.main,
     borderRadius: '16px',
+  },
+  commonWrapper: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    [theme.breakpoints.down('lg')]: {
-      padding: 9,
-    },
-  },
-  favorite: {
-    color: theme.palette.primary.main,
-    fontSize: '30px',
-    [theme.breakpoints.down('lg')]: {
-      fontSize: '20px',
-    },
   },
   likes: {
-    color: theme.palette.primary.main,
-    margin: '5px',
+    color: '#fff',
+    margin: theme.spacing(1),
     cursor: 'pointer',
     fontSize: '16px',
     [theme.breakpoints.down('lg')]: {
       fontSize: '14px',
     },
   },
-  openWithIcon: {
-    color: theme.palette.primary.main,
-    fontSize: '35px',
-    [theme.breakpoints.down('lg')]: {
-      fontSize: '25px',
-    },
-  },
-  cameraIcon: {
+  commonIconColor: {
+    color: '#fff',
     fontSize: '35px',
     [theme.breakpoints.down('lg')]: {
       fontSize: '25px',
@@ -164,7 +108,7 @@ const useStyles = makeStyles()((theme) => ({
 function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
   const { classes } = useStyles();
 
-  const [isShown, setIsShown] = React.useState(false);
+  const [isShown, setIsShown] = React.useState(true);
 
   const createdAt = new Date(timeCreated);
   const dayOfWeek = createdAt.getDay();
@@ -177,7 +121,6 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
   const handleHoverLeave = () => {
     setIsShown(false);
   };
-
   return (
     <Box
       className={classes.container}
@@ -185,34 +128,47 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
       onMouseLeave={() => handleHoverLeave()}
     >
       {isShown && (
-        <Grid className={classes.ContainerIcon}>
-          <div className={classes.Icon}>
-            <CameraAltOutlinedIcon className={classes.cameraIcon} />
-          </div>
-          <div className={classes.ContainerDate}>
-            <div className={classes.dateTitle}>Photo taken on</div>
-            <div className={classes.year}>
+        <Grid
+          item
+          className={clsx(classes.commonBackgroundColor, classes.wrapperDate)}
+        >
+          <CameraAltOutlinedIcon className={classes.commonIconColor} />
+          <div className={classes.date}>
+            <Typography variant="caption" color="white">
+              Photo taken on
+            </Typography>
+            <Typography variant="h6" color="white">
               {dayOfWeek}/{month}/{year}
-            </div>
+            </Typography>
           </div>
         </Grid>
       )}
       {isShown && (
-        <Grid className={classes.containerOpenWithOutlinedIcon}>
+        <Grid
+          className={clsx(
+            classes.commonBackgroundColor,
+            classes.containerOpenWithOutlinedIcon,
+          )}
+        >
           <a
             target="_blank"
             rel="noopener noreferrer"
             href={imageUrl}
-            className={classes.openWithOutlinedIcon}
+            className={classes.commonWrapper}
           >
-            <OpenWithOutlinedIcon className={classes.openWithIcon} />
+            <OpenWithOutlinedIcon className={classes.commonIconColor} />
           </a>
         </Grid>
       )}
       {isShown && (
-        <Grid className={classes.containerFavorite}>
-          <div className={classes.wrapperFavorite}>
-            <FavoriteBorderOutlinedIcon className={classes.favorite} />
+        <Grid
+          className={clsx(
+            classes.commonBackgroundColor,
+            classes.containerFavorite,
+          )}
+        >
+          <div className={classes.commonWrapper}>
+            <FavoriteBorderOutlinedIcon className={classes.commonIconColor} />
             <div className={classes.likes}>{likes}</div>
           </div>
         </Grid>
