@@ -2,7 +2,7 @@ import { mountWithTheme as mount } from '../../models/test-utils';
 import React from 'react';
 import data from '../../../cypress/fixtures/tree186734.json';
 
-import TreeImage from './TreeImage';
+import TreeImage from './CustomImageWrapper';
 
 describe('TreeImage', () => {
   it('The maximum icon link points to the right location', () => {

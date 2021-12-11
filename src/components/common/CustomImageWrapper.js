@@ -161,7 +161,7 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-function TreeImage({ imageUrl, timeCreated, likes }) {
+function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
   const { classes } = useStyles();
 
   const [isShown, setIsShown] = React.useState(false);
@@ -221,4 +221,4 @@ function TreeImage({ imageUrl, timeCreated, likes }) {
     </Box>
   );
 }
-export default TreeImage;
+export default CustomImageWrapper;

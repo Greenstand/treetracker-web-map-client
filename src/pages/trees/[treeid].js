@@ -5,7 +5,7 @@ import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import TreeImage from 'components/common/TreeImage';
+import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
@@ -96,7 +96,7 @@ export default function Tree({ tree, planter, organization }) {
         Eco-Peace-Vision
       </Typography>
       <Badges />
-      <TreeImage
+      <CustomImageWrapper
         imageUrl={tree.photo_url}
         timeCreated={tree.time_created}
         likes={20}
