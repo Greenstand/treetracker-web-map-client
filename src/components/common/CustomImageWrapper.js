@@ -1,10 +1,9 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, Link } from '@mui/material';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import clsx from 'clsx';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
+import React, { useState } from 'react';
 
 const useStyles = makeStyles()((theme) => ({
   container: {
@@ -26,89 +25,38 @@ const useStyles = makeStyles()((theme) => ({
     objectFit: 'cover',
     borderRadius: '16px',
   },
-  wrapperDate: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '177px',
-    height: '72px',
-    position: 'absolute',
-    zIndex: 3,
-    top: '20px',
-    left: '24px',
-    [theme.breakpoints.down('lg')]: {
-      width: '130px',
-      height: '50px',
-      left: '9px',
-    },
-  },
-  containerOpenWithOutlinedIcon: {
-    position: 'absolute',
-    top: '20px',
-    right: '24px',
-    width: '70px',
-    height: '70px',
-    zIndex: 3,
-    [theme.breakpoints.down('lg')]: {
-      width: '50px',
-      height: '50px',
-      right: '10px',
-    },
-  },
-  containerFavorite: {
-    position: 'absolute',
-    width: '86px',
-    height: '56px',
-    left: '20px',
-    bottom: '20px',
-    zIndex: 3,
-    cursor: 'pointer',
-    [theme.breakpoints.down('lg')]: {
-      width: '60px',
-      height: '46px',
-      left: '10px',
-    },
-  },
-  commonBackgroundColor: {
-    background: 'rgba(71, 75, 79, 0.6)',
-    backdropFilter: 'blur(30px)',
-    borderRadius: '16px',
-  },
-  link: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-  },
-  likes: {
-    color: '#fff',
-    margin: theme.spacing(1),
-    cursor: 'pointer',
-    fontSize: '16px',
-    [theme.breakpoints.down('lg')]: {
-      fontSize: '14px',
-    },
-  },
-  commonIconColor: {
-    color: '#fff',
-    fontSize: '35px',
-    [theme.breakpoints.down('lg')]: {
-      fontSize: '25px',
-    },
-  },
 }));
+
+const InfoWrapper = ({ children, top, right, bottom }) => (
+  <Box
+    ml={3}
+    mr={2}
+    p={4}
+    sx={{
+      bgcolor: 'textPrimary.main',
+      opacity: 0.8,
+      borderRadius: '16px',
+      position: 'absolute',
+      height: 'auto',
+      top: top,
+      right: right,
+      bottom: bottom,
+      zIndex: 1,
+    }}
+  >
+    {children}
+  </Box>
+);
 
 function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
   const { classes } = useStyles();
-
-  const [isShown, setIsShown] = React.useState(false);
 
   const createdAt = new Date(timeCreated);
   const dayOfWeek = createdAt.getDay();
   const year = createdAt.getFullYear();
   const month = createdAt.getMonth();
+
+  const [isShown, setIsShown] = useState(false);
 
   const handleHoverEnter = () => {
     setIsShown(true);
@@ -123,44 +71,68 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
       onMouseLeave={() => handleHoverLeave()}
     >
       {isShown && (
-        <Box
-          className={clsx(classes.commonBackgroundColor, classes.wrapperDate)}
-        >
-          <CameraAltOutlinedIcon className={classes.commonIconColor} />
-          <Box>
-            <Typography variant="caption" color="white">
-              Photo taken on
-            </Typography>
-            <Typography variant="h6" color="white">
-              {dayOfWeek}/{month}/{year}
-            </Typography>
-          </Box>
-        </Box>
-      )}
-      {isShown && (
-        <Box
-          className={clsx(
-            classes.commonBackgroundColor,
-            classes.containerOpenWithOutlinedIcon,
-          )}
-        >
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={imageUrl}
-            className={classes.link}
+        <InfoWrapper top={20}>
+          <Grid
+            container
+            justifyContent="space-around"
+            alignItems="center"
+            flexWrap="nowrap"
+            columnGap={5}
+            width={'100%'}
+            height={'100%'}
           >
-            <OpenWithOutlinedIcon className={classes.commonIconColor} />
-          </a>
-        </Box>
+            <CameraAltOutlinedIcon
+              sx={{
+                color: 'common.white',
+              }}
+              fontSize="large"
+            />
+            <Grid item xs={12}>
+              <Typography variant="caption" color="white">
+                Photo taken on
+              </Typography>
+              <Typography variant="h6" color="white">
+                {dayOfWeek}/{month}/{year}
+              </Typography>
+            </Grid>
+          </Grid>
+        </InfoWrapper>
       )}
       {isShown && (
-        <Box
-          className={clsx(
-            classes.commonBackgroundColor,
-            classes.containerFavorite,
-          )}
-        >
+        <InfoWrapper top={20} right={3}>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            width={'100%'}
+            height={'100%'}
+          >
+            <Link
+              target="_blank"
+              rel="noopener"
+              href={imageUrl}
+              underline="none"
+              color="white"
+              sx={[
+                {
+                  '&:hover': {
+                    color: 'common.white',
+                  },
+                },
+              ]}
+            >
+              <OpenWithOutlinedIcon
+                sx={{
+                  color: 'common.white',
+                }}
+                fontSize="large"
+              />
+            </Link>
+          </Grid>
+        </InfoWrapper>
+      )}
+      {isShown && (
+        <InfoWrapper bottom={20}>
           <Grid
             container
             direction="row"
@@ -170,12 +142,13 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
             width={'100%'}
             height={'100%'}
           >
-            <FavoriteBorderOutlinedIcon className={classes.commonIconColor} />
-            <Grid item className={classes.likes}>
-              {likes}
-            </Grid>
+            <FavoriteBorderOutlinedIcon
+              sx={{ color: 'common.white', cursor: 'pointer' }}
+              fontSize="large"
+            />
+            <Typography color="white">{likes}</Typography>
           </Grid>
-        </Box>
+        </InfoWrapper>
       )}
       <img src={imageUrl} alt="tree image" className={classes.image} />
     </Box>
