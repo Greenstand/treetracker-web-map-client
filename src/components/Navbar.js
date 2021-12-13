@@ -20,14 +20,14 @@ const logo = '/images/greenstand_logo_full.png';
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
     backgroundColor: theme.palette.background.default,
-    height: 72,
+    height: theme.spacing(18),
     width: '100vw',
     flexDirection: 'row',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '0 20px',
-    zIndex: 1000,
+    zIndex: 9999,
     [theme.breakpoints.down('sm')]: {
       padding: '0',
       alignItems: 'flex-end',
