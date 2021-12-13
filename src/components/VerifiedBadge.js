@@ -1,6 +1,6 @@
-import React from 'react';
 import CheckIcon from '@mui/icons-material/Check';
 import { Chip } from '@mui/material';
+import React from 'react';
 
 function VerifiedBadge({ verified, badgeName }) {
   return (
@@ -10,6 +10,7 @@ function VerifiedBadge({ verified, badgeName }) {
         bgcolor: verified ? 'primary.main' : 'textPrimary.main',
         color: 'common.white',
         borderRadius: 1,
+        fontSize: 12,
       }}
       size="small"
       icon={!verified ? null : <CheckIcon />}

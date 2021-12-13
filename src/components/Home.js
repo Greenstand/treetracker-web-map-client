@@ -38,24 +38,9 @@ const useStyles = makeStyles()((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  welcome: {
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '0.8rem',
-    },
-  },
-  slogan: {
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.9rem',
-      lineHeight: '2.5rem',
-    },
-  },
   button: {
     textTransform: 'none',
     marginRight: 20,
-  },
-  findATreeButton: {
-    textTransform: 'none',
-    background: theme.palette.secondary.main,
   },
 }));
 
@@ -63,13 +48,19 @@ export default function Home() {
   const { classes } = useStyles();
 
   const Buttons = () => (
-    <Box className={classes.buttonsContainer}>
+    <Box className={classes.buttonsContainer} mt={4.5}>
       <Button variant="outlined" color="inherit" className={classes.button}>
-        Learn more
+        <Typography>Learn more</Typography>
       </Button>
       <Link href="/top">
-        <Button variant="contained" className={classes.findATreeButton}>
-          Let&apos;s Find a Tree
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+        >
+          <Typography sx={{ color: 'textPrimary.main' }}>
+            Let&apos;s Find a Tree
+          </Typography>
         </Button>
       </Link>
     </Box>
@@ -78,10 +69,8 @@ export default function Home() {
   return (
     <Box className={classes.pageContainer}>
       <Box className={classes.contentContainer}>
-        <Typography variant="h3" className={classes.welcome}>
-          Welcome to TreeTracker
-        </Typography>
-        <Typography variant="h1" className={classes.slogan}>
+        <Typography variant="h3">Welcome to TreeTracker</Typography>
+        <Typography variant="h1">
           Come explore the global reforestation effort.
         </Typography>
         <Buttons />
