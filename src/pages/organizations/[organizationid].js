@@ -1,15 +1,19 @@
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Avatar, Box, Divider, Typography } from '@mui/material';
+import { Grid, Avatar, Box, Divider, Typography } from '@mui/material';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
+import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
+import CustomCard from '../../components/common/CustomCard';
+import TreeSpeciesCard from 'components/TreeSpeciesCard';
 
 const useStyles = makeStyles()((theme) => ({
   info: {
@@ -52,6 +56,8 @@ const useStyles = makeStyles()((theme) => ({
 export default function Organization({ organization }) {
   const mapContext = useMapContext();
   const { classes } = useStyles();
+  const [isPlanterTab, setIsPlanterTab] = React.useState(false);
+  const [continent, setContinent] = React.useState(null);
   const {
     name,
     area,
@@ -62,6 +68,15 @@ export default function Organization({ organization }) {
     photo_url,
     logo_url,
   } = organization;
+
+  async function updateContinent() {
+    const tree = organization?.featuredTrees?.trees[0];
+    if (tree) {
+      const { lat, lon } = tree;
+      const continent = await utils.getContinent(lat, lon);
+      setContinent(continent.name);
+    }
+  }
 
   React.useEffect(() => {
     async function reload() {
@@ -84,7 +99,14 @@ export default function Organization({ organization }) {
       }
     }
     reload();
+
+    updateContinent();
   }, [mapContext.map]);
+
+  function handleCardClick() {
+    setIsPlanterTab(!isPlanterTab);
+  }
+
   return (
     <PageWrapper>
       <Typography variant="subtitle1">{name}</Typography>
@@ -105,30 +127,66 @@ export default function Organization({ organization }) {
         <img src={photo_url} />
         <img src={logo_url} />
       </Box>
-      <div>
-        <h5>Tree planted: {organization?.featuredTrees?.total} </h5>
-        <h5>featured tree</h5>
+      <Grid container spacing={1}>
+        <Grid item>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<ParkOutlinedIcon />}
+            title="Trees Planted"
+            text={organization?.featuredTrees?.total}
+            disabled={isPlanterTab ? true : false}
+          />
+        </Grid>
+        <Grid item>
+          <Box width={8} />
+        </Grid>
+        <Grid item>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<GroupsOutlinedIcon />}
+            title="Associated Organizations"
+            text={organization?.associatedPlanters?.total}
+            disabled={isPlanterTab ? false : true}
+          />
+        </Grid>
+      </Grid>
+      {!isPlanterTab && (
         <div>
-          {organization?.featuredTrees?.trees?.map((tree) => (
-            <div key={tree.id}>
-              <Avatar src={tree.photo_url} />
-              <h5>{tree.name}</h5>
-            </div>
-          ))}
+          {/*TODO replace with the world map component */}
+          <h5>The world map</h5>
+          <h5>
+            {organization?.associatedPlanters?.total} tree planted in continent{' '}
+            {continent}{' '}
+          </h5>
         </div>
-      </div>
-      <div>
-        <h5>Associated planters: {organization?.associatedPlanters?.total} </h5>
-        <h5>featured planters</h5>
+      )}
+      {isPlanterTab && (
         <div>
-          {organization?.associatedPlanters?.planters?.map((planter) => (
-            <div key={planter.id}>
-              <Avatar src={planter.photo_url} />
-              <h5>{planter.name}</h5>
-            </div>
-          ))}
+          {/* TODO replace with the planter quote card https://github.com/Greenstand/treetracker-web-map-client/issues/334 */}
+          <h5>
+            Associated planters: {organization?.associatedPlanters?.total}{' '}
+          </h5>
+          <h5>featured planters</h5>
+          <div>
+            {organization?.associatedPlanters?.planters?.map((planter) => (
+              <div key={planter.id}>
+                <Avatar src={planter.photo_url} />
+                <h5>{planter.name}</h5>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+      <Box className={classes.speciesBox}>
+        {organization?.species.species.map((species) => (
+          <TreeSpeciesCard
+            key={species.id}
+            name={species.name}
+            scientificName={species.scientificName}
+            count={species.count}
+          />
+        ))}
+      </Box>
       <div>
         <h5>Species: {organization?.species?.total} </h5>
         <h5>featured species</h5>

@@ -5,9 +5,9 @@ import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
-import Image from 'next/image';
 import React from 'react';
 
 import TreeTag from '../../components/common/TreeTag';
@@ -86,21 +86,6 @@ export default function Tree({ tree, planter, organization }) {
       <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
     </Box>
   );
-
-  const TreeImage = () => (
-    <Box
-      style={{ height: '672px' /* TODO hard code */ }}
-      className={classes.imageContainer}
-    >
-      <Image
-        src={tree.photo_url}
-        layout="fill"
-        objectPosition="center"
-        objectFit="cover"
-      />
-    </Box>
-  );
-
   return (
     <PageWrapper className={classes.root}>
       <Title />
@@ -111,8 +96,11 @@ export default function Tree({ tree, planter, organization }) {
         Eco-Peace-Vision
       </Typography>
       <Badges />
-      <TreeImage />
-
+      <CustomImageWrapper
+        imageUrl={tree.photo_url}
+        timeCreated={tree.time_created}
+        likes={20}
+      />
       <Box className={classes.informationCard}>
         <InformationCard1
           entityName={organization.name}

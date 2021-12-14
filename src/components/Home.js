@@ -21,15 +21,16 @@ const useStyles = makeStyles()((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    paddingTop: '15vh',
     '&>*': {
       marginBottom: theme.spacing(5),
     },
     [theme.breakpoints.down('sm')]: {
       width: '100vw',
       padding: '1rem',
+      paddingTop: '15vh',
       boxSizing: 'border-box',
       overflow: 'hidden',
-      marginTop: '15vh',
       justifyContent: 'flex-start',
     },
   },
@@ -85,6 +86,7 @@ export default function Home() {
           Come explore the global reforestation effort.
         </Typography>
         <Buttons />
+        <Box sx={{ height: 1000 }} />
       </Box>
     </Box>
   );
