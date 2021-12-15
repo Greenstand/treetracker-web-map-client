@@ -64,7 +64,7 @@ async function getContinent(lat, lon) {
 }
 
 function formatDateString(date) {
-  return new Date(date).toLocaleString('en-GB').split(',')[0];
+  return new Date(date).toLocaleDateString('en-GB');
 }
 
 export {
