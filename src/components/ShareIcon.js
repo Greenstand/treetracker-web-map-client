@@ -21,7 +21,7 @@ function ShareIcon(props) {
     <Grid item className={classes.gridContainer}>
       <Grid container direction="column" alignItems="center">
         <Grid item>
-          <IconButton onClick={props.clickHandler}>
+          <IconButton name={props.name} onClick={props.clickHandler}>
             {(() => {
               switch (props.iconSrc) {
                 case 'Embed':
