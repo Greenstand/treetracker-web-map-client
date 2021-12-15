@@ -56,11 +56,21 @@ async function requestAPI(url) {
   }
 }
 
-//TODO implement real code
+// TODO implement real code
 async function getContinent(lat, lon) {
   return {
     name: 'Asia',
   };
 }
 
-export { parseDomain, parseMapName, requestAPI, getContinent };
+function formatDateString(date) {
+  return new Date(date).toLocaleString('en-GB').split(',')[0];
+}
+
+export {
+  parseDomain,
+  parseMapName,
+  requestAPI,
+  getContinent,
+  formatDateString,
+};
