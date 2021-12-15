@@ -8,25 +8,49 @@ on:
     branches:
       - web-map-site
 
-env:
-  project-directory: ./
-
 jobs:
   test:
     name: Run all tests
     runs-on: ubuntu-latest
-    container: node:16.12.0
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Install and cache NPM dependencies, run integration tests
+      - name: Cypress E2E (Dev Server) 🧪
+        uses: cypress-io/github-action@v2
         with:
-          node-version: '16.x'
-      - name: npm clean install
-        run: npm ci
-        working-directory: ${{ env.project-directory }}
+          # run these before testing
+          start: |
+            npm run mock-server
+            npm run dev
+          # wait for server to be ready
+          wait-on: 'http://localhost:3000'
+
+      - name: Run Component tests 🧪
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          command: npx cypress run-ct
+
+      - name: Jest Unit Tests 🧪
+        run: npx jest --ci
 
       - name: ESLint
         run: npm run lint
-        working-directory: ${{ env.project-directory }}
+
+      - name: Save screenshots
+        # step runs even if other steps fail
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: client/cypress/screenshots
+
+      - name: Save videos
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: client/cypress/videos
