@@ -330,18 +330,6 @@ function MapComponent() {
     map.rerender();
   }
 
-  const mapZoomHandler = (type) => {
-    const { map } = mapContext;
-
-    if (type === 'in') {
-      map.map.zoomIn();
-    }
-
-    if (type === 'out') {
-      map.map.zoomOut();
-    }
-  };
-
   /* init timeline date */
   React.useEffect(() => {
     log.debug('init timeline');
@@ -367,38 +355,10 @@ function MapComponent() {
   return (
     <>
       <Box
-        onClick={(e) =>
-          // leaving this lint warning as a reminder to remove this debugging feature
-          console.warn('click:', e, e.screenX, e.clientX, e.clientY)
-        }
         sx={{ width: '100%', height: '100%' }}
         id="map-canvas"
         ref={mapRef}
       >
-        <div className={classes.mapZoomContainer}>
-          <div className={classes.zoomButtonContainer}>
-            <div>
-              <Button
-                className={classes.zoomButton}
-                size="small"
-                variant="outlined"
-                onClick={() => mapZoomHandler('in')}
-              >
-                <AddIcon />
-              </Button>
-            </div>
-            <div>
-              <Button
-                className={classes.zoomButton}
-                size="small"
-                variant="outlined"
-                onClick={() => mapZoomHandler('out')}
-              >
-                <HorizontalRuleIcon />
-              </Button>
-            </div>
-          </div>
-        </div>
       </Box>
       <Snackbar
         open={message.open}
