@@ -46,11 +46,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: cypress-screenshots
-          path: client/cypress/screenshots
+          path: cypress/screenshots
 
       - name: Save videos
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: cypress-videos
-          path: client/cypress/videos
+          path: cypress/videos
