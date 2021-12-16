@@ -10,6 +10,9 @@ const useStyles = makeStyles()((theme) => ({
     background: theme.palette.background.greenOrangeLightGr,
     height: 'fit-content',
     padding: theme.spacing(6),
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(4),
+    },
     borderRadius: theme.spacing(4),
   },
   contentWrapper: {
@@ -34,17 +37,6 @@ const useStyles = makeStyles()((theme) => ({
     width: 110,
     borderRadius: '50%',
     float: 'left',
-  },
-  entityName: {
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: 700,
-    fontSize: '1.75rem',
-    color: theme.palette.textPrimary.main,
-  },
-  entityType: {
-    fontFamily: theme.typography.fontFamily,
-    fontSize: '1rem',
-    color: theme.palette.textPrimary.main,
   },
 }));
 
@@ -77,8 +69,13 @@ function InformationCard1({
           flexDirection="column"
           justifyContent="center"
         >
-          <div className={classes.entityType}>{entityType}</div>
-          <div className={classes.entityName}>{entityName}</div>
+          <Typography>{entityType}</Typography>
+          <Typography
+            variant="h4"
+            sx={{ fontFamily: ['Lato'], letterSpacing: '0.02em' }}
+          >
+            {entityName}
+          </Typography>
         </Box>
       </div>
       <Link href={link}>

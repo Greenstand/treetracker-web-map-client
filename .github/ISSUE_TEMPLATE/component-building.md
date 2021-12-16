@@ -4,7 +4,6 @@ about: This issue is about building component.s
 title: ''
 labels: MaterialUI, react
 assignees: ''
-
 ---
 
 ---

@@ -1,8 +1,8 @@
-import React from 'react';
-import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'models/makeStyles';
+import React from 'react';
 
 const useStyles = makeStyles()((theme) => ({
   root: {

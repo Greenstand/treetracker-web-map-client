@@ -1,15 +1,15 @@
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import * as React from 'react';
-import { styled , useTheme } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import { styled, useTheme } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,23 +41,23 @@ const colorData = [
 ];
 
 const Row = ({ color, isBackground }) => (
-    <StyledTableRow>
-      <TableCell component="th" scope="row">
-        <Typography variant="h6">{color}</Typography>
-      </TableCell>
-      <TableCell align="right">
-        <Box
-          sx={{
-            height: 50,
-            width: 50,
-            borderRadius: '50%',
-            bgcolor: isBackground || `${color}.main`,
-            background: (theme) => theme.palette.background[color],
-          }}
-        ></Box>
-      </TableCell>
-    </StyledTableRow>
-  );
+  <StyledTableRow>
+    <TableCell component="th" scope="row">
+      <Typography variant="h6">{color}</Typography>
+    </TableCell>
+    <TableCell align="right">
+      <Box
+        sx={{
+          height: 50,
+          width: 50,
+          borderRadius: '50%',
+          bgcolor: isBackground || `${color}.main`,
+          background: (theme) => theme.palette.background[color],
+        }}
+      ></Box>
+    </TableCell>
+  </StyledTableRow>
+);
 
 const DesignSandbox = () => {
   const theme = useTheme();

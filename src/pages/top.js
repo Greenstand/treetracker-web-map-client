@@ -1,12 +1,12 @@
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
+import Filter from '../components/common/Filter';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
-import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
@@ -14,8 +14,8 @@ import * as utils from '../models/utils';
 const useStyles = makeStyles()((theme) => ({
   root: {
     padding: theme.spacing(3, 4),
-    maxWidth: "100%",
-    boxSizing: "border-box",
+    maxWidth: '100%',
+    boxSizing: 'border-box',
   },
   title: {
     fontFamily: 'Montserrat',
@@ -69,7 +69,7 @@ export default function Top({ trees, countries }) {
 
   return (
     <div className={classes.root}>
-      <Box sx={{display: "flex", justifyContent: "flex-end", }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Filter onFilter={handleFilter} />
       </Box>
       <Typography variant="h2" className={classes.title}>
