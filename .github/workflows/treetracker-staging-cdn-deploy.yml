@@ -1,3 +1,4 @@
+
 name: Frontend Staging CI/CD Pipeline
 
 on:
@@ -11,7 +12,7 @@ env:
   project-directory: ./
 
 jobs:
-  frontend:
+  release:
     name: Build Frontend Project
     runs-on: ubuntu-latest
     if: |
@@ -30,43 +31,96 @@ jobs:
     - name: npm clean install
       run: npm ci
       working-directory: ${{ env.project-directory }}
-    - name: run ESLint
-      run: npm run lint
+    - run: npm i -g semantic-release @semantic-release/{git,exec,changelog} 
+    - run: semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@master
+    # next.js build
+    - name: build next
+      run: npm run build
       working-directory: ${{ env.project-directory }}
-    # define the endpoints for PROD in github secrets
-    - name: build frontend project
-      run: ${{ secrets.PROD_APP_ENDPOINTS }} npm run build
-      working-directory: ${{ env.project-directory }}
-    - uses: actions/upload-artifact@v2
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
       with:
-        name: frontend-bundle
-        path: build
-    - name: run React tests
-      run: npm test
-      working-directory: ${{ env.project-directory }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build snapshot and push on merge
+      id: docker_build_release
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ./Dockerfile
+        push: true
+        tags: greenstand/${{ github.event.repository.name }}:${{ steps.package-version.outputs.current-version }}
+
+    - id: export_bumped_version
+      run: |
+        export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
+        echo "::set-output name=bumped_version::${BUMPED_VERSION}"
+
+    outputs:
+      bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
 
   deploy:
-    name: Deploy to STAGING CDN
+    name: Deploy to dev env
     runs-on: ubuntu-latest
-    needs: frontend
+    needs: release
     if: |
-      github.repository == "Greenstand/${{ github.event.repository.name }}"   
+      !contains(github.event.head_commit.message, 'skip-ci') &&
+      github.event_name == 'push' &&
+      github.repository == "Greenstand/${{ github.event.repository.name }}"
     steps:
-    - uses: actions/checkout@v2
-    - name: Download bundled frontend resources
-      uses: actions/download-artifact@v2
-      with:
-        name: frontend-bundle
-        path: build
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.PROD_AWS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET }}
-        aws-region: us-east-1
-    - name: Copy front end resources to s3 bucket
-      run: |
-        aws s3 sync build s3://${{ secrets.STAGING_CDN_S3_BUCKET }} --delete
-    - name: Invalidate cloudfront caches
-      run: |
-        aws cloudfront create-invalidation --distribution-id ${{ secrets.STAGING_CDN_DISTRIBUTION_ID }} --paths "/*"
+      - uses: actions/checkout@v2
+      - name: Install kustomize
+        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+      - name: Run kustomize
+        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }} )
+      - name: Install doctl for kubernetes
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
+      - name: Save DigitalOcean kubeconfig
+        run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
+      #- name: Delete completed migration jobs prior to deployment
+      #  run: kubectl -n ${{ secrets.K8S_NAMESPACE }} delete job --ignore-not-found=true  database-migration-job
+      - name: Update kubernetes resources
+        run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+      #- name: Attempt to wait for migration job to complete
+      #  run: kubectl wait -n ${{ secrets.K8S_NAMESPACE }} --for=condition=complete --timeout=45s job/database-migration-job
+
+
+#  deploy:
+#    name: Deploy to STAGING CDN
+#    runs-on: ubuntu-latest
+#    needs: frontend
+#    if: |
+#      github.repository == "Greenstand/${{ github.event.repository.name }}"   
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Download bundled frontend resources
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: frontend-bundle
+#        path: build
+#    - name: Configure AWS credentials
+#      uses: aws-actions/configure-aws-credentials@v1
+#      with:
+#        aws-access-key-id: ${{ secrets.PROD_AWS_KEY_ID }}
+#        aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET }}
+#        aws-region: us-east-1
+#    - name: Copy front end resources to s3 bucket
+#      run: |
+#        aws s3 sync build s3://${{ secrets.STAGING_CDN_S3_BUCKET }} --delete
+#    - name: Invalidate cloudfront caches
+#      run: |
+#        aws cloudfront create-invalidation --distribution-id ${{ secrets.STAGING_CDN_DISTRIBUTION_ID }} --paths "/*"
