@@ -3,8 +3,8 @@ module.exports = {
   '*': ['prettier --ignore-unknown --write'],
 
   // lint javascript after formatting
-  '*.{js,jsx}': ['eslint --fix --cache --quiet'],
+  '*.{js,jsx}': ['eslint --fix'],
 
-  // lint entire project if eslint settings changed
-  '.eslint*': ['eslint . --cache'],
+  // lint entire project if eslint settings changed, do not pass file name arguments
+  '.eslint*': () => 'eslint .',
 };
