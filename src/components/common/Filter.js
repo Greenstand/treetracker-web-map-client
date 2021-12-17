@@ -1,10 +1,11 @@
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import log from 'loglevel';
+// import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
@@ -66,9 +67,16 @@ function Filter(props) {
   const { classes } = useStyles();
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
+  const [showMessage, setShowMessage] = React.useState(false);
 
   function handleSubmit() {
-    log.log('submit');
+    if (startDate > endDate) {
+      setShowMessage(true);
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 5000);
+    }
+
     onFilter({
       startDate,
       endDate,
@@ -235,6 +243,7 @@ function Filter(props) {
               </Grid>
 
               <Grid item xs={6}>
+                {/* I think you should use datepickers here :) */}
                 <TextField
                   label="End Date"
                   type="date"
@@ -260,6 +269,13 @@ function Filter(props) {
           </Box>
         </Box>
       </form>
+      {showMessage ? (
+        <Alert severity="warning">
+          Start date: {startDate} is bigger than end date: {endDate}
+        </Alert>
+      ) : (
+        <p></p>
+      )}
     </Box>
   );
 }
