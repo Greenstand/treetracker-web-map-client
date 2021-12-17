@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-// import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
@@ -270,7 +269,7 @@ function Filter(props) {
         </Box>
       </form>
       {showMessage ? (
-        <Alert severity="warning">
+        <Alert severity="warning" sx={{ my: 4 }}>
           Start date: {startDate} is bigger than end date: {endDate}
         </Alert>
       ) : (
