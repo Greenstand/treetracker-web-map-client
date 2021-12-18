@@ -66,13 +66,76 @@ function Filter(props) {
   const { classes } = useStyles();
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
+  const [toggle, setToggle] = React.useState(true);
+  const [isError, setError] = React.useState(false);
+  const [onSubmit, setSubmit] = React.useState(false);
+
+  const START_DATE = new Date(startDate);
+  const END_DATE = new Date(endDate);
+
+  const END_DATE_TIME_TO_MILLISECONDS = END_DATE.getTime();
+  const START_DATE_TIME_TO_MILLISECONDS = START_DATE.getTime();
+
+  const DATES_IS_TRUE = !startDate || !endDate;
+  const DATES_IS_FALSE = startDate && endDate;
+
+  const START_DATE_IS_TRUE = startDate;
+  const END_DATE_IS_TRUE = endDate;
+
+  const CONDITIONS =
+    !START_DATE_TIME_TO_MILLISECONDS ||
+    !END_DATE_TIME_TO_MILLISECONDS ||
+    END_DATE_TIME_TO_MILLISECONDS === START_DATE_TIME_TO_MILLISECONDS ||
+    START_DATE_TIME_TO_MILLISECONDS > END_DATE_TIME_TO_MILLISECONDS ||
+    END_DATE_TIME_TO_MILLISECONDS < START_DATE_TIME_TO_MILLISECONDS;
+
+  const IS_CLOSED = toggle === false && !onSubmit;
+
+  const IS_OPENED = onFilter && toggle === true;
+
+  const IS_SUBMITTED =
+    onSubmit &&
+    DATES_IS_FALSE &&
+    toggle === false &&
+    START_DATE_IS_TRUE &&
+    END_DATE_IS_TRUE;
+
+  const handleToggle = () => {
+    setToggle((prev) => !prev);
+    if (toggle === false) {
+      setStartDate('');
+      setEndDate('');
+      setError(false);
+      setSubmit(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setSubmit(false);
+    setToggle(false);
+  };
+
+  const handleDates = () => {
+    if (CONDITIONS) {
+      setError(true);
+      setToggle(true);
+    } else {
+      setError(false);
+      setToggle(false);
+    }
+  };
 
   function handleSubmit() {
     log.log('submit');
-    onFilter({
-      startDate,
-      endDate,
-    });
+    setToggle(false);
+    handleDates();
+    if (!isError) {
+      setSubmit(true);
+      onFilter({
+        startDate,
+        endDate,
+      });
+    }
   }
   return (
     <Box sx={{ width: 1 }}>
@@ -83,182 +146,77 @@ function Filter(props) {
             variant="contained"
             color="secondary"
             className={classes.filterButton}
+            onClick={() => handleToggle()}
           >
             <FilterListRoundedIcon fontSize="small" />
             <Typography className={classes.filterButtonText}>
-              Filters
+              {IS_CLOSED && `Filters is  closed`}
+              {IS_OPENED && `Filters is  open`}
+              {IS_SUBMITTED && `Filters is ${startDate} / ${endDate}`}
             </Typography>
           </Button>
         </Box>
-
-        <Box className={classes.container}>
-          {/*<Box className={`${classes.row}`}>
-          <TextField
-            select
-            label="Tree Species"
-            variant="outlined"
-            size="small"
-            className={`${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
-            InputLabelProps={{
-              className: classes.inputLabel,
-            }}
-            InputProps={{
-              className: classes.inputLabel,
-            }}
-            color="secondary"
-          >
-            <MenuItem>todo</MenuItem>
-          </TextField>
-          <TextField
-            select
-            label="Planting org"
-            variant="outlined"
-            size="small"
-            className={`${classes.textField} ${classes.spaceBelow}`}
-            InputLabelProps={{
-              className: classes.inputLabel,
-            }}
-            InputProps={{
-              className: classes.inputLabel,
-            }}
-            color="secondary"
-          >
-            <MenuItem>todo</MenuItem>
-          </TextField>
-        </Box>
-        <Box className={`${classes.row} `}>
-          <TextField
-            select
-            label="Country"
-            variant="outlined"
-            size="small"
-            className={`${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
-            InputLabelProps={{
-              className: classes.inputLabel,
-            }}
-            InputProps={{
-              className: classes.inputLabel,
-            }}
-            color="secondary"
-          >
-            <MenuItem>todo</MenuItem>
-          </TextField>
-          <TextField
-            select
-            label="City"
-            variant="outlined"
-            size="small"
-            className={`${classes.textField} ${classes.spaceBelow}`}
-            InputLabelProps={{
-              className: classes.inputLabel,
-            }}
-            InputProps={{
-              className: classes.inputLabel,
-            }}
-            color="secondary"
-          >
-            <MenuItem>todo</MenuItem>
-          </TextField>
-        </Box>
-        <Box className={`${classes.row}`}>
-          <TextField
-            select
-            label="Health status"
-            variant="outlined"
-            size="small"
-            className={`${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
-            InputLabelProps={{
-              className: classes.inputLabel,
-            }}
-            InputProps={{
-              className: classes.inputLabel,
-            }}
-            color="secondary"
-          >
-            <MenuItem>todo</MenuItem>
-          </TextField>
-          <TextField
-            select
-            label="Verification status"
-            variant="outlined"
-            size="small"
-            className={`${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
-            InputLabelProps={{
-              className: classes.inputLabel,
-            }}
-            InputProps={{
-              className: classes.inputLabel,
-            }}
-            color="secondary"
-          >
-            <MenuItem>todo</MenuItem>
-          </TextField>
-          <TextField
-            select
-            label="Token status"
-            variant="outlined"
-            size="small"
-            className={`${classes.textField} ${classes.spaceBelow}`}
-            InputLabelProps={{
-              className: classes.inputLabel,
-            }}
-            InputProps={{
-              className: classes.inputLabel,
-            }}
-            color="secondary"
-          >
-            <MenuItem>todo</MenuItem>
-          </TextField>
-        </Box> */}
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography className={classes.plantDateTitle}>
-                Planted between (timeline)
-              </Typography>
-            </Grid>
-            <Grid item container sx={{ mt: 5 }} columnSpacing={{ xs: 2 }}>
-              <Grid item xs={6}>
-                <TextField
-                  label="Start Date"
-                  type="date"
-                  variant="outlined"
-                  size="small"
-                  className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
-                  color="secondary"
-                  InputLabelProps={{
-                    shrink: true,
-                    className: classes.inputLabel,
-                  }}
-                  sx={{ width: 1 }}
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
+        {toggle === true && (
+          <Box className={classes.container}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography className={classes.plantDateTitle}>
+                  Planted between (timeline)
+                </Typography>
               </Grid>
+              <Grid item container sx={{ mt: 5 }} columnSpacing={{ xs: 2 }}>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Start Date"
+                    type="date"
+                    variant="outlined"
+                    size="small"
+                    error={isError}
+                    className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
+                    color="secondary"
+                    InputLabelProps={{
+                      shrink: true,
+                      className: classes.inputLabel,
+                    }}
+                    sx={{ width: 1 }}
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
+                </Grid>
 
-              <Grid item xs={6}>
-                <TextField
-                  label="End Date"
-                  type="date"
-                  variant="outlined"
-                  size="small"
-                  className={` ${classes.textField}`}
-                  color="secondary"
-                  InputLabelProps={{
-                    shrink: true,
-                    className: classes.inputLabel,
-                  }}
-                  sx={{ width: 1 }}
-                  onChange={(e) => setEndDate(e.target.value)}
-                />
+                <Grid item xs={6}>
+                  <TextField
+                    label="End Date"
+                    type="date"
+                    variant="outlined"
+                    size="small"
+                    error={isError}
+                    className={` ${classes.textField}`}
+                    color="secondary"
+                    InputLabelProps={{
+                      shrink: true,
+                      className: classes.inputLabel,
+                    }}
+                    sx={{ width: 1 }}
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Box sx={{ gap: 2, display: 'flex', justifyContent: 'end' }}>
-            <Button variant="text">Cancel</Button>
-            <Button onClick={handleSubmit} color="primary" variant="contained">
-              Submit
-            </Button>
+            <Box sx={{ gap: 2, display: 'flex', justifyContent: 'end' }}>
+              <Button variant="text" onClick={() => handleCancel()}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSubmit}
+                color="primary"
+                variant="contained"
+                disabled={DATES_IS_TRUE}
+              >
+                Submit
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        )}
       </form>
     </Box>
   );
