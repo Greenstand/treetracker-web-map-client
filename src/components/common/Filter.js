@@ -157,7 +157,7 @@ function Filter(props) {
           </Button>
         </Box>
         {toggle === true && (
-          <Box className={classes.container}>
+          <Box className={classes.container} data-cy="hidden">
             <Grid container>
               <Grid item xs={12}>
                 <Typography className={classes.plantDateTitle}>
