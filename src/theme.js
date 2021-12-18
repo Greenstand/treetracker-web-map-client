@@ -3,48 +3,8 @@
  */
 import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
+const colorTheme = createTheme({
   spacing: 4,
-  typography: {
-    fontFamily: ['Lato', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
-      ',',
-    ),
-    fontWeight: 400,
-    h1: {
-      fontFamily: ['Montserrat'].join(','),
-      fontSize: '48px',
-      fontWeight: 600,
-      lineHeight: '63px',
-    },
-    h2: {
-      fontFamily: 'Montserrat',
-      fontSize: '36px',
-      lineHeight: '44px',
-      fontWeight: 600,
-    },
-    h3: {
-      fontFamily: 'Montserrat',
-      fontSize: '32px',
-      lineHeight: '28px',
-      fontWeight: 600,
-    },
-    h4: {
-      fontFamily: 'Montserrat',
-      fontSize: '28px',
-      fontWeight: 700,
-    },
-    h5: {
-      fontSize: '20px',
-      fontWeight: 700,
-    },
-    h6: {
-      fontSize: '16px',
-      fontWeight: 700,
-    },
-    body1: {
-      letterSpacing: '0.04em',
-    },
-  },
   palette: {
     background: {
       greenGradient:
@@ -63,6 +23,7 @@ const theme = createTheme({
     },
     secondary: {
       main: '#86C232',
+      contrastText: '#fff',
     },
     textPrimary: {
       main: '#474B4F',
@@ -75,6 +36,69 @@ const theme = createTheme({
     },
     textLight: {
       main: '#6B6E70',
+    },
+  },
+});
+
+const theme = createTheme(colorTheme, {
+  typography: {
+    fontFamily: ['Lato', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
+      ',',
+    ),
+    fontWeight: 400,
+    h1: {
+      fontFamily: ['Montserrat'].join(','),
+      fontSize: '48px',
+      fontWeight: 600,
+      lineHeight: '63px',
+      [colorTheme.breakpoints.down('md')]: {
+        lineHeight: '32px',
+        fontSize: '32px',
+      },
+    },
+    h2: {
+      fontFamily: 'Montserrat',
+      fontSize: '36px',
+      lineHeight: '44px',
+      fontWeight: 600,
+      [colorTheme.breakpoints.down('md')]: {
+        lineHeight: '30px',
+        fontSize: '24px',
+      },
+    },
+    h3: {
+      fontFamily: 'Montserrat',
+      fontSize: '32px',
+      lineHeight: '28px',
+      fontWeight: 600,
+      [colorTheme.breakpoints.down('md')]: {
+        fontSize: '16px',
+      },
+    },
+    h4: {
+      fontFamily: 'Montserrat',
+      fontSize: '28px',
+      fontWeight: 700,
+      [colorTheme.breakpoints.down('md')]: {
+        fontSize: '20px',
+      },
+    },
+    h5: {
+      fontSize: '20px',
+      fontWeight: 700,
+      [colorTheme.breakpoints.down('md')]: {
+        fontSize: '16px',
+      },
+    },
+    h6: {
+      fontSize: '16px',
+      fontWeight: 700,
+    },
+    body1: {
+      letterSpacing: '0.04em',
+      [colorTheme.breakpoints.down('md')]: {
+        fontSize: '14px',
+      },
     },
   },
 });

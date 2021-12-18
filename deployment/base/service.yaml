@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: treetracker-web-map-client-ambassador-svc
+  labels:
+    app: treetracker-web-map-client
+    name: treetracker-web-map-client-ambassador-svc
+  namespace: webmap
+spec:
+  selector:
+    app: tretracker-web-map-client
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
