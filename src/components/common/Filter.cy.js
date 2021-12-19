@@ -17,34 +17,33 @@ describe('Filter', () => {
     cy.contains(/timeline/i);
 
     // cypress to find the date type of input, choose the first one, and input the date
-    cy.get('input[type=date]').first().type('2020-01-01');
+    cy.get('input[type=text]').first().type('2020-01-01');
 
     // find the second date type of input, choose the second one, and input the date
-    cy.get('input[type=date]').eq(1).type('2020-01-02');
+    cy.get('input[type=text]').eq(1).type('2020-01-02');
 
-    cy.get('input[type=date]')
+    cy.get('input[type=text]')
       .invoke('val')
       .then((val1) => {
-        cy.get('input[type=date]')
+        cy.get('input[type=text]')
           .eq(1)
           .invoke('val')
           .should((val2) => {
             const startDate_milliseconds = new Date(val1);
             const endDate_milliseconds = new Date(val2);
-
             const start = startDate_milliseconds.getTime();
             const end = endDate_milliseconds.getTime();
 
-            expect(start).lt(end);
+            expect(start).to.be.lessThan(end);
           });
-        cy.contains(/submit/i)
-          .click()
-          .then(() => {
-            expect(handleFilter).to.be.calledWith({
-              startDate: '2020-01-01',
-              endDate: '2020-01-02',
-            });
-          });
+      });
+    cy.contains(/submit/i)
+      .click()
+      .then(() => {
+        expect(handleFilter).to.be.calledWith({
+          startDate: '2020-01-01',
+          endDate: '2020-01-02',
+        });
       });
   });
 
@@ -55,15 +54,15 @@ describe('Filter', () => {
     cy.contains(/timeline/i);
 
     // cypress to find the date type of input, choose the first one, and input the date
-    cy.get('input[type=date]').first().type('2020-01-05');
+    cy.get('input[type=text]').first().type('2020-01-05');
 
     // find the second date type of input, choose the second one, and input the date
-    cy.get('input[type=date]').eq(1).type('2020-01-02');
+    cy.get('input[type=text]').eq(1).type('2020-01-02');
 
-    cy.get('input[type=date]')
+    cy.get('input[type=text]')
       .invoke('val')
       .then((val1) => {
-        cy.get('input[type=date]')
+        cy.get('input[type=text]')
           .eq(1)
           .invoke('val')
           .should((val2) => {
@@ -75,7 +74,14 @@ describe('Filter', () => {
 
             expect(start).to.be.greaterThan(end);
           });
-        cy.contains(/submit/i).click();
+        cy.contains(/submit/i)
+          .click()
+          .then(() => {
+            expect(handleFilter).to.be.calledWith({
+              startDate: '2020-01-05',
+              endDate: '2020-01-02',
+            });
+          });
       });
   });
 
@@ -86,15 +92,15 @@ describe('Filter', () => {
     cy.contains(/timeline/i);
 
     // cypress to find the date type of input, choose the first one, and input the date
-    cy.get('input[type=date]').first().type('2020-01-05');
+    cy.get('input[type=text]').first().type('2020-01-05');
 
     // find the second date type of input, choose the second one, and input the date
-    cy.get('input[type=date]').eq(1).type('2020-01-05');
+    cy.get('input[type=text]').eq(1).type('2020-01-05');
 
-    cy.get('input[type=date]')
+    cy.get('input[type=text]')
       .invoke('val')
       .then((val1) => {
-        cy.get('input[type=date]')
+        cy.get('input[type=text]')
           .eq(1)
           .invoke('val')
           .should((val2) => {
@@ -106,7 +112,14 @@ describe('Filter', () => {
 
             expect(start).equal(end);
           });
-        cy.contains(/submit/i).click();
+        cy.contains(/submit/i)
+          .click()
+          .then(() => {
+            expect(handleFilter).to.be.calledWith({
+              startDate: '2020-01-05',
+              endDate: '2020-01-05',
+            });
+          });
       });
   });
 
