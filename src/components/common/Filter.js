@@ -1,4 +1,7 @@
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -64,23 +67,43 @@ const useStyles = makeStyles()((theme) => ({
 function Filter(props) {
   const { onFilter } = props;
   const { classes } = useStyles();
-  const [startDate, setStartDate] = React.useState('');
-  const [endDate, setEndDate] = React.useState('');
+  const [startDateState, setStartDateState] = React.useState('');
+  const [endDateState, setEndDateState] = React.useState('');
   const [toggle, setToggle] = React.useState(true);
   const [isError, setError] = React.useState(false);
   const [onSubmit, setSubmit] = React.useState(false);
 
-  const START_DATE = new Date(startDate);
-  const END_DATE = new Date(endDate);
+  const formatTheDates = (date) => {
+    const newDate = new Date(date);
+    const day = `0${newDate.getDate()}`.slice(-2);
+    const month = `0${newDate.getMonth() + 1}`.slice(-2);
+    const year = newDate.getFullYear();
 
-  const END_DATE_TIME_TO_MILLISECONDS = END_DATE.getTime();
-  const START_DATE_TIME_TO_MILLISECONDS = START_DATE.getTime();
+    return `${year}-${month}-${day}`;
+  };
+  const FORMAT_START_DATE = new Date(startDateState);
+  const FORMAT_END_DATE = new Date(endDateState);
 
-  const DATES_IS_TRUE = !startDate || !endDate;
-  const DATES_IS_FALSE = startDate && endDate;
+  const START_DATE = formatTheDates(FORMAT_START_DATE);
+  const END_DATE = formatTheDates(FORMAT_END_DATE);
 
-  const START_DATE_IS_TRUE = startDate;
-  const END_DATE_IS_TRUE = endDate;
+  const formatTheDatesForBetterView = (date) => {
+    const newDate = new Date(date);
+    const day = `0${newDate.getDate()}`.slice(-2);
+    const month = `0${newDate.getMonth() + 1}`.slice(-2);
+    const year = newDate.getFullYear();
+
+    return `${year}/${month}/${day}`;
+  };
+
+  const END_DATE_TIME_TO_MILLISECONDS = FORMAT_END_DATE.getTime();
+  const START_DATE_TIME_TO_MILLISECONDS = FORMAT_START_DATE.getTime();
+
+  const DATES_IS_TRUE = !startDateState || !endDateState;
+  const DATES_IS_FALSE = startDateState && endDateState;
+
+  const START_DATE_IS_TRUE = startDateState;
+  const END_DATE_IS_TRUE = endDateState;
 
   const CONDITIONS =
     !START_DATE_TIME_TO_MILLISECONDS ||
@@ -103,13 +126,18 @@ function Filter(props) {
   const handleToggle = () => {
     setToggle((prev) => !prev);
     if (toggle === false) {
-      setStartDate('');
-      setEndDate('');
+      setStartDateState('');
+      setEndDateState('');
       setError(false);
       setSubmit(false);
     }
   };
-
+  const handleChangeEndDateState = (newValue) => {
+    setEndDateState(newValue);
+  };
+  const handleChangeStartDateState = (newValue) => {
+    setStartDateState(newValue);
+  };
   const handleCancel = () => {
     setSubmit(false);
     setToggle(false);
@@ -125,21 +153,21 @@ function Filter(props) {
     }
   };
 
-  function handleSubmit() {
+  const handleSubmit = () => {
     log.log('submit');
     setToggle(false);
     handleDates();
-    if (!isError) {
+    if (isError !== true) {
       setSubmit(true);
-      onFilter({
-        startDate,
-        endDate,
-      });
+      const startDate = START_DATE;
+      const endDate = END_DATE;
+      onFilter({ startDate, endDate });
     }
-  }
+  };
+
   return (
     <Box sx={{ width: 1 }}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Box className={classes.title}>
           <Typography className={classes.titleText}></Typography>
           <Button
@@ -152,7 +180,10 @@ function Filter(props) {
             <Typography className={classes.filterButtonText}>
               {IS_CLOSED && `Filters is  closed`}
               {IS_OPENED && `Filters is  open`}
-              {IS_SUBMITTED && `Filters is ${startDate} / ${endDate}`}
+              {IS_SUBMITTED &&
+                `Filters are ${formatTheDatesForBetterView(
+                  startDateState,
+                )} - ${formatTheDatesForBetterView(endDateState)}`}
             </Typography>
           </Button>
         </Box>
@@ -164,43 +195,58 @@ function Filter(props) {
                   Planted between (timeline)
                 </Typography>
               </Grid>
-              <Grid item container sx={{ mt: 5 }} columnSpacing={{ xs: 2 }}>
-                <Grid item xs={6}>
-                  <TextField
-                    label="Start Date"
-                    type="date"
-                    variant="outlined"
-                    size="small"
-                    error={isError}
-                    className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
-                    color="secondary"
-                    InputLabelProps={{
-                      shrink: true,
-                      className: classes.inputLabel,
-                    }}
-                    sx={{ width: 1 }}
-                    onChange={(e) => setStartDate(e.target.value)}
-                  />
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Grid item container sx={{ mt: 5 }} columnSpacing={{ xs: 2 }}>
+                  <Grid item sm={6}>
+                    <DesktopDatePicker
+                      label="Start Date"
+                      inputFormat="yyyy-MM-dd"
+                      className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
+                      value={startDateState}
+                      onChange={handleChangeStartDateState}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Start Date"
+                          variant="outlined"
+                          size="small"
+                          error={isError}
+                          className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
+                          color="secondary"
+                          InputLabelProps={{
+                            shrink: true,
+                            className: classes.inputLabel,
+                          }}
+                          sx={{ width: 1 }}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <DesktopDatePicker
+                      label="End Date"
+                      inputFormat="yyyy-MM-dd"
+                      value={endDateState}
+                      onChange={handleChangeEndDateState}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          size="small"
+                          error={isError}
+                          className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
+                          color="secondary"
+                          InputLabelProps={{
+                            shrink: true,
+                            className: classes.inputLabel,
+                          }}
+                          sx={{ width: 1 }}
+                        />
+                      )}
+                    />
+                  </Grid>
                 </Grid>
-
-                <Grid item xs={6}>
-                  <TextField
-                    label="End Date"
-                    type="date"
-                    variant="outlined"
-                    size="small"
-                    error={isError}
-                    className={` ${classes.textField}`}
-                    color="secondary"
-                    InputLabelProps={{
-                      shrink: true,
-                      className: classes.inputLabel,
-                    }}
-                    sx={{ width: 1 }}
-                    onChange={(e) => setEndDate(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
+              </LocalizationProvider>
             </Grid>
             <Box sx={{ gap: 2, display: 'flex', justifyContent: 'end' }}>
               <Button variant="text" onClick={() => handleCancel()}>
