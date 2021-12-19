@@ -81,13 +81,13 @@ function Filter(props) {
 
     return `${year}-${month}-${day}`;
   };
-  const FORMAT_START_DATE = new Date(startDateState);
-  const FORMAT_END_DATE = new Date(endDateState);
+  const START_DATE = new Date(startDateState);
+  const END_DATE = new Date(endDateState);
 
-  const START_DATE = formatTheDates(FORMAT_START_DATE);
-  const END_DATE = formatTheDates(FORMAT_END_DATE);
+  const FORMAT_START_DATE = formatTheDates(START_DATE);
+  const FORMAT_END_DATE = formatTheDates(END_DATE);
 
-  const formatTheDatesForBetterView = (date) => {
+  const formatTheDatesForBetterDisplay = (date) => {
     const newDate = new Date(date);
     const day = `0${newDate.getDate()}`.slice(-2);
     const month = `0${newDate.getMonth() + 1}`.slice(-2);
@@ -96,8 +96,8 @@ function Filter(props) {
     return `${year}/${month}/${day}`;
   };
 
-  const END_DATE_TIME_TO_MILLISECONDS = FORMAT_END_DATE.getTime();
-  const START_DATE_TIME_TO_MILLISECONDS = FORMAT_START_DATE.getTime();
+  const END_DATE_TIME_TO_MILLISECONDS = END_DATE.getTime();
+  const START_DATE_TIME_TO_MILLISECONDS = START_DATE.getTime();
 
   const DATES_IS_TRUE = !startDateState || !endDateState;
   const DATES_IS_FALSE = startDateState && endDateState;
@@ -159,8 +159,8 @@ function Filter(props) {
     handleDates();
     if (isError !== true) {
       setSubmit(true);
-      const startDate = START_DATE;
-      const endDate = END_DATE;
+      const startDate = FORMAT_START_DATE;
+      const endDate = FORMAT_END_DATE;
       onFilter({ startDate, endDate });
     }
   };
@@ -181,9 +181,9 @@ function Filter(props) {
               {IS_CLOSED && `Filters is  closed`}
               {IS_OPENED && `Filters is  open`}
               {IS_SUBMITTED &&
-                `Filters are ${formatTheDatesForBetterView(
+                `Filters are ${formatTheDatesForBetterDisplay(
                   startDateState,
-                )} - ${formatTheDatesForBetterView(endDateState)}`}
+                )} - ${formatTheDatesForBetterDisplay(endDateState)}`}
             </Typography>
           </Button>
         </Box>
