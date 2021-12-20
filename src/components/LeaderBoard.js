@@ -51,9 +51,7 @@ function LeaderBoard(props) {
   }
 
   const { classes } = useStyles();
-  React.useEffect(() => {
-    console.log(props);
-  }, []);
+
   return (
     <>
       <Box
