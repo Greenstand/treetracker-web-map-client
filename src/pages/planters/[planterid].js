@@ -1,5 +1,6 @@
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
+import { Stack } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 // import Card from '@mui/material/Card';
@@ -13,8 +14,7 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 
 import CustomCard from '../../components/common/CustomCard';
-import Location from '../../components/common/Location';
-import Time from '../../components/common/Time';
+import DataTag from '../../components/common/DataTag';
 import FeaturedTreesSlider from '../../components/FeaturedTreesSlider';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
@@ -51,6 +51,9 @@ const useStyles = makeStyles()((theme) => ({
     color: theme.palette.textPrimary.main,
   },
 }));
+
+const formatDates = (date) =>
+  moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('LL');
 
 export default function Planter({ planter }) {
   const mapContext = useMapContext();
@@ -90,10 +93,10 @@ export default function Planter({ planter }) {
         <VerifiedBadge verified={true} badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Orgs" />
       </Box>
-      <Box className={classes.box1}>
-        <Time date={moment(planter.created_time).toDate()} />
-        <Location entityLocation="Shirimatunda,Tanzania" />
-      </Box>
+      <Stack gap={2.5} sx={{ my: 2 }}>
+        <DataTag data={formatDates(planter.created_time)} />
+        <DataTag data="Shirimatunda,Tanzania" location />
+      </Stack>
       <Box mt={1} />
       <Divider className={classes.divider} />
       {/* <Box
