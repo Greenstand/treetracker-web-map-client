@@ -1,6 +1,7 @@
 import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
 import ParkTwoToneIcon from '@mui/icons-material/ParkTwoTone';
 import { Avatar, Box, Grid, Typography } from '@mui/material';
+import { textAlign } from '@mui/system';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
@@ -22,6 +23,12 @@ const useStyles = makeStyles()(() => ({
     fontFamily: 'Montserrat',
     fontWeight: 600,
     padding: '10px',
+    textAlign: 'center',
+  },
+  customText2: {
+    fontFamily: 'Montserrat',
+    fontWeight: 600,
+    textAlign: 'center',
   },
   clickable: {
     cursor: 'pointer',
@@ -44,11 +51,19 @@ function LeaderBoard(props) {
   }
 
   const { classes } = useStyles();
-  const nonTop3 = countries.slice(3);
-
+  React.useEffect(() => {
+    console.log(props);
+  }, []);
   return (
     <>
-      <Box sx={{ flexGrow: 1, borderRadius: 16, borderColor: 'grey.500' }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          borderRadius: 16,
+          borderColor: 'grey.500',
+          marginTop: 5,
+        }}
+      >
         <Grid
           container
           columns={16}
@@ -59,370 +74,97 @@ function LeaderBoard(props) {
             {/* Empty space */}
           </Grid>
           <Grid item xs={1}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 25,
-                  md: 25,
-                  sm: 25,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
+            <Typography variant="h5" className={classes.customText}>
               #
             </Typography>
           </Grid>
-          <Grid item xs={9}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 25,
-                  md: 25,
-                  sm: 25,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
+          <Grid item xs={7}>
+            <Typography variant="h5" className={classes.customText}>
               COUNTRY
             </Typography>
           </Grid>
-          <Grid item xs={5}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 25,
-                  md: 25,
-                  sm: 25,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
+          <Grid item xs={7}>
+            <Typography variant="h5" className={classes.customText}>
               TREES PLANTED <ParkTwoToneIcon style={{ color: 'green' }} />
             </Typography>
           </Grid>
         </Grid>
       </Box>
 
-      <Box
-        sx={{
-          flexGrow: 1,
-          borderRadius: 16,
-          borderColor: 'grey.500',
-          boxShadow: 5,
-        }}
-        margin={2}
-        borderColor={'beige.500'}
-        onClick={() => handleCountryClick(countries[0].id)}
-        className={classes.clickable}
-      >
-        <Grid
-          container
-          columns={16}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item xs={1}>
-            <EmojiEventsTwoToneIcon
-              style={{ color: 'gold', marginLeft: '30px' }}
-            />
-          </Grid>
-
-          <Grid item xs={1}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              1{' '}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Avatar
-              src={countries[0].flag}
-              variant="rounded"
-              className={`${classes.flag}  ${classes.sizeAvatar}  `}
-              borderRadius
-            />
-          </Grid>
-          <Grid item xs={5}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              {countries[0].name}
-            </Typography>
-          </Grid>
-          <Grid item xs={5}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              {countries[0].planted.toLocaleString()}
-              <ParkTwoToneIcon style={{ color: 'green' }} />
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-      <Box
-        sx={{
-          flexGrow: 1,
-          borderRadius: 16,
-          borderColor: 'grey.500',
-          boxShadow: 5,
-        }}
-        margin={2}
-        borderColor={'beige.500'}
-        onClick={() => handleCountryClick(countries[1].id)}
-        className={classes.clickable}
-      >
-        <Grid
-          container
-          columns={16}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item xs={1}>
-            <EmojiEventsTwoToneIcon
-              style={{ color: 'silver', marginLeft: '30px' }}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              2{' '}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Avatar
-              src={countries[1].flag}
-              variant="rounded"
-              className={`${classes.flag}  ${classes.sizeAvatar}  `}
-              borderRadius
-            />
-          </Grid>
-          <Grid item xs={5}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              {countries[1].name}
-            </Typography>
-          </Grid>
-          <Grid item xs={5}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              {countries[1].planted.toLocaleString()}
-              <ParkTwoToneIcon style={{ color: 'green' }} />
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-      <Box
-        sx={{
-          flexGrow: 1,
-          borderRadius: 16,
-          borderColor: 'grey.500',
-          boxShadow: 5,
-        }}
-        margin={2}
-        borderColor={'beige.500'}
-        onClick={() => handleCountryClick(countries[2].id)}
-        className={classes.clickable}
-      >
-        <Grid
-          container
-          columns={16}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item xs={1}>
-            <EmojiEventsTwoToneIcon
-              style={{ color: 'brown', marginLeft: '30px' }}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              3{' '}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Avatar
-              src={countries[2].flag}
-              variant="rounded"
-              className={`${classes.flag}  ${classes.sizeAvatar}  `}
-              borderRadius
-            />
-          </Grid>
-          <Grid item xs={5}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              {countries[2].name}
-            </Typography>
-          </Grid>
-          <Grid item xs={5}>
-            <Typography
-              sx={{
-                fontSize: {
-                  lg: 30,
-                  md: 30,
-                  sm: 30,
-                  xs: 20,
-                },
-              }}
-              className={classes.customText}
-            >
-              {countries[2].planted.toLocaleString()}
-              <ParkTwoToneIcon style={{ color: 'green' }} />
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
       {countries ? (
-        nonTop3.map((country, index) => (
-            <Box
-              key={country.id}
-              sx={{
-                flexGrow: 1,
-                borderRadius: 16,
-                borderColor: 'grey.500',
-                boxShadow: 5,
-              }}
-              margin={2}
-              borderColor={'beige.500'}
-              onClick={() => handleCountryClick(country.id)}
-              className={classes.clickable}
+        countries.map((country, index) => (
+          <Box
+            key={country.id}
+            sx={{
+              flexGrow: 1,
+              borderRadius: 16,
+              borderColor: 'grey.500',
+              boxShadow: 5,
+            }}
+            margin={2}
+            borderColor={'beige.500'}
+            onClick={() => handleCountryClick(country.id)}
+            className={classes.clickable}
+          >
+            <Grid
+              container
+              columns={16}
+              justifyContent="center"
+              alignItems="center"
             >
-              <Grid
-                container
-                columns={16}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Grid item xs={1}></Grid>
-                <Grid item xs={1}>
-                  <Typography
-                    sx={{
-                      fontSize: {
-                        lg: 30,
-                        md: 30,
-                        sm: 30,
-                        xs: 20,
-                      },
-                    }}
-                    className={classes.customText}
-                  >
-                    {index + 4}
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Avatar
-                    src={country.flag || countries[index].flag}
-                    variant="rounded"
-                    className={`${classes.flag}  ${classes.sizeAvatar}  `}
-                    borderRadius
+              <Grid item xs={1}>
+                {index === 0 ? (
+                  <EmojiEventsTwoToneIcon
+                    style={{ color: 'gold', marginLeft: '5' }}
                   />
-                </Grid>
-                <Grid item xs={5}>
-                  <Typography
-                    sx={{
-                      fontSize: {
-                        lg: 30,
-                        md: 30,
-                        sm: 30,
-                        xs: 20,
-                      },
-                    }}
-                    className={classes.customText}
-                  >
-                    {country.name}
-                  </Typography>
-                </Grid>
-                <Grid item xs={5}>
-                  <Typography
-                    sx={{
-                      fontSize: {
-                        lg: 30,
-                        md: 30,
-                        sm: 30,
-                        xs: 20,
-                      },
-                    }}
-                    className={classes.customText}
-                  >
-                    {country.planted.toLocaleString()}
-                    <ParkTwoToneIcon style={{ color: 'green' }} />
-                  </Typography>
-                </Grid>
+                ) : (
+                  <p></p>
+                )}
+                {index === 1 ? (
+                  <EmojiEventsTwoToneIcon
+                    style={{ color: 'silver', marginLeft: '5' }}
+                  />
+                ) : (
+                  <p></p>
+                )}
+                {index === 2 ? (
+                  <EmojiEventsTwoToneIcon
+                    style={{ color: 'brown', marginLeft: '5' }}
+                  />
+                ) : (
+                  <p></p>
+                )}
               </Grid>
-            </Box>
-          ))
+
+              <Grid item xs={1}>
+                <Typography variant="h5" className={classes.customText}>
+                  {index + 1}
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Avatar
+                  src={country.flag || countries[index].flag}
+                  variant="rounded"
+                  className={`${classes.flag}  ${classes.sizeAvatar}  `}
+                  borderRadius
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <Typography variant="h5" className={classes.customText}>
+                  {country.name}
+                </Typography>
+              </Grid>
+              <Grid item xs={5}>
+                <Typography variant="h5" className={classes.customText2}>
+                  {country.planted.toLocaleString()}
+                  <ParkTwoToneIcon
+                    style={{ color: 'green', marginLeft: '5' }}
+                  />
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+        ))
       ) : (
         <p>Siuuu</p>
       )}
