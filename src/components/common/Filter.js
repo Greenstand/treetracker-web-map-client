@@ -41,8 +41,6 @@ function Filter(props) {
     setIsFilterOpen((prev) => !prev);
 
     if (!isFilterOpen) {
-      setStartDate('');
-      setEndDate('');
       setIsError(false);
       setOnSubmit(false);
     }
