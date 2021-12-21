@@ -46,13 +46,15 @@ function Filter(props) {
   const [onSubmit, setOnSubmit] = useState(false);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
 
-  const formatDates = (date) => moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY-MM-DD');
+  const formatDates = (date) =>
+    moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY-MM-DD');
 
   /*
    * The reason why I created the function formatDisplayDates
    * is to make the dates readable in the button filter.
    */
-  const formatDisplayDates = (date) => moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY/MM/DD');
+  const formatDisplayDates = (date) =>
+    moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY/MM/DD');
 
   useEffect(() => {
     setIsButtonDisable(!startDate || !endDate);
@@ -128,23 +130,24 @@ function Filter(props) {
           <Button
             variant={isFilterOpen ? 'contained' : 'outlined'}
             color="secondary"
+            sx={{ color: !isFilterOpen ? 'textPrimary.main' : '' }}
             onClick={() => isHandleFilterIsOpen()}
           >
             <FilterListRoundedIcon fontSize="small" />
             <Typography
               variant="h6"
+              pl={2}
               sx={{
                 textTransform: 'none',
                 fontSize: '16px',
                 fontFamily: 'Lato',
               }}
             >
-              {!isFilterOpen && !onSubmit && `Filters is  closed`}
-              {isFilterOpen && `Filters is  open`}
+              Filters
               {onSubmit &&
-                `Filters are ${formatDisplayDates(
-                  startDate,
-                )} - ${formatDisplayDates(endDate)}`}
+                ` are ${formatDisplayDates(startDate)} - ${formatDisplayDates(
+                  endDate,
+                )}`}
             </Typography>
           </Button>
         </Box>
