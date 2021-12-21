@@ -33,13 +33,6 @@ function Filter(props) {
   const formatDates = (date) =>
     moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY-MM-DD');
 
-  /*
-   * The reason why I created the function formatDisplayDates
-   * is to make the dates readable in the button filter.
-   */
-  const formatDisplayDates = (date) =>
-    moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY/MM/DD');
-
   useEffect(() => {
     setIsButtonDisable(!startDate || !endDate);
   }, [startDate, endDate]);
@@ -103,10 +96,6 @@ function Filter(props) {
             variant="h3"
             sx={{
               color: 'textPrimary.main',
-              fontWeight: '600',
-              fontSize: '32px',
-              fontFamily: 'Montserrat',
-              lineHeight: '39px',
             }}
           >
             Featured Trees
@@ -123,15 +112,12 @@ function Filter(props) {
               pl={2}
               sx={{
                 textTransform: 'none',
-                fontSize: '16px',
-                fontFamily: 'Lato',
+                fontWeight: 'normal',
               }}
             >
               Filters
               {onSubmit &&
-                ` are ${formatDisplayDates(startDate)} - ${formatDisplayDates(
-                  endDate,
-                )}`}
+                ` are ${formatDates(startDate)} / ${formatDates(endDate)}`}
             </Typography>
           </Button>
         </Box>
@@ -148,7 +134,7 @@ function Filter(props) {
                   <Grid item sm={6}>
                     <DesktopDatePicker
                       label="Start Date"
-                      inputFormat="yyyy-MM-dd"
+                      inputFormat="dd-MM-yyyy"
                       value={startDate}
                       onChange={handleChangeStartDate}
                       renderInput={(params) => (
@@ -175,7 +161,7 @@ function Filter(props) {
                   <Grid item xs={6}>
                     <DesktopDatePicker
                       label="End Date"
-                      inputFormat="yyyy-MM-dd"
+                      inputFormat="dd-MM-yyyy"
                       value={endDate}
                       onChange={handleChangeEndDate}
                       renderInput={(params) => (
