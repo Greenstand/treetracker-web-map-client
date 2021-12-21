@@ -217,7 +217,7 @@ function Filter(props) {
                 </Grid>
               </LocalizationProvider>
             </Grid>
-            <Box sx={{ gap: 2, display: 'flex', justifyContent: 'end' }}>
+            <Box sx={{ gap: 2, display: 'flex', justifyContent: 'end' }} m={3}>
               <Button variant="text" onClick={() => handleCancel()}>
                 Cancel
               </Button>
