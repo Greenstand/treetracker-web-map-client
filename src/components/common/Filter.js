@@ -133,6 +133,7 @@ function Filter(props) {
                     <DesktopDatePicker
                       label="Start Date"
                       inputFormat="dd-MM-yyyy"
+                      mask="__-__-____"
                       value={startDate}
                       onChange={handleChangeStartDate}
                       renderInput={(params) => (
@@ -160,6 +161,7 @@ function Filter(props) {
                     <DesktopDatePicker
                       label="End Date"
                       inputFormat="dd-MM-yyyy"
+                      mask="__-__-____"
                       value={endDate}
                       onChange={handleChangeEndDate}
                       renderInput={(params) => (
