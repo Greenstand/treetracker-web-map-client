@@ -24,17 +24,18 @@ describe('Filter', () => {
 
     cy.get('input[type=text]')
       .invoke('val')
-      .then((val1) => {
+      .then((startDate) => {
         cy.get('input[type=text]')
           .eq(1)
           .invoke('val')
-          .should((val2) => {
-            const startDate_milliseconds = new Date(val1);
-            const endDate_milliseconds = new Date(val2);
-            const start = startDate_milliseconds.getTime();
-            const end = endDate_milliseconds.getTime();
+          .should((endDate) => {
+            const convertStartDate = new Date(startDate);
+            const convert_endDate = new Date(endDate);
 
-            expect(start).to.be.lessThan(end);
+            const StartDate_milliSeconds = convertStartDate.getTime();
+            const endDate_milliSeconds = convert_endDate.getTime();
+
+            expect(StartDate_milliSeconds).to.be.lessThan(endDate_milliSeconds);
           });
       });
     cy.contains(/submit/i)
@@ -61,72 +62,34 @@ describe('Filter', () => {
 
     cy.get('input[type=text]')
       .invoke('val')
-      .then((val1) => {
+      .then((startDate) => {
         cy.get('input[type=text]')
           .eq(1)
           .invoke('val')
-          .should((val2) => {
-            const startDate_milliseconds = new Date(val1);
-            const endDate_milliseconds = new Date(val2);
+          .should((endDate) => {
+            const convertStartDate = new Date(startDate);
+            const convert_endDate = new Date(endDate);
 
-            const start = startDate_milliseconds.getTime();
-            const end = endDate_milliseconds.getTime();
+            const StartDate_milliSeconds = convertStartDate.getTime();
+            const endDate_milliSeconds = convert_endDate.getTime();
 
-            expect(start).to.be.greaterThan(end);
-          });
-        cy.contains(/submit/i)
-          .click()
-          .then(() => {
-            expect(handleFilter).to.be.calledWith({
-              startDate: '2020-01-05',
-              endDate: '2020-01-02',
-            });
+            expect(StartDate_milliSeconds).to.be.greaterThan(
+              endDate_milliSeconds,
+            );
           });
       });
-  });
-
-  it.only('Submit is Failed when StartDate is equal to endDate', () => {
-    const handleFilter = cy.stub();
-
-    mount(<Filter onFilter={handleFilter} />);
-    cy.contains(/timeline/i);
-
-    // cypress to find the date type of input, choose the first one, and input the date
-    cy.get('input[type=text]').first().type('2020-01-05');
-
-    // find the second date type of input, choose the second one, and input the date
-    cy.get('input[type=text]').eq(1).type('2020-01-05');
-
-    cy.get('input[type=text]')
-      .invoke('val')
-      .then((val1) => {
-        cy.get('input[type=text]')
-          .eq(1)
-          .invoke('val')
-          .should((val2) => {
-            const startDate_milliseconds = new Date(val1);
-            const endDate_milliseconds = new Date(val2);
-
-            const start = startDate_milliseconds.getTime();
-            const end = endDate_milliseconds.getTime();
-
-            expect(start).equal(end);
-          });
-        cy.contains(/submit/i)
-          .click()
-          .then(() => {
-            expect(handleFilter).to.be.calledWith({
-              startDate: '2020-01-05',
-              endDate: '2020-01-05',
-            });
-          });
+    cy.contains(/submit/i)
+      .click()
+      .then(() => {
+        expect(handleFilter).to.been.not.calledWith({
+          startDate: '2020-01-05',
+          endDate: '2020-01-02',
+        });
       });
   });
 
   it.only('Cancel Button hides the filters', () => {
-    const handleFilter = cy.stub();
-
-    mount(<Filter onFilter={handleFilter} />);
+    mount(<Filter />);
     cy.contains(/timeline/i);
 
     cy.get('button').contains('Cancel').click();
