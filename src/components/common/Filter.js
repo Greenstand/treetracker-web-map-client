@@ -9,35 +9,20 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 
 const useStyles = makeStyles()((theme) => ({
   title: {
     display: 'flex',
     justifyContent: 'space-between',
   },
-  titleText: {
-    fontFamily: 'Montserrat',
-
-    fontSize: '32px',
-    color: theme.palette.textPrimary.main,
-  },
-  filterButtonText: {
-    textTransform: 'none',
-    fontSize: '16px',
-    fontFamily: 'Lato',
-    letterSpacing: '1.5px',
-    marginLeft: '8px',
-  },
+  titleText: {},
 
   container: {
     marginTop: theme.spacing(12),
   },
 
-  row: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
   inputLabel: {
     color: theme.palette.textPrimary.main,
     fontFamily: 'Lato',
@@ -49,149 +34,125 @@ const useStyles = makeStyles()((theme) => ({
   spaceBelow: {
     marginBottom: theme.spacing(5),
   },
-  plantDateTitle: {
-    fontFamily: 'Lato',
-    fontWeight: 'bold',
-    letterSpacing: '0.5px',
-  },
-  dateFieldContainer: {
-    marginTop: theme.spacing(5),
-  },
-  dateField: {
-    borderBottom: 'none !important',
-    border: '1px solid #C4C4C4',
-    borderRadius: '4px',
-  },
 }));
 
 function Filter(props) {
   const { onFilter } = props;
   const { classes } = useStyles();
-  const [startDateState, setStartDateState] = React.useState('');
-  const [endDateState, setEndDateState] = React.useState('');
-  const [toggle, setToggle] = React.useState(true);
-  const [isError, setError] = React.useState(false);
-  const [onSubmit, setSubmit] = React.useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [isFilterOpen, setIsFilterOpen] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [onSubmit, setOnSubmit] = useState(false);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
 
-  const formatTheDates = (date) => {
-    const newDate = new Date(date);
-    const day = `0${newDate.getDate()}`.slice(-2);
-    const month = `0${newDate.getMonth() + 1}`.slice(-2);
-    const year = newDate.getFullYear();
+  const formatDates = (date) => moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY-MM-DD');
 
-    return `${year}-${month}-${day}`;
-  };
-  const START_DATE = new Date(startDateState);
-  const END_DATE = new Date(endDateState);
+  /*
+   * The reason why I created the function formatDisplayDates
+   * is to make the dates readable in the button filter.
+   */
+  const formatDisplayDates = (date) => moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY/MM/DD');
 
-  const FORMAT_START_DATE = formatTheDates(START_DATE);
-  const FORMAT_END_DATE = formatTheDates(END_DATE);
+  useEffect(() => {
+    setIsButtonDisable(!startDate || !endDate);
+  }, [startDate, endDate]);
 
-  const formatTheDatesForBetterDisplay = (date) => {
-    const newDate = new Date(date);
-    const day = `0${newDate.getDate()}`.slice(-2);
-    const month = `0${newDate.getMonth() + 1}`.slice(-2);
-    const year = newDate.getFullYear();
+  const isHandleFilterIsOpen = () => {
+    setIsFilterOpen((prev) => !prev);
 
-    return `${year}/${month}/${day}`;
-  };
-
-  const END_DATE_TIME_TO_MILLISECONDS = END_DATE.getTime();
-  const START_DATE_TIME_TO_MILLISECONDS = START_DATE.getTime();
-
-  const DATES_IS_TRUE = !startDateState || !endDateState;
-  const DATES_IS_FALSE = startDateState && endDateState;
-
-  const START_DATE_IS_TRUE = startDateState;
-  const END_DATE_IS_TRUE = endDateState;
-
-  const CONDITIONS =
-    !START_DATE_TIME_TO_MILLISECONDS ||
-    !END_DATE_TIME_TO_MILLISECONDS ||
-    END_DATE_TIME_TO_MILLISECONDS === START_DATE_TIME_TO_MILLISECONDS ||
-    START_DATE_TIME_TO_MILLISECONDS > END_DATE_TIME_TO_MILLISECONDS ||
-    END_DATE_TIME_TO_MILLISECONDS < START_DATE_TIME_TO_MILLISECONDS;
-
-  const IS_CLOSED = toggle === false && !onSubmit;
-
-  const IS_OPENED = onFilter && toggle === true;
-
-  const IS_SUBMITTED =
-    onSubmit &&
-    DATES_IS_FALSE &&
-    toggle === false &&
-    START_DATE_IS_TRUE &&
-    END_DATE_IS_TRUE;
-
-  const handleToggle = () => {
-    setToggle((prev) => !prev);
-    if (toggle === false) {
-      setStartDateState('');
-      setEndDateState('');
-      setError(false);
-      setSubmit(false);
+    if (!isFilterOpen) {
+      setStartDate('');
+      setEndDate('');
+      setIsError(false);
+      setOnSubmit(false);
     }
   };
-  const handleChangeEndDateState = (newValue) => {
-    setEndDateState(newValue);
+
+  const handleChangeEndDate = (newValue) => {
+    setEndDate(newValue);
   };
-  const handleChangeStartDateState = (newValue) => {
-    setStartDateState(newValue);
+
+  const handleChangeStartDate = (newValue) => {
+    setStartDate(newValue);
   };
+
   const handleCancel = () => {
-    setSubmit(false);
-    setToggle(false);
-  };
-
-  const handleDates = () => {
-    if (CONDITIONS) {
-      setError(true);
-      setToggle(true);
-    } else {
-      setError(false);
-      setToggle(false);
-    }
+    setOnSubmit(false);
+    setIsFilterOpen(false);
+    setStartDate('');
+    setEndDate('');
+    setIsFilterOpen(false);
+    setIsError(false);
   };
 
   const handleSubmit = () => {
     log.log('submit');
-    setToggle(false);
-    handleDates();
-    if (isError !== true) {
-      setSubmit(true);
-      const startDate = FORMAT_START_DATE;
-      const endDate = FORMAT_END_DATE;
-      onFilter({ startDate, endDate });
+    setIsFilterOpen(false);
+
+    if (startDate > endDate) {
+      setIsError(true);
+      setIsFilterOpen(true);
+    } else {
+      setIsError(false);
+      setIsFilterOpen(false);
+      setOnSubmit(true);
+      onFilter({
+        startDate: formatDates(startDate),
+        endDate: formatDates(endDate),
+      });
     }
   };
 
   return (
     <Box sx={{ width: 1 }}>
       <form onSubmit={handleSubmit}>
-        <Box className={classes.title}>
-          <Typography className={classes.titleText}></Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography
+            variant="h3"
+            sx={{
+              color: 'textPrimary.main',
+              fontWeight: '600',
+              fontSize: '32px',
+              fontFamily: 'Montserrat',
+              lineHeight: '39px',
+            }}
+          >
+            Featured Trees
+          </Typography>
           <Button
-            variant="contained"
+            variant={isFilterOpen ? 'contained' : 'outlined'}
             color="secondary"
-            className={classes.filterButton}
-            onClick={() => handleToggle()}
+            onClick={() => isHandleFilterIsOpen()}
           >
             <FilterListRoundedIcon fontSize="small" />
-            <Typography className={classes.filterButtonText}>
-              {IS_CLOSED && `Filters is  closed`}
-              {IS_OPENED && `Filters is  open`}
-              {IS_SUBMITTED &&
-                `Filters are ${formatTheDatesForBetterDisplay(
-                  startDateState,
-                )} - ${formatTheDatesForBetterDisplay(endDateState)}`}
+            <Typography
+              variant="h6"
+              sx={{
+                textTransform: 'none',
+                fontSize: '16px',
+                fontFamily: 'Lato',
+              }}
+            >
+              {!isFilterOpen && !onSubmit && `Filters is  closed`}
+              {isFilterOpen && `Filters is  open`}
+              {onSubmit &&
+                `Filters are ${formatDisplayDates(
+                  startDate,
+                )} - ${formatDisplayDates(endDate)}`}
             </Typography>
           </Button>
         </Box>
-        {toggle === true && (
+        {isFilterOpen && (
           <Box className={classes.container} data-cy="hidden">
             <Grid container>
               <Grid item xs={12}>
-                <Typography className={classes.plantDateTitle}>
+                <Typography variant="h6" sx={{ letterSpacing: '0.04em' }}>
                   Planted between (timeline)
                 </Typography>
               </Grid>
@@ -201,9 +162,8 @@ function Filter(props) {
                     <DesktopDatePicker
                       label="Start Date"
                       inputFormat="yyyy-MM-dd"
-                      className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
-                      value={startDateState}
-                      onChange={handleChangeStartDateState}
+                      value={startDate}
+                      onChange={handleChangeStartDate}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -211,13 +171,16 @@ function Filter(props) {
                           variant="outlined"
                           size="small"
                           error={isError}
-                          className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
                           color="secondary"
                           InputLabelProps={{
                             shrink: true,
                             className: classes.inputLabel,
                           }}
-                          sx={{ width: 1 }}
+                          sx={{
+                            width: 1,
+                            fontFamily: 'Lato',
+                            color: 'textPrimary.main',
+                          }}
                         />
                       )}
                     />
@@ -226,21 +189,24 @@ function Filter(props) {
                     <DesktopDatePicker
                       label="End Date"
                       inputFormat="yyyy-MM-dd"
-                      value={endDateState}
-                      onChange={handleChangeEndDateState}
+                      value={endDate}
+                      onChange={handleChangeEndDate}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           variant="outlined"
                           size="small"
                           error={isError}
-                          className={` ${classes.textField} ${classes.spaceBetween} ${classes.spaceBelow}`}
                           color="secondary"
                           InputLabelProps={{
                             shrink: true,
                             className: classes.inputLabel,
                           }}
-                          sx={{ width: 1 }}
+                          sx={{
+                            width: 1,
+                            fontFamily: 'Lato',
+                            color: 'textPrimary.main',
+                          }}
                         />
                       )}
                     />
@@ -256,7 +222,7 @@ function Filter(props) {
                 onClick={handleSubmit}
                 color="primary"
                 variant="contained"
-                disabled={DATES_IS_TRUE}
+                disabled={isButtonDisable}
               >
                 Submit
               </Button>
