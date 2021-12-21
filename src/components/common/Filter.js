@@ -13,26 +13,10 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 
 const useStyles = makeStyles()((theme) => ({
-  title: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  titleText: {},
-
-  container: {
-    marginTop: theme.spacing(12),
-  },
-
   inputLabel: {
     color: theme.palette.textPrimary.main,
     fontFamily: 'Lato',
     letterSpacing: '0.5px',
-  },
-  spaceBetween: {
-    marginRight: theme.spacing(5),
-  },
-  spaceBelow: {
-    marginBottom: theme.spacing(5),
   },
 }));
 
@@ -152,7 +136,7 @@ function Filter(props) {
           </Button>
         </Box>
         {isFilterOpen && (
-          <Box className={classes.container} data-cy="hidden">
+          <Box mt={12} data-cy="hidden">
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="h6" sx={{ letterSpacing: '0.04em' }}>
