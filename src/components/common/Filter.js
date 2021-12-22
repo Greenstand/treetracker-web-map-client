@@ -88,6 +88,7 @@ function Filter(props) {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
           <Typography
