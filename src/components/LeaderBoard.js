@@ -47,9 +47,9 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
   ribbons: {
-    marginTop: '-35px',
+    marginTop: '-60px',
     '@media (max-width: 425px)': {
-      marginTop: '-50px',
+      marginTop: '-40px',
     },
   },
 }));
