@@ -51,6 +51,10 @@ const useStyles = makeStyles()((theme) => ({
     '@media (max-width: 425px)': {
       marginTop: '-40px',
     },
+    '@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation : portrait)':
+      {
+        marginTop: '-40px',
+      },
   },
 }));
 
