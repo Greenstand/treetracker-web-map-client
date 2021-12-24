@@ -7,4 +7,4 @@ spec:
   cors:
     cors:
     origins:
-    - '*'
+      - '*'

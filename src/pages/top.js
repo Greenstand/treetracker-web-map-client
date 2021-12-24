@@ -17,17 +17,6 @@ const useStyles = makeStyles()((theme) => ({
     maxWidth: '100%',
     boxSizing: 'border-box',
   },
-  title: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: '32px',
-    lineHeight: '39px',
-    /* identical to box height */
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-  },
   title2: {
     fontFamily: 'Montserrat',
     fontStyle: 'normal',
@@ -72,9 +61,6 @@ export default function Top({ trees, countries }) {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Filter onFilter={handleFilter} />
       </Box>
-      <Typography variant="h2" className={classes.title}>
-        Featured Trees
-      </Typography>
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>
