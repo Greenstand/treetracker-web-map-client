@@ -2,7 +2,7 @@ import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -23,13 +23,13 @@ const useStyles = makeStyles()((theme) => ({
 function Filter(props) {
   const { onFilter } = props;
   const { classes } = useStyles();
-
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [isError, setIsError] = useState(false);
   const [onSubmit, setOnSubmit] = useState(false);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const formatDates = (date) =>
     moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY-MM-DD');
@@ -65,12 +65,19 @@ function Filter(props) {
   };
 
   const handleSubmit = () => {
-    log.log('submit');
     setIsFilterOpen(false);
 
     if (startDate > endDate) {
       setIsError(true);
       setIsFilterOpen(true);
+      const a = formatDates(startDate);
+      const b = formatDates(endDate);
+      if (a > b) {
+        setShowMessage(true);
+        setTimeout(() => {
+          setShowMessage(false);
+        }, 5000);
+      }
     } else {
       setIsError(false);
       setIsFilterOpen(false);
@@ -81,6 +88,7 @@ function Filter(props) {
       });
     }
   };
+
   return (
     <Box sx={{ width: 1 }}>
       <form onSubmit={handleSubmit}>
@@ -204,12 +212,11 @@ function Filter(props) {
           </Box>
         )}
       </form>
-      {showMessage ? (
+      {showMessage && (
         <Alert severity="warning" sx={{ my: 4 }}>
-          Start date: {startDate} is bigger than end date: {endDate}
+          Start date: {formatDates(startDate)} is bigger than end date:{' '}
+          {formatDates(endDate)}
         </Alert>
-      ) : (
-        <p></p>
       )}
     </Box>
   );
