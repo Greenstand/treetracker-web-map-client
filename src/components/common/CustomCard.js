@@ -1,16 +1,15 @@
-import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-
 import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+
 import { makeStyles } from '../../models/makeStyles';
 
 const useStyles = makeStyles()((theme) => ({
   root: {
-    minWidth: 275,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -18,6 +17,33 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: theme.spacing(6),
     marginBottom: theme.spacing(6),
     cursor: 'pointer',
+  },
+  avatar: {
+    height: 60,
+    width: 60,
+    background: theme.palette.common.white,
+    [theme.breakpoints.down('md')]: {
+      height: 36,
+      width: 36,
+    },
+    '& > svg': {
+      [theme.breakpoints.down('md')]: {
+        fontSize: '1.5rem',
+      },
+    },
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    paddingLeft: 0,
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(2),
+    },
+    '&:last-child': {
+      [theme.breakpoints.down('md')]: {
+        paddingBottom: theme.spacing(2),
+      },
+    },
   },
 }));
 
@@ -37,26 +63,32 @@ const CustomCard = (props) => {
           : theme.palette.background.greenGradient,
       }}
     >
-      <CardMedia sx={{ padding: theme.spacing(4) }}>
+      <CardMedia
+        sx={{ padding: { xs: theme.spacing(2), md: theme.spacing(4) } }}
+      >
         <Avatar
+          className={classes.avatar}
           sx={{
-            height: 60,
-            width: 60,
             boxShadow: disabled ? '' : '0px 6px 12px 0px #585B5D40',
-            backgroundColor: 'white',
-            color: disabled ? 'textSecondary.main' : 'secondary.main',
+            color: disabled
+              ? theme.palette.textSecondary.main
+              : theme.palette.success.main,
           }}
         >
           {icon}
         </Avatar>
       </CardMedia>
-      <CardContent
-        sx={{ display: 'flex', flexDirection: 'column', paddingLeft: 0 }}
-      >
-        <Typography variant="body1" color="textSecondary">
+      <CardContent className={classes.cardContent}>
+        <Typography
+          variant="body1"
+          color="textSecondary"
+          sx={{ fontSize: { xs: 12, md: 16 } }}
+        >
           {title}
         </Typography>
-        <Typography variant="h2">{text}</Typography>
+        <Typography variant="h2" sx={{ fontSize: { xs: 16, sm: 24, md: 36 } }}>
+          {text}
+        </Typography>
       </CardContent>
     </Card>
   );

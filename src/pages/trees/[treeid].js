@@ -41,17 +41,11 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: theme.spacing(10),
     width: '100%',
   },
-  title2: {
-    marginTop: theme.spacing(26),
-    fontSize: '28px',
-    lineHeight: '34px',
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    color: '#585B5D',
-  },
   tabBox: {
     marginTop: theme.spacing(9),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(5),
+    },
     flexWrap: 'wrap',
     display: 'flex',
     '& div': {
@@ -119,7 +113,10 @@ export default function Tree({ tree, planter, organization }) {
           link={`/planters/${planter.id}`}
         />
       </Box>
-      <Typography variant="h4" className={classes.title2}>
+      <Typography
+        variant="h4"
+        sx={{ color: 'textPrimary.main', mt: { xs: 14, md: 26 } }}
+      >
         Tree Info
       </Typography>
       <Box className={classes.tabBox}>

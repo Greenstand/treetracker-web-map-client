@@ -4,7 +4,6 @@ about: Almost a blank issue with some generic guides/hints.
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 ---
