@@ -1,4 +1,3 @@
-
 name: Frontend Staging CI/CD Pipeline
 
 on:
@@ -8,7 +7,7 @@ on:
         description: 'git-tag'
         required: true
 
-env: 
+env:
   project-directory: ./
 
 jobs:
@@ -18,55 +17,55 @@ jobs:
     if: |
       !contains(github.event.head_commit.message, 'skip-ci')
     steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.inputs.git-tag }}
-    - name: git configure
-      run: |
-        git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14.x'
-    - name: npm clean install
-      run: npm ci
-      working-directory: ${{ env.project-directory }}
-    - run: npm i -g semantic-release @semantic-release/{git,exec,changelog} 
-    - run: semantic-release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: get-npm-version
-      id: package-version
-      uses: martinbeentjes/npm-get-version-action@master
-    # next.js build
-    - name: build next
-      run: npm run build
-      working-directory: ${{ env.project-directory }}
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.git-tag }}
+      - name: git configure
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: npm clean install
+        run: npm ci
+        working-directory: ${{ env.project-directory }}
+      - run: npm i -g semantic-release @semantic-release/{git,exec,changelog}
+      - run: semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      # next.js build
+      - name: build next
+        run: npm run build
+        working-directory: ${{ env.project-directory }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build snapshot and push on merge
-      id: docker_build_release
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ./Dockerfile
-        push: true
-        tags: greenstand/${{ github.event.repository.name }}:${{ steps.package-version.outputs.current-version }}
+      - name: Build snapshot and push on merge
+        id: docker_build_release
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: greenstand/${{ github.event.repository.name }}:${{ steps.package-version.outputs.current-version }}
 
-    - id: export_bumped_version
-      run: |
-        export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
-        echo "::set-output name=bumped_version::${BUMPED_VERSION}"
+      - id: export_bumped_version
+        run: |
+          export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
+          echo "::set-output name=bumped_version::${BUMPED_VERSION}"
 
     outputs:
       bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
@@ -97,14 +96,12 @@ jobs:
         run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
       #- name: Attempt to wait for migration job to complete
       #  run: kubectl wait -n ${{ secrets.K8S_NAMESPACE }} --for=condition=complete --timeout=45s job/database-migration-job
-
-
 #  deploy:
 #    name: Deploy to STAGING CDN
 #    runs-on: ubuntu-latest
 #    needs: frontend
 #    if: |
-#      github.repository == "Greenstand/${{ github.event.repository.name }}"   
+#      github.repository == "Greenstand/${{ github.event.repository.name }}"
 #    steps:
 #    - uses: actions/checkout@v2
 #    - name: Download bundled frontend resources
