@@ -27,7 +27,6 @@ const imageFixtureNames = [
   '11',
   '12',
   '13',
-  '14',
 ];
 
 const testImage = (fileName, imageType = 'image/jpg') => {
@@ -61,7 +60,8 @@ beforeEach(() => {
 
 // mocking api cypress for one(1) image tree.
 
-const testImageTree = () => it('getServerSideProps returns mock', () => {
+const testImageTree = () =>
+  it('getServerSideProps returns mock', () => {
     const path = `/trees/186734/`;
     cy.intercept(path, { fixture: 'tree186734.json' });
 

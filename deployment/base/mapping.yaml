@@ -11,5 +11,5 @@ spec:
   cors:
     methods: GET, OPTIONS
     headers:
-    - Content-Type
-    - Authorization
+      - Content-Type
+      - Authorization

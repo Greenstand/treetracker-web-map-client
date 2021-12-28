@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { mountWithTheme as mount } from '../../models/test-utils';
 import Filter from './Filter';
 // import the expect function from Chai
@@ -10,26 +8,54 @@ describe('Filter', () => {
     mount(<Filter />);
   });
 
-  it.only('Timeline feature', () => {
+  it('Submit is success when startDate is less than endDate', () => {
     const handleFilter = cy.stub();
 
     mount(<Filter onFilter={handleFilter} />);
     cy.contains(/timeline/i);
 
-    // cypress to find the date type of input, choose the first one, and input the date
-    cy.get('input[type=date]').first().type('2020-01-01');
+    cy.contains('label', 'Start Date')
+      .parent()
+      .find('input')
+      .type('01-01-2020');
 
-    // find the second date type of input, choose the second one, and input the date
-    cy.get('input[type=date]').eq(1).type('2020-01-02');
+    cy.contains('label', 'End Date').parent().find('input').type('01-02-2020');
 
-    // click submit button
     cy.contains(/submit/i)
       .click()
       .then(() => {
         expect(handleFilter).to.be.calledWith({
           startDate: '2020-01-01',
-          endDate: '2020-01-02',
+          endDate: '2020-02-01',
         });
       });
+  });
+
+  it('Submit is Failed when startDate is greater than endDate', () => {
+    const handleFilter = cy.stub();
+
+    mount(<Filter onFilter={handleFilter} />);
+    cy.contains(/timeline/i);
+    cy.contains('label', 'Start Date')
+      .parent()
+      .find('input')
+      .type('01-05-2020');
+
+    cy.contains('label', 'End Date').parent().find('input').type('01-02-2020');
+
+    cy.contains(/submit/i)
+      .click()
+      .then(() => {
+        expect(handleFilter).to.have.callCount(0);
+      });
+  });
+
+  it('Cancel Button hides the filters', () => {
+    mount(<Filter />);
+    cy.contains(/timeline/i);
+
+    cy.get('button').contains('Cancel').click();
+
+    cy.get('[data-cy=hidden]').should('not.exist');
   });
 });
