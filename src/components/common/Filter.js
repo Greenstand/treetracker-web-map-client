@@ -1,4 +1,5 @@
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
+import Alert from '@mui/material/Alert';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -7,7 +8,6 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -29,6 +29,7 @@ function Filter(props) {
   const [isError, setIsError] = useState(false);
   const [onSubmit, setOnSubmit] = useState(false);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const formatDates = (date) =>
     moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY-MM-DD');
@@ -64,12 +65,20 @@ function Filter(props) {
   };
 
   const handleSubmit = () => {
-    log.log('submit');
+
     setIsFilterOpen(false);
 
     if (startDate > endDate) {
       setIsError(true);
       setIsFilterOpen(true);
+      let a = formatDates(startDate);
+      let b = formatDates(endDate);
+      if (a > b) {
+        setShowMessage(true);
+        setTimeout(() => {
+          setShowMessage(false);
+        }, 5000);
+      }
     } else {
       setIsError(false);
       setIsFilterOpen(false);
@@ -204,6 +213,11 @@ function Filter(props) {
           </Box>
         )}
       </form>
+      {showMessage &&
+        <Alert severity="warning" sx={{ my: 4 }}>
+          Start date: {formatDates(startDate)} is bigger than end date: {formatDates(endDate)}
+        </Alert>
+      }
     </Box>
   );
 }
