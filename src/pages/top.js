@@ -31,7 +31,7 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Top({ trees, countries }) {
   // use map context to get the map
-  const mapContext = useMapContext();
+  const { map } = useMapContext();
 
   const { classes } = useStyles();
 
@@ -44,16 +44,16 @@ export default function Top({ trees, countries }) {
 
     const { lat, lon } = country.centroid;
 
-    const { map } = mapContext;
     map.flyTo(lat, lon, 6);
   }
 
   function handleFilter(filter) {
     log.warn('handleFilter', filter);
-    mapContext.map.setFilters({
+    if (!map) return;
+    map.setFilters({
       timeline: `${filter.startDate}_${filter.endDate}`,
     });
-    mapContext.map.rerender();
+    map.rerender();
   }
 
   return (

@@ -1,7 +1,8 @@
-import { mountWithTheme as mount } from '../../models/test-utils';
+import { formatDateString } from 'models/utils';
 import React from 'react';
-import data from '../../../cypress/fixtures/tree186734.json';
 
+import data from '../../../cypress/fixtures/tree186734.json';
+import { mountWithTheme as mount } from '../../models/test-utils';
 import CustomImageWrapper from './CustomImageWrapper';
 
 describe('CustomImageWrapper', () => {
@@ -50,6 +51,6 @@ describe('CustomImageWrapper', () => {
     cy.get('.tss-19g14hs-container')
       .trigger('mouseover')
       .get('.MuiTypography-h6')
-      .contains('1/9/2020');
+      .contains(formatDateString(data.time_created));
   });
 });
