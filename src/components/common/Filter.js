@@ -1,8 +1,8 @@
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
-import Alert from '@mui/material/Alert';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -65,14 +65,13 @@ function Filter(props) {
   };
 
   const handleSubmit = () => {
-
     setIsFilterOpen(false);
 
     if (startDate > endDate) {
       setIsError(true);
       setIsFilterOpen(true);
-      let a = formatDates(startDate);
-      let b = formatDates(endDate);
+      const a = formatDates(startDate);
+      const b = formatDates(endDate);
       if (a > b) {
         setShowMessage(true);
         setTimeout(() => {
@@ -213,11 +212,12 @@ function Filter(props) {
           </Box>
         )}
       </form>
-      {showMessage &&
+      {showMessage && (
         <Alert severity="warning" sx={{ my: 4 }}>
-          Start date: {formatDates(startDate)} is bigger than end date: {formatDates(endDate)}
+          Start date: {formatDates(startDate)} is bigger than end date:{' '}
+          {formatDates(endDate)}
         </Alert>
-      }
+      )}
     </Box>
   );
 }
