@@ -1,147 +1,64 @@
-import { Avatar, Box, Grid } from '@mui/material';
+import { Avatar, Box, Grid, Typography } from '@mui/material';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
 
-const useStyles = makeStyles()(() => ({
-  rectangle69: {
-    position: 'relative',
-    height: '168px',
-    width: '208px',
-    borderRadius: '16px',
-  },
-  rectangle81: {
-    position: 'relative',
-    top: '-48px',
-    left: '-9367',
-    height: '164px',
-    width: '160px',
-    borderRadius: '16px',
-    boxSizing: 'border-box',
-    boxShadow: '0px 4px 20px rgba(255, 165, 0, 0.3)',
-    backdropFilter: 'blur(30px)',
-  },
-  profileImage: {
-    position: 'relative',
-    height: '110px',
-    width: '110px',
-  },
-  text1: {
-    color: '#FFFFFF',
-  },
-  planter: {
-    fontFamily: 'Montserrat',
-    fontSize: '22px',
-    lineHeight: '28px',
-    fontWeight: 700,
-    color: '#FFFFFF',
-  },
-  content: {
-    fontFamily: 'Montserrat',
-    fontSize: '26px',
-    lineHeight: '28px',
-    fontWeight: 700,
-    color: '#FFFFFF',
-  },
-  eclipse: {
-    top: '-60px',
-    position: 'relative',
-    height: '120px',
-    width: '120px',
-    background: '#FFFFFF',
-  },
-  rating: {
-    fontFamily: 'Montserrat',
-    fontSize: '20px',
-    lineHeight: '28px',
-    fontWeight: 700,
-  },
-  colorPalette1: {
-    background:
-      'linear-gradient(139.31deg, rgba(71, 75, 79, 0.2) 0%, rgba(255, 165, 0, 0.9) 85.71%)',
-    '& .inner1': {
-      background:
-        'linear-gradient(111.63deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.0075) 100%)',
+import Ribbon from './Ribbon';
+
+const useStyles = makeStyles()((theme) => ({
+  sizeAvatar: {
+    height: '50%',
+    width: '55%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '8px',
+    [theme.breakpoints.down('md')]: {
+      borderRadius: '4px',
     },
   },
-  colorPalette2: {
-    background:
-      'linear-gradient(139.31deg, rgba(71, 75, 79, 0.2) 0%, rgba(97, 137, 47, 0.9) 77.54%)',
-    '& .inner2': {
-      background:
-        'linear-gradient(111.63deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.0075) 100%)',
+  flag: {
+    margin: theme.spacing(5),
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(3.5),
+    },
+    boxShadow: '0 4px 20px rgba(0, 0, 0, .25)',
+  },
+  top: {
+    margin: theme.spacing(14),
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(5),
+    },
+    [theme.breakpoints.only('md')]: {
+      margin: theme.spacing(9.75),
     },
   },
-  colorPalette3: {
-    background:
-      'linear-gradient(139.31deg, rgba(71, 75, 79, 0.2) 0%, #FF7A00 82.18%)',
-    '& .inner3': {
-      background:
-        'linear-gradient(111.63deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.0075) 100%)',
+  item: {
+    borderRadius: '100px',
+    boxShadow: '0 4px 10px 0px rgba(0, 0, 0, 0.15)',
+    cursor: 'pointer',
+    margin: theme.spacing(8),
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(3),
     },
   },
-  rectangle72: {
-    height: '130px',
-    width: '688px',
-    left: '0pxl',
-    top: '-140px',
-    borderRadius: '16px',
-    background: '#F0F0F0',
+  ribbons: {
     position: 'relative',
-    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)',
-  },
-  rank: {
-    fontSize: '40px',
-    fontWeight: 700,
-    paddingLeft: '30px',
-    padding: '10px',
-    fontFamily: 'Montserrat',
-  },
-  sliderRail: {
-    height: '45px',
-    width: '650px',
-    align: 'center',
-    position: 'relative',
-    left: '17px',
-    borderRadius: '16px',
-    top: '-59px',
-    background: 'rgba(71, 75, 79, 1)',
-  },
-  sliderMarker: {
-    position: 'relative',
-    height: '85px',
-    width: '120px',
-    borderRadius: '16px',
-    left: '500px',
-    top: '-20px',
-    backdropFilter: 'blur(10px)',
-    background: '#FF000000',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: theme.spacing(-15),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(-10),
+    },
   },
-  flagContainer: {
-    left: '70px',
-    top: '-64px',
-    position: 'relative',
-    height: '65px',
-    width: '65px',
-    background: '#FFFFFF',
-  },
-  flag: {
-    top: '-px',
-    position: 'relative',
-    height: '60px',
-    width: '60px',
-  },
-  countryText: {
-    fontSize: '40px',
-    fontWeight: 700,
-    paddingLeft: '130px',
-    padding: '10px',
-    fontFamily: 'Montserrat',
-  },
-  clickable: {
-    cursor: 'pointer',
+  rank: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    marginTop: theme.spacing(-2),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(-1),
+    },
   },
 }));
 
@@ -163,139 +80,110 @@ function LeaderBoard(props) {
   const { classes } = useStyles();
 
   return (
-    <Grid>
-      <Box>
-        <Box
-          onClick={() => handleCountryClick(countries[1].id)}
-          className={`${classes.rectangle69} ${classes.colorPalette1} ${classes.clickable}`}
-          align="center"
-          top="100px"
+    <>
+      <Box className={classes.top}>
+        <Grid
+          container
+          columns={16}
+          justifyContent="center"
+          alignItems="center"
         >
-          <Avatar className={classes.eclipse}>
-            <Avatar
-              className={classes.profileImage}
-              alt="alt name"
-              src={countries[1].flag}
-            />
-          </Avatar>
-          <Box id="inner1" className={classes.rectangle81}>
-            <Box className={classes.planter}>No.2</Box>
-            <Box className={classes.content}>{countries[1].name}</Box>
-            <Box className={classes.rating}>
-              Planted
-              <br></br>
-              {countries[1].planted}
-            </Box>
-          </Box>
-        </Box>
+          <Grid item xs={2}>
+            <Typography variant="h5" sx={{ textAlign: 'center' }}>
+              #
+            </Typography>
+          </Grid>
+          <Grid item xs={5}>
+            <Typography variant="h5">COUNTRY</Typography>
+          </Grid>
+
+          <Grid item xs={8}>
+            <Typography variant="h5" sx={{ textAlign: 'right' }}>
+              {'TREES PLANTED '}
+              <img src={'../images/tree_icon.svg'} alt="tree icon" />
+            </Typography>
+          </Grid>
+          <Grid item xs={1}></Grid>
+        </Grid>
       </Box>
-      <Box>
-        <Box
-          onClick={() => handleCountryClick(countries[0].id)}
-          className={`${classes.rectangle69} ${classes.colorPalette2} ${classes.clickable}`}
-          align="center"
-          left="220px"
-          top="-100px"
-        >
-          <Avatar className={classes.eclipse}>
-            <Avatar
-              className={classes.profileImage}
-              alt="alt name"
-              src={countries[0].flag}
-            />
-          </Avatar>
-          <Box id="inner2" className={classes.rectangle81}>
-            <Box className={classes.planter}>Planter</Box>
-            <Box className={classes.content}>{countries[0].name}</Box>
-            <Box className={classes.rating}>
-              Planted
-              <br></br>
-              {countries[0].planted}
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Box>
-        <Box
-          onClick={() => handleCountryClick(countries[2].id)}
-          className={`${classes.rectangle69} ${classes.colorPalette3} ${classes.clickable}`}
-          align="center"
-          left="440px"
-          top="-230px"
-          background="linear-gradient(139.31deg, rgba(71, 75, 79, 0.2) 0%, rgba(97, 137, 47, 0.9) 77.54%);"
-        >
-          <Avatar className={classes.eclipse}>
-            <Avatar
-              className={classes.profileImage}
-              alt="alt name"
-              src={countries[2].flag}
-            />
-          </Avatar>
-          <Box id="inner3" className={classes.rectangle81}>
-            <Box className={classes.planter}>Planter</Box>
-            <Box className={classes.content}>{countries[2].name}</Box>
-            <Box className={classes.rating}>
-              Planted
-              <br></br>
-              {countries[2].planted}
-            </Box>
-          </Box>
-        </Box>
-      </Box>
+
       {countries &&
-        countries.slice(3).map((country, index) => (
+        countries.map((country, index) => (
           <Box
             key={country.id}
-            onClick={() => handleCountryClick(countries[1].id)}
-            className={`${classes.rectangle72}  ${classes.clickable}`}
+            className={classes.item}
+            onClick={() => handleCountryClick(country.id)}
           >
-            <Box className={classes.rank}>{index + 4}</Box>
-            <Avatar className={classes.flagContainer}>
-              <Avatar
-                className={classes.flag}
-                alt="alt name"
-                src={country.flag}
-              />
-            </Avatar>
-            <Box className={classes.sliderRail}>
-              <Box
-                className={`${classes.sliderMarker} ${classes.content}`}
-                fontSize="15px !important"
-                textAlign="center"
-              >
-                Trees Planted ${country.planted}
-              </Box>
-            </Box>
-            <Box
-              classes={classes.countryText}
-              fontSize="20px"
-              fontWeight="200"
-              textAlign="center"
-              bottom="170px"
-              position="relative"
-              left="20px"
-              paddingRight="313px"
-              fontFamily="Montserrat"
+            <Grid
+              container
+              columns={16}
+              justifyContent="center"
+              alignItems="center"
             >
-              Country
-            </Box>
-            <Box
-              classes={classes.countryText}
-              fontSize="30px"
-              fontWeight="700"
-              textAlign="center"
-              bottom="170px"
-              position="relative"
-              left="20px"
-              paddingRight="313px"
-              fontFamily="Montserrat"
-            >
-              {country.name}
-            </Box>
+              <Grid item xs={2}>
+                {index < 3 ? (
+                  <p></p>
+                ) : (
+                  <Typography
+                    variant="h5"
+                    sx={{ textAlign: 'center', marginLeft: '50%' }}
+                  >
+                    {index + 1}
+                  </Typography>
+                )}
+                {/* Here we add the position number for the top 3 countries with an svg file */}
+                {index === 0 && (
+                  <div className={classes.ribbons}>
+                    <Ribbon fill="#FFD700" />
+                    <Typography variant="h5" className={classes.rank}>
+                      {index + 1}
+                    </Typography>
+                  </div>
+                )}
+                {index === 1 && (
+                  <div className={classes.ribbons}>
+                    <Ribbon fill="#cccccc" />
+                    <Typography variant="h5" className={classes.rank}>
+                      {index + 1}
+                    </Typography>
+                  </div>
+                )}
+                {index === 2 && (
+                  <div className={classes.ribbons}>
+                    <Ribbon fill="#9f7a33" />
+                    <Typography variant="h5" className={classes.rank}>
+                      {index + 1}
+                    </Typography>
+                  </div>
+                )}
+                {/* Here we add the position number for the rest of the countries */}
+              </Grid>
+              <Grid item xs={4}>
+                <Avatar
+                  src={country.flag || countries[index].flag}
+                  className={`${classes.flag}  ${classes.sizeAvatar}  `}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="h5">{country.name}</Typography>
+              </Grid>
+              <Grid item xs={7}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    textAlign: 'right',
+                    marginRight: '19.99%',
+                  }}
+                >
+                  {`${country.planted.toLocaleString()} `}
+                  <img src={'../images/tree_icon.svg'} alt="tree icon" />
+                </Typography>
+              </Grid>
+            </Grid>
           </Box>
         ))}
-      <br></br>
-    </Grid>
+      <Box pb={4} />
+    </>
   );
 }
 

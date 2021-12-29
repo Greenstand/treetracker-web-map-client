@@ -1,4 +1,9 @@
-import { parseDomain, parseMapName, requestAPI } from './utils';
+import {
+  formatDateString,
+  parseDomain,
+  parseMapName,
+  requestAPI,
+} from './utils';
 
 describe('parseMapName', () => {
   it('freetown.treetracker.org should return freetown', () => {
@@ -84,7 +89,13 @@ describe('requestAPI', () => {
     try {
       await requestAPI('wrong_end_point');
     } catch (ex) {
-      expect(ex.message).toBe('Request failed with status code 404');
+      expect(ex.message).toBeTruthy();
     }
   });
+});
+
+it('format date string', () => {
+  const unformattedDate = '2020-10-19T06:46:40.000Z';
+  const formattedDate = formatDateString(unformattedDate);
+  expect(['18/10/2020', '19/10/2020']).toContain(formattedDate);
 });
