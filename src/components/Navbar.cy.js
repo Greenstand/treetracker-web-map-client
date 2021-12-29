@@ -13,8 +13,10 @@ describe('Navbar tests', () => {
   it('navbar-mobile', () => {
     mount(<Navbar />);
     cy.viewport(700, 900);
-    cy.get('Button').contains('Menu');
-    cy.get('Button').contains('Menu').click().get('li').contains('Treetracker');
+    cy.get('button[aria-controls="basic-menu"]')
+      .click()
+      .get('li')
+      .contains('Treetracker');
     cy.get('li').contains('Blog');
   });
   it('navbar', () => {
