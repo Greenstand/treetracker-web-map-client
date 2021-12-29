@@ -7,6 +7,9 @@ beforeEach(() => {
   cy.intercept('/_next/**', {
     fixture: 'images/greenway-international.png',
   });
+  cy.intercept('/_next/image?url=%2Fimages%2Fquote-symbol.svg**', {
+    fixture: 'images/quote-symbol.svg',
+  });
   cy.viewport(720, 360);
 });
 
