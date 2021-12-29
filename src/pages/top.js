@@ -17,17 +17,6 @@ const useStyles = makeStyles()((theme) => ({
     maxWidth: '100%',
     boxSizing: 'border-box',
   },
-  title: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: '32px',
-    lineHeight: '39px',
-    /* identical to box height */
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-  },
   title2: {
     fontFamily: 'Montserrat',
     fontStyle: 'normal',
@@ -42,7 +31,7 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Top({ trees, countries }) {
   // use map context to get the map
-  const mapContext = useMapContext();
+  const { map } = useMapContext();
 
   const { classes } = useStyles();
 
@@ -55,16 +44,16 @@ export default function Top({ trees, countries }) {
 
     const { lat, lon } = country.centroid;
 
-    const { map } = mapContext;
     map.flyTo(lat, lon, 6);
   }
 
   function handleFilter(filter) {
     log.warn('handleFilter', filter);
-    mapContext.map.setFilters({
+    if (!map) return;
+    map.setFilters({
       timeline: `${filter.startDate}_${filter.endDate}`,
     });
-    mapContext.map.rerender();
+    map.rerender();
   }
 
   return (
@@ -72,9 +61,6 @@ export default function Top({ trees, countries }) {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Filter onFilter={handleFilter} />
       </Box>
-      <Typography variant="h2" className={classes.title}>
-        Featured Trees
-      </Typography>
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>

@@ -1,9 +1,10 @@
-import { Box, Grid, Typography, Link } from '@mui/material';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
+import { Box, Grid, Link, Typography } from '@mui/material';
 import { makeStyles } from 'models/makeStyles';
-import React, { useState } from 'react';
+import { formatDateString } from 'models/utils';
+import React, { useMemo, useState } from 'react';
 
 const useStyles = makeStyles()((theme) => ({
   container: {
@@ -38,9 +39,9 @@ const InfoWrapper = ({ children, top, right, bottom }) => (
       borderRadius: '16px',
       position: 'absolute',
       height: 'auto',
-      top: top,
-      right: right,
-      bottom: bottom,
+      top,
+      right,
+      bottom,
       zIndex: 1,
     }}
   >
@@ -51,10 +52,10 @@ const InfoWrapper = ({ children, top, right, bottom }) => (
 function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
   const { classes } = useStyles();
 
-  const createdAt = new Date(timeCreated);
-  const dayOfWeek = createdAt.getDay();
-  const year = createdAt.getFullYear();
-  const month = createdAt.getMonth();
+  const formattedDate = useMemo(
+    () => formatDateString(timeCreated),
+    [timeCreated],
+  );
 
   const [isShown, setIsShown] = useState(false);
 
@@ -92,7 +93,7 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
                 Photo taken on
               </Typography>
               <Typography variant="h6" color="white">
-                {dayOfWeek}/{month}/{year}
+                {formattedDate}
               </Typography>
             </Grid>
           </Grid>

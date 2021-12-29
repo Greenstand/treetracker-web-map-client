@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: treetracker-web-map-client
   labels:
-    app: treetracker-web-map-client 
+    app: treetracker-web-map-client
 spec:
   replicas: 1
   selector:
@@ -18,14 +18,14 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: doks.digitalocean.com/node-pool
-                operator: In
-                values:
-                - microservices-node-pool
+              - matchExpressions:
+                  - key: doks.digitalocean.com/node-pool
+                    operator: In
+                    values:
+                      - microservices-node-pool
       containers:
-      - name: treetracker-web-map-client
-        image: greenstand/treetracker-web-map-client:TAG
-        env:
-          #- name: DATABASE_SCHEMA
-          #  value: reporting
+        - name: treetracker-web-map-client
+          image: greenstand/treetracker-web-map-client:TAG
+          env:
+            #- name: DATABASE_SCHEMA
+            #  value: reporting
