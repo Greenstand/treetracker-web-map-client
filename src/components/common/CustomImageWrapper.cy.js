@@ -1,7 +1,8 @@
-import { mountWithTheme as mount } from '../../models/test-utils';
+import { formatDateString } from 'models/utils';
 import React from 'react';
-import data from '../../../cypress/fixtures/tree186734.json';
 
+import data from '../../../cypress/fixtures/tree186734.json';
+import { mountWithTheme as mount } from '../../models/test-utils';
 import CustomImageWrapper from './CustomImageWrapper';
 
 describe('CustomImageWrapper', () => {
@@ -21,21 +22,27 @@ describe('CustomImageWrapper', () => {
       .should('equal', `${data.image_url}`);
   });
 
-  it('Image renders properly', () => {
-    cy.viewport(1440, 700);
-    mount(
-      <CustomImageWrapper
-        imageUrl={data.image_url}
-        timeCreated={data.time_created}
-        likes={20}
-      />,
-    );
-    cy.get('[alt="tree image"]')
-      .should('be.visible')
-      .and(($img) => {
-        expect($img[0].naturalWidth).to.be.greaterThan(0);
-      });
-  });
+  it(
+    'Image renders properly',
+    {
+      defaultCommandTimeout: 180000,
+    },
+    () => {
+      cy.viewport(1440, 700);
+      mount(
+        <CustomImageWrapper
+          imageUrl={data.image_url}
+          timeCreated={data.time_created}
+          likes={20}
+        />,
+      );
+      cy.get('[alt="tree image"]')
+        .should('be.visible')
+        .and(($img) => {
+          expect($img[0].naturalWidth).to.be.greaterThan(0);
+        });
+    },
+  );
 
   it('The date renders properly ', () => {
     cy.viewport(1440, 700);
@@ -50,6 +57,6 @@ describe('CustomImageWrapper', () => {
     cy.get('.tss-19g14hs-container')
       .trigger('mouseover')
       .get('.MuiTypography-h6')
-      .contains('1/9/2020');
+      .contains(formatDateString(data.time_created));
   });
 });
