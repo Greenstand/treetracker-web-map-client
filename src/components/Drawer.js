@@ -1,13 +1,12 @@
-import React from 'react';
-import withStyles from '@mui/styles/withStyles';
-import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import Avatar from '@mui/material/Avatar';
-import log from 'loglevel';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Typography from '@mui/material/Typography';
+import withStyles from '@mui/styles/withStyles';
+import React from 'react';
 
 const style = (theme) => ({
   map: {
@@ -100,7 +99,7 @@ function Drawer(props) {
       >
         <Box
           sx={{
-            /*height: (t) => `calc(100vh - ${t.spacing(18)})`,*/
+            /* height: (t) => `calc(100vh - ${t.spacing(18)})`, */
             height: '60vh',
             backgroundColor: 'white',
             overflowY: 'auto',
