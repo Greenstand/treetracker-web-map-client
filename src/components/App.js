@@ -6,9 +6,8 @@ import Snackbar from '@mui/material/Snackbar';
 import expect from 'expect-runtime';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
-import React, { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
-
 import { useMapContext } from '../mapContext';
 import { parseMapName } from '../models/utils';
 
@@ -135,7 +134,7 @@ function MapComponent() {
   injectApp();
 
   // load map
-  React.useEffect(() => {
+  useEffect(() => {
     if (mapContext.map) return;
     log.info('load map...');
     // disable waiting for loading
@@ -199,7 +198,7 @@ function MapComponent() {
   }
 
   /* init timeline date */
-  React.useEffect(() => {
+  useEffect(() => {
     log.debug('init timeline');
     // if there are any other filter, like wallet, then close the timeline
     // or if the SubDomain is freetown.treetracker also hide timeline
@@ -226,7 +225,7 @@ function MapComponent() {
         sx={{ width: '100%', height: '100%' }}
         id="map-canvas"
         ref={mapRef}
-      ></Box>
+      />
       <Snackbar
         open={message.open}
         autoHideDuration={10000}

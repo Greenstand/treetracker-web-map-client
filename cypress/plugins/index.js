@@ -1,7 +1,9 @@
+/* eslint-disable global-require */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
-const nock = require('nock');
 const http = require('http');
 const next = require('next');
+const nock = require('nock');
 
 // start the Next.js server when Cypress starts
 module.exports = async (on, config) => {

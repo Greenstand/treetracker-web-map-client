@@ -1,7 +1,5 @@
-import React from 'react';
-
-import { mountWithTheme as mount } from '../models/test-utils';
 import Logo from './Logo';
+import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('Logo', () => {
   it('it shows logo', () => {

@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
 import withStyles from '@mui/styles/withStyles';
-import React from 'react';
+import { useState } from 'react';
 
 const style = (theme) => ({
   map: {
@@ -77,7 +77,7 @@ const style = (theme) => ({
 
 function Drawer(props) {
   const { classes, children } = props;
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   // console.log("Tokens List", tokens)
 
@@ -88,12 +88,12 @@ function Drawer(props) {
   return (
     <>
       <SwipeableDrawer
-        anchor={'bottom'}
+        anchor="bottom"
         open={open}
         classes={{ paper: classes.paper }}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
-        disableSwipeToOpen={true}
+        disableSwipeToOpen
         BackdropProps={{ open: false }}
         style={{ position: 'relative' }}
       >

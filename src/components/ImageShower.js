@@ -2,7 +2,6 @@ import Close from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
 
 const useStyles = makeStyles()(() => ({
   closeIcon: {
@@ -19,15 +18,16 @@ const useStyles = makeStyles()(() => ({
 
 function ImageShower(props) {
   const { classes } = useStyles();
-  if (!props.open) {
+  const { open, onClose, title, src } = props;
+  if (!open) {
     return null;
   }
   return (
     <>
-      <Dialog open={true} onClose={props.onClose}>
-        <img alt={props.title} src={props.src} />
+      <Dialog open onClose={onClose}>
+        <img alt={title} src={src} />
       </Dialog>
-      <IconButton className={classes.closeIcon} onClick={props.onClose}>
+      <IconButton className={classes.closeIcon} onClick={onClose}>
         <Close className={classes.icon} />
       </IconButton>
     </>

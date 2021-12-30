@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import MapModel from './MapModel';
 
 jest.mock('axios');

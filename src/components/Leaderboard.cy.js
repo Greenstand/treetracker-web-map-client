@@ -1,7 +1,5 @@
-import React from 'react';
-
-import { mountWithTheme as mount } from '../models/test-utils';
 import LeaderBoard from './LeaderBoard';
+import { mountWithTheme as mount } from '../models/test-utils';
 
 const countries = [
   { id: 6632386, name: 'Tanzania', planted: 100000 },

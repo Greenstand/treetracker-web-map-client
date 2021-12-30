@@ -6,8 +6,6 @@ import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import log from 'loglevel';
-import React from 'react';
-
 import Layout from '../components/Layout';
 import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
@@ -16,6 +14,7 @@ import appTheme from '../theme';
 
 let muiCache;
 
+// eslint-disable-next-line no-return-assign
 export const createMuiCache = () =>
   (muiCache = createCache({
     key: 'mui',

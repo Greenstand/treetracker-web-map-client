@@ -1,9 +1,10 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable react/display-name */
 import MuiLink from '@mui/material/Link';
 import clsx from 'clsx';
 import NextLink from 'next/link';
 import React from 'react';
 
-// eslint-disable-next-line react/display-name
 const NextComposed = React.forwardRef((props, ref) => {
   const { as, href, ...other } = props;
   return (

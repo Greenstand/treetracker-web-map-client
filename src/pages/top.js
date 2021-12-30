@@ -2,11 +2,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
-
-import Filter from '../components/common/Filter';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
+import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 

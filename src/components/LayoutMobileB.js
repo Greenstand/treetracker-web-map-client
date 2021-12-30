@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
 
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 

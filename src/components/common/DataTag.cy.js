@@ -1,7 +1,5 @@
-import React from 'react';
-
-import { mountWithTheme as mount } from '../../models/test-utils';
 import DataTag from './DataTag';
+import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('DataTag', () => {
   it('DataTag', () => {

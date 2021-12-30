@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { makeStyles } from 'models/makeStyles';
 import dynamic from 'next/dynamic';
-import React from 'react';
+import Navbar from './Navbar';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });

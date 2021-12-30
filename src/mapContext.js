@@ -1,23 +1,26 @@
-import React from 'react';
-// The context to handle the map
+import { createContext, useContext, useMemo, useState } from 'react';
 
-const MapContext = React.createContext({
+const MapContext = createContext({
   map: undefined,
   setMap: () => undefined,
 });
 
 export function MapContextProvider({ children }) {
-  const [map, setMap] = React.useState(undefined);
+  const [map, setMap] = useState(undefined);
 
-  return (
-    <MapContext.Provider value={{ map, setMap }}>
-      {children}
-    </MapContext.Provider>
+  const value = useMemo(
+    () => ({
+      map,
+      setMap,
+    }),
+    [map, setMap],
   );
+
+  return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
 }
 
 export function useMapContext() {
-  return React.useContext(MapContext);
+  return useContext(MapContext);
 }
 
 // TODO maybe export consumer
