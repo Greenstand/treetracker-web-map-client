@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 
 import Drawer from './Drawer';
+import Navbar from './Navbar';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });

@@ -57,6 +57,7 @@ async function requestAPI(url) {
 }
 
 // TODO implement real code
+// eslint-disable-next-line no-unused-vars
 async function getContinent(lat, lon) {
   return {
     name: 'Asia',

@@ -1,14 +1,10 @@
 import 'leaflet/dist/leaflet.css';
 
-import AddIcon from '@mui/icons-material/Add';
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import expect from 'expect-runtime';
 import log from 'loglevel';
-import { makeStyles } from 'models/makeStyles';
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
@@ -17,133 +13,6 @@ import { useMapContext } from '../mapContext';
 import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
-
-const useStyles = makeStyles()((theme) => ({
-  mapContainer: {},
-  mapLoaded: {},
-  searchBox: {
-    position: 'absolute',
-    width: 350,
-    borderRadius: 8,
-    paddingTop: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    boxSizing: 'border-box',
-    zIndex: 2,
-    [theme.breakpoints.down('sm')]: {
-      width: 'calc(100% - 22px)',
-      paddingTop: theme.spacing(1),
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-    },
-  },
-  searchInputBox: {
-    flexGrow: 1,
-  },
-  searchInput: {
-    borderWidth: 0,
-    marginLeft: 20,
-    fontSize: 16,
-  },
-  sidePaper: {
-    position: 'absolute',
-    height: '100vh',
-    width: 396,
-    backgroundColor: 'white',
-    zIndex: 1,
-    [theme.breakpoints.down('sm')]: {
-      width: 'calc(100vw - 22px)',
-    },
-  },
-  treePicture: {
-    height: 300,
-  },
-  avatarPaper: {
-    borderRadius: '50%',
-  },
-  avatar: {
-    height: 108,
-    width: 108,
-    marginTop: -77,
-    border: '6px solid white',
-  },
-  titleBox: {
-    marginBottom: 15,
-  },
-  nameBox: {
-    marginLeft: 15,
-  },
-  verify: {
-    marginBottom: 15,
-  },
-  item: {
-    marginBottom: 15,
-  },
-  card: {
-    height: '100%',
-  },
-  arrowBox: {
-    height: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  arrow: {
-    color: 'white',
-    fontSize: 36,
-  },
-  closeButton: {
-    position: 'absolute',
-    right: 0,
-    top: 34,
-    margin: -23,
-    width: 23,
-    height: 48,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-    cursor: 'pointer',
-  },
-  infoItem: {
-    marginBottom: 10,
-    '&>div': {
-      marginRight: 5,
-    },
-  },
-  loadingContainer: {
-    userSelect: 'none',
-    pointerEvents: 'none',
-    position: 'absolute',
-    width: '100%',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.25)',
-  },
-  loadingContainerB: {
-    userSelect: 'none',
-    pointerEvents: 'none',
-    position: 'absolute',
-    width: '100%',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mapZoomContainer: {
-    position: 'relative',
-    zIndex: '999',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'end',
-  },
-  zoomButtonContainer: {
-    position: 'absolute',
-    right: '0px',
-    bottom: '80px',
-  },
-  zoomButton: {
-    color: theme.palette.success.main,
-    borderColor: theme.palette.success.main,
-    margin: '5px 10px 5px 5px',
-  },
-}));
 
 function getParameters() {
   const parameters =
@@ -171,7 +40,6 @@ function getParameters() {
 
 function MapComponent() {
   log.warn('Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-  const { classes } = useStyles();
   // const [tree, setTree] = React.useState(undefined);
   const mapRef = useRef(null);
   const [message, setMessage] = useState({ open: false, message: '' });
