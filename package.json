@@ -2,29 +2,26 @@
   "name": "client",
   "version": "2.0.0",
   "private": true,
-  "engines": {
-    "node": "^16"
-  },
   "scripts": {
     "build": "next build",
-    "start": "next start",
-    "dev": "next dev",
-    "dev:mock": "concurrently \"npm run mock-server\" \"npm run dev\"",
     "cy": "cypress open",
     "cy:nock": "cypress open --env nock=true",
-    "cyu": "cypress open-ct",
-    "cyux": "rm -rf .next/; npm run cyu",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "cyu": "cypress open-ct",
+    "cyux": "rm -rf .next/; npm run cyu",
+    "dev": "next dev",
+    "dev:mock": "concurrently \"npm run mock-server\" \"npm run dev\"",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix --cache",
+    "format": "npm run prettier && npm run lint:fix",
+    "lint": "eslint . --cache",
     "lint:errors": "eslint . --quiet --cache",
-    "prettier": "prettier ./ --write",
-    "format": "npm run prettier; npm run lint:fix",
+    "lint:fix": "eslint . --fix --cache",
     "mock-server": "prism mock ./doc/web-map-api.yaml",
-    "test": "jest --watch",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky install",
+    "prettier": "prettier ./ --write",
+    "start": "next start",
+    "test": "jest --watch"
   },
   "browserslist": {
     "production": [
@@ -97,9 +94,13 @@
     "next-router-mock": "^0.6.3",
     "nock": "^13.1.3",
     "prettier": "^2.4.1",
+    "sort-package-json": "^1.53.1",
     "webfontloader": "^1.6.28",
     "webpack": "^5.64.1",
     "webpack-dev-server": "^4.6.0"
+  },
+  "engines": {
+    "node": "^16"
   },
   "proxy": "http://127.0.0.1:3001"
 }
