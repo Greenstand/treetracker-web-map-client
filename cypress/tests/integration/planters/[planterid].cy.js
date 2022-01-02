@@ -78,15 +78,6 @@ describe('Planter page', () => {
       failOnStatusCode: false,
     });
     cy.contains(planter.id);
-  });
-
-  it('should render planters/{planterId} page and display the name of the planter', () => {
-    const path = `/planters/${planter.id}`;
-
-    cy.intercept(path, { doc: { example: '940.json' } });
-
-    cy.request(path);
-
     cy.get('.MuiTypography-h2').contains(/sebastian gaertner/i);
   });
 });
