@@ -93,7 +93,7 @@ export default function Tree({ tree, planter, organization }) {
       <CustomImageWrapper
         imageUrl={tree.photo_url}
         timeCreated={tree.time_created}
-        likes={20}
+        treeId={tree.id}
       />
       <Box className={classes.informationCard}>
         <InformationCard1
