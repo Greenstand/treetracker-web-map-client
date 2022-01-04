@@ -71,7 +71,11 @@ export default function Planter({ planter }) {
         map.setFilters({
           userid: planter.id,
         });
-        await map?.loadInitialView();
+        try {
+          await map.loadInitialView();
+        } catch (err) {
+          log.warn('error:', err);
+        }
         map.rerender();
       } else {
         log.warn('no data:', map, planter);
