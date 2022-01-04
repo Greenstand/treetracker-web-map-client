@@ -41,16 +41,27 @@ const useStyles = makeStyles()((theme) => ({
       borderRadius: '16px',
     },
     marginBottom: theme.spacing(4),
-    '& img:nth-of-type(1)': {
+    '&> img': {
       width: '100%',
       height: '100%',
     },
-    '& img:nth-of-type(2)': {
-      position: 'absolute',
-      width: 100,
-      height: 100,
-      left: 10,
-      bottom: 10,
+  },
+  logoContainer: {
+    backgroundColor: theme.palette.common.white,
+    position: 'absolute',
+    left: theme.spacing(4),
+    bottom: theme.spacing(4),
+    boxSizing: 'border-box',
+    padding: theme.spacing(5),
+    width: 108,
+    height: 108,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    '&> img': {
+      width: '100%',
     },
   },
 }));
@@ -128,7 +139,9 @@ export default function Organization({ organization }) {
 
       <Box className={classes.imgContainer}>
         <img src={photo_url} />
-        <img src={logo_url} />
+        <Box className={classes.logoContainer}>
+          <img src={logo_url} />
+        </Box>
       </Box>
       <Grid container spacing={1}>
         <Grid item>
