@@ -4,13 +4,15 @@ import { mountWithTheme as mount } from '../models/test-utils';
 import PlanterQuote from './PlanterQuote';
 
 beforeEach(() => {
-  cy.intercept('/_next/**', {
-    fixture: 'images/greenway-international.png',
+  cy.intercept('/_next/static/images/quote-reverse**', {
+    fixture: 'images/quote-reverse.svg',
   });
-  cy.intercept('/_next/image?url=%2Fimages%2Fquote-symbol.svg**', {
+  cy.intercept('/_next/static/images/quote-symbol**', {
     fixture: 'images/quote-symbol.svg',
   });
-  cy.viewport(720, 360);
+  cy.intercept('/_next/**greenway**', {
+    fixture: 'images/greenway-international.png',
+  });
 });
 
 const info = {
@@ -23,7 +25,16 @@ const info = {
 };
 
 describe('PlanterQuote', () => {
-  it('PlanterQuote', () => {
+  it('PlanterQuoteDesktop', () => {
+    cy.viewport(720, 360);
+    mount(<PlanterQuote {...info} />);
+  });
+  it('PlanterQuoteDesktopReverse', () => {
+    cy.viewport(720, 360);
+    mount(<PlanterQuote {...info} reverse />);
+  });
+  it('PlanterQuoteMobile', () => {
+    cy.viewport(375, 500);
     mount(<PlanterQuote {...info} />);
   });
 });
