@@ -1,19 +1,19 @@
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Grid, Avatar, Box, Divider, Typography } from '@mui/material';
+import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
+import { Avatar, Box, Divider, Grid, Typography } from '@mui/material';
+import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import React from 'react';
-import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 
+import CustomCard from '../../components/common/CustomCard';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
-import CustomCard from '../../components/common/CustomCard';
-import TreeSpeciesCard from 'components/TreeSpeciesCard';
 
 const useStyles = makeStyles()((theme) => ({
   info: {
@@ -37,18 +37,31 @@ const useStyles = makeStyles()((theme) => ({
   imgContainer: {
     borderRadius: '16px',
     position: 'relative',
-    height: 332,
+    img: {
+      borderRadius: '16px',
+    },
     marginBottom: theme.spacing(4),
-    '& img:nth-of-type(1)': {
+    '&> img': {
       width: '100%',
       height: '100%',
     },
-    '& img:nth-of-type(2)': {
-      position: 'absolute',
-      width: 100,
-      height: 100,
-      left: 10,
-      bottom: 10,
+  },
+  logoContainer: {
+    backgroundColor: theme.palette.common.white,
+    position: 'absolute',
+    left: theme.spacing(4),
+    bottom: theme.spacing(4),
+    boxSizing: 'border-box',
+    padding: theme.spacing(5),
+    width: 108,
+    height: 108,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    '&> img': {
+      width: '100%',
     },
   },
 }));
@@ -123,9 +136,12 @@ export default function Organization({ organization }) {
         {area}, {country}
       </Box>
       <Divider className={classes.divider} />
+
       <Box className={classes.imgContainer}>
         <img src={photo_url} />
-        <img src={logo_url} />
+        <Box className={classes.logoContainer}>
+          <img src={logo_url} />
+        </Box>
       </Box>
       <Grid container spacing={1}>
         <Grid item>
@@ -134,7 +150,7 @@ export default function Organization({ organization }) {
             icon={<ParkOutlinedIcon />}
             title="Trees Planted"
             text={organization?.featuredTrees?.total}
-            disabled={isPlanterTab ? true : false}
+            disabled={!!isPlanterTab}
           />
         </Grid>
         <Grid item>
@@ -146,13 +162,13 @@ export default function Organization({ organization }) {
             icon={<GroupsOutlinedIcon />}
             title="Associated Organizations"
             text={organization?.associatedPlanters?.total}
-            disabled={isPlanterTab ? false : true}
+            disabled={!isPlanterTab}
           />
         </Grid>
       </Grid>
       {!isPlanterTab && (
         <div>
-          {/*TODO replace with the world map component */}
+          {/* TODO replace with the world map component */}
           <h5>The world map</h5>
           <h5>
             {organization?.associatedPlanters?.total} tree planted in continent{' '}
