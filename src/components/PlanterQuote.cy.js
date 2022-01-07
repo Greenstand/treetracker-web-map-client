@@ -17,7 +17,7 @@ beforeEach(() => {
 
 const info = {
   quote:
-    '“I love how planting trees gives me the opportunity to feed my family and save the world at the same time. I try to plant as many trees as I can.”',
+    'I love how planting trees gives me the opportunity to feed my family and save the world at the same time. I try to plant as many trees as I can.',
   name: 'Samwell A',
   photo: '/images/greenway-international.png',
   initialDate: 'November 11, 2020',

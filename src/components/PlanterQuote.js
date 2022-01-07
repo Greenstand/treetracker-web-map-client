@@ -73,7 +73,7 @@ function PlanterQuote({
             }}
           >
             <Typography variant="body1" sx={{ color: 'textPrimary.main' }}>
-              {quote}
+              {`"${quote}"`}
             </Typography>
           </Grid>
 
