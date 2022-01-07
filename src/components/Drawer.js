@@ -30,26 +30,31 @@ function Drawer(props) {
   const { children } = props;
   const [open, setOpen] = useState(true);
   const [hasHeight, setHasHeight] = useState(0);
+  const defaultHeight = 200;
 
   useEffect(() => {
     if (hasHeight <= 0) {
       setHasHeight(0);
-    } else if (hasHeight >= 500) {
+    } else if (hasHeight >= 600) {
+      /* Close the SwipeableDrawer if the hasHeight is greater than 600 */
       setOpen(false);
     } else {
+      /* return any value the hasHeight state has */
       setHasHeight(hasHeight);
     }
   }, [hasHeight]);
 
   const handleTouch = (event) => {
-    const touches = event.targetTouches[0];
+    event.stopPropagation();
 
-    setHasHeight(Math.round(touches.clientY));
+    const touches = event.targetTouches && event.targetTouches[0];
+
+    setHasHeight(Math.round(touches?.clientY || defaultHeight));
   };
 
   function handleClickBottom() {
     setOpen(true);
-    setHasHeight(200);
+    setHasHeight(defaultHeight);
   }
   return (
     <Root>
