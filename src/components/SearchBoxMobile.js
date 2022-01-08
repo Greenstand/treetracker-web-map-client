@@ -14,6 +14,7 @@ export default function SearchBox() {
           background: '#FFFFFF',
           boxShadow: '0px 4px 10px rgba(0,0,0,0.25)',
           fontSize: 'small',
+          fontStyle: 'italic',
         }}
         type="search"
         placeholder="Enter a tree ID, tree species, or location"
