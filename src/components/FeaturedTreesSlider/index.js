@@ -6,11 +6,11 @@ import React, { useRef } from 'react';
 import Link from '../Link';
 import { useStyles } from './style'; // the style file
 
-function FeaturedTreesSlider(props) {
-  const { classes } = useStyles();
+function FeaturedTreesSlider({ trees, size = null }) {
+  // default size of images = 208px;
+  // if size="small" props is passed in, size of images= 144px
+  const { classes } = useStyles(size);
   const sliderRef = useRef();
-
-  const { trees } = props;
 
   const scrollHandler = (num) => {
     sliderRef.current.scrollLeft += num;
