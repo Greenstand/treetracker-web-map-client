@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.1...v1.17.0) (2022-01-11)
+
+
+### Features
+
+* migrate to use web map core, spin icon ([5b04366](https://github.com/Greenstand/treetracker-web-map-client/commit/5b04366b45e989e73a081d08d2ccca12a2822c90))
+
 ## [1.16.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.0...v1.16.1) (2021-11-04)
 
 
