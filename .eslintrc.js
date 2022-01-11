@@ -15,6 +15,9 @@ module.exports = {
     'react/prop-types': ['error', { skipUndeclared: true }],
     'react/jsx-props-no-spreading': 'off',
 
+    // async functions must use 'await'
+    'require-await': 'error',
+
     // allow test files to use dev dependencies
     'import/no-extraneous-dependencies': [
       'error',

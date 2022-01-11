@@ -4,7 +4,7 @@ import MapModel from './MapModel';
 jest.mock('axios');
 
 describe('MapModel', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     // mock jQuery
     global.$ = () => ({
       addClass: jest.fn(),

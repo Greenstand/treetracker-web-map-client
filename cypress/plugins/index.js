@@ -16,7 +16,7 @@ module.exports = async (on, config) => {
   const handleNextRequests = app.getRequestHandler();
   await app.prepare();
 
-  const customServer = new http.Server(async (req, res) =>
+  const customServer = new http.Server((req, res) =>
     handleNextRequests(req, res),
   );
 
@@ -40,7 +40,7 @@ module.exports = async (on, config) => {
       return null;
     },
 
-    async nock({ hostname, method, path, statusCode, body }) {
+    nock({ hostname, method, path, statusCode, body }) {
       nock.activate();
 
       console.log(
@@ -59,7 +59,7 @@ module.exports = async (on, config) => {
 
       return null;
     },
-    async nocks({ hostname, routes }) {
+    nocks({ hostname, routes }) {
       nock.activate();
 
       let scope = nock(hostname);
