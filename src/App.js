@@ -18,7 +18,7 @@ import Logo from "./components/Logo";
 import SidePanel from "./components/SidePanel";
 import Timeline from "./components/Timeline";
 import getLogoSrc from "./models/logo";
-import Map from "./models/Map";
+import {Map} from "treetracker-web-map-core";
 import {parseMapName} from "./utils";
 
 
@@ -394,6 +394,8 @@ function App() {
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
       filters: parameters,
+      tileServerUrl: process.env.REACT_APP_TILE_SERVER_URL,
+      tileServerSubdomains: process.env.REACT_APP_TILE_SERVER_SUBDOMAINS.split(","),
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;

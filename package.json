@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
+    "client": "ssh://git@github.com/Greenstand/treetracker-web-map-client.git",
     "expect-runtime": "^0.4.0",
     "leaflet": "^1.7.1",
     "leaflet-utfgrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
