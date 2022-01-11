@@ -12,11 +12,14 @@ module.exports = {
     camelcase: 'off',
     'no-unused-expressions': ['error', { allowShortCircuit: true }],
     'react/jsx-filename-extension': ['error', { extensions: ['.js'] }],
-    'react/prop-types': ['error', { skipUndeclared: true }],
-    'react/jsx-props-no-spreading': 'off',
 
     // async functions must use 'await'
     'require-await': 'error',
+
+    // disabled because too strict
+    'react/jsx-props-no-spreading': 'off',
+    'react/jsx-no-bind': 'off',
+    'react/prop-types': ['error', { skipUndeclared: true }],
 
     // allow test files to use dev dependencies
     'import/no-extraneous-dependencies': [
@@ -54,14 +57,13 @@ module.exports = {
     // rule triggers false positive
     '@next/next/no-page-custom-font': 'off',
 
-    // should be set to error when problems are cleared
+    // should be set to error when warnings are cleared
     'import/prefer-default-export': 'warn',
     'jsx-a11y/anchor-is-valid': 'warn',
     'jsx-a11y/click-events-have-key-events': 'warn',
     'jsx-a11y/no-static-element-interactions': 'warn',
     'jsx-a11y/alt-text': 'warn',
     '@next/next/no-img-element': 'warn',
-    'react/jsx-no-bind': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
   },
 
