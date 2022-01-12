@@ -8,10 +8,9 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { makeStyles } from 'models/makeStyles';
 import Image from 'next/image';
-import React, { useState } from 'react';
-
+import { useState } from 'react';
+import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 
 const iconLogo = '/images/greenstand_logo.svg';
@@ -110,7 +109,7 @@ function Navbar() {
           </Button>
         </Link>
         <Link href="/">
-          <Button className={classes.buttonStyle} variant="text" component="a">
+          <Button className={classes.buttonStyle} variant="text">
             Contact Us
           </Button>
         </Link>

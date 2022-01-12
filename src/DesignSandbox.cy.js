@@ -1,5 +1,3 @@
-import React from 'react';
-
 import DesignSandbox from './DesignSandbox';
 import { mountWithTheme as mount } from './models/test-utils';
 

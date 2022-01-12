@@ -1,6 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
 import Fab from '@mui/material/Fab';
-import React from 'react';
 
 export default function SearchButton() {
   return (

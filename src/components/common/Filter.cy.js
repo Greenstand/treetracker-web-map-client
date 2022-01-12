@@ -1,5 +1,5 @@
-import { mountWithTheme as mount } from '../../models/test-utils';
 import Filter from './Filter';
+import { mountWithTheme as mount } from '../../models/test-utils';
 // import the expect function from Chai
 
 describe('Filter', () => {

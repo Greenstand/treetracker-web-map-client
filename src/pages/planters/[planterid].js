@@ -7,18 +7,17 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import log from 'loglevel';
 import moment from 'moment';
 // import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
-import CustomCard from '../../components/common/CustomCard';
-import DataTag from '../../components/common/DataTag';
+import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import FeaturedTreesSlider from '../../components/FeaturedTreesSlider';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
+import CustomCard from '../../components/common/CustomCard';
+import DataTag from '../../components/common/DataTag';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
@@ -71,7 +70,11 @@ export default function Planter({ planter }) {
         map.setFilters({
           userid: planter.id,
         });
-        await map.loadInitialView();
+        try {
+          await map.loadInitialView();
+        } catch (err) {
+          log.warn('error:', err);
+        }
         map.rerender();
       } else {
         log.warn('no data:', map, planter);
@@ -86,11 +89,11 @@ export default function Planter({ planter }) {
 
   return (
     <PageWrapper className={classes.root}>
-      <Typography variant="h2" classname={classes.textColor}>
+      <Typography variant="h2" className={classes.textColor}>
         {planter.first_name} {planter.last_name}
       </Typography>
       <Box sx={{ display: 'flex', gap: 2 }}>
-        <VerifiedBadge verified={true} badgeName="Verified Planter" />
+        <VerifiedBadge verified badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Orgs" />
       </Box>
       <Stack gap={2.5} sx={{ my: 2 }}>
@@ -159,8 +162,8 @@ export default function Planter({ planter }) {
           <div key={org.id}>
             <InformationCard1
               entityName={org.name}
-              entityType={'Planting Organization'}
-              buttonText={'Meet the Organization'}
+              entityType="Planting Organization"
+              buttonText="Meet the Organization"
               cardImageSrc={org?.logo_url}
               link={`/organizations/${org.id}`}
             />
@@ -183,22 +186,22 @@ export default function Planter({ planter }) {
       <Divider className={classes.divider} />
       <Typography
         variant="h4"
-        classname={classes.textColor}
+        className={classes.textColor}
         sx={{ mt: { xs: 12, md: 20 } }}
       >
         About
       </Typography>
-      <Typography variant="body1" classname={classes.textColor} mt={7}>
+      <Typography variant="body1" className={classes.textColor} mt={7}>
         {planter.about}
       </Typography>
       <Typography
         variant="h4"
-        classname={classes.textColor}
+        className={classes.textColor}
         sx={{ mt: { xs: 10, md: 16 } }}
       >
         Mission
       </Typography>
-      <Typography variant="body1" classname={classes.textColor} mt={7}>
+      <Typography variant="body1" className={classes.textColor} mt={7}>
         {planter.mission}
       </Typography>
       <Box mt={20} />

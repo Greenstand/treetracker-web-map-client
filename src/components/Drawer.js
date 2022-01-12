@@ -1,13 +1,12 @@
-import React from 'react';
-import withStyles from '@mui/styles/withStyles';
-import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import Avatar from '@mui/material/Avatar';
-import log from 'loglevel';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Typography from '@mui/material/Typography';
+import withStyles from '@mui/styles/withStyles';
+import { useState } from 'react';
 
 const style = (theme) => ({
   map: {
@@ -78,7 +77,7 @@ const style = (theme) => ({
 
 function Drawer(props) {
   const { classes, children } = props;
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   // console.log("Tokens List", tokens)
 
@@ -89,18 +88,18 @@ function Drawer(props) {
   return (
     <>
       <SwipeableDrawer
-        anchor={'bottom'}
+        anchor="bottom"
         open={open}
         classes={{ paper: classes.paper }}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
-        disableSwipeToOpen={true}
+        disableSwipeToOpen
         BackdropProps={{ open: false }}
         style={{ position: 'relative' }}
       >
         <Box
           sx={{
-            /*height: (t) => `calc(100vh - ${t.spacing(18)})`,*/
+            /* height: (t) => `calc(100vh - ${t.spacing(18)})`, */
             height: '60vh',
             backgroundColor: 'white',
             overflowY: 'auto',
