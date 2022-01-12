@@ -1,7 +1,5 @@
-import React from 'react';
-
-import { mountWithTheme as mount } from '../models/test-utils';
 import PlanterQuote from './PlanterQuote';
+import { mountWithTheme as mount } from '../models/test-utils';
 
 beforeEach(() => {
   cy.intercept('/_next/static/images/quote-reverse**', {

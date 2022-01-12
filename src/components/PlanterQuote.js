@@ -1,10 +1,8 @@
 import { Box, Grid, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
-
+import DataTag from './common/DataTag';
 import quoteImgReverse from '../images/quote-reverse.svg';
 import quoteImg from '../images/quote-symbol.svg';
-import DataTag from './common/DataTag';
 
 function PlanterQuote({
   quote,
@@ -33,7 +31,7 @@ function PlanterQuote({
         container
         direction={{ xs: 'column', sm: reverse ? 'row-reverse' : 'row' }}
         spacing={2}
-        alignItems={'center'}
+        alignItems="center"
       >
         <Grid item sm={4}>
           <Box

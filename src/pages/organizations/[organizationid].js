@@ -2,16 +2,15 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { Avatar, Box, Divider, Grid, Typography } from '@mui/material';
+import { Box, Divider, Grid, Typography } from '@mui/material';
+import log from 'loglevel';
+import React from 'react';
 import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
-import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
-
-import CustomCard from '../../components/common/CustomCard';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
+import CustomCard from '../../components/common/CustomCard';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
@@ -87,8 +86,8 @@ export default function Organization({ organization }) {
     const tree = organization?.featuredTrees?.trees[0];
     if (tree) {
       const { lat, lon } = tree;
-      const continent = await utils.getContinent(lat, lon);
-      setContinent(continent.name);
+      const newContinent = await utils.getContinent(lat, lon);
+      setContinent(newContinent.name);
     }
   }
 
@@ -125,7 +124,7 @@ export default function Organization({ organization }) {
     <PageWrapper>
       <Typography variant="subtitle1">{name}</Typography>
       <Box className={classes.badgeWrapper}>
-        <VerifiedBadge verified={true} badgeName="Verified Planter" />
+        <VerifiedBadge verified badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Planters" />
       </Box>
       <Box className={classes.info}>
@@ -178,7 +177,7 @@ export default function Organization({ organization }) {
         </div>
       )}
       {isPlanterTab && (
-        <>
+        <div>
           {organization?.associatedPlanters?.planters?.map((planter) => (
             <PlanterQuote
               name={planter.first_name}
@@ -189,7 +188,7 @@ export default function Organization({ organization }) {
               location={planter.country}
             />
           ))}
-        </>
+        </div>
       )}
       <Box className={classes.speciesBox}>
         {organization?.species.species.map((species) => (

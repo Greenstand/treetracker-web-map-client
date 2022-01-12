@@ -1,9 +1,7 @@
 import { Box } from '@mui/material';
 import clsx from 'clsx';
-import { makeStyles } from 'models/makeStyles';
 import { useRouter } from 'next/router';
-import React from 'react';
-
+import { makeStyles } from 'models/makeStyles';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
 

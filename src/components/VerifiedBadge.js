@@ -1,6 +1,5 @@
 import CheckIcon from '@mui/icons-material/Check';
 import { Chip } from '@mui/material';
-import React from 'react';
 
 function VerifiedBadge({ verified, badgeName }) {
   return (

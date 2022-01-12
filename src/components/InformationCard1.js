@@ -1,13 +1,11 @@
 import { Box, Button, CardMedia, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
-
 import Link from './Link';
 
 const useStyles = makeStyles()((theme) => ({
   container: {
     boxSizing: 'border-box',
-    background: theme.palette.background.greenOrangeLightGr,
     height: 'fit-content',
     padding: theme.spacing(6),
     [theme.breakpoints.down('md')]: {
@@ -48,12 +46,20 @@ function InformationCard1({
   link,
 }) {
   const { classes } = useStyles();
+  const theme = useTheme();
+
   return (
     <Box
       className={classes.container}
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
+      sx={{
+        background:
+          entityType === 'Planting Organization'
+            ? theme.palette.background.greenOrangeLightGr
+            : theme.palette.background.greenOrangeLightGrInverse,
+      }}
     >
       <div>
         <CardMedia
@@ -79,7 +85,7 @@ function InformationCard1({
         </Box>
       </div>
       <Link href={link}>
-        <Button className={classes.button} fullWidth={true}>
+        <Button className={classes.button} fullWidth>
           <Typography variant="h5">{buttonText}</Typography>
         </Button>
       </Link>

@@ -1,16 +1,15 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button, Grid } from '@mui/material';
-import React, { useRef } from 'react';
-
-import Link from '../Link';
+import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
+import Link from '../Link';
 
-function FeaturedTreesSlider(props) {
-  const { classes } = useStyles();
+function FeaturedTreesSlider({ trees, size = null }) {
+  // default size of images = 208px;
+  // if size="small" props is passed in, size of images= 144px
+  const { classes } = useStyles(size);
   const sliderRef = useRef();
-
-  const { trees } = props;
 
   const scrollHandler = (num) => {
     sliderRef.current.scrollLeft += num;
@@ -22,8 +21,12 @@ function FeaturedTreesSlider(props) {
         <ArrowForwardIosIcon />
       </Button>
       <Grid ref={sliderRef} className={classes.SliderImgContainer}>
-        {trees.map((tree, index) => (
-          <Link href={`/trees/${tree.id}`} key={index} className={classes.Card}>
+        {trees.map((tree) => (
+          <Link
+            href={`/trees/${tree.id}`}
+            key={tree.id}
+            className={classes.Card}
+          >
             <img className={classes.Img} src={tree.photo_url} />
             <div className={classes.Title}>
               <p style={{ padding: '0 8px' }}>

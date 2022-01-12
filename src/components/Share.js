@@ -10,9 +10,8 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import log from 'loglevel';
-import { makeStyles } from 'models/makeStyles';
 import React from 'react';
-
+import { makeStyles } from 'models/makeStyles';
 import ShareIcon from './ShareIcon';
 
 const useStyles = makeStyles()((theme) => ({
@@ -35,6 +34,7 @@ function Share(props) {
   const [embedCode, setEmbedCode] = React.useState('');
   const [isMessageOpen, setMessageOpen] = React.useState(false);
   const [message, setMessage] = React.useState('');
+  const { shareUrl } = props;
 
   function handleClick() {
     setIsOpen(true);
@@ -46,19 +46,19 @@ function Share(props) {
 
   function handleTwitter() {
     window.open(
-      `https://twitter.com/intent/tweet?url=${props.shareUrl}&via=green_stand&related=Greestand,treetracker`,
+      `https://twitter.com/intent/tweet?url=${shareUrl}&via=green_stand&related=Greestand,treetracker`,
     );
   }
 
   function handleFaceBook() {
     window.open(
-      `https://www.facebook.com/dialog/share?app_id=87741124305&href=${props.shareUrl}&display=popup`,
+      `https://www.facebook.com/dialog/share?app_id=87741124305&href=${shareUrl}&display=popup`,
     );
   }
 
   function handleEmail() {
     window.open(
-      `mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this link to check it! ${props.shareUrl}`,
+      `mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this link to check it! ${shareUrl}`,
       '_self',
     );
   }
@@ -70,7 +70,7 @@ function Share(props) {
 
   function handleCopyLink() {
     if (navigator && navigator.clipboard) {
-      navigator.clipboard.writeText(props.shareUrl).then(() => {
+      navigator.clipboard.writeText(shareUrl).then(() => {
         showMessage('Link has been copied!');
       });
     }
@@ -91,7 +91,7 @@ function Share(props) {
 
   React.useEffect(() => {
     setEmbedCode(
-      `<iframe width="560" height="315" src="${props.shareUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+      `<iframe width="560" height="315" src="${shareUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
     );
   }, []);
 
@@ -185,11 +185,9 @@ function Share(props) {
         onClose={handleMessageClose}
         message={message}
         action={
-          <React.Fragment>
-            <IconButton color="primary" onClick={handleMessageClose}>
-              <Close />
-            </IconButton>
-          </React.Fragment>
+          <IconButton color="primary" onClick={handleMessageClose}>
+            <Close />
+          </IconButton>
         }
       />
     </>

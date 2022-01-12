@@ -1,3 +1,6 @@
+/* eslint-disable no-labels */
+/* eslint-disable no-continue */
+/* eslint-disable no-underscore-dangle */
 /*
  * The module to handle greenstand map
  */

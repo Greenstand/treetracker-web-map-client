@@ -5,15 +5,14 @@ import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import log from 'loglevel';
+import * as React from 'react';
+import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
-
-import TreeTag from '../../components/common/TreeTag';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
+import TreeTag from '../../components/common/TreeTag';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
@@ -68,28 +67,21 @@ export default function Tree({ tree, planter, organization }) {
     }
   }, [mapContext.map]);
 
-  const Title = () => (
-    <Typography sx={{ color: 'textPrimary.main' }} variant="h2">
-      Tree{/* tree.species */} - #{tree.id}
-    </Typography>
-  );
-
-  const Badges = () => (
-    <Box className={classes.badges}>
-      <VerifiedBadge verified={tree.verified} badgeName="Tree Verified" />
-      <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
-    </Box>
-  );
   return (
     <PageWrapper className={classes.root}>
-      <Title />
+      <Typography sx={{ color: 'textPrimary.main' }} variant="h2">
+        Tree{/* tree.species */} - #{tree.id}
+      </Typography>
       <Typography
         sx={{ color: 'textPrimary.main', fontWeight: 300 }}
         variant="h5"
       >
         Eco-Peace-Vision
       </Typography>
-      <Badges />
+      <Box className={classes.badges}>
+        <VerifiedBadge verified={tree.verified} badgeName="Tree Verified" />
+        <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
+      </Box>
       <CustomImageWrapper
         imageUrl={tree.photo_url}
         timeCreated={tree.time_created}
@@ -98,8 +90,8 @@ export default function Tree({ tree, planter, organization }) {
       <Box className={classes.informationCard}>
         <InformationCard1
           entityName={organization.name}
-          entityType={'Planting Organization'}
-          buttonText={'Meet the Organization'}
+          entityType="Planting Organization"
+          buttonText="Meet the Organization"
           cardImageSrc={organization?.photo_url}
           link={`/organizations/${organization.id}`}
         />
@@ -107,8 +99,8 @@ export default function Tree({ tree, planter, organization }) {
       <Box className={classes.informationCard}>
         <InformationCard1
           entityName={`${planter.first_name} ${planter.last_name}`}
-          entityType={'Planter'}
-          buttonText={'Meet the Planter'}
+          entityType="Planter"
+          buttonText="Meet the Planter"
           cardImageSrc={planter?.photo_url}
           link={`/planters/${planter.id}`}
         />
@@ -122,39 +114,35 @@ export default function Tree({ tree, planter, organization }) {
       <Box className={classes.tabBox}>
         <TreeTag
           TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
-          title={'Planted on'}
+          title="Planted on"
           icon={<CalendarTodayIcon />}
         />
         <TreeTag
-          TreeTagValue={'Tanzania'}
-          title={'Located in'}
+          TreeTagValue="Tanzania"
+          title="Located in"
           icon={<RoomOutlinedIcon />}
         />
         {tree.age && (
-          <TreeTag
-            TreeTagValue={tree.age}
-            title={'Age'}
-            icon={<AccessTime />}
-          />
+          <TreeTag TreeTagValue={tree.age} title="Age" icon={<AccessTime />} />
         )}
         {tree.gps_accuracy && (
           <TreeTag
             TreeTagValue={tree.gps_accuracy}
-            title={'GPS Accuracy'}
+            title="GPS Accuracy"
             icon={<NavigationOutlinedIcon />}
           />
         )}
         {tree.lat && tree.lon && (
           <TreeTag
             TreeTagValue={`${tree.lat}, ${tree.lon}`}
-            title={'Latitude, Longitude'}
+            title="Latitude, Longitude"
             icon={<LanguageIcon />}
           />
         )}
         {tree.token_id && (
           <TreeTag
             TreeTagValue={tree.token_id}
-            title={'Token ID'}
+            title="Token ID"
             icon={<AccessTime />}
           />
         )}

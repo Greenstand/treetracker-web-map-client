@@ -1,7 +1,5 @@
-import React from 'react';
-
-import { mountWithThemeAndRouter as mount } from '../models/test-utils';
 import Navbar from './Navbar';
+import { mountWithThemeAndRouter as mount } from '../models/test-utils';
 
 beforeEach(() => {
   cy.intercept('/_next/**', {

@@ -1,7 +1,5 @@
-import React from 'react';
-
-import { mountWithTheme as mount } from '../models/test-utils';
 import Share from './Share';
+import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('Share', () => {
   before(() => {});
