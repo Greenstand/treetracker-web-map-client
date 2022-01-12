@@ -1,6 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, IconButton, InputBase } from '@mui/material';
-import React from 'react';
 
 export default function SearchBox() {
   return (

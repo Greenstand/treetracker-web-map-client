@@ -1,8 +1,6 @@
 import { Box, Button, CardMedia, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
-
 import Link from './Link';
 
 const useStyles = makeStyles()((theme) => ({
@@ -87,7 +85,7 @@ function InformationCard1({
         </Box>
       </div>
       <Link href={link}>
-        <Button className={classes.button} fullWidth={true}>
+        <Button className={classes.button} fullWidth>
           <Typography variant="h5">{buttonText}</Typography>
         </Button>
       </Link>

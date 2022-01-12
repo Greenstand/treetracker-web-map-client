@@ -1,7 +1,5 @@
-import React from 'react';
-
-import { mountWithTheme as mount } from '../models/test-utils';
 import BackButton from './BackButton';
+import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('BackButton', () => {
   it('renders', () => {

@@ -1,5 +1,4 @@
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
 
 const logo = '/images/greenstand_logo_full.png';
 

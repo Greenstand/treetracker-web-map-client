@@ -1,5 +1,4 @@
 import { makeStyles } from 'models/makeStyles';
-import * as React from 'react';
 
 const useStyles = makeStyles()((theme) => ({
   root: {

@@ -1,7 +1,6 @@
 import CalendarToday from '@mui/icons-material/CalendarToday';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { Stack, Typography } from '@mui/material';
-import React from 'react';
 
 function DataTag({ data, location }) {
   return (

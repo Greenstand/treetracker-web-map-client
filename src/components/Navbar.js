@@ -8,10 +8,9 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { makeStyles } from 'models/makeStyles';
 import Image from 'next/image';
-import React, { useState } from 'react';
-
+import { useState } from 'react';
+import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 
 const iconLogo = '/images/greenstand_logo.svg';

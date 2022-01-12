@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
-import React from 'react';
 
-import { mountWithTheme as mount } from '../models/test-utils';
 import Timeline from './Timeline';
+import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('Timeline', () => {
   before(() => {
