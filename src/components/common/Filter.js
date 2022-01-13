@@ -25,7 +25,7 @@ function Filter(props) {
   const { classes } = useStyles();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isError, setIsError] = useState(false);
   const [onSubmit, setOnSubmit] = useState(false);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
