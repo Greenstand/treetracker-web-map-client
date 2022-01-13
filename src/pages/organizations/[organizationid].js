@@ -2,9 +2,10 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { Avatar, Box, Divider, Grid, Typography } from '@mui/material';
+import { Box, Divider, Grid, Typography } from '@mui/material';
 import log from 'loglevel';
 import React from 'react';
+import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import { makeStyles } from 'models/makeStyles';
 import PageWrapper from '../../components/PageWrapper';
@@ -177,19 +178,16 @@ export default function Organization({ organization }) {
       )}
       {isPlanterTab && (
         <div>
-          {/* TODO replace with the planter quote card https://github.com/Greenstand/treetracker-web-map-client/issues/334 */}
-          <h5>
-            Associated planters: {organization?.associatedPlanters?.total}{' '}
-          </h5>
-          <h5>featured planters</h5>
-          <div>
-            {organization?.associatedPlanters?.planters?.map((planter) => (
-              <div key={planter.id}>
-                <Avatar src={planter.photo_url} />
-                <h5>{planter.name}</h5>
-              </div>
-            ))}
-          </div>
+          {organization?.associatedPlanters?.planters?.map((planter) => (
+            <PlanterQuote
+              name={planter.first_name}
+              key={planter.id}
+              quote={planter.about.slice(0, 150)}
+              photo={planter.photo_url}
+              initialDate={planter.created_time}
+              location={planter.country}
+            />
+          ))}
         </div>
       )}
       <Box className={classes.speciesBox}>
