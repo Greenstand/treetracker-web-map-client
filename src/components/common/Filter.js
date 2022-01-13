@@ -137,7 +137,13 @@ function Filter(props) {
                 </Typography>
               </Grid>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Grid item container sx={{ mt: 5 }} columnSpacing={{ xs: 2 }}>
+                <Grid
+                  item
+                  container
+                  sx={{ mt: 5 }}
+                  columnSpacing={{ xs: 2 }}
+                  nowrap
+                >
                   <Grid item sm={6}>
                     <DesktopDatePicker
                       label="Start Date"
@@ -166,7 +172,7 @@ function Filter(props) {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item sm={6}>
                     <DesktopDatePicker
                       label="End Date"
                       inputFormat="dd-MM-yyyy"
