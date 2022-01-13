@@ -5,6 +5,7 @@ import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import log from 'loglevel';
 import React from 'react';
+import CustomWorldMap from 'components/CustomWorldMap';
 import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import { makeStyles } from 'models/makeStyles';
@@ -70,6 +71,7 @@ export default function Organization({ organization }) {
   const mapContext = useMapContext();
   const { classes } = useStyles();
   const [isPlanterTab, setIsPlanterTab] = React.useState(false);
+  // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
   const {
     name,
@@ -167,14 +169,9 @@ export default function Organization({ organization }) {
         </Grid>
       </Grid>
       {!isPlanterTab && (
-        <div>
-          {/* TODO replace with the world map component */}
-          <h5>The world map</h5>
-          <h5>
-            {organization?.associatedPlanters?.total} tree planted in continent{' '}
-            {continent}{' '}
-          </h5>
-        </div>
+        <Box>
+          <CustomWorldMap totalTrees={organization?.featuredTrees?.total} />
+        </Box>
       )}
       {isPlanterTab && (
         <div>
