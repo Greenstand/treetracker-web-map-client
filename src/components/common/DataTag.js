@@ -1,7 +1,6 @@
 import CalendarToday from '@mui/icons-material/CalendarToday';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { Stack, Typography } from '@mui/material';
-import React from 'react';
 
 function DataTag({ data, location }) {
   return (
@@ -20,7 +19,7 @@ function DataTag({ data, location }) {
         <CalendarToday sx={{ fontSize: '1.25rem' }} />
       )}
       <Typography variant="body1" sx={{ fontWeight: 700 }}>
-        {location || `Planter since`} {data}
+        {!location && `Planter since`} {data}
       </Typography>
     </Stack>
   );

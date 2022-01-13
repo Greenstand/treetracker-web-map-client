@@ -1,8 +1,6 @@
 import AccessTime from '@mui/icons-material/AccessTime';
-import React from 'react';
-
-import { mountWithTheme as mount } from '../../models/test-utils';
 import TreeTag from './TreeTag';
+import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('TreeTag', () => {
   it('TreeTag', () => {
@@ -10,7 +8,7 @@ describe('TreeTag', () => {
     function Test() {
       return (
         <TreeTag
-          title={'Age'}
+          title="Age"
           TreeTagValue={TreeTagValue}
           icon={<AccessTime />}
         />

@@ -1,8 +1,6 @@
 import { mount } from '@cypress/react';
 import { ThemeProvider } from '@mui/material';
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
-import * as React from 'react';
-
 import appTheme from '../theme';
 
 export const mockRouter = {

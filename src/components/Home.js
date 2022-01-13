@@ -2,8 +2,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
-
 import Link from './Link';
 
 const backgroundImage = '/images/bg.png';
@@ -45,10 +43,9 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export default function Home() {
+function Buttons() {
   const { classes } = useStyles();
-
-  const Buttons = () => (
+  return (
     <Box className={classes.buttonsContainer} mt={4.5}>
       <Button variant="outlined" color="inherit" className={classes.button}>
         <Typography>Learn more</Typography>
@@ -66,6 +63,10 @@ export default function Home() {
       </Link>
     </Box>
   );
+}
+
+export default function Home() {
+  const { classes } = useStyles();
 
   return (
     <Box className={classes.pageContainer}>

@@ -15,6 +15,7 @@ const Root = styled('div')(() => ({
   height: '100%',
 }));
 
+
 const StyledBox = styled(Box)(() => ({}));
 
 const Puller = styled(Box)(({ theme }) => ({
@@ -168,7 +169,6 @@ function Drawer(props) {
         >
           <Puller />
         </StyledBox>
-
         {children}
       </SwipeableDrawer>
     </Root>

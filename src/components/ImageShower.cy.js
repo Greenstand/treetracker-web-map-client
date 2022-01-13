@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { mountWithTheme as mount } from '../models/test-utils';
 import ImageShower from './ImageShower';
+import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('ImageShower', () => {
   it('ImageShower', () => {
@@ -9,7 +8,9 @@ describe('ImageShower', () => {
       const [isOpen, setOpen] = React.useState(false);
       return (
         <>
-          <button onClick={() => setOpen(true)}>show</button>
+          <button type="button" onClick={() => setOpen(true)}>
+            show
+          </button>
           <ImageShower
             open={isOpen}
             src="xxxx"

@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import entity from './entity';
 
 jest.mock('axios');
@@ -20,7 +19,7 @@ describe('entity', () => {
     }));
     const e = await entity.getById(1);
     expect(axios.get).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API}entities/1`,
+      `${process.env.NEXT_PUBLIC_API}entities/1`,
     );
     expect(e).toMatchObject({
       id: 1,
@@ -42,7 +41,7 @@ describe('entity', () => {
     }));
     const e = await entity.getByWallet('Zaven');
     expect(axios.get).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API}entities?wallet=Zaven`,
+      `${process.env.NEXT_PUBLIC_API}entities?wallet=Zaven`,
     );
     expect(e).toMatchObject([
       {
@@ -66,7 +65,7 @@ describe('entity', () => {
     }));
     const e = await entity.getByMapName('freetown');
     expect(axios.get).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API}entities?map_name=freetown`,
+      `${process.env.NEXT_PUBLIC_API}entities?map_name=freetown`,
     );
     expect(e).toMatchObject([
       {
