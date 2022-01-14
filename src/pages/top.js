@@ -62,7 +62,10 @@ export default function Top({ trees, countries }) {
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>
-      <Typography variant="h2" className={classes.title2}>
+      <Typography
+        variant="h2"
+        sx={{ color: 'textPrimary.main', fontSize: { xs: 20, lg: 32 } }}
+      >
         Check out the global leaders in the tree planting effort
       </Typography>
       <LeaderBoard
