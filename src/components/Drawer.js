@@ -5,16 +5,14 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
-import log from 'loglevel';
-import React, { useEffect, useState } from 'react';
+import { styled } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
 
 const Root = styled('div')(() => ({
   height: '100%',
 }));
-
 
 const StyledBox = styled(Box)(() => ({}));
 
@@ -30,14 +28,13 @@ const Puller = styled(Box)(({ theme }) => ({
 function Drawer(props) {
   const { children } = props;
   const [open, setOpen] = useState(true);
-  const [hasHeight, setHasHeight] = useState(0);
-  const defaultHeight = 200;
+  const [hasHeight, setHasHeight] = useState(300);
 
   useEffect(() => {
     if (hasHeight <= 0) {
       setHasHeight(0);
-    } else if (hasHeight >= 600) {
-      /* Close the SwipeableDrawer if the hasHeight is greater than 600 */
+    } else if (hasHeight >= 500) {
+      /* Close the SwipeableDrawer if the hasHeight is equal or greater than 500 */
       setOpen(false);
     } else {
       /* return any value the hasHeight state has */
@@ -50,12 +47,12 @@ function Drawer(props) {
 
     const touches = event.targetTouches && event.targetTouches[0];
 
-    setHasHeight(Math.round(touches?.clientY || defaultHeight));
+    setHasHeight(Math.round(touches?.clientY || hasHeight));
   };
 
   function handleClickBottom() {
     setOpen(true);
-    setHasHeight(defaultHeight);
+    setHasHeight(300);
   }
   return (
     <Root>
@@ -76,7 +73,6 @@ function Drawer(props) {
             top: -56,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
-            visibility: 'visible',
             right: 0,
             left: 0,
           }}
@@ -88,7 +84,7 @@ function Drawer(props) {
               position: 'fixed',
               bottom: 0,
               boxShadow: '0 -1px 2px rgb(0 0 0 / 30%)',
-              zIndex: 1000,
+              zIndex: 900,
               borderRadius: '8px 8px 0 0 ',
             }}
             onClick={handleClickBottom}
@@ -142,8 +138,6 @@ function Drawer(props) {
         </StyledBox>
       )}
       <SwipeableDrawer
-        onTouchMove={handleTouch}
-        onMouseMove={handleTouch}
         anchor="bottom"
         open={open}
         onClose={() => setOpen(false)}
@@ -151,8 +145,6 @@ function Drawer(props) {
         disableSwipeToOpen={false}
         BackdropProps={{ open: false }}
         sx={{
-          backgroundColor: 'transparent',
-          overflow: 'visible',
           position: 'relative',
           zIndex: 900,
         }}
@@ -161,15 +153,25 @@ function Drawer(props) {
         }}
       >
         <StyledBox
+          onTouchMove={handleTouch}
+          onMouseMove={handleTouch}
           sx={{
             display: 'flex',
             justifyContent: 'center',
             marginBottom: 4,
+            padding: 5,
           }}
         >
           <Puller />
         </StyledBox>
-        {children}
+        <StyledBox
+          sx={{
+            position: 'relative',
+            overflow: 'scroll',
+          }}
+        >
+          {children}
+        </StyledBox>
       </SwipeableDrawer>
     </Root>
   );
