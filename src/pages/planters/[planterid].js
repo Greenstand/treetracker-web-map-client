@@ -24,12 +24,6 @@ import * as utils from '../../models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
   imageContainer: {
     position: 'relative',
     flexGrow: 1,
@@ -42,9 +36,12 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: theme.spacing(10),
   },
   divider: {
-    marginLeft: theme.spacing(-10),
-    marginRight: theme.spacing(-10),
-    width: '100%',
+    marginTop: theme.spacing(20),
+    marginBottom: theme.spacing(20),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(14),
+      marginBottom: theme.spacing(14),
+    },
   },
   textColor: {
     color: theme.palette.textPrimary.main,
@@ -59,7 +56,7 @@ export default function Planter({ planter }) {
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   useEffect(() => {
     async function reload() {
@@ -88,7 +85,7 @@ export default function Planter({ planter }) {
   }
 
   return (
-    <PageWrapper className={classes.root}>
+    <PageWrapper>
       <Typography variant="h2" className={classes.textColor}>
         {planter.first_name} {planter.last_name}
       </Typography>
@@ -100,8 +97,7 @@ export default function Planter({ planter }) {
         <DataTag data={formatDates(planter.created_time)} />
         <DataTag data="Shirimatunda,Tanzania" location />
       </Stack>
-      <Box mt={1} />
-      <Divider className={classes.divider} />
+      <Divider variant="fullWidth" sx={{ mt: 6, mb: 9.5 }} />
       {/* <Box
         style={{ height: '672px'  }}
         className={classes.imageContainer}
@@ -182,12 +178,11 @@ export default function Planter({ planter }) {
           />
         ))}
       </Box>
-      <Box mt={10} />
-      <Divider className={classes.divider} />
+      <Divider varian="fullwidth" className={classes.divider} />
       <Typography
         variant="h4"
         className={classes.textColor}
-        sx={{ mt: { xs: 12, md: 20 } }}
+        sx={{ mt: { xs: 12, md: 20 }, fontWeight: 600 }}
       >
         About
       </Typography>
@@ -197,15 +192,14 @@ export default function Planter({ planter }) {
       <Typography
         variant="h4"
         className={classes.textColor}
-        sx={{ mt: { xs: 10, md: 16 } }}
+        sx={{ mt: { xs: 10, md: 16 }, fontWeight: 600 }}
       >
         Mission
       </Typography>
       <Typography variant="body1" className={classes.textColor} mt={7}>
         {planter.mission}
       </Typography>
-      <Box mt={20} />
-      <Divider className={classes.divider} />
+      <Divider varian="fullwidth" className={classes.divider} />
     </PageWrapper>
   );
 }
