@@ -42,8 +42,8 @@ describe('Organizations', () => {
 
     cy.url().should('include', '/organizations');
     cy.get('h6').contains('180Earth');
-    cy.get('h6').contains('About the Organization');
+    cy.get('h4').contains('About the Organization');
     cy.get('div').contains('Planter since November 11, 2019');
-    cy.get('h6').contains('Mission');
+    cy.get('h4').contains('Mission');
   });
 });
