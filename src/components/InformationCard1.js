@@ -2,6 +2,7 @@ import { Box, Button, CardMedia, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
+import Logo from '../images/greenstand_logo.svg';
 
 const useStyles = makeStyles()((theme) => ({
   container: {
@@ -64,9 +65,8 @@ function InformationCard1({
       <div>
         <CardMedia
           className={classes.media}
-          image={cardImageSrc}
+          image={cardImageSrc || Logo}
           title="Contemplative Reptile"
-          src={classes.media}
         />
         <Box
           className={classes.contentWrapper}
