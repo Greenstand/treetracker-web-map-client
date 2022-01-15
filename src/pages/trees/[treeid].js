@@ -83,25 +83,27 @@ export default function Tree({ tree, planter, organization }) {
         <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
       </Box>
       <CustomImageWrapper
-        imageUrl={tree.photo_url}
+        imageUrl={tree.image_url}
         timeCreated={tree.time_created}
         likes={20}
       />
-      <Box className={classes.informationCard}>
-        <InformationCard1
-          entityName={organization.name}
-          entityType="Planting Organization"
-          buttonText="Meet the Organization"
-          cardImageSrc={organization?.photo_url}
-          link={`/organizations/${organization.id}`}
-        />
-      </Box>
+      {organization && (
+        <Box className={classes.informationCard}>
+          <InformationCard1
+            entityName={organization.name}
+            entityType="Planting Organization"
+            buttonText="Meet the Organization"
+            cardImageSrc={organization?.photo_url}
+            link={`/organizations/${organization.id}`}
+          />
+        </Box>
+      )}
       <Box className={classes.informationCard}>
         <InformationCard1
           entityName={`${planter.first_name} ${planter.last_name}`}
           entityType="Planter"
           buttonText="Meet the Planter"
-          cardImageSrc={planter?.photo_url}
+          cardImageSrc={planter?.image_url}
           link={`/planters/${planter.id}`}
         />
       </Box>
@@ -147,6 +149,7 @@ export default function Tree({ tree, planter, organization }) {
           />
         )}
       </Box>
+      <Box height={20} />
     </PageWrapper>
   );
 }
@@ -175,13 +178,14 @@ export async function getServerSideProps({ params }) {
     props.planter = planter;
   }
   {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/organizations/${props.tree.planting_organization_id}`;
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/organizations?${props.tree.planter_id}`;
     log.warn('url:', url);
 
     const res = await fetch(url);
-    const organization = await res.json();
-    log.warn('response:', organization);
-    props.organization = organization;
+    const { organizations } = await res.json();
+    log.warn('response:', organizations);
+    props.organization =
+      (organizations && organizations.length === 1 && organizations[0]) || null;
   }
 
   return {

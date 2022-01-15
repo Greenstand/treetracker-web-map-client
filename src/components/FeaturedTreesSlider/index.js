@@ -27,7 +27,7 @@ function FeaturedTreesSlider({ trees, size = null }) {
             key={tree.id}
             className={classes.Card}
           >
-            <img className={classes.Img} src={tree.photo_url} />
+            <img className={classes.Img} src={tree.image_url} />
             <div className={classes.Title}>
               <p style={{ padding: '0 8px' }}>
                 {tree.species} - {tree.id}

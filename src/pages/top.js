@@ -89,7 +89,7 @@ export async function getServerSideProps() {
   }
 
   {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leader`;
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leaderboard`;
     log.warn('url:', url);
 
     const res = await fetch(url);

@@ -148,7 +148,10 @@ export default function Planter({ planter }) {
             Explore some trees planted by <strong>{planter.first_name}</strong>
           </Typography>
           <Box className={classes.treeSlider}>
-            <FeaturedTreesSlider trees={planter.featuredTrees.trees} />
+            <FeaturedTreesSlider
+              size="small"
+              trees={planter.featuredTrees.trees}
+            />
           </Box>
         </>
       )}
