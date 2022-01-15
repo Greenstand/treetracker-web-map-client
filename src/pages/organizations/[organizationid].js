@@ -1,7 +1,7 @@
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import log from 'loglevel';
 import React from 'react';
@@ -145,7 +145,33 @@ export default function Organization({ organization }) {
           <img src={logo_url} />
         </Box>
       </Box>
-      <Grid container spacing={1}>
+      <Grid
+        container
+        wrap="nowrap"
+        justifyContent="space-between"
+        sx={{ width: '100%' }}
+      >
+        <Grid item sx={{ width: '49%' }}>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<ParkOutlinedIcon fontSize="large" />}
+            title="Trees Planted"
+            text={organization?.featuredTrees?.total}
+            disabled={isPlanterTab}
+          />
+        </Grid>
+        <Grid item sx={{ width: '49%' }}>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<PersonOutlineIcon fontSize="large" />}
+            title="Hired Planters"
+            text={organization?.associatedPlanters?.total}
+            disabled={!isPlanterTab}
+          />
+        </Grid>
+      </Grid>
+
+      {/* <Grid container spacing={1}>
         <Grid item>
           <CustomCard
             handleClick={handleCardClick}
@@ -167,7 +193,7 @@ export default function Organization({ organization }) {
             disabled={!isPlanterTab}
           />
         </Grid>
-      </Grid>
+      </Grid> */}
       {!isPlanterTab && (
         <Box>
           <CustomWorldMap totalTrees={organization?.featuredTrees?.total} />

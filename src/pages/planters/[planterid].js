@@ -120,12 +120,11 @@ export default function Planter({ planter }) {
       />
       <Grid
         container
-        spacing={2}
         wrap="nowrap"
-        justifyContent="center"
+        justifyContent="space-between"
         sx={{ width: '100%' }}
       >
-        <Grid item sx={{ width: '50%' }}>
+        <Grid item sx={{ width: '49%' }}>
           <CustomCard
             handleClick={handleCardClick}
             icon={<ParkOutlinedIcon fontSize="large" />}
@@ -134,7 +133,7 @@ export default function Planter({ planter }) {
             disabled={!isPlanterTab}
           />
         </Grid>
-        <Grid item sx={{ width: '50%' }}>
+        <Grid item sx={{ width: '49%' }}>
           <CustomCard
             handleClick={handleCardClick}
             icon={<GroupsOutlinedIcon fontSize="large" />}
