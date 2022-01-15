@@ -26,10 +26,6 @@ const useStyles = makeStyles()((theme) => ({
     color: theme.palette.textSecondary.main,
     margin: '4px 0',
   },
-  divider: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(6),
-  },
   badgeWrapper: {
     marginBottom: theme.spacing(2),
     display: 'flex',
@@ -64,6 +60,17 @@ const useStyles = makeStyles()((theme) => ({
     '&> img': {
       width: '100%',
     },
+  },
+  divider: {
+    marginTop: theme.spacing(20),
+    marginBottom: theme.spacing(20),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(14),
+      marginBottom: theme.spacing(14),
+    },
+  },
+  textColor: {
+    color: theme.palette.textPrimary.main,
   },
 }));
 
@@ -137,7 +144,7 @@ export default function Organization({ organization }) {
         <LocationOnIcon fontSize="small" />
         {area}, {country}
       </Box>
-      <Divider className={classes.divider} />
+      <Divider variant="fullWidth" sx={{ mt: 6, mb: 9.5 }} />
 
       <Box className={classes.imgContainer}>
         <img src={photo_url} />
@@ -223,30 +230,33 @@ export default function Organization({ organization }) {
           />
         ))}
       </Box>
-      <div>
-        <h5>Species: {organization?.species?.total} </h5>
-        <h5>featured species</h5>
-        <div>
-          {organization?.species?.species?.map((species) => (
-            <div key={species.id}>
-              <p>{species.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <Typography variant="subtitle2" gutterBottom>
+      <Typography
+        variant="h4"
+        className={classes.textColor}
+        sx={{ mt: { xs: 12, md: 20 }, fontWeight: 600 }}
+      >
         About the Organization
       </Typography>
-      <Typography variant="body2">{about}</Typography>
+      <Typography variant="body1" className={classes.textColor} mt={7}>
+        {about}
+      </Typography>
       <br />
-      <Typography variant="subtitle2" gutterBottom>
+      <Typography
+        variant="h4"
+        className={classes.textColor}
+        sx={{ mt: { xs: 10, md: 16 }, fontWeight: 600 }}
+      >
         Mission
       </Typography>
-      <Typography variant="body2" gutterBottom>
+      <Typography variant="body1" className={classes.textColor} mt={7}>
         {mission}
       </Typography>
-      <br />
-      <Typography variant="subtitle2" gutterBottom>
+      <Divider varian="fullwidth" className={classes.divider} />
+      <Typography
+        variant="h4"
+        className={classes.textColor}
+        sx={{ mt: { xs: 10, md: 16 }, fontWeight: 600 }}
+      >
         Check out the planting effort in action
       </Typography>
     </PageWrapper>
