@@ -13,21 +13,7 @@ const exampleTreeData = {
 };
 
 const imageFixturesDir = 'images/trees/';
-const imageFixtureNames = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  '11',
-  '12',
-  '13',
-];
+const imageFixtureNames = ['1', '2', 'wide'];
 
 const testImage = (fileName, imageType = 'image/jpg') => {
   const imageFixturePath = `${imageFixturesDir}${fileName}`;
