@@ -110,7 +110,7 @@ export default function Planter({ planter }) {
         />
       </Box> */}
       <Avatar
-        src={planter.photo_url}
+        src={planter.image_url}
         variant="rounded"
         sx={{ width: '100%', height: '688px', borderRadius: 6, marginTop: 6 }}
       />

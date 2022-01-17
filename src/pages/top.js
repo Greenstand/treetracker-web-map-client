@@ -40,7 +40,7 @@ export default function Top({ trees, countries }) {
     // print country
     log.debug('country', country);
 
-    const { lat, lon } = country.centroid;
+    const [lon, lat] = JSON.parse(country.centroid).coordinates;
 
     map.flyTo(lat, lon, 6);
   }
