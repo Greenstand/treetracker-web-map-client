@@ -12,6 +12,7 @@ describe('Filter', () => {
     const handleFilter = cy.stub();
 
     mount(<Filter onFilter={handleFilter} />);
+    cy.contains(/Filters/i).click();
     cy.contains(/timeline/i);
 
     cy.contains('label', 'Start Date')
@@ -35,6 +36,7 @@ describe('Filter', () => {
     const handleFilter = cy.stub();
 
     mount(<Filter onFilter={handleFilter} />);
+    cy.contains(/Filters/i).click();
     cy.contains(/timeline/i);
     cy.contains('label', 'Start Date')
       .parent()
@@ -52,6 +54,7 @@ describe('Filter', () => {
 
   it('Cancel Button hides the filters', () => {
     mount(<Filter />);
+    cy.contains(/Filters/i).click();
     cy.contains(/timeline/i);
 
     cy.get('button').contains('Cancel').click();
