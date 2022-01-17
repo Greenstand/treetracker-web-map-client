@@ -40,7 +40,7 @@ export default function Top({ trees, countries }) {
     // print country
     log.debug('country', country);
 
-    const { lat, lon } = country.centroid;
+    const [lon, lat] = JSON.parse(country.centroid).coordinates;
 
     map.flyTo(lat, lon, 6);
   }
@@ -89,7 +89,7 @@ export async function getServerSideProps() {
   }
 
   {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leader`;
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leaderboard`;
     log.warn('url:', url);
 
     const res = await fetch(url);

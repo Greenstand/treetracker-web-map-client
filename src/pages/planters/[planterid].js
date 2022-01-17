@@ -110,7 +110,7 @@ export default function Planter({ planter }) {
         />
       </Box> */}
       <Avatar
-        src={planter.photo_url}
+        src={planter.image_url}
         variant="rounded"
         sx={{ width: '100%', height: '688px', borderRadius: 6, marginTop: 6 }}
       />
@@ -148,7 +148,10 @@ export default function Planter({ planter }) {
             Explore some trees planted by <strong>{planter.first_name}</strong>
           </Typography>
           <Box className={classes.treeSlider}>
-            <FeaturedTreesSlider trees={planter.featuredTrees.trees} />
+            <FeaturedTreesSlider
+              size="small"
+              trees={planter.featuredTrees.trees}
+            />
           </Box>
         </>
       )}
