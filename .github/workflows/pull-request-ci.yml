@@ -9,29 +9,67 @@ on:
       - web-map-site
 
 jobs:
-  test:
-    name: Run all tests
+  install:
+    name: Install dependencies
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      # only install dependencies
+      # https://github.com/cypress-io/github-action
+      - name: Install 📦
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+
+  integration-tests:
+    name: Run integration tests
+    needs: install
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Install and cache NPM dependencies, run integration tests
-      - name: Cypress E2E (Dev Server) 🧪
+      # Install cached NPM dependencies, run integration tests
+      - name: Cypress Integration Tests 🧪
         uses: cypress-io/github-action@v2
         with:
           # run these before testing
           start: |
             npm run mock-server
-            npm run dev
+            npm run build-and-start
           # wait for server to be ready
           wait-on: 'http://localhost:3000'
+
+      - name: Save screenshots
+        # step runs even if other steps fail
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Save videos
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+  unit-tests:
+    name: Run unit tests
+    needs: install
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Run Component tests 🧪
         uses: cypress-io/github-action@v2
         with:
-          install: false
           command: npx cypress run-ct
 
       - name: Jest Unit Tests 🧪
