@@ -1,4 +1,3 @@
-import axios from 'axios';
 import log from 'loglevel';
 
 function parseDomain(url) {
@@ -54,8 +53,9 @@ async function requestAPI(url) {
     log.warn('requestAPI:', urlFull);
     // urlFull = urlFull.replace(/\?/, '/query/');
 
-    const res = await axios(urlFull);
-    return res.data;
+    const res = await fetch(urlFull);
+    const data = await res.json();
+    return data;
   } catch (ex) {
     log.error('ex:', ex);
     throw new Error(ex.message);
