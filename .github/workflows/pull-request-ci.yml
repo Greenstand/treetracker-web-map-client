@@ -83,12 +83,12 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-ct
           path: cypress/screenshots
 
       - name: Save videos
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: cypress-videos
+          name: cypress-videos-ct
           path: cypress/videos
