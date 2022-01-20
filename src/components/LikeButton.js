@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 function LikeButton({ treeId }) {
-  const loadScript = () => new Promise((resolve, reject) => {
+  const loadScript = () =>
+    new Promise((resolve, reject) => {
       const loaded = document.getElementById('fbsdk');
       if (loaded) resolve();
 
@@ -18,13 +19,11 @@ function LikeButton({ treeId }) {
     });
 
   useEffect(() => {
-    loadScript()
-      .then(() => {
-        if (typeof window.FB !== 'undefined') {
-          window.FB.XFBML.parse();
-        }
-      })
-      .catch((err) => {});
+    loadScript().then(() => {
+      if (typeof window.FB !== 'undefined') {
+        window.FB.XFBML.parse();
+      }
+    });
   }, []);
 
   return (
@@ -36,7 +35,7 @@ function LikeButton({ treeId }) {
       data-action="like"
       data-size="small"
       data-share="false"
-    ></div>
+    />
   );
 }
 

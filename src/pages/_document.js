@@ -1,7 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
-import React from 'react';
 import { withEmotionCache } from 'tss-react/nextJs';
-
 import { createMuiCache } from './_app';
 
 class MyDocument extends Document {

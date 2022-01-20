@@ -8,9 +8,9 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from 'models/makeStyles';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { makeStyles } from 'models/makeStyles';
 
 const useStyles = makeStyles()((theme) => ({
   inputLabel: {
@@ -25,7 +25,7 @@ function Filter(props) {
   const { classes } = useStyles();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isError, setIsError] = useState(false);
   const [onSubmit, setOnSubmit] = useState(false);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
@@ -137,7 +137,13 @@ function Filter(props) {
                 </Typography>
               </Grid>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Grid item container sx={{ mt: 5 }} columnSpacing={{ xs: 2 }}>
+                <Grid
+                  item
+                  container
+                  sx={{ mt: 5 }}
+                  columnSpacing={{ xs: 2 }}
+                  nowrap
+                >
                   <Grid item sm={6}>
                     <DesktopDatePicker
                       label="Start Date"
@@ -166,7 +172,7 @@ function Filter(props) {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item sm={6}>
                     <DesktopDatePicker
                       label="End Date"
                       inputFormat="dd-MM-yyyy"

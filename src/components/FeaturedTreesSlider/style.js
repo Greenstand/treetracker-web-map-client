@@ -1,6 +1,6 @@
 import { makeStyles } from 'models/makeStyles';
 
-const useStyles = makeStyles()((theme) => ({
+const useStyles = makeStyles()((theme, size) => ({
   SliderContainer: {
     position: 'relative',
     width: '100%',
@@ -13,13 +13,14 @@ const useStyles = makeStyles()((theme) => ({
   },
   SliderImgContainer: {
     display: 'flex',
-    gap: '8px',
+    gap: theme.spacing(3),
     position: 'relative',
     overflowX: 'scroll',
     scrollBehavior: 'smooth',
     scrollSnapType: 'x mandatory',
     padding: '2rem 0',
     scrollPadding: '0 50%',
+    scrollbarWidth: 'none',
     '&::-webkit-scrollbar': {
       display: 'none',
     },
@@ -37,9 +38,9 @@ const useStyles = makeStyles()((theme) => ({
     transition: 'transform .5s',
     width: '100%',
     height: '100%',
-    minWidth: '208px',
+    minWidth: size === 'small' ? '144px' : '208px',
     [theme.breakpoints.down('sm')]: {
-      minWidth: '152px',
+      minWidth: size === 'small' ? '144px' : '152px',
     },
   },
   GoRight: {
@@ -98,8 +99,8 @@ const useStyles = makeStyles()((theme) => ({
     transition: 'all .5s',
   },
   Card: {
-    width: '208px',
-    height: '208px',
+    width: size === 'small' ? '144px' : '208px',
+    height: size === 'small' ? '144px' : '208px',
     transition: 'all .5s',
     scrollSnapAlign: 'center',
     scrollBehavior: 'smooth',
@@ -112,8 +113,8 @@ const useStyles = makeStyles()((theme) => ({
       },
     },
     [theme.breakpoints.down('sm')]: {
-      width: '152px',
-      height: '152px',
+      width: size === 'small' ? '144px' : '152px',
+      height: size === 'small' ? '144px' : '152px',
     },
   },
 }));

@@ -1,5 +1,4 @@
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
 
 const useStyles = makeStyles()((theme) => ({
   '@keyframes spin': {
@@ -30,5 +29,5 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Loader() {
   const { classes } = useStyles();
-  return <div className={classes.loader}></div>;
+  return <div className={classes.loader} />;
 }

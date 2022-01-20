@@ -1,4 +1,4 @@
-import axios from 'axios';
+import log from 'loglevel';
 
 function parseDomain(url) {
   const matcher = url.match(/^https?:\/\/([^/]*)\/?.*$/);
@@ -45,19 +45,26 @@ function parseMapName(domain) {
   to request the default API server
 */
 async function requestAPI(url) {
+  if (!url) {
+    throw new Error('url is not defined');
+  }
   try {
-    let urlFull = `${process.env.NEXT_PUBLIC_API_NEW}${url}`;
-    urlFull = urlFull.replace(/\?/, '/query/');
+    const urlFull = `${process.env.NEXT_PUBLIC_API_NEW}${url}`;
+    log.warn('requestAPI:', urlFull);
+    // urlFull = urlFull.replace(/\?/, '/query/');
 
-    const res = await axios(urlFull);
-    return res.data;
+    const res = await fetch(urlFull);
+    const data = await res.json();
+    return data;
   } catch (ex) {
+    log.error('ex:', ex);
     throw new Error(ex.message);
   }
 }
 
 // TODO implement real code
-async function getContinent(lat, lon) {
+// eslint-disable-next-line no-unused-vars
+function getContinent(lat, lon) {
   return {
     name: 'Asia',
   };

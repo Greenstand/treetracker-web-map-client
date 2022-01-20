@@ -1,7 +1,5 @@
 import { Avatar, Box, Grid, Typography } from '@mui/material';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
-
 import Ribbon from './Ribbon';
 
 const useStyles = makeStyles()((theme) => ({
@@ -100,10 +98,10 @@ function LeaderBoard(props) {
           <Grid item xs={8}>
             <Typography variant="h5" sx={{ textAlign: 'right' }}>
               {'TREES PLANTED '}
-              <img src={'../images/tree_icon.svg'} alt="tree icon" />
+              <img src="../images/tree_icon.svg" alt="tree icon" />
             </Typography>
           </Grid>
-          <Grid item xs={1}></Grid>
+          <Grid item xs={1} />
         </Grid>
       </Box>
 
@@ -122,7 +120,7 @@ function LeaderBoard(props) {
             >
               <Grid item xs={2}>
                 {index < 3 ? (
-                  <p></p>
+                  <p />
                 ) : (
                   <Typography
                     variant="h5"
@@ -176,7 +174,7 @@ function LeaderBoard(props) {
                   }}
                 >
                   {`${country.planted.toLocaleString()} `}
-                  <img src={'../images/tree_icon.svg'} alt="tree icon" />
+                  <img src="../images/tree_icon.svg" alt="tree icon" />
                 </Typography>
               </Grid>
             </Grid>

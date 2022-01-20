@@ -4,18 +4,17 @@ import '../style.css';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
-import React from 'react';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
+import log from 'loglevel';
 import Layout from '../components/Layout';
 import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
 import { MapContextProvider } from '../mapContext';
 import appTheme from '../theme';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import log from 'loglevel';
 
 let muiCache;
 
+// eslint-disable-next-line no-return-assign
 export const createMuiCache = () =>
   (muiCache = createCache({
     key: 'mui',
