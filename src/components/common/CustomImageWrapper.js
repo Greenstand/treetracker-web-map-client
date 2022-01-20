@@ -1,11 +1,10 @@
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
 import { Box, Grid, Link, Typography } from '@mui/material';
+import { useMemo, useState } from 'react';
 import LikeButton from 'components/LikeButton';
 import { makeStyles } from 'models/makeStyles';
 import { formatDateString } from 'models/utils';
-import React, { useMemo, useState } from 'react';
 
 const useStyles = makeStyles()((theme) => ({
   container: {
@@ -29,26 +28,28 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const InfoWrapper = ({ children, top, right, bottom }) => (
-  <Box
-    ml={3}
-    mr={2}
-    p={4}
-    sx={{
-      bgcolor: 'textPrimary.main',
-      opacity: 0.8,
-      borderRadius: '16px',
-      position: 'absolute',
-      height: 'auto',
-      top,
-      right,
-      bottom,
-      zIndex: 1,
-    }}
-  >
-    {children}
-  </Box>
-);
+function InfoWrapper({ children, top, right, bottom }) {
+  return (
+    <Box
+      ml={3}
+      mr={2}
+      p={4}
+      sx={{
+        bgcolor: 'textPrimary.main',
+        opacity: 0.8,
+        borderRadius: '16px',
+        position: 'absolute',
+        height: 'auto',
+        top,
+        right,
+        bottom,
+        zIndex: 1,
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
 
 function CustomImageWrapper({ imageUrl, timeCreated, treeId }) {
   const { classes } = useStyles();
@@ -80,8 +81,8 @@ function CustomImageWrapper({ imageUrl, timeCreated, treeId }) {
             alignItems="center"
             flexWrap="nowrap"
             columnGap={5}
-            width={'100%'}
-            height={'100%'}
+            width="100%"
+            height="100%"
           >
             <CameraAltOutlinedIcon
               sx={{
@@ -106,8 +107,8 @@ function CustomImageWrapper({ imageUrl, timeCreated, treeId }) {
             container
             justifyContent="center"
             alignItems="center"
-            width={'100%'}
-            height={'100%'}
+            width="100%"
+            height="100%"
           >
             <Link
               target="_blank"
@@ -141,14 +142,14 @@ function CustomImageWrapper({ imageUrl, timeCreated, treeId }) {
             justifyContent="center"
             alignItems="center"
             columnGap={2}
-            width={'100%'}
-            height={'100%'}
+            width="100%"
+            height="100%"
           >
             <LikeButton treeId={treeId} />
           </Grid>
         </InfoWrapper>
       )}
-      <img src={imageUrl} alt="tree image" className={classes.image} />
+      <img src={imageUrl} alt="tree" className={classes.image} />
     </Box>
   );
 }

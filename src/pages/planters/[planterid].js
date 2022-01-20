@@ -7,30 +7,23 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import log from 'loglevel';
 import moment from 'moment';
 // import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
-import CustomCard from '../../components/common/CustomCard';
-import DataTag from '../../components/common/DataTag';
+import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import FeaturedTreesSlider from '../../components/FeaturedTreesSlider';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
+import CustomCard from '../../components/common/CustomCard';
+import DataTag from '../../components/common/DataTag';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
   imageContainer: {
     position: 'relative',
     flexGrow: 1,
@@ -43,9 +36,12 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: theme.spacing(10),
   },
   divider: {
-    marginLeft: theme.spacing(-10),
-    marginRight: theme.spacing(-10),
-    width: '100%',
+    marginTop: theme.spacing(20),
+    marginBottom: theme.spacing(20),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(14),
+      marginBottom: theme.spacing(14),
+    },
   },
   textColor: {
     color: theme.palette.textPrimary.main,
@@ -60,7 +56,7 @@ export default function Planter({ planter }) {
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
 
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   useEffect(() => {
     async function reload() {
@@ -89,20 +85,19 @@ export default function Planter({ planter }) {
   }
 
   return (
-    <PageWrapper className={classes.root}>
+    <PageWrapper>
       <Typography variant="h2" className={classes.textColor}>
         {planter.first_name} {planter.last_name}
       </Typography>
       <Box sx={{ display: 'flex', gap: 2 }}>
-        <VerifiedBadge verified={true} badgeName="Verified Planter" />
+        <VerifiedBadge verified badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Orgs" />
       </Box>
       <Stack gap={2.5} sx={{ my: 2 }}>
         <DataTag data={formatDates(planter.created_time)} />
         <DataTag data="Shirimatunda,Tanzania" location />
       </Stack>
-      <Box mt={1} />
-      <Divider className={classes.divider} />
+      <Divider variant="fullWidth" sx={{ mt: 6, mb: 9.5 }} />
       {/* <Box
         style={{ height: '672px'  }}
         className={classes.imageContainer}
@@ -115,18 +110,17 @@ export default function Planter({ planter }) {
         />
       </Box> */}
       <Avatar
-        src={planter.photo_url}
+        src={planter.image_url}
         variant="rounded"
         sx={{ width: '100%', height: '688px', borderRadius: 6, marginTop: 6 }}
       />
       <Grid
         container
-        spacing={2}
         wrap="nowrap"
-        justifyContent="center"
+        justifyContent="space-between"
         sx={{ width: '100%' }}
       >
-        <Grid item sx={{ width: '50%' }}>
+        <Grid item sx={{ width: '49%' }}>
           <CustomCard
             handleClick={handleCardClick}
             icon={<ParkOutlinedIcon fontSize="large" />}
@@ -135,7 +129,7 @@ export default function Planter({ planter }) {
             disabled={!isPlanterTab}
           />
         </Grid>
-        <Grid item sx={{ width: '50%' }}>
+        <Grid item sx={{ width: '49%' }}>
           <CustomCard
             handleClick={handleCardClick}
             icon={<GroupsOutlinedIcon fontSize="large" />}
@@ -154,7 +148,10 @@ export default function Planter({ planter }) {
             Explore some trees planted by <strong>{planter.first_name}</strong>
           </Typography>
           <Box className={classes.treeSlider}>
-            <FeaturedTreesSlider trees={planter.featuredTrees.trees} />
+            <FeaturedTreesSlider
+              size="small"
+              trees={planter.featuredTrees.trees}
+            />
           </Box>
         </>
       )}
@@ -163,8 +160,8 @@ export default function Planter({ planter }) {
           <div key={org.id}>
             <InformationCard1
               entityName={org.name}
-              entityType={'Planting Organization'}
-              buttonText={'Meet the Organization'}
+              entityType="Planting Organization"
+              buttonText="Meet the Organization"
               cardImageSrc={org?.logo_url}
               link={`/organizations/${org.id}`}
             />
@@ -183,12 +180,11 @@ export default function Planter({ planter }) {
           />
         ))}
       </Box>
-      <Box mt={10} />
-      <Divider className={classes.divider} />
+      <Divider varian="fullwidth" className={classes.divider} />
       <Typography
         variant="h4"
         className={classes.textColor}
-        sx={{ mt: { xs: 12, md: 20 } }}
+        sx={{ mt: { xs: 12, md: 20 }, fontWeight: 600 }}
       >
         About
       </Typography>
@@ -198,15 +194,14 @@ export default function Planter({ planter }) {
       <Typography
         variant="h4"
         className={classes.textColor}
-        sx={{ mt: { xs: 10, md: 16 } }}
+        sx={{ mt: { xs: 10, md: 16 }, fontWeight: 600 }}
       >
         Mission
       </Typography>
       <Typography variant="body1" className={classes.textColor} mt={7}>
         {planter.mission}
       </Typography>
-      <Box mt={20} />
-      <Divider className={classes.divider} />
+      <Divider varian="fullwidth" className={classes.divider} />
     </PageWrapper>
   );
 }

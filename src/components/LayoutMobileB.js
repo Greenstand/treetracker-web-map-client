@@ -1,10 +1,6 @@
 import Box from '@mui/material/Box';
-import log from 'loglevel';
-import { makeStyles } from 'models/makeStyles';
 import dynamic from 'next/dynamic';
-import React from 'react';
-
-import Drawer from './Drawer';
+import { makeStyles } from 'models/makeStyles';
 
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 

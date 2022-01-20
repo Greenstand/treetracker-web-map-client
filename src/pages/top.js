@@ -2,11 +2,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
-
-import Filter from '../components/common/Filter';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
+import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
@@ -42,7 +40,7 @@ export default function Top({ trees, countries }) {
     // print country
     log.debug('country', country);
 
-    const { lat, lon } = country.centroid;
+    const [lon, lat] = JSON.parse(country.centroid).coordinates;
 
     map.flyTo(lat, lon, 6);
   }
@@ -64,7 +62,10 @@ export default function Top({ trees, countries }) {
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>
-      <Typography variant="h2" className={classes.title2}>
+      <Typography
+        variant="h2"
+        sx={{ color: 'textPrimary.main', fontSize: { xs: 20, lg: 32 } }}
+      >
         Check out the global leaders in the tree planting effort
       </Typography>
       <LeaderBoard
@@ -88,7 +89,7 @@ export async function getServerSideProps() {
   }
 
   {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leader`;
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leaderboard`;
     log.warn('url:', url);
 
     const res = await fetch(url);

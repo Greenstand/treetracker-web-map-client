@@ -1,16 +1,17 @@
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { Avatar, Box, Divider, Grid, Typography } from '@mui/material';
-import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { Box, Divider, Grid, Typography } from '@mui/material';
 import log from 'loglevel';
-import { makeStyles } from 'models/makeStyles';
 import React from 'react';
-
-import CustomCard from '../../components/common/CustomCard';
+import CustomWorldMap from 'components/CustomWorldMap';
+import PlanterQuote from 'components/PlanterQuote';
+import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import { makeStyles } from 'models/makeStyles';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
+import CustomCard from '../../components/common/CustomCard';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
@@ -24,10 +25,6 @@ const useStyles = makeStyles()((theme) => ({
     fontSize: '0.8rem',
     color: theme.palette.textSecondary.main,
     margin: '4px 0',
-  },
-  divider: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(6),
   },
   badgeWrapper: {
     marginBottom: theme.spacing(2),
@@ -64,12 +61,24 @@ const useStyles = makeStyles()((theme) => ({
       width: '100%',
     },
   },
+  divider: {
+    marginTop: theme.spacing(20),
+    marginBottom: theme.spacing(20),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(14),
+      marginBottom: theme.spacing(14),
+    },
+  },
+  textColor: {
+    color: theme.palette.textPrimary.main,
+  },
 }));
 
 export default function Organization({ organization }) {
   const mapContext = useMapContext();
   const { classes } = useStyles();
   const [isPlanterTab, setIsPlanterTab] = React.useState(false);
+  // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
   const {
     name,
@@ -86,8 +95,8 @@ export default function Organization({ organization }) {
     const tree = organization?.featuredTrees?.trees[0];
     if (tree) {
       const { lat, lon } = tree;
-      const continent = await utils.getContinent(lat, lon);
-      setContinent(continent.name);
+      const newContinent = await utils.getContinent(lat, lon);
+      setContinent(newContinent.name);
     }
   }
 
@@ -124,7 +133,7 @@ export default function Organization({ organization }) {
     <PageWrapper>
       <Typography variant="subtitle1">{name}</Typography>
       <Box className={classes.badgeWrapper}>
-        <VerifiedBadge verified={true} badgeName="Verified Planter" />
+        <VerifiedBadge verified badgeName="Verified Planter" />
         <VerifiedBadge verified={false} badgeName="Seeking Planters" />
       </Box>
       <Box className={classes.info}>
@@ -135,7 +144,7 @@ export default function Organization({ organization }) {
         <LocationOnIcon fontSize="small" />
         {area}, {country}
       </Box>
-      <Divider className={classes.divider} />
+      <Divider variant="fullWidth" sx={{ mt: 6, mb: 9.5 }} />
 
       <Box className={classes.imgContainer}>
         <img src={photo_url} />
@@ -143,7 +152,33 @@ export default function Organization({ organization }) {
           <img src={logo_url} />
         </Box>
       </Box>
-      <Grid container spacing={1}>
+      <Grid
+        container
+        wrap="nowrap"
+        justifyContent="space-between"
+        sx={{ width: '100%' }}
+      >
+        <Grid item sx={{ width: '49%' }}>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<ParkOutlinedIcon fontSize="large" />}
+            title="Trees Planted"
+            text={organization?.featuredTrees?.total}
+            disabled={isPlanterTab}
+          />
+        </Grid>
+        <Grid item sx={{ width: '49%' }}>
+          <CustomCard
+            handleClick={handleCardClick}
+            icon={<PersonOutlineIcon fontSize="large" />}
+            title="Hired Planters"
+            text={organization?.associatedPlanters?.total}
+            disabled={!isPlanterTab}
+          />
+        </Grid>
+      </Grid>
+
+      {/* <Grid container spacing={1}>
         <Grid item>
           <CustomCard
             handleClick={handleCardClick}
@@ -165,32 +200,24 @@ export default function Organization({ organization }) {
             disabled={!isPlanterTab}
           />
         </Grid>
-      </Grid>
+      </Grid> */}
       {!isPlanterTab && (
-        <div>
-          {/* TODO replace with the world map component */}
-          <h5>The world map</h5>
-          <h5>
-            {organization?.associatedPlanters?.total} tree planted in continent{' '}
-            {continent}{' '}
-          </h5>
-        </div>
+        <Box>
+          <CustomWorldMap totalTrees={organization?.featuredTrees?.total} />
+        </Box>
       )}
       {isPlanterTab && (
         <div>
-          {/* TODO replace with the planter quote card https://github.com/Greenstand/treetracker-web-map-client/issues/334 */}
-          <h5>
-            Associated planters: {organization?.associatedPlanters?.total}{' '}
-          </h5>
-          <h5>featured planters</h5>
-          <div>
-            {organization?.associatedPlanters?.planters?.map((planter) => (
-              <div key={planter.id}>
-                <Avatar src={planter.photo_url} />
-                <h5>{planter.name}</h5>
-              </div>
-            ))}
-          </div>
+          {organization?.associatedPlanters?.planters?.map((planter) => (
+            <PlanterQuote
+              name={planter.first_name}
+              key={planter.id}
+              quote={planter.about.slice(0, 150)}
+              photo={planter.photo_url}
+              initialDate={planter.created_time}
+              location={planter.country}
+            />
+          ))}
         </div>
       )}
       <Box className={classes.speciesBox}>
@@ -203,30 +230,33 @@ export default function Organization({ organization }) {
           />
         ))}
       </Box>
-      <div>
-        <h5>Species: {organization?.species?.total} </h5>
-        <h5>featured species</h5>
-        <div>
-          {organization?.species?.species?.map((species) => (
-            <div key={species.id}>
-              <p>{species.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <Typography variant="subtitle2" gutterBottom>
+      <Typography
+        variant="h4"
+        className={classes.textColor}
+        sx={{ mt: { xs: 12, md: 20 }, fontWeight: 600 }}
+      >
         About the Organization
       </Typography>
-      <Typography variant="body2">{about}</Typography>
+      <Typography variant="body1" className={classes.textColor} mt={7}>
+        {about}
+      </Typography>
       <br />
-      <Typography variant="subtitle2" gutterBottom>
+      <Typography
+        variant="h4"
+        className={classes.textColor}
+        sx={{ mt: { xs: 10, md: 16 }, fontWeight: 600 }}
+      >
         Mission
       </Typography>
-      <Typography variant="body2" gutterBottom>
+      <Typography variant="body1" className={classes.textColor} mt={7}>
         {mission}
       </Typography>
-      <br />
-      <Typography variant="subtitle2" gutterBottom>
+      <Divider varian="fullwidth" className={classes.divider} />
+      <Typography
+        variant="h4"
+        className={classes.textColor}
+        sx={{ mt: { xs: 10, md: 16 }, fontWeight: 600 }}
+      >
         Check out the planting effort in action
       </Typography>
     </PageWrapper>

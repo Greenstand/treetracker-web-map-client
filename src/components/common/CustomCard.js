@@ -2,10 +2,8 @@ import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import React from 'react';
-
+import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '../../models/makeStyles';
 
 const useStyles = makeStyles()((theme) => ({
@@ -47,7 +45,7 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const CustomCard = (props) => {
+function CustomCard(props) {
   const { classes } = useStyles(props);
   const theme = useTheme();
   const { icon, title, text, handleClick, disabled } = props;
@@ -71,7 +69,7 @@ const CustomCard = (props) => {
           sx={{
             boxShadow: disabled ? '' : '0px 6px 12px 0px #585B5D40',
             color: disabled
-              ? theme.palette.textSecondary.main
+              ? theme.palette.textLight.main
               : theme.palette.success.main,
           }}
         >
@@ -92,6 +90,6 @@ const CustomCard = (props) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 export default CustomCard;

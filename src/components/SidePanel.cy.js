@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { mountWithTheme as mount } from '../models/test-utils';
 import SidePanel from './SidePanel';
+import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('SidePanel', () => {
   before(() => {
@@ -63,7 +62,7 @@ describe('SidePanel', () => {
       return (
         <div style={{ background: 'gray', height: '1000px' }}>
           <SidePanel
-            state={'show'}
+            state="show"
             tree={trees.map((t) => ({ id: t.id }))[treeIndex]}
             onNext={handleNext}
             hasNext={treeIndex < trees.length - 1}
@@ -128,8 +127,12 @@ describe('SidePanel', () => {
       }
       return (
         <div>
-          <button onClick={handleClick}>show</button>
-          <button onClick={handleDisable}>disable</button>
+          <button type="button" onClick={handleClick}>
+            show
+          </button>
+          <button type="button" onClick={handleDisable}>
+            disable
+          </button>
           <SidePanel
             state={state}
             tree={tree}
@@ -175,7 +178,7 @@ describe('SidePanel', () => {
     });
     mount(
       <SidePanel
-        state={'show'}
+        state="show"
         tree={{
           id: 1,
         }}
@@ -217,7 +220,7 @@ describe('SidePanel', () => {
         cy.viewport(1366, 768);
         mount(
           <SidePanel
-            state={'show'}
+            state="show"
             tree={{
               id: i,
             }}
@@ -252,7 +255,7 @@ describe('SidePanel', () => {
         });
         mount(
           <SidePanel
-            state={'show'}
+            state="show"
             tree={{
               id: i,
             }}
@@ -273,13 +276,13 @@ describe('SidePanel', () => {
       cy.server();
       cy.route({
         method: 'GET',
-        url: new RegExp(`.*tree.*`),
+        url: /.*tree.*/,
         response: tree,
       });
       function Test() {
         return (
           <div style={{ background: 'gray', height: '1000px' }}>
-            <SidePanel state={'show'} tree={{ id: tree.id }} />
+            <SidePanel state="show" tree={{ id: tree.id }} />
           </div>
         );
       }
@@ -307,12 +310,12 @@ describe('SidePanel', () => {
       cy.server();
       cy.route({
         method: 'GET',
-        url: new RegExp(`.*tree.*`),
+        url: /.*tree.*/,
         response: tree,
       });
       mount(
         <div style={{ background: 'gray', height: '1000px' }}>
-          <SidePanel state={'show'} tree={{ id: tree.id }} />
+          <SidePanel state="show" tree={{ id: tree.id }} />
         </div>,
       );
     });

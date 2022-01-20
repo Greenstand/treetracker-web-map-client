@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'models/makeStyles';
-import React from 'react';
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -27,7 +26,7 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const TreeSpeciesCard = (props) => {
+function TreeSpeciesCard(props) {
   const { classes } = useStyles();
 
   const { name, count } = props;
@@ -47,6 +46,6 @@ const TreeSpeciesCard = (props) => {
       </Box>
     </Card>
   );
-};
+}
 
 export default TreeSpeciesCard;

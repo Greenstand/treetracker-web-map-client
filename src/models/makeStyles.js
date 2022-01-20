@@ -1,5 +1,5 @@
-import theme from 'theme';
 import { createMakeAndWithStyles } from 'tss-react';
+import theme from 'theme';
 
 function useTheme() {
   return {
