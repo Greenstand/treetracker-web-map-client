@@ -12,6 +12,7 @@ module.exports = {
       'treetracker-production-images.s3.eu-central-1.amazonaws.com',
       'treetracker-dev-images.s3.eu-central-1.amazonaws.com',
       '180.earth',
+      'purecatamphetamine.github.io',
     ],
   },
 };
