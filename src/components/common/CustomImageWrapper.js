@@ -1,8 +1,8 @@
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
 import { Box, Grid, Link, Typography } from '@mui/material';
 import { useMemo, useState } from 'react';
+import LikeButton from 'components/LikeButton';
 import { makeStyles } from 'models/makeStyles';
 import { formatDateString } from 'models/utils';
 
@@ -51,7 +51,7 @@ function InfoWrapper({ children, top, right, bottom }) {
   );
 }
 
-function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
+function CustomImageWrapper({ imageUrl, timeCreated, treeId }) {
   const { classes } = useStyles();
 
   const formattedDate = useMemo(
@@ -145,11 +145,7 @@ function CustomImageWrapper({ imageUrl, timeCreated, likes }) {
             width="100%"
             height="100%"
           >
-            <FavoriteBorderOutlinedIcon
-              sx={{ color: 'common.white', cursor: 'pointer' }}
-              fontSize="large"
-            />
-            <Typography color="white">{likes}</Typography>
+            <LikeButton treeId={treeId} />
           </Grid>
         </InfoWrapper>
       )}
