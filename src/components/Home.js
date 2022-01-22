@@ -8,21 +8,16 @@ const backgroundImage = '/images/bg.png';
 const useStyles = makeStyles()((theme) => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,
+    backgroundPosition: 'inherit',
     height: '100%',
   },
   contentContainer: {
-    width: '75%',
     margin: '0 auto',
     color: 'white',
-    height: '100%',
     lineHeight: '140%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingTop: '15vh',
-    '&>*': {
-      marginBottom: theme.spacing(5),
-    },
     [theme.breakpoints.down('sm')]: {
       width: '100vw',
       padding: '1rem',
@@ -38,45 +33,82 @@ const useStyles = makeStyles()((theme) => ({
     alignItems: 'center',
   },
   button: {
+    fontFamily: 'Lato',
+    fontSize: '16px',
+    fontStyle: 'normal',
+    fontWeight: '400',
+    lineHeight: '19px',
+    letterSpacing: '0.04em',
+    textAlign: 'left',
     textTransform: 'none',
-    marginRight: 20,
+    borderRadius: theme.spacing(1),
+    padding: theme.spacing(4, 6),
   },
 }));
-
-function Buttons() {
-  const { classes } = useStyles();
-  return (
-    <Box className={classes.buttonsContainer} mt={4.5}>
-      <Button variant="outlined" color="inherit" className={classes.button}>
-        <Typography>Learn more</Typography>
-      </Button>
-      <Link href="/top">
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-        >
-          <Typography sx={{ color: 'textPrimary.main' }}>
-            Let&apos;s Find a Tree
-          </Typography>
-        </Button>
-      </Link>
-    </Box>
-  );
-}
 
 export default function Home() {
   const { classes } = useStyles();
 
   return (
-    <Box className={classes.pageContainer}>
-      <Box className={classes.contentContainer}>
-        <Typography variant="h3">Welcome to TreeTracker</Typography>
-        <Typography variant="h1">
+    <Box
+      className={classes.pageContainer}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 1,
+      }}
+    >
+      <Box
+        sx={{
+          width: (t) => t.spacing(128),
+        }}
+        className={classes.contentContainer}
+      >
+        <Typography
+          variant="h3"
+          sx={{
+            fontSize: [16, 20],
+            fontWeight: 700,
+            lineHeight: (t) => [t.spacing(25.6), t.spacing(7)],
+          }}
+        >
+          Welcome to TreeTracker
+        </Typography>
+        <Typography
+          variant="h1"
+          sx={{
+            fontSize: 48,
+            fontWeight: 700,
+            lineHeight: (t) => [t.spacing(16.8)],
+            letterSpacing: 0,
+          }}
+        >
           Come explore the global reforestation effort.
         </Typography>
-        <Buttons />
-        <Box sx={{ height: 1000 }} />
+        <Box
+          className={classes.buttonsContainer}
+          sx={{
+            mt: (t) => t.spacing(10),
+          }}
+        >
+          <Button variant="outlined" color="inherit" className={classes.button}>
+            Learn more
+          </Button>
+          <Link href="/top">
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              sx={{
+                color: '#474B4F',
+                ml: (t) => t.spacing(6),
+              }}
+            >
+              Let&apos;s Find a Tree
+            </Button>
+          </Link>
+        </Box>
       </Box>
     </Box>
   );
