@@ -45,6 +45,7 @@ const theme = createTheme(colorTheme, {
     fontFamily: ['Lato', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
       ',',
     ),
+    letterSpacing: 0,
     fontWeight: 400,
     h1: {
       fontFamily: ['Montserrat'].join(','),
