@@ -45,7 +45,6 @@ const theme = createTheme(colorTheme, {
     fontFamily: ['Lato', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
       ',',
     ),
-    letterSpacing: 0,
     fontWeight: 400,
     h1: {
       fontFamily: ['Montserrat'].join(','),
@@ -102,6 +101,15 @@ const theme = createTheme(colorTheme, {
       },
     },
   },
+  components: {
+    Typography: {
+      stylesOverrides: {
+        root: {
+          letterSpacing: 0,
+        }
+      }
+    }
+  }
 });
 
 export default theme;
