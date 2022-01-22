@@ -68,19 +68,7 @@ This project must be installed and used with Node v16. [Node Version Manager](ht
 
 NOTE: There is a bug running the project, need some manually steps to work around it, check this [issue](https://github.com/Greenstand/treetracker-web-map-core/issues/23)
 
-3. Start the mock API server
-
-   ```
-   npm run mock-server
-   ```
-
-   Alternatively you can start the dev server and mock API server with [ concurrently ](https://www.npmjs.com/package/concurrently) using this command:
-
-   ```
-   npm run dev:mock
-   ```
-
-4. Open the web map in the browser with URL: http://localhost:3000
+3. Open the web map in the browser with URL: http://localhost:3000
 
 **Setup for WSL users**
 
@@ -167,6 +155,10 @@ When developing component tests use the custom `mountWithTheme` function found i
 ### Using Correct Link Component
 
 Do not use `next/link` or `@mui/material/Link`. Instead use the custom Link component in `src/components/Link`. This component will ensure that an anchor tag is created with the appropriate href value for SEO purposes. If your component uses this Link component then you will need to include router mocking for component tests to pass.
+
+### CSS/Material-UI Guideline
+
+https://app.gitbook.com/o/-MXNadx4i6aOZ12XcStA/s/-MWfUniHAtkV1kYf898m/css-and-materialui-guideline
 
 ### Material UI styles
 
@@ -257,37 +249,8 @@ it('getServerSideProps returns mock', () => {
 
 ### The current map API
 
-This repo is the client/site project of treetracker web map, it connects to our server-side api online directly, to get more information about the server side, visit our repo [here](https://github.com/Greenstand/treetracker-web-map-api)
+https://github.com/Greenstand/treetracker-query-api
 
-### The in-progress API
-
-On current stage, we got another team working on the new API endpoint, eventually, these API will combine with the map API above to provide a unified API service. The new API spec is evolving, his is the newest API specification:
-
-[/doc/web-map-api.yaml](/doc/web-map-api.yaml)
-
-To check the doc in a convenient way, please import it to some API tools like: http://editor.swagger.io/ or Postman.
-
-### Using our mock API server
-
-To develop without relying on the in-progress work of API team, we set up a mock API server.
-
-To start the mock API server:
-
-```
-npm run mock-server
-```
-
-We use [prism](https://github.com/stoplightio/prism/blob/master/docs/guides/01-mocking.md) to mock the API, it read our openAPI spec, and convert to a rest API server.
-
-So if we need to change the mock response, we can modify the mock example in the [spec](/doc/web-map-api.yaml) (those API prefixed with /mock is just for mock purpose) and restart the mock server.
-
-### Config
-
-The config for setting the API server is an env variable, by using `.env`:
-
-```
-REACT_APP_API_NEW=https://48b2db50-8226-4f1e-9b46-7d80bed46d0f.mock.pstmn.io/
-```
 
 ## The route/URL spec
 
