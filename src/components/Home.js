@@ -10,21 +10,18 @@ const useStyles = makeStyles()((theme) => ({
     background: `center / cover no-repeat url(${backgroundImage})`,
     backgroundPosition: 'inherit',
     height: '100%',
+    [theme.breakpoints.down('sm')]: {
+      backgroundPosition: 'center',
+    },
   },
   contentContainer: {
-    margin: '0 auto',
     color: 'white',
     lineHeight: '140%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     [theme.breakpoints.down('sm')]: {
-      width: '100vw',
-      padding: '1rem',
-      paddingTop: '15vh',
       boxSizing: 'border-box',
-      overflow: 'hidden',
-      justifyContent: 'flex-start',
     },
   },
   buttonsContainer: {
@@ -34,15 +31,19 @@ const useStyles = makeStyles()((theme) => ({
   },
   button: {
     fontFamily: 'Lato',
-    fontSize: '16px',
+    fontSize: 16,
     fontStyle: 'normal',
     fontWeight: '400',
-    lineHeight: '19px',
+    lineHeight: theme.spacing(4.75),
     letterSpacing: '0.04em',
     textAlign: 'left',
     textTransform: 'none',
     borderRadius: theme.spacing(1),
     padding: theme.spacing(4, 6),
+    [theme.breakpoints.down('sm')]: {
+      letterSpacing: '0.02em',
+      padding: theme.spacing(3.5, 4.25),
+    },
   },
 }));
 
@@ -61,7 +62,8 @@ export default function Home() {
     >
       <Box
         sx={{
-          width: (t) => t.spacing(128),
+          width: (t) => [t.spacing(83), t.spacing(128)],
+          mt: 30,
         }}
         className={classes.contentContainer}
       >
@@ -70,7 +72,7 @@ export default function Home() {
           sx={{
             fontSize: [16, 20],
             fontWeight: 700,
-            lineHeight: (t) => [t.spacing(25.6), t.spacing(7)],
+            lineHeight: (t) => [t.spacing(6.4), t.spacing(7)],
           }}
         >
           Welcome to TreeTracker
@@ -78,9 +80,9 @@ export default function Home() {
         <Typography
           variant="h1"
           sx={{
-            fontSize: 48,
-            fontWeight: 700,
-            lineHeight: (t) => [t.spacing(16.8)],
+            fontSize: [32, 48],
+            fontWeight: [600, 700],
+            lineHeight: (t) => [t.spacing(11.2), t.spacing(16.8)],
             letterSpacing: 0,
           }}
         >
@@ -89,7 +91,7 @@ export default function Home() {
         <Box
           className={classes.buttonsContainer}
           sx={{
-            mt: (t) => t.spacing(10),
+            mt: (t) => [t.spacing(6.5), t.spacing(10)],
           }}
         >
           <Button variant="outlined" color="inherit" className={classes.button}>
