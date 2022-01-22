@@ -43,7 +43,7 @@ const colorTheme = createTheme({
 const theme = createTheme(colorTheme, {
   typography: {
     fontFamily: ['Lato', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
-      ',',
+      ',',letterSpacing: 0,
     ),
     fontWeight: 400,
     h1: {
