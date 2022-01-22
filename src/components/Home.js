@@ -63,7 +63,7 @@ export default function Home() {
       <Box
         sx={{
           width: (t) => [t.spacing(83), t.spacing(128)],
-          mt: 30,
+          mt: [-71, 30],
         }}
         className={classes.contentContainer}
       >
@@ -104,7 +104,7 @@ export default function Home() {
               className={classes.button}
               sx={{
                 color: '#474B4F',
-                ml: (t) => t.spacing(6),
+                ml: [4, 6],
               }}
             >
               Let&apos;s Find a Tree
