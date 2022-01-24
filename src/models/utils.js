@@ -1,12 +1,10 @@
 import log from 'loglevel';
 
 function hideLastName(name) {
-  const fullNameArray = name.split(" ");
+  const fullNameArray = name.split(' ');
   const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1][0]}`;
-  
   return hiddenFullName;
 }
-
 
 function parseDomain(url) {
   const matcher = url.match(/^https?:\/\/([^/]*)\/?.*$/);
@@ -83,6 +81,7 @@ function formatDateString(date) {
 }
 
 export {
+  hideLastName,
   parseDomain,
   parseMapName,
   requestAPI,

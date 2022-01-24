@@ -87,7 +87,7 @@ export default function Planter({ planter }) {
   return (
     <PageWrapper>
       <Typography variant="h2" className={classes.textColor}>
-        {planter.first_name} {planter.last_name}
+        {utils.hideLastName(`${planter.first_name}${planter.last_name}`)}
       </Typography>
       <Box sx={{ display: 'flex', gap: 2 }}>
         <VerifiedBadge verified badgeName="Verified Planter" />
