@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build-and-start": "next build && next start",
     "cy": "cypress open",
     "cy:nock": "cypress open --env nock=true",
     "cypress:open": "cypress open",
