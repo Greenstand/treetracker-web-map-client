@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build-and-start": "next build && next start",
     "cy": "cypress open",
     "cy:nock": "cypress open --env nock=true",
     "cypress:open": "cypress open",
@@ -46,7 +47,9 @@
     "@mui/styles": "^5.0.2",
     "axios": "^0.24.0",
     "clsx": "^1.1.1",
+    "country-flag-icons": "^1.4.19",
     "expect-runtime": "^0.4.0",
+    "i18n-iso-countries": "^7.2.0",
     "leaflet": "^1.7.1",
     "leaflet-utfgrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
     "leaflet.gridlayer.googlemutant": "^0.12.1",
