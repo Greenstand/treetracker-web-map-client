@@ -1,4 +1,3 @@
-import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Button,
@@ -121,7 +120,7 @@ function Navbar() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <MenuIcon fontSize="large" />
+        <Image src="/images/menu_bars.svg" alt="menu" width={36} height={36} />
       </Button>
       <Menu
         id="basic-menu"
