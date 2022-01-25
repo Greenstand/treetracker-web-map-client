@@ -39,13 +39,25 @@ const colorTheme = createTheme({
     },
   },
 });
-
+const theme = createTheme({
+  components: {
+    // Name of the component
+    MuiButton: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS
+          letterSpacing: 0,
+        },
+      },
+    },
+  },
+});
 const theme = createTheme(colorTheme, {
   typography: {
     fontFamily: ['Lato', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
       ','
     ),
-    letterSpacing: 0,
     fontWeight: 400,
     h1: {
       fontFamily: ['Montserrat'].join(','),
@@ -96,7 +108,7 @@ const theme = createTheme(colorTheme, {
       fontWeight: 700,
     },
     body1: {
-      letterSpacing: '0.04em',
+      letterSpacing: 0,
       [colorTheme.breakpoints.down('md')]: {
         fontSize: '14px',
       },
