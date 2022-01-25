@@ -158,7 +158,7 @@ Do not use `next/link` or `@mui/material/Link`. Instead use the custom Link comp
 
 ### CSS/Material-UI Guideline
 
-https://app.gitbook.com/o/-MXNadx4i6aOZ12XcStA/s/-MWfUniHAtkV1kYf898m/css-and-materialui-guideline
+https://greenstand.gitbook.io/wallet-web-app/css-and-materialui-guideline
 
 ### Material UI styles
 
