@@ -8,9 +8,9 @@ const useStyles = makeStyles()((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(4),
+    padding: theme.spacing(4.875, 6),
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(3.375, 3.875),
     },
     color: theme.palette.common.white,
     background: theme.palette.primary.main,
@@ -25,17 +25,14 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
   const { classes } = useStyles();
   return (
     <Grid container className={classes.container}>
-      <Grid item sx={{ pr: { xs: 2, md: 4 } }}>
+      <Grid item sx={{ pr: [2, 4] }}>
         {icon}
       </Grid>
       <Grid item>
-        <Typography
-          variant="body1"
-          sx={{ fontSize: { xs: '12px', md: '16px' } }}
-        >
-          {title}
+        <Typography variant="body1">{title}</Typography>
+        <Typography variant="h5" sx={{ fontFamily: 'Lato' }}>
+          {TreeTagValue}
         </Typography>
-        <Typography variant="h5">{TreeTagValue}</Typography>
       </Grid>
     </Grid>
   );

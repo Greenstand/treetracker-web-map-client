@@ -60,9 +60,10 @@ const theme = createTheme(colorTheme, {
       fontFamily: 'Montserrat',
       fontSize: '36px',
       lineHeight: '44px',
-      fontWeight: 600,
+      fontWeight: 700,
+      letterSpacing: 0,
       [colorTheme.breakpoints.down('md')]: {
-        lineHeight: '30px',
+        lineHeight: '29.26px',
         fontSize: '24px',
       },
     },
@@ -78,27 +79,47 @@ const theme = createTheme(colorTheme, {
     h4: {
       fontFamily: 'Montserrat',
       fontSize: '28px',
-      fontWeight: 700,
+      fontWeight: 600,
+      lineHeight: '33.6px',
+      letterSpacing: 0,
       [colorTheme.breakpoints.down('md')]: {
         fontSize: '20px',
+        lineHeight: '24px',
       },
     },
     h5: {
+      fontFamily: 'Montserrat',
       fontSize: '20px',
       fontWeight: 700,
+      lineHeight: '24px',
+      letterSpacing: '0.02em',
       [colorTheme.breakpoints.down('md')]: {
         fontSize: '16px',
+        lineHeight: '19.5px',
       },
     },
     h6: {
+      fontFamily: 'Lato',
       fontSize: '16px',
       fontWeight: 700,
+      lineHeight: '19px',
+      letterSpacing: '0.02em',
     },
     body1: {
+      fontFamily: 'Lato',
+      fontSize: '16px',
+      lineHeight: '19.2px',
       letterSpacing: '0.04em',
       [colorTheme.breakpoints.down('md')]: {
-        fontSize: '14px',
+        fontSize: '12px',
+        lineHeight: '14.4px',
       },
+    },
+    caption: {
+      fontFamily: 'Lato',
+      fontSize: '12px',
+      lineHeight: '14.4px',
+      letterSpacing: '0.04em',
     },
   },
 });
