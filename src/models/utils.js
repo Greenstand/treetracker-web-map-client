@@ -74,10 +74,14 @@ function formatDateString(date) {
   return new Date(date).toLocaleDateString('en-GB');
 }
 
+// Hide full name, show only first char and a dot
+const hideFullName = (name) => `${name.charAt(0)}.`;
+
 export {
   parseDomain,
   parseMapName,
   requestAPI,
   getContinent,
   formatDateString,
+  hideFullName,
 };
