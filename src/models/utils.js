@@ -1,4 +1,5 @@
 import log from 'loglevel';
+import moment from 'moment';
 
 function parseDomain(url) {
   const matcher = url.match(/^https?:\/\/([^/]*)\/?.*$/);
@@ -74,10 +75,15 @@ function formatDateString(date) {
   return new Date(date).toLocaleDateString('en-GB');
 }
 
+//
+const formatDates = (date) =>
+  moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('LL');
+
 export {
   parseDomain,
   parseMapName,
   requestAPI,
   getContinent,
   formatDateString,
+  formatDates,
 };
