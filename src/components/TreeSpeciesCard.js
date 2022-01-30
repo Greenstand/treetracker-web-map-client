@@ -19,7 +19,10 @@ const useStyles = makeStyles()((theme) => ({
   countBox: {
     background: theme.palette.textLight.main,
     color: theme.palette.common.white,
-    padding: theme.spacing(5),
+    padding: theme.spacing(6, 8),
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(5.75, 7.5),
+    },
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -33,14 +36,31 @@ function TreeSpeciesCard(props) {
 
   return (
     <Card className={classes.root} elevation={0}>
-      <Box ml={5}>
-        <Typography variant="h5" sx={{ color: 'textPrimary.main' }}>
+      <Box ml={6}>
+        <Typography
+          variant="h5"
+          sx={{
+            color: 'textPrimary.main',
+            fontFamily: 'Lato',
+            fontWeight: 600,
+          }}
+        >
           {name}
         </Typography>
       </Box>
       <Box className={classes.countBox}>
         <Typography variant="body1">Count:</Typography>
-        <Typography variant="h5" sx={{ fontSize: 28 }}>
+        <Typography
+          variant="h3"
+          sx={{
+            fontFamily: 'Lato',
+            fontWeight: 700,
+            fontSize: [24, 32],
+            letterSpacing: '0.04em',
+            lineHeight: ['29px', '38px'],
+            mt: [1, 2],
+          }}
+        >
           {count}
         </Typography>
       </Box>

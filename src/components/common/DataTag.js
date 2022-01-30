@@ -18,7 +18,10 @@ function DataTag({ data, location }) {
       ) : (
         <CalendarToday sx={{ fontSize: '1.25rem' }} />
       )}
-      <Typography variant="body1" sx={{ fontWeight: 700 }}>
+      <Typography
+        variant="body1"
+        sx={{ fontWeight: 700, lineHeight: ['16.8px', '22.5px'] }}
+      >
         {!location && `Planter since`} {data}
       </Typography>
     </Stack>
