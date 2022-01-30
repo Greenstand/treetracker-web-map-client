@@ -6,7 +6,9 @@ export default function BackButton({ onBackHandler }) {
   return (
     <ButtonBase onClick={onBackHandler} sx={{ color: 'textLight.main' }}>
       <ArrowBackIosIcon fontSize="inherit" />
-      <Typography>Back</Typography>
+      <Typography variant="body1" sx={{ lineHeight: '16px' }}>
+        Back
+      </Typography>
     </ButtonBase>
   );
 }

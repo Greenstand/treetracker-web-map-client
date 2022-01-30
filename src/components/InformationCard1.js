@@ -34,6 +34,10 @@ const useStyles = makeStyles()((theme) => ({
   media: {
     height: 110,
     width: 110,
+    [theme.breakpoints.down('md')]: {
+      height: 80,
+      width: 80,
+    },
     borderRadius: '50%',
     float: 'left',
   },
@@ -62,7 +66,7 @@ function InformationCard1({
             : theme.palette.background.greenOrangeLightGrInverse,
       }}
     >
-      <div>
+      <Box display="flex" alignItems="center">
         <CardMedia
           className={classes.media}
           image={cardImageSrc || Logo}
@@ -75,18 +79,30 @@ function InformationCard1({
           flexDirection="column"
           justifyContent="center"
         >
-          <Typography>{entityType}</Typography>
+          <Typography variant="body1">{entityType}</Typography>
           <Typography
             variant="h4"
-            sx={{ fontFamily: ['Lato'], letterSpacing: '0.02em' }}
+            sx={{
+              fontFamily: 'Lato',
+              fontWeight: 700,
+              letterSpacing: '0.02em',
+            }}
           >
             {entityName}
           </Typography>
         </Box>
-      </div>
+      </Box>
       <Link href={link}>
         <Button className={classes.button} fullWidth>
-          <Typography variant="h5">{buttonText}</Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              color: 'textSecondary.main',
+              fontFamily: 'Lato',
+            }}
+          >
+            {buttonText}
+          </Typography>
         </Button>
       </Link>
     </Box>

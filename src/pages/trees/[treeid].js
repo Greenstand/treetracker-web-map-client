@@ -48,7 +48,10 @@ const useStyles = makeStyles()((theme) => ({
     flexWrap: 'wrap',
     display: 'flex',
     '& div': {
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
+      [theme.breakpoints.down('md')]: {
+        marginTop: theme.spacing(1),
+      },
     },
   },
 }));
@@ -73,7 +76,7 @@ export default function Tree({ tree, planter, organization }) {
         Tree{/* tree.species */} - #{tree.id}
       </Typography>
       <Typography
-        sx={{ color: 'textPrimary.main', fontWeight: 300 }}
+        sx={{ color: 'textPrimary.main', fontWeight: 400 }}
         variant="h5"
       >
         Eco-Peace-Vision
@@ -109,7 +112,12 @@ export default function Tree({ tree, planter, organization }) {
       </Box>
       <Typography
         variant="h4"
-        sx={{ color: 'textPrimary.main', mt: { xs: 14, md: 26 } }}
+        sx={{
+          color: 'textPrimary.main',
+          fontSize: [24, 28],
+          lineHeight: ['29.26px', '34.13px'],
+          mt: (t) => [t.spacing(14), t.spacing(26)],
+        }}
       >
         Tree Info
       </Typography>

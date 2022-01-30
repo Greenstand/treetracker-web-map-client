@@ -33,7 +33,8 @@ function InfoWrapper({ children, top, right, bottom }) {
     <Box
       ml={3}
       mr={2}
-      p={4}
+      py={4}
+      px={5}
       sx={{
         bgcolor: 'textPrimary.main',
         opacity: 0.8,
