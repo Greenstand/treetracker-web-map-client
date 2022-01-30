@@ -14,5 +14,6 @@ module.exports = {
       '180.earth',
       'purecatamphetamine.github.io',
     ],
+    disableStaticImages: true,
   },
 };
