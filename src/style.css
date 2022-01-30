@@ -247,7 +247,7 @@ a:hover {
 }
 
 .greenstand-cluster-highlight-box {
-  background: url(./images/cluster_63px_highlight.png);
+  background: ('./images/cluster_63px_highlight.png');
   width: 63px;
   height: 63px;
   display: flex;

@@ -94,9 +94,10 @@ export default function Planter({ planter }) {
       </Stack>
       <Box sx={{ display: 'flex', gap: 2 }}>
         <VerifiedBadge verified badgeName="Verified Planter" />
-        <VerifiedBadge verified={false} badgeName="Seeking Orgs" />
+        <VerifiedBadge badgeName="Seeking Orgs" />
       </Box>
-      {isMobileScreen || (
+
+      {!isMobileScreen && (
         <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
       )}
 
