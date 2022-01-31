@@ -158,7 +158,7 @@ function Drawer(props) {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            marginBottom: 4,
+            marginBottom: [0, 4],
             padding: 5,
           }}
         >

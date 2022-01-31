@@ -5,9 +5,12 @@ const useStyles = makeStyles()((theme, size) => ({
     position: 'relative',
     width: '100%',
     overflow: 'hidden',
+    marginTop: theme.spacing(4.5),
+    marginBottom: theme.spacing(14.25),
     [theme.breakpoints.down('sm')]: {
-      position: 'relative',
       left: theme.spacing(-4),
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(14.25),
       width: '100vw',
     },
   },
@@ -18,7 +21,7 @@ const useStyles = makeStyles()((theme, size) => ({
     overflowX: 'scroll',
     scrollBehavior: 'smooth',
     scrollSnapType: 'x mandatory',
-    padding: '2rem 0',
+    padding: theme.spacing(8, 0),
     scrollPadding: '0 50%',
     scrollbarWidth: 'none',
     '&::-webkit-scrollbar': {
@@ -29,7 +32,7 @@ const useStyles = makeStyles()((theme, size) => ({
       scrollSnapType: 'none',
     },
     [theme.breakpoints.down('sm')]: {
-      padding: `2rem ${theme.spacing(4)}`,
+      padding: theme.spacing(0, 4),
     },
   },
 

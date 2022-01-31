@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
 import countries from 'i18n-iso-countries';
 import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
@@ -6,9 +6,14 @@ import Ribbon from './Ribbon';
 
 const useStyles = makeStyles()((theme) => ({
   flagContainer: {
+    position: 'relative',
     margin: theme.spacing(5),
+    width: 88,
+    height: 60,
     [theme.breakpoints.down('md')]: {
       margin: theme.spacing(3.5),
+      width: 54,
+      height: 40,
     },
     '& span': {
       borderRadius: '8px',
@@ -16,7 +21,7 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
   top: {
-    margin: theme.spacing(14),
+    margin: theme.spacing(14, 4),
     [theme.breakpoints.down('md')]: {
       margin: theme.spacing(5),
     },
@@ -28,7 +33,7 @@ const useStyles = makeStyles()((theme) => ({
     borderRadius: '100px',
     boxShadow: '0 4px 10px 0px rgba(0, 0, 0, 0.15)',
     cursor: 'pointer',
-    margin: theme.spacing(8),
+    margin: theme.spacing(8, 4),
     [theme.breakpoints.down('md')]: {
       margin: theme.spacing(3),
     },
@@ -39,6 +44,7 @@ const useStyles = makeStyles()((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: theme.spacing(-15),
+    marginLeft: theme.spacing(2),
     [theme.breakpoints.down('md')]: {
       marginTop: theme.spacing(-10),
     },
@@ -49,11 +55,49 @@ const useStyles = makeStyles()((theme) => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     marginTop: theme.spacing(-2),
+    fontFamily: 'Lato',
+    fontSize: '24px',
+    lineHeight: '28.8px',
     [theme.breakpoints.down('md')]: {
       marginTop: theme.spacing(-1),
+      fontSize: '16px',
+      lineHeight: '19.2px',
+    },
+  },
+  title: {
+    fontFamily: 'Lato',
+    fontWeight: 700,
+    [theme.breakpoints.down('md')]: {
+      fontWeight: 400,
     },
   },
 }));
+
+function RibbonWrapper({ fill, index }) {
+  const { classes } = useStyles();
+
+  return (
+    <div className={classes.ribbons}>
+      <Ribbon fill={fill} />
+      <Typography variant="h5" className={classes.rank}>
+        {index + 1}
+      </Typography>
+    </div>
+  );
+}
+
+function TreeImage() {
+  const theme = useTheme();
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+  return (
+    <Image
+      src="/images/tree_icon.svg"
+      alt="tree icon"
+      width={!isMobileScreen ? 13.5 : 12}
+      height={!isMobileScreen ? 18 : 14}
+    />
+  );
+}
 
 function LeaderBoard(props) {
   const { countries: rankedCountries, handleCountryClick } = props;
@@ -75,23 +119,31 @@ function LeaderBoard(props) {
           alignItems="center"
         >
           <Grid item xs={2}>
-            <Typography variant="h5" sx={{ textAlign: 'center' }}>
+            <Typography
+              variant="h5"
+              sx={{
+                textAlign: 'center',
+              }}
+              className={classes.title}
+            >
               #
             </Typography>
           </Grid>
-          <Grid item xs={5}>
-            <Typography variant="h5">COUNTRY</Typography>
+          <Grid item xs={4} pl={4}>
+            <Typography variant="h5" className={classes.title}>
+              COUNTRY
+            </Typography>
           </Grid>
 
-          <Grid item xs={8}>
-            <Typography variant="h5" sx={{ textAlign: 'right' }}>
-              {'TREES PLANTED '}
-              <Image
-                src="/images/tree_icon.svg"
-                alt="tree icon"
-                width={12}
-                height={15}
-              />
+          <Grid item xs={9}>
+            <Typography
+              variant="h5"
+              sx={{
+                textAlign: 'right',
+              }}
+              className={classes.title}
+            >
+              TREES PLANTED <TreeImage />
             </Typography>
           </Grid>
           <Grid item xs={1} />
@@ -111,42 +163,26 @@ function LeaderBoard(props) {
               justifyContent="center"
               alignItems="center"
             >
-              <Grid item xs={2}>
+              <Grid item xs={2} justifySelf="center">
                 {index < 3 ? (
                   <p />
                 ) : (
                   <Typography
                     variant="h5"
-                    sx={{ textAlign: 'center', marginLeft: '50%' }}
+                    sx={{
+                      marginLeft: '50%',
+                      fontFamily: 'Lato',
+                      lineHeight: ['28.8px', '19.2px'],
+                    }}
                   >
                     {index + 1}
                   </Typography>
                 )}
                 {/* Here we add the position number for the top 3 countries with an svg file */}
-                {index === 0 && (
-                  <div className={classes.ribbons}>
-                    <Ribbon fill="#FFD700" />
-                    <Typography variant="h5" className={classes.rank}>
-                      {index + 1}
-                    </Typography>
-                  </div>
-                )}
-                {index === 1 && (
-                  <div className={classes.ribbons}>
-                    <Ribbon fill="#cccccc" />
-                    <Typography variant="h5" className={classes.rank}>
-                      {index + 1}
-                    </Typography>
-                  </div>
-                )}
-                {index === 2 && (
-                  <div className={classes.ribbons}>
-                    <Ribbon fill="#9f7a33" />
-                    <Typography variant="h5" className={classes.rank}>
-                      {index + 1}
-                    </Typography>
-                  </div>
-                )}
+                {index === 0 && <RibbonWrapper fill="#FFD700" index={index} />}
+                {index === 1 && <RibbonWrapper fill="#cccccc" index={index} />}
+                {index === 2 && <RibbonWrapper fill="#9f7a33" index={index} />}
+
                 {/* Here we add the position number for the rest of the countries */}
               </Grid>
               <Grid item xs={4}>
@@ -157,29 +193,27 @@ function LeaderBoard(props) {
                       `${country.name}`,
                       'en',
                     )}.svg`}
-                    width={75}
-                    height={50}
+                    layout="fill"
+                    objectFit="cover"
                   />
                 </Box>
               </Grid>
-              <Grid item xs={3}>
-                <Typography variant="h5">{country.name}</Typography>
+              <Grid item xs={5}>
+                <Typography variant="h5" sx={{ fontFamily: 'Lato' }}>
+                  {country.name}
+                </Typography>
               </Grid>
-              <Grid item xs={7}>
+              <Grid item xs={5}>
                 <Typography
                   variant="h5"
                   sx={{
                     textAlign: 'right',
                     marginRight: '19.99%',
+                    fontFamily: 'Lato',
                   }}
                 >
                   {`${country.planted.toLocaleString()} `}
-                  <Image
-                    src="/images/tree_icon.svg"
-                    alt="tree icon"
-                    width={12}
-                    height={15}
-                  />
+                  <TreeImage />
                 </Typography>
               </Grid>
             </Grid>

@@ -59,7 +59,6 @@ const useStyles = makeStyles()((theme) => ({
 export default function Tree({ tree, planter, organization }) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
-  console.log(tree);
 
   log.warn('map:', mapContext);
 
@@ -115,7 +114,7 @@ export default function Tree({ tree, planter, organization }) {
         sx={{
           color: 'textPrimary.main',
           fontSize: [24, 28],
-          lineHeight: ['29.26px', '34.13px'],
+          lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
           mt: (t) => [t.spacing(14), t.spacing(26)],
         }}
       >

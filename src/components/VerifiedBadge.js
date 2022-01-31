@@ -21,7 +21,7 @@ function VerifiedBadge({ verified, badgeName }) {
         color: 'common.white',
         borderRadius: 1,
         fontSize: 12,
-        lineHeight: '16px',
+        lineHeight: (t) => [t.spacing(4)],
         letterSpacing: '0.02em',
       }}
       size="small"
