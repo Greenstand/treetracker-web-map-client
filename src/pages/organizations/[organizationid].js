@@ -1,13 +1,22 @@
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Box, Divider, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
 import log from 'loglevel';
+import Image from 'next/image';
 import React from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import DataTag from 'components/common/DataTag';
 import { makeStyles } from 'models/makeStyles';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -17,20 +26,6 @@ import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
-  info: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: theme.spacing(1),
-    fontFamily: theme.typography.fontFamily,
-    fontSize: '0.8rem',
-    color: theme.palette.textSecondary.main,
-    margin: '4px 0',
-  },
-  badgeWrapper: {
-    marginBottom: theme.spacing(2),
-    display: 'flex',
-    gap: theme.spacing(1),
-  },
   imgContainer: {
     borderRadius: '16px',
     position: 'relative',
@@ -77,19 +72,11 @@ const useStyles = makeStyles()((theme) => ({
 export default function Organization({ organization }) {
   const mapContext = useMapContext();
   const { classes } = useStyles();
-  const [isPlanterTab, setIsPlanterTab] = React.useState(false);
+  const [isPlanterTab, setIsPlanterTab] = React.useState(true);
   // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
-  const {
-    name,
-    area,
-    country,
-    created_at,
-    about,
-    mission,
-    photo_url,
-    logo_url,
-  } = organization;
+  const theme = useTheme();
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   async function updateContinent() {
     const tree = organization?.featuredTrees?.trees[0];
@@ -121,37 +108,52 @@ export default function Organization({ organization }) {
       }
     }
     reload();
-
+    // eslint-disable-next-line
     updateContinent();
-  }, [mapContext.map]);
-
-  function handleCardClick() {
-    setIsPlanterTab(!isPlanterTab);
-  }
+    // eslint-disable-next-line
+  }, [mapContext, organization]);
 
   return (
     <PageWrapper>
-      <Typography variant="subtitle1">{name}</Typography>
-      <Box className={classes.badgeWrapper}>
-        <VerifiedBadge verified badgeName="Verified Planter" />
-        <VerifiedBadge verified={false} badgeName="Seeking Planters" />
-      </Box>
-      <Box className={classes.info}>
-        <CalendarTodayIcon fontSize="small" />
-        Planter since {created_at}
-      </Box>
-      <Box className={classes.info}>
-        <LocationOnIcon fontSize="small" />
-        {area}, {country}
-      </Box>
-      <Divider variant="fullWidth" sx={{ mt: 6, mb: 9.5 }} />
+      <Typography variant="h2" className={classes.textColor}>
+        {organization.map_name}
+      </Typography>
+      <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
+        <DataTag data={utils.formatDates(organization.created_time)} />
+        <DataTag data="Shirimatunda, Tanzania" location />
+      </Stack>
 
-      <Box className={classes.imgContainer}>
-        <img src={photo_url} />
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <VerifiedBadge verified badgeName="Verified Planter" />
+        <VerifiedBadge badgeName="Seeking Orgs" />
+      </Box>
+
+      {!isMobileScreen && (
+        <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
+      )}
+
+      <Box
+        className={classes.imgContainer}
+        sx={{
+          width: '100%',
+          height: '688px',
+          borderRadius: 6,
+          mt: 11,
+          mb: [6, 10],
+        }}
+      >
+        {/* Placeholder image, change it if we get data from API */}
+        <Image
+          src="https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2019.11.08.11.12.43_1a507e4a-ade7-47d7-b7f5-e1a425588483_IMG_20191030_173914_4000805348046989577.jpg"
+          alt="some text"
+          layout="fill"
+        />
         <Box className={classes.logoContainer}>
-          <img src={logo_url} />
+          {/* Replace url with API data  */}
+          {/*  <Image src={organization.logo_url} /> */}
         </Box>
       </Box>
+
       <Grid
         container
         wrap="nowrap"
@@ -160,55 +162,45 @@ export default function Organization({ organization }) {
       >
         <Grid item sx={{ width: '49%' }}>
           <CustomCard
-            handleClick={handleCardClick}
+            handleClick={() => setIsPlanterTab(true)}
             icon={<ParkOutlinedIcon fontSize="large" />}
             title="Trees Planted"
-            text={organization?.featuredTrees?.total}
-            disabled={isPlanterTab}
+            text={organization?.featuredTrees?.trees.length}
+            disabled={!isPlanterTab}
           />
         </Grid>
         <Grid item sx={{ width: '49%' }}>
           <CustomCard
-            handleClick={handleCardClick}
+            handleClick={() => setIsPlanterTab(false)}
             icon={<PersonOutlineIcon fontSize="large" />}
             title="Hired Planters"
-            text={organization?.associatedPlanters?.total}
-            disabled={!isPlanterTab}
+            text={organization?.associatedPlanters?.planters.length}
+            disabled={isPlanterTab}
           />
         </Grid>
       </Grid>
 
-      {/* <Grid container spacing={1}>
-        <Grid item>
-          <CustomCard
-            handleClick={handleCardClick}
-            icon={<ParkOutlinedIcon />}
-            title="Trees Planted"
-            text={organization?.featuredTrees?.total}
-            disabled={!!isPlanterTab}
-          />
-        </Grid>
-        <Grid item>
-          <Box width={8} />
-        </Grid>
-        <Grid item>
-          <CustomCard
-            handleClick={handleCardClick}
-            icon={<GroupsOutlinedIcon />}
-            title="Associated Organizations"
-            text={organization?.associatedPlanters?.total}
-            disabled={!isPlanterTab}
-          />
-        </Grid>
-      </Grid> */}
-      {!isPlanterTab && (
-        <Box>
-          <CustomWorldMap totalTrees={organization?.featuredTrees?.total} />
-        </Box>
-      )}
       {isPlanterTab && (
-        <div>
-          {organization?.associatedPlanters?.planters?.map((planter) => (
+        <>
+          <Box sx={{ mt: [0, 22] }}>
+            <CustomWorldMap
+              totalTrees={organization?.featuredTrees?.trees.length}
+            />
+          </Box>
+          <Box className={classes.speciesBox}>
+            {organization?.species.species.map((species) => (
+              <TreeSpeciesCard
+                key={species.id}
+                name={species.name}
+                count={species.total}
+              />
+            ))}
+          </Box>
+        </>
+      )}
+      {!isPlanterTab && (
+        <Stack spacing={{ xs: 37.5, sm: 14 }} mt={{ xs: 13, sm: 22 }}>
+          {/* {organization?.associatedPlanters?.planters?.map((planter) => (
             <PlanterQuote
               name={planter.first_name}
               key={planter.id}
@@ -217,48 +209,75 @@ export default function Organization({ organization }) {
               initialDate={planter.created_time}
               location={planter.country}
             />
-          ))}
-        </div>
-      )}
-      <Box className={classes.speciesBox}>
-        {organization?.species.species.map((species) => (
-          <TreeSpeciesCard
-            key={species.id}
-            name={species.name}
-            scientificName={species.scientificName}
-            count={species.count}
+          ))} */}
+          {/* Placeholder quote card, remove after API gets data */}
+          <PlanterQuote
+            name="Jirgna O"
+            quote="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+                nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
+                velit ipsa illo, odit unde atque doloribus tempora distinctio facere
+                dolorem expedita error."
+            photo="https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg"
+            initialDate={2022}
+            location="Shiramtunda, Tanzania"
           />
-        ))}
-      </Box>
-      <Typography
-        variant="h4"
-        className={classes.textColor}
-        sx={{ mt: { xs: 12, md: 20 }, fontWeight: 600 }}
-      >
+          <PlanterQuote
+            name="Samwell A"
+            quote="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+                nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
+                velit ipsa illo, odit unde atque doloribus tempora distinctio facere
+                dolorem expedita error."
+            photo="https://treetracker-production.nyc3.digitaloceanspaces.com/2018.11.20.12.11.07_e7a81cf4-2d37-45ee-9d5a-47bdfd7c43cc_IMG_20181120_121037_7990135604649410080.jpg"
+            initialDate={2022}
+            location="Addis Ababa, Ethiopia"
+          />
+        </Stack>
+      )}
+
+      <Divider varian="fullwidth" className={classes.divider} />
+      <Typography variant="h4" className={classes.textColor}>
         About the Organization
       </Typography>
-      <Typography variant="body1" className={classes.textColor} mt={7}>
-        {about}
+      <Typography variant="body2" className={classes.textColor} mt={7}>
+        {/* Just some placeholder text */}
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
+        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
+        dolorem expedita error. Natus, provident. Tempore harum repellendus
+        reprehenderit vitae temporibus, consequuntur blanditiis officia
+        excepturi, natus explicabo laborum delectus repudiandae placeat
+        eligendi.
       </Typography>
-      <br />
       <Typography
         variant="h4"
         className={classes.textColor}
-        sx={{ mt: { xs: 10, md: 16 }, fontWeight: 600 }}
+        sx={{ mt: { xs: 10, md: 16 } }}
       >
         Mission
       </Typography>
-      <Typography variant="body1" className={classes.textColor} mt={7}>
-        {mission}
+      <Typography variant="body2" className={classes.textColor} mt={7}>
+        {/* Just some placeholder text */}
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
+        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
+        dolorem expedita error. Natus, provident. Tempore harum repellendus
+        reprehenderit vitae temporibus, consequuntur blanditiis officia
+        excepturi, natus explicabo laborum delectus repudiandae placeat
+        eligendi.
       </Typography>
+
       <Divider varian="fullwidth" className={classes.divider} />
-      <Typography
-        variant="h4"
-        className={classes.textColor}
-        sx={{ mt: { xs: 10, md: 16 }, fontWeight: 600 }}
-      >
+      <Typography variant="h4" className={classes.textColor} mb={9}>
         Check out the planting effort in action
       </Typography>
+      <Box mb={17}>
+        {/* Placeholder image and data, should be changed later */}
+        <CustomImageWrapper
+          imageUrl="https://treetracker-dev.nyc3.digitaloceanspaces.com/2018.09.07.11.04.27_3ae160d9-58f7-4373-a4c2-3b39edbacd2e_IMG_20180907_095704_764193446.jpg"
+          timeCreated={2022}
+          treeId={940}
+        />
+      </Box>
     </PageWrapper>
   );
 }

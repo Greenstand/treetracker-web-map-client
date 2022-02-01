@@ -76,7 +76,6 @@ export default function Planter({ planter }) {
           log.warn('error:', err);
         }
         map.rerender();
-      } else {
         log.warn('no data:', map, planter);
       }
     }
@@ -95,9 +94,10 @@ export default function Planter({ planter }) {
       </Stack>
       <Box sx={{ display: 'flex', gap: 2 }}>
         <VerifiedBadge verified badgeName="Verified Planter" />
-        <VerifiedBadge verified={false} badgeName="Seeking Orgs" />
+        <VerifiedBadge badgeName="Seeking Orgs" />
       </Box>
-      {isMobileScreen || (
+
+      {!isMobileScreen && (
         <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
       )}
 
@@ -133,7 +133,7 @@ export default function Planter({ planter }) {
             icon={<GroupsOutlinedIcon fontSize="large" />}
             title="Ass. Orgs"
             text={planter.associatedOrganizations.organizations.length}
-            disabled={!!isPlanterTab}
+            disabled={isPlanterTab}
           />
         </Grid>
       </Grid>
