@@ -12,8 +12,6 @@ const useStyles = makeStyles()((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: theme.spacing(2),
-    marginTop: theme.spacing(6),
-    marginBottom: theme.spacing(6),
     cursor: 'pointer',
   },
   avatar: {
@@ -61,9 +59,7 @@ function CustomCard(props) {
           : theme.palette.background.greenGradient,
       }}
     >
-      <CardMedia
-        sx={{ padding: { xs: theme.spacing(2), md: theme.spacing(4) } }}
-      >
+      <CardMedia sx={{ padding: [theme.spacing(4, 3), theme.spacing(6)] }}>
         <Avatar
           className={classes.avatar}
           sx={{
@@ -77,14 +73,18 @@ function CustomCard(props) {
         </Avatar>
       </CardMedia>
       <CardContent className={classes.cardContent}>
-        <Typography
-          variant="body1"
-          color="textSecondary"
-          sx={{ fontSize: { xs: 12, md: 16 } }}
-        >
+        <Typography variant="body1" color="textSecondary">
           {title}
         </Typography>
-        <Typography variant="h2" sx={{ fontSize: { xs: 16, sm: 24, md: 36 } }}>
+        <Typography
+          variant="h2"
+          sx={{
+            fontSize: [16, 36],
+            fontFamily: 'Lato',
+            lineHeight: ['19.2px', '43.2px'],
+            letterSpacing: ['0.02em', 0],
+          }}
+        >
           {text}
         </Typography>
       </CardContent>

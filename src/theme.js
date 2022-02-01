@@ -115,6 +115,17 @@ const theme = createTheme(colorTheme, {
         lineHeight: '14.4px',
       },
     },
+    body2: {
+      fontFamily: 'Lato',
+      fontSize: '20px',
+      lineHeight: '28px',
+      letterSpacing: '0.04em',
+      [colorTheme.breakpoints.down('md')]: {
+        fontSize: '16px',
+        lineHeight: '23.2px',
+        letterSpacing: '0.02em',
+      },
+    },
     caption: {
       fontFamily: 'Lato',
       fontSize: '12px',
