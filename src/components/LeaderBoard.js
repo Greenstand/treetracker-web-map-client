@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import countries from 'i18n-iso-countries';
 import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
+import { fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
 
 const useStyles = makeStyles()((theme) => ({
@@ -58,6 +59,8 @@ const useStyles = makeStyles()((theme) => ({
 function LeaderBoard(props) {
   const { countries: rankedCountries, handleCountryClick } = props;
 
+  const fixedCountries = fixCountryNames(rankedCountries);
+
   // to support a browser environment:
   /* eslint-disable global-require */
   countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
@@ -98,8 +101,8 @@ function LeaderBoard(props) {
         </Grid>
       </Box>
 
-      {rankedCountries &&
-        rankedCountries.map((country, index) => (
+      {fixedCountries &&
+        fixedCountries.map((country, index) => (
           <Box
             key={country.id}
             className={classes.item}
