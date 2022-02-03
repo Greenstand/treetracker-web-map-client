@@ -1,9 +1,16 @@
 import {
+  hideLastName,
   formatDateString,
   parseDomain,
   parseMapName,
   requestAPI,
 } from './utils';
+
+describe('hideLastName', () => {
+  it('Dadior Chen should return Dadior C', () => {
+    expect(hideLastName('Dadior Chen')).toBe('Dadior C');
+  });
+});
 
 describe('parseMapName', () => {
   it('freetown.treetracker.org should return freetown', () => {

@@ -1,6 +1,12 @@
 import log from 'loglevel';
 import moment from 'moment';
 
+function hideLastName(name) {
+  const fullNameArray = name.split(' ');
+  const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1][0]}`;
+  return hiddenFullName;
+}
+
 function parseDomain(url) {
   const matcher = url.match(/^https?:\/\/([^/]*)\/?.*$/);
   if (matcher) {
@@ -92,6 +98,7 @@ const fixCountryNames = (countries) => countries.map((country) => {
   });
 
 export {
+  hideLastName,
   parseDomain,
   parseMapName,
   requestAPI,
