@@ -79,6 +79,18 @@ function formatDateString(date) {
 const formatDates = (date) =>
   moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('LL');
 
+// Fix country names so it get return the correct alpha2 code for the flags
+// todo other faulty country names should be added later
+const fixCountryNames = (countries) => countries.map((country) => {
+    if (country.name === 'Tanzania') {
+      return { ...country, name: 'Tanzania, United Republic of' };
+    } if (country.name === 'Democratic Republic of the Congo') {
+      return { ...country, name: 'Congo, the Democratic Republic of the' };
+    } 
+      return country;
+    
+  });
+
 export {
   parseDomain,
   parseMapName,
@@ -86,4 +98,5 @@ export {
   getContinent,
   formatDateString,
   formatDates,
+  fixCountryNames,
 };
