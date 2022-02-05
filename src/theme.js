@@ -19,6 +19,16 @@ const getDesign = (mode) => ({
   palette: {
     mode,
     background: {
+      ...(mode === 'light'
+        ? {
+            default: '#fff',
+            paper: '#fff',
+          }
+        : {
+            default: '#333',
+            paper: '#1d1d1d',
+          }),
+
       greenGradient:
         'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
       greenOrangeLightGr:
@@ -58,7 +68,7 @@ const getDesign = (mode) => ({
   },
 });
 
-const colorTheme = createTheme(getDesign('light'));
+const colorTheme = createTheme(getDesign('dark'));
 
 const theme = createTheme(colorTheme, {
   typography: {

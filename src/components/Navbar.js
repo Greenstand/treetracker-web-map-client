@@ -4,11 +4,13 @@ import {
   Menu,
   MenuItem,
   Toolbar,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useCustomThemeContext } from 'context/themeContext';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 
@@ -17,7 +19,7 @@ const logo = '/images/greenstand_logo_full.png';
 
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
     height: theme.spacing(18),
     width: '100vw',
     flexDirection: 'row',
@@ -41,11 +43,6 @@ const useStyles = makeStyles()((theme) => ({
     paddingLeft: '1rem',
     paddingBottom: '.5rem',
   },
-  buttonStyle: {
-    fontSize: '16px',
-    textTransform: 'none',
-    color: theme.palette.textPrimary.main,
-  },
   menuButton: {
     display: 'none',
     padding: 0,
@@ -59,6 +56,8 @@ function Navbar() {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = useState(null);
+  const colorMode = useCustomThemeContext();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,18 +67,19 @@ function Navbar() {
   };
   const { classes } = useStyles();
   return (
-    <AppBar className={classes.navContainer} color="primary" position="static">
+    <AppBar className={classes.navContainer} color="default" position="static">
       <Link href="/" className={classes.logo}>
         <Image
           src={isMobileScreen ? iconLogo : logo}
           width={isMobileScreen ? 24 : 180}
           height={30}
+          alt="Greenstand Logo"
         />
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
         <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
-            Greenstand
+          <Button variant="text">
+            <Typography>Greenstand</Typography>
           </Button>
         </Link>
         <Link href="/">
@@ -112,6 +112,7 @@ function Navbar() {
             Contact Us
           </Button>
         </Link>
+        <Button onClick={colorMode.toggleColorMode}>Theme</Button>
       </Toolbar>
       <Button
         className={classes.menuButton}
