@@ -8,9 +8,9 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { makeStyles } from 'models/makeStyles';
+import { formatDates } from 'models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   inputLabel: {
@@ -31,8 +31,8 @@ function Filter(props) {
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
-  const formatDates = (date) =>
-    moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY-MM-DD');
+  // const formatDates = (date) =>
+  //   moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('YYYY-MM-DD');
 
   useEffect(() => {
     setIsButtonDisable(!startDate || !endDate);
@@ -70,8 +70,8 @@ function Filter(props) {
     if (startDate > endDate) {
       setIsError(true);
       setIsFilterOpen(true);
-      const a = formatDates(startDate);
-      const b = formatDates(endDate);
+      const a = formatDates(startDate, 'YYYY-MM-DD');
+      const b = formatDates(endDate, 'YYYY-MM-DD');
       if (a > b) {
         setShowMessage(true);
         setTimeout(() => {
@@ -83,8 +83,8 @@ function Filter(props) {
       setIsFilterOpen(false);
       setOnSubmit(true);
       onFilter({
-        startDate: formatDates(startDate),
-        endDate: formatDates(endDate),
+        startDate: formatDates(startDate, 'YYYY-MM-DD'),
+        endDate: formatDates(endDate, 'YYYY-MM-DD'),
       });
     }
   };
@@ -109,22 +109,28 @@ function Filter(props) {
           </Typography>
           <Button
             variant={isFilterOpen ? 'contained' : 'outlined'}
-            color="secondary"
-            sx={{ color: !isFilterOpen ? 'textPrimary.main' : '' }}
+            color="primary"
+            sx={{
+              color: !isFilterOpen ? 'textPrimary.main' : '',
+              px: [2, 3],
+              py: [2.25, 2.875],
+            }}
             onClick={() => isHandleFilterIsOpen()}
           >
             <FilterListRoundedIcon fontSize="small" />
             <Typography
-              variant="h6"
+              variant="body1"
               pl={2}
               sx={{
                 textTransform: 'none',
-                fontWeight: 'normal',
               }}
             >
               Filters
               {onSubmit &&
-                ` are ${formatDates(startDate)} / ${formatDates(endDate)}`}
+                ` are ${formatDates(startDate, 'YYYY-MM-DD')} / ${formatDates(
+                  endDate,
+                  'YYYY-MM-DD',
+                )}`}
             </Typography>
           </Button>
         </Box>
@@ -133,7 +139,7 @@ function Filter(props) {
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="h6" sx={{ letterSpacing: '0.04em' }}>
-                  Planted between (timeline)
+                  Planted between
                 </Typography>
               </Grid>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -142,7 +148,7 @@ function Filter(props) {
                   container
                   sx={{ mt: 5 }}
                   columnSpacing={{ xs: 2 }}
-                  nowrap
+                  wrap="nowrap"
                 >
                   <Grid item sm={6}>
                     <DesktopDatePicker
@@ -220,8 +226,8 @@ function Filter(props) {
       </form>
       {showMessage && (
         <Alert severity="warning" sx={{ my: 4 }}>
-          Start date: {formatDates(startDate)} is bigger than end date:{' '}
-          {formatDates(endDate)}
+          Start date: {formatDates(startDate, 'YYYY-MM-DD')} is bigger than end
+          date: {formatDates(endDate, 'YYYY-MM-DD')}
         </Alert>
       )}
     </Box>

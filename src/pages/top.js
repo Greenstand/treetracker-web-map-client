@@ -1,37 +1,21 @@
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
-import { makeStyles } from 'models/makeStyles';
+import SearchButton from 'components/SearchButton';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
 import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
-// create style object for use in this component
-const useStyles = makeStyles()((theme) => ({
-  root: {
-    padding: theme.spacing(3, 4),
-    maxWidth: '100%',
-    boxSizing: 'border-box',
-  },
-  title2: {
-    fontFamily: 'Montserrat',
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: '32px',
-    lineHeight: '39px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#474B4F',
-  },
-}));
-
 export default function Top({ trees, countries }) {
   // use map context to get the map
   const { map } = useMapContext();
 
-  const { classes } = useStyles();
+  const theme = useTheme();
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   async function handleCountryClick(countryId) {
     log.debug('handleCountryClick', countryId);
@@ -55,24 +39,27 @@ export default function Top({ trees, countries }) {
   }
 
   return (
-    <div className={classes.root}>
+    <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
+      {!isMobileScreen && (
+        <Stack direction="row" justifyContent="flex-end" mb={6.125}>
+          <SearchButton />
+        </Stack>
+      )}
+
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Filter onFilter={handleFilter} />
       </Box>
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>
-      <Typography
-        variant="h2"
-        sx={{ color: 'textPrimary.main', fontSize: { xs: 20, lg: 32 } }}
-      >
+      <Typography variant="h3" sx={{ color: 'textPrimary.main' }}>
         Check out the global leaders in the tree planting effort
       </Typography>
       <LeaderBoard
         countries={countries}
         handleCountryClick={handleCountryClick}
       />
-    </div>
+    </Box>
   );
 }
 

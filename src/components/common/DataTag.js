@@ -20,7 +20,10 @@ function DataTag({ data, location }) {
       )}
       <Typography
         variant="body1"
-        sx={{ fontWeight: 700, lineHeight: ['16.8px', '22.5px'] }}
+        sx={{
+          fontWeight: 700,
+          lineHeight: (t) => [t.spacing(4.2), t.spacing(5.625)],
+        }}
       >
         {!location && `Planter since`} {data}
       </Typography>

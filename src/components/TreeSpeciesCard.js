@@ -57,7 +57,7 @@ function TreeSpeciesCard(props) {
             fontWeight: 700,
             fontSize: [24, 32],
             letterSpacing: '0.04em',
-            lineHeight: ['29px', '38px'],
+            lineHeight: (t) => [t.spacing(7.25), t.spacing(9.5)],
             mt: [1, 2],
           }}
         >

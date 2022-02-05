@@ -70,10 +70,11 @@ const theme = createTheme(colorTheme, {
     h3: {
       fontFamily: 'Montserrat',
       fontSize: '32px',
-      lineHeight: '28px',
+      lineHeight: '39px',
       fontWeight: 600,
       [colorTheme.breakpoints.down('md')]: {
-        fontSize: '16px',
+        fontSize: '20px',
+        lineHeight: '24px',
       },
     },
     h4: {

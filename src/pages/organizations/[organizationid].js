@@ -119,7 +119,7 @@ export default function Organization({ organization }) {
         {organization.map_name}
       </Typography>
       <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
-        <DataTag data={utils.formatDates(organization.created_time)} />
+        <DataTag data={utils.formatDates(organization.created_time, 'LL')} />
         <DataTag data="Shirimatunda, Tanzania" location />
       </Stack>
 
