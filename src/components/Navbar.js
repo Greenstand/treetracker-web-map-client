@@ -11,15 +11,14 @@ import {
 import Image from 'next/image';
 import { useState } from 'react';
 import { useCustomThemeContext } from 'context/themeContext';
+import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 
 const iconLogo = '/images/greenstand_logo.svg';
-const logo = '/images/greenstand_logo_full.png';
 
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
-    // backgroundColor: theme.palette.background.default,
     height: theme.spacing(18),
     width: '100vw',
     flexDirection: 'row',
@@ -42,6 +41,12 @@ const useStyles = makeStyles()((theme) => ({
   logo: {
     paddingLeft: '1rem',
     paddingBottom: '.5rem',
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  buttonStyle: {
+    fontSize: '16px',
+    textTransform: 'none',
   },
   menuButton: {
     display: 'none',
@@ -69,51 +74,62 @@ function Navbar() {
   return (
     <AppBar className={classes.navContainer} color="default" position="static">
       <Link href="/" className={classes.logo}>
-        <Image
-          src={isMobileScreen ? iconLogo : logo}
-          width={isMobileScreen ? 24 : 180}
-          height={30}
-          alt="Greenstand Logo"
-        />
+        <Image src={iconLogo} width={24} height={30} alt="Greenstand Logo" />
+        {!isMobileScreen && (
+          <Typography
+            variant="h4"
+            ml={2.5}
+            color="text.secondary"
+            sx={{
+              fontWeight: 900,
+              lineHeight: '22px',
+            }}
+          >
+            Greenstand
+          </Typography>
+        )}
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
         <Link href="/">
           <Button variant="text">
-            <Typography>Greenstand</Typography>
+            <Typography className={classes.buttonStyle}>Greenstand</Typography>
           </Button>
         </Link>
         <Link href="/">
           <Button className={classes.buttonStyle} variant="text">
-            Partnerships
+            <Typography className={classes.buttonStyle}>
+              Partnerships
+            </Typography>
           </Button>
         </Link>
         <Link href="/">
           <Button className={classes.buttonStyle} variant="text">
-            Treetracker
+            <Typography className={classes.buttonStyle}>Treetracker</Typography>
           </Button>
         </Link>
         <Link href="/">
           <Button className={classes.buttonStyle} variant="text">
-            Contribute
+            <Typography className={classes.buttonStyle}>Contribute</Typography>
           </Button>
         </Link>
         <Link href="/">
           <Button className={classes.buttonStyle} variant="text">
-            Sevices
+            <Typography className={classes.buttonStyle}>Sevices</Typography>
           </Button>
         </Link>
         <Link href="/">
           <Button className={classes.buttonStyle} variant="text">
-            Blog
+            <Typography className={classes.buttonStyle}>Blog</Typography>
           </Button>
         </Link>
         <Link href="/">
           <Button className={classes.buttonStyle} variant="text">
-            Contact Us
+            <Typography className={classes.buttonStyle}>Contact Us</Typography>
           </Button>
         </Link>
-        <Button onClick={colorMode.toggleColorMode}>Theme</Button>
       </Toolbar>
+      {/* TEMPORARY BUTTON, SHOULD BE REMOVED */}
+      <Button onClick={colorMode.toggleColorMode}>Theme</Button>
       <Button
         className={classes.menuButton}
         aria-controls="basic-menu"
@@ -121,7 +137,8 @@ function Navbar() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Image src="/images/menu_bars.svg" alt="menu" width={36} height={36} />
+        {' '}
+        <MenuBar />
       </Button>
       <Menu
         id="basic-menu"

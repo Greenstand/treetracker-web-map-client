@@ -14,7 +14,8 @@ export default function Top({ trees, countries }) {
   // use map context to get the map
   const { map } = useMapContext();
   // todo
-  // trees = [];
+  // eslint-disable-next-line no-param-reassign
+  trees = [];
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -73,8 +74,7 @@ export async function getServerSideProps() {
     const res = await fetch(url);
     const data = await res.json();
     log.warn('response:', data);
-    // todo
-    props.trees = data.trees;
+    // todo props.trees = data.trees;
   }
 
   {

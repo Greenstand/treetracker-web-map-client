@@ -59,7 +59,18 @@ export function CustomThemeProvider({ children }) {
         main: '#86C232',
         contrastText: '#fff',
       },
-      textPrimary: {
+      text: {
+        secondary: {
+          ...(themeMode === 'light'
+            ? {
+                main: '#222629',
+              }
+            : {
+                main: '#eee',
+              }),
+        },
+      },
+      /* textPrimary: {
         ...(themeMode === 'light'
           ? {
               main: '#474B4F',
@@ -67,13 +78,13 @@ export function CustomThemeProvider({ children }) {
           : {
               main: '#eee',
             }),
-      },
+      }, */
       textSecondary: {
         main: '#222629',
       },
-      textAlternative: {
+      /* textAlternative: {
         main: '#373A3E',
-      },
+      }, */
       textLight: {
         main: '#6B6E70',
       },
@@ -186,7 +197,7 @@ export function CustomThemeProvider({ children }) {
           },
         },
       }),
-    [mode],
+    [mode, colorTheme],
   );
 
   return (

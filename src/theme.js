@@ -47,6 +47,15 @@ const getDesign = (mode) => ({
       main: '#86C232',
       contrastText: '#fff',
     },
+    textSecondary: {
+      ...(mode === 'light'
+        ? {
+            main: '#222629',
+          }
+        : {
+            main: '#eee',
+          }),
+    },
     textPrimary: {
       ...(mode === 'light'
         ? {
@@ -56,9 +65,7 @@ const getDesign = (mode) => ({
             main: '#eee',
           }),
     },
-    textSecondary: {
-      main: '#222629',
-    },
+
     textAlternative: {
       main: '#373A3E',
     },
