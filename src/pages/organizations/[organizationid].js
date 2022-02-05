@@ -64,9 +64,6 @@ const useStyles = makeStyles()((theme) => ({
       marginBottom: theme.spacing(14),
     },
   },
-  textColor: {
-    color: theme.palette.textPrimary.main,
-  },
 }));
 
 export default function Organization({ organization }) {
@@ -115,9 +112,7 @@ export default function Organization({ organization }) {
 
   return (
     <PageWrapper>
-      <Typography variant="h2" className={classes.textColor}>
-        {organization.map_name}
-      </Typography>
+      <Typography variant="h2">{organization.map_name}</Typography>
       <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
         <DataTag data={utils.formatDates(organization.created_time, 'LL')} />
         <DataTag data="Shirimatunda, Tanzania" location />
@@ -235,10 +230,8 @@ export default function Organization({ organization }) {
       )}
 
       <Divider varian="fullwidth" className={classes.divider} />
-      <Typography variant="h4" className={classes.textColor}>
-        About the Organization
-      </Typography>
-      <Typography variant="body2" className={classes.textColor} mt={7}>
+      <Typography variant="h4">About the Organization</Typography>
+      <Typography variant="body2" mt={7}>
         {/* Just some placeholder text */}
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
@@ -248,14 +241,10 @@ export default function Organization({ organization }) {
         excepturi, natus explicabo laborum delectus repudiandae placeat
         eligendi.
       </Typography>
-      <Typography
-        variant="h4"
-        className={classes.textColor}
-        sx={{ mt: { xs: 10, md: 16 } }}
-      >
+      <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
         Mission
       </Typography>
-      <Typography variant="body2" className={classes.textColor} mt={7}>
+      <Typography variant="body2" mt={7}>
         {/* Just some placeholder text */}
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
@@ -267,7 +256,7 @@ export default function Organization({ organization }) {
       </Typography>
 
       <Divider varian="fullwidth" className={classes.divider} />
-      <Typography variant="h4" className={classes.textColor} mb={9}>
+      <Typography variant="h4" mb={9}>
         Check out the planting effort in action
       </Typography>
       <Box mb={17}>

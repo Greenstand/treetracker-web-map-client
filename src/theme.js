@@ -3,9 +3,21 @@
  */
 import { createTheme } from '@mui/material/styles';
 
-const colorTheme = createTheme({
+const getDesign = (mode) => ({
   spacing: 4,
+  typography: {
+    allVariants: {
+      ...(mode === 'light'
+        ? {
+            color: '#474B4F',
+          }
+        : {
+            color: '#eee',
+          }),
+    },
+  },
   palette: {
+    mode,
     background: {
       greenGradient:
         'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
@@ -26,7 +38,13 @@ const colorTheme = createTheme({
       contrastText: '#fff',
     },
     textPrimary: {
-      main: '#474B4F',
+      ...(mode === 'light'
+        ? {
+            main: '#474B4F',
+          }
+        : {
+            main: '#eee',
+          }),
     },
     textSecondary: {
       main: '#222629',
@@ -39,6 +57,8 @@ const colorTheme = createTheme({
     },
   },
 });
+
+const colorTheme = createTheme(getDesign('light'));
 
 const theme = createTheme(colorTheme, {
   typography: {

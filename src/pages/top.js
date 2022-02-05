@@ -13,7 +13,8 @@ import * as utils from '../models/utils';
 export default function Top({ trees, countries }) {
   // use map context to get the map
   const { map } = useMapContext();
-
+  // todo
+  // trees = [];
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -52,7 +53,7 @@ export default function Top({ trees, countries }) {
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>
-      <Typography variant="h3" sx={{ color: 'textPrimary.main' }}>
+      <Typography variant="h3">
         Check out the global leaders in the tree planting effort
       </Typography>
       <LeaderBoard
@@ -72,6 +73,7 @@ export async function getServerSideProps() {
     const res = await fetch(url);
     const data = await res.json();
     log.warn('response:', data);
+    // todo
     props.trees = data.trees;
   }
 

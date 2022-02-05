@@ -40,7 +40,6 @@ function TreeSpeciesCard(props) {
         <Typography
           variant="h5"
           sx={{
-            color: 'textPrimary.main',
             fontFamily: 'Lato',
             fontWeight: 600,
           }}

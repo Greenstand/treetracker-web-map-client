@@ -9,20 +9,10 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
-import { makeStyles } from 'models/makeStyles';
 import { formatDates } from 'models/utils';
-
-const useStyles = makeStyles()((theme) => ({
-  inputLabel: {
-    color: theme.palette.textPrimary.main,
-    fontFamily: 'Lato',
-    letterSpacing: '0.5px',
-  },
-}));
 
 function Filter(props) {
   const { onFilter } = props;
-  const { classes } = useStyles();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -99,19 +89,11 @@ function Filter(props) {
             alignItems: 'center',
           }}
         >
-          <Typography
-            variant="h3"
-            sx={{
-              color: 'textPrimary.main',
-            }}
-          >
-            Featured Trees
-          </Typography>
+          <Typography variant="h3">Featured Trees</Typography>
           <Button
             variant={isFilterOpen ? 'contained' : 'outlined'}
             color="primary"
             sx={{
-              color: !isFilterOpen ? 'textPrimary.main' : '',
               px: [2, 3],
               py: [2.25, 2.875],
             }}
@@ -167,12 +149,11 @@ function Filter(props) {
                           color="secondary"
                           InputLabelProps={{
                             shrink: true,
-                            className: classes.inputLabel,
                           }}
                           sx={{
                             width: 1,
                             fontFamily: 'Lato',
-                            color: 'textPrimary.main',
+                            letterSpacing: '0.5px',
                           }}
                         />
                       )}
@@ -194,12 +175,11 @@ function Filter(props) {
                           color="secondary"
                           InputLabelProps={{
                             shrink: true,
-                            className: classes.inputLabel,
                           }}
                           sx={{
                             width: 1,
                             fontFamily: 'Lato',
-                            color: 'textPrimary.main',
+                            letterSpacing: '0.5px',
                           }}
                         />
                       )}
