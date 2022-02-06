@@ -17,6 +17,36 @@ export function CustomThemeProvider({ children }) {
 
   const getDesign = (themeMode) => ({
     spacing: 4,
+    components: {
+      MuiAppBar: {
+        styleOverrides: {
+          colorDefault: {
+            ...(themeMode === 'light'
+              ? {
+                  backgroundColor: '#fff',
+                }
+              : {
+                  backgroundColor: '#1d1d1d',
+                }),
+          },
+        },
+      },
+      MuiFab: {
+        styleOverrides: {
+          primary: {
+            ...(themeMode === 'light'
+              ? {
+                  backgroundColor: '#fff',
+                  color: '#1d1d1d',
+                }
+              : {
+                  backgroundColor: '#333',
+                  color: '#eee',
+                }),
+          },
+        },
+      },
+    },
     typography: {
       allVariants: {
         ...(themeMode === 'light'
@@ -33,12 +63,12 @@ export function CustomThemeProvider({ children }) {
       background: {
         ...(themeMode === 'light'
           ? {
-              default: '#fff',
+              // default: '#fff',
               paper: '#fff',
             }
           : {
-              default: '#333',
-              paper: '#1d1d1d',
+              // default: '#1d1d1d',
+              paper: '#333',
             }),
 
         greenGradient:
@@ -60,15 +90,24 @@ export function CustomThemeProvider({ children }) {
         contrastText: '#fff',
       },
       text: {
-        secondary: {
-          ...(themeMode === 'light'
-            ? {
-                main: '#222629',
-              }
-            : {
-                main: '#eee',
-              }),
-        },
+        // secondary: {
+        //   ...(themeMode === 'light'
+        //     ? {
+        //         main: '#222629',
+        //       }
+        //     : {
+        //         main: '#eee',
+        //       }),
+        // },
+        ...(themeMode === 'light'
+          ? {
+              disabled: '#6B6E70',
+              secondary: '#222629',
+            }
+          : {
+              disabled: '#eee',
+              secondary: '#eee',
+            }),
       },
       /* textPrimary: {
         ...(themeMode === 'light'
@@ -85,9 +124,9 @@ export function CustomThemeProvider({ children }) {
       /* textAlternative: {
         main: '#373A3E',
       }, */
-      textLight: {
-        main: '#6B6E70',
-      },
+      // textLight: {
+      //   main: '#6B6E70',
+      // },
     },
   });
 
