@@ -89,8 +89,10 @@ export default function Planter({ planter }) {
       </Typography>
 
       <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
-        <DataTag data={formatDates(planter.created_time)} />
-        <DataTag data="Shirimatunda, Tanzania" location />
+        {planter?.created_time && (
+          <DataTag data={formatDates(planter.created_time)} />
+        )}
+        {planter?.country && <DataTag data={planter?.country?.name} location />}
       </Stack>
       <Box sx={{ display: 'flex', gap: 2 }}>
         <VerifiedBadge verified badgeName="Verified Planter" />
@@ -273,6 +275,18 @@ export async function getServerSideProps({ params }) {
       associated_organizations,
     );
     props.planter.species = await utils.requestAPI(species);
+    if (props.planter.featuredTrees?.trees?.length) {
+      const { lat, lon } = props.planter.featuredTrees.trees[0];
+      if (lat && lon) {
+        const { countries } = await utils.requestAPI(
+          `/countries?lat=${lat}&lon=${lon}`,
+        );
+        if (countries?.length) {
+          const [first] = countries;
+          props.planter.country = first;
+        }
+      }
+    }
   }
 
   return {
