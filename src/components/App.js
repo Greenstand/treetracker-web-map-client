@@ -153,10 +153,7 @@ function MapComponent() {
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
       filters: parameters,
-      iconSuite: 'green',
-      // tileServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_URL,
-      // tileServerSubdomains:
-      //   process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
+      iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
     });
     map.on('moveEnd', () => {
       log.warn('update url');
