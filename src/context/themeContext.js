@@ -89,16 +89,8 @@ export function CustomThemeProvider({ children }) {
         main: '#86C232',
         contrastText: '#fff',
       },
+      // Changes text color based on theme
       text: {
-        // secondary: {
-        //   ...(themeMode === 'light'
-        //     ? {
-        //         main: '#222629',
-        //       }
-        //     : {
-        //         main: '#eee',
-        //       }),
-        // },
         ...(themeMode === 'light'
           ? {
               disabled: '#6B6E70',
@@ -109,15 +101,10 @@ export function CustomThemeProvider({ children }) {
               secondary: '#eee',
             }),
       },
-      /* textPrimary: {
-        ...(themeMode === 'light'
-          ? {
-              main: '#474B4F',
-            }
-          : {
-              main: '#eee',
-            }),
-      }, */
+      // Does not changes color, stays the same regardless of theme
+      textPrimary: {
+        main: '#474B4F',
+      },
       textSecondary: {
         main: '#222629',
       },
