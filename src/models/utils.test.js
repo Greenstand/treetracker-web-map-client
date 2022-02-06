@@ -10,6 +10,9 @@ describe('hideLastName', () => {
   it('Dadior Chen should return Dadior C', () => {
     expect(hideLastName('Dadior Chen')).toBe('Dadior C');
   });
+  it('Scott should return Scott', () => {
+    expect(hideLastName('Scott')).toBe('Scott');
+  });
 });
 
 describe('parseMapName', () => {

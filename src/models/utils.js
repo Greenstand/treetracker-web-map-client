@@ -2,9 +2,11 @@ import log from 'loglevel';
 import moment from 'moment';
 
 function hideLastName(name) {
-  const fullNameArray = name.split(' ');
-  const hiddenFullName = `${fullNameArray[0]} ${fullNameArray[1][0]}`;
-  return hiddenFullName;
+  const fullNameArray = name?.split(' ');
+  if (fullNameArray?.length > 1) {
+    return `${fullNameArray[0]} ${fullNameArray[1][0]}`;
+  }
+  return name;
 }
 
 function parseDomain(url) {
@@ -87,14 +89,15 @@ const formatDates = (date, format) =>
 
 // Fix country names so it get return the correct alpha2 code for the flags
 // todo other faulty country names should be added later
-const fixCountryNames = (countries) => countries.map((country) => {
+const fixCountryNames = (countries) =>
+  countries.map((country) => {
     if (country.name === 'Tanzania') {
       return { ...country, name: 'Tanzania, United Republic of' };
-    } if (country.name === 'Democratic Republic of the Congo') {
+    }
+    if (country.name === 'Democratic Republic of the Congo') {
       return { ...country, name: 'Congo, the Democratic Republic of the' };
-    } 
-      return country;
-    
+    }
+    return country;
   });
 
 export {
