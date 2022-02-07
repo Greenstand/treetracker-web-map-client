@@ -18,7 +18,6 @@ const useStyles = makeStyles()((theme) => ({
   },
   countBox: {
     background: theme.palette.textLight.main,
-    color: theme.palette.common.white,
     padding: theme.spacing(6, 8),
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(5.75, 7.5),
@@ -48,9 +47,12 @@ function TreeSpeciesCard(props) {
         </Typography>
       </Box>
       <Box className={classes.countBox}>
-        <Typography variant="body1">Count:</Typography>
+        <Typography variant="body1" color="common.white">
+          Count:
+        </Typography>
         <Typography
           variant="h3"
+          color="common.white"
           sx={{
             fontFamily: 'Lato',
             fontWeight: 700,

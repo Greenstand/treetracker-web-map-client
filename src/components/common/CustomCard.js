@@ -57,6 +57,7 @@ function CustomCard(props) {
         background: disabled
           ? theme.palette.grey[300]
           : theme.palette.background.greenGradient,
+        backgroundColor: disabled ? '' : 'common.white',
       }}
     >
       <CardMedia sx={{ padding: [theme.spacing(4, 3), theme.spacing(6)] }}>
@@ -65,7 +66,7 @@ function CustomCard(props) {
           sx={{
             boxShadow: disabled ? '' : '0px 6px 12px 0px #585B5D40',
             color: disabled
-              ? theme.palette.textLight.main
+              ? theme.palette.textPrimary.main
               : theme.palette.success.main,
           }}
         >
@@ -73,11 +74,12 @@ function CustomCard(props) {
         </Avatar>
       </CardMedia>
       <CardContent className={classes.cardContent}>
-        <Typography variant="body1" color="textSecondary">
+        <Typography variant="body1" color="textPrimary.main">
           {title}
         </Typography>
         <Typography
           variant="h2"
+          color="textSecondary.main"
           sx={{
             fontSize: [16, 36],
             fontFamily: 'Lato',

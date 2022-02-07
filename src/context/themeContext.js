@@ -46,6 +46,19 @@ export function CustomThemeProvider({ children }) {
           },
         },
       },
+      MuiDivider: {
+        styleOverrides: {
+          root: {
+            ...(themeMode === 'light'
+              ? {
+                  borderColor: '#E5E5E5',
+                }
+              : {
+                  borderColor: '#616161',
+                }),
+          },
+        },
+      },
     },
     typography: {
       allVariants: {
@@ -111,9 +124,9 @@ export function CustomThemeProvider({ children }) {
       /* textAlternative: {
         main: '#373A3E',
       }, */
-      // textLight: {
-      //   main: '#6B6E70',
-      // },
+      textLight: {
+        main: '#6B6E70',
+      },
     },
   });
 

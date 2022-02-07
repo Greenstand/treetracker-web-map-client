@@ -50,6 +50,7 @@ function ToolTip({ totalTrees, positionObj }) {
     >
       <img src={TreeTooltip} alt="tree icon" className={classes.tooltipImg} />
       <Typography
+        color="textSecondary.main"
         sx={{
           position: 'absolute',
           top: '50%',

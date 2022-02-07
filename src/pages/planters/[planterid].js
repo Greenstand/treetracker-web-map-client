@@ -137,7 +137,6 @@ export default function Planter({ planter }) {
             variant="h4"
             sx={{
               fontSize: [16, 24],
-
               mt: [0, 20],
               mb: [6, 10],
             }}

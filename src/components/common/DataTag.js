@@ -9,14 +9,15 @@ function DataTag({ data, location }) {
       direction="row"
       sx={{
         alignItems: 'center',
-        color: 'textLight.main',
         opacity: 0.6,
       }}
     >
       {location ? (
-        <LocationOnOutlinedIcon sx={{ fontSize: '1.25rem' }} />
+        <LocationOnOutlinedIcon
+          sx={{ fontSize: '1.25rem', color: 'text.disabled' }}
+        />
       ) : (
-        <CalendarToday sx={{ fontSize: '1.25rem' }} />
+        <CalendarToday sx={{ fontSize: '1.25rem', color: 'text.disabled' }} />
       )}
       <Typography
         variant="body1"
