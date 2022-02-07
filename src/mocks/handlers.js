@@ -1,9 +1,9 @@
 import { rest } from 'msw';
-import apiPaths from 'models/apiPaths';
 import mockTree from '../../cypress/fixtures/tree186734.json';
+import leader from '../../doc/examples/countries/leader.json';
 
 const handlers = [
-  rest.get(apiPaths.featuredTrees, (req, res, ctx) =>
+  rest.get('*/trees/featured', (req, res, ctx) =>
     res(
       ctx.status(200, 'success'),
       ctx.json({
@@ -12,13 +12,8 @@ const handlers = [
     ),
   ),
 
-  rest.get(apiPaths.leaders, (req, res, ctx) =>
-    res(
-      ctx.status(200, 'success'),
-      ctx.json({
-        countries: true,
-      }),
-    ),
+  rest.get('*/countries/leaderboard', (req, res, ctx) =>
+    res(ctx.status(200, 'success'), ctx.json(leader)),
   ),
 ];
 export default handlers;
