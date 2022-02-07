@@ -76,11 +76,9 @@ export function CustomThemeProvider({ children }) {
       background: {
         ...(themeMode === 'light'
           ? {
-              // default: '#fff',
               paper: '#fff',
             }
           : {
-              // default: '#1d1d1d',
               paper: '#333',
             }),
 
@@ -121,9 +119,6 @@ export function CustomThemeProvider({ children }) {
       textSecondary: {
         main: '#222629',
       },
-      /* textAlternative: {
-        main: '#373A3E',
-      }, */
       textLight: {
         main: '#6B6E70',
       },

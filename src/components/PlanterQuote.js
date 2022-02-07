@@ -17,6 +17,7 @@ function PlanterQuote({
     <Box
       sx={{
         background: theme.palette.background.OrangeGreenGradientDark,
+        backgroundColor: 'common.white',
         boxSizing: 'border-box',
         height: 'fit-content',
         justifyContent: 'center',
@@ -77,19 +78,16 @@ function PlanterQuote({
 
           <Grid item container direction="column" spacing={2}>
             <Grid item>
-              <Typography
-                variant="h5"
-                sx={{ color: 'textPrimary.main', fontFamily: 'h1.fontFamily' }}
-              >
+              <Typography variant="h5" color="textSecondary.main">
                 {name}
               </Typography>
             </Grid>
             <Grid item container direction="column" spacing={2}>
               <Grid item>
-                <DataTag data={initialDate} />
+                <DataTag data={initialDate} color />
               </Grid>
               <Grid item>
-                <DataTag data={location} location />
+                <DataTag data={location} location color />
               </Grid>
             </Grid>
           </Grid>
