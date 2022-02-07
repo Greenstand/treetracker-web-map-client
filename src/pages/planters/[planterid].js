@@ -100,8 +100,8 @@ export default function Planter({ planter }) {
         variant="rounded"
         sx={{
           width: '100%',
-          height: '688px',
-          borderRadius: 6,
+          height: '600px',
+          borderRadius: 35,
           mt: 11,
           mb: [6, 10],
         }}
