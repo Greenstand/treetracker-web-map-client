@@ -47,53 +47,6 @@ export async function getPlanterById(id) {
   }
 }
 
-export async function getOrgTrees(id) {
-  try {
-    const url = apiPaths.trees;
-    const res = await axios.get(url, {
-      params: {
-        organization_id: id,
-        limit: 4,
-      },
-    });
-    const data = await res.data;
-    return data;
-  } catch (err) {
-    return console.error(err.message);
-  }
-}
-
-export async function getOrgPlanters(id) {
-  try {
-    const url = apiPaths.planters;
-    const res = await axios.get(url, {
-      params: {
-        organization_id: id,
-        limit: 4,
-      },
-    });
-    const data = await res.data;
-    return data;
-  } catch (err) {
-    return console.error(err.message);
-  }
-}
-
-export async function getOrgSpecies(id) {
-  try {
-    const url = apiPaths.species;
-    const res = await axios.get(url, {
-      params: {
-        organization_id: id,
-      },
-    });
-    const data = await res.data;
-    return data;
-  } catch (err) {
-    return console.error(err.message);
-  }
-}
-
 export async function getOrgLinks(organization) {
   try {
     const {

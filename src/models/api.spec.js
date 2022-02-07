@@ -2,11 +2,10 @@ import {
   getCountryLeaderboard,
   getFeaturedTrees,
   getOrganizationById,
-  getOrgPlanters,
-  getOrgSpecies,
-  getOrgTrees,
+  getOrgLinks,
   getPlanterById,
 } from './api';
+import organization from '../../doc/examples/organizations/1.json';
 
 it('should get featured trees', async () => {
   const trees = await getFeaturedTrees();
@@ -38,29 +37,13 @@ describe('getPlanterById', () => {
   });
 });
 
-describe('getOrgTrees', () => {
-  it('should get trees', async () => {
-    const id = 1;
-    const { trees } = await getOrgTrees(id);
-    expect(trees).toBeDefined();
-    expect(trees.map).toBeDefined();
-  });
-});
-
-describe('getOrgPlanters', () => {
-  it('should get trees', async () => {
-    const id = 1;
-    const { planters } = await getOrgPlanters(id);
-    expect(planters).toBeDefined();
-    expect(planters.map).toBeDefined();
-  });
-});
-
-describe('getOrgSpecies', () => {
-  it('should get trees', async () => {
-    const id = 1;
-    const { species } = await getOrgSpecies(id);
+describe('getOrgLinks', () => {
+  it('should get links', async () => {
+    const data = await getOrgLinks(organization);
+    const { featuredTrees, associatedPlanters, species } = data;
+    expect(data).toBeDefined();
+    expect(featuredTrees).toBeDefined();
+    expect(associatedPlanters).toBeDefined();
     expect(species).toBeDefined();
-    expect(species.map).toBeDefined();
   });
 });
