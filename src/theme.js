@@ -134,6 +134,15 @@ const theme = createTheme(colorTheme, {
       letterSpacing: '0.04em',
     },
   },
+  components: {
+    Typography: {
+      stylesOverrides: {
+        root: {
+          letterSpacing: 0,
+        }
+      }
+    }
+  }
 });
 
 export default theme;
