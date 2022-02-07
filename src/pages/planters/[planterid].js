@@ -84,7 +84,7 @@ export default function Planter({ planter }) {
 
       <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
         {planter?.created_time && (
-          <DataTag data={formatDates(planter.created_time, 'LL')} />
+          <DataTag data={utils.formatDates(planter.created_time, 'LL')} />
         )}
         {planter?.country && <DataTag data={planter?.country?.name} location />}
       </Stack>
