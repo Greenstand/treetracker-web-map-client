@@ -15,7 +15,7 @@ const handlers = [
     ),
   ),
 
-  rest.get('*/planters/*', (req, res, ctx) =>
+  rest.get('*/planters/:id', (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(planter)),
   ),
 
