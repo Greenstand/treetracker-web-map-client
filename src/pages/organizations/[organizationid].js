@@ -6,8 +6,8 @@ import {
   Grid,
   Stack,
   Typography,
-  useTheme,
   useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import log from 'loglevel';
 import Image from 'next/image';
@@ -17,6 +17,7 @@ import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import DataTag from 'components/common/DataTag';
+import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -283,30 +284,15 @@ export default function Organization({ organization }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const url = `${process.env.NEXT_PUBLIC_API_NEW}/organizations/${params.organizationid}`;
-  const res = await fetch(url);
-  const organization = await res.json();
-  const props = { organization };
-
-  {
-    const { featured_trees, associated_planters, species } =
-      props.organization.links;
-    props.organization.featuredTrees = await utils.requestAPI(featured_trees);
-    props.organization.associatedPlanters = await utils.requestAPI(
-      associated_planters,
-    );
-    props.organization.species = await utils.requestAPI(species);
-    log.warn(
-      'get trees: %d, planters: %d, species: %d',
-      props.organization.featuredTrees.total,
-      props.organization.associatedPlanters.total,
-      props.organization.species.total,
-    );
-  }
-
+  const id = params.organizationid;
+  const organization = await getOrganizationById(id);
+  const orgLinks = await getOrgLinks(organization.links);
   return {
     props: {
-      organization,
+      organization: {
+        ...organization,
+        ...orgLinks,
+      },
     },
   };
 }

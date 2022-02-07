@@ -30,6 +30,7 @@ module.exports = {
           'cypress/**/*',
           '.jest/**/*',
           '**/test-utils.js',
+          'src/mocks/*',
         ],
       },
     ],
