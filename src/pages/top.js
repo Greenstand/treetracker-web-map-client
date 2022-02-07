@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import SearchButton from 'components/SearchButton';
+import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
 import Filter from '../components/common/Filter';
@@ -64,28 +65,12 @@ export default function Top({ trees, countries }) {
 }
 
 export async function getServerSideProps() {
-  const props = {};
-  {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/trees/featured`;
-    log.warn('url:', url);
-
-    const res = await fetch(url);
-    const data = await res.json();
-    log.warn('response:', data);
-    props.trees = data.trees;
-  }
-
-  {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leaderboard`;
-    log.warn('url:', url);
-
-    const res = await fetch(url);
-    const data = await res.json();
-    log.warn('response:', data);
-    props.countries = data.countries;
-  }
-
+  const trees = await getFeaturedTrees();
+  const countries = await getCountryLeaderboard();
   return {
-    props,
+    props: {
+      trees,
+      countries,
+    },
   };
 }
