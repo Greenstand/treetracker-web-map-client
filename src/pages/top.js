@@ -3,9 +3,11 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import React from 'react';
 import SearchButton from 'components/SearchButton';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
+import TagChips from '../components/TagChips';
 import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
@@ -16,6 +18,17 @@ export default function Top({ trees, countries }) {
 
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const continentTags = [
+    'Africa',
+    'Americas',
+    'Asia',
+    'Caribbean',
+    'Europe',
+    'Oceania',
+  ];
+  // eslint-disable-next-line
+  const [continentTag, setContinentTag] = React.useState('');
 
   async function handleCountryClick(countryId) {
     log.debug('handleCountryClick', countryId);
@@ -55,6 +68,21 @@ export default function Top({ trees, countries }) {
       <Typography variant="h3" sx={{ color: 'textPrimary.main' }}>
         Check out the global leaders in the tree planting effort
       </Typography>
+      <Box
+        sx={{
+          padding: theme.spacing(8, 0, 8.25),
+          [theme.breakpoints.down('md')]: {
+            padding: theme.spacing(4, 0, 2),
+          },
+        }}
+      >
+        <TagChips
+          tagItems={continentTags}
+          onSelectTag={(tagItem) => {
+            setContinentTag(tagItem);
+          }}
+        />
+      </Box>
       <LeaderBoard
         countries={countries}
         handleCountryClick={handleCountryClick}
