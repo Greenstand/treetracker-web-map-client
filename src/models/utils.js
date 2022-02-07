@@ -1,3 +1,4 @@
+import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
 
@@ -60,8 +61,8 @@ async function requestAPI(url) {
     log.warn('requestAPI:', urlFull);
     // urlFull = urlFull.replace(/\?/, '/query/');
 
-    const res = await fetch(urlFull);
-    const data = await res.json();
+    const res = await axios.get(urlFull);
+    const { data } = res;
     return data;
   } catch (ex) {
     log.error('ex:', ex);
@@ -87,14 +88,15 @@ const formatDates = (date, format) =>
 
 // Fix country names so it get return the correct alpha2 code for the flags
 // todo other faulty country names should be added later
-const fixCountryNames = (countries) => countries.map((country) => {
+const fixCountryNames = (countries) =>
+  countries.map((country) => {
     if (country.name === 'Tanzania') {
       return { ...country, name: 'Tanzania, United Republic of' };
-    } if (country.name === 'Democratic Republic of the Congo') {
+    }
+    if (country.name === 'Democratic Republic of the Congo') {
       return { ...country, name: 'Congo, the Democratic Republic of the' };
-    } 
-      return country;
-    
+    }
+    return country;
   });
 
 export {
