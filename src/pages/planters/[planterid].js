@@ -3,13 +3,10 @@ import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import { Stack, useMediaQuery, useTheme } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-// import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
-import moment from 'moment';
-// import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
@@ -49,9 +46,6 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const formatDates = (date) =>
-  moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('LL');
-
 export default function Planter({ planter }) {
   const mapContext = useMapContext();
 
@@ -90,7 +84,7 @@ export default function Planter({ planter }) {
 
       <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
         {planter?.created_time && (
-          <DataTag data={formatDates(planter.created_time)} />
+          <DataTag data={formatDates(planter.created_time, 'LL')} />
         )}
         {planter?.country && <DataTag data={planter?.country?.name} location />}
       </Stack>

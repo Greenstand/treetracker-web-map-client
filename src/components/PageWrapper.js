@@ -1,4 +1,5 @@
-import { Box } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { makeStyles } from 'models/makeStyles';
@@ -30,16 +31,22 @@ export default function PageWrapper({ children, className, ...otherProps }) {
   const { classes } = useStyles();
   const router = useRouter();
 
+  const theme = useTheme();
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   const onBackHandler = () => {
     router.back();
   };
 
   return (
     <Box className={classes.pageContainer}>
-      <Box className={classes.top}>
-        <BackButton onBackHandler={onBackHandler} />
-        <SearchButton />
-      </Box>
+      {!isMobileScreen && (
+        <Box className={classes.top}>
+          <BackButton onBackHandler={onBackHandler} />
+          <SearchButton />
+        </Box>
+      )}
+
       <Box className={clsx(classes.main, className)} {...otherProps}>
         {children}
       </Box>

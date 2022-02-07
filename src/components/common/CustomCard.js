@@ -81,7 +81,7 @@ function CustomCard(props) {
           sx={{
             fontSize: [16, 36],
             fontFamily: 'Lato',
-            lineHeight: ['19.2px', '43.2px'],
+            lineHeight: (t) => [t.spacing(4.8), t.spacing(10.8)],
             letterSpacing: ['0.02em', 0],
           }}
         >

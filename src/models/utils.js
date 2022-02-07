@@ -84,8 +84,8 @@ function formatDateString(date) {
 }
 
 //
-const formatDates = (date) =>
-  moment(date, 'ddd MMM DD YYYY HH:mm:ss').format('LL');
+const formatDates = (date, format) =>
+  moment(date, 'ddd MMM DD YYYY HH:mm:ss').format(format);
 
 // Fix country names so it get return the correct alpha2 code for the flags
 // todo other faulty country names should be added later
