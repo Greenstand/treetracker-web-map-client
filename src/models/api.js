@@ -18,7 +18,7 @@ export async function getCountryLeaderboard() {
     const url = apiPaths.leaders;
     const res = await axios.get(url);
     const data = await res.data;
-    return data;
+    return data.countries;
   } catch (err) {
     return console.error(err.message);
   }
