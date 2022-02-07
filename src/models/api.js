@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import apiPaths from 'models/apiPaths';
+import { requestAPI } from './utils';
 
 export async function getFeaturedTrees() {
   try {
@@ -19,6 +20,92 @@ export async function getCountryLeaderboard() {
     const res = await axios.get(url);
     const data = await res.data;
     return data.countries;
+  } catch (err) {
+    return console.error(err.message);
+  }
+}
+
+export async function getOrganizationById(id) {
+  try {
+    const url = apiPaths.organization(id);
+    const res = await axios.get(url);
+    const data = await res.data;
+    return data;
+  } catch (err) {
+    return console.error(err.message);
+  }
+}
+
+export async function getPlanterById(id) {
+  try {
+    const url = apiPaths.planters(id);
+    const res = await axios.get(url);
+    const data = await res.data;
+    return data;
+  } catch (err) {
+    return console.error(err.message);
+  }
+}
+
+export async function getOrgTrees(id) {
+  try {
+    const url = apiPaths.trees;
+    const res = await axios.get(url, {
+      params: {
+        organization_id: id,
+        limit: 4,
+      },
+    });
+    const data = await res.data;
+    return data;
+  } catch (err) {
+    return console.error(err.message);
+  }
+}
+
+export async function getOrgPlanters(id) {
+  try {
+    const url = apiPaths.planters;
+    const res = await axios.get(url, {
+      params: {
+        organization_id: id,
+        limit: 4,
+      },
+    });
+    const data = await res.data;
+    return data;
+  } catch (err) {
+    return console.error(err.message);
+  }
+}
+
+export async function getOrgSpecies(id) {
+  try {
+    const url = apiPaths.species;
+    const res = await axios.get(url, {
+      params: {
+        organization_id: id,
+      },
+    });
+    const data = await res.data;
+    return data;
+  } catch (err) {
+    return console.error(err.message);
+  }
+}
+
+export async function getOrgLinks(organization) {
+  try {
+    const {
+      featured_trees,
+      associated_planters,
+      species: species_url,
+    } = organization.links;
+    const featuredTrees = await requestAPI(featured_trees);
+    const associatedPlanters = await requestAPI(associated_planters);
+    const species = await requestAPI(species_url);
+
+    return { featuredTrees, associatedPlanters, species };
   } catch (err) {
     return console.error(err.message);
   }

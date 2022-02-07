@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import { getOrgLinks, getPlanterById } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -246,30 +247,12 @@ export default function Planter({ planter }) {
 }
 
 export async function getServerSideProps({ params }) {
-  log.warn('params:', params);
-  log.warn('host:', process.env.NEXT_PUBLIC_API_NEW);
+  const id = params.planterid;
 
-  const props = {};
-  {
-    const url = `/planters/${params.planterid}`;
-    log.warn('url:', url);
-
-    const planter = await utils.requestAPI(url);
-    log.warn('response:', planter);
-    props.planter = planter;
-  }
-
-  {
-    const { featured_trees, associated_organizations, species } =
-      props.planter.links;
-    props.planter.featuredTrees = await utils.requestAPI(featured_trees);
-    props.planter.associatedOrganizations = await utils.requestAPI(
-      associated_organizations,
-    );
-    props.planter.species = await utils.requestAPI(species);
-  }
+  const planter = await getPlanterById(id);
+  const data = await getOrgLinks(planter);
 
   return {
-    props,
+    props: { ...planter, ...data },
   };
 }
