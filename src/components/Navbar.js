@@ -61,7 +61,7 @@ function Navbar() {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = useState(null);
-  const colorMode = useCustomThemeContext();
+  const { colorMode } = useCustomThemeContext();
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

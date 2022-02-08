@@ -127,115 +127,114 @@ export function CustomThemeProvider({ children }) {
 
   const colorTheme = createTheme(getDesign(mode));
 
-  const theme = React.useMemo(
-    () =>
-      createTheme(colorTheme, {
-        palette: {
-          mode,
+  const theme = createTheme(colorTheme, {
+    palette: {
+      mode,
+    },
+    typography: {
+      fontFamily: ['Lato', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
+        ',',
+      ),
+      fontWeight: 400,
+      h1: {
+        fontFamily: ['Montserrat'].join(','),
+        fontSize: '48px',
+        fontWeight: 600,
+        lineHeight: '63px',
+        [colorTheme.breakpoints.down('md')]: {
+          lineHeight: '32px',
+          fontSize: '32px',
         },
-        typography: {
-          fontFamily: [
-            'Lato',
-            'Roboto',
-            'Helvetica',
-            'Arial',
-            'sans-serif',
-          ].join(','),
-          fontWeight: 400,
-          h1: {
-            fontFamily: ['Montserrat'].join(','),
-            fontSize: '48px',
-            fontWeight: 600,
-            lineHeight: '63px',
-            [colorTheme.breakpoints.down('md')]: {
-              lineHeight: '32px',
-              fontSize: '32px',
-            },
-          },
-          h2: {
-            fontFamily: 'Montserrat',
-            fontSize: '36px',
-            lineHeight: '44px',
-            fontWeight: 700,
-            letterSpacing: 0,
-            [colorTheme.breakpoints.down('md')]: {
-              lineHeight: '29.26px',
-              fontSize: '24px',
-            },
-          },
-          h3: {
-            fontFamily: 'Montserrat',
-            fontSize: '32px',
-            lineHeight: '39px',
-            fontWeight: 600,
-            [colorTheme.breakpoints.down('md')]: {
-              fontSize: '20px',
-              lineHeight: '24px',
-            },
-          },
-          h4: {
-            fontFamily: 'Montserrat',
-            fontSize: '28px',
-            fontWeight: 600,
-            lineHeight: '33.6px',
-            letterSpacing: 0,
-            [colorTheme.breakpoints.down('md')]: {
-              fontSize: '20px',
-              lineHeight: '24px',
-            },
-          },
-          h5: {
-            fontFamily: 'Montserrat',
-            fontSize: '20px',
-            fontWeight: 700,
-            lineHeight: '24px',
-            letterSpacing: '0.02em',
-            [colorTheme.breakpoints.down('md')]: {
-              fontSize: '16px',
-              lineHeight: '19.5px',
-            },
-          },
-          h6: {
-            fontFamily: 'Lato',
-            fontSize: '16px',
-            fontWeight: 700,
-            lineHeight: '19px',
-            letterSpacing: '0.02em',
-          },
-          body1: {
-            fontFamily: 'Lato',
-            fontSize: '16px',
-            lineHeight: '19.2px',
-            letterSpacing: '0.04em',
-            [colorTheme.breakpoints.down('md')]: {
-              fontSize: '12px',
-              lineHeight: '14.4px',
-            },
-          },
-          body2: {
-            fontFamily: 'Lato',
-            fontSize: '20px',
-            lineHeight: '28px',
-            letterSpacing: '0.04em',
-            [colorTheme.breakpoints.down('md')]: {
-              fontSize: '16px',
-              lineHeight: '23.2px',
-              letterSpacing: '0.02em',
-            },
-          },
-          caption: {
-            fontFamily: 'Lato',
-            fontSize: '12px',
-            lineHeight: '14.4px',
-            letterSpacing: '0.04em',
-          },
+      },
+      h2: {
+        fontFamily: 'Montserrat',
+        fontSize: '36px',
+        lineHeight: '44px',
+        fontWeight: 700,
+        letterSpacing: 0,
+        [colorTheme.breakpoints.down('md')]: {
+          lineHeight: '29.26px',
+          fontSize: '24px',
         },
-      }),
-    [mode, colorTheme],
-  );
+      },
+      h3: {
+        fontFamily: 'Montserrat',
+        fontSize: '32px',
+        lineHeight: '39px',
+        fontWeight: 600,
+        [colorTheme.breakpoints.down('md')]: {
+          fontSize: '20px',
+          lineHeight: '24px',
+        },
+      },
+      h4: {
+        fontFamily: 'Montserrat',
+        fontSize: '28px',
+        fontWeight: 600,
+        lineHeight: '33.6px',
+        letterSpacing: 0,
+        [colorTheme.breakpoints.down('md')]: {
+          fontSize: '20px',
+          lineHeight: '24px',
+        },
+      },
+      h5: {
+        fontFamily: 'Montserrat',
+        fontSize: '20px',
+        fontWeight: 700,
+        lineHeight: '24px',
+        letterSpacing: '0.02em',
+        [colorTheme.breakpoints.down('md')]: {
+          fontSize: '16px',
+          lineHeight: '19.5px',
+        },
+      },
+      h6: {
+        fontFamily: 'Lato',
+        fontSize: '16px',
+        fontWeight: 700,
+        lineHeight: '19px',
+        letterSpacing: '0.02em',
+      },
+      body1: {
+        fontFamily: 'Lato',
+        fontSize: '16px',
+        lineHeight: '19.2px',
+        letterSpacing: '0.04em',
+        [colorTheme.breakpoints.down('md')]: {
+          fontSize: '12px',
+          lineHeight: '14.4px',
+        },
+      },
+      body2: {
+        fontFamily: 'Lato',
+        fontSize: '20px',
+        lineHeight: '28px',
+        letterSpacing: '0.04em',
+        [colorTheme.breakpoints.down('md')]: {
+          fontSize: '16px',
+          lineHeight: '23.2px',
+          letterSpacing: '0.02em',
+        },
+      },
+      caption: {
+        fontFamily: 'Lato',
+        fontSize: '12px',
+        lineHeight: '14.4px',
+        letterSpacing: '0.04em',
+      },
+    },
+  });
 
+  const value = React.useMemo(
+    () => ({
+      colorMode,
+      theme,
+    }),
+    [colorMode, theme],
+  );
   return (
-    <CustomThemeContext.Provider value={colorMode}>
+    <CustomThemeContext.Provider value={value}>
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </CustomThemeContext.Provider>
   );
