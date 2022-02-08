@@ -286,12 +286,12 @@ export default function Organization({ organization }) {
 export async function getServerSideProps({ params }) {
   const id = params.organizationid;
   const organization = await getOrganizationById(id);
-  const data = await getOrgLinks(organization);
+  const orgLinks = await getOrgLinks(organization);
   return {
     props: {
       organization: {
         ...organization,
-        ...data,
+        ...orgLinks,
       },
     },
   };

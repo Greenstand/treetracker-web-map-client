@@ -4,8 +4,11 @@ import {
   getOrganizationById,
   getOrgLinks,
   getPlanterById,
+  getPlanterLinks,
+  getTreeById,
 } from './api';
 import organization from '../../doc/examples/organizations/1.json';
+import mockPlanter from '../../doc/examples/planters/940.json';
 
 it('should get featured trees', async () => {
   const trees = await getFeaturedTrees();
@@ -25,6 +28,7 @@ describe('getOrganizationById', () => {
     const org = await getOrganizationById(id);
     expect(org).toBeDefined();
     expect(org.mission).toBeDefined();
+    expect(org.links).toBeDefined();
   });
 });
 
@@ -34,16 +38,45 @@ describe('getPlanterById', () => {
     const planter = await getPlanterById(id);
     expect(planter).toBeDefined();
     expect(planter.mission).toBeDefined();
+    expect(planter.mission).toBeDefined();
   });
 });
 
+describe('getTreeById', () => {
+  it('should get tree by id', async () => {
+    const id = 1;
+    const tree = await getTreeById(id);
+    expect(tree).toBeDefined();
+    expect(tree.name).toBeDefined();
+  });
+});
+
+function assertLinks(data) {
+  expect(data).toBeDefined();
+  const {
+    featuredTrees,
+    associatedPlanters,
+    species,
+    associatedOrganizations,
+  } = data;
+  expect(featuredTrees).toBeDefined();
+  expect(featuredTrees.trees).toBeDefined();
+  expect(featuredTrees.trees.length).toBeDefined();
+  expect(associatedPlanters || associatedOrganizations).toBeDefined();
+  expect(species).toBeDefined();
+}
+
 describe('getOrgLinks', () => {
-  it('should get links', async () => {
+  it('should get org links', async () => {
     const data = await getOrgLinks(organization);
-    const { featuredTrees, associatedPlanters, species } = data;
-    expect(data).toBeDefined();
-    expect(featuredTrees).toBeDefined();
-    expect(associatedPlanters).toBeDefined();
-    expect(species).toBeDefined();
+    assertLinks(data);
+  });
+});
+
+describe('getPlanterLinks', () => {
+  it('should get planter links', async () => {
+    console.log(mockPlanter.links);
+    const data = await getPlanterLinks(mockPlanter);
+    assertLinks(data);
   });
 });

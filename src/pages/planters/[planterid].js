@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import { getOrgLinks, getPlanterById } from 'models/api';
+import { getPlanterById, getPlanterLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -48,6 +48,8 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Planter({ planter }) {
+  const { featuredTrees } = planter;
+  const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
@@ -118,7 +120,7 @@ export default function Planter({ planter }) {
             handleClick={() => setIsPlanterTab(true)}
             icon={<ParkOutlinedIcon fontSize="large" />}
             title="Trees Planted"
-            text={planter.featuredTrees.trees.length}
+            text={treeCount}
             disabled={!isPlanterTab}
           />
         </Grid>
@@ -127,7 +129,7 @@ export default function Planter({ planter }) {
             handleClick={() => setIsPlanterTab(false)}
             icon={<GroupsOutlinedIcon fontSize="large" />}
             title="Ass. Orgs"
-            text={planter.associatedOrganizations.organizations.length}
+            text={planter.associatedOrganizations.length}
             disabled={isPlanterTab}
           />
         </Grid>
@@ -135,7 +137,7 @@ export default function Planter({ planter }) {
       {isPlanterTab && (
         <>
           <Box sx={{ mt: [0, 22] }}>
-            <CustomWorldMap totalTrees={planter?.featuredTrees?.trees.length} />
+            <CustomWorldMap totalTrees={treeCount} />
           </Box>
           <Typography
             variant="h4"
@@ -250,9 +252,9 @@ export async function getServerSideProps({ params }) {
   const id = params.planterid;
 
   const planter = await getPlanterById(id);
-  const data = await getOrgLinks(planter);
+  const data = await getPlanterLinks(planter);
 
   return {
-    props: { ...planter, ...data },
+    props: { planter: { ...planter, ...data } },
   };
 }
