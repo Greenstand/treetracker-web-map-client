@@ -78,6 +78,6 @@ describe('Planter page', () => {
       failOnStatusCode: false,
     });
     cy.contains(planter.id);
-    cy.get('.MuiTypography-h2').contains(/sebastian gaertner/i);
+    cy.get('.MuiTypography-h2').contains(/sebastian g/i);
   });
 });

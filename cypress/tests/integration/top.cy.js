@@ -37,7 +37,6 @@ describe('top', () => {
     cy.visit('/top');
     cy.contains('Featured Trees');
     cy.contains('Check out the global leaders in the tree planting effort');
-    cy.contains(`${tree186734.id}`);
     cy.contains('Tanzania');
   });
 });
