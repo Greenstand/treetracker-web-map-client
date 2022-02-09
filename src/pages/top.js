@@ -13,9 +13,7 @@ import * as utils from '../models/utils';
 export default function Top({ trees, countries }) {
   // use map context to get the map
   const { map } = useMapContext();
-  // todo "assignment should be removed after it gets fixed"
-  // eslint-disable-next-line no-param-reassign
-  trees = [];
+
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -74,7 +72,7 @@ export async function getServerSideProps() {
     const res = await fetch(url);
     const data = await res.json();
     log.warn('response:', data);
-    // todo "comment should be removed after it gets fixed" props.trees = data.trees;
+    props.trees = data.trees;
   }
 
   {
