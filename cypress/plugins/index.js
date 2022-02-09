@@ -4,10 +4,15 @@
 const http = require('http');
 const next = require('next');
 const nock = require('nock');
+require('dotenv').config();
 
 // start the Next.js server when Cypress starts
 module.exports = async (on, config) => {
   require('cypress-watch-and-reload/plugins')(config);
+
+  // copy env vars
+  // eslint-disable-next-line no-param-reassign
+  config.env.NEXT_PUBLIC_API = process.env.NEXT_PUBLIC_API;
 
   // exit if not using nock to mock nextjs ssr functions
   if (!config.env.nock) return config;

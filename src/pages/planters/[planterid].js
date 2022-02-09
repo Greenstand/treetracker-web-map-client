@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import { getPlanterById, getOrgLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -46,7 +47,16 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
+const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
+        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
+        dolorem expedita error. Natus, provident. Tempore harum repellendus
+        reprehenderit vitae temporibus, consequuntur blanditiis officia
+        excepturi, natus explicabo laborum delectus repudiandae placeat
+        eligendi.`;
 export default function Planter({ planter }) {
+  const { featuredTrees } = planter;
+  const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
@@ -117,7 +127,7 @@ export default function Planter({ planter }) {
             handleClick={() => setIsPlanterTab(true)}
             icon={<ParkOutlinedIcon fontSize="large" />}
             title="Trees Planted"
-            text={planter.featuredTrees.trees.length}
+            text={treeCount}
             disabled={!isPlanterTab}
           />
         </Grid>
@@ -126,7 +136,7 @@ export default function Planter({ planter }) {
             handleClick={() => setIsPlanterTab(false)}
             icon={<GroupsOutlinedIcon fontSize="large" />}
             title="Ass. Orgs"
-            text={planter.associatedOrganizations.organizations.length}
+            text={planter.associatedOrganizations.length}
             disabled={isPlanterTab}
           />
         </Grid>
@@ -134,7 +144,7 @@ export default function Planter({ planter }) {
       {isPlanterTab && (
         <>
           <Box sx={{ mt: [0, 22] }}>
-            <CustomWorldMap totalTrees={planter?.featuredTrees?.trees.length} />
+            <CustomWorldMap totalTrees={treeCount} />
           </Box>
           <Typography
             variant="h4"
@@ -201,14 +211,7 @@ export default function Planter({ planter }) {
         About the Planter
       </Typography>
       <Typography variant="body2" className={classes.textColor} mt={7}>
-        {/* Just some placeholder text */}
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-        dolorem expedita error. Natus, provident. Tempore harum repellendus
-        reprehenderit vitae temporibus, consequuntur blanditiis officia
-        excepturi, natus explicabo laborum delectus repudiandae placeat
-        eligendi.
+        {placeholderText}
         {planter.about}
       </Typography>
       <Typography
@@ -219,14 +222,7 @@ export default function Planter({ planter }) {
         Mission
       </Typography>
       <Typography variant="body2" className={classes.textColor} mt={7}>
-        {/* Just some placeholder text */}
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-        dolorem expedita error. Natus, provident. Tempore harum repellendus
-        reprehenderit vitae temporibus, consequuntur blanditiis officia
-        excepturi, natus explicabo laborum delectus repudiandae placeat
-        eligendi.
+        {placeholderText}
         {planter.mission}
       </Typography>
       <Divider varian="fullwidth" className={classes.divider} />
@@ -246,30 +242,10 @@ export default function Planter({ planter }) {
 }
 
 export async function getServerSideProps({ params }) {
-  log.warn('params:', params);
-  log.warn('host:', process.env.NEXT_PUBLIC_API_NEW);
-
-  const props = {};
-  {
-    const url = `/planters/${params.planterid}`;
-    log.warn('url:', url);
-
-    const planter = await utils.requestAPI(url);
-    log.warn('response:', planter);
-    props.planter = planter;
-  }
-
-  {
-    const { featured_trees, associated_organizations, species } =
-      props.planter.links;
-    props.planter.featuredTrees = await utils.requestAPI(featured_trees);
-    props.planter.associatedOrganizations = await utils.requestAPI(
-      associated_organizations,
-    );
-    props.planter.species = await utils.requestAPI(species);
-  }
-
+  const id = params.planterid;
+  const planter = await getPlanterById(id);
+  const data = await getOrgLinks(planter.links);
   return {
-    props,
+    props: { planter: { ...planter, ...data } },
   };
 }
