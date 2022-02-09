@@ -286,7 +286,7 @@ export default function Organization({ organization }) {
 export async function getServerSideProps({ params }) {
   const id = params.organizationid;
   const organization = await getOrganizationById(id);
-  const orgLinks = await getOrgLinks(organization);
+  const orgLinks = await getOrgLinks(organization.links);
   return {
     props: {
       organization: {

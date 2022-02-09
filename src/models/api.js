@@ -64,14 +64,12 @@ export async function getTreeById(id) {
   }
 }
 
-export async function getOrgLinks(organization) {
-  const {
-    featured_trees: treesUrl,
-    associated_planters = null,
-    associated_organizations = null,
-    species: speciesUrl,
-  } = organization.links;
-
+export async function getOrgLinks({
+  featured_trees: treesUrl,
+  associated_planters = null,
+  associated_organizations = null,
+  species: speciesUrl,
+}) {
   const associatesUrl = associated_organizations || associated_planters;
 
   const [featuredTrees, associates, species] = await Promise.all(

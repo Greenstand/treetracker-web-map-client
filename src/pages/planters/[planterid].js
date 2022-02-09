@@ -47,16 +47,13 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const placeholderText = `
-       	Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
         velit ipsa illo, odit unde atque doloribus tempora distinctio facere
         dolorem expedita error. Natus, provident. Tempore harum repellendus
         reprehenderit vitae temporibus, consequuntur blanditiis officia
         excepturi, natus explicabo laborum delectus repudiandae placeat
-        eligendi.
-`;
-
+        eligendi.`;
 export default function Planter({ planter }) {
   const { featuredTrees } = planter;
   const treeCount = featuredTrees.trees.length;
@@ -247,7 +244,7 @@ export default function Planter({ planter }) {
 export async function getServerSideProps({ params }) {
   const id = params.planterid;
   const planter = await getPlanterById(id);
-  const data = await getOrgLinks(planter);
+  const data = await getOrgLinks(planter.links);
   return {
     props: { planter: { ...planter, ...data } },
   };
