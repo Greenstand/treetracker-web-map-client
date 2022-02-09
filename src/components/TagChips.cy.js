@@ -28,11 +28,6 @@ describe('Tag Chip Test', () => {
         .should('have.class', 'MuiChip-filled')
         .then(() => {
           expect(handleSelectTag).to.be.calledWith(`${mockTagItem}`);
-        })
-        .click()
-        .should('have.class', 'MuiChip-outlined')
-        .then(() => {
-          expect(handleSelectTag).to.be.calledWith('');
         });
 
       // Assert styling for the non-selected tags

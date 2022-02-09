@@ -4,29 +4,24 @@ import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
 
 function TagChips({ tagItems, onSelectTag }) {
-  const [activeTagIdx, setActiveTagIdx] = useState(null);
+  const [activeTagIdx, setActiveTagIdx] = useState(0);
   const theme = useTheme();
-  const handleTagChipClick = (i, tagItem) => {
-    if (i === activeTagIdx) {
-      setActiveTagIdx(null);
-      onSelectTag('');
-    }
-    if (i !== activeTagIdx) {
-      setActiveTagIdx(i);
-      onSelectTag(tagItem);
-    }
-  };
 
   return (
     <Stack
       sx={{
         width: '100%',
-        overflow: 'scroll',
-        scrollbarWidth: 'none',
-        '&::-webkit-scrollbar': { display: 'none' },
+        flexWrap: 'wrap',
+        gap: theme.spacing(5),
+        [theme.breakpoints.down('md')]: {
+          flexWrap: 'nowrap',
+          gap: theme.spacing(4),
+          overflow: 'scroll',
+          scrollbarWidth: 'none',
+          '&::-webkit-scrollbar': { display: 'none' },
+        },
       }}
       direction="row"
-      spacing={{ xs: 4, sm: 4, md: 4, lg: 5, xl: 5 }}
     >
       {tagItems.map((tagItem, i) => (
         <Chip
@@ -52,7 +47,8 @@ function TagChips({ tagItems, onSelectTag }) {
           color="primary"
           variant={i === activeTagIdx ? 'filled' : 'outlined'}
           onClick={() => {
-            handleTagChipClick(i, tagItem);
+            setActiveTagIdx(i);
+            onSelectTag(tagItem);
           }}
           key={tagItem}
         />
