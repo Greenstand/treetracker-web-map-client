@@ -8,6 +8,9 @@ on:
     branches:
       - web-map-site
 
+env:
+  NEXT_PUBLIC_API_MOCKING: enabled
+
 jobs:
   install:
     name: Install dependencies
@@ -38,9 +41,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           # run these before testing
-          start: |
-            npm run mock-server
-            npm run build-and-start
+          start: npm run dev
           # wait for server to be ready
           wait-on: 'http://localhost:3000'
 
