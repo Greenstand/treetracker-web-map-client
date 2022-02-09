@@ -4,9 +4,9 @@
 if (typeof window === 'undefined') {
   // mock api calls from nextjs server
   const { server } = require('./server');
-  server.listen();
+  server.listen({ onUnhandledRequest: 'bypass' });
 } else {
   // mock api calls from nextjs client
   const { worker } = require('./browser');
-  worker.start();
+  worker.start({ onUnhandledRequest: 'bypass' });
 }
