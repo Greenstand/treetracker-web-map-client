@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import { getPlanterById, getPlanterLinks } from 'models/api';
+import { getPlanterById, getOrgLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -46,6 +46,16 @@ const useStyles = makeStyles()((theme) => ({
     color: theme.palette.textPrimary.main,
   },
 }));
+
+const placeholderText = `
+       	Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
+        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
+        dolorem expedita error. Natus, provident. Tempore harum repellendus
+        reprehenderit vitae temporibus, consequuntur blanditiis officia
+        excepturi, natus explicabo laborum delectus repudiandae placeat
+        eligendi.
+`;
 
 export default function Planter({ planter }) {
   const { featuredTrees } = planter;
@@ -204,14 +214,7 @@ export default function Planter({ planter }) {
         About the Planter
       </Typography>
       <Typography variant="body2" className={classes.textColor} mt={7}>
-        {/* Just some placeholder text */}
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-        dolorem expedita error. Natus, provident. Tempore harum repellendus
-        reprehenderit vitae temporibus, consequuntur blanditiis officia
-        excepturi, natus explicabo laborum delectus repudiandae placeat
-        eligendi.
+        {placeholderText}
         {planter.about}
       </Typography>
       <Typography
@@ -222,14 +225,7 @@ export default function Planter({ planter }) {
         Mission
       </Typography>
       <Typography variant="body2" className={classes.textColor} mt={7}>
-        {/* Just some placeholder text */}
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-        dolorem expedita error. Natus, provident. Tempore harum repellendus
-        reprehenderit vitae temporibus, consequuntur blanditiis officia
-        excepturi, natus explicabo laborum delectus repudiandae placeat
-        eligendi.
+        {placeholderText}
         {planter.mission}
       </Typography>
       <Divider varian="fullwidth" className={classes.divider} />
@@ -250,10 +246,8 @@ export default function Planter({ planter }) {
 
 export async function getServerSideProps({ params }) {
   const id = params.planterid;
-
   const planter = await getPlanterById(id);
-  const data = await getPlanterLinks(planter);
-
+  const data = await getOrgLinks(planter);
   return {
     props: { planter: { ...planter, ...data } },
   };

@@ -11,7 +11,8 @@ export async function getFeaturedTrees() {
     const data = await res.data;
     return data.trees;
   } catch (err) {
-    return log.error(err.message);
+    log.error(err.message);
+    throw new Error(err.message);
   }
 }
 
@@ -22,7 +23,8 @@ export async function getCountryLeaderboard() {
     const data = await res.data;
     return data.countries;
   } catch (err) {
-    return log.error(err.message);
+    log.error(err.message);
+    throw new Error(err.message);
   }
 }
 
@@ -33,7 +35,8 @@ export async function getOrganizationById(id) {
     const data = await res.data;
     return data;
   } catch (err) {
-    return log.error(err.message);
+    log.error(err.message);
+    throw new Error(err.message);
   }
 }
 
@@ -44,7 +47,8 @@ export async function getPlanterById(id) {
     const data = await res.data;
     return data;
   } catch (err) {
-    return log.error(err.message);
+    log.error(err.message);
+    throw new Error(err.message);
   }
 }
 
@@ -55,38 +59,29 @@ export async function getTreeById(id) {
     const { data } = res;
     return data;
   } catch (err) {
-    return log.error(err.message);
+    log.error(err.message);
+    throw new Error(err.message);
   }
 }
 
 export async function getOrgLinks(organization) {
-  try {
-    const {
-      featured_trees,
-      associated_planters,
-      species: species_url,
-    } = organization.links;
-    const [featuredTrees, associatedPlanters, species] = await Promise.all(
-      [featured_trees, associated_planters, species_url].map(requestAPI),
-    );
-    return { featuredTrees, associatedPlanters, species };
-  } catch (err) {
-    return log.error(err.message);
-  }
-}
+  const {
+    featured_trees: treesUrl,
+    associated_planters = null,
+    associated_organizations = null,
+    species: speciesUrl,
+  } = organization.links;
 
-export async function getPlanterLinks(organization) {
-  try {
-    const {
-      featured_trees,
-      associated_organizations,
-      species: species_url,
-    } = organization.links;
-    const featuredTrees = await requestAPI(featured_trees);
-    const associatedOrganizations = await requestAPI(associated_organizations);
-    const species = await requestAPI(species_url);
-    return { featuredTrees, associatedOrganizations, species };
-  } catch (err) {
-    return log.error(err.message);
-  }
+  const associatesUrl = associated_organizations || associated_planters;
+
+  const [featuredTrees, associates, species] = await Promise.all(
+    [treesUrl, associatesUrl, speciesUrl].map(requestAPI),
+  );
+
+  return {
+    featuredTrees,
+    species,
+    ...(associated_organizations && { associatedOrganizations: associates }),
+    ...(associated_planters && { associatedPlanters: associates }),
+  };
 }

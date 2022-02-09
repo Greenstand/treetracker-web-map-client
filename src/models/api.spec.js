@@ -5,7 +5,6 @@ import {
   getOrganizationById,
   getOrgLinks,
   getPlanterById,
-  getPlanterLinks,
   getTreeById,
 } from './api';
 import organization from '../../doc/examples/organizations/1.json';
@@ -72,12 +71,9 @@ describe('getOrgLinks', () => {
     const data = await getOrgLinks(organization);
     assertLinks(data);
   });
-});
-
-describe('getPlanterLinks', () => {
   it('should get planter links', async () => {
     log.log(mockPlanter.links);
-    const data = await getPlanterLinks(mockPlanter);
+    const data = await getOrgLinks(mockPlanter);
     assertLinks(data);
   });
 });
