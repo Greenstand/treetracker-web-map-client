@@ -1,3 +1,4 @@
+import log from 'loglevel';
 import {
   getCountryLeaderboard,
   getFeaturedTrees,
@@ -75,7 +76,7 @@ describe('getOrgLinks', () => {
 
 describe('getPlanterLinks', () => {
   it('should get planter links', async () => {
-    console.log(mockPlanter.links);
+    log.log(mockPlanter.links);
     const data = await getPlanterLinks(mockPlanter);
     assertLinks(data);
   });

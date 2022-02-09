@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
+import log from 'loglevel';
 import apiPaths from 'models/apiPaths';
 import { requestAPI } from './utils';
 
@@ -10,7 +11,7 @@ export async function getFeaturedTrees() {
     const data = await res.data;
     return data.trees;
   } catch (err) {
-    return console.error(err.message);
+    return log.error(err.message);
   }
 }
 
@@ -21,7 +22,7 @@ export async function getCountryLeaderboard() {
     const data = await res.data;
     return data.countries;
   } catch (err) {
-    return console.error(err.message);
+    return log.error(err.message);
   }
 }
 
@@ -32,7 +33,7 @@ export async function getOrganizationById(id) {
     const data = await res.data;
     return data;
   } catch (err) {
-    return console.error(err.message);
+    return log.error(err.message);
   }
 }
 
@@ -43,7 +44,7 @@ export async function getPlanterById(id) {
     const data = await res.data;
     return data;
   } catch (err) {
-    return console.error(err.message);
+    return log.error(err.message);
   }
 }
 
@@ -54,7 +55,7 @@ export async function getTreeById(id) {
     const { data } = res;
     return data;
   } catch (err) {
-    return console.error(err.message);
+    return log.error(err.message);
   }
 }
 
@@ -70,7 +71,7 @@ export async function getOrgLinks(organization) {
     );
     return { featuredTrees, associatedPlanters, species };
   } catch (err) {
-    return console.error(err.message);
+    return log.error(err.message);
   }
 }
 
@@ -86,6 +87,6 @@ export async function getPlanterLinks(organization) {
     const species = await requestAPI(species_url);
     return { featuredTrees, associatedOrganizations, species };
   } catch (err) {
-    return console.error(err.message);
+    return log.error(err.message);
   }
 }
