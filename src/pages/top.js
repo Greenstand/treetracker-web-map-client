@@ -65,8 +65,10 @@ export default function Top({ trees, countries }) {
 }
 
 export async function getServerSideProps() {
-  const trees = await getFeaturedTrees();
-  const countries = await getCountryLeaderboard();
+  const [trees, countries] = await Promise.all([
+    getFeaturedTrees(), //
+    getCountryLeaderboard(),
+  ]);
   return {
     props: {
       trees,
