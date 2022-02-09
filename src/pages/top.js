@@ -20,6 +20,7 @@ export default function Top({ trees, countries }) {
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const continentTags = [
+    'Global',
     'Africa',
     'Americas',
     'Asia',
@@ -27,8 +28,20 @@ export default function Top({ trees, countries }) {
     'Europe',
     'Oceania',
   ];
-  // eslint-disable-next-line
-  const [continentTag, setContinentTag] = React.useState('');
+
+  const [continentTag, setContinentTag] = React.useState('Global');
+  const [leaderboardCountries, setLeaderboardCountries] =
+    React.useState(countries);
+
+  React.useEffect(() => {
+    const fetchCountries = async () => {
+      const data = await utils.requestAPI(
+        `/countries/leaderboard?continent=${continentTag}`,
+      );
+      setLeaderboardCountries(data.countries);
+    };
+    fetchCountries();
+  }, [continentTag]);
 
   async function handleCountryClick(countryId) {
     log.debug('handleCountryClick', countryId);
@@ -78,13 +91,13 @@ export default function Top({ trees, countries }) {
       >
         <TagChips
           tagItems={continentTags}
-          onSelectTag={(tagItem) => {
-            setContinentTag(tagItem);
+          onSelectTag={(continent) => {
+            setContinentTag(continent);
           }}
         />
       </Box>
       <LeaderBoard
-        countries={countries}
+        countries={leaderboardCountries}
         handleCountryClick={handleCountryClick}
       />
     </Box>
@@ -104,7 +117,7 @@ export async function getServerSideProps() {
   }
 
   {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leaderboard`;
+    const url = `${process.env.NEXT_PUBLIC_API_NEW}/countries/leaderboard?continent=Global`;
     log.warn('url:', url);
 
     const res = await fetch(url);
