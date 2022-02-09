@@ -9,7 +9,7 @@ module.exports = {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
   testEnvironment: 'jsdom',
-  moduleDirectories: ['node_modules', 'src'],
+  modulePaths: ['src/'],
   globalSetup: '<rootDir>/.jest/globalSetup.js',
   setupFilesAfterEnv: ['<rootDir>/.jest/setupFile.js'],
 };
