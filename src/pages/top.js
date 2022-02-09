@@ -83,10 +83,7 @@ export default function Top({ trees, countries }) {
       </Typography>
       <Box
         sx={{
-          padding: theme.spacing(8, 0, 8.25),
-          [theme.breakpoints.down('md')]: {
-            padding: theme.spacing(4, 0, 2),
-          },
+          padding: (t) => [t.spacing(4, 0, 2), t.spacing(8, 0, 8.25)],
         }}
       >
         <TagChips
