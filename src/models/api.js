@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import log from 'loglevel';
 import apiPaths from 'models/apiPaths';
