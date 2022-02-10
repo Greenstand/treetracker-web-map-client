@@ -67,6 +67,8 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
   },
 
+  reportUnusedDisableDirectives: true,
+
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
