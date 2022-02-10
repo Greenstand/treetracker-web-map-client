@@ -11,7 +11,7 @@
   "override_settings_id": null,
   "dead": 0,
   "photo_id": null,
-  "photo_url": "https://treetracker-dev-images.s3.eu-central-1.amazonaws.com/2020.10.19.09.50.38_-5.508172399749922_38.98146973686408_6bebe71e-5369-4ae0-8c47-9eeff6599fb0_IMG_20201019_094615_7537040365910944885.jpg",
+  "image_url": "https://treetracker-dev-images.s3.eu-central-1.amazonaws.com/2020.10.19.09.50.38_-5.508172399749922_38.98146973686408_6bebe71e-5369-4ae0-8c47-9eeff6599fb0_IMG_20201019_094615_7537040365910944885.jpg",
   "certificate_id": null,
   "estimated_geometric_location": "0101000020E610000027ECE2CCA07D43407E9F76585E0816C0",
   "lat": "-5.508172399749922",
