@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import '../style.css';
 
 import createCache from '@emotion/cache';
@@ -24,7 +23,7 @@ export const createMuiCache = () =>
 function TreetrackerApp({ Component, pageProps }) {
   const isDesktop = useMediaQuery(appTheme.breakpoints.up('sm'));
   log.warn('app: isDesktop: ', isDesktop);
-  log.warn('app: component: ', Component);
+  // log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
   return (
     <CacheProvider value={muiCache ?? createMuiCache()}>
