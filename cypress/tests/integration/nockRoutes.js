@@ -105,4 +105,16 @@ export function getNockRoutes(
   ];
 }
 
+export function prepareNocks(props) {
+  if (!Cypress.env('nock')) return;
+  cy.task('nocks', {
+    hostname: Cypress.env('NEXT_PUBLIC_API'),
+    routes: getNockRoutes(props),
+  });
+}
+
+export function clearNocks() {
+  Cypress.env('nock') && cy.task('clearNock');
+}
+
 export default getNockRoutes();

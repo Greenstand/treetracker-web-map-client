@@ -1,20 +1,14 @@
 import planter from '../../../../doc/examples/planters/940.json';
-import { getNockRoutes } from '../nockRoutes';
+import { prepareNocks, clearNocks } from '../nockRoutes';
 
 beforeEach(() => {
-  Cypress.env('nock') && cy.task('clearNock'); // This will clear any mocks that have been set
+  clearNocks();
 });
 
 describe('Planter page', () => {
   it('getServerSideProps return mocks', () => {
     const path = `/planters/${planter.id}`;
-
-    Cypress.env('nock') &&
-      cy.task('nocks', {
-        hostname: Cypress.env('NEXT_PUBLIC_API'),
-        routes: getNockRoutes({ planter }),
-      });
-
+    prepareNocks({ planter });
     cy.visit(path, {
       failOnStatusCode: false,
     });
