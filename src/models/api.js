@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import log from 'loglevel';
 import apiPaths from 'models/apiPaths';
@@ -79,6 +78,7 @@ export async function getOrgLinks({
   return {
     featuredTrees,
     species,
+    // conditionally add properties to object
     ...(associated_organizations && { associatedOrganizations: associates }),
     ...(associated_planters && { associatedPlanters: associates }),
   };
