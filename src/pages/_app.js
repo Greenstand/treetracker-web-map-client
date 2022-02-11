@@ -6,7 +6,9 @@ import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
+import LayoutEmbed from '../components/LayoutEmbed';
 import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
 import { MapContextProvider } from '../mapContext';
@@ -23,6 +25,9 @@ export const createMuiCache = () =>
 
 function TreetrackerApp({ Component, pageProps }) {
   const isDesktop = useMediaQuery(appTheme.breakpoints.up('sm'));
+  const router = useRouter();
+  log.warn('router:', router);
+  const isEmbed = !!router.asPath.match(/embed=true/);
   log.warn('app: isDesktop: ', isDesktop);
   log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
@@ -30,10 +35,15 @@ function TreetrackerApp({ Component, pageProps }) {
     <CacheProvider value={muiCache ?? createMuiCache()}>
       <ThemeProvider theme={appTheme}>
         <MapContextProvider>
-          {isDesktop && (
+          {isDesktop && !isEmbed && (
             <Layout>
               <Component {...pageProps} />
             </Layout>
+          )}
+          {isDesktop && isEmbed && (
+            <LayoutEmbed>
+              <Component {...pageProps} />
+            </LayoutEmbed>
           )}
           {!isDesktop && !Component.isBLayout && (
             <LayoutMobile>
