@@ -73,12 +73,11 @@ module.exports = async (on, config) => {
         const { method, path, statusCode, body } = route;
 
         console.log(
-          'nock will: %s %s%s respond with %d %o',
+          'nock will: %s %s%s respond with %d',
           method,
           hostname,
           path,
           statusCode,
-          body,
         );
 
         const methodString = method.toLowerCase();
