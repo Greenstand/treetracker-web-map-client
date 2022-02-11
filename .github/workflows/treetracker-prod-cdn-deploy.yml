@@ -24,6 +24,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - name: git configure
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
       - name: npm clean install
         run: npm ci
         working-directory: ${{ env.project-directory }}
