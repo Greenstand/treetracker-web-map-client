@@ -78,6 +78,8 @@ describe('Planter page', () => {
       failOnStatusCode: false,
     });
     cy.contains(planter.id);
-    cy.get('.MuiTypography-h2').contains(/sebastian gaertner/i);
+    cy.get('.MuiTypography-h2').contains(/sebastian g/i);
+    // NOTE: this would be the country assertion if the county mock would cooperate
+    // cy.get('.MuiTypography-body1').contains(planter.country);
   });
 });
