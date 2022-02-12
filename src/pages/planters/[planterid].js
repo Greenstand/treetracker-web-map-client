@@ -272,11 +272,11 @@ export async function getServerSideProps({ params }) {
     if (props.planter.featuredTrees?.trees?.length) {
       const { lat, lon } = props.planter.featuredTrees.trees[0];
       if (lat && lon) {
-        const { countries } = await utils.requestAPI(
+        const countriesResponse = await utils.requestAPI(
           `/countries?lat=${lat}&lon=${lon}`,
         );
-        if (countries?.length) {
-          const [first] = countries;
+        if (countriesResponse?.countries?.length) {
+          const [first] = countriesResponse.countries;
           props.planter.country = first;
         }
       }
