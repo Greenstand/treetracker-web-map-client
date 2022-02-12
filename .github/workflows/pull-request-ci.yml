@@ -8,6 +8,9 @@ on:
     branches:
       - web-map-site
 
+env:
+  NEXT_PUBLIC_API: http://127.0.0.1:4010/mock
+
 jobs:
   install:
     name: Install dependencies
@@ -42,6 +45,7 @@ jobs:
             npm run mock-server
             npm run build-and-start
           # wait for server to be ready
+          spec: cypress/tests/integration/**/*.cy.js
           wait-on: 'http://localhost:3000'
 
       - name: Save screenshots
