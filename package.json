@@ -56,7 +56,7 @@
     "leaflet.gridlayer.googlemutant": "^0.12.1",
     "loglevel": "^1.7.0",
     "moment": "^2.29.1",
-    "next": "^12.0.7",
+    "next": "^12.0.11-canary.15",
     "next-images": "^1.8.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
