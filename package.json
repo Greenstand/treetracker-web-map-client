@@ -9,6 +9,7 @@
     "cy:nock": "cypress open --env nock=true",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "cypress:run:fast": "cypress run --env nock=true --spec=cypress/tests/integration/**/*.cy.js --config video=false",
     "cyu": "cypress open-ct",
     "cyux": "rm -rf .next/; npm run cyu",
     "dev": "next dev",
