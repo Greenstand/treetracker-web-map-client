@@ -12,6 +12,7 @@ import { MapContextProvider } from '../mapContext';
 import appTheme from '../theme';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  log.warn('Mocking API calls with msw');
   // eslint-disable-next-line global-require
   require('../mocks');
 }
