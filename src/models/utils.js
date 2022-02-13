@@ -56,7 +56,7 @@ async function requestAPI(url) {
     throw new Error('url is not defined');
   }
   try {
-    const urlFull = `${process.env.NEXT_PUBLIC_API_NEW}${url}`;
+    const urlFull = `${process.env.NEXT_PUBLIC_API}${url}`;
     log.warn('requestAPI:', urlFull);
     // urlFull = urlFull.replace(/\?/, '/query/');
 
