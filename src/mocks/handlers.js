@@ -6,24 +6,25 @@ import planter from '../../doc/examples/planters/940.json';
 import species from '../../doc/examples/species/1.json';
 
 const trees = { trees: [mockTree, mockTree, mockTree] };
+const host = process.env.NEXT_PUBLIC_API || '';
 
 const handlers = [
-  rest.get('*/trees/featured', (req, res, ctx) =>
+  rest.get(`${host}/trees/featured`, (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(trees)),
   ),
 
-  rest.get('*/trees/:id', (req, res, ctx) =>
+  rest.get(`${host}/trees/:id`, (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(mockTree)),
   ),
 
-  rest.get('*/trees*', (req, res, ctx) =>
+  rest.get(`${host}/trees*`, (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(trees)),
   ),
 
-  rest.get('*/planters/:id', (req, res, ctx) =>
+  rest.get(`${host}/planters/:id`, (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(planter)),
   ),
-  rest.get('*/planters*', (req, res, ctx) =>
+  rest.get(`${host}/planters*`, (req, res, ctx) =>
     res(
       ctx.status(200, 'success'),
       ctx.json({
@@ -32,10 +33,10 @@ const handlers = [
     ),
   ),
 
-  rest.get('*/organizations/:id', (req, res, ctx) =>
+  rest.get(`${host}/organizations/:id`, (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(organization)),
   ),
-  rest.get('*/organizations*', (req, res, ctx) =>
+  rest.get(`${host}/organizations*`, (req, res, ctx) =>
     res(
       ctx.status(200, 'success'),
       ctx.json({
@@ -44,7 +45,7 @@ const handlers = [
     ),
   ),
 
-  rest.get('*/species*', (req, res, ctx) =>
+  rest.get(`${host}/species*`, (req, res, ctx) =>
     res(
       ctx.status(200, 'success'),
       ctx.json({
@@ -53,7 +54,7 @@ const handlers = [
     ),
   ),
 
-  rest.get('*/countries/leaderboard', (req, res, ctx) =>
+  rest.get(`${host}/countries/leaderboard`, (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(leader)),
   ),
 ];

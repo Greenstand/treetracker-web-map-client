@@ -13,7 +13,7 @@
     "cyu": "cypress open-ct",
     "cyux": "rm -rf .next/; npm run cyu",
     "dev": "next dev",
-    "dev:mock": "concurrently \"npm run mock-server\" \"npm run dev\"",
+    "dev:mock": "NEXT_PUBLIC_API_MOCKING=enabled npm run dev",
     "eject": "react-scripts eject",
     "format": "npm run prettier && npm run lint:fix",
     "lint": "eslint . --cache",
@@ -109,6 +109,9 @@
   },
   "engines": {
     "node": "^16"
+  },
+  "msw": {
+    "workerDirectory": "public"
   },
   "proxy": "http://127.0.0.1:3001"
 }

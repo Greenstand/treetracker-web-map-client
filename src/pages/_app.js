@@ -11,6 +11,11 @@ import LayoutMobileB from '../components/LayoutMobileB';
 import { MapContextProvider } from '../mapContext';
 import appTheme from '../theme';
 
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  // eslint-disable-next-line global-require
+  require('../mocks');
+}
+
 let muiCache;
 
 // eslint-disable-next-line no-return-assign
