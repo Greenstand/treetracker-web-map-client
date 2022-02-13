@@ -76,8 +76,6 @@
     "@next/eslint-plugin-next": "^12.0.7",
     "@stoplight/prism-cli": "^4.4.2",
     "@svgr/webpack": "^5.5.0",
-    "@swc/core": "^1.2.136",
-    "@swc/jest": "^0.2.17",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.4.1",
