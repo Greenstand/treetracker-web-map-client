@@ -7,6 +7,7 @@
     "build-and-start": "next build && next start",
     "cy": "start-server-and-test dev http://localhost:3000 cypress:open",
     "cy:nock": "cypress open --env nock=true",
+    "cypress:int": "cypress run --spec=cypress/tests/integration/**/*.cy.js --config video=false",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cyr": "start-server-and-test dev:mock http://localhost:3000 cypress:int",
