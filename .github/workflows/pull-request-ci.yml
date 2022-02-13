@@ -41,7 +41,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           # run these before testing
-          start: npm run dev:mock
+          start: npm run build-and-start
           spec: cypress/tests/integration/**/*.cy.js
           # wait for server to be ready
           wait-on: 'http://localhost:3000'
