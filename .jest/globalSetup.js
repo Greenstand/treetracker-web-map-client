@@ -1,4 +1,6 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import { loadEnvConfig } from '@next/env';
 
-export default function globalSetup() {}
+export default async () => {
+  const projectDir = process.cwd();
+  loadEnvConfig(projectDir);
+};
