@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import '../style.css';
 
 import createCache from '@emotion/cache';

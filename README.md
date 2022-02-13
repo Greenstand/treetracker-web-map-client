@@ -251,7 +251,6 @@ it('getServerSideProps returns mock', () => {
 
 https://github.com/Greenstand/treetracker-query-api
 
-
 ## The route/URL spec
 
 For convenience, we also use openAPI protocol to present the URL spec:

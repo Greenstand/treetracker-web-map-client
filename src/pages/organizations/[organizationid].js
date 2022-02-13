@@ -109,7 +109,7 @@ export default function Organization({ organization }) {
       }
     }
     reload();
-    // eslint-disable-next-line
+
     updateContinent();
     // eslint-disable-next-line
   }, [mapContext, organization]);

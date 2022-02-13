@@ -139,10 +139,10 @@ const theme = createTheme(colorTheme, {
       stylesOverrides: {
         root: {
           letterSpacing: 0,
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 });
 
 export default theme;
