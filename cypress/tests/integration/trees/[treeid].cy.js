@@ -1,7 +1,5 @@
-import exampleTreeData from '../../../../doc/examples/trees/186734.json';
-
 it('Image cases', () => {
-  const path = `/trees/${exampleTreeData.id}`;
+  const path = '/trees/1';
   cy.visit(path);
-  cy.contains(`${exampleTreeData.id}`);
+  cy.contains(`Tree Verified`);
 });
