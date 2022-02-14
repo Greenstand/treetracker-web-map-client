@@ -40,7 +40,7 @@ const App = dynamic(() => import('./App'), { ssr: false });
 //   },
 // }));
 
-export default function Layout({ children }) {
+export default function Layout({ children, isFloatingDisabled }) {
   // const { _classes } = useStyles();
   function handleFullScreen() {
     // navigate to /container page through next.js's api
@@ -58,35 +58,58 @@ export default function Layout({ children }) {
       >
         <App />
       </Box>
-      <Box>
-        <Box
-          sx={{
-            position: 'absolute',
-            zIndex: '99999',
-            top: '0px',
-            background: 'white',
-            width: '499px',
-            overflow: 'scroll',
-            height: '100vh',
-          }}
-        >
-          {children}
+      {!isFloatingDisabled && (
+        <Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: '99999',
+              top: '0px',
+              background: 'white',
+              width: '499px',
+              overflow: 'scroll',
+              height: '100vh',
+            }}
+          >
+            {children}
+          </Box>
         </Box>
-      </Box>
-      <Fab
-        onClick={handleFullScreen}
+      )}
+
+      <Box
         sx={{
           position: 'absolute',
           zIndex: '9999',
           bottom: '0px',
           right: '0px',
           margin: '20px',
+          display: 'flex',
+          gap: 3,
         }}
-        color="secondary"
-        aria-label="edit"
       >
-        <OpenWithIcon />
-      </Fab>
+        <Box
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '45px',
+            fontSize: '16px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '20px',
+            fontFamily: 'roboto',
+          }}
+        >
+          POWERED BY GREENSTAND
+        </Box>
+        <Fab
+          onClick={handleFullScreen}
+          sx={{}}
+          color="secondary"
+          aria-label="edit"
+        >
+          <OpenWithIcon />
+        </Fab>
+      </Box>
       {/* <Box className={classes.root}>
         <Box className={classes.main}>
           <Box className={classes.left}>{children}</Box>

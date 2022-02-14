@@ -25,3 +25,4 @@ export default function Homepage() {
 }
 
 Homepage.isBLayout = true;
+Homepage.isFloatingDisabled = true;
