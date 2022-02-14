@@ -154,6 +154,8 @@ function MapComponent() {
       onError: handleError,
       filters: parameters,
       iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
+      zoomControl: true,
+      zoomControlPosition: 'bottomright',
     });
     map.on('moveEnd', () => {
       log.warn('update url');
