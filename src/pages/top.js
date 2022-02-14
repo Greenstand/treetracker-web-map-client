@@ -12,7 +12,7 @@ import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
-export default function Top({ trees, countries }) {
+function Top({ trees, countries }) {
   // use map context to get the map
   const { map } = useMapContext();
 
@@ -127,3 +127,6 @@ export async function getServerSideProps() {
     props,
   };
 }
+
+Top.isFloatingDisabled = true;
+export default Top;

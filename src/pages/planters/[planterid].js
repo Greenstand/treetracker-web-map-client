@@ -79,7 +79,7 @@ export default function Planter({ planter }) {
   return (
     <PageWrapper>
       <Typography variant="h2" className={classes.textColor}>
-        {utils.hideLastName(`${planter.first_name}${planter.last_name}`)}
+        {utils.hideLastName(`${planter.first_name} ${planter.last_name}`)}
       </Typography>
 
       <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>

@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
+import useEmbed from '../hooks/useEmbed';
 
 const backgroundImage = '/images/bg.png';
 const useStyles = makeStyles()((theme) => ({
@@ -49,6 +50,11 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Home() {
   const { classes } = useStyles();
+  const isEmbed = useEmbed();
+
+  if (isEmbed) {
+    return null;
+  }
 
   return (
     <Box
