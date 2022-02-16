@@ -162,8 +162,9 @@ export default function Tree(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, req }) {
   log.warn('params:', params);
+  log.warn('req:', req);
   log.warn('host:', process.env.NEXT_PUBLIC_API_NEW);
 
   const props = {};

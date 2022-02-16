@@ -108,7 +108,14 @@ function MapComponent() {
 
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
-    router.push(`/trees/${tree.id}`);
+    const path = window.location.pathname.match(
+      /^\/(planters|organizations)\/\d+$/,
+    );
+    let prefix = '';
+    if (path) {
+      prefix = window.location.pathname;
+    }
+    router.push(`/${prefix}/trees/${tree.id}`);
   }
 
   function injectApp() {
