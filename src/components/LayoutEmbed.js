@@ -85,21 +85,30 @@ export default function Layout({ children, isFloatingDisabled }) {
           margin: '20px',
           display: 'flex',
           gap: 3,
+          alignItems: 'end',
         }}
       >
         <Box
           sx={{
             backgroundColor: 'white',
-            borderRadius: '45px',
-            fontSize: '16px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '20px',
             fontFamily: 'roboto',
+            flexDirection: 'column',
+            borderRadius: '22px',
+            padding: '10px',
+            fontSize: '12px',
           }}
         >
-          POWERED BY GREENSTAND
+          <Box id="embed-logo-container">{/* logo */}</Box>
+          <Box
+            sx={{
+              height: 'fit-content',
+            }}
+          >
+            POWERED BY GREENSTAND
+          </Box>
         </Box>
         <Fab
           onClick={handleFullScreen}

@@ -56,7 +56,8 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export default function Tree({ tree, planter, organization }) {
+export default function Tree(props) {
+  const { tree, planter, organization, nextExtraIsEmbed } = props;
   const { classes } = useStyles();
   const mapContext = useMapContext();
 
@@ -96,7 +97,7 @@ export default function Tree({ tree, planter, organization }) {
             entityType="Planting Organization"
             buttonText="Meet the Organization"
             cardImageSrc={organization?.photo_url}
-            link={`/organizations/${organization.id}`}
+            link={`/organizations/${organization.id}?embed=${nextExtraIsEmbed}`}
           />
         </Box>
       )}
@@ -106,7 +107,7 @@ export default function Tree({ tree, planter, organization }) {
           entityType="Planter"
           buttonText="Meet the Planter"
           cardImageSrc={planter?.image_url}
-          link={`/planters/${planter.id}`}
+          link={`/planters/${planter.id}?embed=${nextExtraIsEmbed}`}
         />
       </Box>
       <Typography

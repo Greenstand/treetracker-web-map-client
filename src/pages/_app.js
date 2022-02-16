@@ -24,33 +24,37 @@ export const createMuiCache = () =>
   }));
 
 function TreetrackerApp({ Component, pageProps }) {
-  const isDesktop = useMediaQuery(appTheme.breakpoints.up('sm'));
-  const isEmbed = useEmbed();
-  log.warn('app: isDesktop: ', isDesktop);
+  const nextExtraIsDesktop = useMediaQuery(appTheme.breakpoints.up('sm'));
+  const nextExtraIsEmbed = useEmbed();
+  log.warn('app: isDesktop: ', nextExtraIsDesktop);
   log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
+  const extraProps = {
+    nextExtraIsEmbed,
+    nextExtraIsDesktop,
+  };
   return (
     <CacheProvider value={muiCache ?? createMuiCache()}>
       <ThemeProvider theme={appTheme}>
         <MapContextProvider>
-          {isDesktop && !isEmbed && (
+          {nextExtraIsDesktop && !nextExtraIsEmbed && (
             <Layout>
-              <Component {...pageProps} />
+              <Component {...pageProps} {...extraProps} />
             </Layout>
           )}
-          {isDesktop && isEmbed && (
+          {nextExtraIsDesktop && nextExtraIsEmbed && (
             <LayoutEmbed isFloatingDisabled={Component.isFloatingDisabled}>
-              <Component {...pageProps} />
+              <Component {...pageProps} {...extraProps} />
             </LayoutEmbed>
           )}
-          {!isDesktop && !Component.isBLayout && (
+          {!nextExtraIsDesktop && !Component.isBLayout && (
             <LayoutMobile>
-              <Component {...pageProps} />
+              <Component {...pageProps} {...extraProps} />
             </LayoutMobile>
           )}
-          {!isDesktop && Component.isBLayout && (
+          {!nextExtraIsDesktop && Component.isBLayout && (
             <LayoutMobileB>
-              <Component {...pageProps} />
+              <Component {...pageProps} {...extraProps} />
             </LayoutMobileB>
           )}
         </MapContextProvider>
