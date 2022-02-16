@@ -37,12 +37,9 @@ jobs:
       - name: Cypress Integration Tests 🧪
         uses: cypress-io/github-action@v2
         with:
-          # run these before testing
-          start: |
-            npm run mock-server
-            npm run build-and-start
-          # wait for server to be ready
-          wait-on: 'http://localhost:3000'
+          # use mock api
+          env: nock=true
+          spec: cypress/tests/integration/**/*.cy.js
 
       - name: Save screenshots
         # step runs even if other steps fail

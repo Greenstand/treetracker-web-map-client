@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import * as React from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
@@ -162,40 +163,17 @@ export default function Tree({ tree, planter, organization }) {
 }
 
 export async function getServerSideProps({ params }) {
-  log.warn('params:', params);
-  log.warn('host:', process.env.NEXT_PUBLIC_API_NEW);
-
-  const props = {};
-  {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/trees/${params.treeid}`;
-    log.warn('url:', url);
-
-    const res = await fetch(url);
-    const tree = await res.json();
-    log.warn('response:', tree);
-    props.tree = tree;
-  }
-  {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/planters/${props.tree.planter_id}`;
-    log.warn('url:', url);
-
-    const res = await fetch(url);
-    const planter = await res.json();
-    log.warn('response:', planter);
-    props.planter = planter;
-  }
-  {
-    const url = `${process.env.NEXT_PUBLIC_API_NEW}/organizations?${props.tree.planter_id}`;
-    log.warn('url:', url);
-
-    const res = await fetch(url);
-    const { organizations } = await res.json();
-    log.warn('response:', organizations);
-    props.organization =
-      (organizations && organizations.length === 1 && organizations[0]) || null;
-  }
+  const { treeid } = params;
+  const tree = await getTreeById(treeid);
+  const { planter_id, planting_organization_id } = tree;
+  const planter = await getPlanterById(planter_id);
+  const organization = await getOrganizationById(planting_organization_id);
 
   return {
-    props,
+    props: {
+      tree,
+      planter,
+      organization,
+    },
   };
 }

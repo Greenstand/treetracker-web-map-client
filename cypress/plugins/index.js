@@ -4,10 +4,15 @@
 const http = require('http');
 const next = require('next');
 const nock = require('nock');
+require('dotenv').config();
 
 // start the Next.js server when Cypress starts
 module.exports = async (on, config) => {
   require('cypress-watch-and-reload/plugins')(config);
+
+  // copy env vars
+  // eslint-disable-next-line no-param-reassign
+  config.env.NEXT_PUBLIC_API = process.env.NEXT_PUBLIC_API;
 
   // exit if not using nock to mock nextjs ssr functions
   if (!config.env.nock) return config;
@@ -68,12 +73,11 @@ module.exports = async (on, config) => {
         const { method, path, statusCode, body } = route;
 
         console.log(
-          'nock will: %s %s%s respond with %d %o',
+          'nock will: %s %s%s respond with %d',
           method,
           hostname,
           path,
           statusCode,
-          body,
         );
 
         const methodString = method.toLowerCase();
