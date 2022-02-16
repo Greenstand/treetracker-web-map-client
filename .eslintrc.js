@@ -30,6 +30,7 @@ module.exports = {
           'cypress/**/*',
           '.jest/**/*',
           '**/test-utils.js',
+          'src/mocks/*',
         ],
       },
     ],
@@ -66,6 +67,8 @@ module.exports = {
     '@next/next/no-img-element': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
   },
+
+  reportUnusedDisableDirectives: true,
 
   parserOptions: {
     ecmaFeatures: {

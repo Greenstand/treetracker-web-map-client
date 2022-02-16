@@ -66,8 +66,6 @@ This project must be installed and used with Node v16. [Node Version Manager](ht
    npm run dev
    ```
 
-NOTE: There is a bug running the project, need some manually steps to work around it, check this [issue](https://github.com/Greenstand/treetracker-web-map-core/issues/23)
-
 3. Open the web map in the browser with URL: http://localhost:3000
 
 **Setup for WSL users**
@@ -85,32 +83,6 @@ WSL 2
 ```bat
 start "" "C:\Program Files\VcXsrv\vcxsrv.exe" :0 -multiwindow -clipboard -wgl -ac`
 ```
-
-## Workflow with Github
-
-1.  Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it.
-
-2.  We tag issues with:
-
-    - `good first issue`: easy and good for getting started.
-    - `medium`: medium difficulty or needs more work.
-    - `challenge`: hardest or big tasks, or needs some special skill or tricky or even hack in some way.
-    - `documentation`: writing job, sometimes it's good for new dev to learn and do some simple job.
-    - `bug`: just bug.
-    - `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
-    - `high-priority`: urgent problem, like some crucial bug or feature.
-    - We also tag issue with other aspects like the skill needed, the device related and so on.
-
-3.  Fork the repo.
-
-4.  Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
-
-5.  Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
-6.  Optional, if you haven't fully conficence about your code, it's always a good idea that create a PR in `draft` status as early as possible, so you can draw others attention on it and give you suggestions. (to do it, just expand the PR button, there is a `draft` selection)
-
-7.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
-
-More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
 
 ## Test Driven Development
 
@@ -194,15 +166,37 @@ Also, integration tests bring some benefits for the development workflow - by mo
 
 **To run Cypress integration tests:**
 
+Open cypress test viewer
+
+```
+npm run cypress:open
 ```
 
-npm run cy
+Nextjs dev server + Cypress test viewer
 
+```
+npm run cy
+```
+
+Nextjs dev server + Cypress test viewer + nock
+
+```
+npm run cy:nock
+```
+
+Run cypress tests headless
+
+```
+npm run cypress:run
+```
+
+Nextjs dev server + Cypress run headless + nock + skip video recording
+
+```
+npm run cypress:run:fast
 ```
 
 **Note**
-
-Cypress will initialize a Nextjs dev server when run in integration mode. This means you do not need to run a local dev/production server before starting cypress.
 
 Cypress Integration testing also includes the `cypress-watch-and-reload` plugin which will restart any loaded tests when you save any changes inside the `src` directory.
 
@@ -210,34 +204,41 @@ Cypress Integration testing also includes the `cypress-watch-and-reload` plugin 
 
 [Video tutorial for mock the API](https://www.loom.com/share/48554f0f67314ea78925a627b2142e1b)
 
-### Mocking API calls in NextJs SSR functions
+### Mocking API calls in cypress tests
 
-API calls made inside nextJs serverless functions like `getServerSideProps()` can be mocked with the nock task we have added to cypress. The following example provides a mock response at the address being fetched during SSR.
+NextJS deploys with a nodejs server and API calls can be made from this server or from the client viewing the webpage. Client-side API calls can be mocked by Cypress normally with the `cy.intercept()` method like this:
+
+```js
+cy.intercept('GET', '**/countries/**', {
+  statusCode: 200,
+  body: leaders,
+});
+```
+
+Server-side API calls in NextJs must occur within a `getServerSideProps()` page function or from files in the `pages/api/` folder. These API calls can be mocked with the nock task we have added to cypress. The following example provides a mock response at the address being fetched during SSR.
 
 **Note**
 
 Cypress must start a custom Nextjs server to mock SSR functions. Use `cypress open --env nock=true` or `npm run cy:nock` to start cypress with a Nextjs server (this means you do not need to use `npm run dev` or `npm start`). You can use `Cypress.env('nock')` in your test files to check if the cypress nextjs server is active.
 
 ```js
+import tree from '../../fixtures/tree186734.json';
+
 beforeEach(() => {
-  Cypress.env('nock') && cy.task('clearNock'); // This will clear any mocks that have been set
+  // This will clear any mocks that have been set
+  Cypress.env('nock') && cy.task('clearNock');
 });
 
 it('getServerSideProps returns mock', () => {
   const path = `/trees/${tree.id}`;
-  const testData = {
-    // expected data here
-  };
+
   Cypress.env('nock') &&
     cy.task('nock', {
-      hostname: 'http://127.0.0.1:4010/mock',
+      hostname: Cypress.env('NEXT_PUBLIC_API')
       method: 'GET',
       path,
       statusCode: 200,
-      body: {
-        ...testData,
-        status: 200,
-      },
+      body: tree,
     });
 
   cy.visit(path);
@@ -251,6 +252,15 @@ it('getServerSideProps returns mock', () => {
 
 https://github.com/Greenstand/treetracker-query-api
 
+### Mocking the API in development
+
+Start the dev server with msw enabled:
+
+```
+npm run dev:mock
+```
+
+[msw](https://mswjs.io) is used for mocking API calls during development and for jest tests. To enable it use the following env var ` NEXT_PUBLIC_API_MOCKING=enabled` or use the `dev:mock` script. If a new API route needs to be added use the `src/mocks/handlers.js` file.
 
 ## The route/URL spec
 
@@ -360,3 +370,29 @@ CYPRESS_INSTALL_BINARY=[path/to/Cypress/zip/file] npm ci
 We have more tech guides and handbook here:
 
 [Greenstand engineer handbook](https://greenstand.gitbook.io/engineering/)
+
+## Workflow with Github
+
+1.  Feel free to pick tasks that interests you in the [issue](/issues) page, and leave some comment on it if you are going to work on it.
+
+2.  We tag issues with:
+
+    - `good first issue`: easy and good for getting started.
+    - `medium`: medium difficulty or needs more work.
+    - `challenge`: hardest or big tasks, or needs some special skill or tricky or even hack in some way.
+    - `documentation`: writing job, sometimes it's good for new dev to learn and do some simple job.
+    - `bug`: just bug.
+    - `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
+    - `high-priority`: urgent problem, like some crucial bug or feature.
+    - We also tag issue with other aspects like the skill needed, the device related and so on.
+
+3.  Fork the repo.
+
+4.  Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
+
+5.  Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
+6.  Optional, if you haven't fully conficence about your code, it's always a good idea that create a PR in `draft` status as early as possible, so you can draw others attention on it and give you suggestions. (to do it, just expand the PR button, there is a `draft` selection)
+
+7.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
+
+More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#github

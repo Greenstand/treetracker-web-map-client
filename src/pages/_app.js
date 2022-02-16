@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import '../style.css';
 
 import createCache from '@emotion/cache';
@@ -13,6 +12,12 @@ import LayoutMobileB from '../components/LayoutMobileB';
 import useEmbed from '../hooks/useEmbed';
 import { MapContextProvider } from '../mapContext';
 import appTheme from '../theme';
+
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  log.warn('Mocking API calls with msw');
+  // eslint-disable-next-line global-require
+  require('../mocks');
+}
 
 let muiCache;
 
