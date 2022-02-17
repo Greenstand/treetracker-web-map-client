@@ -135,21 +135,20 @@ function CustomImageWrapper({ imageUrl, timeCreated, treeId }) {
           </Grid>
         </InfoWrapper>
       )}
-      {isShown && (
-        <InfoWrapper bottom={20}>
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            columnGap={2}
-            width="100%"
-            height="100%"
-          >
-            <LikeButton treeId={treeId} />
-          </Grid>
-        </InfoWrapper>
-      )}
+
+      <InfoWrapper bottom={20}>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          columnGap={2}
+          width="100%"
+          height="100%"
+        >
+          <LikeButton treeId={treeId} />
+        </Grid>
+      </InfoWrapper>
       <img src={imageUrl} alt="tree" className={classes.image} />
     </Box>
   );

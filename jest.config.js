@@ -1,5 +1,4 @@
 // jest.config.js
-
 module.exports = {
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
@@ -20,6 +19,7 @@ module.exports = {
   },
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jsdom',
+  modulePaths: ['src'],
   transform: {
     /* Use babel-jest to transpile tests with the next/babel preset
     https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object */
@@ -29,5 +29,6 @@ module.exports = {
     '/node_modules/',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
-  setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
+  globalSetup: '<rootDir>/.jest/globalSetup.js',
+  setupFilesAfterEnv: ['<rootDir>/.jest/setupFile.js'],
 };

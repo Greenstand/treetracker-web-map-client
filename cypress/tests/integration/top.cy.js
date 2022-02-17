@@ -1,38 +1,18 @@
-import leader from '../../fixtures/countries/leader.json';
+import { prepareNocks, clearNocks } from './nockRoutes';
+import leaders from '../../../doc/examples/countries/leader.json';
 import tree186734 from '../../fixtures/tree186734.json';
 
 describe('top', () => {
   beforeEach(() => {
-    Cypress.env('nock') && cy.task('clearNock');
+    clearNocks();
   });
 
   it('top page', () => {
-    Cypress.env('nock') &&
-      cy.task('nocks', {
-        hostname: 'http://127.0.0.1:4010/mock',
-        routes: [
-          {
-            method: 'GET',
-            path: '/trees/featured',
-            statusCode: 200,
-            body: {
-              trees: [{ ...tree186734 }],
-            },
-          },
-          {
-            method: 'GET',
-            path: '/trees/186734',
-            statusCode: 200,
-            body: { ...tree186734 },
-          },
-          {
-            method: 'GET',
-            path: '/countries/leader',
-            statusCode: 200,
-            body: leader,
-          },
-        ],
-      });
+    prepareNocks({ tree: tree186734 });
+    cy.intercept('GET', '**/countries/**', {
+      statusCode: 200,
+      body: leaders,
+    });
 
     cy.visit('/top');
     cy.contains('Featured Trees');

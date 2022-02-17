@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import '../style.css';
 
 import createCache from '@emotion/cache';
@@ -10,6 +9,12 @@ import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
 import { CustomThemeProvider } from '../context/themeContext';
 import { MapContextProvider } from '../mapContext';
+
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  log.warn('Mocking API calls with msw');
+  // eslint-disable-next-line global-require
+  require('../mocks');
+}
 
 let muiCache;
 
@@ -24,7 +29,7 @@ function TreetrackerApp({ Component, pageProps }) {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
   log.warn('app: isDesktop: ', isDesktop);
-  log.warn('app: component: ', Component);
+  // log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
   return (
     <CacheProvider value={muiCache ?? createMuiCache()}>
