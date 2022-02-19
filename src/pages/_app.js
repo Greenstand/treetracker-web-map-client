@@ -5,6 +5,7 @@ import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import LayoutEmbed from '../components/LayoutEmbed';
 import LayoutMobile from '../components/LayoutMobile';
@@ -34,9 +35,14 @@ function TreetrackerApp({ Component, pageProps }) {
   log.warn('app: isDesktop: ', nextExtraIsDesktop);
   log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
+  const router = useRouter();
+  log.warn('router:', router);
+  const nextExtraKeyword = router.query.keyword;
+
   const extraProps = {
     nextExtraIsEmbed,
     nextExtraIsDesktop,
+    nextExtraKeyword,
   };
   return (
     <CacheProvider value={muiCache ?? createMuiCache()}>

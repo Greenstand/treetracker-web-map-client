@@ -8,6 +8,7 @@ import SearchButton from 'components/SearchButton';
 import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
+import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
@@ -67,15 +68,19 @@ function Top({ trees, countries }) {
 
   return (
     <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
-      {!isMobileScreen && (
+      {!isMobileScreen && false && (
         <Stack direction="row" justifyContent="flex-end" mb={6.125}>
           <SearchButton />
         </Stack>
       )}
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Filter onFilter={handleFilter} />
-      </Box>
+      {!isMobileScreen && <SearchFilter />}
+
+      {false && ( // going to be replaced by search filter component
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Filter onFilter={handleFilter} />
+        </Box>
+      )}
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>

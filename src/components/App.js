@@ -116,8 +116,12 @@ function MapComponent() {
     if (path) {
       prefix = window.location.pathname;
     }
+    const url = new URL(window.location.href);
+    const { timeline } = url.searchParams;
     router.push(
-      `/${prefix}/trees/${tree.id}?embed=${isEmbed ? 'true' : 'false'}`,
+      `/${prefix}/trees/${tree.id}?embed=${isEmbed ? 'true' : 'false'}${
+        timeline ? `&timeline=${timeline}` : ''
+      }`,
     );
   }
 
