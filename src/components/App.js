@@ -111,11 +111,14 @@ function MapComponent() {
     const path = window.location.pathname.match(
       /^\/(planters|organizations)\/\d+$/,
     );
+    const isEmbed = window.location.search.match(/embed=true/);
     let prefix = '';
     if (path) {
       prefix = window.location.pathname;
     }
-    router.push(`/${prefix}/trees/${tree.id}`);
+    router.push(
+      `/${prefix}/trees/${tree.id}?embed=${isEmbed ? 'true' : 'false'}`,
+    );
   }
 
   function injectApp() {

@@ -45,7 +45,9 @@ export default function Layout({ children }) {
   const { classes } = useStyles();
   function handleFullScreen() {
     // navigate to /container page through next.js's api
-    window.location.href = `${window.location.href}?embed=true`;
+    const url = new URL(window.location.href);
+    url.searchParams.set('embed', true);
+    window.location.href = url.toString();
   }
   return (
     <>
