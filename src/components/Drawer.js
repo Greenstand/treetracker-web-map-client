@@ -150,6 +150,9 @@ function Drawer(props) {
         }}
         ModalProps={{
           keepMounted: true,
+          hideBackdrop: true,
+          disableEnforceFocus: true,
+          disableAutoFocus: true,
         }}
       >
         <StyledBox
