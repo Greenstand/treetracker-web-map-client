@@ -96,24 +96,18 @@ function Filter(props) {
             sx={{
               px: [2, 3],
               py: [2.25, 2.875],
+              fontSize: [12, 16],
+              textTransform: 'none',
             }}
             onClick={() => isHandleFilterIsOpen()}
           >
-            <FilterListRoundedIcon fontSize="small" />
-            <Typography
-              variant="body1"
-              pl={2}
-              sx={{
-                textTransform: 'none',
-              }}
-            >
-              Filters
-              {onSubmit &&
-                ` are ${formatDates(startDate, 'YYYY-MM-DD')} / ${formatDates(
-                  endDate,
-                  'YYYY-MM-DD',
-                )}`}
-            </Typography>
+            <FilterListRoundedIcon fontSize="small" sx={{ mr: 1 }} />
+            Filters
+            {onSubmit &&
+              ` are ${formatDates(startDate, 'YYYY-MM-DD')} / ${formatDates(
+                endDate,
+                'YYYY-MM-DD',
+              )}`}
           </Button>
         </Box>
         {isFilterOpen && (
@@ -145,8 +139,8 @@ function Filter(props) {
                           label="Start Date"
                           variant="outlined"
                           size="small"
-                          error={isError}
                           color="secondary"
+                          error={isError}
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -154,6 +148,9 @@ function Filter(props) {
                             width: 1,
                             fontFamily: 'Lato',
                             letterSpacing: '0.5px',
+                            '& input': {
+                              color: 'text.secondary',
+                            },
                           }}
                         />
                       )}
@@ -180,6 +177,9 @@ function Filter(props) {
                             width: 1,
                             fontFamily: 'Lato',
                             letterSpacing: '0.5px',
+                            '& input': {
+                              color: 'text.secondary',
+                            },
                           }}
                         />
                       )}

@@ -31,6 +31,28 @@ export function CustomThemeProvider({ children }) {
           },
         },
       },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            '&.MuiButton-outlined': {
+              ...(themeMode === 'light'
+                ? {}
+                : {
+                    color: '#eee',
+                  }),
+            },
+            '&.Mui-disabled': {
+              ...(themeMode === 'light'
+                ? {}
+                : {
+                    color: '#eee',
+                    backgroundColor: '#1d1d1d',
+                    opacity: 0.75,
+                  }),
+            },
+          },
+        },
+      },
       MuiFab: {
         styleOverrides: {
           primary: {
@@ -59,6 +81,32 @@ export function CustomThemeProvider({ children }) {
           },
         },
       },
+      MuiIconButton: {
+        styleOverrides: {
+          root: {
+            ...(themeMode === 'light'
+              ? {
+                  color: '#474B4F',
+                }
+              : {
+                  color: '#eee',
+                }),
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            ...(themeMode === 'light'
+              ? {
+                  color: '#222629',
+                }
+              : {
+                  color: '#eee',
+                }),
+          },
+        },
+      },
     },
     typography: {
       allVariants: {
@@ -73,6 +121,7 @@ export function CustomThemeProvider({ children }) {
     },
     palette: {
       themeMode,
+
       background: {
         ...(themeMode === 'light'
           ? {
@@ -81,7 +130,6 @@ export function CustomThemeProvider({ children }) {
           : {
               paper: '#333',
             }),
-
         greenGradient:
           'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
         greenOrangeLightGr:
