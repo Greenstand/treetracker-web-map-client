@@ -27,6 +27,7 @@ jobs:
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
+
       # only install dependencies
       # https://github.com/cypress-io/github-action
       - name: Install 📦
@@ -34,6 +35,7 @@ jobs:
         with:
           runTests: false
           working-directory: ${{ env.project-directory }}
+
       # - name: run ESLint
       #   run: npm run lint
       #   working-directory: ${{ env.project-directory }}
@@ -43,6 +45,7 @@ jobs:
         working-directory:
           ${{ env.project-directory }}
           # Install cached NPM dependencies, run end to end tests
+
       - name: Cypress E2E Tests 🧪
         uses: cypress-io/github-action@v2
         with:
@@ -51,6 +54,21 @@ jobs:
           start: npm run start
           # wait for server to be ready
           wait-on: 'http://localhost:3000'
+
+      - name: Save screenshots
+        # step runs even if other steps fail
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Save videos
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
       - uses: actions/upload-artifact@v2
         with:
           name: frontend-bundle
