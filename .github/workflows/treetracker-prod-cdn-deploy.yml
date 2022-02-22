@@ -32,7 +32,7 @@ jobs:
       - name: Install 📦
         uses: cypress-io/github-action@v2
         with:
-          runTests: falsei
+          runTests: false
           working-directory: ${{ env.project-directory }}
       # - name: run ESLint
       #   run: npm run lint
