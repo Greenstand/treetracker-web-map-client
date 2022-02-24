@@ -144,7 +144,7 @@ export default function Planter({ planter }) {
       {isPlanterTab && (
         <>
           <Box sx={{ mt: [0, 22] }}>
-            <CustomWorldMap totalTrees={treeCount} />
+            <CustomWorldMap totalTrees={treeCount} con="af" />
           </Box>
           <Typography
             variant="h4"
