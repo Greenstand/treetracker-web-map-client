@@ -109,7 +109,7 @@ export default function Organization({ organization }) {
       }
     }
     reload();
-    // eslint-disable-next-line
+     
     updateContinent();
     // eslint-disable-next-line
   }, [mapContext, organization]);
@@ -186,6 +186,7 @@ export default function Organization({ organization }) {
           <Box sx={{ mt: [0, 22] }}>
             <CustomWorldMap
               totalTrees={organization?.featuredTrees?.trees.length}
+              con="af"
             />
           </Box>
           <Box className={classes.speciesBox}>

@@ -9,6 +9,7 @@ import TreeTooltip from '../images/tree_tooltip.svg';
 const useStyles = makeStyles()((theme) => ({
   root: {
     position: 'relative',
+    pointerEvents: 'none',
     '& div': {
       '& svg': {
         width: '100%',
@@ -17,9 +18,6 @@ const useStyles = makeStyles()((theme) => ({
         },
         '& .map-selected': {
           fill: theme.palette.secondary.main,
-        },
-        '& .map-selected:hover, .map-unselected:hover': {
-          cursor: 'pointer',
         },
       },
     },
@@ -31,21 +29,37 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-function ToolTip({ totalTrees, positionObj }) {
+/* Tooltip positions based on screen sizes */
+const toolTipPos = {
+  na: { top: '0%', left: '12%' },
+  sa: { top: '40%', left: '18%' },
+  af: { top: '25%', left: '43%' },
+  eu: { top: '0%', left: '43%' },
+  as: { top: '0%', left: '63%' },
+  oc: { top: '50%', left: '80%' },
+};
+const mobileToolTipPos = {
+  na: { top: '15%', left: '12%' },
+  sa: { top: '40%', left: '17%' },
+  af: { top: '30%', left: '41%' },
+  eu: { top: '15%', left: '43%' },
+  as: { top: '15%', left: '62%' },
+  oc: { top: '45%', left: '78%' },
+};
+
+function ToolTip({ totalTrees, con }) {
   const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { classes } = useStyles();
 
   return (
     <Box
       sx={{
         position: 'absolute',
-        left:
-          positionObj.continentPos.left + positionObj.continentPos.width / 2,
-        top: positionObj.continentPos.top - positionObj.mapPos.top,
-        transform: isMobileScreen
-          ? `translate(-80%, -40%)`
-          : `translate(-50%, -10%)`,
+        top: isMobileScreen ? mobileToolTipPos[con].top : toolTipPos[con].top,
+        left: isMobileScreen
+          ? mobileToolTipPos[con].left
+          : toolTipPos[con].left,
       }}
     >
       <img src={TreeTooltip} alt="tree icon" className={classes.tooltipImg} />
@@ -63,31 +77,14 @@ function ToolTip({ totalTrees, positionObj }) {
   );
 }
 
-function CustomWorldMap({ totalTrees }) {
+function CustomWorldMap({ totalTrees, con }) {
   const { classes } = useStyles();
-  const [selected, onSelect] = React.useState(null);
-  const [positionObj, setPositionObj] = React.useState(null);
-
-  const handleClick = (e) => {
-    // disable clicking on "water", or the tooltip itself
-    if (e.target.nodeName !== 'path') return;
-    // Get position of map container, we need this data because the map is not at the top of the viewport, we need the top of the map to be able to position the tooltip
-    const mapPos = e.target.closest('.row').getBoundingClientRect();
-    // Get position of clicked continent
-    const continentPos = e.target.parentElement.getBoundingClientRect();
-    setPositionObj({ mapPos, continentPos });
-  };
-
-  React.useEffect(() => {
-    if (!selected) setPositionObj(null);
-  }, [selected]);
+  const [selected, onSelect] = React.useState(con);
 
   return (
-    <Box className={classes.root} onClick={handleClick}>
+    <Box className={classes.root}>
       <WorldMap selected={selected} onSelect={onSelect} />
-      {positionObj && (
-        <ToolTip totalTrees={totalTrees} positionObj={positionObj} />
-      )}
+      <ToolTip totalTrees={totalTrees} pos={toolTipPos} con={con} />
     </Box>
   );
 }
