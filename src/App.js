@@ -388,7 +388,7 @@ function App() {
     script.id = 'googleMaps';
     document.body.appendChild(script);
     const parameters = getParameters();
-    parameters.bounds = parameters.bounds.replaceAll('!',',');
+    parameters.bounds = parameters.bounds?.replaceAll('!',',');
     const map = new Map({
       onLoad: loaded,
       onClickTree: showPanel,
