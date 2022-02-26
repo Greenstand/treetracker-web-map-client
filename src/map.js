@@ -193,7 +193,7 @@ var initMarkers = function(viewportBounds, zoomLevel) {
       firstRender == true
     )
   ) {
-    queryUrl = queryUrl + "&bounds=" + viewportBounds;
+    queryUrl = queryUrl + "&bounds=" + viewportBounds.replaceAll(',','!');
   }
   queryUrl = queryUrl + getTreeQueryParametersFromRequestedFilters();
 
