@@ -1,6 +1,6 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Button, Grid } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
@@ -17,7 +17,14 @@ function FeaturedTreesSlider({ trees, size = null }) {
 
   return (
     <div className={classes.SliderContainer}>
-      <Button className={classes.GoRight} onClick={() => scrollHandler(500)}>
+      <Button
+        className={classes.arrow}
+        onClick={() => scrollHandler(500)}
+        sx={{
+          right: 0,
+          borderRadius: '40px 0 0 40px',
+        }}
+      >
         <ArrowForwardIosIcon />
       </Button>
       <Grid ref={sliderRef} className={classes.SliderImgContainer}>
@@ -28,15 +35,25 @@ function FeaturedTreesSlider({ trees, size = null }) {
             className={classes.Card}
           >
             <img className={classes.Img} src={tree.image_url} />
-            <div className={classes.Title}>
-              <p style={{ padding: '0 8px' }}>
+            <Box className={classes.Title}>
+              <Typography
+                variant="h6"
+                sx={{ fontFamily: 'Montserrat', letterSpacing: '0.04em' }}
+              >
                 {tree.species} - {tree.id}
-              </p>
-            </div>
+              </Typography>
+            </Box>
           </Link>
         ))}
       </Grid>
-      <Button className={classes.GoLeft} onClick={() => scrollHandler(-500)}>
+      <Button
+        className={classes.arrow}
+        onClick={() => scrollHandler(-500)}
+        sx={{
+          left: 0,
+          borderRadius: ' 0 40px 40px 0',
+        }}
+      >
         <ArrowBackIosIcon />
       </Button>
     </div>
