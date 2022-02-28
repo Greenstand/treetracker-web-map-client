@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import { green } from '@mui/material/colors';
 import makeStyles from '@mui/styles/makeStyles';
 import log from 'loglevel';
@@ -56,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Share({ shareUrl }) {
+function Share() {
+  const shareUrl = encodeURI(window.location.href);
+
   const classes = useStyles();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isEmbedOpen, setEmbedOpen] = React.useState(false);
@@ -102,10 +105,10 @@ function Share({ shareUrl }) {
 
   React.useEffect(() => {
     setEmbedCode(
-      `<iframe width="560" height="315" src="${shareUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+      `<iframe width="560" height="315" src="${window.location.href}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
     );
-    setLink(`${shareUrl}`);
-  }, [shareUrl]);
+    setLink(window.location.href);
+  }, []);
 
   function showMessage(text) {
     setMessage(text);
@@ -181,10 +184,15 @@ function Share({ shareUrl }) {
 
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item xs={8} className={classes.linkText}>
-              Or this link
+              <Typography>Or this link</Typography>
             </Grid>
             <Grid item xs={12}>
-              <input type="text" className={classes.inputField} value={link} />
+              <input
+                type="text"
+                className={classes.inputField}
+                value={link}
+                readOnly
+              />
             </Grid>
           </Grid>
         </Grid>
