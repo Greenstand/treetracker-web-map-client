@@ -623,10 +623,7 @@ export default class Map{
         this.height,
       );
     }
-    if(this.filters.userid || this.filters.wallet){
-      log.warn("try to get initial bounds");
-      view = await calculateInitialView();
-    }else if(this.filters.treeid || this.filters.tree_name || this.filters.token ){
+    if(this.filters.treeid || this.filters.tree_name || this.filters.token ){
       const {treeid, tree_name, token} = this.filters;
       const url = `${this.apiServerUrl}tree?${treeid? "tree_id=" + treeid :""}${tree_name?"tree_name=" + tree_name:""}${token? "token=" + token:""}`;
       log.info("url to load tree:", url);
@@ -645,6 +642,9 @@ export default class Map{
         },
         zoomLevel: 16,
       }
+    }else if(this.filters.userid || this.filters.wallet){
+      log.warn("try to get initial bounds");
+      view = await calculateInitialView();
     }else if(this.filters.map_name){
       log.info("to init org map");
       if(mapConfig[this.filters.map_name]){
