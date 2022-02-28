@@ -1,5 +1,9 @@
 import Close from '@mui/icons-material/Close';
-import MaterialShareIcon from '@mui/icons-material/Share';
+import Code from '@mui/icons-material/Code';
+import Email from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import ShareIcon from '@mui/icons-material/Share';
+import TwitterIcon from '@mui/icons-material/Twitter';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,32 +13,57 @@ import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
+import { green } from '@mui/material/colors';
+import makeStyles from '@mui/styles/makeStyles';
 import log from 'loglevel';
 import React from 'react';
-import { makeStyles } from 'models/makeStyles';
-import ShareIcon from './ShareIcon';
+import CustomShareIcon from './common/CustomShareIcon';
 
-const useStyles = makeStyles()((theme) => ({
+const useStyles = makeStyles((theme) => ({
+  DialogTitle: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '18px',
+    },
+  },
+  closeIcon: {
+    width: '32px',
+    height: '32px',
+    borderRadius: '4px',
+    backgroundColor: theme.palette.secondary.lightGreen,
+  },
   box1: {
     padding: theme.spacing(4),
-  },
-  box2: {
-    padding: theme.spacing(2),
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(2),
+    },
   },
   code: {
     minWidth: 400,
     margin: 10,
   },
+  linkText: {
+    fontWeight: 'bold',
+  },
+  inputField: {
+    width: '100%',
+    height: '30px',
+    border: 'none',
+    borderRadius: '4px',
+    padding: '8px',
+    marginTop: '8px',
+    backgroundColor: '#F5F5F5',
+  },
 }));
 
-function Share(props) {
-  const { classes } = useStyles();
+function Share({ shareUrl }) {
+  const classes = useStyles();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isEmbedOpen, setEmbedOpen] = React.useState(false);
   const [embedCode, setEmbedCode] = React.useState('');
   const [isMessageOpen, setMessageOpen] = React.useState(false);
   const [message, setMessage] = React.useState('');
-  const { shareUrl } = props;
+  const [link, setLink] = React.useState('');
 
   function handleClick() {
     setIsOpen(true);
@@ -56,25 +85,7 @@ function Share(props) {
     );
   }
 
-  function handleEmail() {
-    window.open(
-      `mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this link to check it! ${shareUrl}`,
-      '_self',
-    );
-  }
-
-  function showMessage(text) {
-    setMessage(text);
-    setMessageOpen(true);
-  }
-
-  function handleCopyLink() {
-    if (navigator && navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl).then(() => {
-        showMessage('Link has been copied!');
-      });
-    }
-  }
+  const mailString = `mailto:?subject=A tree from Greenstand&body=I want to share this tree from Greenstand with you, please click this link to check it! ${shareUrl}`;
 
   function handleEmbed() {
     setIsOpen(false);
@@ -91,9 +102,15 @@ function Share(props) {
 
   React.useEffect(() => {
     setEmbedCode(
-      `<iframe width="560" height="315" src="${shareUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+      `<iframe width="560" height="315" src="${shareUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
     );
-  }, []);
+    setLink(`${shareUrl}`);
+  }, [shareUrl]);
+
+  function showMessage(text) {
+    setMessage(text);
+    setMessageOpen(true);
+  }
 
   function handleCopy() {
     log.log('copy...');
@@ -120,46 +137,66 @@ function Share(props) {
     <>
       <Tooltip title="share tree">
         <IconButton onClick={handleClick}>
-          <MaterialShareIcon />
+          <ShareIcon style={{ color: green[500] }} />
         </IconButton>
       </Tooltip>
-      <Dialog open={isOpen} onClose={handleClose}>
+      <Dialog
+        open={isOpen}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            margin: '8px',
+          },
+        }}
+      >
         <DialogTitle>
-          <Grid container justify="space-between" alignItems="center">
-            <Grid item xs={8}>
-              Share
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item xs={8} className={classes.DialogTitle}>
+              Share this token
             </Grid>
             <Grid item>
-              <IconButton onClick={handleClose}>
-                <Close />
+              <IconButton
+                className={classes.closeIcon}
+                onClick={handleClose}
+                size="large"
+              >
+                <Close style={{ color: green[500] }} />
               </IconButton>
             </Grid>
           </Grid>
         </DialogTitle>
-        <Grid container justify="center" className={classes.box1}>
-          <ShareIcon name="Link" iconSrc="Link" clickHandler={handleCopyLink} />
-          <ShareIcon name="Embed" iconSrc="Embed" clickHandler={handleEmbed} />
-          <ShareIcon
-            name="Twitter"
-            iconSrc="https://dadior.s3-ap-northeast-1.amazonaws.com/twitter2.svg"
-            clickHandler={handleTwitter}
-          />
-          <ShareIcon
-            name="Facebook"
-            iconSrc="https://dadior.s3-ap-northeast-1.amazonaws.com/facebook.svg"
-            clickHandler={handleFaceBook}
-          />
-          <ShareIcon name="Email" iconSrc="Email" clickHandler={handleEmail} />
+        <Grid container justifyContent="center" className={classes.box1}>
+          <CustomShareIcon handleOnClick={handleEmbed}>
+            <Code />
+          </CustomShareIcon>
+          <CustomShareIcon handleOnClick={handleFaceBook}>
+            <FacebookIcon />
+          </CustomShareIcon>
+          <CustomShareIcon handleOnClick={handleTwitter}>
+            <TwitterIcon />
+          </CustomShareIcon>
+          <CustomShareIcon mailString={mailString}>
+            <Email />
+          </CustomShareIcon>
+
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item xs={8} className={classes.linkText}>
+              Or this link
+            </Grid>
+            <Grid item xs={12}>
+              <input type="text" className={classes.inputField} value={link} />
+            </Grid>
+          </Grid>
         </Grid>
       </Dialog>
       <Dialog open={isEmbedOpen} onClose={handleEmbedClose}>
         <DialogTitle>
-          <Grid container justify="space-between" alignItems="center">
+          <Grid container justifyContent="space-between" alignItems="center">
             <Grid item xs={8}>
               Embed Greenstand
             </Grid>
             <Grid item>
-              <IconButton onClick={handleEmbedClose}>
+              <IconButton onClick={handleEmbedClose} size="large">
                 <Close />
               </IconButton>
             </Grid>
@@ -170,7 +207,7 @@ function Share(props) {
           multiline
           variant="outlined"
           value={embedCode}
-          rowsMax={4}
+          maxRows={4}
           onChange={handleChange}
           className={classes.code}
         />
@@ -185,7 +222,7 @@ function Share(props) {
         onClose={handleMessageClose}
         message={message}
         action={
-          <IconButton color="primary" onClick={handleMessageClose}>
+          <IconButton color="primary" onClick={handleMessageClose} size="large">
             <Close />
           </IconButton>
         }
