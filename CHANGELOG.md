@@ -1,3 +1,10 @@
+## [1.16.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.3...v1.16.4) (2022-02-28)
+
+
+### Bug Fixes
+
+* bad tiles ([65f0ac5](https://github.com/Greenstand/treetracker-web-map-client/commit/65f0ac5073eed1d5f8c42ad258786cc4e6261be1))
+
 ## [1.16.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.2...v1.16.3) (2022-02-28)
 
 
