@@ -236,6 +236,13 @@ export default class Map{
           )
         ){
           tile.src = "https://khms0.googleapis.com/kh?v=903&hl=en&x=3792&y=3905&z=13";
+        }else if(
+          (coords.z === 13 && (coords.x >= 4926 && coords.x <=4927 && coords.y >= 4100 && coords.y <= 4102)) ||
+          (coords.z === 14 && (coords.x >= 9852 && coords.x <=9855 && coords.y >= 8200 && coords.y <= 8204))  ||
+          (coords.z === 16 && (coords.x >= 39408 && coords.x <=39423 && coords.y >= 32800 && coords.y <= 32816))  ||
+          (coords.z === 15 && (coords.x >= 19704 && coords.x <=19711 && coords.y >= 16400 && coords.y <= 16408)) 
+        ){
+          tile.src = `https://khms1.google.com/kh/v=917?x=${coords.x}&y=${coords.y}&z=${coords.z}`;
         }else{
           tile.src = this.getTileUrl(coords);
         }
