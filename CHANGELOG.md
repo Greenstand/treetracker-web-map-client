@@ -1,3 +1,10 @@
+## [1.16.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.2...v1.16.3) (2022-02-28)
+
+
+### Bug Fixes
+
+* no logo ([c2d5a02](https://github.com/Greenstand/treetracker-web-map-client/commit/c2d5a022e50ecedc6a3b62510b974e9d39da1f03))
+
 ## [1.16.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.1...v1.16.2) (2022-02-28)
 
 
