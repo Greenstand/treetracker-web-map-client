@@ -2,9 +2,9 @@ import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import { green } from '@mui/material/colors';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'models/makeStyles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   box2: {
     [theme.breakpoints.down('sm')]: {
       width: '25%',
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CustomShareIcon({ handleOnClick, children, mailString }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Grid item className={classes.box2}>
