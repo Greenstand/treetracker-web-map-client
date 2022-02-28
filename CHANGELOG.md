@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.17.0...v1.17.1) (2022-02-28)
+
+
+### Bug Fixes
+
+* support token id ([dd0baa4](https://github.com/Greenstand/treetracker-web-map-client/commit/dd0baa4d9b85401921930f1d9fd449486ceff313))
+
 # [1.17.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.1...v1.17.0) (2022-01-11)
 
 
