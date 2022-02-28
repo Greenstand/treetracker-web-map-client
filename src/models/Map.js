@@ -145,6 +145,8 @@ export default class Map{
         log.info("treeid mode do not need tile server");
       }else if(this.filters.tree_name){
         log.info("tree name mode do not need tile server");
+      }else if(this.filters.token){
+        log.info("token id mode do not need tile server");
       }else{
         await this.loadTileServer();
       }
@@ -164,6 +166,11 @@ export default class Map{
       if(this.filters.tree_name){
         log.info("load tree by name");
         await this.loadTree(undefined, this.filters.tree_name);
+      }
+
+      if(this.filters.token){
+        log.info("load tree by token");
+        await this.loadTree(undefined, undefined, this.filters.token);
       }
 
       // load freetown special map
@@ -450,7 +457,7 @@ export default class Map{
     });
   }
 
-  async loadTree(treeid, treeName){
+  async loadTree(treeid, treeName, token){
     let res;
     if(treeid){
       res = await this.requester.request({
@@ -459,6 +466,10 @@ export default class Map{
     }else if(treeName){
       res = await this.requester.request({
         url: `${this.apiServerUrl}tree?tree_name=${treeName}`,
+      });
+    }else if(token){
+      res = await this.requester.request({
+        url: `${this.apiServerUrl}tree?token=${token}`,
       });
     }else{
       log.error("do not support");
@@ -615,9 +626,9 @@ export default class Map{
     if(this.filters.userid || this.filters.wallet){
       log.warn("try to get initial bounds");
       view = await calculateInitialView();
-    }else if(this.filters.treeid || this.filters.tree_name){
-      const {treeid, tree_name} = this.filters;
-      const url = `${this.apiServerUrl}tree?${treeid? "tree_id=" + treeid : "tree_name=" + tree_name}`;
+    }else if(this.filters.treeid || this.filters.tree_name || this.filters.token ){
+      const {treeid, tree_name, token} = this.filters;
+      const url = `${this.apiServerUrl}tree?${treeid? "tree_id=" + treeid :""}${tree_name?"tree_name=" + tree_name:""}${token? "token=" + token:""}`;
       log.info("url to load tree:", url);
       const res = await this.requester.request({
         url,
