@@ -12,7 +12,7 @@ import { useEffect, useState, useContext } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import DrawerFixedTitle from 'components/common/DrawerTitle';
+import DrawerTitles from 'components/common/DrawerTitles';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
@@ -109,7 +109,7 @@ export default function Planter({ planter }) {
   return (
     <PageWrapper>
       <IsMobileScreen>
-        <DrawerFixedTitle
+        <DrawerTitles
           firstName={planter.first_name}
           lastName={planter.last_name}
           createdTime={planter.created_time}

@@ -9,7 +9,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState, useContext } from 'react';
-import DrawerTitle from './common/DrawerTitle';
+import DrawerTitle from './common/DrawerTitles';
 import { ContextApi } from './common/Hooks/DrawerHooks';
 
 const Root = styled('div')(() => ({

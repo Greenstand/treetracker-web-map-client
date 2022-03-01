@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import log from 'loglevel';
 import { useEffect, useContext } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import DrawerTitles from 'components/common/DrawerTitle';
+import DrawerTitles from 'components/common/DrawerTitles';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
