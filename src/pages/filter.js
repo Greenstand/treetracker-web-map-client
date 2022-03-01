@@ -1,9 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 import SearchFilter from '../components/SearchFilter';
 
 export default function FilterPage() {
   const [filter, setFilter] = React.useState(null);
+  const theme = useTheme();
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   React.useEffect(() => {
     const url = new URL(window.location.href);
@@ -16,9 +18,11 @@ export default function FilterPage() {
 
   return (
     <Box>
-      <Box>
-        <SearchFilter />
-      </Box>
+      {!isMobileScreen && (
+        <Box>
+          <SearchFilter />
+        </Box>
+      )}
       <Box>
         <Typography variant="h6">Filter by:</Typography>
         <Typography variant="body1">
