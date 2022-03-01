@@ -9,7 +9,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState, useContext } from 'react';
-import DrawerTitle from './common/DrawerTitles';
+import DrawerTitles from './common/DrawerTitles';
 import { ContextApi } from './common/Hooks/DrawerHooks';
 
 const Root = styled('div')(() => ({
@@ -177,7 +177,7 @@ function Drawer(props) {
             <Puller />
           </StyledBox>
           {firstName && (
-            <DrawerTitle
+            <DrawerTitles
               firstName={firstName}
               lastName={lastName}
               createdTime={createdTime}
@@ -186,7 +186,7 @@ function Drawer(props) {
           )}
 
           {treeId && (
-            <DrawerTitle
+            <DrawerTitles
               treeId={treeId}
               verifiedTree={verifiedTree}
               verifiedToken={verifiedToken}
