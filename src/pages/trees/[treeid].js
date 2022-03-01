@@ -5,14 +5,16 @@ import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 import log from 'loglevel';
-import * as React from 'react';
+import { useEffect, useContext } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import DrawerTitles from 'components/common/DrawerTitle';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
-import VerifiedBadge from '../../components/VerifiedBadge';
+import { ContextApi } from '../../components/common/Hooks/DrawerHooks';
 import TreeTag from '../../components/common/TreeTag';
 import { useMapContext } from '../../mapContext';
 
@@ -30,12 +32,6 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: 20,
     borderRadius: 16,
     overflow: 'hidden',
-  },
-  badges: {
-    marginTop: 8,
-    '&>*': {
-      marginRight: 8,
-    },
   },
   informationCard: {
     marginTop: theme.spacing(10),
@@ -57,34 +53,52 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
+const IsMobileScreen = styled(Box)(({ theme }) => ({
+  display: 'block',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}));
+
 export default function Tree({ tree, planter, organization }) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
 
+  const { setVerifiedTree, setTreeId, setVerifiedToken } =
+    useContext(ContextApi);
+
   log.warn('map:', mapContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setTreeId(tree.id);
+    setVerifiedTree(tree.verified);
+    setVerifiedToken(tree.token_id);
+  }, [
+    setTreeId,
+    setVerifiedToken,
+    setVerifiedTree,
+    tree.id,
+    tree.token_id,
+    tree.verified,
+  ]);
+
+  useEffect(() => {
     // manipulate the map
     if (mapContext.map && tree?.lat && tree?.lon) {
       mapContext.map.flyTo(tree.lat, tree.lon, 16);
     }
-  }, [mapContext.map]);
+  }, [mapContext.map, tree.lat, tree.lon]);
 
   return (
     <PageWrapper className={classes.root}>
-      <Typography sx={{ color: 'textPrimary.main' }} variant="h2">
-        Tree{/* tree.species */} - #{tree.id}
-      </Typography>
-      <Typography
-        sx={{ color: 'textPrimary.main', fontWeight: 400 }}
-        variant="h5"
-      >
-        Eco-Peace-Vision
-      </Typography>
-      <Box className={classes.badges}>
-        <VerifiedBadge verified={tree.verified} badgeName="Tree Verified" />
-        <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
-      </Box>
+      <IsMobileScreen>
+        <DrawerTitles
+          treeId={tree.id}
+          verifiedTree={tree.verified}
+          verifiedToken={tree.token_id}
+        />
+      </IsMobileScreen>
+
       <CustomImageWrapper
         imageUrl={tree.image_url}
         timeCreated={tree.time_created}

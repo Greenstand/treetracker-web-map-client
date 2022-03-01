@@ -8,7 +8,9 @@ import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import DrawerTitle from './common/DrawerTitle';
+import { ContextApi } from './common/Hooks/DrawerHooks';
 
 const Root = styled('div')(() => ({
   height: '100%',
@@ -25,10 +27,21 @@ const Puller = styled(Box)(({ theme }) => ({
   top: 8,
 }));
 
+const Wrapper = styled(Box)(() => ({}));
+
 function Drawer(props) {
   const { children } = props;
   const [open, setOpen] = useState(true);
   const [hasHeight, setHasHeight] = useState(300);
+
+  const {
+    treeId,
+    firstName,
+    lastName,
+    createdTime,
+    verifiedToken,
+    verifiedTree,
+  } = useContext(ContextApi);
 
   useEffect(() => {
     if (hasHeight <= 0) {
@@ -152,18 +165,34 @@ function Drawer(props) {
           keepMounted: true,
         }}
       >
-        <StyledBox
-          onTouchMove={handleTouch}
-          onMouseMove={handleTouch}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: [0, 4],
-            padding: 5,
-          }}
-        >
-          <Puller />
-        </StyledBox>
+        <Wrapper onTouchMove={handleTouch} onMouseMove={handleTouch}>
+          <StyledBox
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: [0, 4],
+              padding: 5,
+            }}
+          >
+            <Puller />
+          </StyledBox>
+          {firstName && (
+            <DrawerTitle
+              firstName={firstName}
+              lastName={lastName}
+              createdTime={createdTime}
+              widthTitle={150}
+            />
+          )}
+
+          {treeId && (
+            <DrawerTitle
+              treeId={treeId}
+              verifiedTree={verifiedTree}
+              verifiedToken={verifiedToken}
+            />
+          )}
+        </Wrapper>
         <StyledBox
           sx={{
             position: 'relative',
