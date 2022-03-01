@@ -1,25 +1,61 @@
-import { Box, Button } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Typography, Box, Button, Menu, MenuItem } from '@mui/material';
+import log from 'loglevel';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Link from './Link';
+import Filter from './common/Filter';
 
 export default function SearchFilter() {
   const [keyword, setKeyword] = React.useState('');
   const [keywordPlaceholder, setKeywordPlaceholder] = React.useState('Search');
+  const [mode, setMode] = React.useState('search');
   const router = useRouter();
+  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  function embedPath() {
+    const url = new URL(window.location.href);
+    let path = '';
+    if (url.searchParams.get('embed')) {
+      path = '&embed=true';
+    }
+    return path;
+  }
 
   function handleSearchClick() {
     // jump to search page using next router
-    router.push(`/search?keyword=${keyword}`);
+    router.push(`/search?keyword=${keyword}${embedPath()}`);
   }
 
   function handleChange(e) {
     setKeyword(e.target.value);
   }
 
-  function handleFilterClick() {
-    // setMode("filter");
-    router.push(`/filter`);
+  function handleFilter(filter) {
+    log.warn('handle filter:', filter);
+    router.push(
+      `/filter?timeline=${filter.startDate}_${filter.endDate}${embedPath()}`,
+    );
+    setIsFilterOpen(false);
+  }
+
+  function handleDropDownClick(event) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  function handleModeClick(mode2) {
+    setMode(mode2);
+    setAnchorEl(null);
+  }
+
+  function handleOpenFilter() {
+    setIsFilterOpen(!isFilterOpen);
   }
 
   React.useEffect(() => {
@@ -51,16 +87,34 @@ export default function SearchFilter() {
           <Link href={`/search?keyword=${keywordPlaceholder}`}>Back</Link>
         </Box>
       )}
-      <Box>
-        <input
-          placeholder={keywordPlaceholder}
-          onChange={handleChange}
-          value={keyword}
-          type="text"
-        />
-      </Box>
-      <Button onClick={handleSearchClick}>Search</Button>|
-      <Button onClick={handleFilterClick}>Filter</Button>
+      {mode === 'search' && (
+        <>
+          <Box>
+            <input
+              placeholder={keywordPlaceholder}
+              onChange={handleChange}
+              value={keyword}
+              type="text"
+            />
+          </Box>
+          <Button onClick={handleSearchClick}>Search</Button>
+        </>
+      )}
+      {mode === 'filter' && (
+        <>
+          <Box onClick={handleOpenFilter}>
+            <Typography variant="h6">Filter by:</Typography>
+          </Box>
+          {isFilterOpen && (
+            <Filter isFilterOpenInitial onFilter={handleFilter} />
+          )}
+        </>
+      )}
+      <ArrowDropDownIcon onClick={handleDropDownClick} />
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem onClick={() => handleModeClick('search')}>Search</MenuItem>
+        <MenuItem onClick={() => handleModeClick('filter')}>Filter</MenuItem>
+      </Menu>
     </Box>
   );
 }

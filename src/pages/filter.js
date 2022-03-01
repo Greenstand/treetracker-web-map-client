@@ -1,23 +1,18 @@
-import { Box } from '@mui/material';
-import log from 'loglevel';
+import { Box, Typography } from '@mui/material';
+import React from 'react';
 import SearchFilter from '../components/SearchFilter';
-import Filter from '../components/common/Filter';
-import { useMapContext } from '../mapContext';
 
-export default function Search() {
-  const { map } = useMapContext();
+export default function FilterPage() {
+  const [filter, setFilter] = React.useState(null);
 
-  function handleFilter(filter) {
-    log.warn('handleFilter', filter);
-    if (!map) return;
-    map.setFilters({
-      timeline: `${filter.startDate}_${filter.endDate}`,
-    });
-    map.rerender();
+  React.useEffect(() => {
     const url = new URL(window.location.href);
-    url.searchParams.set('timeline', `${filter.startDate}_${filter.endDate}`);
-    window.history.pushState('treetrakcer', '', url.href);
-  }
+    const timeline = url.searchParams.get('timeline');
+    setFilter({
+      startDate: timeline ? timeline.split('_')[0] : '',
+      endDate: timeline ? timeline.split('_')[1] : '',
+    });
+  }, []);
 
   return (
     <Box>
@@ -25,7 +20,14 @@ export default function Search() {
         <SearchFilter />
       </Box>
       <Box>
-        <Filter isFilterOpenInitial onFilter={handleFilter} />
+        <Typography variant="h6">Filter by:</Typography>
+        <Typography variant="body1">
+          Start Date: {filter && filter.startDate}
+        </Typography>
+        <Typography variant="body1">
+          End Date: {filter && filter.startDate}
+        </Typography>
+        <Typography variant="body1">Found trees: 1,000,000</Typography>
       </Box>
     </Box>
   );

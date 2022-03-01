@@ -10,6 +10,7 @@ import Layout from '../components/Layout';
 import LayoutEmbed from '../components/LayoutEmbed';
 import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
+import LayoutMobileC from '../components/LayoutMobileC';
 import useEmbed from '../hooks/useEmbed';
 import { MapContextProvider } from '../mapContext';
 import appTheme from '../theme';
@@ -58,15 +59,20 @@ function TreetrackerApp({ Component, pageProps }) {
               <Component {...pageProps} {...extraProps} />
             </LayoutEmbed>
           )}
-          {!nextExtraIsDesktop && !Component.isBLayout && (
-            <LayoutMobile>
-              <Component {...pageProps} {...extraProps} />
-            </LayoutMobile>
-          )}
           {!nextExtraIsDesktop && Component.isBLayout && (
             <LayoutMobileB>
               <Component {...pageProps} {...extraProps} />
             </LayoutMobileB>
+          )}
+          {!nextExtraIsDesktop && Component.isCLayout && (
+            <LayoutMobileC>
+              <Component {...pageProps} {...extraProps} />
+            </LayoutMobileC>
+          )}
+          {!nextExtraIsDesktop && !Component.isBLayout && !Component.isCLayout && (
+            <LayoutMobile>
+              <Component {...pageProps} {...extraProps} />
+            </LayoutMobile>
           )}
         </MapContextProvider>
       </ThemeProvider>

@@ -1,7 +1,10 @@
 import OpenWithIcon from '@mui/icons-material/OpenWith';
 import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
 import Fab from '@mui/material/Fab';
 import dynamic from 'next/dynamic';
+import React from 'react';
+import SearchFilter from './SearchFilter';
 // import { makeStyles } from 'models/makeStyles';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -41,10 +44,15 @@ const App = dynamic(() => import('./App'), { ssr: false });
 // }));
 
 export default function Layout({ children, isFloatingDisabled }) {
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   // const { _classes } = useStyles();
   function handleFullScreen() {
     // navigate to /container page through next.js's api
     window.location.href = window.location.href.replace(/embed=true/, '');
+  }
+
+  function handleDrawerToggle() {
+    setIsDrawerOpen(!isDrawerOpen);
   }
   return (
     <>
@@ -59,20 +67,89 @@ export default function Layout({ children, isFloatingDisabled }) {
         <App />
       </Box>
       {!isFloatingDisabled && (
-        <Box>
-          <Box
+        <>
+          <Drawer
             sx={{
-              position: 'absolute',
-              zIndex: '99999',
-              top: '0px',
-              background: 'white',
               width: '499px',
-              overflow: 'scroll',
-              height: '100vh',
+              flexShrink: 0,
+              '& .MuiDrawer-paper': {
+                width: '499px',
+                boxSizing: 'border-box',
+              },
+            }}
+            variant="persistent"
+            anchor="left"
+            open={isDrawerOpen}
+          >
+            <Box>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  zIndex: '99999',
+                  top: '0px',
+                  background: 'white',
+                  width: '499px',
+                  overflow: 'scroll',
+                  height: '100vh',
+                }}
+              >
+                {children}
+              </Box>
+            </Box>
+          </Drawer>
+          {isDrawerOpen && (
+            <Box
+              onClick={handleDrawerToggle}
+              sx={{
+                position: 'absolute',
+                top: '0',
+                left: '499px',
+                zIndex: '999',
+                background: 'white',
+                fontSize: '32px',
+              }}
+            >
+              X
+            </Box>
+          )}
+        </>
+      )}
+
+      {!isDrawerOpen && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 12,
+            left: 12,
+            zIndex: '999',
+            backgroundColor: 'white',
+            display: 'flex',
+          }}
+        >
+          <SearchFilter />
+          <Box
+            onClick={handleDrawerToggle}
+            sx={{
+              fontSize: '32px',
             }}
           >
-            {children}
+            X
           </Box>
+        </Box>
+      )}
+
+      {isFloatingDisabled && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 12,
+            left: 12,
+            zIndex: '999',
+            backgroundColor: 'white',
+            display: 'flex',
+          }}
+        >
+          <SearchFilter />
         </Box>
       )}
 

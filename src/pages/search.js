@@ -5,6 +5,14 @@ import SearchFilter from '../components/SearchFilter';
 
 export default function Search(props) {
   const { list, keyword } = props;
+  function embedPath() {
+    const url = new URL(window.location.href);
+    let path = '';
+    if (url.searchParams.get('embed')) {
+      path = '&embed=true';
+    }
+    return path;
+  }
 
   return (
     <Box>
@@ -14,7 +22,9 @@ export default function Search(props) {
       <Box>
         {list.map((item) => (
           <Box key={item.id}>
-            <Link href={`/trees/${item.id}?keyword=${keyword}`}>{item.id}</Link>
+            <Link href={`/trees/${item.id}?keyword=${keyword}${embedPath()}`}>
+              {item.id}
+            </Link>
           </Box>
         ))}
       </Box>
@@ -35,3 +45,5 @@ export async function getServerSideProps({ query }) {
     },
   };
 }
+
+Search.isCLayout = true;
