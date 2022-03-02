@@ -29,8 +29,14 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
         {icon}
       </Grid>
       <Grid item>
-        <Typography variant="body1">{title}</Typography>
-        <Typography variant="h5" sx={{ fontFamily: 'Lato' }}>
+        <Typography variant="body1" color="common.white">
+          {title}
+        </Typography>
+        <Typography
+          variant="h5"
+          color="common.white"
+          sx={{ fontFamily: 'Lato' }}
+        >
           {TreeTagValue}
         </Typography>
       </Grid>

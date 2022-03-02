@@ -6,6 +6,7 @@ import Logo from '../images/greenstand_logo.svg';
 
 const useStyles = makeStyles()((theme) => ({
   container: {
+    backgroundColor: theme.palette.common.white,
     boxSizing: 'border-box',
     height: 'fit-content',
     padding: theme.spacing(6),
@@ -79,13 +80,21 @@ function InformationCard1({
           flexDirection="column"
           justifyContent="center"
         >
-          <Typography variant="body1">{entityType}</Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'textPrimary.main',
+            }}
+          >
+            {entityType}
+          </Typography>
           <Typography
             variant="h4"
             sx={{
               fontFamily: 'Lato',
               fontWeight: 700,
               letterSpacing: '0.02em',
+              color: 'textPrimary.main',
             }}
           >
             {entityName}
@@ -96,9 +105,10 @@ function InformationCard1({
         <Button className={classes.button} fullWidth>
           <Typography
             variant="h5"
+            // color="text.secondary"
             sx={{
-              color: 'textSecondary.main',
               fontFamily: 'Lato',
+              color: 'textSecondary.main',
             }}
           >
             {buttonText}

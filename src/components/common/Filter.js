@@ -9,23 +9,15 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
-import { makeStyles } from 'models/makeStyles';
 import { formatDates } from 'models/utils';
 
-const useStyles = makeStyles()((theme) => ({
-  inputLabel: {
-    color: theme.palette.textPrimary.main,
-    fontFamily: 'Lato',
-    letterSpacing: '0.5px',
-  },
-}));
-
 function Filter(props) {
-  const { onFilter } = props;
-  const { classes } = useStyles();
+  const { onFilter, isFilterOpenInitial } = props;
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(
+    isFilterOpenInitial || false,
+  );
   const [isError, setIsError] = useState(false);
   const [onSubmit, setOnSubmit] = useState(false);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
@@ -99,39 +91,25 @@ function Filter(props) {
             alignItems: 'center',
           }}
         >
-          <Typography
-            variant="h3"
-            sx={{
-              color: 'textPrimary.main',
-            }}
-          >
-            Featured Trees
-          </Typography>
+          <Typography variant="h3">Featured Trees</Typography>
           <Button
             variant={isFilterOpen ? 'contained' : 'outlined'}
             color="primary"
             sx={{
-              color: !isFilterOpen ? 'textPrimary.main' : '',
               px: [2, 3],
               py: [2.25, 2.875],
+              fontSize: [12, 16],
+              textTransform: 'none',
             }}
             onClick={() => isHandleFilterIsOpen()}
           >
-            <FilterListRoundedIcon fontSize="small" />
-            <Typography
-              variant="body1"
-              pl={2}
-              sx={{
-                textTransform: 'none',
-              }}
-            >
-              Filters
-              {onSubmit &&
-                ` are ${formatDates(startDate, 'YYYY-MM-DD')} / ${formatDates(
-                  endDate,
-                  'YYYY-MM-DD',
-                )}`}
-            </Typography>
+            <FilterListRoundedIcon fontSize="small" sx={{ mr: 1 }} />
+            Filters
+            {onSubmit &&
+              ` are ${formatDates(startDate, 'YYYY-MM-DD')} / ${formatDates(
+                endDate,
+                'YYYY-MM-DD',
+              )}`}
           </Button>
         </Box>
         {isFilterOpen && (
@@ -163,16 +141,18 @@ function Filter(props) {
                           label="Start Date"
                           variant="outlined"
                           size="small"
-                          error={isError}
                           color="secondary"
+                          error={isError}
                           InputLabelProps={{
                             shrink: true,
-                            className: classes.inputLabel,
                           }}
                           sx={{
                             width: 1,
                             fontFamily: 'Lato',
-                            color: 'textPrimary.main',
+                            letterSpacing: '0.5px',
+                            '& input': {
+                              color: 'text.secondary',
+                            },
                           }}
                         />
                       )}
@@ -194,12 +174,14 @@ function Filter(props) {
                           color="secondary"
                           InputLabelProps={{
                             shrink: true,
-                            className: classes.inputLabel,
                           }}
                           sx={{
                             width: 1,
                             fontFamily: 'Lato',
-                            color: 'textPrimary.main',
+                            letterSpacing: '0.5px',
+                            '& input': {
+                              color: 'text.secondary',
+                            },
                           }}
                         />
                       )}

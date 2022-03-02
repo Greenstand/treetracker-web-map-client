@@ -1,10 +1,7 @@
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-import Drawer from './Drawer';
-import SearchFilter from './SearchFilter';
 
-const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 
 const useStyles = makeStyles()((theme) => ({
@@ -49,35 +46,8 @@ export default function Layout({ children }) {
     <Box className={classes.root}>
       <Navbar />
       <Box sx={{ position: 'relative', width: 1, height: 1 }}>
-        <Box
-          sx={{ position: 'absolute', top: 0, left: 0, width: 1, height: 1 }}
-        >
-          <App />
-        </Box>
-        <Box
-          sx={{
-            position: 'absolute',
-            width: 1,
-            height: 1,
-            zIndex: 1000,
-            pointerEvents: 'none',
-          }}
-        >
-          <Drawer>{children}</Drawer>
-        </Box>
-        <Box
-          sx={{
-            position: 'absolute',
-            zIndex: 1000,
-            width: '100%',
-            display: 'flex',
-            padding: '10px 10px',
-            '&>div': {
-              backgroundColor: 'white',
-            },
-          }}
-        >
-          <SearchFilter />
+        <Box sx={{ position: 'absolute', width: 1, height: 1, zIndex: 1000 }}>
+          {children}
         </Box>
       </Box>
     </Box>
