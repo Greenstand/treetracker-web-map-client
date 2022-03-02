@@ -35,12 +35,14 @@ function Drawer(props) {
   const [hasHeight, setHasHeight] = useState(300);
 
   const {
-    treeId,
-    firstName,
-    lastName,
-    createdTime,
-    verifiedToken,
-    verifiedTree,
+    titles: {
+      treeId,
+      firstName,
+      lastName,
+      createdTime,
+      verifiedToken,
+      verifiedTree,
+    },
   } = useContext(ContextApi);
 
   useEffect(() => {

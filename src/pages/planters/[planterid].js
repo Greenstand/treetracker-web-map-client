@@ -68,22 +68,17 @@ export default function Planter({ planter }) {
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
 
-  const { setFirstName, setLastName, setCreatedTime } = useContext(ContextApi);
+  const { setTitles } = useContext(ContextApi);
 
   const { classes } = useStyles();
 
   useEffect(() => {
-    setFirstName(planter.first_name);
-    setLastName(planter.last_name);
-    setCreatedTime(planter.created_time);
-  }, [
-    planter.created_time,
-    planter.first_name,
-    planter.last_name,
-    setCreatedTime,
-    setFirstName,
-    setLastName,
-  ]);
+    setTitles({
+      firstName: planter.first_name,
+      lastName: planter.last_name,
+      createdTime: planter.created_time,
+    });
+  }, [planter.created_time, planter.first_name, planter.last_name, setTitles]);
 
   useEffect(() => {
     async function reload() {

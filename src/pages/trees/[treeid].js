@@ -64,23 +64,17 @@ export default function Tree({ tree, planter, organization }) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
 
-  const { setVerifiedTree, setTreeId, setVerifiedToken } =
-    useContext(ContextApi);
+  const { setTitles } = useContext(ContextApi);
 
   log.warn('map:', mapContext);
 
   useEffect(() => {
-    setTreeId(tree.id);
-    setVerifiedTree(tree.verified);
-    setVerifiedToken(tree.token_id);
-  }, [
-    setTreeId,
-    setVerifiedToken,
-    setVerifiedTree,
-    tree.id,
-    tree.token_id,
-    tree.verified,
-  ]);
+    setTitles({
+      treeId: tree.id,
+      verifiedToken: tree.token_id,
+      verifiedTree: tree.verified,
+    });
+  }, [setTitles, tree.id, tree.token_id, tree.verified]);
 
   useEffect(() => {
     // manipulate the map
