@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 
@@ -22,7 +23,6 @@ const useStyles = makeStyles()((theme) => ({
     width: '50%',
     height: '100%',
     zIndex: 999,
-    background: theme.palette.background.default,
     overflowY: 'auto',
     display: 'flex',
     [theme.breakpoints.down('sm')]: {
@@ -45,7 +45,7 @@ export default function Layout({ children }) {
     <Box className={classes.root}>
       <Navbar />
       <Box className={classes.main}>
-        <Box className={classes.left}>{children}</Box>
+        <Paper className={classes.left}>{children}</Paper>
         <Box className={classes.right}>
           <App />
         </Box>

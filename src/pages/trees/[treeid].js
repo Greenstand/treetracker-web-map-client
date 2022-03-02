@@ -72,13 +72,10 @@ export default function Tree({ tree, planter, organization }) {
 
   return (
     <PageWrapper className={classes.root}>
-      <Typography sx={{ color: 'textPrimary.main' }} variant="h2">
+      <Typography variant="h2">
         Tree{/* tree.species */} - #{tree.id}
       </Typography>
-      <Typography
-        sx={{ color: 'textPrimary.main', fontWeight: 400 }}
-        variant="h5"
-      >
+      <Typography sx={{ fontWeight: 400 }} variant="h5">
         Eco-Peace-Vision
       </Typography>
       <Box className={classes.badges}>
@@ -113,7 +110,6 @@ export default function Tree({ tree, planter, organization }) {
       <Typography
         variant="h4"
         sx={{
-          color: 'textPrimary.main',
           fontSize: [24, 28],
           lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
           mt: (t) => [t.spacing(14), t.spacing(26)],

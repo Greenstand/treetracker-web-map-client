@@ -2,14 +2,13 @@ import '../style.css';
 
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { ThemeProvider } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { useMediaQuery, useTheme } from '@mui/material';
 import log from 'loglevel';
 import Layout from '../components/Layout';
 import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
+import { CustomThemeProvider } from '../context/themeContext';
 import { MapContextProvider } from '../mapContext';
-import appTheme from '../theme';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   log.warn('Mocking API calls with msw');
@@ -27,13 +26,14 @@ export const createMuiCache = () =>
   }));
 
 function TreetrackerApp({ Component, pageProps }) {
-  const isDesktop = useMediaQuery(appTheme.breakpoints.up('sm'));
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
   log.warn('app: isDesktop: ', isDesktop);
   // log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
   return (
     <CacheProvider value={muiCache ?? createMuiCache()}>
-      <ThemeProvider theme={appTheme}>
+      <CustomThemeProvider>
         <MapContextProvider>
           {isDesktop && (
             <Layout>
@@ -51,7 +51,7 @@ function TreetrackerApp({ Component, pageProps }) {
             </LayoutMobileB>
           )}
         </MapContextProvider>
-      </ThemeProvider>
+      </CustomThemeProvider>
     </CacheProvider>
   );
 }

@@ -42,9 +42,6 @@ const useStyles = makeStyles()((theme) => ({
       marginBottom: theme.spacing(14),
     },
   },
-  textColor: {
-    color: theme.palette.textPrimary.main,
-  },
 }));
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -88,7 +85,7 @@ export default function Planter({ planter }) {
 
   return (
     <PageWrapper>
-      <Typography variant="h2" className={classes.textColor}>
+      <Typography variant="h2">
         {utils.hideLastName(`${planter.first_name}${planter.last_name}`)}
       </Typography>
 
@@ -150,7 +147,6 @@ export default function Planter({ planter }) {
             variant="h4"
             sx={{
               fontSize: [16, 24],
-              color: 'textPrimary.main',
               mt: [0, 20],
               mb: [6, 10],
             }}
@@ -214,11 +210,7 @@ export default function Planter({ planter }) {
         {placeholderText}
         {planter.about}
       </Typography>
-      <Typography
-        variant="h4"
-        className={classes.textColor}
-        sx={{ mt: { xs: 10, md: 16 } }}
-      >
+      <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
         Mission
       </Typography>
       <Typography variant="body2" className={classes.textColor} mt={7}>
@@ -226,7 +218,7 @@ export default function Planter({ planter }) {
         {planter.mission}
       </Typography>
       <Divider varian="fullwidth" className={classes.divider} />
-      <Typography variant="h4" className={classes.textColor} mb={9}>
+      <Typography variant="h4" mb={9}>
         Check out the planting effort in action
       </Typography>
       <Box mb={17}>
