@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState, useContext } from 'react';
 import DrawerTitles from './common/DrawerTitles';
-import { ContextApi } from './common/Hooks/DrawerHooks';
+import { ContextApi } from '../hooks/DrawerHooks';
 
 const Root = styled('div')(() => ({
   height: '100%',

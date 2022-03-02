@@ -18,7 +18,7 @@ import { getPlanterById, getOrgLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import CustomCard from '../../components/common/CustomCard';
-import { ContextApi } from '../../components/common/Hooks/DrawerHooks';
+import { ContextApi } from '../../hooks/DrawerHooks';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 

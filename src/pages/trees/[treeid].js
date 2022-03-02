@@ -14,8 +14,8 @@ import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
-import { ContextApi } from '../../components/common/Hooks/DrawerHooks';
 import TreeTag from '../../components/common/TreeTag';
+import { ContextApi } from '../../hooks/DrawerHooks';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
