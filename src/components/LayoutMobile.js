@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 import Drawer from './Drawer';
-import SearchFilterMobile from './SearchFilterMobile';
+import SearchFilter from './SearchFilter';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
@@ -77,7 +77,7 @@ export default function Layout({ children }) {
             },
           }}
         >
-          <SearchFilterMobile />
+          <SearchFilter />
         </Box>
       </Box>
     </Box>

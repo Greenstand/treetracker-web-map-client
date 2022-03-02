@@ -8,6 +8,7 @@ import Filter from './common/Filter';
 
 export default function SearchFilter() {
   const [keyword, setKeyword] = React.useState('');
+  const [filterText, setFilterText] = React.useState('');
   const [keywordPlaceholder, setKeywordPlaceholder] = React.useState('Search');
   const [mode, setMode] = React.useState('search');
   const router = useRouter();
@@ -33,12 +34,29 @@ export default function SearchFilter() {
     setKeyword(e.target.value);
   }
 
+  function updateStatus() {
+    const url = new URL(window.location.href);
+    const keyword2 = url.searchParams.get('keyword');
+    if (keyword2) {
+      setKeywordPlaceholder(keyword2);
+      setMode('search');
+    }
+    const timeline = url.searchParams.get('timeline');
+    if (timeline) {
+      setFilterText(`timeline:${timeline}`);
+      setMode('filter');
+    }
+  }
+
   function handleFilter(filter) {
     log.warn('handle filter:', filter);
     router.push(
       `/filter?timeline=${filter.startDate}_${filter.endDate}${embedPath()}`,
     );
     setIsFilterOpen(false);
+    setTimeout(() => {
+      updateStatus();
+    }, 10);
   }
 
   function handleDropDownClick(event) {
@@ -59,11 +77,7 @@ export default function SearchFilter() {
   }
 
   React.useEffect(() => {
-    const url = new URL(window.location.href);
-    const keyword2 = url.searchParams.get('keyword');
-    if (keyword2) {
-      setKeywordPlaceholder(keyword2);
-    }
+    updateStatus();
   }, []);
 
   return (
@@ -80,6 +94,7 @@ export default function SearchFilter() {
         // boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.25)',
         // borderRadius: '50px',
         border: '1px solid #E0E0E0',
+        position: 'relative',
       }}
     >
       {keywordPlaceholder && (
@@ -102,11 +117,26 @@ export default function SearchFilter() {
       )}
       {mode === 'filter' && (
         <>
-          <Box onClick={handleOpenFilter}>
-            <Typography variant="h6">Filter by:</Typography>
+          <Box
+            sx={{
+              minWidth: 100,
+            }}
+            onClick={handleOpenFilter}
+          >
+            <Typography variant="h6">filter by:{filterText}</Typography>
           </Box>
           {isFilterOpen && (
-            <Filter isFilterOpenInitial onFilter={handleFilter} />
+            <Box
+              sx={{
+                position: 'absolute',
+                backgroundColor: 'white',
+                top: '43px',
+                left: '1px',
+                zIndex: '9999',
+              }}
+            >
+              <Filter isFilterOpenInitial onFilter={handleFilter} />
+            </Box>
           )}
         </>
       )}
