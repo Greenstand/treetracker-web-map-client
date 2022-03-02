@@ -16,4 +16,5 @@ it(`treeid page`, () => {
   });
   cy.visit(treePath);
   cy.contains(`${exampleTreeData.id}`);
+  cy.screenshot();
 });

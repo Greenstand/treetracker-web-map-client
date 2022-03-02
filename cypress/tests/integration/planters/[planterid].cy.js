@@ -14,5 +14,6 @@ describe('Planter page', () => {
     });
     cy.contains(planter.id);
     cy.get('.MuiTypography-h2').contains(/sebastian g/i);
+    cy.screenshot();
   });
 });
