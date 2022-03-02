@@ -8,12 +8,13 @@ import SearchButton from 'components/SearchButton';
 import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
+import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Filter from '../components/common/Filter';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
-export default function Top({ trees, countries }) {
+function Top({ trees, countries }) {
   // use map context to get the map
   const { map } = useMapContext();
 
@@ -67,15 +68,28 @@ export default function Top({ trees, countries }) {
 
   return (
     <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
-      {!isMobileScreen && (
+      {!isMobileScreen && false && (
         <Stack direction="row" justifyContent="flex-end" mb={6.125}>
           <SearchButton />
         </Stack>
       )}
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Filter onFilter={handleFilter} />
+      {!isMobileScreen && <SearchFilter />}
+
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h3">Featured Trees</Typography>
       </Box>
+      {false && ( // going to be replaced by search filter component
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Filter onFilter={handleFilter} />
+        </Box>
+      )}
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>
@@ -114,3 +128,6 @@ export async function getServerSideProps() {
     },
   };
 }
+
+Top.isFloatingDisabled = true;
+export default Top;

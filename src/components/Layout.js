@@ -1,5 +1,6 @@
+import OpenWithIcon from '@mui/icons-material/OpenWith';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import Fab from '@mui/material/Fab';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 
@@ -41,15 +42,37 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Layout({ children }) {
   const { classes } = useStyles();
+  function handleFullScreen() {
+    // navigate to /container page through next.js's api
+    const url = new URL(window.location.href);
+    url.searchParams.set('embed', true);
+    window.location.href = url.toString();
+  }
   return (
-    <Box className={classes.root}>
-      <Navbar />
-      <Box className={classes.main}>
-        <Paper className={classes.left}>{children}</Paper>
-        <Box className={classes.right}>
-          <App />
+    <>
+      <Box className={classes.root}>
+        <Navbar />
+        <Box className={classes.main}>
+          <Box className={classes.left}>{children}</Box>
+          <Box className={classes.right}>
+            <App />
+          </Box>
         </Box>
       </Box>
-    </Box>
+      <Fab
+        onClick={handleFullScreen}
+        sx={{
+          position: 'absolute',
+          zIndex: '9999',
+          bottom: '0px',
+          right: '0px',
+          margin: '20px',
+        }}
+        color="secondary"
+        aria-label="edit"
+      >
+        <OpenWithIcon />
+      </Fab>
+    </>
   );
 }
