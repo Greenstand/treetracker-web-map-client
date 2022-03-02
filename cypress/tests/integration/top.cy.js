@@ -18,5 +18,6 @@ describe('top', () => {
     cy.contains('Featured Trees');
     cy.contains('Check out the global leaders in the tree planting effort');
     cy.contains('Tanzania');
+    cy.screenshot();
   });
 });

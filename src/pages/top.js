@@ -76,6 +76,15 @@ function Top({ trees, countries }) {
 
       {!isMobileScreen && <SearchFilter />}
 
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h3">Featured Trees</Typography>
+      </Box>
       {false && ( // going to be replaced by search filter component
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Filter onFilter={handleFilter} />
