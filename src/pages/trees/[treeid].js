@@ -165,7 +165,10 @@ export async function getServerSideProps({ params }) {
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
   const planter = await getPlanterById(planter_id);
-  const organization = await getOrganizationById(planting_organization_id);
+  let organization = null;
+  if (planting_organization_id) {
+    organization = await getOrganizationById(planting_organization_id);
+  }
 
   return {
     props: {
