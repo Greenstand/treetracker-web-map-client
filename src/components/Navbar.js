@@ -127,9 +127,8 @@ function Navbar() {
             <Typography className={classes.buttonStyle}>Contact Us</Typography>
           </Button>
         </Link>
+        <Button onClick={colorMode.toggleColorMode}>Theme</Button>
       </Toolbar>
-      {/* TEMPORARY BUTTON, SHOULD BE REMOVED */}
-      <Button onClick={colorMode.toggleColorMode}>Theme</Button>
       <Button
         className={classes.menuButton}
         aria-controls="basic-menu"
@@ -161,6 +160,9 @@ function Navbar() {
         <MenuItem onClick={handleClose}>Services</MenuItem>
         <MenuItem onClick={handleClose}>Blog</MenuItem>
         <MenuItem onClick={handleClose}>Contact Us</MenuItem>
+        <MenuItem onClick={handleClose} sx={{ paddingLeft: '10px' }}>
+          <Button onClick={colorMode.toggleColorMode}>Theme</Button>
+        </MenuItem>
       </Menu>
     </AppBar>
   );
