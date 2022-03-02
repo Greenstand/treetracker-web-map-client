@@ -16,28 +16,55 @@ jobs:
       !contains(github.event.head_commit.message, 'skip-ci')
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Node.js 16.x
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-      - name: npm clean install
-        run: npm ci
-        working-directory: ${{ env.project-directory }}
-      # - name: run ESLint
-      #   run: npm run lint
-      #   working-directory: ${{ env.project-directory }}
+
+      # only install dependencies
+      # https://github.com/cypress-io/github-action
+      - name: Install 📦
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+
       # define the endpoints for DEV in github secrets
       - name: build frontend project
         run: ${{ secrets.DEV_APP_ENDPOINTS }} CI= npm run build
         working-directory: ${{ env.project-directory }}
+
+      # Install cached NPM dependencies, run end to end tests
+      - name: Cypress E2E Tests 🧪
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          # run these before testing
+          start: npm run start
+          # wait for server to be ready
+          wait-on: 'http://localhost:3000'
+
       - uses: actions/upload-artifact@v2
         if: github.event_name == 'push' && github.repository == "Greenstand/${{ github.event.repository.name }}"
         with:
           name: frontend-bundle
           path: build
-    # - name: run React tests
-    #   run: npm test
-    #   working-directory: ${{ env.project-directory }}
+
+      - name: Save screenshots
+        # step runs even if other steps fail
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Save videos
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
   release:
     name: Release semantic version
     needs: frontend

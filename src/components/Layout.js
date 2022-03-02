@@ -24,7 +24,6 @@ const useStyles = makeStyles()((theme) => ({
     width: '50%',
     height: '100%',
     zIndex: 999,
-    background: theme.palette.background.default,
     overflowY: 'auto',
     display: 'flex',
     [theme.breakpoints.down('sm')]: {

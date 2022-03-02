@@ -43,9 +43,6 @@ const useStyles = makeStyles()((theme) => ({
       marginBottom: theme.spacing(14),
     },
   },
-  textColor: {
-    color: theme.palette.textPrimary.main,
-  },
 }));
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -92,8 +89,8 @@ export default function Planter(props) {
   return (
     <>
       <PageWrapper>
-        <Typography variant="h2" className={classes.textColor}>
-          {utils.hideLastName(`${planter.first_name} ${planter.last_name}`)}
+        <Typography variant="h2">
+          {utils.hideLastName(`${planter.first_name}${planter.last_name}`)}
         </Typography>
 
         <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
@@ -148,33 +145,12 @@ export default function Planter(props) {
         {isPlanterTab && (
           <>
             <Box sx={{ mt: [0, 22] }}>
-              <CustomWorldMap totalTrees={treeCount} />
+              <CustomWorldMap totalTrees={treeCount} con="af" />
             </Box>
             <Typography
               variant="h4"
               sx={{
                 fontSize: [16, 24],
-                color: 'textPrimary.main',
-                mt: [0, 20],
-                mb: [6, 10],
-              }}
-            >
-              Species of trees planted
-            </Typography>
-            <Box className={classes.speciesBox}>
-              {planter.species.species.map((species) => (
-                <TreeSpeciesCard
-                  key={species.id}
-                  name={species.name}
-                  count={species.count}
-                />
-              ))}
-            </Box>
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: [16, 24],
-                color: 'textPrimary.main',
                 mt: [0, 20],
                 mb: [6, 10],
               }}

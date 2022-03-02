@@ -68,6 +68,7 @@ const useStyles = makeStyles()((theme) => ({
   title: {
     fontFamily: 'Lato',
     fontWeight: 700,
+    // color: theme.palette.text.secondary,
     [theme.breakpoints.down('md')]: {
       fontWeight: 400,
     },
@@ -127,13 +128,18 @@ function LeaderBoard(props) {
               sx={{
                 textAlign: 'center',
               }}
+              color="text.secondary"
               className={classes.title}
             >
               #
             </Typography>
           </Grid>
           <Grid item xs={4} pl={4}>
-            <Typography variant="h5" className={classes.title}>
+            <Typography
+              variant="h5"
+              color="text.secondary"
+              className={classes.title}
+            >
               COUNTRY
             </Typography>
           </Grid>
@@ -141,6 +147,7 @@ function LeaderBoard(props) {
           <Grid item xs={9}>
             <Typography
               variant="h5"
+              color="text.secondary"
               sx={{
                 textAlign: 'right',
               }}
@@ -172,6 +179,7 @@ function LeaderBoard(props) {
                 ) : (
                   <Typography
                     variant="h5"
+                    color="text.secondary"
                     sx={{
                       marginLeft: '50%',
                       fontFamily: 'Lato',
@@ -202,13 +210,18 @@ function LeaderBoard(props) {
                 </Box>
               </Grid>
               <Grid item xs={5}>
-                <Typography variant="h5" sx={{ fontFamily: 'Lato' }}>
+                <Typography
+                  variant="h5"
+                  color="text.secondary"
+                  sx={{ fontFamily: 'Lato' }}
+                >
                   {country.name}
                 </Typography>
               </Grid>
               <Grid item xs={5}>
                 <Typography
                   variant="h5"
+                  color="text.secondary"
                   sx={{
                     textAlign: 'right',
                     marginRight: '19.99%',

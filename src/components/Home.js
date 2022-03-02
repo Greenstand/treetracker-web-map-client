@@ -75,6 +75,7 @@ export default function Home() {
       >
         <Typography
           variant="h3"
+          color="common.white"
           sx={{
             fontSize: [16, 20],
             fontWeight: 700,
@@ -85,6 +86,7 @@ export default function Home() {
         </Typography>
         <Typography
           variant="h1"
+          color="common.white"
           sx={{
             fontSize: [32, 48],
             fontWeight: [600, 700],

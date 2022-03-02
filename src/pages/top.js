@@ -84,7 +84,7 @@ function Top({ trees, countries }) {
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>
-      <Typography variant="h3" sx={{ color: 'textPrimary.main' }}>
+      <Typography variant="h3">
         Check out the global leaders in the tree planting effort
       </Typography>
       <Box
