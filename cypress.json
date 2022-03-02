@@ -1,4 +1,6 @@
 {
+  "viewportWidth": 1440,
+  "viewportHeight": 800,
   "baseUrl": "http://localhost:3000",
   "testFiles": "**/*.cy.{js,jsx,ts,tsx}",
   "componentFolder": "src",
