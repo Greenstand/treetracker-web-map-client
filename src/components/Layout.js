@@ -1,6 +1,7 @@
 import OpenWithIcon from '@mui/icons-material/OpenWith';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
+import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 
@@ -53,7 +54,7 @@ export default function Layout({ children }) {
       <Box className={classes.root}>
         <Navbar />
         <Box className={classes.main}>
-          <Box className={classes.left}>{children}</Box>
+          <Paper className={classes.left}>{children}</Paper>
           <Box className={classes.right}>
             <App />
           </Box>
