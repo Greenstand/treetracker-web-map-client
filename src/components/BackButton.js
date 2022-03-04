@@ -4,9 +4,13 @@ import Typography from '@mui/material/Typography';
 
 export default function BackButton({ onBackHandler }) {
   return (
-    <ButtonBase onClick={onBackHandler} sx={{ color: 'textLight.main' }}>
-      <ArrowBackIosIcon fontSize="inherit" />
-      <Typography variant="body1" sx={{ lineHeight: '16px' }}>
+    <ButtonBase onClick={onBackHandler}>
+      <ArrowBackIosIcon fontSize="inherit" sx={{ color: 'text.disabled' }} />
+      <Typography
+        variant="body1"
+        color="text.disabled"
+        sx={{ lineHeight: '16px' }}
+      >
         Back
       </Typography>
     </ButtonBase>

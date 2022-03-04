@@ -34,7 +34,7 @@ export async function getOrganizationById(id) {
     const data = await res.data;
     return data;
   } catch (err) {
-    log.error(err.message);
+    log.error(err);
     throw new Error(err.message);
   }
 }

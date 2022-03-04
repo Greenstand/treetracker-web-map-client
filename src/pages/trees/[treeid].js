@@ -57,7 +57,9 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export default function Tree({ tree, planter, organization }) {
+export default function Tree(props) {
+  const { tree, planter, organization, nextExtraIsEmbed, nextExtraKeyword } =
+    props;
   const { classes } = useStyles();
   const mapContext = useMapContext();
 
@@ -72,13 +74,10 @@ export default function Tree({ tree, planter, organization }) {
 
   return (
     <PageWrapper className={classes.root}>
-      <Typography sx={{ color: 'textPrimary.main' }} variant="h2">
+      <Typography variant="h2">
         Tree{/* tree.species */} - #{tree.id}
       </Typography>
-      <Typography
-        sx={{ color: 'textPrimary.main', fontWeight: 400 }}
-        variant="h5"
-      >
+      <Typography sx={{ fontWeight: 400 }} variant="h5">
         Eco-Peace-Vision
       </Typography>
       <Box className={classes.badges}>
@@ -97,7 +96,7 @@ export default function Tree({ tree, planter, organization }) {
             entityType="Planting Organization"
             buttonText="Meet the Organization"
             cardImageSrc={organization?.photo_url}
-            link={`/organizations/${organization.id}`}
+            link={`/organizations/${organization.id}?embed=${nextExtraIsEmbed}&keyword=${nextExtraKeyword}`}
           />
         </Box>
       )}
@@ -107,13 +106,12 @@ export default function Tree({ tree, planter, organization }) {
           entityType="Planter"
           buttonText="Meet the Planter"
           cardImageSrc={planter?.image_url}
-          link={`/planters/${planter.id}`}
+          link={`/planters/${planter.id}?embed=${nextExtraIsEmbed}&keyword=${nextExtraKeyword}`}
         />
       </Box>
       <Typography
         variant="h4"
         sx={{
-          color: 'textPrimary.main',
           fontSize: [24, 28],
           lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
           mt: (t) => [t.spacing(14), t.spacing(26)],
@@ -167,7 +165,10 @@ export async function getServerSideProps({ params }) {
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
   const planter = await getPlanterById(planter_id);
-  const organization = await getOrganizationById(planting_organization_id);
+  let organization = null;
+  if (planting_organization_id) {
+    organization = await getOrganizationById(planting_organization_id);
+  }
 
   return {
     props: {

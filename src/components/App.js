@@ -68,7 +68,21 @@ function MapComponent() {
 
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
-    router.push(`/trees/${tree.id}`);
+    const path = window.location.pathname.match(
+      /^\/(planters|organizations)\/\d+$/,
+    );
+    const isEmbed = window.location.search.match(/embed=true/);
+    let prefix = '';
+    if (path) {
+      prefix = window.location.pathname;
+    }
+    const url = new URL(window.location.href);
+    const { timeline } = url.searchParams;
+    router.push(
+      `/${prefix}/trees/${tree.id}?embed=${isEmbed ? 'true' : 'false'}${
+        timeline ? `&timeline=${timeline}` : ''
+      }`,
+    );
   }
 
   function injectApp() {

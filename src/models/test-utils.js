@@ -1,7 +1,6 @@
 import { mount } from '@cypress/react';
-import { ThemeProvider } from '@mui/material';
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
-import appTheme from '../theme';
+import { CustomThemeProvider } from '../context/themeContext';
 
 export const mockRouter = {
   pathname: '/testPath',
@@ -21,7 +20,7 @@ export const mockRouter = {
 };
 
 export function mountWithTheme(element) {
-  return mount(<ThemeProvider theme={appTheme}>{element}</ThemeProvider>);
+  return mount(<CustomThemeProvider>{element}</CustomThemeProvider>);
 }
 
 export function mountWithThemeAndRouter(children, config = mockRouter) {

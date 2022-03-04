@@ -5,6 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { useEffect, useState } from 'react';
@@ -42,9 +43,6 @@ const useStyles = makeStyles()((theme) => ({
       marginBottom: theme.spacing(14),
     },
   },
-  textColor: {
-    color: theme.palette.textPrimary.main,
-  },
 }));
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -54,7 +52,9 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
         reprehenderit vitae temporibus, consequuntur blanditiis officia
         excepturi, natus explicabo laborum delectus repudiandae placeat
         eligendi.`;
-export default function Planter({ planter }) {
+export default function Planter(props) {
+  log.info('props for planter page:', props);
+  const { planter, nextExtraIsEmbed } = props;
   const { featuredTrees } = planter;
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
@@ -87,91 +87,91 @@ export default function Planter({ planter }) {
   }, [mapContext, planter]);
 
   return (
-    <PageWrapper>
-      <Typography variant="h2" className={classes.textColor}>
-        {utils.hideLastName(`${planter.first_name}${planter.last_name}`)}
-      </Typography>
+    <>
+      <PageWrapper>
+        <Typography variant="h2">
+          {utils.hideLastName(`${planter.first_name}${planter.last_name}`)}
+        </Typography>
 
-      <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
-        <DataTag data={utils.formatDates(planter.created_time, 'LL')} />
-        <DataTag data="Shirimatunda, Tanzania" location />
-      </Stack>
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        <VerifiedBadge verified badgeName="Verified Planter" />
-        <VerifiedBadge badgeName="Seeking Orgs" />
-      </Box>
+        <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
+          <DataTag data={utils.formatDates(planter.created_time, 'LL')} />
+          <DataTag data="Shirimatunda, Tanzania" location />
+        </Stack>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <VerifiedBadge verified badgeName="Verified Planter" />
+          <VerifiedBadge badgeName="Seeking Orgs" />
+        </Box>
 
-      {!isMobileScreen && (
-        <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
-      )}
+        {!isMobileScreen && (
+          <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
+        )}
 
-      <Avatar
-        src={planter.image_url}
-        variant="rounded"
-        sx={{
-          width: '100%',
-          height: '688px',
-          borderRadius: 6,
-          mt: 11,
-          mb: [6, 10],
-        }}
-      />
-      <Grid
-        container
-        wrap="nowrap"
-        justifyContent="space-between"
-        sx={{ width: '100%' }}
-      >
-        <Grid item sx={{ width: '49%' }}>
-          <CustomCard
-            handleClick={() => setIsPlanterTab(true)}
-            icon={<ParkOutlinedIcon fontSize="large" />}
-            title="Trees Planted"
-            text={treeCount}
-            disabled={!isPlanterTab}
-          />
+        <Avatar
+          src={planter.image_url}
+          variant="rounded"
+          sx={{
+            width: '100%',
+            height: '688px',
+            borderRadius: 6,
+            mt: 11,
+            mb: [6, 10],
+          }}
+        />
+        <Grid
+          container
+          wrap="nowrap"
+          justifyContent="space-between"
+          sx={{ width: '100%' }}
+        >
+          <Grid item sx={{ width: '49%' }}>
+            <CustomCard
+              handleClick={() => setIsPlanterTab(true)}
+              icon={<ParkOutlinedIcon fontSize="large" />}
+              title="Trees Planted"
+              text={treeCount}
+              disabled={!isPlanterTab}
+            />
+          </Grid>
+          <Grid item sx={{ width: '49%' }}>
+            <CustomCard
+              handleClick={() => setIsPlanterTab(false)}
+              icon={<GroupsOutlinedIcon fontSize="large" />}
+              title="Ass. Orgs"
+              text={planter.associatedOrganizations.length}
+              disabled={isPlanterTab}
+            />
+          </Grid>
         </Grid>
-        <Grid item sx={{ width: '49%' }}>
-          <CustomCard
-            handleClick={() => setIsPlanterTab(false)}
-            icon={<GroupsOutlinedIcon fontSize="large" />}
-            title="Ass. Orgs"
-            text={planter.associatedOrganizations.length}
-            disabled={isPlanterTab}
-          />
-        </Grid>
-      </Grid>
-      {isPlanterTab && (
-        <>
-          <Box sx={{ mt: [0, 22] }}>
-            <CustomWorldMap totalTrees={treeCount} con="af" />
-          </Box>
-          <Typography
-            variant="h4"
-            sx={{
-              fontSize: [16, 24],
-              color: 'textPrimary.main',
-              mt: [0, 20],
-              mb: [6, 10],
-            }}
-          >
-            Species of trees planted
-          </Typography>
-          <Box className={classes.speciesBox}>
-            {planter.species.species.map((species) => (
-              <TreeSpeciesCard
-                key={species.id}
-                name={species.name}
-                count={species.count}
-              />
-            ))}
-            {/* Placeholder, remove after API fixed */}
-            <TreeSpeciesCard name="Baobab Tree" count={10} />
-            <TreeSpeciesCard name="Wattle Tree" count={2} />
-          </Box>
-        </>
-      )}
-      {/* {!isPlanterTab &&
+        {isPlanterTab && (
+          <>
+            <Box sx={{ mt: [0, 22] }}>
+              <CustomWorldMap totalTrees={treeCount} con="af" />
+            </Box>
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: [16, 24],
+                mt: [0, 20],
+                mb: [6, 10],
+              }}
+            >
+              Species of trees planted
+            </Typography>
+            <Box className={classes.speciesBox}>
+              {planter.species.species.map((species) => (
+                <TreeSpeciesCard
+                  key={species.id}
+                  name={species.name}
+                  count={species.count}
+                />
+              ))}
+              {/* Placeholder, remove after API fixed */}
+              <TreeSpeciesCard name="Baobab Tree" count={10} />
+              <TreeSpeciesCard name="Wattle Tree" count={2} />
+            </Box>
+          </>
+        )}
+        {/* {!isPlanterTab &&
         planter.associatedOrganizations.organizations.map((org) => (
           <div key={org.id}>
             <InformationCard1
@@ -183,61 +183,120 @@ export default function Planter({ planter }) {
             />
           </div>
         ))} */}
-      {/* placeholder until API can return the correct data, should be removed */}
-      {!isPlanterTab && (
-        <Stack
-          spacing={{ xs: 6, sm: 12 }}
-          p={{ xs: 0, sm: 6 }}
-          pt={0}
-          mt={{ xs: 14, sm: 22 }}
-        >
-          <InformationCard1
-            entityName="Greenway International Foundation"
-            entityType="Planting Organization"
-            buttonText="Meet the Organization"
-            link="/organizations/1"
-          />
-          <InformationCard1
-            entityName="One Tree Planted"
-            entityType="Planting Organization"
-            buttonText="Meet the Organization"
-            link="/organizations/1"
-          />
-        </Stack>
-      )}
+        {/* placeholder until API can return the correct data, should be removed */}
+        {!isPlanterTab && (
+          <Stack
+            spacing={{ xs: 6, sm: 12 }}
+            p={{ xs: 0, sm: 6 }}
+            pt={0}
+            mt={{ xs: 14, sm: 22 }}
+          >
+            <InformationCard1
+              entityName="Greenway International Foundation"
+              entityType="Planting Organization"
+              buttonText="Meet the Organization"
+              link="/organizations/1"
+            />
+            <InformationCard1
+              entityName="One Tree Planted"
+              entityType="Planting Organization"
+              buttonText="Meet the Organization"
+              link="/organizations/1"
+            />
+          </Stack>
+        )}
 
-      <Divider varian="fullwidth" className={classes.divider} />
-      <Typography variant="h4" className={classes.textColor}>
-        About the Planter
-      </Typography>
-      <Typography variant="body2" className={classes.textColor} mt={7}>
-        {placeholderText}
-        {planter.about}
-      </Typography>
-      <Typography
-        variant="h4"
-        className={classes.textColor}
-        sx={{ mt: { xs: 10, md: 16 } }}
-      >
-        Mission
-      </Typography>
-      <Typography variant="body2" className={classes.textColor} mt={7}>
-        {placeholderText}
-        {planter.mission}
-      </Typography>
-      <Divider varian="fullwidth" className={classes.divider} />
-      <Typography variant="h4" className={classes.textColor} mb={9}>
-        Check out the planting effort in action
-      </Typography>
-      <Box mb={17}>
-        {/* Placeholder image, should be changed later */}
-        <CustomImageWrapper
-          imageUrl={planter.image_url}
-          timeCreated={planter.time_created}
-          treeId={planter.id}
-        />
-      </Box>
-    </PageWrapper>
+        <Divider varian="fullwidth" className={classes.divider} />
+        <Typography variant="h4" className={classes.textColor}>
+          About the Planter
+        </Typography>
+        <Typography variant="body2" className={classes.textColor} mt={7}>
+          {/* Just some placeholder text */}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+          nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
+          velit ipsa illo, odit unde atque doloribus tempora distinctio facere
+          dolorem expedita error. Natus, provident. Tempore harum repellendus
+          reprehenderit vitae temporibus, consequuntur blanditiis officia
+          excepturi, natus explicabo laborum delectus repudiandae placeat
+          eligendi.
+          {planter.about}
+        </Typography>
+        <Typography
+          variant="h4"
+          className={classes.textColor}
+          sx={{ mt: { xs: 10, md: 16 } }}
+        >
+          Mission
+        </Typography>
+        <Typography variant="body2" className={classes.textColor} mt={7}>
+          {/* Just some placeholder text */}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+          nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
+          velit ipsa illo, odit unde atque doloribus tempora distinctio facere
+          dolorem expedita error. Natus, provident. Tempore harum repellendus
+          reprehenderit vitae temporibus, consequuntur blanditiis officia
+          excepturi, natus explicabo laborum delectus repudiandae placeat
+          eligendi.
+          {planter.mission}
+        </Typography>
+        <Divider varian="fullwidth" className={classes.divider} />
+        <Typography variant="h4" className={classes.textColor} mb={9}>
+          Check out the planting effort in action
+        </Typography>
+        <Box mb={17}>
+          {/* Placeholder image, should be changed later */}
+          <CustomImageWrapper
+            imageUrl={planter.image_url}
+            timeCreated={planter.time_created}
+            treeId={planter.id}
+          />
+        </Box>
+        <Divider varian="fullwidth" className={classes.divider} />
+        <Typography variant="h4" className={classes.textColor}>
+          About the Planter
+        </Typography>
+        <Typography variant="body2" className={classes.textColor} mt={7}>
+          {placeholderText}
+          {planter.about}
+        </Typography>
+        <Typography
+          variant="h4"
+          className={classes.textColor}
+          sx={{ mt: { xs: 10, md: 16 } }}
+        >
+          Mission
+        </Typography>
+        <Typography variant="body2" className={classes.textColor} mt={7}>
+          {placeholderText}
+          {planter.mission}
+        </Typography>
+        <Divider varian="fullwidth" className={classes.divider} />
+        <Typography variant="h4" className={classes.textColor} mb={9}>
+          Check out the planting effort in action
+        </Typography>
+        <Box mb={17}>
+          {/* Placeholder image, should be changed later */}
+          <CustomImageWrapper
+            imageUrl={planter.image_url}
+            timeCreated={planter.time_created}
+            treeId={planter.id}
+          />
+        </Box>
+      </PageWrapper>
+      {nextExtraIsEmbed && (
+        <Portal container={document.getElementById('embed-logo-container')}>
+          <Avatar
+            sx={{
+              width: '120px',
+              height: '120px',
+              margin: '10px',
+            }}
+            src={planter.image_url}
+            variant="rounded"
+          />
+        </Portal>
+      )}
+    </>
   );
 }
 

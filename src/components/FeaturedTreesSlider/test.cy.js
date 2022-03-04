@@ -1,5 +1,5 @@
-import { mount } from '@cypress/react';
 import FeaturedTreesSlider from './index';
+import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Featured Trees Slider', () => {
   it('it shows featured trees', () => {

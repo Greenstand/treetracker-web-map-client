@@ -21,5 +21,6 @@ describe('Organizations', () => {
 
     cy.url().should('include', '/organizations');
     cy.contains(org.name);
+    cy.screenshot();
   });
 });

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { makeStyles } from 'models/makeStyles';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
+import SearchFilter from './SearchFilter';
 
 const useStyles = makeStyles()((theme) => ({
   pageContainer: {
@@ -40,12 +41,13 @@ export default function PageWrapper({ children, className, ...otherProps }) {
 
   return (
     <Box className={classes.pageContainer}>
-      {!isMobileScreen && (
+      {false && !isMobileScreen && (
         <Box className={classes.top}>
           <BackButton onBackHandler={onBackHandler} />
           <SearchButton />
         </Box>
       )}
+      {!isMobileScreen && <SearchFilter />}
 
       <Box className={clsx(classes.main, className)} {...otherProps}>
         {children}
