@@ -3,7 +3,6 @@ import 'leaflet/dist/leaflet.css';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
-import expect from 'expect-runtime';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
@@ -42,7 +41,6 @@ function MapComponent() {
   // const [tree, setTree] = React.useState(undefined);
   const mapRef = useRef(null);
   const [message, setMessage] = useState({ open: false, message: '' });
-  const [arrow, setArrow] = useState({});
   // eslint-disable-next-line no-unused-vars
   const [timelineDate, setTimelineDate] = useState(null);
   // eslint-disable-next-line no-unused-vars
@@ -68,44 +66,6 @@ function MapComponent() {
     showMessage(error.message);
   }
 
-  function showArrow(direction) {
-    log.debug('show arrow:', direction);
-    expect(direction).oneOf(['north', 'south', 'west', 'east']);
-    setArrow({
-      direction,
-    });
-  }
-
-  function hideArrow() {
-    log.debug('hide arrow');
-    // to avoid useless refresh of this component, check current arrow object
-    if (arrow.direction === undefined) {
-      return;
-    }
-    setArrow({});
-  }
-
-  function handleFindNearestAt(placement) {
-    log.info('handle find nearest:', placement);
-    expect(placement).oneOf(['north', 'south', 'west', 'east', 'in']);
-    if (placement === 'in') {
-      hideArrow();
-    } else {
-      showArrow(placement);
-    }
-  }
-
-  async function handleArrowClick() {
-    const { map } = mapRef.current;
-    hideArrow();
-    const nearest = await map.getNearest();
-    if (nearest) {
-      map.goto(nearest);
-    } else {
-      log.warn('can not find nearest:', nearest);
-    }
-  }
-
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
     router.push(`/trees/${tree.id}`);
@@ -125,8 +85,6 @@ function MapComponent() {
           log.warn('mock load B');
         },
         showMessage,
-        showArrow,
-        hideArrow,
       };
     }
   }
@@ -150,7 +108,6 @@ function MapComponent() {
         log.warn('mock onload');
       },
       onClickTree: handleClickTree,
-      onFindNearestAt: handleFindNearestAt,
       onError: handleError,
       filters: parameters,
       iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
@@ -235,20 +192,6 @@ function MapComponent() {
           {message.message}
         </Alert>
       </Snackbar>
-      {arrow.direction && (
-        <div
-          id="arrow"
-          className={`${arrow.direction || ''}`}
-          onClick={handleArrowClick}
-        >
-          <div className="round">
-            <div id="cta">
-              <span className="arrow primera next " />
-              <span className="arrow segunda next " />
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
