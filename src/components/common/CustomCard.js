@@ -66,7 +66,7 @@ function CustomCard(props) {
           sx={{
             boxShadow: disabled ? '' : '0px 6px 12px 0px #585B5D40',
             color: disabled
-              ? theme.palette.textPrimary.main
+              ? theme.palette.darkGrey.main
               : theme.palette.success.main,
           }}
         >
@@ -74,12 +74,12 @@ function CustomCard(props) {
         </Avatar>
       </CardMedia>
       <CardContent className={classes.cardContent}>
-        <Typography variant="body1" color="textPrimary.main">
+        <Typography variant="body1" color="darkGrey.main">
           {title}
         </Typography>
         <Typography
           variant="h2"
-          color="textSecondary.main"
+          color="nearBlack.main"
           sx={{
             fontSize: [16, 36],
             fontFamily: 'Lato',

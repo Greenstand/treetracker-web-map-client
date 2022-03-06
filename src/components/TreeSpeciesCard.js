@@ -9,7 +9,7 @@ const useStyles = makeStyles()((theme) => ({
     boxSizing: 'border-box',
     borderRadius: theme.spacing(4),
     border: '1px solid',
-    borderColor: theme.palette.textLight.main,
+    borderColor: theme.palette.grey.main,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -17,7 +17,7 @@ const useStyles = makeStyles()((theme) => ({
     marginBottom: theme.spacing(4),
   },
   countBox: {
-    background: theme.palette.textLight.main,
+    background: theme.palette.grey.main,
     padding: theme.spacing(6, 8),
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(5.75, 7.5),

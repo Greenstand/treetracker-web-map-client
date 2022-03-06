@@ -17,7 +17,7 @@ function VerifiedBadge({ verified, badgeName }) {
       color="primary"
       className={classes.root}
       sx={{
-        bgcolor: verified ? 'primary.main' : 'textLight.main',
+        bgcolor: verified ? 'primary.main' : 'grey.main',
         color: 'common.white',
         borderRadius: 1,
         fontSize: 12,

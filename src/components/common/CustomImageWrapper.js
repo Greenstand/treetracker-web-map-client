@@ -36,7 +36,7 @@ function InfoWrapper({ children, top, right, bottom }) {
       py={4}
       px={5}
       sx={{
-        bgcolor: 'textPrimary.main',
+        bgcolor: 'darkGrey.main',
         opacity: 0.8,
         borderRadius: '16px',
         position: 'absolute',

@@ -284,7 +284,9 @@ To access the projects design sandbox, please run Cypress unit/component tests:
 npm run cyu
 ```
 
-Open DesignSandbox.cy.js test file in the component test browser. This component will have a color swatch, background gradient swatch, and typography information that matches the project's design file.
+Open DesignSandbox.cy.js test file in the component test browser. located in the DesignSandbox folder. This component will have a color swatch, background swatch, and all the necessary typography information that matches the project's design file.
+
+As we now have a dark theme, when working with text colors use the correct ones. We have colors that are dynamic based on the theme, and we have colors that are NOT dynamic that can be used for components with a background that does not change based on the theme.
 
 Please use colors from MUI's theme when working on the style of the project for better maintainability, at readability. DO NOT write colors manually!
 

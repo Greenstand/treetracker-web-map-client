@@ -30,7 +30,7 @@ const useStyles = makeStyles()((theme) => ({
     letterSpacing: '0.02em',
     lineHeight: theme.spacing(6),
     marginTop: theme.spacing(5),
-    color: theme.palette.textPrimary.main,
+    color: theme.palette.darkGrey.main,
   },
   media: {
     height: 110,
@@ -83,7 +83,7 @@ function InformationCard1({
           <Typography
             variant="body1"
             sx={{
-              color: 'textPrimary.main',
+              color: 'darkGrey.main',
             }}
           >
             {entityType}
@@ -94,7 +94,7 @@ function InformationCard1({
               fontFamily: 'Lato',
               fontWeight: 700,
               letterSpacing: '0.02em',
-              color: 'textPrimary.main',
+              color: 'darkGrey.main',
             }}
           >
             {entityName}
@@ -108,7 +108,7 @@ function InformationCard1({
             // color="text.secondary"
             sx={{
               fontFamily: 'Lato',
-              color: 'textSecondary.main',
+              color: 'nearBlack.main',
             }}
           >
             {buttonText}
