@@ -2,10 +2,10 @@ import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 import Drawer from './Drawer';
+import Navbar from './Navbar';
 import SearchFilter from './SearchFilter';
 
 const App = dynamic(() => import('./App'), { ssr: false });
-const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 
 const useStyles = makeStyles()((theme) => ({
   root: {

@@ -1,8 +1,6 @@
 import Box from '@mui/material/Box';
-import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-
-const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
+import Navbar from './Navbar';
 
 const useStyles = makeStyles()((theme) => ({
   root: {
