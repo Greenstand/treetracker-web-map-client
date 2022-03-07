@@ -205,52 +205,6 @@ export default function Planter(props) {
             />
           </Stack>
         )}
-
-        <Divider varian="fullwidth" className={classes.divider} />
-        <Typography variant="h4" className={classes.textColor}>
-          About the Planter
-        </Typography>
-        <Typography variant="body2" className={classes.textColor} mt={7}>
-          {/* Just some placeholder text */}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-          nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-          velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-          dolorem expedita error. Natus, provident. Tempore harum repellendus
-          reprehenderit vitae temporibus, consequuntur blanditiis officia
-          excepturi, natus explicabo laborum delectus repudiandae placeat
-          eligendi.
-          {planter.about}
-        </Typography>
-        <Typography
-          variant="h4"
-          className={classes.textColor}
-          sx={{ mt: { xs: 10, md: 16 } }}
-        >
-          Mission
-        </Typography>
-        <Typography variant="body2" className={classes.textColor} mt={7}>
-          {/* Just some placeholder text */}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-          nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-          velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-          dolorem expedita error. Natus, provident. Tempore harum repellendus
-          reprehenderit vitae temporibus, consequuntur blanditiis officia
-          excepturi, natus explicabo laborum delectus repudiandae placeat
-          eligendi.
-          {planter.mission}
-        </Typography>
-        <Divider varian="fullwidth" className={classes.divider} />
-        <Typography variant="h4" className={classes.textColor} mb={9}>
-          Check out the planting effort in action
-        </Typography>
-        <Box mb={17}>
-          {/* Placeholder image, should be changed later */}
-          <CustomImageWrapper
-            imageUrl={planter.image_url}
-            timeCreated={planter.time_created}
-            treeId={planter.id}
-          />
-        </Box>
         <Divider varian="fullwidth" className={classes.divider} />
         <Typography variant="h4" className={classes.textColor}>
           About the Planter
