@@ -18,7 +18,7 @@ import Logo from "./components/Logo";
 import SidePanel from "./components/SidePanel";
 import Timeline from "./components/Timeline";
 import getLogoSrc from "./models/logo";
-import {Map} from "treetracker-web-map-core";
+import Map from "./models/Map";
 import {parseMapName} from "./utils";
 
 

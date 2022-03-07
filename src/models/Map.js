@@ -706,7 +706,7 @@ export default class Map{
 
   updateUrl(){
     log.warn("update url");
-    window.history.pushState('treetrakcer', '', `/?${this.getFilterParameters()}&bounds=${this.getCurrentBounds()}`);
+    window.history.pushState('treetracker', '', `/?${this.getFilterParameters()}&bounds=${this.getCurrentBounds().replaceAll(',','!')}`);
   }
 
   getCurrentBounds(){
