@@ -395,8 +395,6 @@ function App() {
       onFindNearestAt: handleFindNearestAt,
       onError: handleError,
       filters: parameters,
-      tileServerUrl: process.env.REACT_APP_TILE_SERVER_URL,
-      tileServerSubdomains: process.env.REACT_APP_TILE_SERVER_SUBDOMAINS.split(","),
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;
