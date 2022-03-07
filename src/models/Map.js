@@ -145,6 +145,8 @@ export default class Map{
         log.info("treeid mode do not need tile server");
       }else if(this.filters.tree_name){
         log.info("tree name mode do not need tile server");
+      }else if(this.filters.token){
+        log.info("token id mode do not need tile server");
       }else{
         await this.loadTileServer();
       }
@@ -164,6 +166,11 @@ export default class Map{
       if(this.filters.tree_name){
         log.info("load tree by name");
         await this.loadTree(undefined, this.filters.tree_name);
+      }
+
+      if(this.filters.token){
+        log.info("load tree by token");
+        await this.loadTree(undefined, undefined, this.filters.token);
       }
 
       // load freetown special map
@@ -229,6 +236,13 @@ export default class Map{
           )
         ){
           tile.src = "https://khms0.googleapis.com/kh?v=903&hl=en&x=3792&y=3905&z=13";
+        }else if(
+          (coords.z === 13 && (coords.x >= 4926 && coords.x <=4927 && coords.y >= 4100 && coords.y <= 4102)) ||
+          (coords.z === 14 && (coords.x >= 9852 && coords.x <=9855 && coords.y >= 8200 && coords.y <= 8204))  ||
+          (coords.z === 16 && (coords.x >= 39408 && coords.x <=39423 && coords.y >= 32800 && coords.y <= 32816))  ||
+          (coords.z === 15 && (coords.x >= 19704 && coords.x <=19711 && coords.y >= 16400 && coords.y <= 16408)) 
+        ){
+          tile.src = `https://khms1.google.com/kh/v=917?x=${coords.x}&y=${coords.y}&z=${coords.z}`;
         }else{
           tile.src = this.getTileUrl(coords);
         }
@@ -450,7 +464,7 @@ export default class Map{
     });
   }
 
-  async loadTree(treeid, treeName){
+  async loadTree(treeid, treeName, token){
     let res;
     if(treeid){
       res = await this.requester.request({
@@ -459,6 +473,10 @@ export default class Map{
     }else if(treeName){
       res = await this.requester.request({
         url: `${this.apiServerUrl}tree?tree_name=${treeName}`,
+      });
+    }else if(token){
+      res = await this.requester.request({
+        url: `${this.apiServerUrl}tree?token=${token}`,
       });
     }else{
       log.error("do not support");
@@ -612,12 +630,9 @@ export default class Map{
         this.height,
       );
     }
-    if(this.filters.userid || this.filters.wallet){
-      log.warn("try to get initial bounds");
-      view = await calculateInitialView();
-    }else if(this.filters.treeid || this.filters.tree_name){
-      const {treeid, tree_name} = this.filters;
-      const url = `${this.apiServerUrl}tree?${treeid? "tree_id=" + treeid : "tree_name=" + tree_name}`;
+    if(this.filters.treeid || this.filters.tree_name || this.filters.token ){
+      const {treeid, tree_name, token} = this.filters;
+      const url = `${this.apiServerUrl}tree?${treeid? "tree_id=" + treeid :""}${tree_name?"tree_name=" + tree_name:""}${token? "token=" + token:""}`;
       log.info("url to load tree:", url);
       const res = await this.requester.request({
         url,
@@ -634,6 +649,9 @@ export default class Map{
         },
         zoomLevel: 16,
       }
+    }else if(this.filters.userid || this.filters.wallet){
+      log.warn("try to get initial bounds");
+      view = await calculateInitialView();
     }else if(this.filters.map_name){
       log.info("to init org map");
       if(mapConfig[this.filters.map_name]){

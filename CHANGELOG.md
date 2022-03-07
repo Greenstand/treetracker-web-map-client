@@ -4,6 +4,26 @@
 ### Features
 
 * migrate to use web map core, spin icon ([5b04366](https://github.com/Greenstand/treetracker-web-map-client/commit/5b04366b45e989e73a081d08d2ccca12a2822c90))
+## [1.16.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.3...v1.16.4) (2022-02-28)
+
+
+### Bug Fixes
+
+* bad tiles ([65f0ac5](https://github.com/Greenstand/treetracker-web-map-client/commit/65f0ac5073eed1d5f8c42ad258786cc4e6261be1))
+
+## [1.16.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.2...v1.16.3) (2022-02-28)
+
+
+### Bug Fixes
+
+* no logo ([c2d5a02](https://github.com/Greenstand/treetracker-web-map-client/commit/c2d5a022e50ecedc6a3b62510b974e9d39da1f03))
+
+## [1.16.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.1...v1.16.2) (2022-02-28)
+
+
+### Bug Fixes
+
+* support token id ([dd0baa4](https://github.com/Greenstand/treetracker-web-map-client/commit/dd0baa4d9b85401921930f1d9fd449486ceff313))
 
 ## [1.16.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.16.0...v1.16.1) (2021-11-04)
 
