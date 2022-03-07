@@ -5,9 +5,11 @@ describe('Share', () => {
   before(() => {});
 
   it('Share', () => {
-    mount(<Share shareUrl="https://treetracker.org/?treeid=300556" />);
+    mount(<Share />);
     cy.get('.MuiButtonBase-root').click();
-    cy.get('button[name="Embed"]').click();
+    cy.get(
+      'div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)',
+    ).click();
     cy.contains(/copy/i).click();
   });
 });
