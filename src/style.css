@@ -90,6 +90,10 @@ a:hover {
   box-shadow: 0 0px 0px rgb(0 0 0 / 0%);
 }
 
+.leaflet-bottom {
+  z-index: 900 !important;
+}
+
 @keyframes slideInFromBottom {
   0% {
     opacity: 0;
