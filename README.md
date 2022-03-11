@@ -364,6 +364,8 @@ Then install the project with a env variable:
 ```
 CYPRESS_INSTALL_BINARY=[path/to/Cypress/zip/file] npm ci
 ```
+## local set up is showing errors 
+comment the line in (engine-strict=true) .npmrc file.
 
 ## Other resource from Greenstand
 
