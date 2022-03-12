@@ -1,10 +1,11 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React from 'react';
+import useLocalStorage from 'hooks/useLocalStorage';
 
 const CustomThemeContext = React.createContext({ toggleColorMode: () => {} });
 
 export function CustomThemeProvider({ children }) {
-  const [mode, setMode] = React.useState('light');
+  const [mode, setMode] = useLocalStorage('theme', 'light');
 
   const colorMode = React.useMemo(
     () => ({
@@ -281,6 +282,7 @@ export function CustomThemeProvider({ children }) {
     }),
     [colorMode, theme],
   );
+
   return (
     <CustomThemeContext.Provider value={value}>
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
