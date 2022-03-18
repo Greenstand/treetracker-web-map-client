@@ -122,7 +122,6 @@ export function CustomThemeProvider({ children }) {
     },
     palette: {
       themeMode,
-
       background: {
         ...(themeMode === 'light'
           ? {
@@ -153,22 +152,24 @@ export function CustomThemeProvider({ children }) {
       text: {
         ...(themeMode === 'light'
           ? {
+              primary: '#474B4F',
               disabled: '#6B6E70',
               secondary: '#222629',
             }
           : {
+              primary: '#eee',
               disabled: '#eee',
               secondary: '#eee',
             }),
       },
       // Does not changes color, stays the same regardless of theme
-      textPrimary: {
+      darkGrey: {
         main: '#474B4F',
       },
-      textSecondary: {
+      nearBlack: {
         main: '#222629',
       },
-      textLight: {
+      grey: {
         main: '#6B6E70',
       },
     },
