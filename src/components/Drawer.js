@@ -8,9 +8,8 @@ import Paper from '@mui/material/Paper';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { useEffect, useState, useContext } from 'react';
-import DrawerTitles from './common/DrawerTitles';
-import { ContextApi } from '../hooks/DrawerHooks';
+import { useEffect, useState } from 'react';
+import DrawerTitle from './common/DrawerTitle';
 
 const Root = styled('div')(() => ({
   height: '100%',
@@ -33,17 +32,6 @@ function Drawer(props) {
   const { children } = props;
   const [open, setOpen] = useState(true);
   const [hasHeight, setHasHeight] = useState(300);
-
-  const {
-    titles: {
-      treeId,
-      firstName,
-      lastName,
-      createdTime,
-      verifiedToken,
-      verifiedTree,
-    },
-  } = useContext(ContextApi);
 
   useEffect(() => {
     if (hasHeight <= 0) {
@@ -176,27 +164,11 @@ function Drawer(props) {
               display: 'flex',
               justifyContent: 'center',
               marginBottom: [0, 4],
-              padding: 5,
             }}
           >
             <Puller />
+            <DrawerTitle />
           </StyledBox>
-          {firstName && (
-            <DrawerTitles
-              firstName={firstName}
-              lastName={lastName}
-              createdTime={createdTime}
-              widthTitle={150}
-            />
-          )}
-
-          {treeId && (
-            <DrawerTitles
-              treeId={treeId}
-              verifiedTree={verifiedTree}
-              verifiedToken={verifiedToken}
-            />
-          )}
         </Wrapper>
         <StyledBox
           sx={{
