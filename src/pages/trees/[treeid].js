@@ -7,15 +7,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import log from 'loglevel';
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import DrawerTitles from 'components/common/DrawerTitles';
+import DrawerTitle from 'components/common/DrawerTitle';
+import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import TreeTag from '../../components/common/TreeTag';
-import { ContextApi } from '../../hooks/DrawerHooks';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
@@ -70,17 +70,17 @@ export default function Tree({
   const { classes } = useStyles();
   const mapContext = useMapContext();
 
-  const { setTitles } = useContext(ContextApi);
+  const { setTitlesData } = useDrawerContext();
 
   log.warn('map:', mapContext);
 
   useEffect(() => {
-    setTitles({
+    setTitlesData({
       treeId: tree.id,
       verifiedToken: tree.token_id,
       verifiedTree: tree.verified,
     });
-  }, [setTitles, tree.id, tree.token_id, tree.verified]);
+  }, [setTitlesData, tree.id, tree.token_id, tree.verified]);
 
   useEffect(() => {
     // manipulate the map
@@ -92,13 +92,8 @@ export default function Tree({
   return (
     <PageWrapper className={classes.root}>
       <IsMobileScreen>
-        <DrawerTitles
-          treeId={tree.id}
-          verifiedTree={tree.verified}
-          verifiedToken={tree.token_id}
-        />
+        <DrawerTitle />
       </IsMobileScreen>
-
       <CustomImageWrapper
         imageUrl={tree.image_url}
         timeCreated={tree.time_created}

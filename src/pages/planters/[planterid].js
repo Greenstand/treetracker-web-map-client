@@ -9,16 +9,16 @@ import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import log from 'loglevel';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import DrawerTitles from 'components/common/DrawerTitles';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
 import CustomCard from '../../components/common/CustomCard';
-import { ContextApi } from '../../hooks/DrawerHooks';
+import DrawerTitle from '../../components/common/DrawerTitle';
+import { useDrawerContext } from '../../context/DrawerContext';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 
@@ -44,14 +44,12 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
 }));
-
 const IsMobileScreen = styled(Box)(({ theme }) => ({
   display: 'block',
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
 }));
-
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
         velit ipsa illo, odit unde atque doloribus tempora distinctio facere
@@ -68,17 +66,22 @@ export default function Planter(props) {
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
 
-  const { setTitles } = useContext(ContextApi);
+  const { setTitlesData } = useDrawerContext();
 
   const { classes } = useStyles();
 
   useEffect(() => {
-    setTitles({
+    setTitlesData({
       firstName: planter.first_name,
       lastName: planter.last_name,
       createdTime: planter.created_time,
     });
-  }, [planter.created_time, planter.first_name, planter.last_name, setTitles]);
+  }, [
+    planter.created_time,
+    planter.first_name,
+    planter.last_name,
+    setTitlesData,
+  ]);
 
   useEffect(() => {
     async function reload() {
@@ -105,14 +108,8 @@ export default function Planter(props) {
     <>
       <PageWrapper>
         <IsMobileScreen>
-          <DrawerTitles
-            firstName={planter.first_name}
-            lastName={planter.last_name}
-            createdTime={planter.created_time}
-            widthTitle={223}
-          />
+          <DrawerTitle />
         </IsMobileScreen>
-
         <IsMobileScreen>
           <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
         </IsMobileScreen>
