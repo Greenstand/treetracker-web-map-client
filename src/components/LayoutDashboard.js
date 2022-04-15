@@ -2,11 +2,14 @@
 // import React from 'react';
 import { SSRKeycloakProvider, SSRCookies } from '@react-keycloak/ssr';
 import cookie from 'cookie';
+import log from 'loglevel';
 
 const keycloakCfg = {
-  url: 'http://localhost:8080/',
-  realm: 'myrealm',
-  clientId: 'myclient',
+  url: 'https://dev-k8s.treetracker.org/auth/',
+  realm: 'greenstand',
+  clientId: 'webmap',
+  // realm: 'quickstart',
+  // clientId: 'webmap-client',
 };
 
 function Layout({ children, cookies }) {
@@ -15,7 +18,6 @@ function Layout({ children, cookies }) {
       keycloakConfig={keycloakCfg}
       persistor={SSRCookies(cookies)}
     >
-      <h1>admin frame</h1>
       {children}
     </SSRKeycloakProvider>
   );
@@ -23,16 +25,17 @@ function Layout({ children, cookies }) {
 
 function parseCookies(req) {
   if (!req || !req.headers) {
+    log.warn('no cookie');
     return {};
   }
+  log.warn('cookie:', req.headers.cookie);
   return cookie.parse(req.headers.cookie || '');
 }
 
-Layout.getInitialProps = (context) => 
+Layout.getInitialProps = (context) =>
   // Extract cookies from AppContext
-   ({
+  ({
     cookies: parseCookies(context?.ctx?.req),
-  })
-;
+  });
 
 export default Layout;
