@@ -5,7 +5,7 @@ import cookie from 'cookie';
 import log from 'loglevel';
 
 const keycloakCfg = {
-  url: 'https://dev-k8s.treetracker.org/auth/',
+  url: 'https://dev-k8s.treetracker.org/auth',
   realm: 'greenstand',
   clientId: 'webmap',
   // realm: 'quickstart',
