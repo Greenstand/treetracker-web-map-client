@@ -8,12 +8,15 @@ resources:
 */
 import { Box, Button, Typography, Divider } from '@mui/material';
 import { useKeycloak } from '@react-keycloak/ssr';
+import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
-import Link from '../../components/Link';
 
 export default function Index() {
   const { keycloak } = useKeycloak();
+  const [RPT, setRPT] = React.useState(null);
+  // const [RPTToken, setRPTToken] = React.useState(null);
+  const [auz, setAuz] = React.useState(null);
   log.warn('keycloak', keycloak);
 
   function load() {
@@ -22,8 +25,9 @@ export default function Index() {
     // });
     if (keycloak.token) {
       // eslint-disable-next-line no-undef
-      const auz = new KeycloakAuthorization(keycloak);
-      log.warn('auz', auz);
+      const auzTemp = new KeycloakAuthorization(keycloak);
+      log.warn('auz', auzTemp);
+      setAuz(auzTemp);
 
       /* eslint-disable */
       !(function a(b, c, d) {
@@ -188,11 +192,13 @@ export default function Index() {
       /* eslint-enable */
 
       setTimeout(() => {
-        auz.entitlement('webmap-service').then((res) => {
+        auzTemp.entitlement('webmap-service').then((res) => {
           log.warn('entitlement', res);
           // eslint-disable-next-line no-undef
           const r = jwt_decode(res);
           log.warn('r', r);
+          setRPT(r);
+          // setRPTToken(res);
         });
       }, 3000);
 
@@ -217,6 +223,7 @@ export default function Index() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  log.warn('rpt', RPT);
   return (
     <>
       <Box
@@ -230,12 +237,30 @@ export default function Index() {
           <Typography variant="h5">Greenstand</Typography>
         </Box>
         <Box>
-          {keycloak?.tokenParsed?.realm_access?.roles.includes(
-            'web-map-manager',
-          ) && (
-            <Link href="/admin/global">
-              <Button color="primary">Global</Button>
-            </Link>
+          {RPT?.authorization.permissions
+            .map((r) => r.rsname)
+            .includes('web-map-global-setting') && (
+            <Button
+              onClick={() => {
+                axios({
+                  method: 'GET',
+                  url: 'http://localhost:3006/settings',
+                  headers: {
+                    // Authorization: `Bearer ${keycloak.token}`,
+                    Authorization: `Bearer ${auz.rpt}`,
+                  },
+                })
+                  .then((res) => {
+                    log.warn('res', res);
+                  })
+                  .catch((err) => {
+                    log.warn('err', err);
+                  });
+              }}
+              color="primary"
+            >
+              Global
+            </Button>
           )}
           {keycloak?.tokenParsed?.realm_access?.roles.includes(
             'web-map-manager',
