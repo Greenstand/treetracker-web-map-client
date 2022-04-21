@@ -6,6 +6,7 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
+import LayoutDashboard from '../components/LayoutDashboard';
 import LayoutEmbed from '../components/LayoutEmbed';
 import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
@@ -46,6 +47,16 @@ function TreetrackerApp({ Component, pageProps }) {
     nextExtraIsDesktop,
     nextExtraKeyword,
   };
+
+  const isAdmin = !!router.asPath.match(/admin/);
+  if (isAdmin) {
+    return (
+      <LayoutDashboard>
+        <Component {...pageProps} />
+      </LayoutDashboard>
+    );
+  }
+
   return (
     <CacheProvider value={muiCache ?? createMuiCache()}>
       <CustomThemeProvider>
