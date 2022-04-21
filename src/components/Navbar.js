@@ -15,7 +15,7 @@ import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 
-const iconLogo = '/images/greenstand_logo.svg';
+const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
 
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
