@@ -42,7 +42,7 @@ jobs:
         run: npm run build
         working-directory: ${{ env.project-directory }}
         env:
-          NODE_ENV: development
+          NODE_ENV: production
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
