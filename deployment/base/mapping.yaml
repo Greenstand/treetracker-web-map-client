@@ -4,7 +4,7 @@ metadata:
   name: treetracker-web-map-client-be-api
   namespace: webmap
 spec:
-  prefix: /webmapclient/
+  prefix: /web-map-site/
   service: treetracker-web-map-client-ambassador-svc
   rewrite: /
   timeout_ms: 0
