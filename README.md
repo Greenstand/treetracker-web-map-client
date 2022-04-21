@@ -398,3 +398,4 @@ We have more tech guides and handbook here:
 7.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
 
 More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
+.
