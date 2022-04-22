@@ -31,7 +31,7 @@ jobs:
         run: npm ci
         working-directory: ${{ env.project-directory }}
       - run: npm i -g semantic-release @semantic-release/{git,exec,changelog}
-      - run: semantic-release
+      - run: semantic-release --debug
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: get-npm-version
