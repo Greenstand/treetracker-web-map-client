@@ -1,3 +1,10 @@
+# [1.15.0-beta.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.15.0-beta.1...v1.15.0-beta.2) (2022-04-22)
+
+
+### Features
+
+* deploy test \n\n BREAKING CHANGE: it breaks something ([8c34ab0](https://github.com/Greenstand/treetracker-web-map-client/commit/8c34ab066417b145a2b70098cc61df277d0d7fb8))
+
 # [1.15.0-beta.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.14.0...v1.15.0-beta.1) (2022-04-22)
 
 
