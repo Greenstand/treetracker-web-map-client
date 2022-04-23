@@ -1,3 +1,10 @@
+# [2.0.0-beta.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2022-04-23)
+
+
+### Bug Fixes
+
+* mapname domain problem ([0dc6bbd](https://github.com/Greenstand/treetracker-web-map-client/commit/0dc6bbdaeb5ac1b051649c1806c9eb38b1dd3259))
+
 # [2.0.0-beta.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2022-04-23)
 
 
