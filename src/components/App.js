@@ -26,13 +26,13 @@ function getParameters() {
         }, {})) ||
     {};
   log.info('getParameters:', parameters);
-  if (!parameters.map_name) {
-    const map_name = parseMapName(window.location.hostname);
-    if (map_name) {
-      log.info('Got map name from domain');
-      parameters.map_name = map_name;
-    }
-  }
+  // if (!parameters.map_name) {
+  //   const map_name = parseMapName(window.location.hostname);
+  //   if (map_name) {
+  //     log.info('Got map name from domain');
+  //     parameters.map_name = map_name;
+  //   }
+  // }
   return parameters;
 }
 
