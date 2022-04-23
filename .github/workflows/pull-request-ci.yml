@@ -6,7 +6,7 @@ name: API CI for New Pull Requests
 on:
   pull_request:
     branches:
-      - web-map-site
+      - beta
 
 jobs:
   install:
