@@ -6,7 +6,7 @@ metadata:
 spec:
   prefix: /web-map-site/
   service: treetracker-web-map-client-ambassador-svc
-  rewrite: /
+  rewrite: /web-map-site/
   timeout_ms: 0
   cors:
     methods: GET, OPTIONS
