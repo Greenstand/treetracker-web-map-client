@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
 import { useMapContext } from '../mapContext';
-import { parseMapName } from '../models/utils';
+// import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
 
@@ -176,8 +176,9 @@ function MapComponent() {
     if (
       window.location.search.match(
         /(wallet=|userid=|treeid=|flavor=|token=|tree_name=|map_name=)/,
-      ) ||
-      parseMapName(window.location.hostname) === 'freetown'
+      )
+      // ) ||
+      // parseMapName(window.location.hostname) === 'freetown'
     ) {
       return;
     }
