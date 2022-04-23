@@ -1,3 +1,10 @@
+# [2.0.0-beta.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2022-04-23)
+
+
+### Bug Fixes
+
+* ambassidor + next path problem ([d3b4916](https://github.com/Greenstand/treetracker-web-map-client/commit/d3b4916b801d0feebb80229ab68ef75f72100325))
+
 # [2.0.0-beta.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.15.0-beta.2...v2.0.0-beta.1) (2022-04-22)
 
 
