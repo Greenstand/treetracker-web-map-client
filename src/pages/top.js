@@ -116,7 +116,7 @@ function Top({ trees, planters, countries }) {
       </Box>
       <FeaturedPlantersSlider planters={planters} />
       <Typography
-        variant="h3"
+        variant="h4"
         sx={{
           marginTop: 8,
         }}
@@ -125,7 +125,7 @@ function Top({ trees, planters, countries }) {
       </Typography>
       <Box
         sx={{
-          padding: (t) => [t.spacing(4, 0, 2), t.spacing(8, 0, 8.25)],
+          padding: (t) => [t.spacing(4, 0, 0, 0), t.spacing(8, 0, 0, 0)],
         }}
       >
         <TagChips
@@ -135,6 +135,7 @@ function Top({ trees, planters, countries }) {
           }}
         />
       </Box>
+      <Box sx={{ marginTop: 18 }} />
       <LeaderBoard
         countries={leaderboardCountries}
         handleCountryClick={handleCountryClick}
