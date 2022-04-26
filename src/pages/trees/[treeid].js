@@ -5,14 +5,16 @@ import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 import log from 'loglevel';
-import * as React from 'react';
+import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import DrawerTitle from 'components/common/DrawerTitle';
+import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
-import VerifiedBadge from '../../components/VerifiedBadge';
 import TreeTag from '../../components/common/TreeTag';
 import { useMapContext } from '../../mapContext';
 
@@ -30,12 +32,6 @@ const useStyles = makeStyles()((theme) => ({
     marginTop: 20,
     borderRadius: 16,
     overflow: 'hidden',
-  },
-  badges: {
-    marginTop: 8,
-    '&>*': {
-      marginRight: 8,
-    },
   },
   informationCard: {
     marginTop: theme.spacing(10),
@@ -57,33 +53,47 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export default function Tree(props) {
-  const { tree, planter, organization, nextExtraIsEmbed, nextExtraKeyword } =
-    props;
+const IsMobileScreen = styled(Box)(({ theme }) => ({
+  display: 'block',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}));
+
+export default function Tree({
+  tree,
+  planter,
+  organization,
+  nextExtraIsEmbed,
+  nextExtraKeyword,
+}) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
 
+  const { setTitlesData } = useDrawerContext();
+
   log.warn('map:', mapContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setTitlesData({
+      treeId: tree.id,
+      verifiedToken: tree.token_id,
+      verifiedTree: tree.verified,
+    });
+  }, [setTitlesData, tree.id, tree.token_id, tree.verified]);
+
+  useEffect(() => {
     // manipulate the map
     if (mapContext.map && tree?.lat && tree?.lon) {
       mapContext.map.flyTo(tree.lat, tree.lon, 16);
     }
-  }, [mapContext.map]);
+  }, [mapContext.map, tree.lat, tree.lon]);
 
   return (
     <PageWrapper className={classes.root}>
-      <Typography variant="h2">
-        Tree{/* tree.species */} - #{tree.id}
-      </Typography>
-      <Typography sx={{ fontWeight: 400 }} variant="h5">
-        Eco-Peace-Vision
-      </Typography>
-      <Box className={classes.badges}>
-        <VerifiedBadge verified={tree.verified} badgeName="Tree Verified" />
-        <VerifiedBadge verified={tree.token_id} badgeName="Token Issued" />
-      </Box>
+      <IsMobileScreen>
+        <DrawerTitle />
+      </IsMobileScreen>
       <CustomImageWrapper
         imageUrl={tree.image_url}
         timeCreated={tree.time_created}

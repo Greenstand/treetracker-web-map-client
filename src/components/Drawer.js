@@ -9,6 +9,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
+import DrawerTitle from './common/DrawerTitle';
 
 const Root = styled('div')(() => ({
   height: '100%',
@@ -24,6 +25,8 @@ const Puller = styled(Box)(({ theme }) => ({
   position: 'absolute',
   top: 8,
 }));
+
+const Wrapper = styled(Box)(() => ({}));
 
 function Drawer(props) {
   const { children } = props;
@@ -155,18 +158,18 @@ function Drawer(props) {
           disableAutoFocus: true,
         }}
       >
-        <StyledBox
-          onTouchMove={handleTouch}
-          onMouseMove={handleTouch}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: [0, 4],
-            padding: 5,
-          }}
-        >
-          <Puller />
-        </StyledBox>
+        <Wrapper onTouchMove={handleTouch} onMouseMove={handleTouch}>
+          <StyledBox
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: [0, 4],
+            }}
+          >
+            <Puller />
+            <DrawerTitle />
+          </StyledBox>
+        </Wrapper>
         <StyledBox
           sx={{
             position: 'relative',

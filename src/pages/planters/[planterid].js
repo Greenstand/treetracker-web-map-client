@@ -1,12 +1,13 @@
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Stack } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 import log from 'loglevel';
 import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
@@ -15,12 +16,11 @@ import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import PageWrapper from '../../components/PageWrapper';
-import VerifiedBadge from '../../components/VerifiedBadge';
 import CustomCard from '../../components/common/CustomCard';
-import DataTag from '../../components/common/DataTag';
+import DrawerTitle from '../../components/common/DrawerTitle';
+import { useDrawerContext } from '../../context/DrawerContext';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
-import * as utils from '../../models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -44,7 +44,12 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
 }));
-
+const IsMobileScreen = styled(Box)(({ theme }) => ({
+  display: 'block',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}));
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
         velit ipsa illo, odit unde atque doloribus tempora distinctio facere
@@ -60,10 +65,23 @@ export default function Planter(props) {
   const mapContext = useMapContext();
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
-  const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { setTitlesData } = useDrawerContext();
 
   const { classes } = useStyles();
+
+  useEffect(() => {
+    setTitlesData({
+      firstName: planter.first_name,
+      lastName: planter.last_name,
+      createdTime: planter.created_time,
+    });
+  }, [
+    planter.created_time,
+    planter.first_name,
+    planter.last_name,
+    setTitlesData,
+  ]);
 
   useEffect(() => {
     async function reload() {
@@ -89,22 +107,12 @@ export default function Planter(props) {
   return (
     <>
       <PageWrapper>
-        <Typography variant="h2">
-          {utils.hideLastName(`${planter.first_name}${planter.last_name}`)}
-        </Typography>
-
-        <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
-          <DataTag data={utils.formatDates(planter.created_time, 'LL')} />
-          <DataTag data="Shirimatunda, Tanzania" location />
-        </Stack>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <VerifiedBadge verified badgeName="Verified Planter" />
-          <VerifiedBadge badgeName="Seeking Orgs" />
-        </Box>
-
-        {!isMobileScreen && (
+        <IsMobileScreen>
+          <DrawerTitle />
+        </IsMobileScreen>
+        <IsMobileScreen>
           <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
-        )}
+        </IsMobileScreen>
 
         <Avatar
           src={planter.image_url}

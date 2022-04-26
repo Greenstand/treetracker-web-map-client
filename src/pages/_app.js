@@ -11,6 +11,7 @@ import LayoutEmbed from '../components/LayoutEmbed';
 import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
 import LayoutMobileC from '../components/LayoutMobileC';
+import { DrawerProvider } from '../context/DrawerContext';
 import { CustomThemeProvider } from '../context/themeContext';
 import useEmbed from '../hooks/useEmbed';
 import { MapContextProvider } from '../mapContext';
@@ -60,33 +61,37 @@ function TreetrackerApp({ Component, pageProps }) {
   return (
     <CacheProvider value={muiCache ?? createMuiCache()}>
       <CustomThemeProvider>
-        <MapContextProvider>
-          {nextExtraIsDesktop && !nextExtraIsEmbed && (
-            <Layout>
-              <Component {...pageProps} {...extraProps} />
-            </Layout>
-          )}
-          {nextExtraIsDesktop && nextExtraIsEmbed && (
-            <LayoutEmbed isFloatingDisabled={Component.isFloatingDisabled}>
-              <Component {...pageProps} {...extraProps} />
-            </LayoutEmbed>
-          )}
-          {!nextExtraIsDesktop && Component.isBLayout && (
-            <LayoutMobileB>
-              <Component {...pageProps} {...extraProps} />
-            </LayoutMobileB>
-          )}
-          {!nextExtraIsDesktop && Component.isCLayout && (
-            <LayoutMobileC>
-              <Component {...pageProps} {...extraProps} />
-            </LayoutMobileC>
-          )}
-          {!nextExtraIsDesktop && !Component.isBLayout && !Component.isCLayout && (
-            <LayoutMobile>
-              <Component {...pageProps} {...extraProps} />
-            </LayoutMobile>
-          )}
-        </MapContextProvider>
+        <DrawerProvider>
+          <MapContextProvider>
+            {nextExtraIsDesktop && !nextExtraIsEmbed && (
+              <Layout>
+                <Component {...pageProps} {...extraProps} />
+              </Layout>
+            )}
+            {nextExtraIsDesktop && nextExtraIsEmbed && (
+              <LayoutEmbed isFloatingDisabled={Component.isFloatingDisabled}>
+                <Component {...pageProps} {...extraProps} />
+              </LayoutEmbed>
+            )}
+            {!nextExtraIsDesktop && Component.isBLayout && (
+              <LayoutMobileB>
+                <Component {...pageProps} {...extraProps} />
+              </LayoutMobileB>
+            )}
+            {!nextExtraIsDesktop && Component.isCLayout && (
+              <LayoutMobileC>
+                <Component {...pageProps} {...extraProps} />
+              </LayoutMobileC>
+            )}
+            {!nextExtraIsDesktop &&
+              !Component.isBLayout &&
+              !Component.isCLayout && (
+                <LayoutMobile>
+                  <Component {...pageProps} {...extraProps} />
+                </LayoutMobile>
+              )}
+          </MapContextProvider>
+        </DrawerProvider>
       </CustomThemeProvider>
     </CacheProvider>
   );

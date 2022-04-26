@@ -13,16 +13,16 @@ import {
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import DataTag from 'components/common/DataTag';
+import DrawerTitle from 'components/common/DrawerTitle';
+import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import PageWrapper from '../../components/PageWrapper';
-import VerifiedBadge from '../../components/VerifiedBadge';
 import CustomCard from '../../components/common/CustomCard';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
@@ -79,6 +79,8 @@ export default function Organization(props) {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
+  const { setTitlesData } = useDrawerContext();
+
   async function updateContinent() {
     const tree = organization?.featuredTrees?.trees[0];
     if (tree) {
@@ -88,7 +90,14 @@ export default function Organization(props) {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setTitlesData({
+      name: organization.map_name,
+      createAt: organization.created_time,
+    });
+  }, [organization.created_time, organization.map_name, setTitlesData]);
+
+  useEffect(() => {
     async function reload() {
       // manipulate the map
       const { map } = mapContext;
@@ -117,21 +126,11 @@ export default function Organization(props) {
   return (
     <>
       <PageWrapper>
-        <Typography variant="h2">{organization.map_name}</Typography>
-        <Stack gap={{ xs: 1, sm: 2 }} sx={{ mb: 3, mt: [2, 3] }}>
-          <DataTag data={utils.formatDates(organization.created_time, 'LL')} />
-          <DataTag data="Shirimatunda, Tanzania" location />
-        </Stack>
-
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <VerifiedBadge verified badgeName="Verified Planter" />
-          <VerifiedBadge badgeName="Seeking Orgs" />
-        </Box>
+        {!isMobileScreen && <DrawerTitle />}
 
         {!isMobileScreen && (
           <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
         )}
-
         <Box
           className={classes.imgContainer}
           sx={{
@@ -153,7 +152,6 @@ export default function Organization(props) {
             {/*  <Image src={organization.logo_url} /> */}
           </Box>
         </Box>
-
         <Grid
           container
           wrap="nowrap"
@@ -179,7 +177,6 @@ export default function Organization(props) {
             />
           </Grid>
         </Grid>
-
         {isPlanterTab && (
           <>
             <Box sx={{ mt: [0, 22] }}>
@@ -234,7 +231,6 @@ export default function Organization(props) {
             />
           </Stack>
         )}
-
         <Divider varian="fullwidth" className={classes.divider} />
         <Typography variant="h4">About the Organization</Typography>
         <Typography variant="body2" mt={7}>
@@ -260,7 +256,6 @@ export default function Organization(props) {
           excepturi, natus explicabo laborum delectus repudiandae placeat
           eligendi.
         </Typography>
-
         <Divider varian="fullwidth" className={classes.divider} />
         <Typography variant="h4" mb={9}>
           Check out the planting effort in action
