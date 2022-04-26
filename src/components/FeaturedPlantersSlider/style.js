@@ -20,7 +20,7 @@ const useStyles = makeStyles()((theme, size) => ({
     overflowX: 'scroll',
     scrollBehavior: 'smooth',
     scrollSnapType: 'x mandatory',
-    padding: theme.spacing(6, 4),
+    padding: theme.spacing(8, 4),
     scrollPadding: '0 50%',
     scrollbarWidth: 'none',
     '&::-webkit-scrollbar': {
@@ -36,7 +36,7 @@ const useStyles = makeStyles()((theme, size) => ({
   },
 
   Img: {
-    borderRadius: '16px',
+    borderRadius: '8px',
     transition: 'transform .5s',
     width: 208,
     height: 232,

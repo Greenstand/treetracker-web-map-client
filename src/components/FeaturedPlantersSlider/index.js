@@ -1,11 +1,11 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
 import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
 
-function FeaturedTreesSlider({ trees, size = null }) {
+function FeaturedPlantersSlider({ planters, size = null }) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
@@ -28,30 +28,41 @@ function FeaturedTreesSlider({ trees, size = null }) {
         <ArrowForwardIosIcon />
       </Button>
       <Grid ref={sliderRef} className={classes.SliderImgContainer}>
-        {trees.map((tree) => (
+        {planters.map((planter) => (
           <Link
-            href={`/trees/${tree.id}`}
-            key={tree.id}
+            href={`/planters/${planter.id}`}
+            key={planter.id}
             className={classes.Card}
+            sx={{
+              backgroundColor: '#FF7A0033',
+              boxShadow: '0px 2px 16px rgba(255, 122, 0, 0.15)',
+              borderRadius: '16px',
+            }}
           >
-            <img className={classes.Img} src={tree.image_url} />
+            <Avatar
+              sx={{
+                width: 136,
+                height: 136,
+                border: '4px solid white',
+                boxSizing: 'border-box',
+              }}
+              src="https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg"
+            />
             <Box sx={{}}>
               <Typography
                 variant="h6"
                 sx={{
-                  fontSize: '20px',
-                  marginTop: 4,
+                  fontSize: '16px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '24px',
+                  marginBottom: '20px',
+                  textTransform: 'capitalize',
                 }}
               >
-                Tree - {tree.id}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  marginTop: 1.5,
-                }}
-              >
-                West-Smith-Nayer
+                {planter.first_name}
+                &nbsp;
+                {(planter.last_name && planter.last_name.slice(0, 1)) || ''}
               </Typography>
             </Box>
           </Link>
@@ -71,4 +82,4 @@ function FeaturedTreesSlider({ trees, size = null }) {
   );
 }
 
-export default FeaturedTreesSlider;
+export default FeaturedPlantersSlider;

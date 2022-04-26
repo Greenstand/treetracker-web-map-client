@@ -27,8 +27,8 @@ const useStyles = makeStyles()((theme) => ({
     justifyContent: 'space-between',
     padding: '0 20px',
     zIndex: 9999,
-    boxShadow:
-      '0px 20px 17px -14px rgb(0 0 0 / 32%), 0px 10px 15px 1px rgb(0 0 0 / 14%), 0px 10px 20px 3px rgb(0 0 0 / 12%)',
+    // boxShadow:
+    //   '0px 20px 17px -14px rgb(0 0 0 / 32%), 0px 10px 15px 1px rgb(0 0 0 / 14%), 0px 10px 20px 3px rgb(0 0 0 / 12%)',
     [theme.breakpoints.down('sm')]: {
       padding: '0',
       alignItems: 'flex-end',
@@ -75,7 +75,7 @@ function Navbar() {
   const { classes } = useStyles();
   return (
     <AppBar
-      elevation={9}
+      elevation={4}
       className={classes.navContainer}
       color="default"
       position="static"
