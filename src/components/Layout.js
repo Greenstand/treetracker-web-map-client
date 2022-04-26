@@ -1,10 +1,14 @@
+import AddIcon from '@mui/icons-material/Add';
+import OpenWithIcon from '@mui/icons-material/OpenWith';
+import RemoveIcon from '@mui/icons-material/Remove';
 import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-import max from '../images/max.svg';
-import zoomIn from '../images/zoom-in.svg';
-import zoomOut from '../images/zoom-out.svg';
+// import max from '../images/max.svg';
+// import zoomIn from '../images/zoom-in.svg';
+// import zoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -84,8 +88,10 @@ export default function Layout({ children }) {
               cursor: 'pointer',
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="fullscreen" src={max} />
+            <Fab color="primary" aria-label="max">
+              {}
+              <OpenWithIcon />
+            </Fab>
           </Box>
           <Box
             sx={{
@@ -100,12 +106,16 @@ export default function Layout({ children }) {
             }}
           >
             <Box onClick={handleZoomIn}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-in" src={zoomIn} />
+              <Fab color="primary" aria-label="zoomin">
+                {}
+                <AddIcon />
+              </Fab>
             </Box>
             <Box onClick={handleZoomOut}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-out" src={zoomOut} />
+              <Fab color="primary" aria-label="zoomout">
+                {}
+                <RemoveIcon />
+              </Fab>
             </Box>
           </Box>
           <App />
