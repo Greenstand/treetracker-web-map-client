@@ -22,7 +22,6 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
   top: {
-    margin: theme.spacing(14, 4),
     [theme.breakpoints.down('md')]: {
       margin: theme.spacing(5),
     },
@@ -127,6 +126,7 @@ function LeaderBoard(props) {
               variant="h5"
               sx={{
                 textAlign: 'center',
+                marginLeft: '38px',
               }}
               color="text.secondary"
               className={classes.title}
@@ -139,22 +139,35 @@ function LeaderBoard(props) {
               variant="h5"
               color="text.secondary"
               className={classes.title}
+              sx={{
+                marginLeft: '16px',
+              }}
             >
               COUNTRY
             </Typography>
           </Grid>
 
-          <Grid item xs={9}>
+          <Grid
+            item
+            xs={9}
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              paddingRight: '4px',
+            }}
+          >
             <Typography
               variant="h5"
               color="text.secondary"
               sx={{
                 textAlign: 'right',
+                marginRight: '8px',
               }}
               className={classes.title}
             >
-              TREES PLANTED <TreeImage />
+              TREES PLANTED
             </Typography>
+            <TreeImage />
           </Grid>
           <Grid item xs={1} />
         </Grid>
@@ -219,18 +232,28 @@ function LeaderBoard(props) {
                 </Typography>
               </Grid>
               <Grid item xs={5}>
-                <Typography
-                  variant="h5"
-                  color="text.secondary"
+                <Box
                   sx={{
-                    textAlign: 'right',
-                    marginRight: '19.99%',
-                    fontFamily: 'Lato',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    width: 1,
+                    boxSizing: 'border-box',
+                    paddingRight: '32px',
                   }}
                 >
-                  {`${country.planted.toLocaleString()} `}
+                  <Typography
+                    variant="h5"
+                    color="text.secondary"
+                    sx={{
+                      textAlign: 'right',
+                      fontFamily: 'Lato',
+                      marginRight: '8px',
+                    }}
+                  >
+                    {`${country.planted.toLocaleString()} `}
+                  </Typography>
                   <TreeImage />
-                </Typography>
+                </Box>
               </Grid>
             </Grid>
           </Box>
