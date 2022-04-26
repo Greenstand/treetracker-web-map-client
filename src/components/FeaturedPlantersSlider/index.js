@@ -37,6 +37,7 @@ function FeaturedPlantersSlider({ planters, size = null }) {
               backgroundColor: '#FF7A0033',
               boxShadow: '0px 2px 16px rgba(255, 122, 0, 0.15)',
               borderRadius: '16px',
+              textDecoration: 'none',
             }}
           >
             <Avatar
