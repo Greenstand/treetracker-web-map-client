@@ -91,10 +91,10 @@ const formatDates = (date, format) =>
 const fixCountryNames = (countries) =>
   countries.map((country) => {
     if (country.name === 'Tanzania') {
-      return { ...country, name: 'Tanzania, United Republic of' };
+      return { ...country, name: 'United Republic of Tanzania' };
     }
     if (country.name === 'Democratic Republic of the Congo') {
-      return { ...country, name: 'Congo, the Democratic Republic of the' };
+      return { ...country, name: 'Democratic Republic of the Congo' };
     }
     return country;
   });
