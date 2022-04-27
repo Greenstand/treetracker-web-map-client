@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { makeStyles } from 'models/makeStyles';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
-import SearchFilter from './SearchFilter';
 
 const Share = dynamic(() => import('./Share')); // needed to access window object in component
 
@@ -67,7 +66,7 @@ export default function PageWrapper({ children, className, ...otherProps }) {
           </Box>
         </Box>
       )}
-      {!isMobileScreen && <SearchFilter />}
+      {/* {!isMobileScreen && <SearchFilter />} */}
 
       <Box className={clsx(classes.main, className)} {...otherProps}>
         {children}

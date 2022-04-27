@@ -1,4 +1,4 @@
-import FeaturedTreesSlider from './index';
+import FeaturedPlantersSlider from './index';
 import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Featured Trees Slider', () => {
@@ -46,6 +46,6 @@ describe('Featured Trees Slider', () => {
         species: 'Palm Tree',
       },
     ];
-    mount(<FeaturedTreesSlider trees={trees} />);
+    mount(<FeaturedPlantersSlider trees={trees} />);
   });
 });
