@@ -1,6 +1,12 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Button,
+  Grid,
+  Typography,
+} from '@mui/material';
 import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
@@ -18,65 +24,106 @@ function FeaturedPlantersSlider({ planters, size = null }) {
   return (
     <div className={classes.SliderContainer}>
       <Button
-        className={classes.arrow}
-        onClick={() => scrollHandler(500)}
-        sx={{
-          right: 0,
-          borderRadius: '40px 0 0 40px',
-        }}
-      >
-        <ArrowForwardIosIcon />
-      </Button>
-      <Grid ref={sliderRef} className={classes.SliderImgContainer}>
-        {planters.map((planter) => (
-          <Link
-            href={`/planters/${planter.id}`}
-            key={planter.id}
-            className={classes.Card}
-            sx={{
-              backgroundColor: '#FF7A0033',
-              boxShadow: '0px 2px 16px rgba(255, 122, 0, 0.15)',
-              borderRadius: '16px',
-            }}
-          >
-            <Avatar
-              sx={{
-                width: 136,
-                height: 136,
-                border: '4px solid white',
-                boxSizing: 'border-box',
-              }}
-              src="https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg"
-            />
-            <Box sx={{}}>
-              <Typography
-                variant="h6"
-                sx={{
-                  fontSize: '16px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '24px',
-                  marginBottom: '20px',
-                  textTransform: 'capitalize',
-                }}
-              >
-                {planter.first_name}
-                &nbsp;
-                {(planter.last_name && planter.last_name.slice(0, 1)) || ''}
-              </Typography>
-            </Box>
-          </Link>
-        ))}
-      </Grid>
-      <Button
-        className={classes.arrow}
         onClick={() => scrollHandler(-500)}
         sx={{
           left: 0,
+          // borderRadius: '40px 0 0 40px',
+          position: 'absolute',
           borderRadius: ' 0 40px 40px 0',
+          zIndex: 3,
+          bottom: '47%',
+          minWidth: '35px',
+          height: '75px',
+          cursor: 'pointer',
+          marginLeft: -3,
+          '& svg': {
+            marginRight: -4,
+          },
+          opacity: 0.4,
         }}
+        variant="contained"
       >
-        <ArrowBackIosIcon />
+        <ArrowBackIosIcon
+          sx={{
+            transform: 'rotate(0deg)',
+          }}
+        />
+      </Button>
+      <Grid ref={sliderRef} className={classes.SliderImgContainer}>
+        {planters.map((planter) => (
+          <Card
+            key={planter.id}
+            elevation={8}
+            sx={{
+              transition: 'all .5s',
+              scrollSnapAlign: 'center',
+              scrollBehavior: 'smooth',
+              // position: 'relative',
+              padding: (theme) => theme.spacing(5),
+              borderRadius: (theme) => theme.spacing(4),
+              overflow: 'initial',
+              backgroundColor: '#FF7A0033',
+            }}
+          >
+            <CardMedia
+              component="img"
+              image="https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg"
+              alt="tree"
+              sx={{
+                width: 136,
+                height: 136,
+                borderWidth: 4,
+                borderStyle: 'solid',
+                borderColor: (t) => t.palette.background.paper,
+                boxSizing: 'border-box',
+                borderRadius: '50%',
+                transition: 'transform .5s',
+              }}
+            />
+            <CardContent>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontSize: '20px',
+                  marginTop: 4,
+                  wordBreak: 'break-all',
+                }}
+                align="center"
+              >
+                <Link href={`/planters/${planter.id}`}>
+                  {planter.first_name}
+                  &nbsp;
+                  {(planter.last_name && planter.last_name.slice(0, 1)) || ''}
+                </Link>
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Grid>
+      <Button
+        onClick={() => scrollHandler(500)}
+        sx={{
+          right: 0,
+          position: 'absolute',
+          borderRadius: '40px 0 0 40px',
+          zIndex: 3,
+          bottom: '47%',
+          minWidth: '35px',
+          height: '75px',
+          cursor: 'pointer',
+          marginRight: -3,
+          '& svg': {
+            marginLeft: -4,
+          },
+          opacity: 0.4,
+        }}
+        variant="contained"
+      >
+        <ArrowBackIosIcon
+          sx={{
+            transform: 'rotate(180deg)',
+          }}
+        />
       </Button>
     </div>
   );
