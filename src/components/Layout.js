@@ -1,14 +1,13 @@
-import AddIcon from '@mui/icons-material/Add';
-import OpenWithIcon from '@mui/icons-material/OpenWith';
-import RemoveIcon from '@mui/icons-material/Remove';
+import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
 import Paper from '@mui/material/Paper';
+import { blueGrey } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-// import max from '../images/max.svg';
-// import zoomIn from '../images/zoom-in.svg';
-// import zoomOut from '../images/zoom-out.svg';
+import max from '../images/max.svg';
+import zoomIn from '../images/zoom-in.svg';
+import zoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -54,6 +53,7 @@ const useStyles = makeStyles()((theme) => ({
 export default function Layout({ children }) {
   const mapContext = useMapContext();
   const { classes } = useStyles();
+
   function handleFullScreen() {
     // navigate to /container page through next.js's api
     const url = new URL(window.location.href);
@@ -68,6 +68,14 @@ export default function Layout({ children }) {
   function handleZoomOut() {
     mapContext.map.map.zoomOut();
   }
+
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(blueGrey[900]),
+    backgroundColor: blueGrey[900],
+    '&:hover': {
+      backgroundColor: blueGrey[800],
+    },
+  }));
 
   return (
     <Box className={classes.root}>
@@ -88,10 +96,11 @@ export default function Layout({ children }) {
               cursor: 'pointer',
             }}
           >
-            <Fab color="primary" aria-label="max">
-              {}
-              <OpenWithIcon />
-            </Fab>
+            <ColorButton
+              style={{maxWidth: '55px', maxHeight: '55px', minWidth: '55px', minHeight: '55px'}}
+              sx={{ borderRadius: '15px' }}>
+              <img src={max} alt="max" />
+            </ColorButton>
           </Box>
           <Box
             sx={{
@@ -105,18 +114,18 @@ export default function Layout({ children }) {
               flexDirection: 'column',
             }}
           >
-            <Box onClick={handleZoomIn}>
-              <Fab color="primary" aria-label="zoomin">
-                {}
-                <AddIcon />
-              </Fab>
-            </Box>
-            <Box onClick={handleZoomOut}>
-              <Fab color="primary" aria-label="zoomout">
-                {}
-                <RemoveIcon />
-              </Fab>
-            </Box>
+            <ColorButton
+              style={{maxWidth: '55px', maxHeight: '55px', minWidth: '55px', minHeight: '55px'}}
+              sx={{ borderRadius: '15px' }}
+              onClick={handleZoomIn}>
+              <img src={zoomIn} alt="zoom in" />
+            </ColorButton>
+            <ColorButton
+              style={{maxWidth: '55px', maxHeight: '55px', minWidth: '55px', minHeight: '55px'}}
+              sx={{ borderRadius: '15px' }}
+              onClick={handleZoomOut}>
+              <img src={zoomOut} alt="zoom in" />
+            </ColorButton>
           </Box>
           <App />
         </Box>
@@ -124,3 +133,4 @@ export default function Layout({ children }) {
     </Box>
   );
 }
+
