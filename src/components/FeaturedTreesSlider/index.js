@@ -1,5 +1,4 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
   Button,
   Grid,
@@ -25,14 +24,30 @@ function FeaturedTreesSlider({ trees, size = null }) {
   return (
     <div className={classes.SliderContainer}>
       <Button
-        className={classes.arrow}
-        onClick={() => scrollHandler(500)}
+        onClick={() => scrollHandler(-500)}
         sx={{
-          right: 0,
-          borderRadius: '40px 0 0 40px',
+          left: 0,
+          // borderRadius: '40px 0 0 40px',
+          position: 'absolute',
+          borderRadius: ' 0 40px 40px 0',
+          zIndex: 3,
+          bottom: '47%',
+          minWidth: '35px',
+          height: '75px',
+          cursor: 'pointer',
+          marginLeft: -3,
+          '& svg': {
+            marginRight: -4,
+          },
+          opacity: 0.4,
         }}
+        variant="contained"
       >
-        <ArrowForwardIosIcon />
+        <ArrowBackIosIcon
+          sx={{
+            transform: 'rotate(0deg)',
+          }}
+        />
       </Button>
       <Grid ref={sliderRef} className={classes.SliderImgContainer}>
         {trees.map((tree) => (
@@ -86,14 +101,29 @@ function FeaturedTreesSlider({ trees, size = null }) {
         ))}
       </Grid>
       <Button
-        className={classes.arrow}
-        onClick={() => scrollHandler(-500)}
+        onClick={() => scrollHandler(500)}
         sx={{
-          left: 0,
-          borderRadius: ' 0 40px 40px 0',
+          right: 0,
+          position: 'absolute',
+          borderRadius: '40px 0 0 40px',
+          zIndex: 3,
+          bottom: '47%',
+          minWidth: '35px',
+          height: '75px',
+          cursor: 'pointer',
+          marginRight: -3,
+          '& svg': {
+            marginLeft: -4,
+          },
+          opacity: 0.4,
         }}
+        variant="contained"
       >
-        <ArrowBackIosIcon />
+        <ArrowBackIosIcon
+          sx={{
+            transform: 'rotate(180deg)',
+          }}
+        />
       </Button>
     </div>
   );

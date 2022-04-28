@@ -54,7 +54,7 @@ const useStyles = makeStyles()((theme, size) => ({
     // background: theme.palette.nearBlack.main,
     border: 'none',
     opacity: 0.7,
-    color: theme.palette.common.white,
+    // color: theme.palette.common.white,
     '&:hover': {
       // background: theme.palette.nearBlack.main,
     },
