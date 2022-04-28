@@ -5,7 +5,7 @@ function MenuBar() {
 
   const fill =
     theme.palette.mode === 'light'
-      ? theme.palette.nearBlack.main
+      ? theme.palette.common.black
       : theme.palette.common.white;
 
   return (

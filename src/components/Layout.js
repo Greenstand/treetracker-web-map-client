@@ -29,8 +29,8 @@ const useStyles = makeStyles()((theme) => ({
     zIndex: 999,
     overflowY: 'auto',
     display: 'flex',
-    boxShadow:
-      '20px 0px 17px -14px rgb(0 0 0 / 32%), 10px 0px 15px 1px rgb(0 0 0 / 14%), 10px 0px 20px 3px rgb(0 0 0 / 12%)',
+    // boxShadow:
+    //   '20px 0px 17px -14px rgb(0 0 0 / 32%), 10px 0px 15px 1px rgb(0 0 0 / 14%), 10px 0px 20px 3px rgb(0 0 0 / 12%)',
     borderRadius: 0,
     [theme.breakpoints.down('sm')]: {
       width: '100%',

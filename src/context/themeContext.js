@@ -90,7 +90,7 @@ export function CustomThemeProvider({ children }) {
                   color: '#474B4F',
                 }
               : {
-                  color: '#eee',
+                  color: '#fff',
                 }),
           },
         },
@@ -109,37 +109,26 @@ export function CustomThemeProvider({ children }) {
         },
       },
     },
-    typography: {
-      allVariants: {
-        ...(themeMode === 'light'
-          ? {
-              color: '#474B4F',
-            }
-          : {
-              color: '#eee',
-            }),
-      },
-    },
     palette: {
       themeMode,
       background: {
         ...(themeMode === 'light'
           ? {
-              paper: '#fff',
+              //  paper: '#fff',
             }
           : {
+              default: '#333',
               paper: '#333',
             }),
-        greenGradient:
-          'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
-        greenOrangeLightGr:
-          'linear-gradient(291.56deg, rgba(255, 122, 0, 0.4) 0%, rgba(117, 185, 38, 0.15) 98.94%)',
-        greenOrangeLightGrInverse:
-          'linear-gradient(111.41deg, rgba(255, 122, 0, 0.15) 1.62%, rgba(117, 185, 38, 0.4) 98.96%)',
-        OrangeGreenGradient:
-          'linear-gradient(90.06deg, rgba(255, 165, 0, 0.45) 0.79%, rgba(117, 185, 38, 0.45) 49.97%, rgba(96, 137, 47, 0.6) 99.95%)',
-        OrangeGreenGradientDark:
-          'linear-gradient(90deg, rgba(255, 165, 0, 0.225) 0%, rgba(255, 122, 0, 0.2625) 48.96%, rgba(134, 194, 64, 0.45) 100%)',
+        // greenGradient: //   'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
+        // greenOrangeLightGr:
+        //   'linear-gradient(291.56deg, rgba(255, 122, 0, 0.4) 0%, rgba(117, 185, 38, 0.15) 98.94%)',
+        // greenOrangeLightGrInverse:
+        //   'linear-gradient(111.41deg, rgba(255, 122, 0, 0.15) 1.62%, rgba(117, 185, 38, 0.4) 98.96%)',
+        // OrangeGreenGradient:
+        //   'linear-gradient(90.06deg, rgba(255, 165, 0, 0.45) 0.79%, rgba(117, 185, 38, 0.45) 49.97%, rgba(96, 137, 47, 0.6) 99.95%)',
+        // OrangeGreenGradientDark:
+        //   'linear-gradient(90deg, rgba(255, 165, 0, 0.225) 0%, rgba(255, 122, 0, 0.2625) 48.96%, rgba(134, 194, 64, 0.45) 100%)',
       },
       primary: {
         main: '#61892F',
@@ -163,15 +152,15 @@ export function CustomThemeProvider({ children }) {
             }),
       },
       // Does not changes color, stays the same regardless of theme
-      darkGrey: {
-        main: '#474B4F',
-      },
-      nearBlack: {
-        main: '#222629',
-      },
-      grey: {
-        main: '#6B6E70',
-      },
+      // darkGrey: {
+      //   main: '#474B4F',
+      // },
+      // nearBlack: {
+      //   main: '#222629',
+      // },
+      // grey: {
+      //   main: '#6B6E70',
+      // },
     },
   });
 
@@ -275,6 +264,8 @@ export function CustomThemeProvider({ children }) {
       },
     },
   });
+
+  console.warn('theme:', theme);
 
   const value = React.useMemo(
     () => ({
