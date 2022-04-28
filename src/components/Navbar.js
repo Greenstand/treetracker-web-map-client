@@ -1,6 +1,7 @@
 import {
   AppBar,
   Button,
+  Box,
   Menu,
   MenuItem,
   Toolbar,
@@ -81,20 +82,28 @@ function Navbar() {
       position="static"
     >
       <Link href="/" className={classes.logo}>
-        <Image src={iconLogo} width={24} height={30} alt="Greenstand Logo" />
-        {!isMobileScreen && (
-          <Typography
-            variant="h4"
-            ml={2.5}
-            color="text.secondary"
-            sx={{
-              fontWeight: 900,
-              lineHeight: '22px',
-            }}
-          >
-            Greenstand
-          </Typography>
-        )}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'baseline',
+          }}
+        >
+          <Image src={iconLogo} width={24} height={30} alt="Greenstand Logo" />
+          {!isMobileScreen && (
+            <Typography
+              variant="h4"
+              ml={2.5}
+              color="text.secondary"
+              sx={{
+                fontWeight: 900,
+                lineHeight: '22px',
+              }}
+            >
+              Greenstand
+            </Typography>
+          )}
+        </Box>
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
         <Link href="/">
