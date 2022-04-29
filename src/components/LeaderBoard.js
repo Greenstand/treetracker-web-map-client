@@ -1,4 +1,11 @@
-import { Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Paper,
+  Box,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import countries from 'i18n-iso-countries';
 import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
@@ -175,10 +182,19 @@ function LeaderBoard(props) {
 
       {fixedCountries &&
         fixedCountries.map((country, index) => (
-          <Box
+          <Paper
             key={country.id}
-            className={classes.item}
             onClick={() => handleCountryClick(country.id)}
+            elevation={5}
+            sx={{
+              borderRadius: '100px',
+              // boxShadow: '0 4px 10px 0px rgba(0, 0, 0, 0.15)',
+              cursor: 'pointer',
+              margin: (t) => t.spacing(8, 4),
+              // [theme.breakpoints.down('md')]: {
+              //   margin: theme.spacing(3),
+              // },
+            }}
           >
             <Grid
               container
@@ -256,7 +272,7 @@ function LeaderBoard(props) {
                 </Box>
               </Grid>
             </Grid>
-          </Box>
+          </Paper>
         ))}
       <Box pb={4} />
     </>

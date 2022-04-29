@@ -1,30 +1,24 @@
 import AccessTime from '@mui/icons-material/AccessTime';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
 import log from 'loglevel';
 import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import DrawerTitle from 'components/common/DrawerTitle';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
-import PageWrapper from '../../components/PageWrapper';
 import TreeTag from '../../components/common/TreeTag';
+import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
   imageContainer: {
     position: 'relative',
     flexGrow: 1,
@@ -53,12 +47,12 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const IsMobileScreen = styled(Box)(({ theme }) => ({
-  display: 'block',
-  [theme.breakpoints.down('md')]: {
-    display: 'none',
-  },
-}));
+// const IsMobileScreen = styled(Box)(({ theme }) => ({
+//   display: 'block',
+//   [theme.breakpoints.down('md')]: {
+//     display: 'none',
+//   },
+// }));
 
 export default function Tree({
   tree,
@@ -90,10 +84,30 @@ export default function Tree({
   }, [mapContext.map, tree.lat, tree.lon]);
 
   return (
-    <PageWrapper className={classes.root}>
-      <IsMobileScreen>
+    <Box
+      sx={{
+        padding: 6,
+      }}
+    >
+      {/* <IsMobileScreen>
         <DrawerTitle />
-      </IsMobileScreen>
+      </IsMobileScreen> */}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+      >
+        <Box>
+          <ArrowBackIosIcon />
+          <Button variant="text">Back</Button>
+        </Box>
+        <Box>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={searchIcon} alt="search" />
+        </Box>
+      </Box>
       <CustomImageWrapper
         imageUrl={tree.image_url}
         timeCreated={tree.time_created}
@@ -166,7 +180,7 @@ export default function Tree({
         )}
       </Box>
       <Box height={20} />
-    </PageWrapper>
+    </Box>
   );
 }
 

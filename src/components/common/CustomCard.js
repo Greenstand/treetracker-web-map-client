@@ -66,7 +66,8 @@ function CustomCard(props) {
           sx={{
             boxShadow: disabled ? '' : '0px 6px 12px 0px #585B5D40',
             color: disabled
-              ? theme.palette.darkGrey.main
+              ? // ? theme.palette.darkGrey.main
+                theme.palette.success.main
               : theme.palette.success.main,
           }}
         >

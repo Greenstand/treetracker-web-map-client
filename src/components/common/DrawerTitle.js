@@ -17,14 +17,14 @@ const Wrapper = styled(Box)(({ theme }) => ({
 
 const Title = styled(Typography)(({ theme }) => ({
   width: '100%',
-  color: theme.palette.textPrimary.main,
+  color: theme.palette.text.primary.main,
   [theme.breakpoints.down('md')]: {
     paddingTop: '10px',
   },
 }));
 
 const SubTitle = styled(Typography)(({ theme }) => ({
-  color: theme.palette.textLight.main,
+  color: theme.palette.text.primary.main,
   paddingTop: '4px',
 }));
 

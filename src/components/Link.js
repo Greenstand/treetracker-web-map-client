@@ -1,15 +1,27 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable react/display-name */
 import MuiLink from '@mui/material/Link';
+import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
 import NextLink from 'next/link';
 import React from 'react';
 
+// generate material-ui style hook
+const useStyles = makeStyles((theme) => ({
+  link: {
+    color: theme.palette.text.primary,
+    '& :hover': {
+      color: theme.palette.text.primary,
+    },
+  },
+}));
+
 const NextComposed = React.forwardRef((props, ref) => {
   const { as, href, ...other } = props;
+  const classes = useStyles();
   return (
     <NextLink href={href} as={as}>
-      <a ref={ref} {...other} style={{ color: 'black' }} />
+      <a ref={ref} {...other} className={classes.link} />
     </NextLink>
   );
 });
