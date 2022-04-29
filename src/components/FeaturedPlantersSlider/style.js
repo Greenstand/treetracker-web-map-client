@@ -45,25 +45,6 @@ const useStyles = makeStyles()((theme, size) => ({
       minWidth: size === 'small' ? '144px' : '152px',
     },
   },
-  arrow: {
-    bottom: '47%',
-    zIndex: 3,
-    position: 'absolute',
-    minWidth: '35px',
-    height: '75px',
-    // background: theme.palette.nearBlack.main,
-    border: 'none',
-    opacity: 0.7,
-    color: theme.palette.common.white,
-    '&:hover': {
-      // background: theme.palette.nearBlack.main,
-    },
-    cursor: 'pointer',
-    padding: '0',
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-  },
   Title: {
     position: 'absolute',
     bottom: 0,

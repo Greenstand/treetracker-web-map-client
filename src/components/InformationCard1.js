@@ -30,7 +30,7 @@ const useStyles = makeStyles()((theme) => ({
     letterSpacing: '0.02em',
     lineHeight: theme.spacing(6),
     marginTop: theme.spacing(5),
-    color: theme.palette.darkGrey.main,
+    // color: theme.palette.darkGrey.main,
   },
   media: {
     height: 110,

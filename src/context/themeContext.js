@@ -151,16 +151,6 @@ export function CustomThemeProvider({ children }) {
               secondary: '#eee',
             }),
       },
-      // Does not changes color, stays the same regardless of theme
-      // darkGrey: {
-      //   main: '#474B4F',
-      // },
-      // nearBlack: {
-      //   main: '#222629',
-      // },
-      // grey: {
-      //   main: '#6B6E70',
-      // },
     },
   });
 
