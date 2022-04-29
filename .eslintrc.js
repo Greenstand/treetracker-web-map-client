@@ -66,6 +66,7 @@ module.exports = {
     'jsx-a11y/alt-text': 'warn',
     '@next/next/no-img-element': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
+    'no-unused-vars': 'warn',
   },
 
   reportUnusedDisableDirectives: true,

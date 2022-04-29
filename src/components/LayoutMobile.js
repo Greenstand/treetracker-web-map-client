@@ -65,7 +65,7 @@ export default function Layout({ children }) {
         >
           <Drawer>{children}</Drawer>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             position: 'absolute',
             zIndex: 1000,
@@ -78,7 +78,7 @@ export default function Layout({ children }) {
           }}
         >
           <SearchFilter />
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

@@ -19,19 +19,6 @@ export function CustomThemeProvider({ children }) {
   const getDesign = (themeMode) => ({
     spacing: 4,
     components: {
-      MuiAppBar: {
-        styleOverrides: {
-          colorDefault: {
-            ...(themeMode === 'light'
-              ? {
-                  backgroundColor: '#fff',
-                }
-              : {
-                  backgroundColor: '#1d1d1d',
-                }),
-          },
-        },
-      },
       MuiButton: {
         styleOverrides: {
           root: {

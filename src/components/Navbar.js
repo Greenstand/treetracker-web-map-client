@@ -82,15 +82,37 @@ function Navbar() {
       position="static"
     >
       <Link href="/" className={classes.logo}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'baseline',
-          }}
-        >
-          <Image src={iconLogo} width={24} height={30} alt="Greenstand Logo" />
-          {!isMobileScreen && (
+        {isMobileScreen && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              alignItems: 'baseline',
+              m: 4,
+            }}
+          >
+            <Image
+              src={iconLogo}
+              width={24}
+              height={30}
+              alt="Greenstand Logo"
+            />
+          </Box>
+        )}
+        {!isMobileScreen && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              alignItems: 'baseline',
+            }}
+          >
+            <Image
+              src={iconLogo}
+              width={24}
+              height={30}
+              alt="Greenstand Logo"
+            />
             <Typography
               variant="h4"
               ml={2.5}
@@ -102,8 +124,8 @@ function Navbar() {
             >
               Greenstand
             </Typography>
-          )}
-        </Box>
+          </Box>
+        )}
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
         <Link href="/">

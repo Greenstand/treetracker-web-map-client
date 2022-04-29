@@ -9,24 +9,12 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-import DrawerTitle from './common/DrawerTitle';
 
 const Root = styled('div')(() => ({
   height: '100%',
 }));
 
 const StyledBox = styled(Box)(() => ({}));
-
-const Puller = styled(Box)(({ theme }) => ({
-  width: 30,
-  height: 6,
-  backgroundColor: theme.palette.text.disabled,
-  borderRadius: 3,
-  position: 'absolute',
-  top: 8,
-}));
-
-const Wrapper = styled(Box)(() => ({}));
 
 function Drawer(props) {
   const { children } = props;
@@ -146,7 +134,7 @@ function Drawer(props) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         disableSwipeToOpen={false}
-        BackdropProps={{ open: false }}
+        hideBackdrop
         sx={{
           position: 'relative',
           zIndex: 900,
@@ -157,8 +145,14 @@ function Drawer(props) {
           disableEnforceFocus: true,
           disableAutoFocus: true,
         }}
+        PaperProps={{
+          elevation: 11,
+          sx: {
+            borderRadius: '16px 16px 0 0 ',
+          },
+        }}
       >
-        <Wrapper onTouchMove={handleTouch} onMouseMove={handleTouch}>
+        {/* <Wrapper onTouchMove={handleTouch} onMouseMove={handleTouch}>
           <StyledBox
             sx={{
               display: 'flex',
@@ -169,7 +163,30 @@ function Drawer(props) {
             <Puller />
             <DrawerTitle />
           </StyledBox>
-        </Wrapper>
+        </Wrapper> */}
+
+        <Box
+          id="drawer-header"
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            // marginBottom: [0, 4],
+            borderRadius: '16px 16px 0 0 ',
+          }}
+          onTouchMove={handleTouch}
+          onMouseMove={handleTouch}
+        >
+          <Box
+            sx={{
+              width: 24,
+              height: 4,
+              backgroundColor: (t) => t.palette.text.disabled,
+              borderRadius: 3,
+              my: 4,
+            }}
+          />
+        </Box>
+
         <StyledBox
           sx={{
             position: 'relative',
