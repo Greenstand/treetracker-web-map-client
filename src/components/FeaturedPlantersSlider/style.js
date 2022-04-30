@@ -31,7 +31,7 @@ const useStyles = makeStyles()((theme, size) => ({
       scrollSnapType: 'none',
     },
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0, 4),
+      padding: theme.spacing(4, 8),
     },
   },
 
