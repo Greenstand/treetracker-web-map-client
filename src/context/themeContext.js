@@ -113,6 +113,19 @@ export function buildTheme(theMode) {
         main: '#86C232',
         contrastText: '#fff',
       },
+      // a color that do not have primary color (like the branding green color)
+      // can be used in place like the `back` button on the corner
+      notImportant: {
+        ...(themeMode === 'light'
+          ? {
+              main: '#6B6E70',
+              contrastText: '#fff',
+            }
+          : {
+              main: '#a5a8a9',
+              contrastText: '#fff',
+            }),
+      },
       // Changes text color based on theme
       text: {
         ...(themeMode === 'light'

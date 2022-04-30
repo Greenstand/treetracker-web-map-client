@@ -1,11 +1,9 @@
 import AccessTime from '@mui/icons-material/AccessTime';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { useEffect } from 'react';
@@ -14,6 +12,7 @@ import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
+import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
 import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
@@ -46,13 +45,6 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
 }));
-
-// const IsMobileScreen = styled(Box)(({ theme }) => ({
-//   display: 'block',
-//   [theme.breakpoints.down('md')]: {
-//     display: 'none',
-//   },
-// }));
 
 export default function Tree({
   tree,
@@ -99,10 +91,7 @@ export default function Tree({
           width: '100%',
         }}
       >
-        <Box>
-          <ArrowBackIosIcon />
-          <Button variant="text">Back</Button>
-        </Box>
+        <BackButton />
         <Box>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={searchIcon} alt="search" />
