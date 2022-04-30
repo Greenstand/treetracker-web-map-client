@@ -1,5 +1,7 @@
-import { Divider, Stack, Box, Typography } from '@mui/material';
+import { Paper, Tooltip, Divider, Stack, Box, Typography } from '@mui/material';
 // import { useTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import log from 'loglevel';
 import { buildTheme } from 'context/themeContext';
 import ColorSwatch from './ColorSwatch';
 import TypographyTable from './TypographyTable';
@@ -94,6 +96,34 @@ function b(theme) {
           </>
         ))}
       </Box>
+      <Divider />
+      <Box>
+        <Typography variant="h2">Typography</Typography>
+        {[
+          'h1',
+          'h2',
+          'h3',
+          'h4',
+          'h5',
+          'h6',
+          'body1',
+          'body2',
+          'button',
+          'caption',
+          'subtitle1',
+          'subtitle2',
+        ].map((t) => (
+          <>
+            <Divider />
+            <Tooltip title={JSON.stringify(theme.typography[t])}>
+              <Typography variant={t}>
+                Typo{t} {theme.typography[t].fontFamily},
+                {theme.typography[t].fontSize}
+              </Typography>
+            </Tooltip>
+          </>
+        ))}
+      </Box>
     </Stack>
   );
 }
@@ -101,7 +131,8 @@ function b(theme) {
 function DesignSandbox() {
   const theme = buildTheme('light');
   const themeDark = buildTheme('dark');
-  console.log('xxx:', theme);
+  log.log('theme:', theme);
+  log.log('themeDark:', themeDark);
 
   const box1 = b(theme);
   const box2 = b(themeDark);
@@ -112,15 +143,12 @@ function DesignSandbox() {
         display: 'flex',
       }}
     >
-      <Box>{box1}</Box>
-      <Box
-        sx={{
-          color: 'white',
-          backgroundColor: 'black',
-        }}
-      >
-        {box2}
-      </Box>
+      <ThemeProvider theme={theme}>
+        <Paper elevation={11}>{box1}</Paper>
+      </ThemeProvider>
+      <ThemeProvider theme={themeDark}>
+        <Paper elevation={11}>{box2}</Paper>
+      </ThemeProvider>
     </Box>
   );
 }
