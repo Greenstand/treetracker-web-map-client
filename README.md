@@ -122,6 +122,16 @@ npm run cyu
 
 **NOTE** if you met : `not test found` problem, check this issue for fixing: [issue229](https://github.com/Greenstand/treetracker-web-map-client/issues/229)
 
+### What's need to test in a component unit test
+
+1. We require that the component should be correctly mount and present in there there enviroments:
+
+- Normal, the default desktop enviroments.
+- The mobile viewer enviroments with screen size: 390*844
+- The dark theme enviroment on descktop
+
+2. We require to take a picture for every three seneriors above. ( `cy.screenshot()` )
+
 ### Adding Material UI Theme to Component Tests
 
 When developing component tests use the custom `mountWithTheme` function found in `src/models/test-utils.js` instead of the mount function in the `@cypress/react` library. This will include the material-ui theme configuration when rendering your test component in cypress.
