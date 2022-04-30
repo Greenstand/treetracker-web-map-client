@@ -80,7 +80,7 @@ function Top({ trees, planters, countries }) {
 
       <Box
         sx={{
-          height: 13,
+          height: [4, 13],
         }}
       />
       <Box

@@ -109,6 +109,8 @@ function TreeImage() {
 
 function LeaderBoard(props) {
   const { countries: rankedCountries, handleCountryClick } = props;
+  const theme = useTheme();
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const fixedCountries = fixCountryNames(rankedCountries);
 
@@ -133,7 +135,7 @@ function LeaderBoard(props) {
               variant="h5"
               sx={{
                 textAlign: 'center',
-                marginLeft: '38px',
+                ml: [0, 9.5],
               }}
               color="text.secondary"
               className={classes.title}
@@ -147,7 +149,7 @@ function LeaderBoard(props) {
               color="text.secondary"
               className={classes.title}
               sx={{
-                marginLeft: '16px',
+                ml: [-3, 4],
               }}
             >
               COUNTRY
@@ -185,12 +187,12 @@ function LeaderBoard(props) {
           <Paper
             key={country.id}
             onClick={() => handleCountryClick(country.id)}
-            elevation={5}
+            elevation={isMobileScreen ? 2 : 5}
             sx={{
               borderRadius: '100px',
               // boxShadow: '0 4px 10px 0px rgba(0, 0, 0, 0.15)',
               cursor: 'pointer',
-              margin: (t) => t.spacing(8, 4),
+              margin: (t) => [t.spacing(4, 0), t.spacing(8, 4)],
               // [theme.breakpoints.down('md')]: {
               //   margin: theme.spacing(3),
               // },

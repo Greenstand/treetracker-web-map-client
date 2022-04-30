@@ -4,18 +4,7 @@ import useLocalStorage from 'hooks/useLocalStorage';
 
 const CustomThemeContext = React.createContext({ toggleColorMode: () => {} });
 
-export function CustomThemeProvider({ children }) {
-  const [mode, setMode] = useLocalStorage('theme', 'light');
-
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    [],
-  );
-
+export function buildTheme(theMode) {
   const getDesign = (themeMode) => ({
     spacing: 4,
     components: {
@@ -141,11 +130,11 @@ export function CustomThemeProvider({ children }) {
     },
   });
 
-  const colorTheme = createTheme(getDesign(mode));
+  const colorTheme = createTheme(getDesign(theMode));
 
   const theme = createTheme(colorTheme, {
     palette: {
-      mode,
+      mode: theMode,
     },
     typography: {
       fontFamily: ['Lato', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
@@ -241,6 +230,23 @@ export function CustomThemeProvider({ children }) {
       },
     },
   });
+
+  return theme;
+}
+
+export function CustomThemeProvider({ children }) {
+  const [mode, setMode] = useLocalStorage('theme', 'light');
+
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
+  const theme = buildTheme(mode);
 
   console.warn('theme:', theme);
 
