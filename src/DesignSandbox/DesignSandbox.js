@@ -1,4 +1,4 @@
-import { Stack, Box, Typography } from '@mui/material';
+import { Divider, Stack, Box, Typography } from '@mui/material';
 // import { useTheme } from '@mui/material/styles';
 import { buildTheme } from 'context/themeContext';
 import ColorSwatch from './ColorSwatch';
@@ -56,6 +56,43 @@ function b(theme) {
             </Box>
           ))}
         </Box>
+      </Box>
+      <Divider />
+      <Box>
+        <Typography variant="h2">Pallette</Typography>
+        {[
+          'primary',
+          'secondary',
+          'success',
+          'warning',
+          'info',
+          'text',
+          'common',
+          'background',
+          'action',
+        ].map((color) => (
+          <>
+            <Divider />
+            <Typography variant="h3">{color}</Typography>
+            <Box>
+              {Object.entries(theme.palette[color]).map((entry) => (
+                <>
+                  <Divider />
+                  <Box
+                    key={entry[0]}
+                    sx={{
+                      with: 20,
+                      height: 20,
+                      backgroundColor: entry[1],
+                    }}
+                  >
+                    {`${entry[0]}: ${entry[1]}`}
+                  </Box>
+                </>
+              ))}
+            </Box>
+          </>
+        ))}
       </Box>
     </Stack>
   );
