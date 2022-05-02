@@ -1,20 +1,11 @@
-import { Box, Button, CardMedia, Typography } from '@mui/material';
+import { Card, Box, Button, Avatar, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import * as d3 from 'd3';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 import Logo from '../images/greenstand_logo.svg';
 
 const useStyles = makeStyles()((theme) => ({
-  container: {
-    backgroundColor: theme.palette.common.white,
-    boxSizing: 'border-box',
-    height: 'fit-content',
-    padding: theme.spacing(6),
-    [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(4),
-    },
-    borderRadius: theme.spacing(4),
-  },
   contentWrapper: {
     gap: theme.spacing(1),
     paddingLeft: theme.spacing(5),
@@ -30,17 +21,21 @@ const useStyles = makeStyles()((theme) => ({
     letterSpacing: '0.02em',
     lineHeight: theme.spacing(6),
     marginTop: theme.spacing(5),
-    // color: theme.palette.darkGrey.main,
+    color: theme.palette.text.text1,
   },
   media: {
-    height: 110,
-    width: 110,
+    height: 128,
+    width: 128,
     [theme.breakpoints.down('md')]: {
       height: 80,
       width: 80,
     },
     borderRadius: '50%',
     float: 'left',
+    borderWidth: theme.spacing(1),
+    borderColor: theme.palette.background.paper,
+    borderStyle: 'solid',
+    boxSizing: 'border-box',
   },
 }));
 
@@ -55,22 +50,33 @@ function InformationCard1({
   const theme = useTheme();
 
   return (
-    <Box
+    <Card
+      elevation={0}
       className={classes.container}
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
       sx={{
-        background:
-          entityType === 'Planting Organization'
-            ? theme.palette.background.greenOrangeLightGr
-            : theme.palette.background.greenOrangeLightGrInverse,
+        bgcolor: (t) =>
+          t.palette.mode === 'light'
+            ? d3
+                .color(t.palette.secondary.main)
+                .copy({ opacity: 0.2 })
+                .formatRgb()
+            : d3
+                .color(t.palette.secondary.main)
+                .copy({ opacity: 0.4 })
+                .formatRgb(),
+        boxSizing: 'border-box',
+        height: 'fit-content',
+        p: [4, 6],
+        borderRadius: 4,
       }}
     >
       <Box display="flex" alignItems="center">
-        <CardMedia
+        <Avatar
           className={classes.media}
-          image={cardImageSrc || Logo}
+          src={cardImageSrc}
           title="Contemplative Reptile"
         />
         <Box
@@ -115,7 +121,7 @@ function InformationCard1({
           </Typography>
         </Button>
       </Link>
-    </Box>
+    </Card>
   );
 }
 

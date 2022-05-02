@@ -1,11 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import AccessTime from '@mui/icons-material/AccessTime';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { useEffect } from 'react';
@@ -14,7 +14,15 @@ import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
+import VerifiedBadge from '../../components/VerifiedBadge';
+import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
+import accuracyIcon from '../../images/icons/accuracy.svg';
+import calendarIcon from '../../images/icons/calendar.svg';
+import globalIcon from '../../images/icons/global.svg';
+import historyIcon from '../../images/icons/history.svg';
+import location from '../../images/icons/location.svg';
+import tokenIcon from '../../images/icons/token.svg';
 import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
@@ -27,10 +35,6 @@ const useStyles = makeStyles()((theme) => ({
     borderRadius: 16,
     overflow: 'hidden',
   },
-  informationCard: {
-    marginTop: theme.spacing(10),
-    width: '100%',
-  },
   tabBox: {
     marginTop: theme.spacing(9),
     [theme.breakpoints.down('md')]: {
@@ -38,21 +42,15 @@ const useStyles = makeStyles()((theme) => ({
     },
     flexWrap: 'wrap',
     display: 'flex',
-    '& div': {
-      margin: theme.spacing(2),
-      [theme.breakpoints.down('md')]: {
-        marginTop: theme.spacing(1),
-      },
-    },
+    gap: 16,
+    // '& div': {
+    //   margin: theme.spacing(2),
+    //   [theme.breakpoints.down('md')]: {
+    //     marginTop: theme.spacing(1),
+    //   },
+    // },
   },
 }));
-
-// const IsMobileScreen = styled(Box)(({ theme }) => ({
-//   display: 'block',
-//   [theme.breakpoints.down('md')]: {
-//     display: 'none',
-//   },
-// }));
 
 export default function Tree({
   tree,
@@ -63,6 +61,7 @@ export default function Tree({
 }) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
+  const theme = useTheme();
 
   const { setTitlesData } = useDrawerContext();
 
@@ -97,24 +96,81 @@ export default function Tree({
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
+          alignItems: 'center',
         }}
       >
+        <BackButton />
         <Box>
-          <ArrowBackIosIcon />
-          <Button variant="text">Back</Button>
-        </Box>
-        <Box>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          { }
           <img src={searchIcon} alt="search" />
         </Box>
       </Box>
-      <CustomImageWrapper
+      <Box
+        sx={{
+          borderRadius: 4,
+          maxHeight: 764,
+          mt: 6,
+          position: 'relative',
+          overflow: 'hidden',
+          '& img': {
+            width: '100%',
+          },
+        }}
+      >
+        <img src={tree.image_url} alt="tree" />
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            background:
+              'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
+            p: 6,
+            width: 1,
+            height: 260,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-start',
+          }}
+        >
+          <Typography variant="h2" color={theme.palette.common.white}>
+            Tree - #{tree.id}
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 400,
+            }}
+            variant="h5"
+            color={theme.palette.common.white}
+          >
+            Palm tree
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 2,
+            }}
+          >
+            <VerifiedBadge
+              color="primary"
+              verified
+              badgeName="Verified Planter"
+            />
+            <VerifiedBadge color="secondary" badgeName="Token Issued" />
+          </Box>
+        </Box>
+      </Box>
+      {/* <CustomImageWrapper
         imageUrl={tree.image_url}
         timeCreated={tree.time_created}
         treeId={tree.id}
-      />
+      /> */}
       {organization && (
-        <Box className={classes.informationCard}>
+        <Box
+          sx={{
+            mt: 14,
+          }}
+        >
           <InformationCard1
             entityName={organization.name}
             entityType="Planting Organization"
@@ -124,7 +180,11 @@ export default function Tree({
           />
         </Box>
       )}
-      <Box className={classes.informationCard}>
+      <Box
+        sx={{
+          mt: 10,
+        }}
+      >
         <InformationCard1
           entityName={`${planter.first_name} ${planter.last_name}`}
           entityType="Planter"
@@ -147,35 +207,39 @@ export default function Tree({
         <TreeTag
           TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
           title="Planted on"
-          icon={<CalendarTodayIcon />}
+          icon={<img src={calendarIcon} alt="calendar" />}
         />
         <TreeTag
           TreeTagValue="Tanzania"
           title="Located in"
-          icon={<RoomOutlinedIcon />}
+          icon={<img src={location} alt="location" />}
         />
         {tree.age && (
-          <TreeTag TreeTagValue={tree.age} title="Age" icon={<AccessTime />} />
+          <TreeTag
+            TreeTagValue={tree.age}
+            title="Age"
+            icon={<img src={historyIcon} alt="age" />}
+          />
         )}
         {tree.gps_accuracy && (
           <TreeTag
             TreeTagValue={tree.gps_accuracy}
             title="GPS Accuracy"
-            icon={<NavigationOutlinedIcon />}
+            icon={<img src={accuracyIcon} alt="accuracy" />}
           />
         )}
         {tree.lat && tree.lon && (
           <TreeTag
             TreeTagValue={`${tree.lat}, ${tree.lon}`}
             title="Latitude, Longitude"
-            icon={<LanguageIcon />}
+            icon={<img src={globalIcon} alt="lat,lon" />}
           />
         )}
         {tree.token_id && (
           <TreeTag
             TreeTagValue={tree.token_id}
             title="Token ID"
-            icon={<AccessTime />}
+            icon={<img src={tokenIcon} alt="token" />}
           />
         )}
       </Box>
