@@ -10,15 +10,13 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-function VerifiedBadge({ verified, badgeName }) {
+function VerifiedBadge({ verified, badgeName, color }) {
   const { classes } = useStyles();
   return (
     <Chip
-      color="primary"
+      color={color}
       className={classes.root}
       sx={{
-        bgcolor: verified ? 'primary.main' : 'grey.main',
-        color: 'common.white',
         borderRadius: 1,
         fontSize: 12,
         lineHeight: (t) => [t.spacing(4)],

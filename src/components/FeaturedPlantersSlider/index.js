@@ -7,6 +7,7 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
+import * as d3 from 'd3';
 import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
@@ -62,7 +63,16 @@ function FeaturedPlantersSlider({ planters, size = null }) {
               padding: (theme) => theme.spacing(5),
               borderRadius: (theme) => theme.spacing(4),
               overflow: 'initial',
-              backgroundColor: '#FF7A0033',
+              bgcolor: (t) =>
+                t.palette.mode === 'light'
+                  ? d3
+                      .color(t.palette.secondary.main)
+                      .copy({ opacity: 0.2 })
+                      .formatRgb()
+                  : d3
+                      .color(t.palette.secondary.main)
+                      .copy({ opacity: 0.4 })
+                      .formatRgb(),
             }}
           >
             <CardMedia

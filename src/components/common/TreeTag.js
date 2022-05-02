@@ -1,46 +1,66 @@
-import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
+import * as d3 from 'd3';
 import { makeStyles } from 'models/makeStyles';
 
-const useStyles = makeStyles()((theme) => ({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: theme.spacing(4.875, 6),
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(3.375, 3.875),
-    },
-    color: theme.palette.common.white,
-    background: theme.palette.primary.main,
-    borderRadius: theme.spacing(4),
-    width: 'fit-content',
-    letterSpacing: '0.02em',
-    flexWrap: 'nowrap',
-  },
-}));
+const useStyles = makeStyles()((theme) => ({}));
 
 function TreeTagComponent({ TreeTagValue, title, icon }) {
   const { classes } = useStyles();
   return (
-    <Grid container className={classes.container}>
-      <Grid item sx={{ pr: [2, 4] }}>
-        {icon}
-      </Grid>
-      <Grid item>
-        <Typography variant="body1" color="common.white">
-          {title}
-        </Typography>
-        <Typography
-          variant="h5"
-          color="common.white"
-          sx={{ fontFamily: 'Lato' }}
+    <Chip
+      sx={{
+        // bgcolor: 'orange.light',
+        bgcolor: (t) =>
+          t.palette.mode === 'light'
+            ? d3
+                .color(t.palette.secondary.main)
+                .copy({ opacity: 0.05 })
+                .formatRgb()
+            : d3
+                .color(t.palette.secondary.main)
+                .copy({ opacity: 0.5 })
+                .formatRgb(),
+        // hover
+        '&:hover': {
+          bgcolor: (t) =>
+            t.palette.mode === 'light'
+              ? d3
+                  .color(t.palette.secondary.main)
+                  .copy({ opacity: 0.1 })
+                  .formatRgb()
+              : d3
+                  .color(t.palette.secondary.main)
+                  .copy({ opacity: 0.6 })
+                  .formatRgb(),
+        },
+        borderColor: 'secondary.dark',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        p: (t) => t.spacing(4.75, 6),
+        height: 'auto',
+      }}
+      color="orange"
+      icon={<Box m={1}>{icon}</Box>}
+      label={
+        <Box
+          sx={{
+            ml: 6,
+          }}
         >
-          {TreeTagValue}
-        </Typography>
-      </Grid>
-    </Grid>
+          <Typography variant="body1">{title}</Typography>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}
+            variant="body2"
+          >
+            {TreeTagValue}
+          </Typography>
+        </Box>
+      }
+    />
   );
 }
 
