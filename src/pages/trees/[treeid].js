@@ -88,6 +88,8 @@ export default function Tree({
     <Box
       sx={{
         padding: (t) => [t.spacing(0, 4), 6],
+        width: 1,
+        boxSizing: 'border-box',
       }}
     >
       {/* <IsMobileScreen>
