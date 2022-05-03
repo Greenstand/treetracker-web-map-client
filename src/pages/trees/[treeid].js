@@ -6,6 +6,7 @@ import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
+import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { useEffect } from 'react';
@@ -62,6 +63,7 @@ export default function Tree({
   const { classes } = useStyles();
   const mapContext = useMapContext();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { setTitlesData } = useDrawerContext();
 
@@ -85,30 +87,70 @@ export default function Tree({
   return (
     <Box
       sx={{
-        padding: 6,
+        padding: (t) => [t.spacing(0, 4), 6],
       }}
     >
       {/* <IsMobileScreen>
         <DrawerTitle />
       </IsMobileScreen> */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '100%',
-          alignItems: 'center',
-        }}
-      >
-        <BackButton />
-        <Box>
-          { }
-          <img src={searchIcon} alt="search" />
+      {isMobile && (
+        <Portal container={document.getElementById('drawer-title-container')}>
+          <Box
+            sx={{
+              width: 1,
+              px: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-start',
+            }}
+          >
+            <Typography variant="h2">Tree - #{tree.id}</Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+              }}
+              variant="h5"
+            >
+              Palm tree
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                mt: 2,
+              }}
+            >
+              <VerifiedBadge
+                color="primary"
+                verified
+                badgeName="Verified Planter"
+              />
+              <VerifiedBadge color="secondary" badgeName="Token Issued" />
+            </Box>
+          </Box>
+        </Portal>
+      )}
+      {!isMobile && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+            alignItems: 'center',
+          }}
+        >
+          <BackButton />
+          <Box>
+            {}
+            <img src={searchIcon} alt="search" />
+          </Box>
         </Box>
-      </Box>
+      )}
       <Box
         sx={{
           borderRadius: 4,
-          maxHeight: 764,
+          maxHeight: [332, 764],
           mt: 6,
           position: 'relative',
           overflow: 'hidden',
@@ -118,47 +160,50 @@ export default function Tree({
         }}
       >
         <img src={tree.image_url} alt="tree" />
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            background:
-              'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
-            p: 6,
-            width: 1,
-            height: 260,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-start',
-          }}
-        >
-          <Typography variant="h2" color={theme.palette.common.white}>
-            Tree - #{tree.id}
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 400,
-            }}
-            variant="h5"
-            color={theme.palette.common.white}
-          >
-            Palm tree
-          </Typography>
+        {!isMobile && (
           <Box
             sx={{
+              position: 'absolute',
+              bottom: 0,
+              background:
+                'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
+              p: 6,
+              width: 1,
+              height: 260,
               display: 'flex',
-              gap: 2,
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-start',
             }}
           >
-            <VerifiedBadge
-              color="primary"
-              verified
-              badgeName="Verified Planter"
-            />
-            <VerifiedBadge color="secondary" badgeName="Token Issued" />
+            <Typography variant="h2" color={theme.palette.common.white}>
+              Tree - #{tree.id}
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+              }}
+              variant="h5"
+              color={theme.palette.common.white}
+            >
+              Palm tree
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                mt: 2,
+              }}
+            >
+              <VerifiedBadge
+                color="primary"
+                verified
+                badgeName="Verified Planter"
+              />
+              <VerifiedBadge color="secondary" badgeName="Token Issued" />
+            </Box>
           </Box>
-        </Box>
+        )}
       </Box>
       {/* <CustomImageWrapper
         imageUrl={tree.image_url}

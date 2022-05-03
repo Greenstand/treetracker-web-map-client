@@ -136,6 +136,17 @@ export function buildTheme(theMode) {
               // contrastText: '#222629',
             }),
       },
+      secondaryLight: {
+        ...(themeMode === 'light'
+          ? {
+              main: '#FFA500',
+              // contrastText: '#222629',
+            }
+          : {
+              main: '#FFA500',
+              // contrastText: '#222629',
+            }),
+      },
       // a color that do not have primary color (like the branding green color)
       // can be used in place like the `back` button on the corner
       notImportant: {
@@ -148,16 +159,36 @@ export function buildTheme(theMode) {
             }),
       },
       // a light orange color, used in some components as background color
-      orange: {
+      grey: {
         ...(themeMode === 'light'
           ? {
-              main: '#FFA500',
-              light: '#FFA500',
-              dark: '#FF7A00',
+              main: '#6B6E70',
               contrastText: '#474B4F',
             }
           : {
-              main: 'rgb(255 122 0 / 46%)',
+              main: '#6B6E70',
+              contrastText: '#474B4F',
+            }),
+      },
+      darkGrey: {
+        ...(themeMode === 'light'
+          ? {
+              main: '#474B4F',
+              contrastText: '#474B4F',
+            }
+          : {
+              main: '#474B4F',
+              contrastText: '#474B4F',
+            }),
+      },
+      nearBlack: {
+        ...(themeMode === 'light'
+          ? {
+              main: '#222629',
+              contrastText: '#474B4F',
+            }
+          : {
+              main: '#222629',
               contrastText: '#474B4F',
             }),
       },

@@ -11,7 +11,6 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
   return (
     <Chip
       sx={{
-        // bgcolor: 'orange.light',
         bgcolor: (t) =>
           t.palette.mode === 'light'
             ? d3
@@ -41,7 +40,7 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
         p: (t) => t.spacing(4.75, 6),
         height: 'auto',
       }}
-      color="orange"
+      color="secondary"
       icon={<Box m={1}>{icon}</Box>}
       label={
         <Box

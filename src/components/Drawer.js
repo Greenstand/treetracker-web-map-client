@@ -169,9 +169,11 @@ function Drawer(props) {
           id="drawer-header"
           sx={{
             display: 'flex',
-            justifyContent: 'center',
             // marginBottom: [0, 4],
             borderRadius: '16px 16px 0 0 ',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
           onTouchMove={handleTouch}
           onMouseMove={handleTouch}
@@ -184,6 +186,13 @@ function Drawer(props) {
               borderRadius: 3,
               my: 4,
             }}
+          />
+          <Box
+            sx={{
+              width: 1,
+              pointerEvents: 'none',
+            }}
+            id="drawer-title-container"
           />
         </Box>
 
