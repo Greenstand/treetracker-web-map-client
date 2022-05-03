@@ -108,7 +108,7 @@ export default function Home() {
           <Link href="/top">
             <Button
               variant="contained"
-              color="secondary"
+              color="primaryLight"
               className={classes.button}
               sx={{
                 color: '#474B4F',

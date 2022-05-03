@@ -116,6 +116,15 @@ export function buildTheme(theMode) {
               main: '#76B024',
             }),
       },
+      primaryLight: {
+        ...(themeMode === 'light'
+          ? {
+              main: '#86C232',
+            }
+          : {
+              main: '#86C232',
+            }),
+      },
       secondary: {
         ...(themeMode === 'light'
           ? {

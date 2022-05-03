@@ -35,7 +35,7 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
                   .copy({ opacity: 0.6 })
                   .formatRgb(),
         },
-        borderColor: 'secondary.dark',
+        borderColor: 'secondary.main',
         borderWidth: '1px',
         borderStyle: 'solid',
         p: (t) => t.spacing(4.75, 6),
