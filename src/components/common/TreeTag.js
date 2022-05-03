@@ -37,7 +37,7 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
         borderColor: 'secondary.main',
         borderWidth: '1px',
         borderStyle: 'solid',
-        p: (t) => t.spacing(4.75, 6),
+        p: (t) => [t.spacing(3, 4), t.spacing(4.75, 6)],
         height: 'auto',
       }}
       color="secondary"
@@ -45,7 +45,7 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
       label={
         <Box
           sx={{
-            ml: 6,
+            ml: [4, 6],
           }}
         >
           <Typography variant="body1">{title}</Typography>

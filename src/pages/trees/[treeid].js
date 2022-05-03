@@ -99,6 +99,7 @@ export default function Tree({
             sx={{
               width: 1,
               px: 4,
+              pb: 4,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'flex-end',
@@ -213,7 +214,7 @@ export default function Tree({
       {organization && (
         <Box
           sx={{
-            mt: 14,
+            mt: [6, 14],
           }}
         >
           <InformationCard1
@@ -227,7 +228,7 @@ export default function Tree({
       )}
       <Box
         sx={{
-          mt: 10,
+          mt: [4, 10],
         }}
       >
         <InformationCard1
