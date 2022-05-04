@@ -50,8 +50,8 @@ function B() {
             <Box
               key={entry[0]}
               sx={{
-                with: 20,
-                height: 20,
+                with: 100,
+                height: 100,
                 backgroundColor: entry[1],
               }}
             >
@@ -63,6 +63,8 @@ function B() {
       <Divider />
       <Box>
         <Typography variant="h2">Pallette</Typography>
+        <Typography variant="h3">Colors</Typography>
+
         {Object.entries(theme.palette)
           .filter((e) => e[1].main)
           .map(([key, value]) => (
@@ -74,25 +76,49 @@ function B() {
               <Box>
                 <Box
                   sx={{
-                    width: 40,
-                    height: 40,
+                    width: 100,
+                    height: 100,
                     bgcolor: `${key}.main`,
                   }}
                 />
-                <Typography variant="body1">{`${key}.main`}</Typography>
+                <Typography variant="body1">{`${key}.main:${value}`}</Typography>
               </Box>
               <Box>
                 <Box
                   sx={{
-                    width: 40,
-                    height: 40,
+                    width: 100,
+                    height: 100,
                     bgcolor: `${key}.light`,
                   }}
                 />
-                <Typography variant="body1">{`${key}.light`}</Typography>
+                <Typography variant="body1">{`${key}.light:${value}`}</Typography>
               </Box>
             </>
           ))}
+        {['common', 'background', 'text'].map((field) => (
+          <>
+            <Typography variant="h3">{field}</Typography>
+            {Object.entries(theme.palette[field]).map(([key, value]) => (
+              <>
+                <Divider />
+                <Tooltip title={JSON.stringify(value)}>
+                  <Typography variant="h3">{key}</Typography>
+                </Tooltip>
+                <Box>
+                  <Box
+                    sx={{
+                      width: 100,
+                      height: 100,
+                      bgcolor: `${value}`,
+                      border: '1px solid gray',
+                    }}
+                  />
+                  <Typography variant="body1">{`${key}:${value}`}</Typography>
+                </Box>
+              </>
+            ))}
+          </>
+        ))}
       </Box>
       <Divider />
       <Box>

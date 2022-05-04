@@ -17,7 +17,7 @@ const useStyles = makeStyles()((theme) => ({
           fill: '#cccccc',
         },
         '& .map-selected': {
-          fill: theme.palette.secondary.main,
+          fill: theme.palette.primaryLight.main,
         },
       },
     },

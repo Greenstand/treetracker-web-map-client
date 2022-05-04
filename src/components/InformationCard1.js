@@ -13,7 +13,6 @@ const useStyles = makeStyles()((theme) => ({
   },
   button: {
     background: theme.palette.background.OrangeGreenGradient,
-    height: 52,
     borderRadius: theme.spacing(6),
     boxShadow: '0px 8px 16px rgba(97, 137, 47, 0.25)',
     textTransform: 'none',
@@ -81,7 +80,6 @@ function InformationCard1({
         />
         <Box
           className={classes.contentWrapper}
-          height={110}
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -108,7 +106,13 @@ function InformationCard1({
         </Box>
       </Box>
       <Link href={link}>
-        <Button className={classes.button} fullWidth>
+        <Button
+          sx={{
+            height: [40, 52],
+          }}
+          className={classes.button}
+          fullWidth
+        >
           <Typography
             variant="h5"
             // color="text.secondary"
