@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { Stack } from '@mui/material';
+import { Stack, useMediaQuery, useTheme, SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -9,18 +10,29 @@ import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import log from 'loglevel';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
-import PageWrapper from '../../components/PageWrapper';
+import VerifiedBadge from '../../components/VerifiedBadge';
+import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
+import DataTag from '../../components/common/DataTag';
 import DrawerTitle from '../../components/common/DrawerTitle';
+import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
+import planterBackground from '../../images/background.png';
+import calendarIcon from '../../images/icons/calendar.svg';
+import locationIcon from '../../images/icons/location.svg';
+import peopleIcon from '../../images/icons/people.svg';
+import treeIcon from '../../images/icons/tree.svg';
+import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
+import * as utils from '../../models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -64,6 +76,8 @@ export default function Planter(props) {
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
 
+  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
+
   const [isPlanterTab, setIsPlanterTab] = useState(true);
 
   const { setTitlesData } = useDrawerContext();
@@ -106,35 +120,106 @@ export default function Planter(props) {
 
   return (
     <>
-      <PageWrapper>
-        <IsMobileScreen>
+      <Box
+        sx={{
+          padding: (t) => [t.spacing(0, 4), 6],
+          width: 1,
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* <IsMobileScreen>
           <DrawerTitle />
-        </IsMobileScreen>
-        <IsMobileScreen>
+        </IsMobileScreen> */}
+        {/* <IsMobileScreen>
           <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
-        </IsMobileScreen>
+        </IsMobileScreen> */}
+        {!isMobile && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <BackButton />
+            <Box>
+              {}
+              <img src={searchIcon} alt="search" />
+            </Box>
+          </Box>
+        )}
 
-        <Avatar
-          src={planter.image_url}
-          variant="rounded"
+        <Box
           sx={{
-            width: '100%',
-            height: '600px',
-            borderRadius: 35,
-            mt: 11,
-            mb: [6, 10],
+            borderRadius: 4,
+            mt: 6,
+            '& img': {
+              width: '100%',
+            },
           }}
-        />
+        >
+          <img src={planterBackground} alt="profile" />
+          <Avatar
+            src={planter.image_url}
+            sx={{
+              width: 189,
+              height: 189,
+              borderWidth: 9,
+              borderStyle: 'solid',
+              borderColor: (t) => t.palette.background.paper,
+              boxSizing: 'border-box',
+              ml: 8,
+              mt: -146 / 4,
+            }}
+          />
+        </Box>
+
+        {!isMobile && (
+          <Box sx={{}}>
+            <Typography variant="h2">
+              {planter.first_name}{' '}
+              {planter.last_name && planter.last_name.slice(0, 1)}.
+            </Typography>
+            <Box sx={{ mt: 2 }}>
+              <Info
+                iconURI={calendarIcon}
+                info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+              />
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+            </Box>
+            <Box
+              sx={{
+                mt: 4,
+                gap: 2,
+                display: 'flex',
+              }}
+            >
+              <VerifiedBadge
+                color="primary"
+                verified
+                badgeName="Verified Planter"
+              />
+              <VerifiedBadge color="greyLight" badgeName="Seeking Orgs" />
+            </Box>
+          </Box>
+        )}
+
         <Grid
           container
           wrap="nowrap"
           justifyContent="space-between"
-          sx={{ width: '100%' }}
+          sx={{
+            width: 1,
+            mt: 12,
+          }}
         >
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
               handleClick={() => setIsPlanterTab(true)}
-              icon={<ParkOutlinedIcon fontSize="large" />}
+              iconURI={treeIcon}
               title="Trees Planted"
               text={treeCount}
               disabled={!isPlanterTab}
@@ -143,15 +228,19 @@ export default function Planter(props) {
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
               handleClick={() => setIsPlanterTab(false)}
-              icon={<GroupsOutlinedIcon fontSize="large" />}
+              iconURI={peopleIcon}
               title="Ass. Orgs"
-              text={planter.associatedOrganizations.length}
+              text={planter.associatedOrganizations.length || '---'}
               disabled={isPlanterTab}
             />
           </Grid>
         </Grid>
         {isPlanterTab && (
-          <>
+          <Box
+            sx={{
+              px: 6,
+            }}
+          >
             <Box sx={{ mt: [0, 22] }}>
               <CustomWorldMap totalTrees={treeCount} con="af" />
             </Box>
@@ -160,12 +249,15 @@ export default function Planter(props) {
               sx={{
                 fontSize: [16, 24],
                 mt: [0, 20],
-                mb: [6, 10],
               }}
             >
               Species of trees planted
             </Typography>
-            <Box className={classes.speciesBox}>
+            <Box
+              sx={{
+                mt: 10,
+              }}
+            >
               {planter.species.species.map((species) => (
                 <TreeSpeciesCard
                   key={species.id}
@@ -174,10 +266,19 @@ export default function Planter(props) {
                 />
               ))}
               {/* Placeholder, remove after API fixed */}
-              <TreeSpeciesCard name="Baobab Tree" count={10} />
-              <TreeSpeciesCard name="Wattle Tree" count={2} />
+              <TreeSpeciesCard
+                name="Baobab Tree"
+                subTitle="Adansonia"
+                count={10}
+              />
+              <Box sx={{ mt: 4 }} />
+              <TreeSpeciesCard
+                name="Wattle Tree"
+                subTitle="Acacia sensu lato"
+                count={2}
+              />
             </Box>
-          </>
+          </Box>
         )}
         {/* {!isPlanterTab &&
         planter.associatedOrganizations.organizations.map((org) => (
@@ -193,11 +294,11 @@ export default function Planter(props) {
         ))} */}
         {/* placeholder until API can return the correct data, should be removed */}
         {!isPlanterTab && (
-          <Stack
-            spacing={{ xs: 6, sm: 12 }}
-            p={{ xs: 0, sm: 6 }}
-            pt={0}
-            mt={{ xs: 14, sm: 22 }}
+          <Box
+            sx={{
+              px: 6,
+              mt: 22,
+            }}
           >
             <InformationCard1
               entityName="Greenway International Foundation"
@@ -205,46 +306,34 @@ export default function Planter(props) {
               buttonText="Meet the Organization"
               link="/organizations/1"
             />
+            <Box sx={{ mt: 12 }} />
             <InformationCard1
               entityName="One Tree Planted"
               entityType="Planting Organization"
               buttonText="Meet the Organization"
               link="/organizations/1"
             />
-          </Stack>
+          </Box>
         )}
-        <Divider varian="fullwidth" className={classes.divider} />
-        <Typography variant="h4" className={classes.textColor}>
+        <Divider
+          varian="fullwidth"
+          sx={{
+            mt: 20,
+          }}
+        />
+        <Typography sx={{ mt: 5 }} variant="h4" className={classes.textColor}>
           About the Planter
         </Typography>
-        <Typography variant="body2" className={classes.textColor} mt={7}>
+        <Typography
+          sx={{ mt: 5 }}
+          variant="body2"
+          className={classes.textColor}
+        >
           {placeholderText}
           {planter.about}
         </Typography>
-        <Typography
-          variant="h4"
-          className={classes.textColor}
-          sx={{ mt: { xs: 10, md: 16 } }}
-        >
-          Mission
-        </Typography>
-        <Typography variant="body2" className={classes.textColor} mt={7}>
-          {placeholderText}
-          {planter.mission}
-        </Typography>
-        <Divider varian="fullwidth" className={classes.divider} />
-        <Typography variant="h4" className={classes.textColor} mb={9}>
-          Check out the planting effort in action
-        </Typography>
-        <Box mb={17}>
-          {/* Placeholder image, should be changed later */}
-          <CustomImageWrapper
-            imageUrl={planter.image_url}
-            timeCreated={planter.time_created}
-            treeId={planter.id}
-          />
-        </Box>
-      </PageWrapper>
+        <Box sx={{ height: 40 }} />
+      </Box>
       {nextExtraIsEmbed && (
         <Portal container={document.getElementById('embed-logo-container')}>
           <Avatar

@@ -95,7 +95,7 @@ function B() {
               </Box>
             </>
           ))}
-        {['common', 'background'].map((field) => (
+        {['common', 'background', 'text'].map((field) => (
           <>
             <Typography variant="h3">{field}</Typography>
             {Object.entries(theme.palette[field]).map(([key, value]) => (

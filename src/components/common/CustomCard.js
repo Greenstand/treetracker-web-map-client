@@ -1,55 +1,19 @@
+/* eslint-disable @next/next/no-img-element */
+import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '../../models/makeStyles';
 
-const useStyles = makeStyles()((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: theme.spacing(2),
-    cursor: 'pointer',
-  },
-  avatar: {
-    height: 60,
-    width: 60,
-    background: theme.palette.common.white,
-    [theme.breakpoints.down('md')]: {
-      height: 36,
-      width: 36,
-    },
-    '& > svg': {
-      [theme.breakpoints.down('md')]: {
-        fontSize: '1.5rem',
-      },
-    },
-  },
-  cardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingLeft: 0,
-    [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(2),
-    },
-    '&:last-child': {
-      [theme.breakpoints.down('md')]: {
-        paddingBottom: theme.spacing(2),
-      },
-    },
-  },
-}));
+const useStyles = makeStyles()((theme) => ({}));
 
 function CustomCard(props) {
   const { classes } = useStyles(props);
   const theme = useTheme();
-  const { icon, title, text, handleClick, disabled } = props;
+  const { iconURI, title, text, handleClick, disabled } = props;
 
   return (
-    <Card
+    <Box
       className={classes.root}
       onClick={handleClick}
       elevation={0}
@@ -58,12 +22,19 @@ function CustomCard(props) {
           ? theme.palette.grey[300]
           : theme.palette.background.greenGradient,
         backgroundColor: disabled ? '' : 'common.white',
+        borderRadius: 4,
+        p: 6,
+        display: 'flex',
+        cursor: 'pointer',
       }}
     >
-      <CardMedia sx={{ padding: [theme.spacing(4, 3), theme.spacing(6)] }}>
+      <Box sx={{}}>
         <Avatar
           className={classes.avatar}
           sx={{
+            width: 60,
+            height: 60,
+            bgcolor: 'background.paper',
             boxShadow: disabled ? '' : '0px 6px 12px 0px #585B5D40',
             color: disabled
               ? // ? theme.palette.darkGrey.main
@@ -71,10 +42,14 @@ function CustomCard(props) {
               : theme.palette.success.main,
           }}
         >
-          {icon}
+          <img src={iconURI} alt="icon" />
         </Avatar>
-      </CardMedia>
-      <CardContent className={classes.cardContent}>
+      </Box>
+      <Box
+        sx={{
+          ml: 6,
+        }}
+      >
         <Typography variant="body1" color="darkGrey.main">
           {title}
         </Typography>
@@ -82,16 +57,13 @@ function CustomCard(props) {
           variant="h2"
           color="nearBlack.main"
           sx={{
-            fontSize: [16, 36],
-            fontFamily: 'Lato',
-            lineHeight: (t) => [t.spacing(4.8), t.spacing(10.8)],
-            letterSpacing: ['0.02em', 0],
+            mt: 1,
           }}
         >
           {text}
         </Typography>
-      </CardContent>
-    </Card>
+      </Box>
+    </Box>
   );
 }
 

@@ -53,7 +53,7 @@ export function buildTheme(theMode) {
                   borderColor: '#E5E5E5',
                 }
               : {
-                  borderColor: '#616161',
+                  borderColor: '#878585',
                 }),
           },
         },
@@ -91,21 +91,24 @@ export function buildTheme(theMode) {
         ...(themeMode === 'light'
           ? {
               //  paper: '#fff',
+              paperDark: '#6B6E70',
             }
           : {
               default: '#333',
               // paper: '#333',
               paper: '#4a4747',
+              paperDark: '#6B6E70',
             }),
-        // greenGradient: //   'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
+        greenGradient:
+          'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
         // greenOrangeLightGr:
         //   'linear-gradient(291.56deg, rgba(255, 122, 0, 0.4) 0%, rgba(117, 185, 38, 0.15) 98.94%)',
         // greenOrangeLightGrInverse:
         //   'linear-gradient(111.41deg, rgba(255, 122, 0, 0.15) 1.62%, rgba(117, 185, 38, 0.4) 98.96%)',
         OrangeGreenGradient:
-          'linear-gradient(90.06deg, rgba(255, 165, 0, 0.45) 0.79%, rgba(117, 185, 38, 0.45) 49.97%, rgba(96, 137, 47, 0.6) 99.95%)',
-        // OrangeGreenGradientDark:
-        //   'linear-gradient(90deg, rgba(255, 165, 0, 0.225) 0%, rgba(255, 122, 0, 0.2625) 48.96%, rgba(134, 194, 64, 0.45) 100%)',
+          themeMode === 'light'
+            ? 'linear-gradient(90.06deg, rgba(255, 165, 0, 0.45) 0.79%, rgba(117, 185, 38, 0.45) 49.97%, rgba(96, 137, 47, 0.6) 99.95%)'
+            : 'linear-gradient(90deg, rgba(255, 165, 0, 0.225) 0%, rgba(255, 122, 0, 0.2625) 48.96%, rgba(134, 194, 64, 0.45) 100%)',
       },
       primary: {
         ...(themeMode === 'light'
@@ -159,15 +162,15 @@ export function buildTheme(theMode) {
             }),
       },
       // a light orange color, used in some components as background color
-      grey: {
+      greyLight: {
         ...(themeMode === 'light'
           ? {
               main: '#6B6E70',
-              contrastText: '#474B4F',
+              contrastText: '#fff',
             }
           : {
               main: '#6B6E70',
-              contrastText: '#474B4F',
+              contrastText: '#fff',
             }),
       },
       darkGrey: {
@@ -197,15 +200,19 @@ export function buildTheme(theMode) {
         ...(themeMode === 'light'
           ? {
               primary: '#474B4F',
+              primaryReverse: '#eee',
               disabled: '#6B6E70',
               secondary: '#222629',
               text1: '#222629',
+              text2: 'rgba(88, 91, 93, 0.6)',
             }
           : {
               primary: '#eee',
+              primaryReverse: '#fff',
               disabled: '#eee',
               secondary: '#eee',
               text1: '#222629',
+              text2: 'rgba(88, 91, 93, 0.6)',
             }),
       },
     },
