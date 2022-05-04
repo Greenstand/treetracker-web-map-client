@@ -22,18 +22,19 @@ function CustomCard(props) {
           ? theme.palette.grey[300]
           : theme.palette.background.greenGradient,
         backgroundColor: disabled ? '' : 'common.white',
-        borderRadius: 4,
-        p: 6,
+        borderRadius: [2, 4],
+        p: [3, 6],
         display: 'flex',
         cursor: 'pointer',
+        alignItems: 'center',
       }}
     >
       <Box sx={{}}>
         <Avatar
           className={classes.avatar}
           sx={{
-            width: 60,
-            height: 60,
+            width: [36, 60],
+            height: [36, 60],
             bgcolor: 'background.paper',
             boxShadow: disabled ? '' : '0px 6px 12px 0px #585B5D40',
             color: disabled
@@ -47,7 +48,7 @@ function CustomCard(props) {
       </Box>
       <Box
         sx={{
-          ml: 6,
+          ml: [3, 6],
         }}
       >
         <Typography variant="body1" color="darkGrey.main">
@@ -57,7 +58,7 @@ function CustomCard(props) {
           variant="h2"
           color="nearBlack.main"
           sx={{
-            mt: 1,
+            mt: [0.5, 1],
           }}
         >
           {text}

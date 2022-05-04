@@ -212,7 +212,7 @@ export function buildTheme(theMode) {
               disabled: '#eee',
               secondary: '#eee',
               text1: '#222629',
-              text2: 'rgba(88, 91, 93, 0.6)',
+              text2: 'rgb(221 229 234 / 60%)',
             }),
       },
     },
