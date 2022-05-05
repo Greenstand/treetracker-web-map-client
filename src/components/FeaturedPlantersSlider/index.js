@@ -12,7 +12,7 @@ import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
 
-function FeaturedPlantersSlider({ planters, size = null }) {
+function FeaturedPlantersSlider({ planters, color, link, size = null }) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
@@ -66,16 +66,19 @@ function FeaturedPlantersSlider({ planters, size = null }) {
               bgcolor: (t) =>
                 t.palette.mode === 'light'
                   ? d3
-                      .color(t.palette.secondary.main)
+                      .color(t.palette[color].main)
                       .copy({ opacity: 0.2 })
                       .formatRgb()
                   : d3
-                      .color(t.palette.secondary.main)
+                      .color(t.palette[color].main)
                       .copy({ opacity: 0.4 })
                       .formatRgb(),
             }}
           >
             <CardMedia
+              onClick={() => {
+                window.location.href = link(planter.id);
+              }}
               component="img"
               image="https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg"
               alt="tree"
@@ -90,23 +93,25 @@ function FeaturedPlantersSlider({ planters, size = null }) {
                 transition: 'transform .5s',
               }}
             />
-            <CardContent>
-              <Typography
-                variant="h6"
-                sx={{
-                  fontSize: '20px',
-                  marginTop: 4,
-                  wordBreak: 'break-all',
-                }}
-                align="center"
-              >
-                <Link href={`/planters/${planter.id}`}>
-                  {planter.first_name}
-                  &nbsp;
-                  {(planter.last_name && planter.last_name.slice(0, 1)) || ''}
-                </Link>
-              </Typography>
-            </CardContent>
+            {false && (
+              <CardContent>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontSize: '20px',
+                    marginTop: 4,
+                    wordBreak: 'break-all',
+                  }}
+                  align="center"
+                >
+                  <Link href={link(planter.id)}>
+                    {planter.first_name}
+                    &nbsp;
+                    {(planter.last_name && planter.last_name.slice(0, 1)) || ''}
+                  </Link>
+                </Typography>
+              </CardContent>
+            )}
           </Card>
         ))}
       </Grid>

@@ -69,62 +69,34 @@ function Drawer(props) {
           }}
         >
           <Paper
+            elevation="11"
             sx={{
               pointerEvents: 'auto',
               width: '100%',
               position: 'fixed',
               bottom: 0,
-              boxShadow: '0 -1px 2px rgb(0 0 0 / 30%)',
-              zIndex: 900,
-              borderRadius: '8px 8px 0 0 ',
+              borderRadius: '16px 16px 0 0 ',
             }}
             onClick={handleClickBottom}
           >
-            <Grid
-              container
+            <Box
               sx={{
                 height: 50,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
-              wrap="nowrap"
-              pt={1}
             >
-              <Grid
-                item
-                p={1}
+              <Box
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  width: 24,
+                  height: 4,
+                  backgroundColor: (t) => t.palette.text.disabled,
+                  borderRadius: 3,
+                  my: 4,
                 }}
-              >
-                <ExpandLess color="action" />
-              </Grid>
-              <Grid
-                item
-                sx={{
-                  flexGrow: 1,
-                }}
-              >
-                <Grid
-                  container
-                  sx={{
-                    height: '100%',
-                    alignItems: 'center',
-                    width: '100%',
-                  }}
-                >
-                  <Grid item ml={1}>
-                    <Avatar width={3} height={3} />
-                  </Grid>
-                  <Grid item ml={1}>
-                    <Typography variant="h6">@$</Typography>
-                  </Grid>
-                  <Grid item ml={1}>
-                    <Typography variant="body1">tokens</Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+              />
+            </Box>
           </Paper>
         </StyledBox>
       )}

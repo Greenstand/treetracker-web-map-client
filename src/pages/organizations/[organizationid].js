@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
+import moment from 'moment';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
@@ -23,7 +24,16 @@ import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import PageWrapper from '../../components/PageWrapper';
+import VerifiedBadge from '../../components/VerifiedBadge';
+import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
+import Info from '../../components/common/Info';
+import calendarIcon from '../../images/icons/calendar.svg';
+import locationIcon from '../../images/icons/location.svg';
+import peopleIcon from '../../images/icons/people.svg';
+import treeIcon from '../../images/icons/tree.svg';
+import orgBackground from '../../images/org-background.png';
+import searchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
@@ -59,14 +69,6 @@ const useStyles = makeStyles()((theme) => ({
       width: '100%',
     },
   },
-  divider: {
-    marginTop: theme.spacing(20),
-    marginBottom: theme.spacing(20),
-    [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(14),
-      marginBottom: theme.spacing(14),
-    },
-  },
 }));
 
 export default function Organization(props) {
@@ -77,7 +79,7 @@ export default function Organization(props) {
   // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
   const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
   const { setTitlesData } = useDrawerContext();
 
@@ -125,79 +127,218 @@ export default function Organization(props) {
 
   return (
     <>
-      <PageWrapper>
-        {!isMobileScreen && <DrawerTitle />}
-
-        {!isMobileScreen && (
-          <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
-        )}
+      <Box>
         <Box
-          className={classes.imgContainer}
           sx={{
-            width: '100%',
-            height: '688px',
-            borderRadius: 6,
-            mt: 11,
-            mb: [6, 10],
+            padding: (t) => [t.spacing(0, 4), 6],
+            width: 1,
+            boxSizing: 'border-box',
           }}
         >
-          {/* Placeholder image, change it if we get data from API */}
-          <Image
-            src="https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2019.11.08.11.12.43_1a507e4a-ade7-47d7-b7f5-e1a425588483_IMG_20191030_173914_4000805348046989577.jpg"
-            alt="some text"
-            layout="fill"
-          />
-          <Box className={classes.logoContainer}>
-            {/* Replace url with API data  */}
-            {/*  <Image src={organization.logo_url} /> */}
+          {!isMobile && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+                alignItems: 'center',
+              }}
+            >
+              <BackButton />
+              <Box>
+                {}
+                <img src={searchIcon} alt="search" />
+              </Box>
+            </Box>
+          )}
+          <Box
+            sx={{
+              borderRadius: 4,
+              mt: 6,
+              '& img': {
+                width: '100%',
+              },
+            }}
+          >
+            <img src={orgBackground} alt="profile" />
+            <Avatar
+              src={organization.image_url}
+              sx={{
+                width: [120, 189],
+                height: [120, 189],
+                borderWidth: [4, 9],
+                borderStyle: 'solid',
+                borderColor: (t) => t.palette.background.paper,
+                boxSizing: 'border-box',
+                ml: [4, 8],
+                mt: [-98 / 4, -146 / 4],
+              }}
+            />
           </Box>
-        </Box>
-        <Grid
-          container
-          wrap="nowrap"
-          justifyContent="space-between"
-          sx={{ width: '100%' }}
-        >
-          <Grid item sx={{ width: '49%' }}>
-            <CustomCard
-              handleClick={() => setIsPlanterTab(true)}
-              icon={<ParkOutlinedIcon fontSize="large" />}
-              title="Trees Planted"
-              text={organization?.featuredTrees?.trees.length}
-              disabled={!isPlanterTab}
-            />
-          </Grid>
-          <Grid item sx={{ width: '49%' }}>
-            <CustomCard
-              handleClick={() => setIsPlanterTab(false)}
-              icon={<PersonOutlineIcon fontSize="large" />}
-              title="Hired Planters"
-              text={organization?.associatedPlanters?.planters.length}
-              disabled={isPlanterTab}
-            />
-          </Grid>
-        </Grid>
-        {isPlanterTab && (
-          <>
-            <Box sx={{ mt: [0, 22] }}>
-              <CustomWorldMap
-                totalTrees={organization?.featuredTrees?.trees.length}
-                con="af"
-              />
-            </Box>
-            <Box className={classes.speciesBox}>
-              {organization?.species.species.map((species) => (
-                <TreeSpeciesCard
-                  key={species.id}
-                  name={species.name}
-                  count={species.total}
+
+          {!isMobile && (
+            <Box sx={{ mt: 6 }}>
+              <Typography variant="h2">
+                {organization.first_name} {organization.last_name}
+              </Typography>
+              <Box sx={{ mt: 2 }}>
+                <Info
+                  iconURI={calendarIcon}
+                  info={`Organization since ${moment().format(
+                    'MMMM DD, YYYY',
+                  )}`}
                 />
-              ))}
+              </Box>
+              <Box sx={{ mt: 2 }}>
+                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+              </Box>
+              <Box
+                sx={{
+                  mt: 4,
+                  gap: 2,
+                  display: 'flex',
+                }}
+              >
+                <VerifiedBadge
+                  color="primary"
+                  verified
+                  badgeName="Verified Organization"
+                />
+                <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
+              </Box>
             </Box>
-          </>
-        )}
+          )}
+
+          {isMobile && (
+            <Portal
+              container={document.getElementById('drawer-title-container')}
+            >
+              <Box
+                sx={{
+                  px: 4,
+                  pb: 4,
+                }}
+              >
+                <Typography variant="h2">
+                  {organization.first_name} {organization.last_name}
+                </Typography>
+                <Box sx={{ mt: 2 }}>
+                  <Info
+                    iconURI={calendarIcon}
+                    info={`Organization since ${moment().format(
+                      'MMMM DD, YYYY',
+                    )}`}
+                  />
+                </Box>
+                <Box sx={{ mt: 2 }}>
+                  <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+                </Box>
+                <Box
+                  sx={{
+                    mt: 4,
+                    gap: 2,
+                    display: 'flex',
+                  }}
+                >
+                  <VerifiedBadge
+                    color="primary"
+                    verified
+                    badgeName="Verified Organization"
+                  />
+                  <VerifiedBadge
+                    color="greyLight"
+                    badgeName="Seeking Planter"
+                  />
+                </Box>
+              </Box>
+            </Portal>
+          )}
+          <Grid
+            container
+            wrap="nowrap"
+            justifyContent="space-between"
+            sx={{
+              width: 1,
+              mt: [6, 12],
+            }}
+          >
+            <Grid item sx={{ width: '49%' }}>
+              <CustomCard
+                handleClick={() => setIsPlanterTab(true)}
+                iconURI={treeIcon}
+                title="Trees Planted"
+                text={organization?.featuredTrees?.trees.length || '---'}
+                disabled={!isPlanterTab}
+              />
+            </Grid>
+            <Grid item sx={{ width: '49%' }}>
+              <CustomCard
+                handleClick={() => setIsPlanterTab(false)}
+                iconURI={peopleIcon}
+                title="Hired Planters"
+                text={
+                  organization?.associatedPlanters?.planters.length || '---'
+                }
+                disabled={isPlanterTab}
+              />
+            </Grid>
+          </Grid>
+          {isPlanterTab && (
+            <Box
+              sx={{
+                px: [0, 6],
+              }}
+            >
+              <Box sx={{ mt: [0, 22] }}>
+                <CustomWorldMap
+                  totalTrees={organization?.featuredTrees?.trees.length}
+                  con="af"
+                />
+              </Box>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: [16, 24],
+                  mt: [0, 20],
+                }}
+              >
+                Species of trees planted
+              </Typography>
+              <Box
+                sx={{
+                  mt: [5, 10],
+                }}
+              >
+                {[].map((species) => (
+                  <TreeSpeciesCard
+                    key={species.id}
+                    name={species.name}
+                    count={species.count}
+                  />
+                ))}
+                {/* Placeholder, remove after API fixed */}
+                <TreeSpeciesCard
+                  name="Baobab Tree"
+                  subTitle="Adansonia"
+                  count={10}
+                />
+                <Box sx={{ mt: [2, 4] }} />
+                <TreeSpeciesCard
+                  name="Wattle Tree"
+                  subTitle="Acacia sensu lato"
+                  count={2}
+                />
+              </Box>
+            </Box>
+          )}
+        </Box>
+
         {!isPlanterTab && (
-          <Stack spacing={{ xs: 37.5, sm: 14 }} mt={{ xs: 13, sm: 22 }}>
+          <Box
+            sx={{
+              mt: [11, 22],
+            }}
+          >
             {/* {organization?.associatedPlanters?.planters?.map((planter) => (
             <PlanterQuote
               name={planter.first_name}
@@ -209,66 +350,75 @@ export default function Organization(props) {
             />
           ))} */}
             {/* Placeholder quote card, remove after API gets data */}
-            <PlanterQuote
-              name="Jirgna O"
-              quote="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+            {[
+              {
+                name: 'Jirgna O',
+                quote: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
                 nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
                 velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-                dolorem expedita error."
-              photo="https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg"
-              initialDate={2022}
-              location="Shiramtunda, Tanzania"
-            />
-            <PlanterQuote
-              name="Samwell A"
-              quote="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+                dolorem expedita error.`,
+                photo:
+                  'https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg',
+                location: 'Shiramtunda, Tanzania',
+              },
+              {
+                name: 'Samwell A',
+                quote: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
                 nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
                 velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-                dolorem expedita error."
-              photo="https://treetracker-production.nyc3.digitaloceanspaces.com/2018.11.20.12.11.07_e7a81cf4-2d37-45ee-9d5a-47bdfd7c43cc_IMG_20181120_121037_7990135604649410080.jpg"
-              initialDate={2022}
-              location="Addis Ababa, Ethiopia"
-            />
-          </Stack>
+                dolorem expedita error.`,
+                photo:
+                  'https://treetracker-production.nyc3.digitaloceanspaces.com/2018.11.20.12.11.07_e7a81cf4-2d37-45ee-9d5a-47bdfd7c43cc_IMG_20181120_121037_7990135604649410080.jpg',
+                location: 'Addis Ababa, Ethisa',
+              },
+            ].map((planter, i) => (
+              <Box sx={{ mt: [6, 12] }} key={planter.name}>
+                <PlanterQuote {...planter} reverse={i % 2 !== 0} />
+              </Box>
+            ))}
+          </Box>
         )}
-        <Divider varian="fullwidth" className={classes.divider} />
-        <Typography variant="h4">About the Organization</Typography>
-        <Typography variant="body2" mt={7}>
-          {/* Just some placeholder text */}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-          nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-          velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-          dolorem expedita error. Natus, provident. Tempore harum repellendus
-          reprehenderit vitae temporibus, consequuntur blanditiis officia
-          excepturi, natus explicabo laborum delectus repudiandae placeat
-          eligendi.
-        </Typography>
-        <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
-          Mission
-        </Typography>
-        <Typography variant="body2" mt={7}>
-          {/* Just some placeholder text */}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-          nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-          velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-          dolorem expedita error. Natus, provident. Tempore harum repellendus
-          reprehenderit vitae temporibus, consequuntur blanditiis officia
-          excepturi, natus explicabo laborum delectus repudiandae placeat
-          eligendi.
-        </Typography>
-        <Divider varian="fullwidth" className={classes.divider} />
-        <Typography variant="h4" mb={9}>
-          Check out the planting effort in action
-        </Typography>
-        <Box mb={17}>
-          {/* Placeholder image and data, should be changed later */}
-          <CustomImageWrapper
-            imageUrl="https://treetracker-dev.nyc3.digitaloceanspaces.com/2018.09.07.11.04.27_3ae160d9-58f7-4373-a4c2-3b39edbacd2e_IMG_20180907_095704_764193446.jpg"
-            timeCreated={2022}
-            treeId={940}
-          />
+        <Box
+          sx={{
+            px: [24 / 8, 24 / 4],
+            mt: [80 / 8, 80 / 4],
+          }}
+        >
+          <Divider varian="fullwidth" />
+          <Typography
+            sx={{
+              mt: [80 / 8, 80 / 4],
+            }}
+            variant="h4"
+          >
+            About the Organization
+          </Typography>
+          <Typography variant="body2" mt={7}>
+            {/* Just some placeholder text */}
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+            nesciunt quasi praesentium non cupiditate ratione nihil.
+            Perferendis, velit ipsa illo, odit unde atque doloribus tempora
+            distinctio facere dolorem expedita error. Natus, provident. Tempore
+            harum repellendus reprehenderit vitae temporibus, consequuntur
+            blanditiis officia excepturi, natus explicabo laborum delectus
+            repudiandae placeat eligendi.
+          </Typography>
+          <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
+            Mission
+          </Typography>
+          <Typography variant="body2" mt={7}>
+            {/* Just some placeholder text */}
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
+            nesciunt quasi praesentium non cupiditate ratione nihil.
+            Perferendis, velit ipsa illo, odit unde atque doloribus tempora
+            distinctio facere dolorem expedita error. Natus, provident. Tempore
+            harum repellendus reprehenderit vitae temporibus, consequuntur
+            blanditiis officia excepturi, natus explicabo laborum delectus
+            repudiandae placeat eligendi.
+          </Typography>
+          <Box sx={{ height: 80 }} />
         </Box>
-      </PageWrapper>
+      </Box>
       {nextExtraIsEmbed && (
         <Portal container={document.getElementById('embed-logo-container')}>
           <Avatar
