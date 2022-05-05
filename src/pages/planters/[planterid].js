@@ -163,20 +163,59 @@ export default function Planter(props) {
           <Avatar
             src={planter.image_url}
             sx={{
-              width: 189,
-              height: 189,
-              borderWidth: 9,
+              width: [120, 189],
+              height: [120, 189],
+              borderWidth: [4, 9],
               borderStyle: 'solid',
               borderColor: (t) => t.palette.background.paper,
               boxSizing: 'border-box',
-              ml: 8,
-              mt: -146 / 4,
+              ml: [4, 8],
+              mt: [-98 / 4, -146 / 4],
             }}
           />
         </Box>
 
+        {isMobile && (
+          <Portal container={document.getElementById('drawer-title-container')}>
+            <Box
+              sx={{
+                px: 4,
+                pb: 4,
+              }}
+            >
+              <Typography variant="h2">
+                {planter.first_name}{' '}
+                {planter.last_name && planter.last_name.slice(0, 1)}.
+              </Typography>
+              <Box sx={{ mt: 2 }}>
+                <Info
+                  iconURI={calendarIcon}
+                  info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                />
+              </Box>
+              <Box sx={{ mt: 2 }}>
+                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+              </Box>
+              <Box
+                sx={{
+                  mt: 4,
+                  gap: 2,
+                  display: 'flex',
+                }}
+              >
+                <VerifiedBadge
+                  color="primary"
+                  verified
+                  badgeName="Verified Planter"
+                />
+                <VerifiedBadge color="greyLight" badgeName="Seeking Orgs" />
+              </Box>
+            </Box>
+          </Portal>
+        )}
+
         {!isMobile && (
-          <Box sx={{}}>
+          <Box sx={{ mt: 6 }}>
             <Typography variant="h2">
               {planter.first_name}{' '}
               {planter.last_name && planter.last_name.slice(0, 1)}.
@@ -213,7 +252,7 @@ export default function Planter(props) {
           justifyContent="space-between"
           sx={{
             width: 1,
-            mt: 12,
+            mt: [6, 12],
           }}
         >
           <Grid item sx={{ width: '49%' }}>
@@ -238,7 +277,7 @@ export default function Planter(props) {
         {isPlanterTab && (
           <Box
             sx={{
-              px: 6,
+              px: [0, 6],
             }}
           >
             <Box sx={{ mt: [0, 22] }}>
@@ -255,7 +294,7 @@ export default function Planter(props) {
             </Typography>
             <Box
               sx={{
-                mt: 10,
+                mt: [5, 10],
               }}
             >
               {planter.species.species.map((species) => (
@@ -271,7 +310,7 @@ export default function Planter(props) {
                 subTitle="Adansonia"
                 count={10}
               />
-              <Box sx={{ mt: 4 }} />
+              <Box sx={{ mt: [2, 4] }} />
               <TreeSpeciesCard
                 name="Wattle Tree"
                 subTitle="Acacia sensu lato"
@@ -296,8 +335,8 @@ export default function Planter(props) {
         {!isPlanterTab && (
           <Box
             sx={{
-              px: 6,
-              mt: 22,
+              px: [0, 6],
+              mt: [11, 22],
             }}
           >
             <InformationCard1
@@ -306,7 +345,7 @@ export default function Planter(props) {
               buttonText="Meet the Organization"
               link="/organizations/1"
             />
-            <Box sx={{ mt: 12 }} />
+            <Box sx={{ mt: [6, 12] }} />
             <InformationCard1
               entityName="One Tree Planted"
               entityType="Planting Organization"
@@ -318,14 +357,18 @@ export default function Planter(props) {
         <Divider
           varian="fullwidth"
           sx={{
-            mt: 20,
+            mt: [10, 20],
           }}
         />
-        <Typography sx={{ mt: 5 }} variant="h4" className={classes.textColor}>
+        <Typography
+          sx={{ mt: [2.5, 5] }}
+          variant="h4"
+          className={classes.textColor}
+        >
           About the Planter
         </Typography>
         <Typography
-          sx={{ mt: 5 }}
+          sx={{ mt: [2.5, 5] }}
           variant="body2"
           className={classes.textColor}
         >

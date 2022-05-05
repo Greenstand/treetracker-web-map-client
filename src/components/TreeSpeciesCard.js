@@ -1,23 +1,10 @@
+import { Paper, Card } from '@mui/material';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
 import { makeStyles } from 'models/makeStyles';
 
-const useStyles = makeStyles()((theme) => ({
-  root: {
-    boxSizing: 'border-box',
-    borderRadius: theme.spacing(4),
-    border: '1px solid',
-    borderColor: d3
-      .color(theme.palette.greyLight.main)
-      .copy({ opacity: 0.5 })
-      .formatRgb(),
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-}));
+const useStyles = makeStyles()((theme) => ({}));
 
 function TreeSpeciesCard(props) {
   const { classes } = useStyles();
@@ -25,12 +12,19 @@ function TreeSpeciesCard(props) {
   const { name, count, subTitle } = props;
 
   return (
-    <Card
-      sx={{
-        bgcolor: (t) => t.palette.background.paper,
-      }}
+    <Paper
+      // sx={{
+      //   bgcolor: (t) => t.palette.background.paper,
+      // }}
       className={classes.root}
-      elevation={0}
+      variant="outlined"
+      sx={{
+        borderRadius: 4,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        overflow: 'hidden',
+      }}
     >
       <Box ml={6}>
         <Typography
@@ -76,7 +70,7 @@ function TreeSpeciesCard(props) {
           {count}
         </Typography>
       </Box>
-    </Card>
+    </Paper>
   );
 }
 
