@@ -1,6 +1,14 @@
-import { Box, Grid, Typography, useTheme } from '@mui/material';
+/* eslint-disable @next/next/no-img-element */
+import { Avatar, Button, Box, Grid, Typography, useTheme } from '@mui/material';
+import * as d3 from 'd3';
+import moment from 'moment';
 import Image from 'next/image';
+import ColorButton from './common/ColorButton';
 import DataTag from './common/DataTag';
+import Info from './common/Info';
+import calendarIcon from '../images/icons/calendar.svg';
+import locationIcon from '../images/icons/location.svg';
+import peopleIcon from '../images/icons/people.svg';
 import quoteImgReverse from '../images/quote-reverse.svg';
 import quoteImg from '../images/quote-symbol.svg';
 
@@ -13,86 +21,147 @@ function PlanterQuote({
   reverse = false,
 }) {
   const theme = useTheme();
+  const isMobile = theme.breakpoints.down('sm');
   return (
     <Box
       sx={{
-        background: theme.palette.background.OrangeGreenGradientDark,
-        backgroundColor: 'common.white',
         boxSizing: 'border-box',
-        height: 'fit-content',
+        display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
-        padding: 8,
-        borderRadius: { xs: 2, sm: 0 },
-        px: { xs: 12 },
-        py: { sm: 10 },
-        mt: { xs: 30, sm: 0 },
+        width: 1,
+        px: [48 / 8, 48 / 4],
+        pt: [78 / 8, 78 / 4],
+        pb: [6, 12],
+        bgcolor: (t) =>
+          t.palette.mode === 'light'
+            ? d3
+                .color(t.palette.secondary.main)
+                .copy({ opacity: 0.2 })
+                .formatRgb()
+            : d3
+                .color(t.palette.secondary.main)
+                .copy({ opacity: 0.4 })
+                .formatRgb(),
       }}
     >
-      <Grid
-        container
-        direction={{ xs: 'column', sm: reverse ? 'row-reverse' : 'row' }}
-        spacing={2}
-        alignItems="center"
-      >
-        <Grid item sm={4}>
+      {!reverse && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar
+            src={photo}
+            sx={{
+              zIndex: '1',
+              width: [90, 180],
+              height: [90, 180],
+              filter: 'drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.25))',
+            }}
+          />
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              height: { xs: 150, sm: 'fit-content' },
-              mt: { xs: -30, sm: 0 },
-              mb: { xs: 5, sm: 0 },
+              ml: [4, 6],
+              position: 'relative',
             }}
           >
-            <Image
-              width={200}
-              height={250}
-              objectFit="contain"
-              src={photo}
-              title={name}
-              alt={`${name}'s Photo`}
-            />
-          </Box>
-        </Grid>
-
-        <Grid item sm={8} container direction="column" spacing={10}>
-          <Grid
-            item
-            sx={{
-              backgroundImage: reverse
-                ? `url(${quoteImgReverse})`
-                : `url(${quoteImg})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: { xs: 100, sm: 130 },
-              backgroundPosition: {
-                xs: '1em 1.5em',
-                sm: reverse ? 'right 1.5em' : 'left 1em',
-              },
-              pb: 5,
-            }}
-          >
-            <Typography variant="body1" sx={{ color: 'darkGrey.main' }}>
-              {`"${quote}"`}
+            <Box
+              sx={{
+                position: 'absolute',
+                top: -42,
+                left: -80,
+                transform: ['scale(.5)', ''],
+              }}
+            >
+              <img src={quoteImg} alt="quote" />
+            </Box>
+            <Typography variant="body1">{quote}</Typography>
+            <Typography
+              sx={{
+                mt: [4, 8],
+              }}
+              variant="h5"
+            >
+              {name}
             </Typography>
-          </Grid>
-
-          <Grid item container direction="column" spacing={2}>
-            <Grid item>
-              <Typography variant="h5" color="nearBlack.main">
-                {name}
-              </Typography>
-            </Grid>
-            <Grid item container direction="column" spacing={2}>
-              <Grid item>
-                <DataTag data={initialDate} color />
-              </Grid>
-              <Grid item>
-                <DataTag data={location} location color />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+            <Box sx={{ mt: [1.5, 3] }}>
+              <Info
+                iconURI={calendarIcon}
+                info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+              />
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+            </Box>
+          </Box>
+        </Box>
+      )}
+      {reverse && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}
+        >
+          <Box
+            sx={{
+              position: 'relative',
+            }}
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: -42,
+                right: -103,
+                transform: ['scale(.5)', ''],
+              }}
+            >
+              <img src={quoteImgReverse} alt="quote" />
+            </Box>
+            <Typography variant="body1">&ldquo;{quote}&ldquo;</Typography>
+            <Typography
+              sx={{
+                mt: [4, 8],
+              }}
+              variant="h5"
+            >
+              {name}
+            </Typography>
+            <Box sx={{ mt: [1.5, 3] }}>
+              <Info
+                iconURI={calendarIcon}
+                info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+              />
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+            </Box>
+          </Box>
+          <Avatar
+            src={photo}
+            sx={{
+              ml: [26 / 8, 26 / 4],
+              zIndex: '1',
+              width: [90, 180],
+              height: [90, 180],
+              filter: 'drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.25))',
+            }}
+          />
+        </Box>
+      )}
+      <Box
+        sx={{
+          mt: [8, 16],
+        }}
+      >
+        <ColorButton>Meet the Planter</ColorButton>
+      </Box>
     </Box>
   );
 }

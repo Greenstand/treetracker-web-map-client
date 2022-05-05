@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
+import * as d3 from 'd3';
 import log from 'loglevel';
 import moment from 'moment';
 import { useEffect, useState } from 'react';

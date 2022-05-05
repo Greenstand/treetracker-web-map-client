@@ -3,6 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import * as d3 from 'd3';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
+import ColorButton from './common/ColorButton';
 import Logo from '../images/greenstand_logo.svg';
 
 const useStyles = makeStyles()((theme) => ({
@@ -10,17 +11,6 @@ const useStyles = makeStyles()((theme) => ({
     gap: theme.spacing(1),
     paddingLeft: theme.spacing(5),
     justifyContent: 'center',
-  },
-  button: {
-    background: theme.palette.background.OrangeGreenGradient,
-    borderRadius: theme.spacing(6),
-    boxShadow: '0px 8px 16px rgba(97, 137, 47, 0.25)',
-    textTransform: 'none',
-    fontSize: '1.25rem',
-    letterSpacing: '0.02em',
-    lineHeight: theme.spacing(6),
-    marginTop: theme.spacing(5),
-    color: theme.palette.text.text1,
   },
   media: {
     height: 128,
@@ -105,25 +95,9 @@ function InformationCard1({
           </Typography>
         </Box>
       </Box>
+      <Box sx={{ mt: [4, 6] }} />
       <Link href={link}>
-        <Button
-          sx={{
-            height: [40, 52],
-          }}
-          className={classes.button}
-          fullWidth
-        >
-          <Typography
-            variant="h5"
-            // color="text.secondary"
-            sx={{
-              fontFamily: 'Lato',
-              color: 'nearBlack.main',
-            }}
-          >
-            {buttonText}
-          </Typography>
-        </Button>
+        <ColorButton>{buttonText}</ColorButton>
       </Link>
     </Card>
   );

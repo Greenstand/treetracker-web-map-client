@@ -16,7 +16,7 @@ import search from '../images/search.svg';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
-function Top({ trees, planters, countries }) {
+function Top({ trees, planters, countries, organizations }) {
   // use map context to get the map
   const { map } = useMapContext();
 
@@ -104,17 +104,25 @@ function Top({ trees, planters, countries }) {
       <Box>
         <FeaturedTreesSlider trees={trees} />
       </Box>
+      <Box sx={{ mt: [4, 8] }} />
+      <Typography variant="h4">Featured organizations this week</Typography>
+      <FeaturedPlantersSlider
+        link={(id) => `/organizations/${id}`}
+        color="primary"
+        planters={organizations}
+      />
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 8,
+          mt: 8,
         }}
       >
         <Typography variant="h4">Featured planters this week</Typography>
       </Box>
-      <FeaturedPlantersSlider planters={planters} />
+      <FeaturedPlantersSlider
+        link={(id) => `/planters/${id}`}
+        color="secondary"
+        planters={planters}
+      />
       <Typography
         variant="h4"
         sx={{
@@ -145,7 +153,7 @@ function Top({ trees, planters, countries }) {
 }
 
 export async function getServerSideProps() {
-  const [trees, countries, planters] = await Promise.all([
+  const [trees, countries, planters, organizations] = await Promise.all([
     getFeaturedTrees(), //
     getCountryLeaderboard(),
     (async () => {
@@ -153,12 +161,18 @@ export async function getServerSideProps() {
       log.warn('planters', data);
       return data.planters;
     })(),
+    (async () => {
+      const data = await utils.requestAPI('/organizations?limit=10');
+      log.warn('organizations', data);
+      return data.organizations;
+    })(),
   ]);
   return {
     props: {
       trees,
       countries,
       planters,
+      organizations,
     },
   };
 }
