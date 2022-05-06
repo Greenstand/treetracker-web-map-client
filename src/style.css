@@ -99,6 +99,7 @@ a:hover {
     opacity: 0;
     transform: translateY(100%);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -148,4 +149,8 @@ a:hover {
   height: 500px;
   background-position: center;
   background-size: cover;
+}
+
+.mui-0 ~ .mui-0 img {
+  float: left;
 }
