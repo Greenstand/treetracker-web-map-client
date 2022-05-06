@@ -122,11 +122,16 @@ export default function Planter(props) {
   return (
     <>
       <Box
-        sx={{
-          padding: (t) => [t.spacing(0, 4), 6],
-          width: 1,
-          boxSizing: 'border-box',
-        }}
+        sx={[
+          {
+            padding: (t) => [t.spacing(0, 4), 6],
+            width: 1,
+            boxSizing: 'border-box',
+          },
+          nextExtraIsEmbed && {
+            padding: (t) => [t.spacing(0, 4), 4],
+          },
+        ]}
       >
         {/* <IsMobileScreen>
           <DrawerTitle />
