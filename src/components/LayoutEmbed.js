@@ -1,3 +1,4 @@
+import { ArrowRight, ArrowLeft } from '@mui/icons-material';
 import { Paper, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -104,7 +105,7 @@ export default function Layout({ children, isFloatingDisabled }) {
                   zIndex: '99999',
                   top: '0px',
                   background: 'white',
-                  width: '568px',
+                  width: 568,
                   overflow: 'scroll',
                   height: '100vh',
                 }}
@@ -114,24 +115,29 @@ export default function Layout({ children, isFloatingDisabled }) {
             </Box>
           </Drawer>
           {isDrawerOpen && (
-            <Box
+            <Paper
               onClick={handleDrawerToggle}
               sx={{
+                cursor: 'pointer',
                 position: 'absolute',
-                top: '0',
-                left: '499px',
-                zIndex: '999',
-                background: 'white',
-                fontSize: '32px',
+                left: 568,
+                width: 23,
+                height: 48,
+                display: 'flex',
+                borderRadius: '0px 5px 5px 0',
+                zIndex: 1200,
+                top: 13,
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
-              X
-            </Box>
+              <ArrowLeft />
+            </Paper>
           )}
         </>
       )}
 
-      {!isDrawerOpen && (
+      {false && !isDrawerOpen && (
         <Box
           sx={{
             position: 'absolute',
@@ -143,15 +149,27 @@ export default function Layout({ children, isFloatingDisabled }) {
           }}
         >
           <SearchFilter />
-          <Box
-            onClick={handleDrawerToggle}
-            sx={{
-              fontSize: '32px',
-            }}
-          >
-            X
-          </Box>
         </Box>
+      )}
+      {!isDrawerOpen && (
+        <Paper
+          onClick={handleDrawerToggle}
+          sx={{
+            cursor: 'pointer',
+            position: 'absolute',
+            left: 0,
+            width: 23,
+            height: 48,
+            display: 'flex',
+            borderRadius: '0px 5px 5px 0',
+            zIndex: 1200,
+            top: 13,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ArrowRight />
+        </Paper>
       )}
 
       {false && isFloatingDisabled && (
