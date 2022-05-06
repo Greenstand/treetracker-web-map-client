@@ -1,10 +1,14 @@
-import OpenWithIcon from '@mui/icons-material/OpenWith';
+import { Paper, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Fab from '@mui/material/Fab';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import SearchFilter from './SearchFilter';
+import logoIcon from '../images/logo.png';
+import max from '../images/max.svg';
+import zoomIn from '../images/zoom-in.svg';
+import zoomOut from '../images/zoom-out.svg';
+import { useMapContext } from '../mapContext';
 // import { makeStyles } from 'models/makeStyles';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -46,6 +50,7 @@ const App = dynamic(() => import('./App'), { ssr: false });
 export default function Layout({ children, isFloatingDisabled }) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   // const { _classes } = useStyles();
+  const mapContext = useMapContext();
   function handleFullScreen() {
     // navigate to /container page through next.js's api
     window.location.href = window.location.href.replace(/embed=true/, '');
@@ -53,6 +58,14 @@ export default function Layout({ children, isFloatingDisabled }) {
 
   function handleDrawerToggle() {
     setIsDrawerOpen(!isDrawerOpen);
+  }
+
+  function handleZoomIn() {
+    mapContext.map.map.zoomIn();
+  }
+
+  function handleZoomOut() {
+    mapContext.map.map.zoomOut();
   }
   return (
     <>
@@ -70,16 +83,19 @@ export default function Layout({ children, isFloatingDisabled }) {
         <>
           <Drawer
             sx={{
-              width: '499px',
+              width: 568,
               flexShrink: 0,
               '& .MuiDrawer-paper': {
-                width: '499px',
+                width: 568,
                 boxSizing: 'border-box',
               },
             }}
             variant="persistent"
             anchor="left"
             open={isDrawerOpen}
+            PaperProps={{
+              elevation: 6,
+            }}
           >
             <Box>
               <Box
@@ -88,7 +104,7 @@ export default function Layout({ children, isFloatingDisabled }) {
                   zIndex: '99999',
                   top: '0px',
                   background: 'white',
-                  width: '499px',
+                  width: '568px',
                   overflow: 'scroll',
                   height: '100vh',
                 }}
@@ -138,7 +154,7 @@ export default function Layout({ children, isFloatingDisabled }) {
         </Box>
       )}
 
-      {isFloatingDisabled && (
+      {false && isFloatingDisabled && (
         <Box
           sx={{
             position: 'absolute',
@@ -152,6 +168,20 @@ export default function Layout({ children, isFloatingDisabled }) {
           <SearchFilter />
         </Box>
       )}
+      <Box
+        onClick={handleFullScreen}
+        sx={{
+          position: 'absolute',
+          zIndex: '9999',
+          top: '0px',
+          right: '0px',
+          margin: '20px',
+          cursor: 'pointer',
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img alt="fullscreen" src={max} />
+      </Box>
 
       <Box
         sx={{
@@ -165,36 +195,67 @@ export default function Layout({ children, isFloatingDisabled }) {
           alignItems: 'end',
         }}
       >
-        <Box
+        <Paper
+          elevation={4}
           sx={{
-            backgroundColor: 'white',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            fontFamily: 'roboto',
             flexDirection: 'column',
-            borderRadius: '22px',
-            padding: '10px',
-            fontSize: '12px',
+            borderRadius: '25px',
+            padding: (t) => t.spacing(2, 4),
+            opacity: 0.77,
           }}
         >
           <Box id="embed-logo-container">{/* logo */}</Box>
           <Box
             sx={{
-              height: 'fit-content',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'baseline',
+              gap: 1,
             }}
           >
-            POWERED BY GREENSTAND
+            <Typography
+              sx={{
+                fontWeight: '600',
+                fontSize: '10px',
+              }}
+              variant="caption"
+            >
+              Powered by
+            </Typography>
+            <Box
+              sx={{
+                width: [60, 80],
+                mt: '-3px',
+              }}
+            >
+              <img width="100%" alt="logo" src={logoIcon} />
+            </Box>
+          </Box>
+        </Paper>
+        <Box
+          sx={{
+            // position: 'absolute',
+            zIndex: '9999',
+            bottom: '0px',
+            right: '0px',
+            // margin: '20px',
+            cursor: 'pointer',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Box onClick={handleZoomIn}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img alt="zoom-in" src={zoomIn} />
+          </Box>
+          <Box onClick={handleZoomOut}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img alt="zoom-out" src={zoomOut} />
           </Box>
         </Box>
-        <Fab
-          onClick={handleFullScreen}
-          sx={{}}
-          color="secondary"
-          aria-label="edit"
-        >
-          <OpenWithIcon />
-        </Fab>
       </Box>
       {/* <Box className={classes.root}>
         <Box className={classes.main}>

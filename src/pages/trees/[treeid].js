@@ -86,11 +86,16 @@ export default function Tree({
 
   return (
     <Box
-      sx={{
-        padding: (t) => [t.spacing(0, 4), 6],
-        width: 1,
-        boxSizing: 'border-box',
-      }}
+      sx={[
+        {
+          padding: (t) => [t.spacing(0, 4), 6],
+          width: 1,
+          boxSizing: 'border-box',
+        },
+        nextExtraIsEmbed && {
+          padding: (t) => [t.spacing(0, 4), 4],
+        },
+      ]}
     >
       {/* <IsMobileScreen>
         <DrawerTitle />
@@ -215,9 +220,14 @@ export default function Tree({
       /> */}
       {organization && (
         <Box
-          sx={{
-            mt: [6, 14],
-          }}
+          sx={[
+            {
+              mt: [6, 14],
+            },
+            nextExtraIsEmbed && {
+              mt: [6, 10],
+            },
+          ]}
         >
           <InformationCard1
             entityName={organization.name}
@@ -243,11 +253,16 @@ export default function Tree({
       </Box>
       <Typography
         variant="h4"
-        sx={{
-          fontSize: [24, 28],
-          lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
-          mt: (t) => [t.spacing(14), t.spacing(26)],
-        }}
+        sx={[
+          {
+            fontSize: [24, 28],
+            lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
+            mt: (t) => [t.spacing(14), t.spacing(26)],
+          },
+          nextExtraIsEmbed && {
+            mt: (t) => [t.spacing(14), t.spacing(26 * 0.6)],
+          },
+        ]}
       >
         Tree Info
       </Typography>

@@ -129,11 +129,16 @@ export default function Organization(props) {
     <>
       <Box>
         <Box
-          sx={{
-            padding: (t) => [t.spacing(0, 4), 6],
-            width: 1,
-            boxSizing: 'border-box',
-          }}
+          sx={[
+            {
+              padding: (t) => [t.spacing(0, 4), 6],
+              width: 1,
+              boxSizing: 'border-box',
+            },
+            nextExtraIsEmbed && {
+              padding: (t) => [t.spacing(0, 4), 6 * 0.6],
+            },
+          ]}
         >
           {!isMobile && (
             <Box
