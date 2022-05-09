@@ -156,16 +156,24 @@ export default function Tree({
         </Box>
       )}
       <Box
-        sx={{
-          borderRadius: 4,
-          maxHeight: [332, 764],
-          mt: 6,
-          position: 'relative',
-          overflow: 'hidden',
-          '& img': {
-            width: '100%',
+        sx={[
+          {
+            borderRadius: 4,
+            maxHeight: [332, 764],
+            mt: 6,
+            position: 'relative',
+            overflow: 'hidden',
+            '& img': {
+              width: '100%',
+            },
           },
-        }}
+          nextExtraIsEmbed && {
+            '& img': {
+              maxHeight: 600,
+              objectFit: 'cover',
+            },
+          },
+        ]}
       >
         <img src={tree.image_url} alt="tree" />
         {!isMobile && (
