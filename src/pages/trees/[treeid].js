@@ -15,6 +15,8 @@ import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
+import LikeButton from '../../components/LikeButton';
+import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
@@ -23,7 +25,9 @@ import calendarIcon from '../../images/icons/calendar.svg';
 import globalIcon from '../../images/icons/global.svg';
 import historyIcon from '../../images/icons/history.svg';
 import location from '../../images/icons/location.svg';
+import shareIcon from '../../images/icons/share.svg';
 import tokenIcon from '../../images/icons/token.svg';
+import maxIcon from '../../images/max.svg';
 import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
@@ -68,6 +72,12 @@ export default function Tree({
   const { setTitlesData } = useDrawerContext();
 
   log.warn('map:', mapContext);
+
+  function handleShare() {}
+
+  function handleMax(url) {
+    window.open(url, '_blank');
+  }
 
   useEffect(() => {
     setTitlesData({
@@ -156,17 +166,77 @@ export default function Tree({
         </Box>
       )}
       <Box
-        sx={{
-          borderRadius: 4,
-          maxHeight: [332, 764],
-          mt: 6,
-          position: 'relative',
-          overflow: 'hidden',
-          '& img': {
-            width: '100%',
+        sx={[
+          {
+            borderRadius: 4,
+            maxHeight: [332, 764],
+            mt: 6,
+            position: 'relative',
+            overflow: 'hidden',
+            '& img': {
+              width: '100%',
+            },
           },
-        }}
+          nextExtraIsEmbed && {
+            '& img': {
+              maxHeight: 600,
+              objectFit: 'cover',
+            },
+          },
+        ]}
       >
+        <Box
+          sx={{
+            position: 'absolute',
+            // top: [4, 6],
+            // left: [4, 6],
+            pt: [4, 6],
+            px: [4, 6],
+            width: 1,
+            boxSizing: 'border-box',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <LikeButton treeId={tree.id} />
+          <Box
+            sx={{
+              display: 'flex',
+              gap: [4, 6],
+              flexDirection: 'row',
+            }}
+          >
+            <Share
+              shareUrl={window.location.href}
+              icon={
+                <Box
+                  onClick={handleShare}
+                  sx={{
+                    cursor: 'pointer',
+                    '& img': {
+                      width: [40, 52],
+                      height: [40, 52],
+                    },
+                  }}
+                >
+                  <img alt="share the link" src={shareIcon} />
+                </Box>
+              }
+            />
+            <Box
+              onClick={() => handleMax(tree.image_url)}
+              sx={{
+                cursor: 'pointer',
+                '& img': {
+                  width: [40, 52],
+                  height: [40, 52],
+                },
+              }}
+            >
+              <img alt="fullscreen" src={maxIcon} />
+            </Box>
+          </Box>
+        </Box>
         <img src={tree.image_url} alt="tree" />
         {!isMobile && (
           <Box

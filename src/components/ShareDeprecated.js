@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Close from '@mui/icons-material/Close';
 import Code from '@mui/icons-material/Code';
 import Email from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import ShareIcon from '@mui/icons-material/Share';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { Box, Typography, Tooltip } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,6 +12,8 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import { green } from '@mui/material/colors';
 import makeStyles from '@mui/styles/makeStyles';
 import log from 'loglevel';
@@ -20,6 +21,11 @@ import React from 'react';
 import CustomShareIcon from './common/CustomShareIcon';
 
 const useStyles = makeStyles((theme) => ({
+  DialogTitle: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '18px',
+    },
+  },
   closeIcon: {
     width: '32px',
     height: '32px',
@@ -51,8 +57,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Share(props) {
-  const { icon, shareUrl } = props;
+function Share() {
+  const shareUrl = encodeURI(window.location.href);
+
   const classes = useStyles();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isEmbedOpen, setEmbedOpen] = React.useState(false);
@@ -98,10 +105,15 @@ function Share(props) {
 
   React.useEffect(() => {
     setEmbedCode(
-      `<iframe width="560" height="315" src="${shareUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+      `<iframe width="560" height="315" src="${window.location.href}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
     );
-    setLink(`${shareUrl}`);
+    setLink(window.location.href);
   }, []);
+
+  function showMessage(text) {
+    setMessage(text);
+    setMessageOpen(true);
+  }
 
   function handleCopy() {
     log.log('copy...');
@@ -116,7 +128,7 @@ function Share(props) {
     } catch (err) {
       log.log('Oops, unable to copy');
     }
-    // showMessage('Code has been copied!');
+    showMessage('Code has been copied!');
   }
 
   function handleMessageClose() {
@@ -124,73 +136,44 @@ function Share(props) {
     setMessage('');
   }
 
-  function showMessage(text) {
-    setMessage(text);
-    setMessageOpen(true);
-  }
-
   return (
     <>
-      {icon && <Box onClick={handleClick}>{icon}</Box>}
-      {!icon && (
+      <Tooltip title="share tree">
         <IconButton onClick={handleClick}>
           <ShareIcon style={{ color: green[500] }} />
         </IconButton>
-      )}
+      </Tooltip>
       <Dialog
         open={isOpen}
         onClose={handleClose}
         PaperProps={{
-          sx: {
-            borderRadius: [2, 4],
-            m: [1, 2],
-            p: [6, 8],
+          style: {
+            margin: '8px',
           },
         }}
       >
-        <DialogTitle
-          sx={{
-            p: 0,
-          }}
-        >
-          <Grid
-            sx={{
-              p: 0,
-            }}
-            container
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Grid item xs={8}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-                Share this link
-              </Typography>
+        <DialogTitle>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item xs={8} className={classes.DialogTitle}>
+              Share this token
             </Grid>
             <Grid item>
-              <IconButton className={classes.closeIcon} onClick={handleClose}>
+              <IconButton
+                className={classes.closeIcon}
+                onClick={handleClose}
+                size="large"
+              >
                 <Close style={{ color: green[500] }} />
               </IconButton>
             </Grid>
           </Grid>
         </DialogTitle>
-        <Grid
-          sx={{
-            gap: [2, 4],
-          }}
-          container
-          justifyContent="center"
-          className={classes.box1}
-        >
+        <Grid container justifyContent="center" className={classes.box1}>
           <CustomShareIcon handleOnClick={handleEmbed}>
             <Code />
           </CustomShareIcon>
           <CustomShareIcon handleOnClick={handleFaceBook}>
-            <FontAwesomeIcon icon={['fab', 'facebook-f']} />
+            <FacebookIcon />
           </CustomShareIcon>
           <CustomShareIcon handleOnClick={handleTwitter}>
             <TwitterIcon />
@@ -201,10 +184,15 @@ function Share(props) {
 
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item xs={8} className={classes.linkText}>
-              <Typography variant="body1">Or copy link</Typography>
+              <Typography>Or this link</Typography>
             </Grid>
             <Grid item xs={12}>
-              <input type="text" className={classes.inputField} value={link} />
+              <input
+                type="text"
+                className={classes.inputField}
+                value={link}
+                readOnly
+              />
             </Grid>
           </Grid>
         </Grid>
