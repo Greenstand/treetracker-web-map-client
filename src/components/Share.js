@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Close from '@mui/icons-material/Close';
 import Code from '@mui/icons-material/Code';
 import Email from '@mui/icons-material/Email';
+import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import ShareIcon from '@mui/icons-material/Share';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { Box, Typography, Tooltip } from '@mui/material';
@@ -190,7 +190,7 @@ function Share(props) {
             <Code />
           </CustomShareIcon>
           <CustomShareIcon handleOnClick={handleFaceBook}>
-            <FontAwesomeIcon icon={['fab', 'facebook-f']} />
+            <FacebookRoundedIcon />
           </CustomShareIcon>
           <CustomShareIcon handleOnClick={handleTwitter}>
             <TwitterIcon />
