@@ -16,6 +16,7 @@ import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
+import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
@@ -205,18 +206,23 @@ export default function Tree({
               flexDirection: 'row',
             }}
           >
-            <Box
-              onClick={handleShare}
-              sx={{
-                cursor: 'pointer',
-                '& img': {
-                  width: [40, 52],
-                  height: [40, 52],
-                },
-              }}
-            >
-              <img alt="fullscreen" src={shareIcon} />
-            </Box>
+            <Share
+              shareUrl={window.location.href}
+              icon={
+                <Box
+                  onClick={handleShare}
+                  sx={{
+                    cursor: 'pointer',
+                    '& img': {
+                      width: [40, 52],
+                      height: [40, 52],
+                    },
+                  }}
+                >
+                  <img alt="share the link" src={shareIcon} />
+                </Box>
+              }
+            />
             <Box
               onClick={() => handleMax(tree.image_url)}
               sx={{
