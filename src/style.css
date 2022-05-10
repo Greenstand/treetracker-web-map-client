@@ -44,11 +44,6 @@ a {
   margin-right: 5px;
 }
 
-a:hover {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
 .leaflet-control {
   animation-name: slideInFromBottom;
   animation-duration: 1s;
