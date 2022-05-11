@@ -9,11 +9,11 @@ function CustomShareIcon({ handleOnClick, children, mailString }) {
       sx={{
         color: (t) => t.palette.primaryLight.main,
         backgroundColor: 'rgba(0, 0, 0, 0.04)',
-        width: [48, 64],
-        height: [48, 64],
+        width: [56, 64],
+        height: [56, 64],
         '& svg': {
-          width: [24, 32],
-          height: [24, 32],
+          width: [28, 32],
+          height: [28, 32],
         },
         '&:hover': {
           backgroundColor: 'rgba(0, 0, 0, 0.08)',

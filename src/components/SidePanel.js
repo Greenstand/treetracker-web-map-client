@@ -34,7 +34,7 @@ import log from 'loglevel';
 import React from 'react';
 import { makeStyles } from 'models/makeStyles';
 import ImageShower from './ImageShower';
-import Share from './Share';
+import Share from './ShareDeprecated';
 
 const { CancelToken } = axios;
 let source;

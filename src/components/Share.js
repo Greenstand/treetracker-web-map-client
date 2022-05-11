@@ -180,7 +180,7 @@ function Share(props) {
         </DialogTitle>
         <Grid
           sx={{
-            gap: [2, 4],
+            gap: [4, 4],
           }}
           container
           justifyContent="center"

@@ -1,4 +1,4 @@
-import Share from './Share';
+import Share from './ShareDeprecated';
 import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('Share', () => {
