@@ -7,7 +7,7 @@ import { makeStyles } from 'models/makeStyles';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
 
-const Share = dynamic(() => import('./Share')); // needed to access window object in component
+const Share = dynamic(() => import('./ShareDeprecated')); // needed to access window object in component
 
 const useStyles = makeStyles()((theme) => ({
   pageContainer: {
