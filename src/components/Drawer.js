@@ -67,11 +67,13 @@ export default function Drawer(props) {
     log.warn('last velocity:', touchCache.lastVelocity);
     if (touchCache.lastVelocity < -0.4) {
       rootRef.current.style.transform = `translateY(0px)`;
+      contentRef.current.style.height = '100%';
       return;
     }
     if (touchCache.lastVelocity > 0.4) {
       rootRef.current.style.transform = `translateY(${window.innerHeight}px)`;
       handleClose();
+      contentRef.current.style.height = 'auto';
       return;
     }
     log.warn(
@@ -86,6 +88,7 @@ export default function Drawer(props) {
         contentRef.current.style.height = '100%';
         return;
       }
+      contentRef.current.style.height = 'auto';
       if (y > window.innerHeight - 150) {
         rootRef.current.style.transform = `translateY(${window.innerHeight}px)`;
         handleClose();

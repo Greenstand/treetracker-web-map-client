@@ -219,6 +219,18 @@ export default function Planter(props) {
             </Box>
           </Portal>
         )}
+        {isMobile && (
+          <Portal
+            container={document.getElementById('drawer-title-container-min')}
+          >
+            <Box sx={{}}>
+              <Typography variant="h2">
+                {planter.first_name}{' '}
+                {planter.last_name && planter.last_name.slice(0, 1)}.
+              </Typography>
+            </Box>
+          </Portal>
+        )}
 
         {!isMobile && (
           <Box sx={{ mt: 6 }}>
