@@ -52,7 +52,7 @@ export default function Layout({ children }) {
         <Box
           sx={{ position: 'absolute', top: 0, left: 0, width: 1, height: 1 }}
         >
-          {/* <App /> */}
+          <App />
         </Box>
         <Drawer>{children}</Drawer>
         {/* <Box
