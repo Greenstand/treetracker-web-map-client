@@ -1,3 +1,27 @@
+# [2.0.0-beta.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2022-05-14)
+
+
+### Bug Fixes
+
+* [#537](https://github.com/Greenstand/treetracker-web-map-client/issues/537) ([943bc95](https://github.com/Greenstand/treetracker-web-map-client/commit/943bc95ca68c25ed14e9c362ee8f418a5abeab89))
+* [#559](https://github.com/Greenstand/treetracker-web-map-client/issues/559) ([1c167b4](https://github.com/Greenstand/treetracker-web-map-client/commit/1c167b4bdf12598adf844ee0a32cb318ffc7eacc))
+* image height in embded ([915adcc](https://github.com/Greenstand/treetracker-web-map-client/commit/915adcc8b9d176901563f1f3d90d3bfde58c3d12))
+* missing flags for 2 countries added back ([338bcb0](https://github.com/Greenstand/treetracker-web-map-client/commit/338bcb0dbf016de47b5b993c473a844f490ecc57))
+* pages layout for drawer ([58a4a5e](https://github.com/Greenstand/treetracker-web-map-client/commit/58a4a5e0a84eb7a4b6028530aec16c5e8cf81a06))
+* remove underline below planter name ([13b7769](https://github.com/Greenstand/treetracker-web-map-client/commit/13b776914b8f6fe068a5e63744d25d7dda4d9eef))
+* typo in README.md ([abfe36b](https://github.com/Greenstand/treetracker-web-map-client/commit/abfe36bbb5bd08070fc6c01f7ed09b29852b2663))
+* udpate drawer titles ([d1f2786](https://github.com/Greenstand/treetracker-web-map-client/commit/d1f27869d7b7d12eb85cb0a2e144d480e1f8067c))
+
+
+### Features
+
+* add drawertitle ([2f2ab7a](https://github.com/Greenstand/treetracker-web-map-client/commit/2f2ab7a3a83a9712ca8574aa21bc91d120e9f568))
+* drawer component ([8c6704f](https://github.com/Greenstand/treetracker-web-map-client/commit/8c6704f27ad8ab50ba6c98f4ddbd25893fbcb491))
+* fixed the title area drawer mobile ([08a4f74](https://github.com/Greenstand/treetracker-web-map-client/commit/08a4f74d214122e2a9c9623811be3e18ad42ecf3))
+* new darwer for mobile ([baa3e84](https://github.com/Greenstand/treetracker-web-map-client/commit/baa3e84a8a3340085e173bd32db67f32be038da2))
+* share box ([25b158d](https://github.com/Greenstand/treetracker-web-map-client/commit/25b158d0f934c6a8fe7dd5537f444543a5b3a259))
+* update drawer title ([33a9ec2](https://github.com/Greenstand/treetracker-web-map-client/commit/33a9ec2bbcd0eb5ed84b87fbaa5ba0c770de9401))
+
 # [2.0.0-beta.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2022-04-23)
 
 
