@@ -149,6 +149,15 @@ export default function Tree({
           </Box>
         </Portal>
       )}
+      {isMobile && (
+        <Portal
+          container={document.getElementById('drawer-title-container-min')}
+        >
+          <Box sx={{}}>
+            <Typography variant="h2">Tree - #{tree.id}</Typography>
+          </Box>
+        </Portal>
+      )}
       {!isMobile && (
         <Box
           sx={{

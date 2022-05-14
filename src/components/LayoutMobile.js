@@ -54,17 +54,7 @@ export default function Layout({ children }) {
         >
           <App />
         </Box>
-        <Box
-          sx={{
-            position: 'absolute',
-            width: 1,
-            height: 1,
-            zIndex: 1000,
-            pointerEvents: 'none',
-          }}
-        >
-          <Drawer>{children}</Drawer>
-        </Box>
+        <Drawer>{children}</Drawer>
         {/* <Box
           sx={{
             position: 'absolute',

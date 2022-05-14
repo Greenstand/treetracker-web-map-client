@@ -184,7 +184,39 @@ export default function Organization(props) {
           {!isMobile && (
             <Box sx={{ mt: 6 }}>
               <Typography variant="h2">
-                {organization.first_name} {organization.last_name}
+                {organization.first_name || '---'} {organization.last_name}
+              </Typography>
+              <Box sx={{ mt: 2 }}>
+                <Info
+                  iconURI={calendarIcon}
+                  info={`Organization since ${moment().format(
+                    'MMMM DD, YYYY',
+                  )}`}
+                />
+              </Box>
+              <Box sx={{ mt: 2 }}>
+                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+              </Box>
+              <Box
+                sx={{
+                  mt: 4,
+                  gap: 2,
+                  display: 'flex',
+                }}
+              >
+                <VerifiedBadge
+                  color="primary"
+                  verified
+                  badgeName="Verified Organization"
+                />
+                <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
+              </Box>
+            </Box>
+          )}
+          {!isMobile && (
+            <Box sx={{ mt: 6 }}>
+              <Typography variant="h2">
+                {organization.first_name || '---'} {organization.last_name}
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
@@ -225,7 +257,7 @@ export default function Organization(props) {
                 }}
               >
                 <Typography variant="h2">
-                  {organization.first_name} {organization.last_name}
+                  {organization.first_name || '---'} {organization.last_name}
                 </Typography>
                 <Box sx={{ mt: 2 }}>
                   <Info
@@ -255,6 +287,32 @@ export default function Organization(props) {
                     badgeName="Seeking Planter"
                   />
                 </Box>
+              </Box>
+            </Portal>
+          )}
+          {isMobile && (
+            <Portal
+              container={document.getElementById('drawer-title-container-min')}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: '8px',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                }}
+              >
+                <Avatar
+                  src={organization.image_url}
+                  sx={{
+                    width: 32,
+                    height: 32,
+                  }}
+                />
+                <Typography variant="h2">
+                  {organization.first_name || '---'} {organization.last_name}
+                </Typography>
               </Box>
             </Portal>
           )}
