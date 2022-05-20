@@ -19,6 +19,7 @@ function CustomShareIcon({ handleOnClick, children, mailString }) {
           backgroundColor: 'rgba(0, 0, 0, 0.08)',
         },
       }}
+      onClick={handleOnClick}
     >
       {children}
     </IconButton>
