@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  CardActionArea,
 } from '@mui/material';
 import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
@@ -59,44 +60,52 @@ function FeaturedTreesSlider({ trees, size = null }) {
               scrollSnapAlign: 'center',
               scrollBehavior: 'smooth',
               // position: 'relative',
-              padding: (theme) => theme.spacing(5),
               borderRadius: (theme) => theme.spacing(4),
               // boxShadow: '0px 2px 16px rgba(34, 38, 41, 0.15)',
               // width: [152, 208],
               overflow: 'initial',
             }}
           >
-            <CardMedia
-              component="img"
-              image={tree.image_url}
-              alt="tree"
+            <CardActionArea
               sx={{
-                borderRadius: '16px',
-                transition: 'transform .5s',
-                width: 208,
-                height: 232,
-                minWidth: [144, 208],
+                padding: (theme) => theme.spacing(5),
+                borderRadius: (theme) => theme.spacing(4),
               }}
-            />
-            <CardContent>
-              <Typography
-                variant="h6"
-                sx={{
-                  fontSize: '20px',
-                  marginTop: 4,
-                }}
-              >
-                <Link href={`/trees/${tree.id}`}>Tree - {tree.id}</Link>
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  marginTop: 1.5,
-                }}
-              >
-                West-Smith-Nayer
-              </Typography>
-            </CardContent>
+            >
+              <Link href={`/trees/${tree.id}`}>
+                <CardMedia
+                  component="img"
+                  image={tree.image_url}
+                  alt="tree"
+                  sx={{
+                    borderRadius: '16px',
+                    transition: 'transform .5s',
+                    width: 208,
+                    height: 232,
+                    minWidth: [144, 208],
+                  }}
+                />
+                <CardContent>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontSize: '20px',
+                      marginTop: 4,
+                    }}
+                  >
+                    Tree - {tree.id}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      marginTop: 1.5,
+                    }}
+                  >
+                    West-Smith-Nayer
+                  </Typography>
+                </CardContent>
+              </Link>
+            </CardActionArea>
           </Card>
         ))}
       </Grid>
