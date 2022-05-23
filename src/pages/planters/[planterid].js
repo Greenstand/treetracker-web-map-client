@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import * as d3 from 'd3';
 import log from 'loglevel';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
@@ -76,6 +77,8 @@ export default function Planter(props) {
   const { featuredTrees } = planter;
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
+
+  const router = useRouter();
 
   const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
@@ -165,7 +168,7 @@ export default function Planter(props) {
             },
           }}
         >
-          <img src={planterBackground} alt="profile" />
+          <img src={`${router.basePath}${planterBackground}`} alt="profile" />
           <Avatar
             src={planter.image_url}
             sx={{
