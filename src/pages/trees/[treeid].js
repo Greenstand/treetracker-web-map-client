@@ -216,7 +216,7 @@ export default function Tree({
             }}
           >
             <Share
-              shareUrl={window.location.href}
+              shareUrl={typeof window !== 'undefined' && window.location.href}
               icon={
                 <Box
                   onClick={handleShare}
