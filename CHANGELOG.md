@@ -1,3 +1,20 @@
+# [2.0.0-beta.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2022-05-23)
+
+
+### Bug Fixes
+
+* **sharebutton:** added onClick to CustomShareIcon ([c2580e6](https://github.com/Greenstand/treetracker-web-map-client/commit/c2580e65b835d6e94c51af4c085f670d8da67209))
+* updated package.json ([91d10f1](https://github.com/Greenstand/treetracker-web-map-client/commit/91d10f157d0fcb9033aacf24d3d3a13182a79068))
+* window protect, image url fix ([b14f6b2](https://github.com/Greenstand/treetracker-web-map-client/commit/b14f6b23b9945c40e06c2928ed1fe7b1720eeced))
+
+
+### Features
+
+* readme about theme ([dc07e78](https://github.com/Greenstand/treetracker-web-map-client/commit/dc07e78e7ccf383dd5f89856ffe381d3bf8e530c))
+* upgrade core ([bc78691](https://github.com/Greenstand/treetracker-web-map-client/commit/bc78691ac44b74c5f807c00b9854525bb364f28e))
+* upgrade core ([55194a9](https://github.com/Greenstand/treetracker-web-map-client/commit/55194a93a592dfdda0b9eea0fcfb6c7ddf9ce54f))
+* upgrade core ([6fe722c](https://github.com/Greenstand/treetracker-web-map-client/commit/6fe722ccab87328d4f0616ae3320c40594a7ec4f))
+
 # [2.0.0-beta.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2022-05-14)
 
 
