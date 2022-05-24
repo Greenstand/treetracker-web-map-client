@@ -14,6 +14,7 @@ import Portal from '@mui/material/Portal';
 import log from 'loglevel';
 import moment from 'moment';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import PlanterQuote from 'components/PlanterQuote';
@@ -80,6 +81,7 @@ export default function Organization(props) {
   const [continent, setContinent] = React.useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
+  const router = useRouter();
 
   const { setTitlesData } = useDrawerContext();
 
@@ -165,7 +167,7 @@ export default function Organization(props) {
               },
             }}
           >
-            <img src={orgBackground} alt="profile" />
+            <img src={`${router.basePath}${orgBackground}`} alt="profile" />
             <Avatar
               src={organization.image_url}
               sx={{
