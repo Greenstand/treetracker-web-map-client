@@ -1,3 +1,4 @@
+/* eslint-disable require-await */
 const withImages = require('next-images');
 
 module.exports = {
@@ -12,7 +13,16 @@ module.exports = {
     ],
     disableStaticImages: true,
   },
-  // eslint-disable-next-line require-await
+  async redirects() {
+    return [
+      {
+        source: '/_next/static/images/:image*',
+        destination: `${process.env.NEXT_PUBLIC_BASE}/_next/static/images/:image*`,
+        permanent: true,
+        basePath: false,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
