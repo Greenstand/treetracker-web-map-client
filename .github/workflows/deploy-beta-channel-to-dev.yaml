@@ -1,11 +1,8 @@
 name: Deploy beta channel to dev
 
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       environment:
-#         description: 'git-tag'
-#         required: true
+on:
+   workflow_dispatch:
+
 
 env:
   project-directory: ./
