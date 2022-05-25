@@ -4,7 +4,7 @@ metadata:
   name: treetracker-web-map-client-beta-ambassador-svc
   labels:
     app: treetracker-web-map-client-beta
-    name: treetracker-web-map-client-bate-ambassador-svc
+    name: treetracker-web-map-client-beta-ambassador-svc
   namespace: webmap
 spec:
   selector:

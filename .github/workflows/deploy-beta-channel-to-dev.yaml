@@ -1,8 +1,7 @@
 name: Deploy beta channel to dev
 
 on:
-   workflow_dispatch:
-
+  workflow_dispatch:
 
 env:
   project-directory: ./
@@ -81,7 +80,7 @@ jobs:
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
-        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }} )
+        run: (cd deployment-beta/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }} )
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
@@ -91,7 +90,7 @@ jobs:
       #- name: Delete completed migration jobs prior to deployment
       #  run: kubectl -n ${{ secrets.K8S_NAMESPACE }} delete job --ignore-not-found=true  database-migration-job
       - name: Update kubernetes resources
-        run: kustomize build deployment/overlays/development-beta | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build deployment-beta/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
       #- name: Attempt to wait for migration job to complete
       #  run: kubectl wait -n ${{ secrets.K8S_NAMESPACE }} --for=condition=complete --timeout=45s job/database-migration-job
 #  deploy:

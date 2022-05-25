@@ -14,6 +14,16 @@ spec:
     metadata:
       labels:
         app: treetracker-web-map-client-beta
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: doks.digitalocean.com/node-pool
+                    operator: In
+                    values:
+                      - microservices-node-pool
       containers:
         - name: treetracker-web-map-client
           image: greenstand/treetracker-web-map-client:TAG
