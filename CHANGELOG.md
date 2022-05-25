@@ -1,3 +1,10 @@
+# [2.0.0-beta.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2022-05-25)
+
+
+### Bug Fixes
+
+* shortened gps location numbers ([de93099](https://github.com/Greenstand/treetracker-web-map-client/commit/de930997b9d3dfeb65276870833467dd10ccebee))
+
 # [2.0.0-beta.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2022-05-23)
 
 
