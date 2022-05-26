@@ -5,5 +5,4 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci --silent
 COPY . ./
-RUN npm run build
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "build-and-start" ]
