@@ -25,6 +25,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
       - id: export_bumped_version
         run: |
           export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
