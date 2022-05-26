@@ -28,9 +28,5 @@ spec:
         - name: treetracker-web-map-client
           image: greenstand/treetracker-web-map-client:TAG
           env:
-            - name: NEXT_PUBLIC_API
-              value: https://dev-k8s.treetracker.org/query
-            - name: NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS
-              value: dev-k8s
-            - name: TEST-6
-              value: for-test
+            - name: NODE_ENV
+              value: development
