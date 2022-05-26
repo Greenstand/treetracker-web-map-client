@@ -33,4 +33,4 @@ spec:
             - name: NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS
               value: dev-k8s
             - name: TEST-6
-              value: 257
+              value: for-test
