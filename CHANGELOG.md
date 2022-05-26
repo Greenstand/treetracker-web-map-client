@@ -1,3 +1,10 @@
+# [2.0.0-beta.11](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2022-05-26)
+
+
+### Bug Fixes
+
+* deploy test ([b0805bd](https://github.com/Greenstand/treetracker-web-map-client/commit/b0805bdde414d05dc1b4b13fc22ed24793c66db6))
+
 # [2.0.0-beta.10](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2022-05-26)
 
 
