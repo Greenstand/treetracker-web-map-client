@@ -1,3 +1,38 @@
+# [2.0.0-beta.11](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2022-05-26)
+
+
+### Bug Fixes
+
+* deploy test ([b0805bd](https://github.com/Greenstand/treetracker-web-map-client/commit/b0805bdde414d05dc1b4b13fc22ed24793c66db6))
+
+# [2.0.0-beta.10](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2022-05-26)
+
+
+### Bug Fixes
+
+* deploy test ([a7fbfb8](https://github.com/Greenstand/treetracker-web-map-client/commit/a7fbfb8a14424df88106eb192acd799ecd6bd8c7))
+
+# [2.0.0-beta.9](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2022-05-26)
+
+
+### Bug Fixes
+
+* deploy test ([c64782a](https://github.com/Greenstand/treetracker-web-map-client/commit/c64782adc2b0811ac6853dac4653d5d278eaaff9))
+
+# [2.0.0-beta.8](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2022-05-25)
+
+
+### Features
+
+* beta deployment channel ([087c774](https://github.com/Greenstand/treetracker-web-map-client/commit/087c7744e621afc07311aa08d99b795de0f859c2))
+
+# [2.0.0-beta.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2022-05-25)
+
+
+### Bug Fixes
+
+* shortened gps location numbers ([de93099](https://github.com/Greenstand/treetracker-web-map-client/commit/de930997b9d3dfeb65276870833467dd10ccebee))
+
 # [2.0.0-beta.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2022-05-23)
 
 

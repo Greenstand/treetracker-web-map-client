@@ -1,0 +1,75 @@
+name: Deploy beta channel to prod
+
+on:
+  workflow_dispatch:
+
+env:
+  project-directory: ./
+
+jobs:
+  deploy:
+    name: Deploy to test prod
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.head_commit.message, 'skip-ci') &&
+      github.event_name == 'push' &&
+      github.repository == "Greenstand/${{ github.event.repository.name }}"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: beta
+      - name: git configure
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      - id: export_bumped_version
+        run: |
+          export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
+          echo "::set-output name=bumped_version::${BUMPED_VERSION}"
+      - name: Install kustomize
+        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+      - name: Run kustomize
+        run: (cd deployment-beta/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ steps.export_bumped_version.outputs.bumped_version }} )
+      - name: Install doctl for kubernetes
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_PRODUCTION_TOKEN }}
+      - name: Save DigitalOcean kubeconfig
+        run: doctl kubernetes cluster kubeconfig save ${{ secrets.PRODUCTION_CLUSTER_NAME }}
+      #- name: Delete completed migration jobs prior to deployment
+      #  run: kubectl -n ${{ secrets.K8S_NAMESPACE }} delete job --ignore-not-found=true  database-migration-job
+      - name: Update kubernetes resources
+        run: kustomize build deployment-beta/overlays/prod | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+      #- name: Attempt to wait for migration job to complete
+      #  run: kubectl wait -n ${{ secrets.K8S_NAMESPACE }} --for=condition=complete --timeout=45s job/database-migration-job
+#  deploy:
+#    name: Deploy to STAGING CDN
+#    runs-on: ubuntu-latest
+#    needs: frontend
+#    if: |
+#      github.repository == "Greenstand/${{ github.event.repository.name }}"
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Download bundled frontend resources
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: frontend-bundle
+#        path: build
+#    - name: Configure AWS credentials
+#      uses: aws-actions/configure-aws-credentials@v1
+#      with:
+#        aws-access-key-id: ${{ secrets.PROD_AWS_KEY_ID }}
+#        aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET }}
+#        aws-region: us-east-1
+#    - name: Copy front end resources to s3 bucket
+#      run: |
+#        aws s3 sync build s3://${{ secrets.STAGING_CDN_S3_BUCKET }} --delete
+#    - name: Invalidate cloudfront caches
+#      run: |
+#        aws cloudfront create-invalidation --distribution-id ${{ secrets.STAGING_CDN_DISTRIBUTION_ID }} --paths "/*"
