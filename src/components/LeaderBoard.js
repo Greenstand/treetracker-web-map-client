@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
 import { fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
+import treeIcon from '../images/icons/tree.svg';
 
 const useStyles = makeStyles()((theme) => ({
   flagContainer: {
@@ -99,7 +100,7 @@ function TreeImage() {
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <Image
-      src="/images/tree_icon.svg"
+      src={treeIcon}
       alt="tree icon"
       width={!isMobileScreen ? 13.5 : 12}
       height={!isMobileScreen ? 18 : 14}
