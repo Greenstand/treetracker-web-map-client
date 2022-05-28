@@ -74,6 +74,7 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 export default function Planter(props) {
   log.info('props for planter page:', props);
   const { planter, nextExtraIsEmbed } = props;
+  console.log(props);
   const { featuredTrees } = planter;
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
@@ -415,11 +416,22 @@ export default function Planter(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
   const id = params.planterid;
   const planter = await getPlanterById(id);
   const data = await getOrgLinks(planter.links);
   return {
-    props: { planter: { ...planter, ...data } },
+    props: {
+      planter: { ...planter, ...data },
+    },
+    revalidate: 60,
+  };
+}
+
+// eslint-disable-next-line require-await
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
   };
 }
