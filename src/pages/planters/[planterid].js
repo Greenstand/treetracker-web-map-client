@@ -424,7 +424,7 @@ export async function getStaticProps({ params }) {
     props: {
       planter: { ...planter, ...data },
     },
-    revalidate: 60,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 }
 

@@ -512,7 +512,7 @@ export async function getStaticProps({ params }) {
         ...orgLinks,
       },
     },
-    revalidate: 60,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 }
 

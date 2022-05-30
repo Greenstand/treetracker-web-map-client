@@ -406,7 +406,7 @@ export async function getStaticProps({ params }) {
       planter,
       organization,
     },
-    revalidate: 60,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 180,
   };
 }
 
