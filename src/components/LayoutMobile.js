@@ -72,7 +72,7 @@ export default function Layout({ children }) {
           <Box
             sx={{
               position: 'absolute',
-              zIndex: '9999',
+              zIndex: '996',
               bottom: '0px',
               right: '0px',
               margin: '20px',
