@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: treetracker-web-map-client
+  name: treetracker-web-map-client-beta
   namespace: webmap
   labels:
-    app: treetracker-web-map-client
+    app: treetracker-web-map-client-beta
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: treetracker-web-map-client
+      app: treetracker-web-map-client-beta
   template:
     metadata:
       labels:
-        app: treetracker-web-map-client
+        app: treetracker-web-map-client-beta
     spec:
       affinity:
         nodeAffinity:
@@ -28,5 +28,5 @@ spec:
         - name: treetracker-web-map-client
           image: greenstand/treetracker-web-map-client:TAG
           env:
-            #- name: DATABASE_SCHEMA
-            #  value: reporting
+            - name: NODE_ENV
+              value: development

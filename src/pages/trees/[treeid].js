@@ -75,6 +75,15 @@ export default function Tree({
 
   function handleShare() {}
 
+  // shorten tree.lat, tree.lon down to 5 decimal points
+  function shortenLongLat(number, digits) {
+    const multiplier = 10 ** digits;
+    const numAdjust = number * multiplier;
+    const shortenNum = Math[numAdjust < 0 ? 'ceil' : 'floor'](numAdjust);
+
+    return shortenNum / multiplier;
+  }
+
   function handleMax(url) {
     window.open(url, '_blank');
   }
@@ -372,7 +381,10 @@ export default function Tree({
         )}
         {tree.lat && tree.lon && (
           <TreeTag
-            TreeTagValue={`${tree.lat}, ${tree.lon}`}
+            TreeTagValue={`${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
+              tree.lon,
+              5,
+            )}`}
             title="Latitude, Longitude"
             icon={<img src={globalIcon} alt="lat,lon" />}
           />
