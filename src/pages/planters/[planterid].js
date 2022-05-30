@@ -74,7 +74,6 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 export default function Planter(props) {
   log.info('props for planter page:', props);
   const { planter, nextExtraIsEmbed } = props;
-  console.log(props);
   const { featuredTrees } = planter;
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
