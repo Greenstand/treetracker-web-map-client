@@ -108,7 +108,7 @@ export function getNockRoutes(
 export function prepareNocks(props) {
   if (!Cypress.env('nock')) return;
   cy.task('nocks', {
-    hostname: Cypress.env('NEXT_PUBLIC_API'),
+    hostname: Cypress.env('apiUrl'),
     routes: getNockRoutes(props),
   });
 }

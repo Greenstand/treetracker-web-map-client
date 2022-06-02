@@ -149,22 +149,20 @@ export default function Drawer(props) {
     buttonRef.current.addEventListener('touchstart', handleButtonTouchStart);
     buttonRef.current.addEventListener('touchmove', handleButtonTouchMove);
     buttonRef.current.addEventListener('touchend', handleButtonTouchEnd);
-
+    const buttonRefValue = buttonRef.current;
+    const rootRefValue = rootRef.current;
     // contentRef.current.addEventListener("touchstart", e => { e.stopPropagation(); }, { passive: false })
     // contentRef.current.addEventListener("touchmove", e => { e.stopPropagation(); }, { passive: false })
     // contentRef.current.addEventListener("touchend", e => { e.stopPropagation(); }, { passive: false })
 
     return () => {
       log.warn('unmount listener...');
-      rootRef.current.removeEventListener('touchstart', handleTouchStart);
-      rootRef.current.removeEventListener('touchmove', handleTouchMove);
-      rootRef.current.removeEventListener('touchend', handleTouchEnd);
-      buttonRef.current.removeEventListener(
-        'touchstart',
-        handleButtonTouchStart,
-      );
-      buttonRef.current.removeEventListener('touchmove', handleButtonTouchMove);
-      buttonRef.current.removeEventListener('touchend', handleButtonTouchEnd);
+      rootRefValue.removeEventListener('touchstart', handleTouchStart);
+      rootRefValue.removeEventListener('touchmove', handleTouchMove);
+      rootRefValue.removeEventListener('touchend', handleTouchEnd);
+      buttonRefValue.removeEventListener('touchstart', handleButtonTouchStart);
+      buttonRefValue.removeEventListener('touchmove', handleButtonTouchMove);
+      buttonRefValue.removeEventListener('touchend', handleButtonTouchEnd);
       // contentRef.current.removeEventListener("touchstart");
       // contentRef.current.addEventListener("touchmove");
       // contentRef.current.addEventListener("touchend");
