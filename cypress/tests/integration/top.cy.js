@@ -14,7 +14,7 @@ describe('top', () => {
       body: leaders,
     });
 
-    cy.visit(`${Cypress.env('urlPath')}/top`);
+    cy.visit(`${Cypress.env('NEXT_PUBLIC_BASE')}/top`);
     cy.contains('Featured Trees');
     cy.contains('Check out the global leaders in the tree planting effort');
     cy.contains('Tanzania');

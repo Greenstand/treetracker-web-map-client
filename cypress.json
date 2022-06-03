@@ -14,8 +14,6 @@
     "supportFile": "cypress/support/components-testing.js"
   },
   "env": {
-    "nock": false,
-    "urlPath": "/web-map-beta/demo",
-    "apiUrl": "https://prod-k8s.treetracker.org/query"
+    "nock": false
   }
 }

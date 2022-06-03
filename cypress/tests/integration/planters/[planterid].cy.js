@@ -7,7 +7,7 @@ beforeEach(() => {
 
 describe('Planter page', () => {
   it('getServerSideProps return mocks', () => {
-    const path = `${Cypress.env('urlPath')}/planters/${planter.id}`;
+    const path = `${Cypress.env('NEXT_PUBLIC_BASE')}/planters/${planter.id}`;
     prepareNocks({ planter });
     cy.visit(path, {
       failOnStatusCode: false,

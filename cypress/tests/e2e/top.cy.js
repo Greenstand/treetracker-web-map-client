@@ -11,7 +11,7 @@ describe('Top Page', () => {
 
   it.only('mobile', () => {
     cy.viewport('iphone-6');
-    cy.visit(`${Cypress.env('urlPath')}/top`);
+    cy.visit(`${Cypress.env('NEXT_PUBLIC_BASE')}/top`);
     /* 
     Below component is not being used, seems will be replaced by 'search filter component', 
     just removed tests to suppress error in meantime
