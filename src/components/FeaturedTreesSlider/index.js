@@ -94,7 +94,7 @@ function FeaturedTreesSlider({ trees, size = null }) {
                   marginTop: 1.5,
                 }}
               >
-                West-Smith-Nayer
+                {tree.species ? `${tree.species_name}` : `${tree.country_name}`}
               </Typography>
             </CardContent>
           </Card>
