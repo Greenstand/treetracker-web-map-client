@@ -1,4 +1,5 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import log from 'loglevel';
 import React from 'react';
 import useLocalStorage from 'hooks/useLocalStorage';
 
@@ -324,6 +325,11 @@ export function buildTheme(theMode) {
 
 export function CustomThemeProvider({ children }) {
   const [mode, setMode] = useLocalStorage('theme', 'light');
+  const [themeObject, setThemeObject] = useLocalStorage(
+    'themeObject',
+    undefined,
+  );
+  log.warn('themeObject: ', themeObject);
 
   const colorMode = React.useMemo(
     () => ({
@@ -334,7 +340,7 @@ export function CustomThemeProvider({ children }) {
     [],
   );
 
-  const theme = buildTheme(mode);
+  const theme = themeObject ? createTheme(themeObject) : buildTheme(mode);
 
   console.warn('theme:', theme);
 
