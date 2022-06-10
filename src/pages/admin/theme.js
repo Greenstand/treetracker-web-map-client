@@ -1,4 +1,5 @@
 import { Button, Box } from '@mui/material';
+import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
 import { buildTheme } from '../../context/themeContext';
@@ -21,11 +22,28 @@ function ThemeConfig() {
     setTheme(value);
   }
 
-  function handleSave() {
+  function handlePreview() {
     const themeObject2 = JSON.parse(theme);
     setThemeObject(themeObject2);
     setKey(key + 1);
   }
+
+  function handleSave() {
+    // post theme to server
+    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
+    axios.post(url, {
+      theme,
+    });
+  }
+
+  React.useEffect(() => {
+    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
+    axios.get(url).then((response) => {
+      log.warn('response:', response);
+      setTheme(JSON.stringify(response.data.theme, null, 2));
+      setThemeObject(response.data.theme);
+    });
+  }, []);
 
   return (
     <Box
@@ -51,6 +69,9 @@ function ThemeConfig() {
         />
       </Box>
       <Box>
+        <Button onClick={handlePreview} fullWidth>
+          preview
+        </Button>
         <Button onClick={handleSave} fullWidth>
           save
         </Button>
@@ -61,7 +82,7 @@ function ThemeConfig() {
             height: '100%',
           }}
           value={theme}
-         />
+        />
       </Box>
     </Box>
   );
