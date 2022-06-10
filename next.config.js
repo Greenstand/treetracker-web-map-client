@@ -24,6 +24,10 @@ module.exports = {
           '/organizations/:organization_id(\\d{1,})/trees/:tree_id(\\d{1,})',
         destination: '/trees/:tree_id(\\d{1,})',
       },
+      {
+        source: '/map/:map_name(\\d{1,})',
+        destination: '/?map=:map_name',
+      },
     ];
   },
   basePath: process.env.NEXT_PUBLIC_BASE,
