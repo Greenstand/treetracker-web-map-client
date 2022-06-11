@@ -415,11 +415,22 @@ export default function Planter(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
   const id = params.planterid;
   const planter = await getPlanterById(id);
   const data = await getOrgLinks(planter.links);
   return {
-    props: { planter: { ...planter, ...data } },
+    props: {
+      planter: { ...planter, ...data },
+    },
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+  };
+}
+
+// eslint-disable-next-line require-await
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
   };
 }
