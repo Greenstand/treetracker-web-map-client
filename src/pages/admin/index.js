@@ -192,7 +192,7 @@ export default function Index() {
       /* eslint-enable */
 
       setTimeout(() => {
-        auzTemp.entitlement('webmap-service').then((res) => {
+        auzTemp.entitlement('api-services').then((res) => {
           log.warn('entitlement', res);
           // eslint-disable-next-line no-undef
           const r = jwt_decode(res);
@@ -239,27 +239,28 @@ export default function Index() {
         <Box>
           {RPT?.authorization.permissions
             .map((r) => r.rsname)
-            .includes('web-map-global-setting') && (
+            .includes('web-map-theme') && (
             <Button
               onClick={() => {
-                axios({
-                  method: 'GET',
-                  url: 'http://localhost:3006/settings',
-                  headers: {
-                    // Authorization: `Bearer ${keycloak.token}`,
-                    Authorization: `Bearer ${auz.rpt}`,
-                  },
-                })
-                  .then((res) => {
-                    log.warn('res', res);
-                  })
-                  .catch((err) => {
-                    log.warn('err', err);
-                  });
+                window.location.href = '/admin/theme';
+                // axios({
+                //   method: 'GET',
+                //   url: 'http://localhost:3006/settings',
+                //   headers: {
+                //     // Authorization: `Bearer ${keycloak.token}`,
+                //     Authorization: `Bearer ${auz.rpt}`,
+                //   },
+                // })
+                //   .then((res) => {
+                //     log.warn('res', res);
+                //   })
+                //   .catch((err) => {
+                //     log.warn('err', err);
+                //   });
               }}
               color="primary"
             >
-              Global
+              theme
             </Button>
           )}
           {keycloak?.tokenParsed?.realm_access?.roles.includes(

@@ -6,7 +6,7 @@ function getStorageValue(key, defaultValue) {
   if (typeof window !== 'undefined') {
     const value = localStorage.getItem(key);
     let saved;
-    log.warn('value:', value);
+    // log.warn('value:', value);
     if (value && value !== 'undefined') {
       saved = JSON.parse(value);
     }
