@@ -36,9 +36,26 @@ function ThemeConfig() {
   function handleSave() {
     // post theme to server
     const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
-    axios.post(url, {
-      theme,
-    });
+
+    axios({
+      method: 'POST',
+      url,
+      data: {
+        theme,
+      },
+      headers: {
+        // Authorization: `Bearer ${keycloak.token}`,
+        Authorization: `Bearer ${auz.rpt}`,
+      },
+    })
+      .then((response) => {
+        log.warn('response:', response);
+        alert('Theme saved!');
+      })
+      .catch((error) => {
+        log.warn('error:', error);
+        alert('Theme save failed!');
+      });
   }
 
   function load() {
