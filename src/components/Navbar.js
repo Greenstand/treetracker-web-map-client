@@ -11,9 +11,9 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useCustomThemeContext } from 'context/themeContext';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
+import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
 
 const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
@@ -64,7 +64,6 @@ function Navbar() {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = useState(null);
-  const { colorMode } = useCustomThemeContext();
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -165,7 +164,7 @@ function Navbar() {
             <Typography className={classes.buttonStyle}>Contact Us</Typography>
           </Button>
         </Link>
-        <Button onClick={colorMode.toggleColorMode}>Theme</Button>
+        <ChangeThemeButton />
       </Toolbar>
       <Button
         className={classes.menuButton}
@@ -199,7 +198,7 @@ function Navbar() {
         <MenuItem onClick={handleClose}>Blog</MenuItem>
         <MenuItem onClick={handleClose}>Contact Us</MenuItem>
         <MenuItem onClick={handleClose} sx={{ paddingLeft: '10px' }}>
-          <Button onClick={colorMode.toggleColorMode}>Theme</Button>
+          <ChangeThemeButton />
         </MenuItem>
       </Menu>
     </AppBar>
