@@ -58,6 +58,9 @@ export default function Drawer(props) {
     touchCache.lastTranslateY = translateY;
     touchCache.lastPageY = event.touches[0].pageY;
     rootRef.current.style.transform = `translateY(${translateY}px)`;
+    if (translateY > 10) {
+      rootRef.current.style.borderRadius = '16px 16px 0 0';
+    }
     // event.stopPropagation();
   }, []);
 
@@ -67,6 +70,7 @@ export default function Drawer(props) {
     log.warn('last velocity:', touchCache.lastVelocity);
     if (touchCache.lastVelocity < -0.4) {
       rootRef.current.style.transform = `translateY(0px)`;
+      rootRef.current.style.borderRadius = '0';
       contentRef.current.style.height = '100%';
       return;
     }
@@ -85,6 +89,7 @@ export default function Drawer(props) {
       const y = parseInt(m[1], 10);
       if (y < 150) {
         rootRef.current.style.transform = `translateY(0px)`;
+        rootRef.current.style.borderRadius = '0';
         contentRef.current.style.height = '100%';
         return;
       }
