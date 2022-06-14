@@ -12,7 +12,7 @@ import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
 
-function FeaturedPlantersSlider({ planters, color, link, size = null }) {
+function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);

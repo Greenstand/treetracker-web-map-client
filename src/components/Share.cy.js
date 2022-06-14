@@ -19,11 +19,12 @@ describe('Share', () => {
       );
     }
     mount(<Test />);
-    cy.get('.MuiButtonBase-root').click();
-    cy.pause();
+    cy.get('.MuiBox-root').click().pause();
     cy.get(
-      'div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)',
-    ).click();
-    cy.contains(/copy/i).click();
+      '.MuiDialog-container > .MuiPaper-root > .MuiGrid-root > .MuiButtonBase-root:first',
+    )
+      .click()
+      .pause();
+    cy.get('.MuiButton-root').contains(/copy/i).click();
   });
 });
