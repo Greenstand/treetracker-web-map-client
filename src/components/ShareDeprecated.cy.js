@@ -6,10 +6,12 @@ describe('Share', () => {
 
   it('Share', () => {
     mount(<Share />);
-    cy.get('.MuiButtonBase-root').click();
+    cy.get('.MuiButtonBase-root').click().pause();
     cy.get(
-      'div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)',
-    ).click();
+      '.MuiDialog-container > .MuiPaper-root > .MuiGrid-root > .MuiButtonBase-root:first',
+    )
+      .click()
+      .pause();
     cy.contains(/copy/i).click();
   });
 });

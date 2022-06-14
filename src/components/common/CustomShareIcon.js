@@ -7,7 +7,7 @@ function CustomShareIcon({ handleOnClick, children, mailString }) {
   const button = (
     <IconButton
       sx={{
-        color: (t) => t.palette.primaryLight.main,
+        color: (t) => t.palette.primary,
         backgroundColor: 'rgba(0, 0, 0, 0.04)',
         width: [56, 64],
         height: [56, 64],
