@@ -62,7 +62,13 @@ function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
       </Button>
       <Grid ref={sliderRef} className={classes.SliderImgContainer}>
         {planters.map((planter) => (
-          <Tooltip key={planter.id} title={showAppropiateToolTipName(planter)}>
+          <Tooltip
+            key={planter.id}
+            title={showAppropiateToolTipName(planter)}
+            classes={{
+              tooltip: classes.toolTip,
+            }}
+          >
             <Card
               key={planter.id}
               elevation={8}
