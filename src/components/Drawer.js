@@ -160,6 +160,8 @@ export default function Drawer(props) {
     // contentRef.current.addEventListener("touchend", e => { e.stopPropagation(); }, { passive: false })
 
     return () => {
+      if (rootRef.current === null) return;
+      if (buttonRef.current === null) return;
       log.warn('unmount listener...');
       rootRef.current.removeEventListener('touchstart', handleTouchStart);
       rootRef.current.removeEventListener('touchmove', handleTouchMove);
