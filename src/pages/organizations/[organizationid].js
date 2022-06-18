@@ -21,6 +21,7 @@ import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import DrawerTitle from 'components/common/DrawerTitle';
+import SearchIcon from 'components/common/SearchIcon';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
@@ -34,7 +35,7 @@ import locationIcon from '../../images/icons/location.svg';
 import peopleIcon from '../../images/icons/people.svg';
 import treeIcon from '../../images/icons/tree.svg';
 import orgBackground from '../../images/org-background.png';
-import searchIcon from '../../images/search.svg';
+// import searchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
@@ -154,7 +155,7 @@ export default function Organization(props) {
               <BackButton />
               <Box>
                 {}
-                <img src={searchIcon} alt="search" />
+                <SearchIcon />
               </Box>
             </Box>
           )}

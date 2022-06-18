@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import SearchIcon from 'components/common/SearchIcon';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import InformationCard1 from '../../components/InformationCard1';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -31,7 +32,7 @@ import calendarIcon from '../../images/icons/calendar.svg';
 import locationIcon from '../../images/icons/location.svg';
 import peopleIcon from '../../images/icons/people.svg';
 import treeIcon from '../../images/icons/tree.svg';
-import searchIcon from '../../images/search.svg';
+// import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
@@ -154,7 +155,7 @@ export default function Planter(props) {
             <BackButton />
             <Box>
               {}
-              <img src={searchIcon} alt="search" />
+              <SearchIcon />
             </Box>
           </Box>
         )}

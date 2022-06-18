@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import React from 'react';
 import SearchButton from 'components/SearchButton';
+import SearchIcon from 'components/common/SearchIcon';
 import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import FeaturedPlantersSlider from '../components/FeaturedPlantersSlider';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
@@ -94,8 +95,8 @@ function Top({ trees, planters, countries, organizations }) {
         >
           <Typography variant="h4">Featured trees this week</Typography>
           <Box>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={search} alt="search" />
+            { }
+            <SearchIcon />
           </Box>
         </Box>
         {false && ( // going to be replaced by search filter component

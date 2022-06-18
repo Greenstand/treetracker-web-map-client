@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import SearchIcon from 'components/common/SearchIcon';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
@@ -28,7 +29,7 @@ import location from '../../images/icons/location.svg';
 import shareIcon from '../../images/icons/share.svg';
 import tokenIcon from '../../images/icons/token.svg';
 import maxIcon from '../../images/max.svg';
-import searchIcon from '../../images/search.svg';
+// import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
@@ -179,7 +180,7 @@ export default function Tree({
           <BackButton />
           <Box>
             {}
-            <img src={searchIcon} alt="search" />
+            <SearchIcon />
           </Box>
         </Box>
       )}
