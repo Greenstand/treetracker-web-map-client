@@ -80,6 +80,14 @@ const useStyles = makeStyles()((theme, size) => ({
       height: size === 'small' ? '144px' : '152px',
     },
   },
+  toolTip:
+    theme.palette.mode === 'dark'
+      ? {
+          backgroundColor: theme.palette.common.white,
+          color: 'rgba(0, 0, 0, 0.87)',
+          boxShadow: theme.shadows[1],
+        }
+      : {},
 }));
 
 export { useStyles };
