@@ -4,7 +4,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
+import { useMediaQuery, useTheme, SvgIcon, Avatar } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -168,20 +168,37 @@ export default function Tree({
         </Portal>
       )}
       {!isMobile && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            alignItems: 'center',
-          }}
-        >
-          <BackButton />
-          <Box>
-            {}
-            <img src={searchIcon} alt="search" />
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar className={classes.media} src={planter.image_url} />
+            <Box sx={{ marginLeft: 3 }}>
+              <Typography variant="h5">
+                {planter.first_name} {planter.last_name}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <BackButton />
+            <Box>
+              {}
+              <img src={searchIcon} alt="search" />
+            </Box>
+          </Box>
+        </>
       )}
       <Box
         sx={[
