@@ -6,6 +6,8 @@ import {
   Card,
   CardContent,
   CardMedia,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
@@ -16,6 +18,7 @@ function FeaturedTreesSlider({ trees, size = null }) {
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
   const sliderRef = useRef();
+  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
   const scrollHandler = (num) => {
     sliderRef.current.scrollLeft += num;
@@ -23,32 +26,34 @@ function FeaturedTreesSlider({ trees, size = null }) {
 
   return (
     <div className={classes.SliderContainer}>
-      <Button
-        onClick={() => scrollHandler(-500)}
-        sx={{
-          left: 0,
-          // borderRadius: '40px 0 0 40px',
-          position: 'absolute',
-          borderRadius: ' 0 40px 40px 0',
-          zIndex: 3,
-          bottom: '47%',
-          minWidth: '35px',
-          height: '75px',
-          cursor: 'pointer',
-          marginLeft: -3,
-          '& svg': {
-            marginRight: -4,
-          },
-          opacity: 0.4,
-        }}
-        variant="contained"
-      >
-        <ArrowBackIosIcon
+      {!isMobile && (
+        <Button
+          onClick={() => scrollHandler(-500)}
           sx={{
-            transform: 'rotate(0deg)',
+            left: 0,
+            // borderRadius: '40px 0 0 40px',
+            position: 'absolute',
+            borderRadius: ' 0 40px 40px 0',
+            zIndex: 3,
+            bottom: '47%',
+            minWidth: '35px',
+            height: '75px',
+            cursor: 'pointer',
+            marginLeft: -3,
+            '& svg': {
+              marginRight: -4,
+            },
+            opacity: 0.4,
           }}
-        />
-      </Button>
+          variant="contained"
+        >
+          <ArrowBackIosIcon
+            sx={{
+              transform: 'rotate(0deg)',
+            }}
+          />
+        </Button>
+      )}
       <Grid ref={sliderRef} className={classes.SliderImgContainer}>
         {trees.map((tree) => (
           <Card
@@ -100,31 +105,33 @@ function FeaturedTreesSlider({ trees, size = null }) {
           </Card>
         ))}
       </Grid>
-      <Button
-        onClick={() => scrollHandler(500)}
-        sx={{
-          right: 0,
-          position: 'absolute',
-          borderRadius: '40px 0 0 40px',
-          zIndex: 3,
-          bottom: '47%',
-          minWidth: '35px',
-          height: '75px',
-          cursor: 'pointer',
-          marginRight: -3,
-          '& svg': {
-            marginLeft: -4,
-          },
-          opacity: 0.4,
-        }}
-        variant="contained"
-      >
-        <ArrowBackIosIcon
+      {!isMobile && (
+        <Button
+          onClick={() => scrollHandler(500)}
           sx={{
-            transform: 'rotate(180deg)',
+            right: 0,
+            position: 'absolute',
+            borderRadius: '40px 0 0 40px',
+            zIndex: 3,
+            bottom: '47%',
+            minWidth: '35px',
+            height: '75px',
+            cursor: 'pointer',
+            marginRight: -3,
+            '& svg': {
+              marginLeft: -4,
+            },
+            opacity: 0.4,
           }}
-        />
-      </Button>
+          variant="contained"
+        >
+          <ArrowBackIosIcon
+            sx={{
+              transform: 'rotate(180deg)',
+            }}
+          />
+        </Button>
+      )}
     </div>
   );
 }
