@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { useRef } from 'react';
 import { useStyles } from './style'; // the style file
+import { getThumbnailImageUrls } from '../../models/utils';
 import Link from '../Link';
 
 function FeaturedTreesSlider({ trees, size = null }) {
@@ -68,7 +69,7 @@ function FeaturedTreesSlider({ trees, size = null }) {
           >
             <CardMedia
               component="img"
-              image={tree.image_url}
+              image={getThumbnailImageUrls(tree.image_url, 208, 232)}
               alt="tree"
               sx={{
                 borderRadius: '16px',
