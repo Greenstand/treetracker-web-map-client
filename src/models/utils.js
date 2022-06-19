@@ -99,6 +99,19 @@ const fixCountryNames = (countries) =>
     return country;
   });
 
+const debounce = (func, timeout = 50) => {
+  let debouncedFunc = null;
+
+  return () => {
+    if (!debouncedFunc) {
+      debouncedFunc = setTimeout(func, timeout);
+    } else {
+      clearTimeout(debouncedFunc);
+      debouncedFunc = setTimeout(func, timeout);
+    }
+  };
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -108,4 +121,5 @@ export {
   formatDateString,
   formatDates,
   fixCountryNames,
+  debounce,
 };
