@@ -7,15 +7,34 @@ import {
   CardContent,
   CardMedia,
 } from '@mui/material';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { debounce } from 'models/utils';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
+
+const SLIDE_EXTREME_INDEX = 30;
 
 function FeaturedTreesSlider({ trees, size = null }) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
   const sliderRef = useRef();
+  const [leftScrollButton, showLeftScrollButton] = useState();
+  const [rightScrollButton, showRightScrollButton] = useState();
+
+  const onScroll = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+    // checking if user reached extreme left or right scroll postions
+    // then disable respective button
+    showLeftScrollButton(!(scrollLeft < SLIDE_EXTREME_INDEX));
+    showRightScrollButton(
+      !(Math.abs(scrollWidth - clientWidth - scrollLeft) < SLIDE_EXTREME_INDEX),
+    );
+  };
+
+  useEffect(() => {
+    onScroll();
+  });
 
   const scrollHandler = (num) => {
     sliderRef.current.scrollLeft += num;
@@ -23,33 +42,39 @@ function FeaturedTreesSlider({ trees, size = null }) {
 
   return (
     <div className={classes.SliderContainer}>
-      <Button
-        onClick={() => scrollHandler(-500)}
-        sx={{
-          left: 0,
-          // borderRadius: '40px 0 0 40px',
-          position: 'absolute',
-          borderRadius: ' 0 40px 40px 0',
-          zIndex: 3,
-          bottom: '47%',
-          minWidth: '35px',
-          height: '75px',
-          cursor: 'pointer',
-          marginLeft: -3,
-          '& svg': {
-            marginRight: -4,
-          },
-          opacity: 0.4,
-        }}
-        variant="contained"
-      >
-        <ArrowBackIosIcon
+      {leftScrollButton && (
+        <Button
+          onClick={() => scrollHandler(-500)}
           sx={{
-            transform: 'rotate(0deg)',
+            left: 0,
+            // borderRadius: '40px 0 0 40px',
+            position: 'absolute',
+            borderRadius: ' 0 40px 40px 0',
+            zIndex: 3,
+            bottom: '47%',
+            minWidth: '35px',
+            height: '75px',
+            cursor: 'pointer',
+            marginLeft: -3,
+            '& svg': {
+              marginRight: -4,
+            },
+            opacity: 0.4,
           }}
-        />
-      </Button>
-      <Grid ref={sliderRef} className={classes.SliderImgContainer}>
+          variant="contained"
+        >
+          <ArrowBackIosIcon
+            sx={{
+              transform: 'rotate(0deg)',
+            }}
+          />
+        </Button>
+      )}
+      <Grid
+        ref={sliderRef}
+        className={classes.SliderImgContainer}
+        onScroll={debounce(onScroll, 70)}
+      >
         {trees.map((tree) => (
           <Card
             key={tree.id}
@@ -100,31 +125,33 @@ function FeaturedTreesSlider({ trees, size = null }) {
           </Card>
         ))}
       </Grid>
-      <Button
-        onClick={() => scrollHandler(500)}
-        sx={{
-          right: 0,
-          position: 'absolute',
-          borderRadius: '40px 0 0 40px',
-          zIndex: 3,
-          bottom: '47%',
-          minWidth: '35px',
-          height: '75px',
-          cursor: 'pointer',
-          marginRight: -3,
-          '& svg': {
-            marginLeft: -4,
-          },
-          opacity: 0.4,
-        }}
-        variant="contained"
-      >
-        <ArrowBackIosIcon
+      {rightScrollButton && (
+        <Button
+          onClick={() => scrollHandler(500)}
           sx={{
-            transform: 'rotate(180deg)',
+            right: 0,
+            position: 'absolute',
+            borderRadius: '40px 0 0 40px',
+            zIndex: 3,
+            bottom: '47%',
+            minWidth: '35px',
+            height: '75px',
+            cursor: 'pointer',
+            marginRight: -3,
+            '& svg': {
+              marginLeft: -4,
+            },
+            opacity: 0.4,
           }}
-        />
-      </Button>
+          variant="contained"
+        >
+          <ArrowBackIosIcon
+            sx={{
+              transform: 'rotate(180deg)',
+            }}
+          />
+        </Button>
+      )}
     </div>
   );
 }
