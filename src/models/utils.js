@@ -99,6 +99,7 @@ const fixCountryNames = (countries) =>
     return country;
   });
 
+
 // For places that display a small size of pictures, we should use our image API to load it.
 // https://dev-k8s.treetracker.org/images/img/:domain/:params/:image
 // E.g.,
@@ -111,6 +112,19 @@ const getThumbnailImageUrls = (imageUrl, width = 400, height = 400) => {
   const paramUrl = `w=${width},h=${height}`;
   const thumbNailImageUrl = `https://dev-k8s.treetracker.org/images/img/${domain}/${paramUrl}/${imagePath}`;
   return thumbNailImageUrl;
+  }
+
+const debounce = (func, timeout = 50) => {
+  let debouncedFunc = null;
+
+  return () => {
+    if (!debouncedFunc) {
+      debouncedFunc = setTimeout(func, timeout);
+    } else {
+      clearTimeout(debouncedFunc);
+      debouncedFunc = setTimeout(func, timeout);
+    }
+  };
 };
 
 export {
@@ -123,4 +137,5 @@ export {
   formatDates,
   fixCountryNames,
   getThumbnailImageUrls,
+  debounce,
 };
