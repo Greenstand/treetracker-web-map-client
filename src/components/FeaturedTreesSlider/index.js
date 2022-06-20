@@ -6,8 +6,6 @@ import {
   Card,
   CardContent,
   CardMedia,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import { useRef, useState, useEffect } from 'react';
 import { debounce } from 'models/utils';
@@ -16,13 +14,12 @@ import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;
 
-function FeaturedTreesSlider({ trees, size = null }) {
+function FeaturedTreesSlider({ trees, size = null, isMobile }) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
   const sliderRef = useRef();
-  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
-  
+
   const [leftScrollButton, showLeftScrollButton] = useState();
   const [rightScrollButton, showRightScrollButton] = useState();
 
@@ -40,15 +37,13 @@ function FeaturedTreesSlider({ trees, size = null }) {
     onScroll();
   });
 
-
   const scrollHandler = (num) => {
     sliderRef.current.scrollLeft += num;
   };
 
   return (
     <div className={classes.SliderContainer}>
-    
-      {!(isMobile && leftScrollButton) && (
+      {!isMobile && leftScrollButton && (
         <Button
           onClick={() => scrollHandler(-500)}
           sx={{
@@ -131,7 +126,7 @@ function FeaturedTreesSlider({ trees, size = null }) {
           </Card>
         ))}
       </Grid>
-      {(!isMobile && rightScrollButton) && (
+      {!isMobile && rightScrollButton && (
         <Button
           onClick={() => scrollHandler(500)}
           sx={{
