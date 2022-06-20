@@ -11,9 +11,12 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import * as d3 from 'd3';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { debounce } from 'models/utils';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
+
+const SLIDE_EXTREME_INDEX = 30;
 
 function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
   // default size of images = 208px;
@@ -21,6 +24,23 @@ function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
   const { classes } = useStyles(size);
   const sliderRef = useRef();
   const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
+
+  const [leftScrollButton, showLeftScrollButton] = useState();
+  const [rightScrollButton, showRightScrollButton] = useState();
+
+  const onScroll = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+    // checking if user reached extreme left or right scroll postions
+    // then disable respective button
+    showLeftScrollButton(!(scrollLeft < SLIDE_EXTREME_INDEX));
+    showRightScrollButton(
+      !(Math.abs(scrollWidth - clientWidth - scrollLeft) < SLIDE_EXTREME_INDEX),
+    );
+  };
+
+  useEffect(() => {
+    onScroll();
+  }, []);
 
   const scrollHandler = (num) => {
     sliderRef.current.scrollLeft += num;
@@ -37,7 +57,8 @@ function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
 
   return (
     <div className={classes.SliderContainer}>
-      {!isMobile && (
+    
+      {(!isMobile && leftScrollButton)  && (
         <Button
           onClick={() => scrollHandler(-500)}
           sx={{
@@ -65,7 +86,11 @@ function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
           />
         </Button>
       )}
-      <Grid ref={sliderRef} className={classes.SliderImgContainer}>
+      <Grid
+        ref={sliderRef}
+        className={classes.SliderImgContainer}
+        onScroll={debounce(onScroll, 70)}
+      >
         {planters.map((planter) => (
           <Tooltip
             key={planter.id}
@@ -139,7 +164,7 @@ function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
           </Tooltip>
         ))}
       </Grid>
-      {!isMobile && (
+      {(!isMobile && rightScrollButton) && (
         <Button
           onClick={() => scrollHandler(500)}
           sx={{
