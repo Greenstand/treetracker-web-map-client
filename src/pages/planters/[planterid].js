@@ -331,7 +331,6 @@ export default function Planter(props) {
                 subTitle="Adansonia"
                 count={10}
               />
-              <Box sx={{ mt: [2, 4] }} />
               <TreeSpeciesCard
                 name="Wattle Tree"
                 subTitle="Acacia sensu lato"
