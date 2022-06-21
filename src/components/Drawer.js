@@ -1,5 +1,5 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { Typography, Button, Box, Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import * as d3 from 'd3';
 import log from 'loglevel';
 import React from 'react';

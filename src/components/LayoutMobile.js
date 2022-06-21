@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-import Drawer from './Drawer';
 import SearchFilter from './SearchFilter';
 import zoomIn from '../images/zoom-in.svg';
 import zoomOut from '../images/zoom-out.svg';
@@ -9,6 +8,7 @@ import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
+const Drawer = dynamic(() => import('./Drawer'), { ssr: false });
 
 const useStyles = makeStyles()((theme) => ({
   root: {
