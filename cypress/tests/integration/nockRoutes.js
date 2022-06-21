@@ -16,6 +16,22 @@ export function getNockRoutes(
   return [
     {
       method: 'GET',
+      path: '/planters?limit=10',
+      statusCode: 200,
+      body: {
+        planters: Array(10).fill([planter]),
+      },
+    },
+    {
+      method: 'GET',
+      path: '/organizations?limit=10',
+      statusCode: 200,
+      body: {
+        organizations: Array(10).fill([organization]),
+      },
+    },
+    {
+      method: 'GET',
       path: `/planters/${planter.id}`,
       statusCode: 200,
       body: planter,
