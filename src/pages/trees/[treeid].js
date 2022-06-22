@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { useDrawerContext } from 'context/DrawerContext';
@@ -68,6 +69,8 @@ export default function Tree({
   const mapContext = useMapContext();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const router = useRouter();
+  const userCameFromPlanterPage = router.asPath.includes('planters');
 
   const { setTitlesData } = useDrawerContext();
 
@@ -167,7 +170,7 @@ export default function Tree({
           </Box>
         </Portal>
       )}
-      {!isMobile && (
+      {!isMobile && userCameFromPlanterPage && (
         <>
           <Box
             sx={{
