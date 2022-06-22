@@ -16,11 +16,18 @@ import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;
 
-function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
+function FeaturedPlantersSlider({
+  planters = [],
+  color,
+  link,
+  size = null,
+  isMobile,
+}) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
   const sliderRef = useRef();
+
   const [leftScrollButton, showLeftScrollButton] = useState();
   const [rightScrollButton, showRightScrollButton] = useState();
 
@@ -53,7 +60,7 @@ function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
 
   return (
     <div className={classes.SliderContainer}>
-      {leftScrollButton && (
+      {!isMobile && leftScrollButton && (
         <Button
           onClick={() => scrollHandler(-500)}
           sx={{
@@ -159,7 +166,8 @@ function FeaturedPlantersSlider({ planters = [], color, link, size = null }) {
           </Tooltip>
         ))}
       </Grid>
-      {rightScrollButton && (
+
+      {!isMobile && rightScrollButton && (
         <Button
           onClick={() => scrollHandler(500)}
           sx={{

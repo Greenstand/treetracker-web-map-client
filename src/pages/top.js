@@ -104,7 +104,7 @@ function Top({ trees, planters, countries, organizations }) {
           </Box>
         )}
         <Box>
-          <FeaturedTreesSlider trees={trees} />
+          <FeaturedTreesSlider trees={trees} isMobile={isMobileScreen} />
         </Box>
         <Box sx={{ mt: [4, 8] }} />
         <Typography variant="h4">Featured organizations this week</Typography>
@@ -112,6 +112,7 @@ function Top({ trees, planters, countries, organizations }) {
           link={(id) => `/organizations/${id}`}
           color="primary"
           planters={organizations}
+          isMobile={isMobileScreen}
         />
         <Box
           sx={{
@@ -124,6 +125,7 @@ function Top({ trees, planters, countries, organizations }) {
           link={(id) => `/planters/${id}`}
           color="secondary"
           planters={planters}
+          isMobile={isMobileScreen}
         />
         <Typography
           variant="h4"

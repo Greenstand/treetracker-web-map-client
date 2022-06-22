@@ -14,11 +14,12 @@ import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;
 
-function FeaturedTreesSlider({ trees, size = null }) {
+function FeaturedTreesSlider({ trees, size = null, isMobile }) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
   const sliderRef = useRef();
+
   const [leftScrollButton, showLeftScrollButton] = useState();
   const [rightScrollButton, showRightScrollButton] = useState();
 
@@ -42,7 +43,7 @@ function FeaturedTreesSlider({ trees, size = null }) {
 
   return (
     <div className={classes.SliderContainer}>
-      {leftScrollButton && (
+      {!isMobile && leftScrollButton && (
         <Button
           onClick={() => scrollHandler(-500)}
           sx={{
@@ -125,7 +126,7 @@ function FeaturedTreesSlider({ trees, size = null }) {
           </Card>
         ))}
       </Grid>
-      {rightScrollButton && (
+      {!isMobile && rightScrollButton && (
         <Button
           onClick={() => scrollHandler(500)}
           sx={{
