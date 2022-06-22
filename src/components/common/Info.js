@@ -7,6 +7,7 @@ export default function Info({ info, iconURI }) {
       sx={{
         color: 'text.text2',
         display: 'flex',
+        alignItems: 'center',
         gap: 3,
         '& img': {
           filter: 'opacity(0.5)',
