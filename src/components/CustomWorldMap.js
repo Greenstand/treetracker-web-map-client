@@ -47,6 +47,20 @@ const mobileToolTipPos = {
   oc: { top: '45%', left: '78%' },
 };
 
+const mapContinentName = (continentName) => {
+  if (!continentName) return undefined;
+
+  const nameArray = continentName.toLowerCase().split(' ');
+  if (nameArray.length > 1) {
+    return nameArray[0][0] + nameArray[1][0];
+  }
+  if (nameArray.length === 1) {
+    return nameArray[0][0] + nameArray[0][1];
+  }
+
+  return undefined;
+};
+
 function ToolTip({ totalTrees, con }) {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -80,12 +94,13 @@ function ToolTip({ totalTrees, con }) {
 
 function CustomWorldMap({ totalTrees, con }) {
   const { classes } = useStyles();
-  const [selected, onSelect] = React.useState(con);
+  const continentAbr = mapContinentName(con);
+  const [selected, onSelect] = React.useState(continentAbr);
 
   return (
     <Box className={classes.root}>
       <WorldMap selected={selected} onSelect={onSelect} />
-      <ToolTip totalTrees={totalTrees} pos={toolTipPos} con={con} />
+      <ToolTip totalTrees={totalTrees} pos={toolTipPos} con={continentAbr} />
     </Box>
   );
 }

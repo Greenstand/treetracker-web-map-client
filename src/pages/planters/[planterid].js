@@ -36,20 +36,6 @@ import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
 
-const mapContinentName = (continentName) => {
-  if (!continentName) return undefined;
-
-  const nameArray = continentName.toLowerCase().split(' ');
-  if (nameArray.length > 1) {
-    return nameArray[0][0] + nameArray[1][0];
-  }
-  if (nameArray.length === 1) {
-    return nameArray[0][0] + nameArray[0][1];
-  }
-
-  return undefined;
-};
-
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
   imageContainer: {
@@ -91,7 +77,6 @@ export default function Planter(props) {
   const { featuredTrees } = planter;
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
-  const planterContinentName = mapContinentName(planter.continent_name);
 
   const router = useRouter();
 
@@ -316,11 +301,11 @@ export default function Planter(props) {
               px: [0, 6],
             }}
           >
-            {planterContinentName && (
+            {planter.continent_name && (
               <Box sx={{ mt: [0, 22] }}>
                 <CustomWorldMap
                   totalTrees={treeCount}
-                  con={planterContinentName}
+                  con={planter.continent_name}
                 />
               </Box>
             )}
