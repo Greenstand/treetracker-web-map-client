@@ -81,7 +81,7 @@ module.exports = async (on, config) => {
         );
 
         const methodString = method.toLowerCase();
-        scope = scope[methodString](path).reply(statusCode, body);
+        scope = scope.persist()[methodString](path).reply(statusCode, body);
       }
 
       return null;
