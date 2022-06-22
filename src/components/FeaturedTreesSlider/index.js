@@ -10,6 +10,7 @@ import {
 import { useRef, useState, useEffect } from 'react';
 import { debounce } from 'models/utils';
 import { useStyles } from './style'; // the style file
+import { getThumbnailImageUrls } from '../../models/utils';
 import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;
@@ -94,7 +95,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile }) {
           >
             <CardMedia
               component="img"
-              image={tree.image_url}
+              image={getThumbnailImageUrls(tree.image_url, 208, 232)}
               alt="tree"
               sx={{
                 borderRadius: '16px',
