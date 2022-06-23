@@ -301,9 +301,15 @@ export default function Planter(props) {
               px: [0, 6],
             }}
           >
-            <Box sx={{ mt: [0, 22] }}>
-              <CustomWorldMap totalTrees={treeCount} con="af" />
-            </Box>
+            {planter.continent_name && (
+              <Box sx={{ mt: [0, 22] }}>
+                <CustomWorldMap
+                  totalTrees={treeCount}
+                  con={planter.continent_name}
+                />
+              </Box>
+            )}
+
             <Typography
               variant="h4"
               sx={{
