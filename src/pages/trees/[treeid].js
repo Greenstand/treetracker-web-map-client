@@ -4,11 +4,12 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
+import { useMediaQuery, useTheme, SvgIcon, Avatar } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { useDrawerContext } from 'context/DrawerContext';
@@ -68,6 +69,8 @@ export default function Tree({
   const mapContext = useMapContext();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const router = useRouter();
+  const userCameFromPlanterPage = router.asPath.includes('planters');
 
   const { setTitlesData } = useDrawerContext();
 
@@ -167,21 +170,38 @@ export default function Tree({
           </Box>
         </Portal>
       )}
-      {!isMobile && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            alignItems: 'center',
-          }}
-        >
-          <BackButton />
-          <Box>
-            {}
-            <img src={searchIcon} alt="search" />
+      {!isMobile && userCameFromPlanterPage && (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar className={classes.media} src={planter.image_url} />
+            <Box sx={{ marginLeft: 3 }}>
+              <Typography variant="h5">
+                {planter.first_name} {planter.last_name}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <BackButton />
+            <Box>
+              {}
+              <img src={searchIcon} alt="search" />
+            </Box>
+          </Box>
+        </>
       )}
       <Box
         sx={[
