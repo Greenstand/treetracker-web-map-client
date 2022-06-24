@@ -418,6 +418,19 @@ export default function Tree({
         )}
       </Box>
       <Box height={20} />
+      {nextExtraIsEmbed && (
+        <Portal container={document.getElementById('embed-logo-container')}>
+          <Avatar
+            sx={{
+              width: '120px',
+              height: '120px',
+              margin: '10px',
+            }}
+            src={planter.image_url}
+            variant="rounded"
+          />
+        </Portal>
+      )}
     </Box>
   );
 }
