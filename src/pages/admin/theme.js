@@ -15,6 +15,7 @@ function ThemeConfig() {
     JSON.stringify(buildTheme('light'), null, 2),
   );
   const [key, setKey] = React.useState(1);
+  const [user, setUser] = React.useState(null);
   // log.warn('theme to config:', theme);
 
   const [themeObject, setThemeObject] = useLocalStorage(
@@ -35,7 +36,7 @@ function ThemeConfig() {
 
   function handleSave() {
     // post theme to server
-    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
+    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/${user.organization_id}/theme`;
 
     axios({
       method: 'POST',
@@ -55,6 +56,33 @@ function ThemeConfig() {
       .catch((error) => {
         log.warn('error:', error);
         alert('Theme save failed!');
+      });
+  }
+
+  function handleLoad() {
+    // post theme to server
+    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/${user.organization_id}/theme`;
+
+    axios({
+      method: 'get',
+      url,
+      headers: {
+        // Authorization: `Bearer ${keycloak.token}`,
+        Authorization: `Bearer ${auz.rpt}`,
+      },
+    })
+      .then((response) => {
+        // check status
+        if (response.status === 200) {
+          log.warn('response:', response);
+          alert('Theme loaded!');
+        } else {
+          alert(`Theme load failed!${  response.status}`);
+        }
+      })
+      .catch((error) => {
+        log.warn('error:', error);
+        alert('Theme save loaded!');
       });
   }
 
@@ -230,46 +258,48 @@ function ThemeConfig() {
       );
       /* eslint-enable */
 
-      setTimeout(() => {
-        auzTemp.entitlement('api-services').then((res) => {
-          log.warn('entitlement', res);
-          // eslint-disable-next-line no-undef
-          const r = jwt_decode(res);
-          log.warn('r', r);
-          setRPT(r);
-          // setRPTToken(res);
-          if (r) {
-            //   .then((res) => {
-            //     log.warn('res', res);
-            //   })
-            //   .catch((err) => {
-            //     log.warn('err', err);
-            //   });
-            const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
-            axios({
-              method: 'GET',
-              url,
-              headers: {
-                // Authorization: `Bearer ${keycloak.token}`,
-                Authorization: `Bearer ${auzTemp.rpt}`,
-              },
-            })
-              .then((response) => {
-                log.warn('response:', response);
-                setTheme(JSON.stringify(response.data.theme, null, 2));
-                setThemeObject(response.data.theme);
-              })
-              .catch((err) => {
-                log.warn('err', err);
-              });
-          } else {
-            log.warn('r is null, do not request api-services');
-          }
-        });
-      }, 3000);
-
       keycloak.loadUserInfo().then(() => {
         log.warn('user', keycloak.userInfo);
+        setUser(keycloak.userInfo);
+
+        setTimeout(() => {
+          auzTemp.entitlement('api-services').then((res) => {
+            log.warn('entitlement', res);
+            // eslint-disable-next-line no-undef
+            const r = jwt_decode(res);
+            log.warn('r', r);
+            setRPT(r);
+            // setRPTToken(res);
+            if (r) {
+              //   .then((res) => {
+              //     log.warn('res', res);
+              //   })
+              //   .catch((err) => {
+              //     log.warn('err', err);
+              //   });
+              const { organization_id } = user;
+              const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/${organization_id}/theme`;
+              axios({
+                method: 'GET',
+                url,
+                headers: {
+                  // Authorization: `Bearer ${keycloak.token}`,
+                  Authorization: `Bearer ${auzTemp.rpt}`,
+                },
+              })
+                .then((response) => {
+                  log.warn('response:', response);
+                  setTheme(JSON.stringify(response.data.theme, null, 2));
+                  setThemeObject(response.data.theme);
+                })
+                .catch((err) => {
+                  log.warn('err', err);
+                });
+            } else {
+              log.warn('r is null, do not request api-services');
+            }
+          });
+        }, 3000);
       });
     } else {
       log.warn('no token');
@@ -318,6 +348,9 @@ function ThemeConfig() {
         </Button>
         <Button onClick={handleSave} fullWidth>
           save
+        </Button>
+        <Button onClick={handleLoad} fullWidth>
+          load
         </Button>
         <textarea
           onChange={handleChange}
