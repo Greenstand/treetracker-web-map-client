@@ -43,8 +43,6 @@ function InformationCard1({
       elevation={0}
       className={classes.container}
       display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
       sx={{
         bgcolor: (t) =>
           t.palette.mode === 'light'
@@ -60,6 +58,8 @@ function InformationCard1({
         height: 'fit-content',
         p: [4, 6],
         borderRadius: 4,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
       }}
     >
       <Box display="flex" alignItems="center">
