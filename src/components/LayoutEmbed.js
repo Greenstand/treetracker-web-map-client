@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 import SearchFilter from './SearchFilter';
 import logoIcon from '../images/logo.png';
-import max from '../images/max.svg';
+import minIcon from '../images/min.svg';
 import zoomIn from '../images/zoom-in.svg';
 import zoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
@@ -198,7 +198,7 @@ export default function Layout({ children, isFloatingDisabled }) {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img alt="fullscreen" src={max} />
+        <img alt="fullscreen" src={minIcon} />
       </Box>
 
       <Box
