@@ -10,6 +10,9 @@ function TreeSpeciesCard(props) {
   const { classes } = useStyles();
 
   const { name, count, subTitle } = props;
+  const formattedCount = new Intl.NumberFormat('en', {
+    notation: 'compact',
+  }).format(count);
 
   return (
     <Paper
@@ -72,7 +75,7 @@ function TreeSpeciesCard(props) {
               mt: [1, 2],
             }}
           >
-            {count}
+            {formattedCount}
           </Typography>
         </Grid>
       </Grid>
