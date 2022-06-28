@@ -20,34 +20,9 @@ import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import planterBackground from '../../images/background.png';
 import calendarIcon from '../../images/icons/calendar.svg';
-import locationIcon from '../../images/icons/location.svg';
 import treeIcon from '../../images/icons/tree.svg';
 import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
-import { makeStyles } from '../../models/makeStyles';
-
-// make styles for component with material-ui
-const useStyles = makeStyles()((theme) => ({
-  imageContainer: {
-    position: 'relative',
-    flexGrow: 1,
-    width: '100%',
-    marginTop: 20,
-    borderRadius: 16,
-    overflow: 'hidden',
-  },
-  treeSlider: {
-    marginTop: theme.spacing(10),
-  },
-  divider: {
-    marginTop: theme.spacing(20),
-    marginBottom: theme.spacing(20),
-    [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(14),
-      marginBottom: theme.spacing(14),
-    },
-  },
-}));
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
@@ -68,8 +43,6 @@ export default function Wallet(props) {
   const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
   const { setTitlesData } = useDrawerContext();
-
-  const { classes } = useStyles();
 
   useEffect(() => {
     setTitlesData({
@@ -106,6 +79,7 @@ export default function Wallet(props) {
           padding: (t) => [t.spacing(0, 4), 6],
           width: 1,
           boxSizing: 'border-box',
+          // overflow : 'scroll'
         },
       ]}
     >
@@ -165,9 +139,6 @@ export default function Wallet(props) {
                 iconURI={calendarIcon}
                 info={`wallet since ${moment().format('MMMM DD, YYYY')}`}
               />
-            </Box>
-            <Box sx={{ mt: 2 }}>
-              <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
             </Box>
             <Box
               sx={{
@@ -233,7 +204,7 @@ export default function Wallet(props) {
             variant="h4"
             sx={{
               fontSize: [16, 24],
-              mt: [0, 20],
+              mt: [5, 10],
             }}
           >
             Species of trees planted
@@ -259,20 +230,11 @@ export default function Wallet(props) {
           mt: [10, 20],
         }}
       />
-      <Typography
-        sx={{ mt: [2.5, 5] }}
-        variant="h4"
-        className={classes.textColor}
-      >
+      <Typography sx={{ mt: [2.5, 5] }} variant="h4">
         About the Wallet
       </Typography>
-      <Typography
-        sx={{ mt: [2.5, 5] }}
-        variant="body2"
-        className={classes.textColor}
-      >
+      <Typography sx={{ mt: [2.5, 5] }} variant="body2">
         {placeholderText}
-        {/* {planter.about} */}
       </Typography>
     </Box>
   );
