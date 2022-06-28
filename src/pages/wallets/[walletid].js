@@ -140,20 +140,6 @@ export default function Wallet(props) {
                 info={`wallet since ${moment().format('MMMM DD, YYYY')}`}
               />
             </Box>
-            <Box
-              sx={{
-                mt: 4,
-                gap: 2,
-                display: 'flex',
-              }}
-            >
-              <VerifiedBadge
-                color="primary"
-                verified
-                badgeName="Verified Planter"
-              />
-              <VerifiedBadge color="greyLight" badgeName="Seeking Orgs" />
-            </Box>
           </Box>
         </Portal>
       )}
