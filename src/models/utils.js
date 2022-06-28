@@ -99,20 +99,20 @@ const fixCountryNames = (countries) =>
     return country;
   });
 
-
 // For places that display a small size of pictures, we should use our image API to load it.
 // https://dev-k8s.treetracker.org/images/img/:domain/:params/:image
 // E.g.,
 // https://dev-k8s.treetracker.org/images/img/treetracker-dev-images.s3.eu-central-1.amazonaws.com/w=300,h=400,r=90/2020.05.19.15.41.53_37.421998333333335_-122.08400000000002_c36747a4-101f-43ff-9a91-45b3cb9bfd01_IMG_20200515_141055_7587706704717292658.jpg
 // Params are width (pixels), height (pixels) and rotation (degrees).
 const getThumbnailImageUrls = (imageUrl, width = 400, height = 400) => {
+  if (!imageUrl) return '';
   const imageUrlArr = imageUrl.split('/');
   const domain = imageUrlArr[imageUrlArr.length - 2];
   const imagePath = imageUrlArr[imageUrlArr.length - 1];
   const paramUrl = `w=${width},h=${height}`;
   const thumbNailImageUrl = `https://dev-k8s.treetracker.org/images/img/${domain}/${paramUrl}/${imagePath}`;
   return thumbNailImageUrl;
-  }
+};
 
 const debounce = (func, timeout = 50) => {
   let debouncedFunc = null;
