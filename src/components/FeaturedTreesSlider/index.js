@@ -78,53 +78,54 @@ function FeaturedTreesSlider({ trees, size = null, isMobile }) {
         onScroll={debounce(onScroll, 70)}
       >
         {trees.map((tree) => (
-          <Card
-            key={tree.id}
-            elevation={8}
-            sx={{
-              transition: 'all .5s',
-              scrollSnapAlign: 'center',
-              scrollBehavior: 'smooth',
-              // position: 'relative',
-              padding: (theme) => theme.spacing(5),
-              borderRadius: (theme) => theme.spacing(4),
-              // boxShadow: '0px 2px 16px rgba(34, 38, 41, 0.15)',
-              // width: [152, 208],
-              overflow: 'initial',
-            }}
-          >
-            <CardMedia
-              component="img"
-              image={getThumbnailImageUrls(tree.image_url, 208, 232)}
-              alt="tree"
+          <Link href={`/trees/${tree.id}`} key={`featured-tree-${tree.id}`}>
+            <Card
+              elevation={8}
               sx={{
-                borderRadius: '16px',
-                transition: 'transform .5s',
-                width: 208,
-                height: 232,
-                minWidth: [144, 208],
+                transition: 'all .5s',
+                scrollSnapAlign: 'center',
+                scrollBehavior: 'smooth',
+                // position: 'relative',
+                padding: (theme) => theme.spacing(5),
+                borderRadius: (theme) => theme.spacing(4),
+                // boxShadow: '0px 2px 16px rgba(34, 38, 41, 0.15)',
+                // width: [152, 208],
+                overflow: 'initial',
               }}
-            />
-            <CardContent>
-              <Typography
-                variant="h6"
+            >
+              <CardMedia
+                component="img"
+                image={getThumbnailImageUrls(tree.image_url, 208, 232)}
+                alt="tree"
                 sx={{
-                  fontSize: '20px',
-                  marginTop: 4,
+                  borderRadius: '16px',
+                  transition: 'transform .5s',
+                  width: 208,
+                  height: 232,
+                  minWidth: [144, 208],
                 }}
-              >
-                <Link href={`/trees/${tree.id}`}>Tree - {tree.id}</Link>
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  marginTop: 1.5,
-                }}
-              >
-                West-Smith-Nayer
-              </Typography>
-            </CardContent>
-          </Card>
+              />
+              <CardContent>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontSize: '20px',
+                    marginTop: 4,
+                  }}
+                >
+                  Tree - {tree.id}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    marginTop: 1.5,
+                  }}
+                >
+                  West-Smith-Nayer
+                </Typography>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </Grid>
       {!isMobile && rightScrollButton && (
