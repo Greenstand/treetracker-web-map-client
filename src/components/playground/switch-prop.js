@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 
 function SwitchProp(props) {
-  const { optionA, optionB, initial, onChange } = props;
+  const { prop, optionA, optionB, initial, onChange } = props;
   const isB = initial === optionB;
 
   const handleChange = () => {
@@ -21,7 +21,7 @@ function SwitchProp(props) {
         justifyContent: 'space-between',
       }}
     >
-      <ListItemText>Type</ListItemText>
+      <ListItemText>{prop}</ListItemText>
       <Stack
         direction="row"
         sx={{
