@@ -6,7 +6,7 @@ import log from 'loglevel';
 
 const keycloakCfg = {
   url: 'https://dev-k8s.treetracker.org/auth',
-  realm: 'greenstand',
+  realm: 'treetracker',
   clientId: 'webmap',
   // realm: 'quickstart',
   // clientId: 'webmap-client',

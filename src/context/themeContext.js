@@ -1,4 +1,6 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import axios from 'axios';
+import log from 'loglevel';
 import React from 'react';
 import useLocalStorage from 'hooks/useLocalStorage';
 
@@ -324,6 +326,12 @@ export function buildTheme(theMode) {
 
 export function CustomThemeProvider({ children }) {
   const [mode, setMode] = useLocalStorage('theme', 'light');
+  const [theme, setTheme] = React.useState(buildTheme(mode));
+  const [themeObject, setThemeObject] = useLocalStorage(
+    'themeObject',
+    undefined,
+  );
+  log.warn('themeObject: ', themeObject);
 
   const colorMode = React.useMemo(
     () => ({
@@ -334,9 +342,29 @@ export function CustomThemeProvider({ children }) {
     [],
   );
 
-  const theme = buildTheme(mode);
-
   console.warn('theme:', theme);
+
+  function loadThemeFromServer() {
+    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
+    axios.get(url).then((response) => {
+      log.warn('loaded theme from server:', response);
+      setTheme(createTheme(response.data.theme));
+    });
+  }
+
+  React.useEffect(() => {
+    if (themeObject) {
+      setTheme(createTheme(themeObject));
+    }
+    if (process.env.NEXT_PUBLIC_CONFIG_API) {
+      log.warn('to load theme from server');
+      loadThemeFromServer();
+    } else {
+      log.warn(
+        "There isn't setting's for config api, do not load theme from server",
+      );
+    }
+  }, []);
 
   const value = React.useMemo(
     () => ({

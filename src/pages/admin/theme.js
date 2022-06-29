@@ -1,29 +1,95 @@
-/*
-
-resources:
-- web-map-global-setting
-- web-map-featured-trees-management
-- organization-map-customization
-
-*/
-import { Box, Button, Typography, Divider } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
+import { buildTheme } from '../../context/themeContext';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
-export default function Index() {
+function ThemeConfig() {
   const { keycloak } = useKeycloak();
   const [RPT, setRPT] = React.useState(null);
   // const [RPTToken, setRPTToken] = React.useState(null);
   const [auz, setAuz] = React.useState(null);
+  const [theme, setTheme] = React.useState(
+    JSON.stringify(buildTheme('light'), null, 2),
+  );
+  const [key, setKey] = React.useState(1);
   const [user, setUser] = React.useState(null);
-  log.warn('keycloak', keycloak);
+  // log.warn('theme to config:', theme);
+
+  const [themeObject, setThemeObject] = useLocalStorage(
+    'themeObject',
+    undefined,
+  );
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setTheme(value);
+  }
+
+  function handlePreview() {
+    const themeObject2 = JSON.parse(theme);
+    setThemeObject(themeObject2);
+    setKey(key + 1);
+  }
+
+  function handleSave() {
+    // post theme to server
+    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/${user.organization_id}/theme`;
+
+    axios({
+      method: 'POST',
+      url,
+      data: {
+        theme,
+      },
+      headers: {
+        // Authorization: `Bearer ${keycloak.token}`,
+        Authorization: `Bearer ${auz.rpt}`,
+      },
+    })
+      .then((response) => {
+        log.warn('response:', response);
+        alert('Theme saved!');
+      })
+      .catch((error) => {
+        log.warn('error:', error);
+        alert('Theme save failed!');
+      });
+  }
+
+  function handleLoad() {
+    // post theme to server
+    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/${user.organization_id}/theme`;
+
+    axios({
+      method: 'get',
+      url,
+      headers: {
+        // Authorization: `Bearer ${keycloak.token}`,
+        Authorization: `Bearer ${auz.rpt}`,
+      },
+    })
+      .then((response) => {
+        // check status
+        if (response.status === 200) {
+          log.warn('response:', response);
+          alert('Theme loaded!');
+        } else {
+          alert(`Theme load failed!${response.status}`);
+        }
+      })
+      .catch((error) => {
+        log.warn('error:', error);
+        alert('Theme save loaded!');
+      });
+  }
 
   function load() {
-    keycloak.onAuthSuccess((...args) => {
-      log.warn('onAuthSuccess', args);
-    });
+    // keycloak.onAuthSuccess((...args) => {
+    //   log.warn('onAuthSuccess', args);
+    // });
     if (keycloak.token) {
       // eslint-disable-next-line no-undef
       const auzTemp = new KeycloakAuthorization(keycloak);
@@ -192,21 +258,48 @@ export default function Index() {
       );
       /* eslint-enable */
 
-      setTimeout(() => {
-        auzTemp.entitlement('api-services').then((res) => {
-          log.warn('entitlement', res);
-          // eslint-disable-next-line no-undef
-          const r = jwt_decode(res);
-          log.warn('r', r);
-          setRPT(r);
-          // setRPTToken(res);
-        });
-      }, 3000);
-
       keycloak.loadUserInfo().then(() => {
         log.warn('user', keycloak.userInfo);
         setUser(keycloak.userInfo);
-        log.warn('user', keycloak.userInfo);
+
+        setTimeout(() => {
+          auzTemp.entitlement('api-services').then((res) => {
+            log.warn('entitlement', res);
+            // eslint-disable-next-line no-undef
+            const r = jwt_decode(res);
+            log.warn('r', r);
+            setRPT(r);
+            // setRPTToken(res);
+            if (r) {
+              //   .then((res) => {
+              //     log.warn('res', res);
+              //   })
+              //   .catch((err) => {
+              //     log.warn('err', err);
+              //   });
+              const { organization_id } = user;
+              const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/${organization_id}/theme`;
+              axios({
+                method: 'GET',
+                url,
+                headers: {
+                  // Authorization: `Bearer ${keycloak.token}`,
+                  Authorization: `Bearer ${auzTemp.rpt}`,
+                },
+              })
+                .then((response) => {
+                  log.warn('response:', response);
+                  setTheme(JSON.stringify(response.data.theme, null, 2));
+                  setThemeObject(response.data.theme);
+                })
+                .catch((err) => {
+                  log.warn('err', err);
+                });
+            } else {
+              log.warn('r is null, do not request api-services');
+            }
+          });
+        }, 3000);
       });
     } else {
       log.warn('no token');
@@ -214,123 +307,69 @@ export default function Index() {
   }
 
   React.useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://dev-k8s.treetracker.org/auth/js/keycloak-authz.js';
-    script.id = 'googleMaps';
-    document.body.appendChild(script);
-    setTimeout(() => {
-      load();
-      // eslint-disable-next-line no-undef
-      log.warn('loaded file:', KeycloakAuthorization);
-    }, 10000);
+    if (process.env.NEXT_PUBLIC_CONFIG_API) {
+      log.warn('to load theme from server');
+      const script = document.createElement('script');
+      script.src = 'https://dev-k8s.treetracker.org/auth/js/keycloak-authz.js';
+      script.id = 'googleMaps';
+      document.body.appendChild(script);
+      setTimeout(() => {
+        load();
+        // eslint-disable-next-line no-undef
+        log.warn('loaded file:', KeycloakAuthorization);
+      }, 10000);
+    } else {
+      log.warn(
+        "There isn't setting's for config api, do not load theme from server",
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  log.warn('rpt', RPT);
   return (
-    <>
+    <Box
+      sx={{
+        width: 1,
+        display: 'flex',
+      }}
+    >
       <Box
         sx={{
-          display: 'flex',
-          padding: 1,
-          justifyContent: 'space-between',
+          width: 0.8,
+          height: '100vh',
         }}
       >
-        <Box>
-          <Typography variant="h5">Greenstand</Typography>
-        </Box>
-        <Box>
-          {RPT?.authorization.permissions
-            .map((r) => r.rsname)
-            .includes('web-map-theme') && (
-            <>
-              <Button
-                onClick={() => {
-                  window.location.href = '/admin/theme';
-                  // axios({
-                  //   method: 'GET',
-                  //   url: 'http://localhost:3006/settings',
-                  //   headers: {
-                  //     // Authorization: `Bearer ${keycloak.token}`,
-                  //     Authorization: `Bearer ${auz.rpt}`,
-                  //   },
-                  // })
-                  //   .then((res) => {
-                  //     log.warn('res', res);
-                  //   })
-                  //   .catch((err) => {
-                  //     log.warn('err', err);
-                  //   });
-                }}
-                color="primary"
-              >
-                theme
-              </Button>
-              <Button
-                onClick={() => {
-                  axios({
-                    method: 'GET',
-                    url: `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/${user.organization_id}/theme`,
-                    headers: {
-                      // Authorization: `Bearer ${keycloak.token}`,
-                      Authorization: `Bearer ${auz.rpt}`,
-                    },
-                  })
-                    .then((res) => {
-                      log.warn('res', res);
-                    })
-                    .catch((err) => {
-                      log.warn('err', err);
-                    });
-                }}
-                color="primary"
-              >
-                view 178 org theme
-              </Button>
-            </>
-          )}
-          {keycloak?.tokenParsed?.realm_access?.roles.includes(
-            'web-map-manager',
-          ) && <Button color="primary">Organization</Button>}
-        </Box>
-        <Box>
-          {keycloak?.tokenParsed && (
-            <Box>
-              Hi, {keycloak.tokenParsed.given_name}
-              {keycloak.tokenParsed.family_name}!
-              <Button
-                onClick={() => {
-                  if (keycloak) {
-                    window.location.href = keycloak.createLogoutUrl();
-                  }
-                }}
-              >
-                Logout
-              </Button>
-            </Box>
-          )}
-          {!keycloak?.tokenParsed && (
-            <Box>
-              <Button
-                onClick={() => {
-                  if (keycloak) {
-                    console.warn(
-                      'has keycloak, go to keycloak login:',
-                      keycloak.createLoginUrl(),
-                    );
-                    window.location.href = keycloak.createLoginUrl();
-                  } else {
-                    throw new Error('no keycloak');
-                  }
-                }}
-              >
-                Login
-              </Button>
-            </Box>
-          )}
-        </Box>
+        <iframe
+          title="sandbox"
+          key={key}
+          src="http://localhost:3000/"
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        />
       </Box>
-      <Divider />
-    </>
+      <Box>
+        <Button onClick={handlePreview} fullWidth>
+          preview
+        </Button>
+        <Button onClick={handleSave} fullWidth>
+          save
+        </Button>
+        <Button onClick={handleLoad} fullWidth>
+          load
+        </Button>
+        <textarea
+          onChange={handleChange}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+          value={theme}
+        />
+      </Box>
+    </Box>
   );
 }
+
+export default ThemeConfig;
