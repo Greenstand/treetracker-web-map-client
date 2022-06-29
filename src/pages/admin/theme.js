@@ -11,9 +11,7 @@ function ThemeConfig() {
   const [RPT, setRPT] = React.useState(null);
   // const [RPTToken, setRPTToken] = React.useState(null);
   const [auz, setAuz] = React.useState(null);
-  const [theme, setTheme] = React.useState(
-    JSON.stringify(buildTheme('light'), null, 2),
-  );
+  const [theme, setTheme] = React.useState(buildTheme('light'));
   const [key, setKey] = React.useState(1);
   const [user, setUser] = React.useState(null);
   // log.warn('theme to config:', theme);
@@ -24,13 +22,13 @@ function ThemeConfig() {
   );
 
   function handleChange(event) {
-    const { name, value } = event.target;
-    setTheme(value);
+    const { _, value } = event.target;
+    const parsedTheme = JSON.parse(value);
+    setTheme(parsedTheme);
   }
 
   function handlePreview() {
-    const themeObject2 = JSON.parse(theme);
-    setThemeObject(themeObject2);
+    setThemeObject({ ...theme });
     setKey(key + 1);
   }
 
@@ -365,7 +363,7 @@ function ThemeConfig() {
             width: '100%',
             height: '100%',
           }}
-          value={theme}
+          value={JSON.stringify(theme, null, 2)}
         />
       </Box>
     </Box>
