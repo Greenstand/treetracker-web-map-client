@@ -7,42 +7,42 @@ describe('Featured Trees Slider', () => {
     const trees = [
       {
         id: '115059',
-        photo_url: 'https://picsum.photos/id/10/208',
+        image_url: 'https://picsum.photos/id/10/208',
         species: 'Palm Tree',
       },
       {
         id: '115059',
-        photo_url: 'https://picsum.photos/id/1037/208',
+        image_url: 'https://picsum.photos/id/1037/208',
         species: 'Palm Tree',
       },
       {
         id: '115059',
-        photo_url: 'https://picsum.photos/id/106/208',
+        image_url: 'https://picsum.photos/id/106/208',
         species: 'Palm Tree',
       },
       {
         id: '115059',
-        photo_url: 'https://picsum.photos/id/107/208',
+        image_url: 'https://picsum.photos/id/107/208',
         species: 'Palm Tree',
       },
       {
         id: '115059',
-        photo_url: 'https://picsum.photos/id/108/208',
+        image_url: 'https://picsum.photos/id/108/208',
         species: 'Palm Tree',
       },
       {
         id: '115059',
-        photo_url: 'https://picsum.photos/id/109/208',
+        image_url: 'https://picsum.photos/id/109/208',
         species: 'Palm Tree',
       },
       {
         id: '115059',
-        photo_url: 'https://picsum.photos/id/111/208',
+        image_url: 'https://picsum.photos/id/111/208',
         species: 'Palm Tree',
       },
       {
         id: '115059',
-        photo_url: 'https://picsum.photos/id/112/208',
+        image_url: 'https://picsum.photos/id/112/208',
         species: 'Palm Tree',
       },
     ];
