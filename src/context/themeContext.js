@@ -356,7 +356,14 @@ export function CustomThemeProvider({ children }) {
     if (themeObject) {
       setTheme(createTheme(themeObject));
     }
-    loadThemeFromServer();
+    if (process.env.NEXT_PUBLIC_CONFIG_API) {
+      log.warn('to load theme from server');
+      loadThemeFromServer();
+    } else {
+      log.warn(
+        "There isn't setting's for config api, do not load theme from server",
+      );
+    }
   }, []);
 
   const value = React.useMemo(

@@ -77,7 +77,7 @@ function ThemeConfig() {
           log.warn('response:', response);
           alert('Theme loaded!');
         } else {
-          alert(`Theme load failed!${  response.status}`);
+          alert(`Theme load failed!${response.status}`);
         }
       })
       .catch((error) => {
@@ -307,15 +307,22 @@ function ThemeConfig() {
   }
 
   React.useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://dev-k8s.treetracker.org/auth/js/keycloak-authz.js';
-    script.id = 'googleMaps';
-    document.body.appendChild(script);
-    setTimeout(() => {
-      load();
-      // eslint-disable-next-line no-undef
-      log.warn('loaded file:', KeycloakAuthorization);
-    }, 10000);
+    if (process.env.NEXT_PUBLIC_CONFIG_API) {
+      log.warn('to load theme from server');
+      const script = document.createElement('script');
+      script.src = 'https://dev-k8s.treetracker.org/auth/js/keycloak-authz.js';
+      script.id = 'googleMaps';
+      document.body.appendChild(script);
+      setTimeout(() => {
+        load();
+        // eslint-disable-next-line no-undef
+        log.warn('loaded file:', KeycloakAuthorization);
+      }, 10000);
+    } else {
+      log.warn(
+        "There isn't setting's for config api, do not load theme from server",
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -332,7 +339,7 @@ function ThemeConfig() {
           height: '100vh',
         }}
       >
-        {/* <iframe
+        <iframe
           title="sandbox"
           key={key}
           src="http://localhost:3000/"
@@ -340,7 +347,7 @@ function ThemeConfig() {
             width: '100%',
             height: '100%',
           }}
-        /> */}
+        />
       </Box>
       <Box>
         <Button onClick={handlePreview} fullWidth>
