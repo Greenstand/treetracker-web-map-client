@@ -8,6 +8,9 @@ const apiPaths = {
   planters: (id = '') => urlJoin(host, `/planters/${id}`),
   species: urlJoin(host, '/species'),
   organization: (id = '') => urlJoin(host, `/organizations/${id}`),
+  wallets: (id = '') => urlJoin(host, `/wallets/${id}`),
+  filterSpeciesByWalletId: (id = '') =>
+    urlJoin(host, `/species?wallet_id=${id}`),
 };
 
 export default apiPaths;
