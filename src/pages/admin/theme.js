@@ -18,6 +18,7 @@ import {
 } from '../../context/playgroundContext';
 import { buildTheme } from '../../context/themeContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { customizeOptions } from '../../models/themePlaygroundOptions';
 
 function ThemeConfig() {
   const { keycloak } = useKeycloak();
@@ -419,16 +420,21 @@ function ThemeConfig() {
               setPropByPath('palette.mode', value);
             }}
           />
-          <SelectColorProp prop="primary" path="palette.primary" />
-          <SelectColorProp prop="secondary" path="palette.secondary" />
-          <SelectColorProp prop="background" path="palette.background" />
+          {customizeOptions.palette.map((prop) => (
+            <SelectColorProp
+              key={`select-color-${prop}`}
+              prop={prop}
+              path={`palette.${prop}`}
+            />
+          ))}
         </List>
         <textarea
           onChange={handleChange}
           style={{
             width: '100%',
             height: '100%',
-            minHeight: '300px',
+            maxHeight: '350px',
+            minHeight: '200px',
             flex: '1',
           }}
           value={JSON.stringify(theme, null, 2)}
