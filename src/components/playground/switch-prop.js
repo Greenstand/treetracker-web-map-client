@@ -21,7 +21,13 @@ function SwitchProp(props) {
         justifyContent: 'space-between',
       }}
     >
-      <ListItemText>{prop}</ListItemText>
+      <ListItemText
+        sx={{
+          textTransform: 'capitalize',
+        }}
+      >
+        {prop}
+      </ListItemText>
       <Stack
         direction="row"
         sx={{
@@ -31,6 +37,9 @@ function SwitchProp(props) {
         <Typography
           variant="body2"
           color={isB ? 'textSecondary' : 'textPrimary'}
+          sx={{
+            textTransform: 'capitalize',
+          }}
         >
           {optionA}
         </Typography>
@@ -38,6 +47,9 @@ function SwitchProp(props) {
         <Typography
           variant="body2"
           color={!isB ? 'textSecondary' : 'textPrimary'}
+          sx={{
+            textTransform: 'capitalize',
+          }}
         >
           {optionB}
         </Typography>
