@@ -1,20 +1,34 @@
-import { Button, Box } from '@mui/material';
+import AutoRenewIcon from '@mui/icons-material/Autorenew';
+import PreviewIcon from '@mui/icons-material/Preview';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { Button, List, Stack, Grid } from '@mui/material';
 import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
-import React from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import {
+  SwitchProp,
+  SelectColorProp,
+  SquareIconButton,
+} from '../../components/playground';
+import {
+  PlaygroundProvider,
+  usePlaygroundTheme,
+  usePropUtils,
+} from '../../context/playgroundContext';
 import { buildTheme } from '../../context/themeContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 function ThemeConfig() {
   const { keycloak } = useKeycloak();
-  const [RPT, setRPT] = React.useState(null);
+  const [RPT, setRPT] = useState(null);
   // const [RPTToken, setRPTToken] = React.useState(null);
-  const [auz, setAuz] = React.useState(null);
-  const [theme, setTheme] = React.useState(buildTheme('light'));
-  const [key, setKey] = React.useState(1);
-  const [user, setUser] = React.useState(null);
-  // log.warn('theme to config:', theme);
+  const [auz, setAuz] = useState(null);
+  const [theme, setTheme] = usePlaygroundTheme();
+  const [key, setKey] = useState(1);
+  const [user, setUser] = useState(null);
+  const [autoReload, setAutoReload] = useState(false);
+  const { setPropByPath } = usePropUtils();
 
   const [themeObject, setThemeObject] = useLocalStorage(
     'themeObject',
@@ -22,15 +36,15 @@ function ThemeConfig() {
   );
 
   function handleChange(event) {
-    const { _, value } = event.target;
-    const parsedTheme = JSON.parse(value);
+    const userValue = event.target.value;
+    const parsedTheme = JSON.parse(userValue);
     setTheme(parsedTheme);
   }
 
-  function handlePreview() {
+  const handlePreview = useCallback(() => {
     setThemeObject({ ...theme });
     setKey(key + 1);
-  }
+  }, [theme]);
 
   function handleSave() {
     // post theme to server
@@ -82,6 +96,11 @@ function ThemeConfig() {
         log.warn('error:', error);
         alert('Theme save loaded!');
       });
+  }
+
+  function resetAll() {
+    log.warn('reseting theme');
+    setTheme(buildTheme('light'));
   }
 
   function load() {
@@ -304,7 +323,7 @@ function ThemeConfig() {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (process.env.NEXT_PUBLIC_CONFIG_API) {
       log.warn('to load theme from server');
       const script = document.createElement('script');
@@ -324,50 +343,105 @@ function ThemeConfig() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    // only trigger preview if auto reload is enabled
+    if (!autoReload) return;
+    handlePreview();
+  }, [theme]);
+
   return (
-    <Box
+    <Grid
+      container
       sx={{
-        width: 1,
-        display: 'flex',
+        height: '100vh',
       }}
     >
-      <Box
-        sx={{
-          width: 0.8,
-          height: '100vh',
-        }}
-      >
+      <Grid item xs={9}>
         <iframe
           title="sandbox"
           key={key}
-          src="http://localhost:3000/"
+          src="http://localhost:3000/top"
           style={{
             width: '100%',
             height: '100%',
           }}
         />
-      </Box>
-      <Box>
-        <Button onClick={handlePreview} fullWidth>
-          preview
-        </Button>
-        <Button onClick={handleSave} fullWidth>
-          save
-        </Button>
-        <Button onClick={handleLoad} fullWidth>
-          load
-        </Button>
+      </Grid>
+      <Grid
+        item
+        xs={3}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+        }}
+      >
+        <Stack
+          direction="row"
+          sx={{
+            justifyContent: 'space-between',
+          }}
+        >
+          <SquareIconButton
+            icon={<PreviewIcon />}
+            tooltip="Reload Preview"
+            onClick={handlePreview}
+          />
+          <Button onClick={handleSave}>save</Button>
+          <Button onClick={handleLoad}>load</Button>
+          <SquareIconButton
+            icon={<RestartAltIcon />}
+            color="error"
+            tooltip="Reset to default"
+            onClick={resetAll}
+          />
+          <SquareIconButton
+            icon={<AutoRenewIcon />}
+            color={autoReload ? 'success' : 'warning'}
+            tooltip={`Auto Reload: ${autoReload ? 'on' : 'off'}`}
+            onClick={() => setAutoReload((prev) => !prev)}
+          />
+        </Stack>
+        <List
+          sx={{
+            p: 0,
+            overflowY: 'scroll',
+            flex: '1',
+          }}
+        >
+          <SwitchProp
+            prop="Theme mode"
+            optionA="light"
+            optionB="dark"
+            initial={theme?.palette?.mode}
+            onChange={(value) => {
+              setPropByPath('palette.themeMode', value);
+              setPropByPath('palette.mode', value);
+            }}
+          />
+          <SelectColorProp prop="primary" path="palette.primary" />
+          <SelectColorProp prop="secondary" path="palette.secondary" />
+          <SelectColorProp prop="background" path="palette.background" />
+        </List>
         <textarea
           onChange={handleChange}
           style={{
             width: '100%',
             height: '100%',
+            minHeight: '300px',
+            flex: '1',
           }}
           value={JSON.stringify(theme, null, 2)}
         />
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 }
 
-export default ThemeConfig;
+export default function ThemePlayground() {
+  return (
+    <PlaygroundProvider>
+      <ThemeConfig />
+    </PlaygroundProvider>
+  );
+}
