@@ -25,7 +25,6 @@ function ColorInput(props) {
 
   return (
     <Box
-      component="form"
       sx={{
         flex: '1',
       }}

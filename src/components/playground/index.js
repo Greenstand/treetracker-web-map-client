@@ -1,3 +1,4 @@
+import CategoryTabPanel, { getTabProps } from './category-tab-panel';
 import ColorInput from './color-input';
 import ColorThumbnail from './color-thumbnail';
 import SelectColorProp from './select-color-prop';
@@ -16,4 +17,6 @@ export {
   SelectTypographyProp,
   SquareIconButton,
   SwitchProp,
+  CategoryTabPanel,
+  getTabProps,
 };

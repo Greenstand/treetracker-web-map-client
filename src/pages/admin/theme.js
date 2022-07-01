@@ -1,7 +1,9 @@
 import AutoRenewIcon from '@mui/icons-material/Autorenew';
+import PaletteIcon from '@mui/icons-material/Palette';
 import PreviewIcon from '@mui/icons-material/Preview';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { Button, List, Stack, Grid } from '@mui/material';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
+import { Button, Box, Stack, Grid, Tabs, Tab } from '@mui/material';
 import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
@@ -9,7 +11,10 @@ import { useState, useEffect, useCallback } from 'react';
 import {
   SwitchProp,
   SelectColorProp,
+  SelectTypographyProp,
   SquareIconButton,
+  CategoryTabPanel,
+  getTabProps,
 } from '../../components/playground';
 import {
   PlaygroundProvider,
@@ -30,6 +35,11 @@ function ThemeConfig() {
   const [user, setUser] = useState(null);
   const [autoReload, setAutoReload] = useState(false);
   const { setPropByPath } = usePropUtils();
+
+  const [tabIndex, setTabIndex] = useState(0);
+  const handleTabChange = (_, newIndex) => {
+    setTabIndex(newIndex);
+  };
 
   const [themeObject, setThemeObject] = useLocalStorage(
     'themeObject',
@@ -403,31 +413,54 @@ function ThemeConfig() {
             onClick={() => setAutoReload((prev) => !prev)}
           />
         </Stack>
-        <List
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          aria-label="customization category tabs"
+        >
+          <Tab icon={<PaletteIcon />} label="Palette" {...getTabProps(0)} />
+          <Tab
+            icon={<TextFieldsIcon />}
+            label="Typography"
+            {...getTabProps(1)}
+          />
+        </Tabs>
+        <Box
           sx={{
             p: 0,
-            overflowY: 'scroll',
             flex: '1',
+            overflowY: 'scroll',
           }}
         >
-          <SwitchProp
-            prop="Theme mode"
-            optionA="light"
-            optionB="dark"
-            initial={theme?.palette?.mode}
-            onChange={(value) => {
-              setPropByPath('palette.themeMode', value);
-              setPropByPath('palette.mode', value);
-            }}
-          />
-          {customizeOptions.palette.map((prop) => (
-            <SelectColorProp
-              key={`select-color-${prop}`}
-              prop={prop}
-              path={`palette.${prop}`}
+          <CategoryTabPanel value={tabIndex} index={0}>
+            <SwitchProp
+              prop="Theme mode"
+              optionA="light"
+              optionB="dark"
+              initial={theme?.palette?.mode}
+              onChange={(value) => {
+                setPropByPath('palette.themeMode', value);
+                setPropByPath('palette.mode', value);
+              }}
             />
-          ))}
-        </List>
+            {customizeOptions.palette.map((prop) => (
+              <SelectColorProp
+                key={`select-color-${prop}`}
+                prop={prop}
+                path={`palette.${prop}`}
+              />
+            ))}
+          </CategoryTabPanel>
+          <CategoryTabPanel value={tabIndex} index={1}>
+            {customizeOptions.typography.map((prop) => (
+              <SelectTypographyProp
+                key={`select-typography-${prop}`}
+                prop={prop}
+                path={`typography.${prop}`}
+              />
+            ))}
+          </CategoryTabPanel>
+        </Box>
         <textarea
           onChange={handleChange}
           style={{
