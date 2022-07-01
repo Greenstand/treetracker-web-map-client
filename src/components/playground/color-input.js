@@ -6,6 +6,7 @@ function ColorInput(props) {
   const { label, initial, onChange } = props;
   const [value, setValue] = useState(initial);
   const [isValid, setValid] = useState(true);
+  const isGradient = /gradient/i.test(label);
 
   useEffect(() => {
     setValue(initial);
@@ -16,7 +17,7 @@ function ColorInput(props) {
     setValue(userValue);
     setValid(false);
 
-    if (!propRules.color.test(userValue)) return;
+    if (!isGradient) if (!propRules.color.test(userValue)) return;
     setValid(true);
     onChange({ propName: label, newValue: userValue });
   };
@@ -30,6 +31,7 @@ function ColorInput(props) {
       <TextField
         variant="standard"
         error={!isValid}
+        multiline={isGradient}
         label={label}
         value={value}
         onChange={handleChange}
