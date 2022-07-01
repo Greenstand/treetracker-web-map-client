@@ -64,20 +64,23 @@ function SelectColorProp(props) {
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {Object.entries(childProps).map(([name, value]) => (
-              <ListItem
-                key={`typography-input-${name}`}
-                sx={{
-                  px: 0,
-                }}
-              >
-                <TypographyInput
-                  label={name}
-                  initial={value}
-                  onChange={handleChange}
-                />
-              </ListItem>
-            ))}
+            {Object.entries(childProps).map(
+              ([name, value]) =>
+                typeof value === 'string' && (
+                  <ListItem
+                    key={`typography-input-${name}`}
+                    sx={{
+                      px: 0,
+                    }}
+                  >
+                    <TypographyInput
+                      label={name}
+                      initial={value}
+                      onChange={handleChange}
+                    />
+                  </ListItem>
+                ),
+            )}
           </List>
         </AccordionDetails>
       </Accordion>

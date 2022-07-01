@@ -1,15 +1,11 @@
 import { Box, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
+import { propRules } from '../../models/themePlaygroundOptions';
 
 function ColorInput(props) {
   const { label, initial, onChange } = props;
   const [value, setValue] = useState(initial);
-
-  /**
-   * valid: hex, rgb, rgba
-   */
-  const validColor =
-    /^#([a-f0-9]{6}|[a-f0-9]{3})$|^rgba?\(((25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*,\s*?){2}(25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*,?\s*([01]\.?\d*?)?\)$/gi;
+  const [isValid, setValid] = useState(true);
 
   useEffect(() => {
     setValue(initial);
@@ -18,8 +14,10 @@ function ColorInput(props) {
   const handleChange = (e) => {
     const userValue = e.target.value;
     setValue(userValue);
+    setValid(false);
 
-    if (!validColor.test(userValue)) return;
+    if (!propRules.color.test(userValue)) return;
+    setValid(true);
     onChange({ propName: label, newValue: userValue });
   };
 
@@ -31,6 +29,7 @@ function ColorInput(props) {
     >
       <TextField
         variant="standard"
+        error={!isValid}
         label={label}
         value={value}
         onChange={handleChange}
@@ -38,6 +37,7 @@ function ColorInput(props) {
           textTransform: 'capitalize',
           width: 1,
         }}
+        helperText={!isValid && 'Invalid syntax'}
       />
     </Box>
   );

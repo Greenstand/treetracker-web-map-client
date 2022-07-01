@@ -1,9 +1,11 @@
 import { Box, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
+import { propRules } from '../../models/themePlaygroundOptions';
 
 function TypographyInput(props) {
   const { label, initial, onChange } = props;
   const [value, setValue] = useState(initial);
+  const [isValid, setValid] = useState(true);
 
   useEffect(() => {
     setValue(initial);
@@ -12,7 +14,10 @@ function TypographyInput(props) {
   const handleChange = (e) => {
     const userValue = e.target.value;
     setValue(userValue);
+    setValid(false);
 
+    if (!propRules[label].test(userValue)) return;
+    setValid(true);
     onChange({ propName: label, newValue: userValue });
   };
 
@@ -24,6 +29,7 @@ function TypographyInput(props) {
     >
       <TextField
         variant="standard"
+        error={!isValid}
         label={label}
         value={value}
         onChange={handleChange}
@@ -31,6 +37,7 @@ function TypographyInput(props) {
           textTransform: 'capitalize',
           width: 1,
         }}
+        helperText={!isValid && 'Invalid syntax'}
       />
     </Box>
   );
