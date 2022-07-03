@@ -112,6 +112,10 @@ function FeaturedPlantersSlider({
                 padding: (theme) => theme.spacing(5),
                 borderRadius: (theme) => theme.spacing(4),
                 overflow: 'initial',
+                boxShadow: ({ palette }) =>
+                  palette.mode === 'light'
+                    ? '0px 2px 16px rgba(34, 38, 41, 0.15)'
+                    : '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%)',
                 bgcolor: (t) =>
                   t.palette.mode === 'light'
                     ? d3
