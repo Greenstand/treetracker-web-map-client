@@ -5,21 +5,11 @@ import useLocalStorage from '../hooks/useLocalStorage';
 export const PlaygroundContext = createContext({});
 
 export function PlaygroundProvider({ children }) {
-  const [mode, setMode] = useLocalStorage('theme', 'light');
-  const [theme, setTheme] = useState(buildTheme(mode));
-  const [themeObject, setThemeObject] = useLocalStorage(
-    'themeObject',
-    undefined,
-  );
-
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    [],
-  );
+  const [themeType, setThemeType] = useLocalStorage('theme', 'light');
+  const [theme, setTheme] = useState({
+    dark: buildTheme('dark'),
+    light: buildTheme('light'),
+  });
 
   /**
    * set mui theme prop by path
@@ -34,7 +24,7 @@ export function PlaygroundProvider({ children }) {
    */
   const setPropByPath = (propPath, value) => {
     if (!value || !propPath) return null;
-    const temp = { ...theme };
+    const temp = { ...theme[themeType] };
     propPath.split('.').reduce((acc, curr, i, src) => {
       if (curr === src[src.length - 1]) {
         acc[src[src.length - 1]] = value;
@@ -42,7 +32,10 @@ export function PlaygroundProvider({ children }) {
       }
       return acc[curr];
     }, temp);
-    setTheme(temp);
+    setTheme({
+      ...theme,
+      [themeType]: temp,
+    });
     return temp;
   };
 
@@ -61,18 +54,21 @@ export function PlaygroundProvider({ children }) {
    */
   const getPropByPath = (propPath) => {
     if (!propPath) return null;
-    return propPath.split('.').reduce((acc, curr, i, src) => acc[curr], theme);
+    return propPath
+      .split('.')
+      .reduce((acc, curr, i, src) => acc[curr], theme[themeType]);
   };
 
   const contextValue = React.useMemo(
     () => ({
-      colorMode,
       theme,
       setTheme,
+      themeType,
+      setThemeType,
       getPropByPath,
       setPropByPath,
     }),
-    [colorMode, theme, setTheme, getPropByPath, setPropByPath],
+    [theme, setTheme, themeType, setThemeType, getPropByPath, setPropByPath],
   );
 
   return (
@@ -85,6 +81,11 @@ export function PlaygroundProvider({ children }) {
 export const usePlaygroundTheme = () => {
   const { theme, setTheme } = useContext(PlaygroundContext);
   return [theme, setTheme];
+};
+
+export const usePlaygroundThemeType = () => {
+  const { themeType, setThemeType } = useContext(PlaygroundContext);
+  return [themeType, setThemeType];
 };
 
 export const usePropUtils = () => {

@@ -19,6 +19,7 @@ import {
 import {
   PlaygroundProvider,
   usePlaygroundTheme,
+  usePlaygroundThemeType,
   usePropUtils,
 } from '../../context/playgroundContext';
 import { buildTheme } from '../../context/themeContext';
@@ -30,9 +31,12 @@ function ThemeConfig() {
   const [RPT, setRPT] = useState(null);
   // const [RPTToken, setRPTToken] = React.useState(null);
   const [auz, setAuz] = useState(null);
-  const [theme, setTheme] = usePlaygroundTheme();
   const [key, setKey] = useState(1);
   const [user, setUser] = useState(null);
+
+  // playground theme for customization
+  const [theme, setTheme] = usePlaygroundTheme();
+  const [themeType, setThemeType] = usePlaygroundThemeType();
   const [autoReload, setAutoReload] = useState(false);
   const { setPropByPath } = usePropUtils();
 
@@ -41,15 +45,16 @@ function ThemeConfig() {
     setTabIndex(newIndex);
   };
 
-  const [themeObject, setThemeObject] = useLocalStorage(
-    'themeObject',
-    undefined,
-  );
+  const [_, setThemeObject] = useLocalStorage('themeObject', undefined);
 
   function handleChange(event) {
     const userValue = event.target.value;
     const parsedTheme = JSON.parse(userValue);
-    setTheme(parsedTheme);
+    const newTheme = {
+      ...theme,
+      [themeType]: parsedTheme,
+    };
+    setTheme(newTheme);
   }
 
   const handlePreview = useCallback(() => {
@@ -111,7 +116,11 @@ function ThemeConfig() {
 
   function resetAll() {
     log.warn('reseting theme');
-    setTheme(buildTheme('light'));
+    const newTheme = {
+      ...theme,
+      [themeType]: buildTheme(themeType),
+    };
+    setTheme(newTheme);
   }
 
   function load() {
@@ -317,7 +326,7 @@ function ThemeConfig() {
               })
                 .then((response) => {
                   log.warn('response:', response);
-                  setTheme(JSON.stringify(response.data.theme, null, 2));
+                  setTheme(response.data.theme, null, 2);
                   setThemeObject(response.data.theme);
                 })
                 .catch((err) => {
@@ -355,6 +364,7 @@ function ThemeConfig() {
   }, []);
 
   useEffect(() => {
+    log.warn('playground config theme changed', theme);
     // only trigger preview if auto reload is enabled
     if (!autoReload) return;
     handlePreview();
@@ -437,11 +447,8 @@ function ThemeConfig() {
               prop="Theme mode"
               optionA="light"
               optionB="dark"
-              initial={theme?.palette?.mode}
-              onChange={(value) => {
-                setPropByPath('palette.themeMode', value);
-                setPropByPath('palette.mode', value);
-              }}
+              initial={themeType}
+              onChange={(value) => setThemeType(value)}
             />
             {customizeOptions.palette.map((prop) => (
               <SelectColorProp
@@ -470,7 +477,7 @@ function ThemeConfig() {
             minHeight: '200px',
             flex: '1',
           }}
-          value={JSON.stringify(theme, null, 2)}
+          value={JSON.stringify(theme[themeType], null, 2)}
         />
       </Grid>
     </Grid>
