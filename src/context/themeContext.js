@@ -355,7 +355,11 @@ export function CustomThemeProvider({ children }) {
 
   React.useEffect(() => {
     if (themeObject) {
-      setTheme(createTheme(themeObject[mode]));
+      setTheme(
+        createTheme(themeObject[mode], {
+          spacing: theme.spacing,
+        }),
+      );
     }
     if (process.env.NEXT_PUBLIC_CONFIG_API) {
       log.warn('to load theme from server');
@@ -370,7 +374,11 @@ export function CustomThemeProvider({ children }) {
   React.useEffect(() => {
     // set the theme to correct mode when the mode changes
     if (!themeObject) return;
-    setTheme(createTheme(themeObject[mode]));
+    setTheme(
+      createTheme(themeObject[mode], {
+        spacing: theme.spacing,
+      }),
+    );
   }, [mode]);
 
   React.useEffect(() => {
