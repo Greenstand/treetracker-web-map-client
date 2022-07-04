@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { useEffect, createContext, useState, useContext } from 'react';
 import { buildTheme } from './themeContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -6,10 +6,23 @@ export const PlaygroundContext = createContext({});
 
 export function PlaygroundProvider({ children }) {
   const [themeType, setThemeType] = useLocalStorage('theme', 'light');
+  const [themeObject, setThemeObject] = useLocalStorage(
+    'themeObject',
+    undefined,
+  );
   const [theme, setTheme] = useState({
     dark: buildTheme('dark'),
     light: buildTheme('light'),
   });
+
+  useEffect(() => {
+    if (themeObject === undefined) return;
+    // set theme for customization to the saved theme
+    setTheme((prevTheme) => ({
+        ...prevTheme,
+        ...themeObject,
+      }));
+  }, []);
 
   /**
    * set mui theme prop by path

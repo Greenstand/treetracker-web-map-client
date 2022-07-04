@@ -9,18 +9,17 @@ import axios from 'axios';
 import log from 'loglevel';
 import { useState, useEffect, useCallback } from 'react';
 import {
-  SwitchProp,
   SelectColorProp,
   SelectTypographyProp,
   SquareIconButton,
   CategoryTabPanel,
+  ToggleThemeMode,
   getTabProps,
 } from '../../components/playground';
 import {
   PlaygroundProvider,
   usePlaygroundTheme,
   usePlaygroundThemeType,
-  usePropUtils,
 } from '../../context/playgroundContext';
 import { buildTheme } from '../../context/themeContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -38,7 +37,6 @@ function ThemeConfig() {
   const [theme, setTheme] = usePlaygroundTheme();
   const [themeType, setThemeType] = usePlaygroundThemeType();
   const [autoReload, setAutoReload] = useState(false);
-  const { setPropByPath } = usePropUtils();
 
   const [tabIndex, setTabIndex] = useState(0);
   const handleTabChange = (_, newIndex) => {
@@ -115,7 +113,7 @@ function ThemeConfig() {
   }
 
   function resetAll() {
-    log.warn('reseting theme');
+    log.warn('reseting theme of type', themeType);
     const newTheme = {
       ...theme,
       [themeType]: buildTheme(themeType),
@@ -326,6 +324,11 @@ function ThemeConfig() {
               })
                 .then((response) => {
                   log.warn('response:', response);
+                  /**
+                   * !! should store the theme from server to the themeObject state !!
+                   * themeObject is used for customization has light/dark version
+                   * theme is the actual theme
+                   */
                   setTheme(response.data.theme, null, 2);
                   setThemeObject(response.data.theme);
                 })
@@ -443,13 +446,7 @@ function ThemeConfig() {
           }}
         >
           <CategoryTabPanel value={tabIndex} index={0}>
-            <SwitchProp
-              prop="Theme mode"
-              optionA="light"
-              optionB="dark"
-              initial={themeType}
-              onChange={(value) => setThemeType(value)}
-            />
+            <ToggleThemeMode />
             {customizeOptions.palette.map((prop) => (
               <SelectColorProp
                 key={`select-color-${prop}`}
