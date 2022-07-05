@@ -127,6 +127,32 @@ const debounce = (func, timeout = 50) => {
   };
 };
 
+/**
+ * @param {string[]} fonts - list of google font names
+ *
+ * @returns {Promise} succes - true/false based if font succesfully loaded
+ */
+const loadFonts = (fonts) => new Promise((resolve, _) => {
+    try {
+      // require ssr
+      /* eslint-disable-next-line */
+      const WebFont = require('webfontloader');
+      WebFont.load({
+        google: {
+          families: fonts,
+        },
+        active: () => {
+          resolve(true);
+        },
+        inactive: () => {
+          resolve(false);
+        },
+      });
+    } catch (err) {
+      resolve(false);
+    }
+  });
+
 export {
   hideLastName,
   parseDomain,
@@ -138,4 +164,5 @@ export {
   fixCountryNames,
   getThumbnailImageUrls,
   debounce,
+  loadFonts,
 };

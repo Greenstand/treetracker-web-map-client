@@ -1,5 +1,6 @@
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, InputAdornment } from '@mui/material';
 import { useState, useEffect } from 'react';
+import FontSelector from './font-selector';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 function TypographyInput(props) {
@@ -38,6 +39,17 @@ function TypographyInput(props) {
           width: 1,
         }}
         helperText={!isValid && 'Invalid syntax'}
+        InputProps={{
+          endAdornment: label === 'fontFamily' && (
+            <InputAdornment position="end">
+              <FontSelector
+                handleChange={(val) =>
+                  onChange({ propName: label, newValue: val })
+                }
+              />
+            </InputAdornment>
+          ),
+        }}
       />
     </Box>
   );

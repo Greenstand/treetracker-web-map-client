@@ -1,6 +1,7 @@
 import React, { useEffect, createContext, useState, useContext } from 'react';
 import { buildTheme } from './themeContext';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { predefinedFonts } from '../models/themePlaygroundOptions';
 
 export const PlaygroundContext = createContext({});
 
@@ -10,6 +11,7 @@ export function PlaygroundProvider({ children }) {
     'themeObject',
     undefined,
   );
+  const [fonts, setFonts] = useState(predefinedFonts);
   const [theme, setTheme] = useState({
     dark: buildTheme('dark'),
     light: buildTheme('light'),
@@ -19,9 +21,9 @@ export function PlaygroundProvider({ children }) {
     if (themeObject === undefined) return;
     // set theme for customization to the saved theme
     setTheme((prevTheme) => ({
-        ...prevTheme,
-        ...themeObject,
-      }));
+      ...prevTheme,
+      ...themeObject,
+    }));
   }, []);
 
   /**
@@ -78,10 +80,21 @@ export function PlaygroundProvider({ children }) {
       setTheme,
       themeType,
       setThemeType,
+      fonts,
+      setFonts,
       getPropByPath,
       setPropByPath,
     }),
-    [theme, setTheme, themeType, setThemeType, getPropByPath, setPropByPath],
+    [
+      theme,
+      setTheme,
+      themeType,
+      setThemeType,
+      fonts,
+      setFonts,
+      getPropByPath,
+      setPropByPath,
+    ],
   );
 
   return (
@@ -99,6 +112,11 @@ export const usePlaygroundTheme = () => {
 export const usePlaygroundThemeType = () => {
   const { themeType, setThemeType } = useContext(PlaygroundContext);
   return [themeType, setThemeType];
+};
+
+export const usePlaygroundFonts = () => {
+  const { fonts, setFonts } = useContext(PlaygroundContext);
+  return [fonts, setFonts];
 };
 
 export const usePropUtils = () => {

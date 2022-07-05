@@ -44,7 +44,7 @@ function SelectColorProp(props) {
           aria-controls={`select-color-${prop}-content`}
           id={`select-color-${prop}-header`}
           sx={{
-            background: (t) => (t.themeMode !== 'light' ? '#eee' : '#000'),
+            background: '#eee',
           }}
         >
           <Stack

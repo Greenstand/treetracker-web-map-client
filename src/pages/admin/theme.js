@@ -1,4 +1,5 @@
 import AutoRenewIcon from '@mui/icons-material/Autorenew';
+import FontDownloadIcon from '@mui/icons-material/FontDownload';
 import PaletteIcon from '@mui/icons-material/Palette';
 import PreviewIcon from '@mui/icons-material/Preview';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -15,6 +16,7 @@ import {
   CategoryTabPanel,
   ToggleThemeMode,
   getTabProps,
+  FontCustomization,
 } from '../../components/playground';
 import {
   PlaygroundProvider,
@@ -437,6 +439,7 @@ function ThemeConfig() {
             label="Typography"
             {...getTabProps(1)}
           />
+          <Tab icon={<FontDownloadIcon />} label="Fonts" {...getTabProps(2)} />
         </Tabs>
         <Box
           sx={{
@@ -463,6 +466,9 @@ function ThemeConfig() {
                 path={`typography.${prop}`}
               />
             ))}
+          </CategoryTabPanel>
+          <CategoryTabPanel value={tabIndex} index={2}>
+            <FontCustomization />
           </CategoryTabPanel>
         </Box>
         <textarea

@@ -13,6 +13,8 @@ export const customizeOptions = {
   typography: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body1', 'body2', 'caption'],
 };
 
+export const predefinedFonts = ['Lato', 'Montserrat', 'Roboto'];
+
 export const propRules = {
   color:
     /^#([a-f0-9]{6}|[a-f0-9]{3})$|^rgba?\(((25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*,\s*?){2}(25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*,?\s*([01]\.?\d*?)?\)$/i,
