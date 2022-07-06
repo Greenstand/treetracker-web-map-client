@@ -265,7 +265,7 @@ export default function Token({ token, wallet }) {
           {
             fontSize: [24, 28],
             lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
-            mt: (t) => [t.spacing(14), t.spacing(26)],
+            mt: (t) => [t.spacing(14), t.spacing(18)],
           },
         ]}
       >
