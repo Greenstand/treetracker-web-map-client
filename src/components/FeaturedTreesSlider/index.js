@@ -8,6 +8,7 @@ import {
   CardMedia,
 } from '@mui/material';
 import { useRef, useState, useEffect } from 'react';
+import { getTreeSpecies } from 'models/trees';
 import { debounce } from 'models/utils';
 import { useStyles } from './style'; // the style file
 import { getThumbnailImageUrls } from '../../models/utils';
@@ -121,7 +122,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile }) {
                   marginTop: 1.5,
                 }}
               >
-                West-Smith-Nayer
+                {getTreeSpecies(tree)}
               </Typography>
             </CardContent>
           </Card>
