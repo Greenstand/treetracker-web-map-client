@@ -2,6 +2,7 @@ import React, { useEffect, createContext, useState, useContext } from 'react';
 import { buildTheme } from './themeContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { predefinedFonts } from '../models/themePlaygroundOptions';
+import { loadFonts } from '../models/utils';
 
 export const PlaygroundContext = createContext({});
 
@@ -15,6 +16,7 @@ export function PlaygroundProvider({ children }) {
   const [theme, setTheme] = useState({
     dark: buildTheme('dark'),
     light: buildTheme('light'),
+    fonts: [...predefinedFonts],
   });
 
   useEffect(() => {
@@ -24,7 +26,24 @@ export function PlaygroundProvider({ children }) {
       ...prevTheme,
       ...themeObject,
     }));
+
+    if (!themeObject.fonts) return;
+
+    loadFonts(themeObject.fonts).then((fontsLoaded) => {
+      if (!fontsLoaded) return;
+      setFonts((prevFonts) => {
+        const newFonts = new Set([...prevFonts, ...themeObject.fonts]);
+        return [...newFonts];
+      });
+    });
   }, []);
+
+  useEffect(() => {
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      fonts: [...fonts],
+    }));
+  }, [fonts]);
 
   /**
    * set mui theme prop by path

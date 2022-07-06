@@ -15,8 +15,9 @@ function FontSelector(props) {
   };
 
   const handleClose = (value) => {
-    handleChange(value);
     setAnchorEl(null);
+    // prevent passing down event data
+    if (typeof value === 'string') handleChange(value);
   };
 
   return (

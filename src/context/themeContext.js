@@ -3,6 +3,7 @@ import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
 import useLocalStorage from 'hooks/useLocalStorage';
+import { loadFonts } from '../models/utils';
 
 const CustomThemeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -360,6 +361,10 @@ export function CustomThemeProvider({ children }) {
           spacing: theme.spacing,
         }),
       );
+
+      loadFonts(themeObject.fonts).then((fontsLoaded) => {
+        log.warn('custom fonts loaded:', fontsLoaded);
+      });
     }
     if (process.env.NEXT_PUBLIC_CONFIG_API) {
       log.warn('to load theme from server');
