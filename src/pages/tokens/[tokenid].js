@@ -163,13 +163,31 @@ export default function Token({ token, wallet }) {
               pb: 4,
             }}
           >
-            <Typography variant="h2">{wallet.name} </Typography>
-            <Box sx={{ mt: 2 }}>
-              <Info
-                iconURI={calendarIcon}
-                info={`Token since ${moment(token.created_at).format(
-                  'MMMM DD, YYYY',
-                )}`}
+            <Typography
+              variant="h2"
+              sx={{
+                '&': {
+                  fontSize: '15px',
+                },
+              }}
+            >
+              Token - #{token.id}
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                mt: 2,
+              }}
+            >
+              <VerifiedBadge
+                color="primary"
+                verified={token.claim}
+                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
+              />
+              <VerifiedBadge
+                color="secondary"
+                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
               />
             </Box>
           </Box>
