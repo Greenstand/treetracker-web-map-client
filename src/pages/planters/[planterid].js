@@ -88,6 +88,11 @@ export default function Planter(props) {
 
   const { classes } = useStyles();
 
+  // try to find first tree image or default image return
+  const backgroundPic =
+    planter?.featuredTrees?.trees?.[0]?.image_url ||
+    `${router.basePath}${planterBackground}`;
+
   useEffect(() => {
     setTitlesData({
       firstName: planter.first_name,
@@ -168,7 +173,7 @@ export default function Planter(props) {
             },
           }}
         >
-          <img src={`${router.basePath}${planterBackground}`} alt="profile" />
+          <img src={backgroundPic} alt="profile" />
           <Avatar
             src={planter.image_url}
             sx={{
