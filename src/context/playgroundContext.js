@@ -45,6 +45,14 @@ export function PlaygroundProvider({ children }) {
     }));
   }, [fonts]);
 
+  const resetTheme = () => {
+    setTheme({
+      dark: buildTheme('dark'),
+      light: buildTheme('light'),
+    });
+    setFonts(predefinedFonts);
+  };
+
   /**
    * set mui theme prop by path
    *
@@ -101,6 +109,7 @@ export function PlaygroundProvider({ children }) {
       setThemeType,
       fonts,
       setFonts,
+      resetTheme,
       getPropByPath,
       setPropByPath,
     }),
@@ -111,6 +120,7 @@ export function PlaygroundProvider({ children }) {
       setThemeType,
       fonts,
       setFonts,
+      resetTheme,
       getPropByPath,
       setPropByPath,
     ],
@@ -138,7 +148,8 @@ export const usePlaygroundFonts = () => {
   return [fonts, setFonts];
 };
 
-export const usePropUtils = () => {
-  const { getPropByPath, setPropByPath } = useContext(PlaygroundContext);
-  return { getPropByPath, setPropByPath };
+export const usePlaygroundUtils = () => {
+  const { resetTheme, getPropByPath, setPropByPath } =
+    useContext(PlaygroundContext);
+  return { resetTheme, getPropByPath, setPropByPath };
 };

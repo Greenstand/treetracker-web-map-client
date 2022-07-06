@@ -11,11 +11,11 @@ import {
 import log from 'loglevel';
 import ColorInput from './color-input';
 import ColorThumbnail from './color-thumbnail';
-import { usePropUtils } from '../../context/playgroundContext';
+import { usePlaygroundUtils } from '../../context/playgroundContext';
 
 function SelectColorProp(props) {
   const { prop, path } = props;
-  const { getPropByPath, setPropByPath } = usePropUtils();
+  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
 
   const childProps = getPropByPath(path);
 

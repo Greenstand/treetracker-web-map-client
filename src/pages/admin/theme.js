@@ -22,8 +22,8 @@ import {
   PlaygroundProvider,
   usePlaygroundTheme,
   usePlaygroundThemeType,
+  usePlaygroundUtils,
 } from '../../context/playgroundContext';
-import { buildTheme } from '../../context/themeContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { customizeOptions } from '../../models/themePlaygroundOptions';
 
@@ -38,6 +38,7 @@ function ThemeConfig() {
   // playground theme for customization
   const [theme, setTheme] = usePlaygroundTheme();
   const [themeType, setThemeType] = usePlaygroundThemeType();
+  const { resetTheme } = usePlaygroundUtils();
   const [autoReload, setAutoReload] = useState(false);
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -114,13 +115,8 @@ function ThemeConfig() {
       });
   }
 
-  function resetAll() {
-    log.warn('reseting theme of type', themeType);
-    const newTheme = {
-      ...theme,
-      [themeType]: buildTheme(themeType),
-    };
-    setTheme(newTheme);
+  function resetFullTheme() {
+    resetTheme();
   }
 
   function load() {
@@ -419,7 +415,7 @@ function ThemeConfig() {
             icon={<RestartAltIcon />}
             color="error"
             tooltip="Reset to default"
-            onClick={resetAll}
+            onClick={resetFullTheme}
           />
           <SquareIconButton
             icon={<AutoRenewIcon />}
