@@ -6,11 +6,12 @@ import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import { useMediaQuery, useTheme, SvgIcon, Avatar } from '@mui/material';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
@@ -74,6 +75,9 @@ export default function Tree({
 
   const { setTitlesData } = useDrawerContext();
 
+  const [treeInfoHeight, setTreeInfoHeight] = useState(0);
+  const treeInfoHeightRef = useRef();
+
   log.warn('map:', mapContext);
 
   function handleShare() {}
@@ -100,6 +104,11 @@ export default function Tree({
   }, [setTitlesData, tree.id, tree.token_id, tree.verified]);
 
   useEffect(() => {
+    setTreeInfoHeight(treeInfoHeightRef.current.clientHeight);
+    console.log('height:', treeInfoHeightRef.current.clientHeight);
+  }, []);
+
+  useEffect(() => {
     // manipulate the map
     if (mapContext.map && tree?.lat && tree?.lon) {
       mapContext.map.flyTo(tree.lat, tree.lon, 16);
@@ -118,6 +127,7 @@ export default function Tree({
           padding: (t) => [t.spacing(0, 4), 4],
         },
       ]}
+      style={{ height: `calc(100% + ${treeInfoHeight}px)` }}
     >
       {/* <IsMobileScreen>
         <DrawerTitle />
@@ -358,58 +368,72 @@ export default function Tree({
           {
             fontSize: [24, 28],
             lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
-            mt: (t) => [t.spacing(14), t.spacing(26)],
+            mt: (t) => [t.spacing(14), t.spacing(20)],
+            mb: (t) => [t.spacing(14), t.spacing(15 * 0.6)],
           },
           nextExtraIsEmbed && {
-            mt: (t) => [t.spacing(14), t.spacing(26 * 0.6)],
+            mt: (t) => [t.spacing(14), t.spacing(20 * 0.6)],
+            mb: (t) => [t.spacing(14), t.spacing(15 * 0.6)],
           },
         ]}
       >
         Tree Info
       </Typography>
-      <Box className={classes.tabBox}>
-        <TreeTag
-          TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
-          title="Planted on"
-          icon={<img src={calendarIcon} alt="calendar" />}
-        />
-        <TreeTag
-          TreeTagValue="Tanzania"
-          title="Located in"
-          icon={<img src={location} alt="location" />}
-        />
+      <Grid container spacing={2} ref={treeInfoHeightRef}>
+        <Grid item xs={6}>
+          <TreeTag
+            TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
+            title="Planted on"
+            icon={<img src={calendarIcon} alt="calendar" />}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TreeTag
+            TreeTagValue="Tanzania"
+            title="Located in"
+            icon={<img src={location} alt="location" />}
+          />
+        </Grid>
         {tree.age && (
-          <TreeTag
-            TreeTagValue={tree.age}
-            title="Age"
-            icon={<img src={historyIcon} alt="age" />}
-          />
-        )}
-        {tree.gps_accuracy && (
-          <TreeTag
-            TreeTagValue={tree.gps_accuracy}
-            title="GPS Accuracy"
-            icon={<img src={accuracyIcon} alt="accuracy" />}
-          />
+          <Grid item xs={6}>
+            <TreeTag
+              TreeTagValue={tree.age}
+              title="Age"
+              icon={<img src={historyIcon} alt="age" />}
+            />
+          </Grid>
         )}
         {tree.lat && tree.lon && (
-          <TreeTag
-            TreeTagValue={`${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
-              tree.lon,
-              5,
-            )}`}
-            title="Latitude, Longitude"
-            icon={<img src={globalIcon} alt="lat,lon" />}
-          />
+          <Grid item xs={12} sm={6}>
+            <TreeTag
+              TreeTagValue={`${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
+                tree.lon,
+                5,
+              )}`}
+              title="Latitude, Longitude"
+              icon={<img src={globalIcon} alt="lat,lon" />}
+            />
+          </Grid>
+        )}
+        {tree.gps_accuracy && (
+          <Grid item xs={6}>
+            <TreeTag
+              TreeTagValue={tree.gps_accuracy}
+              title="GPS Accuracy"
+              icon={<img src={accuracyIcon} alt="accuracy" />}
+            />
+          </Grid>
         )}
         {tree.token_id && (
-          <TreeTag
-            TreeTagValue={tree.token_id}
-            title="Token ID"
-            icon={<img src={tokenIcon} alt="token" />}
-          />
+          <Grid item xs={6}>
+            <TreeTag
+              TreeTagValue={tree.token_id}
+              title="Token ID"
+              icon={<img src={tokenIcon} alt="token" />}
+            />
+          </Grid>
         )}
-      </Box>
+      </Grid>
       <Box height={20} />
     </Box>
   );

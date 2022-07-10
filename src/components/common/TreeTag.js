@@ -39,6 +39,7 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
         borderStyle: 'solid',
         p: (t) => [t.spacing(3, 4), t.spacing(4.75, 6)],
         height: 'auto',
+        width: '100%',
       }}
       color="secondary"
       icon={<Box m={1}>{icon}</Box>}

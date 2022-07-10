@@ -247,7 +247,7 @@ export default function Drawer(props) {
           top: 0,
           left: 0,
           width: '100%',
-          height: '100vh',
+          height: '100%',
           transition: 'transform 125ms cubic-bezier(0, 0, 0.2, 1) 0ms',
           // transform: 'translateY(500px)',
           zIndex: '999',
