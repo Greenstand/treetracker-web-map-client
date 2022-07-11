@@ -26,6 +26,7 @@ import {
 } from '../../context/playgroundContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { customizeOptions } from '../../models/themePlaygroundOptions';
+import { optimizeThemeFonts } from '../../models/utils';
 
 function ThemeConfig() {
   const { keycloak } = useKeycloak();
@@ -59,7 +60,9 @@ function ThemeConfig() {
   }
 
   const handlePreview = useCallback(() => {
-    setThemeObject({ ...theme });
+    // NOTE: when theme can be stored on server this step(optimizing fonts) can be removed
+    const themeWithOptimizedFonts = optimizeThemeFonts(theme);
+    setThemeObject(themeWithOptimizedFonts);
     setKey(key + 1);
   }, [theme]);
 

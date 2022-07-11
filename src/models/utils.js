@@ -132,7 +132,8 @@ const debounce = (func, timeout = 50) => {
  *
  * @returns {Promise} succes - true/false based if font succesfully loaded
  */
-const loadFonts = (fonts) => new Promise((resolve, _) => {
+const loadFonts = (fonts) =>
+  new Promise((resolve, _) => {
     try {
       // require ssr
       /* eslint-disable-next-line */
@@ -153,6 +154,34 @@ const loadFonts = (fonts) => new Promise((resolve, _) => {
     }
   });
 
+/**
+ * Optimizes fonts by only adding the fonts that are actually used in the typography
+ *
+ * @param {Object} theme - theme from the playground
+ *
+ * @returns {Object} theme - theme with optimized fonts
+ */
+const optimizeThemeFonts = (theme) => {
+  const temp = { ...theme };
+  const {typography} = theme;
+  const usedFonts = new Set();
+  // loop over all props in typography
+  Object.keys(typography).forEach((key) => {
+    // filter out the fontSize, htmlFontSize, etc props
+    if (/font/i.test(key)) return;
+
+    // check if font has fallbacks
+    // if fallbacks -> not custom font
+    const font = typography[key].fontFamily;
+    if (/,/.test(font)) return;
+
+    // finally add font to set
+    usedFonts.add(font);
+  });
+  temp.fonts = [...usedFonts];
+  return temp;
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -165,4 +194,5 @@ export {
   getThumbnailImageUrls,
   debounce,
   loadFonts,
+  optimizeThemeFonts,
 };
