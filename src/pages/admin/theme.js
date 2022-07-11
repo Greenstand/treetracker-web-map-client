@@ -53,7 +53,7 @@ function ThemeConfig() {
     const parsedTheme = JSON.parse(userValue);
     const newTheme = {
       ...theme,
-      [themeType]: parsedTheme,
+      parsedTheme,
     };
     setTheme(newTheme);
   }
@@ -450,7 +450,7 @@ function ThemeConfig() {
               <SelectColorProp
                 key={`select-color-${prop}`}
                 prop={prop}
-                path={`palette.${prop}`}
+                path={`palette.${themeType}.${prop}`}
               />
             ))}
           </CategoryTabPanel>
@@ -476,7 +476,7 @@ function ThemeConfig() {
             minHeight: '200px',
             flex: '1',
           }}
-          value={JSON.stringify(theme[themeType], null, 2)}
+          value={JSON.stringify(theme, null, 2)}
         />
       </Grid>
     </Grid>

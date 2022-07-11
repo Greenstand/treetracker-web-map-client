@@ -357,7 +357,10 @@ export function CustomThemeProvider({ children }) {
   React.useEffect(() => {
     if (themeObject) {
       setTheme(
-        createTheme(themeObject[mode], {
+        createTheme(themeObject, {
+          // overrides the palette/components with the custom light/dark version
+          palette: themeObject.palette[mode],
+          components: themeObject.components[mode],
           spacing: theme.spacing,
         }),
       );
@@ -380,7 +383,9 @@ export function CustomThemeProvider({ children }) {
     // set the theme to correct mode when the mode changes
     if (!themeObject) return;
     setTheme(
-      createTheme(themeObject[mode], {
+      createTheme(themeObject, {
+        palette: themeObject.palette[mode],
+        components: themeObject.components[mode],
         spacing: theme.spacing,
       }),
     );

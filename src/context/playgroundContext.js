@@ -4,6 +4,25 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { predefinedFonts } from '../models/themePlaygroundOptions';
 import { loadFonts } from '../models/utils';
 
+const getInitialTheme = () => {
+  // init default theme
+  const lightTheme = buildTheme('light');
+  const darkTheme = buildTheme('dark');
+  const initialTheme = {
+    ...lightTheme,
+    components: {
+      dark: darkTheme.components,
+      light: lightTheme.components,
+    },
+    palette: {
+      dark: darkTheme.palette,
+      light: lightTheme.palette,
+    },
+    fonts: [...predefinedFonts],
+  };
+  return initialTheme;
+};
+
 export const PlaygroundContext = createContext({});
 
 export function PlaygroundProvider({ children }) {
@@ -13,11 +32,7 @@ export function PlaygroundProvider({ children }) {
     undefined,
   );
   const [fonts, setFonts] = useState(predefinedFonts);
-  const [theme, setTheme] = useState({
-    dark: buildTheme('dark'),
-    light: buildTheme('light'),
-    fonts: [...predefinedFonts],
-  });
+  const [theme, setTheme] = useState(getInitialTheme());
 
   useEffect(() => {
     if (themeObject === undefined) return;
@@ -46,10 +61,7 @@ export function PlaygroundProvider({ children }) {
   }, [fonts]);
 
   const resetTheme = () => {
-    setTheme({
-      dark: buildTheme('dark'),
-      light: buildTheme('light'),
-    });
+    setTheme(getInitialTheme());
     setFonts(predefinedFonts);
   };
 
@@ -66,7 +78,7 @@ export function PlaygroundProvider({ children }) {
    */
   const setPropByPath = (propPath, value) => {
     if (!value || !propPath) return null;
-    const temp = { ...theme[themeType] };
+    const temp = { ...theme };
     propPath.split('.').reduce((acc, curr, i, src) => {
       if (curr === src[src.length - 1]) {
         acc[src[src.length - 1]] = value;
@@ -76,7 +88,7 @@ export function PlaygroundProvider({ children }) {
     }, temp);
     setTheme({
       ...theme,
-      [themeType]: temp,
+      temp,
     });
     return temp;
   };
@@ -96,9 +108,7 @@ export function PlaygroundProvider({ children }) {
    */
   const getPropByPath = (propPath) => {
     if (!propPath) return null;
-    return propPath
-      .split('.')
-      .reduce((acc, curr, i, src) => acc[curr], theme[themeType]);
+    return propPath.split('.').reduce((acc, curr, i, src) => acc[curr], theme);
   };
 
   const contextValue = React.useMemo(
