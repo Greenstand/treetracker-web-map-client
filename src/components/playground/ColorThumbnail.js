@@ -10,7 +10,7 @@ function ColorThumbnail({ color }) {
         border: '1px solid #333',
         ml: 0.5,
       }}
-     />
+    />
   );
 }
 

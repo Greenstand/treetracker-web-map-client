@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import FontAddInput from './font-add-input';
-import FontsList from './fonts-list';
+import FontAddInput from './FontAddInput';
+import FontsList from './FontsList';
 import { usePlaygroundFonts } from '../../context/playgroundContext';
 
 const popularFonts = [

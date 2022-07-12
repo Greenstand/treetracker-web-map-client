@@ -19,7 +19,7 @@ function SquareIconButton(props) {
       onClick={onClick}
       color={color}
       size="large"
-     />
+    />
   );
 
   return tooltip ? <Tooltip title={tooltip}>{button}</Tooltip> : { button };

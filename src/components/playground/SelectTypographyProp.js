@@ -9,8 +9,8 @@ import {
   Typography,
 } from '@mui/material';
 import log from 'loglevel';
-import ColorInput from './color-input';
-import ColorThumbnail from './color-thumbnail';
+import TypographyInput from './TypographyInput';
+import TypogarphyThumbnail from './TypographyThumbnail';
 import { usePlaygroundUtils } from '../../context/playgroundContext';
 
 function SelectColorProp(props) {
@@ -41,8 +41,8 @@ function SelectColorProp(props) {
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls={`select-color-${prop}-content`}
-          id={`select-color-${prop}-header`}
+          aria-controls={`select-typography-${prop}-content`}
+          id={`select-typography-${prop}-header`}
           sx={{
             background: '#eee',
           }}
@@ -54,40 +54,33 @@ function SelectColorProp(props) {
               width: 1,
             }}
           >
-            <Typography
-              sx={{
-                textTransform: 'capitalize',
-              }}
-            >
-              {prop}
-            </Typography>
-            <Stack direction="row">
-              {Object.values(childProps).map((color, idx) => (
-                <ColorThumbnail
-                  /* eslint-disable-next-line */
-                  key={`color-thumbnail-${color}-${idx}`}
-                  color={color}
-                />
-              ))}
-            </Stack>
+            <Typography>{prop}</Typography>
+            <TypogarphyThumbnail
+              key={`typography-thumbnail-${prop}`}
+              text={`style for ${prop}`}
+              previewStyle={childProps}
+            />
           </Stack>
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {Object.entries(childProps).map(([name, value]) => (
-              <ListItem
-                key={`color-input-${name}`}
-                sx={{
-                  px: 0,
-                }}
-              >
-                <ColorInput
-                  label={name}
-                  initial={value}
-                  onChange={handleChange}
-                />
-              </ListItem>
-            ))}
+            {Object.entries(childProps).map(
+              ([name, value]) =>
+                typeof value === 'string' && (
+                  <ListItem
+                    key={`typography-input-${name}`}
+                    sx={{
+                      px: 0,
+                    }}
+                  >
+                    <TypographyInput
+                      label={name}
+                      initial={value}
+                      onChange={handleChange}
+                    />
+                  </ListItem>
+                ),
+            )}
           </List>
         </AccordionDetails>
       </Accordion>

@@ -1,6 +1,6 @@
 import { Box, TextField, InputAdornment } from '@mui/material';
 import { useState, useEffect } from 'react';
-import FontSelector from './font-selector';
+import FontSelector from './FontSelector';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 function TypographyInput(props) {

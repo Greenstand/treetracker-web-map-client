@@ -18,8 +18,8 @@ function CategoryTabPanel(props) {
 
 // helper function
 export const getTabProps = (index) => ({
-    id: `theme-category-tab-${index}`,
-    'aria-controls': `theme-category-tabpanel-${index}`,
-  });
+  id: `theme-category-tab-${index}`,
+  'aria-controls': `theme-category-tabpanel-${index}`,
+});
 
 export default CategoryTabPanel;

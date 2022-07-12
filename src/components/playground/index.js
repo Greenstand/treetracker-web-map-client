@@ -1,17 +1,17 @@
-import CategoryTabPanel, { getTabProps } from './category-tab-panel';
-import ColorInput from './color-input';
-import ColorThumbnail from './color-thumbnail';
-import FontAddInput from './font-add-input';
-import FontCustomization from './font-customization';
-import FontSelector from './font-selector';
-import FontsList from './fonts-list';
-import SelectColorProp from './select-color-prop';
-import SelectTypographyProp from './select-typography-prop';
-import SquareIconButton from './square-icon-button';
-import SwitchProp from './switch-prop';
-import ToggleThemeMode from './toggle-theme-mode';
-import TypographyInput from './typography-input';
-import TypographyThumbnail from './typography-thumbnail';
+import CategoryTabPanel, { getTabProps } from './CategoryTabPanel';
+import ColorInput from './ColorInput';
+import ColorThumbnail from './ColorThumbnail';
+import FontAddInput from './FontAddInput';
+import FontCustomization from './FontCustomization';
+import FontSelector from './FontSelector';
+import FontsList from './FontsList';
+import SelectColorProp from './SelectColorProp';
+import SelectTypographyProp from './SelectTypographyProp';
+import SquareIconButton from './SquareIconButton';
+import SwitchProp from './SwitchProp';
+import ToggleThemeMode from './ToggleThemeMode';
+import TypographyInput from './TypographyInput';
+import TypographyThumbnail from './TypographyThumbnail';
 
 export {
   ColorInput,
