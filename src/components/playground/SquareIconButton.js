@@ -14,7 +14,6 @@ function SquareIconButton(props) {
 
   const button = (
     <CustomButton
-      {...props}
       startIcon={icon}
       onClick={onClick}
       color={color}
@@ -22,7 +21,7 @@ function SquareIconButton(props) {
     />
   );
 
-  return tooltip ? <Tooltip title={tooltip}>{button}</Tooltip> : { button };
+  return tooltip ? <Tooltip title={tooltip}>{button}</Tooltip> : button;
 }
 
 export default SquareIconButton;

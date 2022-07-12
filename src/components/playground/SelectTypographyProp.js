@@ -10,10 +10,10 @@ import {
 } from '@mui/material';
 import log from 'loglevel';
 import TypographyInput from './TypographyInput';
-import TypogarphyThumbnail from './TypographyThumbnail';
+import TypographyThumbnail from './TypographyThumbnail';
 import { usePlaygroundUtils } from '../../context/playgroundContext';
 
-function SelectColorProp(props) {
+function SelectTypographyProp(props) {
   const { prop, path } = props;
   const { getPropByPath, setPropByPath } = usePlaygroundUtils();
 
@@ -55,7 +55,7 @@ function SelectColorProp(props) {
             }}
           >
             <Typography>{prop}</Typography>
-            <TypogarphyThumbnail
+            <TypographyThumbnail
               key={`typography-thumbnail-${prop}`}
               text={`style for ${prop}`}
               previewStyle={childProps}
@@ -88,4 +88,4 @@ function SelectColorProp(props) {
   );
 }
 
-export default SelectColorProp;
+export default SelectTypographyProp;

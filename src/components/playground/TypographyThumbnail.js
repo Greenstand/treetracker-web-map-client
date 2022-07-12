@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-function TypogarphyThumbnail({ text, previewStyle }) {
+function TypographyThumbnail({ text, previewStyle }) {
   return (
     <Box
       sx={{
@@ -12,4 +12,4 @@ function TypogarphyThumbnail({ text, previewStyle }) {
   );
 }
 
-export default TypogarphyThumbnail;
+export default TypographyThumbnail;
