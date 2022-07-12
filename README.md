@@ -9,7 +9,7 @@
     - [Test File Naming Conventions](#test-file-naming-conventions)
   - [How to Build Components](#how-to-build-components)
     - [Adding Material UI Theme to Component Tests](#adding-material-ui-theme-to-component-tests)
-    - [Our Theme System](#our-theme-systeme)
+    - [Our Theme System](#our-theme-system)
     - [Using Correct Link Component](#using-correct-link-component)
     - [Material UI styles](#material-ui-styles)
     - [Mocking NextJs Router in Component Tests](#mocking-nextjs-router-in-component-tests)
@@ -143,7 +143,7 @@ We heavely use the MaterialUI theme as the source of style, including: color, fo
 
 The color system defined several named color as the brand color on Greenstand, check code in the theme file and in the pallete section, these color is also defined in our Figma file, check link below to find the design file.
 
-For convenience, run `npm run cyu` and find the page of `DesignSandbox`, you can directly check the theme settings, and pick appropriate ones for your coding. 
+For convenience, run `npm run cyu` and find the page of `DesignSandbox`, you can directly check the theme settings, and pick appropriate ones for your coding.
 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/5744708/169634253-1c391f1e-8163-4cc0-8054-946b66dadbe3.png">
 
