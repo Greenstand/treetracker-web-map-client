@@ -10,6 +10,7 @@ import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
 import { requestAPI } from 'models/utils';
@@ -34,7 +35,18 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 
 export default function Wallet(props) {
   log.info('props for wallet page:', props);
+
   const { wallet, species, tokenCount } = props;
+  // eslint-disable-next-line react/destructuring-assignment
+  const tokenRegionStatistics = props.tokenRegionCount.filter(
+    (statistics) => statistics.continent !== null,
+  );
+  const tokenRegionName = [];
+  const tokenRegionCount = [];
+  tokenRegionStatistics.forEach((obj) => {
+    tokenRegionName.push(obj.continent);
+    tokenRegionCount.push(obj.token_count);
+  });
 
   const mapContext = useMapContext();
 
@@ -180,6 +192,13 @@ export default function Wallet(props) {
           <CustomCard iconURI={treeIcon} title="Tokens" text={tokenCount} />
         </Grid>
       </Grid>
+
+      {tokenRegionName.length > 0 && (
+        <Box sx={{ mt: [0, 22] }}>
+          <CustomWorldMap totalTrees={tokenRegionCount} con={tokenRegionName} />
+        </Box>
+      )}
+
       {species.length > 0 && (
         <Box
           sx={{
@@ -228,7 +247,7 @@ export default function Wallet(props) {
 
 export async function getStaticProps({ params }) {
   const id = params.walletid;
-  const [wallet, species, tokenCount] = await Promise.all([
+  const [wallet, species, tokenCount, tokenRegionCount] = await Promise.all([
     getWalletById(id),
     getSpeciesByWalletId(id),
     (async () => {
@@ -236,12 +255,18 @@ export async function getStaticProps({ params }) {
       const data = await requestAPI(`/tokens?wallet=${id}`);
       return data.total;
     })(),
+    (async () => {
+      // return total no.trees/tokens per country
+      const data = await requestAPI(`/wallets/${id}/token-region-count`);
+      return data.walletStatistics;
+    })(),
   ]);
   return {
     props: {
       wallet,
       species: species.species,
       tokenCount,
+      tokenRegionCount,
     },
     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
