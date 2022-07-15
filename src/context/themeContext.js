@@ -3,6 +3,7 @@ import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
 import useLocalStorage from 'hooks/useLocalStorage';
+import { loadFonts } from '../models/utils';
 
 const CustomThemeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -88,7 +89,6 @@ export function buildTheme(theMode) {
       },
     },
     palette: {
-      themeMode,
       background: {
         ...(themeMode === 'light'
           ? {
@@ -331,7 +331,6 @@ export function CustomThemeProvider({ children }) {
     'themeObject',
     undefined,
   );
-  log.warn('themeObject: ', themeObject);
 
   const colorMode = React.useMemo(
     () => ({
@@ -342,19 +341,33 @@ export function CustomThemeProvider({ children }) {
     [],
   );
 
-  console.warn('theme:', theme);
-
   function loadThemeFromServer() {
     const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
     axios.get(url).then((response) => {
       log.warn('loaded theme from server:', response);
+      /**
+       * !! should store the theme from server to the themeObject state !!
+       * themeObject is used for customization has light/dark version
+       * theme is the actual theme
+       */
       setTheme(createTheme(response.data.theme));
     });
   }
 
   React.useEffect(() => {
     if (themeObject) {
-      setTheme(createTheme(themeObject));
+      setTheme(
+        createTheme(themeObject, {
+          // overrides the palette/components with the custom light/dark version
+          palette: themeObject.palette[mode],
+          components: themeObject.components[mode],
+          spacing: theme.spacing,
+        }),
+      );
+
+      loadFonts(themeObject.fonts).then((fontsLoaded) => {
+        log.warn('custom fonts loaded:', fontsLoaded);
+      });
     }
     if (process.env.NEXT_PUBLIC_CONFIG_API) {
       log.warn('to load theme from server');
@@ -365,6 +378,22 @@ export function CustomThemeProvider({ children }) {
       );
     }
   }, []);
+
+  React.useEffect(() => {
+    // set the theme to correct mode when the mode changes
+    if (!themeObject) return;
+    setTheme(
+      createTheme(themeObject, {
+        palette: themeObject.palette[mode],
+        components: themeObject.components[mode],
+        spacing: theme.spacing,
+      }),
+    );
+  }, [mode]);
+
+  React.useEffect(() => {
+    log.warn('theme changed', theme);
+  }, [theme]);
 
   const value = React.useMemo(
     () => ({

@@ -127,6 +127,61 @@ const debounce = (func, timeout = 50) => {
   };
 };
 
+/**
+ * @param {string[]} fonts - list of google font names
+ *
+ * @returns {Promise} succes - true/false based if font succesfully loaded
+ */
+const loadFonts = (fonts) =>
+  new Promise((resolve, _) => {
+    try {
+      // require ssr
+      /* eslint-disable-next-line */
+      const WebFont = require('webfontloader');
+      WebFont.load({
+        google: {
+          families: fonts,
+        },
+        active: () => {
+          resolve(true);
+        },
+        inactive: () => {
+          resolve(false);
+        },
+      });
+    } catch (err) {
+      resolve(false);
+    }
+  });
+
+/**
+ * Optimizes fonts by only adding the fonts that are actually used in the typography
+ *
+ * @param {Object} theme - theme from the playground
+ *
+ * @returns {Object} theme - theme with optimized fonts
+ */
+const optimizeThemeFonts = (theme) => {
+  const temp = { ...theme };
+  const {typography} = theme;
+  const usedFonts = new Set();
+  // loop over all props in typography
+  Object.keys(typography).forEach((key) => {
+    // filter out the fontSize, htmlFontSize, etc props
+    if (/font/i.test(key)) return;
+
+    // check if font has fallbacks
+    // if fallbacks -> not custom font
+    const font = typography[key].fontFamily;
+    if (/,/.test(font)) return;
+
+    // finally add font to set
+    usedFonts.add(font);
+  });
+  temp.fonts = [...usedFonts];
+  return temp;
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -138,4 +193,6 @@ export {
   fixCountryNames,
   getThumbnailImageUrls,
   debounce,
+  loadFonts,
+  optimizeThemeFonts,
 };
