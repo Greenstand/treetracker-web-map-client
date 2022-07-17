@@ -410,7 +410,7 @@ export default function Tree({
           />
         )}
       </Box>
-      <Box height={20} />
+      <Box height={225} />
     </Box>
   );
 }
