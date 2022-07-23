@@ -15,7 +15,7 @@ describe('top', () => {
     });
 
     cy.visit('/top');
-    cy.contains('Featured Trees');
+    cy.contains('Featured trees');
     cy.contains('Check out the global leaders in the tree planting effort');
     cy.contains('Tanzania');
     cy.screenshot();
