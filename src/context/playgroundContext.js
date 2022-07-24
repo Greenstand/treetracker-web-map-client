@@ -88,7 +88,7 @@ export function PlaygroundProvider({ children }) {
     }, temp);
     setTheme({
       ...theme,
-      temp,
+      ...temp,
     });
     return temp;
   };
