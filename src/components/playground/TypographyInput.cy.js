@@ -5,11 +5,12 @@ import { mountWithTheme as mount } from '../../models/test-utils';
 describe('Typography Input', () => {
   it('renders fontFamily', () => {
     const name = 'fontFamily';
-    const value = 'Lato';
+    const path = `typography.h1.${name}`;
+    const value = 'Montserrat';
 
     mount(
       <PlaygroundProvider>
-        <TypographyInput label={name} initial={value} onChange={console.log} />
+        <TypographyInput path={path} label={name} />
       </PlaygroundProvider>,
     );
     cy.get('.MuiFormControl-root').contains(name);

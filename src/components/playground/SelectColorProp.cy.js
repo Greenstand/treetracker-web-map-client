@@ -4,7 +4,10 @@ import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Select Color Prop', () => {
   const path = 'palette.light.primary';
-  const prop = 'main';
+  const prop = {
+    propName: 'primary',
+    options: ['main', 'light', 'dark', 'contrastText'],
+  };
 
   it('renders', () => {
     mount(
@@ -12,8 +15,8 @@ describe('Select Color Prop', () => {
         <SelectColorProp path={path} prop={prop} />
       </PlaygroundProvider>,
     );
-    cy.get('#select-color-main-header').contains(prop);
-    cy.get('#select-color-main-header').click();
+    cy.get(`#select-color-${prop.propName}-header`).contains(prop.propName);
+    cy.get(`#select-color-${prop.propName}-header`).click();
     cy.get('.MuiList-root').should('be.visible');
   });
 });
