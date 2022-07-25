@@ -269,7 +269,12 @@ export default function Layout({ children, isFloatingDisabled }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img alt="zoom-in" src={zoomIn} />
           </Box>
-          <Box onClick={handleZoomOut}>
+          <Box
+            onClick={handleZoomOut}
+            sx={{
+              '& img': { display: 'block' },
+            }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img alt="zoom-out" src={zoomOut} />
           </Box>
