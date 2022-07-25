@@ -5,8 +5,8 @@ import { usePlaygroundUtils } from '../../context/playgroundContext';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 function TypographyInput(props) {
-  const { path, label, onChange } = props;
-  const { getPropByPath } = usePlaygroundUtils();
+  const { path, label } = props;
+  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState(initialValue);
   const [isValid, setValid] = useState(true);
@@ -22,7 +22,7 @@ function TypographyInput(props) {
 
     if (!propRules[label].test(userValue)) return;
     setValid(true);
-    onChange({ propName: label, newValue: userValue });
+    setPropByPath(path, userValue);
   };
 
   return (
@@ -45,11 +45,7 @@ function TypographyInput(props) {
         InputProps={{
           endAdornment: label === 'fontFamily' && (
             <InputAdornment position="end">
-              <FontSelector
-                handleChange={(val) =>
-                  onChange({ propName: label, newValue: val })
-                }
-              />
+              <FontSelector handleChange={(val) => setPropByPath(path, val)} />
             </InputAdornment>
           ),
         }}

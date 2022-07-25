@@ -8,23 +8,12 @@ import {
   AccordionDetails,
   Typography,
 } from '@mui/material';
-import log from 'loglevel';
 import ColorInput from './ColorInput';
 import ColorThumbnail from './ColorThumbnail';
-import { usePlaygroundUtils } from '../../context/playgroundContext';
 
 function SelectColorProp(props) {
   const { prop, path } = props;
   const { propName, options } = prop;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-
-  const childProps = getPropByPath(path);
-
-  /* eslint-disable-next-line */
-  const handleChange = ({ propName, newValue }) => {
-    log.warn('prop changed', `${path}.${propName} with ${newValue}`);
-    setPropByPath(`${path}.${propName}`, newValue);
-  };
 
   return (
     <ListItem
@@ -64,11 +53,10 @@ function SelectColorProp(props) {
               {propName}
             </Typography>
             <Stack direction="row">
-              {Object.values(childProps).map((color, idx) => (
+              {options.map((option) => (
                 <ColorThumbnail
-                  /* eslint-disable-next-line */
-                  key={`color-thumbnail-${color}-${idx}`}
-                  color={color}
+                  key={`color-thumbnail-${propName}-${option}`}
+                  path={`${path}.${option}`}
                 />
               ))}
             </Stack>
@@ -76,18 +64,14 @@ function SelectColorProp(props) {
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {Object.entries(childProps).map(([name]) => (
+            {options.map((option) => (
               <ListItem
-                key={`color-input-${name}`}
+                key={`color-input-${option}`}
                 sx={{
                   px: 0,
                 }}
               >
-                <ColorInput
-                  path={`${path}.${name}`}
-                  label={name}
-                  onChange={handleChange}
-                />
+                <ColorInput path={`${path}.${option}`} label={option} />
               </ListItem>
             ))}
           </List>

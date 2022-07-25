@@ -4,8 +4,8 @@ import { usePlaygroundUtils } from '../../context/playgroundContext';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 function ColorInput(props) {
-  const { path, label, onChange } = props;
-  const { getPropByPath } = usePlaygroundUtils();
+  const { path, label } = props;
+  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState(initialValue);
   const [isValid, setValid] = useState(true);
@@ -18,7 +18,7 @@ function ColorInput(props) {
 
     if (!isGradient) if (!propRules.color.test(userValue)) return;
     setValid(true);
-    onChange({ propName: label, newValue: userValue });
+    setPropByPath(path, userValue);
   };
 
   return (
