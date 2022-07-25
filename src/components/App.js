@@ -128,7 +128,7 @@ function MapComponent() {
       zoomControl: true,
       zoomControlPosition: 'bottomright',
     });
-    map.on('moveEnd', () => {
+    map.on('move-end', () => {
       log.warn('update url');
       window.history.pushState(
         'treetrakcer',
