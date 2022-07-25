@@ -15,10 +15,12 @@ import { usePlaygroundUtils } from '../../context/playgroundContext';
 
 function SelectTypographyProp(props) {
   const { prop, path } = props;
+  const { propName, options } = prop;
   const { getPropByPath, setPropByPath } = usePlaygroundUtils();
 
   const childProps = getPropByPath(path);
 
+  /* eslint-disable-next-line */
   const handleChange = ({ propName, newValue }) => {
     log.warn('prop changed', `${path}.${propName} with ${newValue}`);
     setPropByPath(`${path}.${propName}`, newValue);
@@ -54,10 +56,10 @@ function SelectTypographyProp(props) {
               width: 1,
             }}
           >
-            <Typography>{prop}</Typography>
+            <Typography>{propName}</Typography>
             <TypographyThumbnail
-              key={`typography-thumbnail-${prop}`}
-              text={`style for ${prop}`}
+              key={`typography-thumbnail-${propName}`}
+              text={`style for ${propName}`}
               previewStyle={childProps}
             />
           </Stack>
@@ -74,8 +76,8 @@ function SelectTypographyProp(props) {
                     }}
                   >
                     <TypographyInput
+                      path={`${path}.${name}`}
                       label={name}
-                      initial={value}
                       onChange={handleChange}
                     />
                   </ListItem>

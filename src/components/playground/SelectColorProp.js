@@ -15,10 +15,12 @@ import { usePlaygroundUtils } from '../../context/playgroundContext';
 
 function SelectColorProp(props) {
   const { prop, path } = props;
+  const { propName, options } = prop;
   const { getPropByPath, setPropByPath } = usePlaygroundUtils();
 
   const childProps = getPropByPath(path);
 
+  /* eslint-disable-next-line */
   const handleChange = ({ propName, newValue }) => {
     log.warn('prop changed', `${path}.${propName} with ${newValue}`);
     setPropByPath(`${path}.${propName}`, newValue);
@@ -41,8 +43,8 @@ function SelectColorProp(props) {
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls={`select-color-${prop}-content`}
-          id={`select-color-${prop}-header`}
+          aria-controls={`select-color-${propName}-content`}
+          id={`select-color-${propName}-header`}
           sx={{
             background: '#eee',
           }}
@@ -59,7 +61,7 @@ function SelectColorProp(props) {
                 textTransform: 'capitalize',
               }}
             >
-              {prop}
+              {propName}
             </Typography>
             <Stack direction="row">
               {Object.values(childProps).map((color, idx) => (
@@ -74,7 +76,7 @@ function SelectColorProp(props) {
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {Object.entries(childProps).map(([name, value]) => (
+            {Object.entries(childProps).map(([name]) => (
               <ListItem
                 key={`color-input-${name}`}
                 sx={{
@@ -82,8 +84,8 @@ function SelectColorProp(props) {
                 }}
               >
                 <ColorInput
+                  path={`${path}.${name}`}
                   label={name}
-                  initial={value}
                   onChange={handleChange}
                 />
               </ListItem>
