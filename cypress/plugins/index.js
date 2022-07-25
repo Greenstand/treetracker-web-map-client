@@ -27,6 +27,11 @@ module.exports = async (on, config) => {
     handleNextRequests(req, res),
   );
 
+  const axios = require('axios');
+  const MockAdapter = require('axios-mock-adapter');
+  // This sets the mock adapter on the default instance
+  const mock = new MockAdapter(axios);
+
   await new Promise((resolve, reject) => {
     customServer.listen(3000, (err) => {
       if (err) {
@@ -63,6 +68,9 @@ module.exports = async (on, config) => {
       // nock('https://icanhazdadjoke.com').get('/').reply(200, ...)
       const methodString = method.toLowerCase();
       nock(hostname)[methodString](path).reply(statusCode, body);
+      const url = `${hostname}${path}`;
+      console.log('axios url:', url);
+      mock.onGet(url).reply(statusCode, body);
 
       return null;
     },
@@ -84,6 +92,9 @@ module.exports = async (on, config) => {
 
         const methodString = method.toLowerCase();
         scope = scope.persist()[methodString](path).reply(statusCode, body);
+        const url = `${hostname}${path}`;
+        console.log('axios url2:', url);
+        mock.onGet(url).reply(statusCode, body);
       }
 
       return null;
