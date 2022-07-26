@@ -1,16 +1,25 @@
+import { PlaygroundProvider } from 'context/playgroundContext';
 import ColorInput from './ColorInput';
 import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Color Input', () => {
   const name = 'main';
-  const value = '#ff7';
+  const path = `palette.dark.primary.${name}`;
 
   it('renders', () => {
-    mount(<ColorInput label={name} initial={value} onChange={console.log} />);
+    mount(
+      <PlaygroundProvider>
+        <ColorInput label={name} path={path} />
+      </PlaygroundProvider>,
+    );
   });
 
   it('gives error on invalid syntax', () => {
-    mount(<ColorInput label={name} initial={value} onChange={console.log} />);
+    mount(
+      <PlaygroundProvider>
+        <ColorInput label={name} path={path} />
+      </PlaygroundProvider>,
+    );
     cy.get('.MuiFormControl-root').type('z').contains('Invalid syntax');
   });
 });

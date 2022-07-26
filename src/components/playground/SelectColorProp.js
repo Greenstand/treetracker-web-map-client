@@ -8,21 +8,12 @@ import {
   AccordionDetails,
   Typography,
 } from '@mui/material';
-import log from 'loglevel';
 import ColorInput from './ColorInput';
 import ColorThumbnail from './ColorThumbnail';
-import { usePlaygroundUtils } from '../../context/playgroundContext';
 
 function SelectColorProp(props) {
   const { prop, path } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-
-  const childProps = getPropByPath(path);
-
-  const handleChange = ({ propName, newValue }) => {
-    log.warn('prop changed', `${path}.${propName} with ${newValue}`);
-    setPropByPath(`${path}.${propName}`, newValue);
-  };
+  const { propName, options } = prop;
 
   return (
     <ListItem
@@ -41,8 +32,8 @@ function SelectColorProp(props) {
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls={`select-color-${prop}-content`}
-          id={`select-color-${prop}-header`}
+          aria-controls={`select-color-${propName}-content`}
+          id={`select-color-${propName}-header`}
           sx={{
             background: '#eee',
           }}
@@ -59,14 +50,13 @@ function SelectColorProp(props) {
                 textTransform: 'capitalize',
               }}
             >
-              {prop}
+              {propName}
             </Typography>
             <Stack direction="row">
-              {Object.values(childProps).map((color, idx) => (
+              {options.map((option) => (
                 <ColorThumbnail
-                  /* eslint-disable-next-line */
-                  key={`color-thumbnail-${color}-${idx}`}
-                  color={color}
+                  key={`color-thumbnail-${propName}-${option}`}
+                  path={`${path}.${option}`}
                 />
               ))}
             </Stack>
@@ -74,18 +64,14 @@ function SelectColorProp(props) {
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {Object.entries(childProps).map(([name, value]) => (
+            {options.map((option) => (
               <ListItem
-                key={`color-input-${name}`}
+                key={`color-input-${option}`}
                 sx={{
                   px: 0,
                 }}
               >
-                <ColorInput
-                  label={name}
-                  initial={value}
-                  onChange={handleChange}
-                />
+                <ColorInput path={`${path}.${option}`} label={option} />
               </ListItem>
             ))}
           </List>

@@ -4,7 +4,16 @@ import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Select Typography Prop', () => {
   const path = 'typography.h1';
-  const prop = 'h1';
+  const prop = {
+    propName: 'h1',
+    options: [
+      'fontFamily',
+      'fontWeight',
+      'fontSize',
+      'lineHeight',
+      'letterSpacing',
+    ],
+  };
 
   it('renders', () => {
     mount(
@@ -12,8 +21,10 @@ describe('Select Typography Prop', () => {
         <SelectTypographyProp path={path} prop={prop} />
       </PlaygroundProvider>,
     );
-    cy.get('#select-typography-h1-header').contains(prop);
-    cy.get('#select-typography-h1-header').click();
+    cy.get(`#select-typography-${prop.propName}-header`).contains(
+      prop.propName,
+    );
+    cy.get(`#select-typography-${prop.propName}-header`).click();
     cy.get('.MuiList-root').should('be.visible');
   });
 });

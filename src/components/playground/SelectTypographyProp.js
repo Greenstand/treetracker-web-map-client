@@ -8,21 +8,12 @@ import {
   AccordionDetails,
   Typography,
 } from '@mui/material';
-import log from 'loglevel';
 import TypographyInput from './TypographyInput';
 import TypographyThumbnail from './TypographyThumbnail';
-import { usePlaygroundUtils } from '../../context/playgroundContext';
 
 function SelectTypographyProp(props) {
   const { prop, path } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-
-  const childProps = getPropByPath(path);
-
-  const handleChange = ({ propName, newValue }) => {
-    log.warn('prop changed', `${path}.${propName} with ${newValue}`);
-    setPropByPath(`${path}.${propName}`, newValue);
-  };
+  const { propName, options } = prop;
 
   return (
     <ListItem
@@ -41,8 +32,8 @@ function SelectTypographyProp(props) {
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls={`select-typography-${prop}-content`}
-          id={`select-typography-${prop}-header`}
+          aria-controls={`select-typography-${propName}-content`}
+          id={`select-typography-${propName}-header`}
           sx={{
             background: '#eee',
           }}
@@ -54,33 +45,26 @@ function SelectTypographyProp(props) {
               width: 1,
             }}
           >
-            <Typography>{prop}</Typography>
+            <Typography>{propName}</Typography>
             <TypographyThumbnail
-              key={`typography-thumbnail-${prop}`}
-              text={`style for ${prop}`}
-              previewStyle={childProps}
+              key={`typography-thumbnail-${propName}`}
+              text={`style for ${propName}`}
+              path={path}
             />
           </Stack>
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {Object.entries(childProps).map(
-              ([name, value]) =>
-                typeof value === 'string' && (
-                  <ListItem
-                    key={`typography-input-${name}`}
-                    sx={{
-                      px: 0,
-                    }}
-                  >
-                    <TypographyInput
-                      label={name}
-                      initial={value}
-                      onChange={handleChange}
-                    />
-                  </ListItem>
-                ),
-            )}
+            {options.map((option) => (
+              <ListItem
+                key={`typography-input-${option}`}
+                sx={{
+                  px: 0,
+                }}
+              >
+                <TypographyInput path={`${path}.${option}`} label={option} />
+              </ListItem>
+            ))}
           </List>
         </AccordionDetails>
       </Accordion>

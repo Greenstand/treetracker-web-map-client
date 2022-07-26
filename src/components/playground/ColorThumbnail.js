@@ -1,6 +1,10 @@
 import { Box } from '@mui/material';
+import { usePlaygroundUtils } from '../../context/playgroundContext';
 
-function ColorThumbnail({ color }) {
+function ColorThumbnail({ path }) {
+  const { getPropByPath } = usePlaygroundUtils();
+  const color = getPropByPath(path);
+
   return (
     <Box
       sx={{

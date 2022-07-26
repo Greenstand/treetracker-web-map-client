@@ -1,16 +1,19 @@
 import { Box, TextField, InputAdornment } from '@mui/material';
 import { useState, useEffect } from 'react';
 import FontSelector from './FontSelector';
+import { usePlaygroundUtils } from '../../context/playgroundContext';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 function TypographyInput(props) {
-  const { label, initial, onChange } = props;
-  const [value, setValue] = useState(initial);
+  const { path, label } = props;
+  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
+  const initialValue = getPropByPath(path);
+  const [value, setValue] = useState(initialValue);
   const [isValid, setValid] = useState(true);
 
   useEffect(() => {
-    setValue(initial);
-  }, [initial]);
+    setValue(initialValue);
+  }, [initialValue]);
 
   const handleChange = (e) => {
     const userValue = e.target.value;
@@ -19,7 +22,7 @@ function TypographyInput(props) {
 
     if (!propRules[label].test(userValue)) return;
     setValid(true);
-    onChange({ propName: label, newValue: userValue });
+    setPropByPath(path, userValue);
   };
 
   return (
@@ -42,11 +45,7 @@ function TypographyInput(props) {
         InputProps={{
           endAdornment: label === 'fontFamily' && (
             <InputAdornment position="end">
-              <FontSelector
-                handleChange={(val) =>
-                  onChange({ propName: label, newValue: val })
-                }
-              />
+              <FontSelector handleChange={(val) => setPropByPath(path, val)} />
             </InputAdornment>
           ),
         }}

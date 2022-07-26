@@ -449,22 +449,34 @@ function ThemeConfig() {
         >
           <CategoryTabPanel value={tabIndex} index={0}>
             <ToggleThemeMode />
-            {customizeOptions.palette.map((prop) => (
-              <SelectColorProp
-                key={`select-color-${prop}`}
-                prop={prop}
-                path={`palette.${themeType}.${prop}`}
-              />
-            ))}
+            {Object.entries(customizeOptions.palette.options).map(
+              ([propName, options]) => (
+                <SelectColorProp
+                  key={`select-color-${propName}`}
+                  prop={{ propName, options }}
+                  path={`palette${
+                    customizeOptions.palette.themeModeDependend
+                      ? `.${  themeType}`
+                      : ''
+                  }.${propName}`}
+                />
+              ),
+            )}
           </CategoryTabPanel>
           <CategoryTabPanel value={tabIndex} index={1}>
-            {customizeOptions.typography.map((prop) => (
-              <SelectTypographyProp
-                key={`select-typography-${prop}`}
-                prop={prop}
-                path={`typography.${prop}`}
-              />
-            ))}
+            {Object.entries(customizeOptions.typography.options).map(
+              ([propName, options]) => (
+                <SelectTypographyProp
+                  key={`select-typography-${propName}`}
+                  prop={{ propName, options }}
+                  path={`typography${
+                    customizeOptions.typography.themeModeDependend
+                      ? `.${  themeType}`
+                      : ''
+                  }.${propName}`}
+                />
+              ),
+            )}
           </CategoryTabPanel>
           <CategoryTabPanel value={tabIndex} index={2}>
             <FontCustomization />
