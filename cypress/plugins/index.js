@@ -74,6 +74,25 @@ module.exports = async (on, config) => {
 
       return null;
     },
+    nockIntercept({ hostname, method, path, statusCode, body }) {
+      console.log(
+        'nock will: %s %s%s respond with %d %o',
+        method,
+        hostname,
+        path,
+        statusCode,
+        body,
+      );
+
+      // add one-time network stub like
+      // nock('https://icanhazdadjoke.com').get('/').reply(200, ...)
+      const methodString = method.toLowerCase();
+      nock(hostname)[methodString](path).reply(statusCode, body);
+      const url = `${hostname}${path}`;
+      console.log('axios url:', url);
+      mock.onGet(url).reply(statusCode, body);
+      return null;
+    },
     nocks({ hostname, routes }) {
       nock.activate();
 
