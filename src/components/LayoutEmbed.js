@@ -114,7 +114,7 @@ export default function Layout({ children, isFloatingDisabled }) {
               </Box>
             </Box>
           </Drawer>
-          {isDrawerOpen && (
+          {isDrawerOpen ? (
             <Paper
               onClick={handleDrawerToggle}
               sx={{
@@ -132,6 +132,25 @@ export default function Layout({ children, isFloatingDisabled }) {
               }}
             >
               <ArrowLeft />
+            </Paper>
+          ) : (
+            <Paper
+              onClick={handleDrawerToggle}
+              sx={{
+                cursor: 'pointer',
+                position: 'absolute',
+                left: 0,
+                width: 23,
+                height: 48,
+                display: 'flex',
+                borderRadius: '0px 5px 5px 0',
+                zIndex: 1200,
+                top: 13,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <ArrowRight />
             </Paper>
           )}
         </>
@@ -151,27 +170,6 @@ export default function Layout({ children, isFloatingDisabled }) {
           <SearchFilter />
         </Box>
       )}
-      {!isDrawerOpen && (
-        <Paper
-          onClick={handleDrawerToggle}
-          sx={{
-            cursor: 'pointer',
-            position: 'absolute',
-            left: 0,
-            width: 23,
-            height: 48,
-            display: 'flex',
-            borderRadius: '0px 5px 5px 0',
-            zIndex: 1200,
-            top: 13,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <ArrowRight />
-        </Paper>
-      )}
-
       {false && isFloatingDisabled && (
         <Box
           sx={{
