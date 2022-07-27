@@ -389,6 +389,7 @@ function ThemeConfig() {
           style={{
             width: '100%',
             height: '100%',
+            border: 'none',
           }}
         />
       </Grid>
@@ -456,7 +457,7 @@ function ThemeConfig() {
                   prop={{ propName, options }}
                   path={`palette${
                     customizeOptions.palette.themeModeDependend
-                      ? `.${  themeType}`
+                      ? `.${themeType}`
                       : ''
                   }.${propName}`}
                 />
@@ -471,7 +472,7 @@ function ThemeConfig() {
                   prop={{ propName, options }}
                   path={`typography${
                     customizeOptions.typography.themeModeDependend
-                      ? `.${  themeType}`
+                      ? `.${themeType}`
                       : ''
                   }.${propName}`}
                 />
