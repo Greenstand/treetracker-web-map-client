@@ -341,6 +341,13 @@ export function CustomThemeProvider({ children }) {
     [],
   );
 
+  const createThemeFromThemeObject = () => createTheme({
+      ...themeObject,
+      palette: themeObject.palette[mode],
+      components: themeObject.components[mode],
+      spacing: theme.spacing,
+    });
+
   function loadThemeFromServer() {
     const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
     axios.get(url).then((response) => {
@@ -356,14 +363,7 @@ export function CustomThemeProvider({ children }) {
 
   React.useEffect(() => {
     if (themeObject) {
-      setTheme(
-        createTheme(themeObject, {
-          // overrides the palette/components with the custom light/dark version
-          palette: themeObject.palette[mode],
-          components: themeObject.components[mode],
-          spacing: theme.spacing,
-        }),
-      );
+      setTheme(createThemeFromThemeObject());
 
       loadFonts(themeObject.fonts).then((fontsLoaded) => {
         log.warn('custom fonts loaded:', fontsLoaded);
@@ -396,28 +396,9 @@ export function CustomThemeProvider({ children }) {
 
   React.useEffect(() => {
     if (!themeObject) return;
-    // create a new theme
-    const newTheme = {
-      ...themeObject,
-      palette: themeObject.palette[mode],
-      components: themeObject.components[mode],
-      spacing: theme.spacing,
-    };
-    // set the new theme
-    setTheme(createTheme(newTheme));
-  }, [themeObject]);
-
-  React.useEffect(() => {
     // set the theme to correct mode when the mode changes
-    if (!themeObject) return;
-    setTheme(
-      createTheme(themeObject, {
-        palette: themeObject.palette[mode],
-        components: themeObject.components[mode],
-        spacing: theme.spacing,
-      }),
-    );
-  }, [mode]);
+    setTheme(createThemeFromThemeObject);
+  }, [mode, themeObject]);
 
   React.useEffect(() => {
     log.warn('theme changed', theme);
