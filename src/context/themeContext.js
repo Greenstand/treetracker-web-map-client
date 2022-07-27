@@ -377,7 +377,35 @@ export function CustomThemeProvider({ children }) {
         "There isn't setting's for config api, do not load theme from server",
       );
     }
+
+    const handlePreviewEvent = (e) => {
+      setThemeObject(e.detail.theme);
+    };
+
+    window.addEventListener(
+      'playground:theme-update',
+      handlePreviewEvent,
+      false,
+    );
+
+    return () => {
+      // remove event listener on unmount
+      window.removeEventListener(handlePreviewEvent);
+    };
   }, []);
+
+  React.useEffect(() => {
+    if (!themeObject) return;
+    // create a new theme
+    const newTheme = {
+      ...themeObject,
+      palette: themeObject.palette[mode],
+      components: themeObject.components[mode],
+      spacing: theme.spacing,
+    };
+    // set the new theme
+    setTheme(createTheme(newTheme));
+  }, [themeObject]);
 
   React.useEffect(() => {
     // set the theme to correct mode when the mode changes
