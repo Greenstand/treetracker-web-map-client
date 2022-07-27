@@ -1,5 +1,5 @@
 import { Box, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePlaygroundUtils } from '../../context/playgroundContext';
 import { propRules } from '../../models/themePlaygroundOptions';
 
@@ -10,6 +10,10 @@ function ColorInput(props) {
   const [value, setValue] = useState(initialValue);
   const [isValid, setValid] = useState(true);
   const isGradient = /gradient/i.test(label);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   const handleChange = (e) => {
     const userValue = e.target.value;
