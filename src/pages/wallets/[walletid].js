@@ -245,7 +245,7 @@ export default function Wallet(props) {
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const id = params.walletid;
   const [wallet, species, tokenCount, tokenRegionCount] = await Promise.all([
     getWalletById(id),
@@ -268,14 +268,5 @@ export async function getStaticProps({ params }) {
       tokenCount,
       tokenRegionCount,
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
-  };
-}
-
-// eslint-disable-next-line require-await
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 }
