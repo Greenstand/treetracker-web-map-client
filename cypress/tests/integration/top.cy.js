@@ -9,9 +9,7 @@ describe('top', () => {
     clearNocks();
   });
 
-  // skip because unknown error:
-  // https://github.com/Greenstand/treetracker-web-map-client/runs/7515320937?check_suite_focus=true
-  it.skip('top page', () => {
+  it('top page', () => {
     prepareNocks({ tree: tree186734 });
 
     cy.task('nockIntercept', {
