@@ -86,7 +86,7 @@ export function PlaygroundProvider({ children }) {
     if (!value || !propPath) return null;
     const temp = { ...theme };
     propPath.split('.').reduce((acc, curr, i, src) => {
-      if (curr === src[src.length - 1]) {
+      if (i === src.length - 1) {
         acc[src[src.length - 1]] = value;
         return acc[src[src.length - 1]];
       }
