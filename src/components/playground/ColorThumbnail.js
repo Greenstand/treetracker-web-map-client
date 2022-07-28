@@ -1,9 +1,15 @@
 import { Box } from '@mui/material';
+import { useState, useEffect } from 'react';
 import { usePlaygroundUtils } from '../../context/playgroundContext';
 
 function ColorThumbnail({ path }) {
   const { getPropByPath } = usePlaygroundUtils();
-  const color = getPropByPath(path);
+  const themeColor = getPropByPath(path);
+  const [color, setColor] = useState('');
+
+  useEffect(() => {
+    setColor(themeColor);
+  }, [themeColor]);
 
   return (
     <Box

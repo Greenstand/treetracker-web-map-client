@@ -1,4 +1,10 @@
-import React, { useEffect, createContext, useState, useContext } from 'react';
+import React, {
+  useEffect,
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+} from 'react';
 import { buildTheme } from './themeContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { predefinedFonts } from '../models/themePlaygroundOptions';
@@ -106,10 +112,15 @@ export function PlaygroundProvider({ children }) {
    * // returns { main: xxx, light: xxx, dark: xxx }
    * getPropByPath('palette.primary')
    */
-  const getPropByPath = (propPath) => {
-    if (!propPath) return null;
-    return propPath.split('.').reduce((acc, curr, i, src) => acc[curr], theme);
-  };
+  const getPropByPath = useCallback(
+    (propPath) => {
+      if (!propPath) return null;
+      return propPath
+        .split('.')
+        .reduce((acc, curr, i, src) => acc[curr], theme);
+    },
+    [theme],
+  );
 
   const contextValue = React.useMemo(
     () => ({
