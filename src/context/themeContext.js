@@ -341,6 +341,13 @@ export function CustomThemeProvider({ children }) {
     [],
   );
 
+  const createThemeFromThemeObject = () => createTheme({
+      ...themeObject,
+      palette: themeObject.palette[mode],
+      components: themeObject.components[mode],
+      spacing: theme.spacing,
+    });
+
   function loadThemeFromServer() {
     const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
     axios.get(url).then((response) => {
@@ -356,14 +363,7 @@ export function CustomThemeProvider({ children }) {
 
   React.useEffect(() => {
     if (themeObject) {
-      setTheme(
-        createTheme(themeObject, {
-          // overrides the palette/components with the custom light/dark version
-          palette: themeObject.palette[mode],
-          components: themeObject.components[mode],
-          spacing: theme.spacing,
-        }),
-      );
+      setTheme(createThemeFromThemeObject());
 
       loadFonts(themeObject.fonts).then((fontsLoaded) => {
         log.warn('custom fonts loaded:', fontsLoaded);
@@ -377,19 +377,28 @@ export function CustomThemeProvider({ children }) {
         "There isn't setting's for config api, do not load theme from server",
       );
     }
+
+    const handlePreviewEvent = (e) => {
+      setThemeObject(e.detail.theme);
+    };
+
+    window.addEventListener(
+      'playground:theme-update',
+      handlePreviewEvent,
+      false,
+    );
+
+    return () => {
+      // remove event listener on unmount
+      window.removeEventListener(handlePreviewEvent);
+    };
   }, []);
 
   React.useEffect(() => {
-    // set the theme to correct mode when the mode changes
     if (!themeObject) return;
-    setTheme(
-      createTheme(themeObject, {
-        palette: themeObject.palette[mode],
-        components: themeObject.components[mode],
-        spacing: theme.spacing,
-      }),
-    );
-  }, [mode]);
+    // set the theme to correct mode when the mode changes
+    setTheme(createThemeFromThemeObject);
+  }, [mode, themeObject]);
 
   React.useEffect(() => {
     log.warn('theme changed', theme);

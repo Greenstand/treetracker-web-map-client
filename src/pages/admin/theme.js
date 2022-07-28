@@ -8,7 +8,7 @@ import { Button, Box, Stack, Grid, Tabs, Tab } from '@mui/material';
 import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   SelectColorProp,
   SelectTypographyProp,
@@ -33,8 +33,8 @@ function ThemeConfig() {
   const [RPT, setRPT] = useState(null);
   // const [RPTToken, setRPTToken] = React.useState(null);
   const [auz, setAuz] = useState(null);
-  const [key, setKey] = useState(1);
   const [user, setUser] = useState(null);
+  const iframeRef = useRef();
 
   // playground theme for customization
   const [theme, setTheme] = usePlaygroundTheme();
@@ -62,8 +62,13 @@ function ThemeConfig() {
   const handlePreview = useCallback(() => {
     // NOTE: when theme can be stored on server this step(optimizing fonts) can be removed
     const themeWithOptimizedFonts = optimizeThemeFonts(theme);
+
+    const customEvent = new CustomEvent('playground:theme-update', {
+      detail: { theme: themeWithOptimizedFonts },
+    });
+
+    iframeRef.current.contentWindow.dispatchEvent(customEvent);
     setThemeObject(themeWithOptimizedFonts);
-    setKey(key + 1);
   }, [theme]);
 
   function handleSave() {
@@ -383,8 +388,8 @@ function ThemeConfig() {
     >
       <Grid item xs={9}>
         <iframe
+          ref={iframeRef}
           title="sandbox"
-          key={key}
           src="http://localhost:3000/top"
           style={{
             width: '100%',
@@ -456,7 +461,7 @@ function ThemeConfig() {
                   prop={{ propName, options }}
                   path={`palette${
                     customizeOptions.palette.themeModeDependend
-                      ? `.${  themeType}`
+                      ? `.${themeType}`
                       : ''
                   }.${propName}`}
                 />
@@ -471,7 +476,7 @@ function ThemeConfig() {
                   prop={{ propName, options }}
                   path={`typography${
                     customizeOptions.typography.themeModeDependend
-                      ? `.${  themeType}`
+                      ? `.${themeType}`
                       : ''
                   }.${propName}`}
                 />
