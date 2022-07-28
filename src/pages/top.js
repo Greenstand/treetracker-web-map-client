@@ -9,7 +9,7 @@ import SearchButton from 'components/SearchButton';
 import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import FeaturedPlantersSlider from '../components/FeaturedPlantersSlider';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
-// import LeaderBoard from '../components/LeaderBoard';
+import LeaderBoard from '../components/LeaderBoard';
 // import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Filter from '../components/common/Filter';
@@ -148,10 +148,10 @@ function Top({ trees, planters, countries, organizations }) {
           />
         </Box>
         <Box sx={{ marginTop: 18 }} />
-        {/* <LeaderBoard
+        <LeaderBoard
           countries={leaderboardCountries}
           handleCountryClick={handleCountryClick}
-        /> */}
+        />
       </Box>
       {isMobileScreen && (
         <Portal container={document.getElementById('drawer-title-container')}>
