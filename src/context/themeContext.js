@@ -341,7 +341,8 @@ export function CustomThemeProvider({ children }) {
     [],
   );
 
-  const createThemeFromThemeObject = () => createTheme({
+  const createThemeFromThemeObject = () =>
+    createTheme({
       ...themeObject,
       palette: themeObject.palette[mode],
       components: themeObject.components[mode],
@@ -390,7 +391,7 @@ export function CustomThemeProvider({ children }) {
 
     return () => {
       // remove event listener on unmount
-      window.removeEventListener(handlePreviewEvent);
+      window.removeEventListener('playground:theme-update', handlePreviewEvent);
     };
   }, []);
 
