@@ -113,10 +113,11 @@ export async function getTokenById(id) {
   try {
     const url = apiPaths.tokens(id);
     const res = await axios.get(url);
+    log.warn('url:', url);
     const { data } = res;
     return data;
   } catch (err) {
-    log.error(err.message);
+    log.error(err);
     throw new Error(err.message);
   }
 }
