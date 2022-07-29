@@ -88,6 +88,11 @@ export default function Planter(props) {
 
   const { classes } = useStyles();
 
+  // try to find first tree image or default image return
+  const backgroundPic =
+    planter?.featuredTrees?.trees?.[0]?.image_url ||
+    `${router.basePath}${planterBackground}`;
+
   useEffect(() => {
     setTitlesData({
       firstName: planter.first_name,
@@ -168,7 +173,7 @@ export default function Planter(props) {
             },
           }}
         >
-          <img src={`${router.basePath}${planterBackground}`} alt="profile" />
+          <img src={backgroundPic} alt="profile" />
           <Avatar
             src={planter.image_url}
             sx={{
@@ -420,7 +425,7 @@ export default function Planter(props) {
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const id = params.planterid;
   const planter = await getPlanterById(id);
   const data = await getOrgLinks(planter.links);
@@ -428,14 +433,5 @@ export async function getStaticProps({ params }) {
     props: {
       planter: { ...planter, ...data },
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
-  };
-}
-
-// eslint-disable-next-line require-await
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 }

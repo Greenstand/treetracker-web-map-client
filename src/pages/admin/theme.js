@@ -1,38 +1,75 @@
-import { Button, Box } from '@mui/material';
+import AutoRenewIcon from '@mui/icons-material/Autorenew';
+import FontDownloadIcon from '@mui/icons-material/FontDownload';
+import PaletteIcon from '@mui/icons-material/Palette';
+import PreviewIcon from '@mui/icons-material/Preview';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
+import { Button, Box, Stack, Grid, Tabs, Tab } from '@mui/material';
 import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
-import React from 'react';
-import { buildTheme } from '../../context/themeContext';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import {
+  SelectColorProp,
+  SelectTypographyProp,
+  SquareIconButton,
+  CategoryTabPanel,
+  ToggleThemeMode,
+  getTabProps,
+  FontCustomization,
+} from '../../components/playground';
+import {
+  PlaygroundProvider,
+  usePlaygroundTheme,
+  usePlaygroundThemeType,
+  usePlaygroundUtils,
+} from '../../context/playgroundContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { customizeOptions } from '../../models/themePlaygroundOptions';
+import { optimizeThemeFonts } from '../../models/utils';
 
 function ThemeConfig() {
   const { keycloak } = useKeycloak();
-  const [RPT, setRPT] = React.useState(null);
+  const [RPT, setRPT] = useState(null);
   // const [RPTToken, setRPTToken] = React.useState(null);
-  const [auz, setAuz] = React.useState(null);
-  const [theme, setTheme] = React.useState(
-    JSON.stringify(buildTheme('light'), null, 2),
-  );
-  const [key, setKey] = React.useState(1);
-  const [user, setUser] = React.useState(null);
-  // log.warn('theme to config:', theme);
+  const [auz, setAuz] = useState(null);
+  const [user, setUser] = useState(null);
+  const iframeRef = useRef();
 
-  const [themeObject, setThemeObject] = useLocalStorage(
-    'themeObject',
-    undefined,
-  );
+  // playground theme for customization
+  const [theme, setTheme] = usePlaygroundTheme();
+  const [themeType, setThemeType] = usePlaygroundThemeType();
+  const { resetTheme } = usePlaygroundUtils();
+  const [autoReload, setAutoReload] = useState(false);
+
+  const [tabIndex, setTabIndex] = useState(0);
+  const handleTabChange = (_, newIndex) => {
+    setTabIndex(newIndex);
+  };
+
+  const [_, setThemeObject] = useLocalStorage('themeObject', undefined);
 
   function handleChange(event) {
-    const { name, value } = event.target;
-    setTheme(value);
+    const userValue = event.target.value;
+    const parsedTheme = JSON.parse(userValue);
+    const newTheme = {
+      ...theme,
+      parsedTheme,
+    };
+    setTheme(newTheme);
   }
 
-  function handlePreview() {
-    const themeObject2 = JSON.parse(theme);
-    setThemeObject(themeObject2);
-    setKey(key + 1);
-  }
+  const handlePreview = useCallback(() => {
+    // NOTE: when theme can be stored on server this step(optimizing fonts) can be removed
+    const themeWithOptimizedFonts = optimizeThemeFonts(theme);
+
+    const customEvent = new CustomEvent('playground:theme-update', {
+      detail: { theme: themeWithOptimizedFonts },
+    });
+
+    iframeRef.current.contentWindow.dispatchEvent(customEvent);
+    setThemeObject(themeWithOptimizedFonts);
+  }, [theme]);
 
   function handleSave() {
     // post theme to server
@@ -84,6 +121,10 @@ function ThemeConfig() {
         log.warn('error:', error);
         alert('Theme save loaded!');
       });
+  }
+
+  function resetFullTheme() {
+    resetTheme();
   }
 
   function load() {
@@ -289,7 +330,12 @@ function ThemeConfig() {
               })
                 .then((response) => {
                   log.warn('response:', response);
-                  setTheme(JSON.stringify(response.data.theme, null, 2));
+                  /**
+                   * !! should store the theme from server to the themeObject state !!
+                   * themeObject is used for customization has light/dark version
+                   * theme is the actual theme
+                   */
+                  setTheme(response.data.theme, null, 2);
                   setThemeObject(response.data.theme);
                 })
                 .catch((err) => {
@@ -306,7 +352,7 @@ function ThemeConfig() {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (process.env.NEXT_PUBLIC_CONFIG_API) {
       log.warn('to load theme from server');
       const script = document.createElement('script');
@@ -326,50 +372,142 @@ function ThemeConfig() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    log.warn('playground config theme changed', theme);
+    // only trigger preview if auto reload is enabled
+    if (!autoReload) return;
+    handlePreview();
+  }, [theme]);
+
   return (
-    <Box
+    <Grid
+      container
       sx={{
-        width: 1,
-        display: 'flex',
+        height: '100vh',
       }}
     >
-      <Box
-        sx={{
-          width: 0.8,
-          height: '100vh',
-        }}
-      >
+      <Grid item xs={9}>
         <iframe
+          ref={iframeRef}
           title="sandbox"
-          key={key}
-          src="http://localhost:3000/"
+          src="http://localhost:3000/top"
           style={{
             width: '100%',
             height: '100%',
+            border: 'none',
           }}
         />
-      </Box>
-      <Box>
-        <Button onClick={handlePreview} fullWidth>
-          preview
-        </Button>
-        <Button onClick={handleSave} fullWidth>
-          save
-        </Button>
-        <Button onClick={handleLoad} fullWidth>
-          load
-        </Button>
+      </Grid>
+      <Grid
+        item
+        xs={3}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+        }}
+      >
+        <Stack
+          direction="row"
+          sx={{
+            justifyContent: 'space-between',
+          }}
+        >
+          <SquareIconButton
+            icon={<PreviewIcon />}
+            tooltip="Reload Preview"
+            onClick={handlePreview}
+          />
+          <Button onClick={handleSave}>save</Button>
+          <Button onClick={handleLoad}>load</Button>
+          <SquareIconButton
+            icon={<RestartAltIcon />}
+            color="error"
+            tooltip="Reset to default"
+            onClick={resetFullTheme}
+          />
+          <SquareIconButton
+            icon={<AutoRenewIcon />}
+            color={autoReload ? 'success' : 'warning'}
+            tooltip={`Auto Reload: ${autoReload ? 'on' : 'off'}`}
+            onClick={() => setAutoReload((prev) => !prev)}
+          />
+        </Stack>
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          aria-label="customization category tabs"
+        >
+          <Tab icon={<PaletteIcon />} label="Palette" {...getTabProps(0)} />
+          <Tab
+            icon={<TextFieldsIcon />}
+            label="Typography"
+            {...getTabProps(1)}
+          />
+          <Tab icon={<FontDownloadIcon />} label="Fonts" {...getTabProps(2)} />
+        </Tabs>
+        <Box
+          sx={{
+            p: 0,
+            flex: '1',
+            overflowY: 'scroll',
+          }}
+        >
+          <CategoryTabPanel value={tabIndex} index={0}>
+            <ToggleThemeMode />
+            {Object.entries(customizeOptions.palette.options).map(
+              ([propName, options]) => (
+                <SelectColorProp
+                  key={`select-color-${propName}`}
+                  prop={{ propName, options }}
+                  path={`palette${
+                    customizeOptions.palette.themeModeDependend
+                      ? `.${themeType}`
+                      : ''
+                  }.${propName}`}
+                />
+              ),
+            )}
+          </CategoryTabPanel>
+          <CategoryTabPanel value={tabIndex} index={1}>
+            {Object.entries(customizeOptions.typography.options).map(
+              ([propName, options]) => (
+                <SelectTypographyProp
+                  key={`select-typography-${propName}`}
+                  prop={{ propName, options }}
+                  path={`typography${
+                    customizeOptions.typography.themeModeDependend
+                      ? `.${themeType}`
+                      : ''
+                  }.${propName}`}
+                />
+              ),
+            )}
+          </CategoryTabPanel>
+          <CategoryTabPanel value={tabIndex} index={2}>
+            <FontCustomization />
+          </CategoryTabPanel>
+        </Box>
         <textarea
           onChange={handleChange}
           style={{
             width: '100%',
             height: '100%',
+            maxHeight: '350px',
+            minHeight: '200px',
+            flex: '1',
           }}
-          value={theme}
+          value={JSON.stringify(theme, null, 2)}
         />
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 }
 
-export default ThemeConfig;
+export default function ThemePlayground() {
+  return (
+    <PlaygroundProvider>
+      <ThemeConfig />
+    </PlaygroundProvider>
+  );
+}
