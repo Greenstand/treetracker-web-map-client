@@ -86,11 +86,12 @@ export async function getOrgLinks({
 export async function getWalletById(id) {
   try {
     const url = apiPaths.wallets(id);
+    log.warn('url: ', url);
     const res = await axios.get(url);
     const { data } = res;
     return data;
   } catch (err) {
-    log.error(err.message);
+    log.error(err);
     throw new Error(err.message);
   }
 }
@@ -99,10 +100,11 @@ export async function getSpeciesByWalletId(id) {
   try {
     const url = apiPaths.filterSpeciesByWalletId(id);
     const res = await axios.get(url);
+    log.warn('url: ', url);
     const { data } = res;
     return data;
   } catch (err) {
-    log.error(err.message);
+    log.error(err);
     throw new Error(err.message);
   }
 }

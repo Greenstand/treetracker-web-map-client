@@ -501,7 +501,7 @@ export default function Organization(props) {
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const id = params.organizationid;
   const organization = await getOrganizationById(id);
   const orgLinks = await getOrgLinks(organization.links);
@@ -512,14 +512,5 @@ export async function getStaticProps({ params }) {
         ...orgLinks,
       },
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
-  };
-}
-
-// eslint-disable-next-line require-await
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 }
