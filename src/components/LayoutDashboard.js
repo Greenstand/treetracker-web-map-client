@@ -13,14 +13,17 @@ const keycloakCfg = {
 };
 
 function Layout({ children, cookies }) {
-  return (
-    <SSRKeycloakProvider
-      keycloakConfig={keycloakCfg}
-      persistor={SSRCookies(cookies)}
-    >
-      {children}
-    </SSRKeycloakProvider>
-  );
+  return <div>{children}</div>;
+
+  // disable keycloak for now
+  // return (
+  //   <SSRKeycloakProvider
+  //     keycloakConfig={keycloakCfg}
+  //     persistor={SSRCookies(cookies)}
+  //   >
+  //     {children}
+  //   </SSRKeycloakProvider>
+  // );
 }
 
 function parseCookies(req) {
