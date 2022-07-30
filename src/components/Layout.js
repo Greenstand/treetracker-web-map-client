@@ -1,10 +1,11 @@
+import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-import max from '../images/max.svg';
-import zoomIn from '../images/zoom-in.svg';
-import zoomOut from '../images/zoom-out.svg';
+import Max from '../images/max.svg';
+import ZoomIn from '../images/zoom-in.svg';
+import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -84,8 +85,8 @@ export default function Layout({ children }) {
               cursor: 'pointer',
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="fullscreen" src={max} />
+            { }
+            <SvgIcon component={Max} inheritViewBox fontSize="large" />
           </Box>
           <Box
             sx={{
@@ -99,14 +100,19 @@ export default function Layout({ children }) {
               flexDirection: 'column',
             }}
           >
-            <Box onClick={handleZoomIn}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-in" src={zoomIn} />
-            </Box>
-            <Box onClick={handleZoomOut}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-out" src={zoomOut} />
-            </Box>
+            <SvgIcon
+              onClick={handleZoomIn}
+              component={ZoomIn}
+              inheritViewBox
+              fontSize="large"
+              sx={{ mb: '10px' }}
+            />
+            <SvgIcon
+              onClick={handleZoomOut}
+              component={ZoomOut}
+              inheritViewBox
+              fontSize="large"
+            />
           </Box>
           <App />
         </Box>

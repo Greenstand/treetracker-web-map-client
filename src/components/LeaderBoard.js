@@ -5,13 +5,14 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  SvgIcon,
 } from '@mui/material';
 import countries from 'i18n-iso-countries';
 import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
 import { fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
-import treeIcon from '../images/icons/tree.svg';
+import TreeIcon from '../images/icons/tree.svg';
 
 const useStyles = makeStyles()((theme) => ({
   flagContainer: {
@@ -99,9 +100,9 @@ function TreeImage() {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
   return (
-    <Image
-      src={treeIcon}
-      alt="tree icon"
+    <SvgIcon
+      component={TreeIcon}
+      inheritViewBox
       width={!isMobileScreen ? 13.5 : 12}
       height={!isMobileScreen ? 18 : 14}
     />

@@ -1,14 +1,14 @@
 import { ArrowRight, ArrowLeft } from '@mui/icons-material';
-import { Paper, Typography } from '@mui/material';
+import { Paper, Typography, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import SearchFilter from './SearchFilter';
-import logoIcon from '../images/logo.png';
-import minIcon from '../images/min.svg';
-import zoomIn from '../images/zoom-in.svg';
-import zoomOut from '../images/zoom-out.svg';
+import LogoIcon from '../images/greenstand_logo.svg';
+import MinIcon from '../images/min.svg';
+import ZoomIn from '../images/zoom-in.svg';
+import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 // import { makeStyles } from 'models/makeStyles';
 
@@ -184,8 +184,7 @@ export default function Layout({ children, isFloatingDisabled }) {
           cursor: 'pointer',
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img alt="fullscreen" src={minIcon} />
+        <SvgIcon component={MinIcon} inheritViewBox fontSize="large" />
       </Box>
 
       <Box
@@ -236,7 +235,7 @@ export default function Layout({ children, isFloatingDisabled }) {
                 mt: '-3px',
               }}
             >
-              <img width="100%" alt="logo" src={logoIcon} />
+              <SvgIcon component={LogoIcon} inheritViewBox />
             </Box>
           </Box>
         </Paper>
@@ -252,19 +251,19 @@ export default function Layout({ children, isFloatingDisabled }) {
             flexDirection: 'column',
           }}
         >
-          <Box onClick={handleZoomIn}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="zoom-in" src={zoomIn} />
-          </Box>
-          <Box
+          <SvgIcon
+            onClick={handleZoomIn}
+            inheritViewBox
+            component={ZoomIn}
+            fontSize="large"
+          />
+
+          <SvgIcon
             onClick={handleZoomOut}
-            sx={{
-              '& img': { display: 'block' },
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="zoom-out" src={zoomOut} />
-          </Box>
+            component={ZoomOut}
+            fontSize="large"
+            inheritViewBox
+          />
         </Box>
       </Box>
       {/* <Box className={classes.root}>

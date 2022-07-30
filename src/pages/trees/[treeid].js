@@ -29,16 +29,16 @@ import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
-import accuracyIcon from '../../images/icons/accuracy.svg';
-import calendarIcon from '../../images/icons/calendar.svg';
+import AccuracyIcon from '../../images/icons/accuracy.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
 import diameterIcon from '../../images/icons/diameter.svg';
-import globalIcon from '../../images/icons/global.svg';
-import historyIcon from '../../images/icons/history.svg';
-import location from '../../images/icons/location.svg';
+import GlobalIcon from '../../images/icons/global.svg';
+import HistoryIcon from '../../images/icons/history.svg';
+import LocationIcon from '../../images/icons/location.svg';
 import originIcon from '../../images/icons/origin.svg';
-import shareIcon from '../../images/icons/share.svg';
-import tokenIcon from '../../images/icons/token.svg';
-import searchIcon from '../../images/search.svg';
+import ShareIcon from '../../images/icons/share.svg';
+import TokenIcon from '../../images/icons/token.svg';
+import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
@@ -204,7 +204,7 @@ export default function Tree({
             <BackButton />
             <Box>
               {}
-              <img src={searchIcon} alt="search" />
+              <SvgIcon component={SearchIcon} />
             </Box>
           </Box>
         </>
@@ -263,7 +263,11 @@ export default function Tree({
                     },
                   }}
                 >
-                  <img alt="share the link" src={shareIcon} />
+                  <SvgIcon
+                    component={ShareIcon}
+                    fontSize="large"
+                    viewBox="0 0 40 40"
+                  />
                 </Box>
               }
             />
@@ -372,18 +376,18 @@ export default function Tree({
         <TreeTag
           TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
           title="Planted on"
-          icon={<img src={calendarIcon} alt="calendar" />}
+          icon={<SvgIcon component={CalendarIcon} />}
         />
         <TreeTag
           TreeTagValue="Tanzania"
           title="Located in"
-          icon={<img src={location} alt="location" />}
+          icon={<SvgIcon component={LocationIcon} />}
         />
         {tree.age && (
           <TreeTag
             TreeTagValue={`${tree.age} Years`}
             title="Age"
-            icon={<img src={historyIcon} alt="age" />}
+            icon={<SvgIcon component={HistoryIcon} />}
           />
         )}
         {tree.species && (
@@ -398,7 +402,7 @@ export default function Tree({
           <TreeTag
             TreeTagValue={tree.gps_accuracy}
             title="GPS Accuracy"
-            icon={<img src={accuracyIcon} alt="accuracy" />}
+            icon={<SvgIcon component={AccuracyIcon} />}
           />
         )}
 
@@ -417,17 +421,16 @@ export default function Tree({
               5,
             )}`}
             title="Latitude, Longitude"
-            icon={<img src={globalIcon} alt="lat,lon" />}
+            icon={<SvgIcon component={GlobalIcon} />}
           />
         )}
         {tree.token_id && (
           <TreeTag
             TreeTagValue={tree.token_id}
             title="Token ID"
-            icon={<img src={tokenIcon} alt="token" />}
+            icon={<SvgIcon component={TokenIcon} />}
           />
         )}
-        
       </Box>
       <Divider
         varian="fullwidth"

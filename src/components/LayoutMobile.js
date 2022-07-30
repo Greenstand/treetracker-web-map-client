@@ -1,9 +1,10 @@
+import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 import SearchFilter from './SearchFilter';
-import zoomIn from '../images/zoom-in.svg';
-import zoomOut from '../images/zoom-out.svg';
+import ZoomIn from '../images/zoom-in.svg';
+import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -81,14 +82,23 @@ export default function Layout({ children }) {
               flexDirection: 'column',
             }}
           >
-            <Box onClick={handleZoomIn}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-in" src={zoomIn} />
-            </Box>
-            <Box marginBottom="2rem" onClick={handleZoomOut}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-out" src={zoomOut} />
-            </Box>
+            <SvgIcon
+              onClick={handleZoomIn}
+              alt="zoom-in"
+              component={ZoomIn}
+              inheritViewBox
+              fontSize="large"
+              sx={{ mb: '10px' }}
+            />
+            <SvgIcon
+              alt="zoom-out"
+              component={ZoomOut}
+              inheritViewBox
+              fontSize="large"
+              sx={{ mb: '2rem' }}
+              marginBottom="2rem"
+              onClick={handleZoomOut}
+            />
           </Box>
         </Box>
         {/* <Box

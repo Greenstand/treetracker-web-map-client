@@ -12,6 +12,8 @@ import peopleIcon from '../images/icons/people.svg';
 import quoteImgReverse from '../images/quote-reverse.svg';
 import quoteImg from '../images/quote-symbol.svg';
 
+// TODO: finish this page with turning the .svg files into SvgIcon components, I cant find where this page is and I dont want to change them without seeing what it looks like
+
 function PlanterQuote({
   quote,
   name,
