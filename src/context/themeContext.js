@@ -324,13 +324,13 @@ export function buildTheme(theMode) {
   return theme;
 }
 
+const defaultLightTheme = buildTheme('light');
+const defaultDarkTheme = buildTheme('dark');
+
 export function CustomThemeProvider({ children }) {
   const [mode, setMode] = useLocalStorage('theme', 'light');
   const [theme, setTheme] = React.useState(buildTheme(mode));
-  const [themeObject, setThemeObject] = useLocalStorage(
-    'themeObject',
-    undefined,
-  );
+  const [themeObject, setThemeObject] = useLocalStorage('themeObject', null);
 
   const colorMode = React.useMemo(
     () => ({
@@ -396,10 +396,14 @@ export function CustomThemeProvider({ children }) {
   }, []);
 
   React.useEffect(() => {
-    if (!themeObject) return;
     // set the theme to correct mode when the mode changes
-    setTheme(createThemeFromThemeObject);
-  }, [mode, themeObject]);
+    // if there is no custom theme set it to the default
+    if (!themeObject) {
+      setTheme(mode === 'light' ? defaultDarkTheme : defaultLightTheme);
+    } else {
+      setTheme(createThemeFromThemeObject);
+    }
+  }, [mode]);
 
   React.useEffect(() => {
     log.warn('theme changed', theme);
