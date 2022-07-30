@@ -18,6 +18,7 @@ import { makeStyles } from 'models/makeStyles';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
 import Share from '../../components/Share';
+import TreeInfoDialog from '../../components/TreeInfoDialog';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
@@ -28,7 +29,6 @@ import historyIcon from '../../images/icons/history.svg';
 import location from '../../images/icons/location.svg';
 import shareIcon from '../../images/icons/share.svg';
 import tokenIcon from '../../images/icons/token.svg';
-import maxIcon from '../../images/max.svg';
 import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
@@ -261,18 +261,11 @@ export default function Tree({
                 </Box>
               }
             />
-            <Box
-              onClick={() => handleMax(tree.image_url)}
-              sx={{
-                cursor: 'pointer',
-                '& img': {
-                  width: [40, 52],
-                  height: [40, 52],
-                },
-              }}
-            >
-              <img alt="fullscreen" src={maxIcon} />
-            </Box>
+            <TreeInfoDialog
+              tree={tree}
+              planter={planter}
+              organization={organization}
+            />
           </Box>
         </Box>
         <img src={tree.image_url} alt="tree" />
@@ -435,7 +428,7 @@ export default function Tree({
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
@@ -451,14 +444,5 @@ export async function getStaticProps({ params }) {
       planter,
       organization,
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 180,
-  };
-}
-
-// eslint-disable-next-line require-await
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 }

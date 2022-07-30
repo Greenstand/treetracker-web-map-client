@@ -17,12 +17,13 @@ export default function Index() {
   const [RPT, setRPT] = React.useState(null);
   // const [RPTToken, setRPTToken] = React.useState(null);
   const [auz, setAuz] = React.useState(null);
+  const [user, setUser] = React.useState(null);
   log.warn('keycloak', keycloak);
 
   function load() {
-    // keycloak.onAuthSuccess((...args) => {
-    //   log.warn('onAuthSuccess', args);
-    // });
+    keycloak.onAuthSuccess((...args) => {
+      log.warn('onAuthSuccess', args);
+    });
     if (keycloak.token) {
       // eslint-disable-next-line no-undef
       const auzTemp = new KeycloakAuthorization(keycloak);
@@ -192,7 +193,7 @@ export default function Index() {
       /* eslint-enable */
 
       setTimeout(() => {
-        auzTemp.entitlement('webmap-service').then((res) => {
+        auzTemp.entitlement('api-services').then((res) => {
           log.warn('entitlement', res);
           // eslint-disable-next-line no-undef
           const r = jwt_decode(res);
@@ -203,6 +204,8 @@ export default function Index() {
       }, 3000);
 
       keycloak.loadUserInfo().then(() => {
+        log.warn('user', keycloak.userInfo);
+        setUser(keycloak.userInfo);
         log.warn('user', keycloak.userInfo);
       });
     } else {
@@ -239,28 +242,52 @@ export default function Index() {
         <Box>
           {RPT?.authorization.permissions
             .map((r) => r.rsname)
-            .includes('web-map-global-setting') && (
-            <Button
-              onClick={() => {
-                axios({
-                  method: 'GET',
-                  url: 'http://localhost:3006/settings',
-                  headers: {
-                    // Authorization: `Bearer ${keycloak.token}`,
-                    Authorization: `Bearer ${auz.rpt}`,
-                  },
-                })
-                  .then((res) => {
-                    log.warn('res', res);
+            .includes('web-map-theme') && (
+            <>
+              <Button
+                onClick={() => {
+                  window.location.href = '/admin/theme';
+                  // axios({
+                  //   method: 'GET',
+                  //   url: 'http://localhost:3006/settings',
+                  //   headers: {
+                  //     // Authorization: `Bearer ${keycloak.token}`,
+                  //     Authorization: `Bearer ${auz.rpt}`,
+                  //   },
+                  // })
+                  //   .then((res) => {
+                  //     log.warn('res', res);
+                  //   })
+                  //   .catch((err) => {
+                  //     log.warn('err', err);
+                  //   });
+                }}
+                color="primary"
+              >
+                theme
+              </Button>
+              <Button
+                onClick={() => {
+                  axios({
+                    method: 'GET',
+                    url: `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/${user.organization_id}/theme`,
+                    headers: {
+                      // Authorization: `Bearer ${keycloak.token}`,
+                      Authorization: `Bearer ${auz.rpt}`,
+                    },
                   })
-                  .catch((err) => {
-                    log.warn('err', err);
-                  });
-              }}
-              color="primary"
-            >
-              Global
-            </Button>
+                    .then((res) => {
+                      log.warn('res', res);
+                    })
+                    .catch((err) => {
+                      log.warn('err', err);
+                    });
+                }}
+                color="primary"
+              >
+                view 178 org theme
+              </Button>
+            </>
           )}
           {keycloak?.tokenParsed?.realm_access?.roles.includes(
             'web-map-manager',
@@ -287,7 +314,13 @@ export default function Index() {
               <Button
                 onClick={() => {
                   if (keycloak) {
+                    console.warn(
+                      'has keycloak, go to keycloak login:',
+                      keycloak.createLoginUrl(),
+                    );
                     window.location.href = keycloak.createLoginUrl();
+                  } else {
+                    throw new Error('no keycloak');
                   }
                 }}
               >

@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 import SearchFilter from './SearchFilter';
 import logoIcon from '../images/logo.png';
-import max from '../images/max.svg';
+import minIcon from '../images/min.svg';
 import zoomIn from '../images/zoom-in.svg';
 import zoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
@@ -50,6 +50,7 @@ const App = dynamic(() => import('./App'), { ssr: false });
 
 export default function Layout({ children, isFloatingDisabled }) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
+  const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
   // const { _classes } = useStyles();
   const mapContext = useMapContext();
   function handleFullScreen() {
@@ -68,6 +69,14 @@ export default function Layout({ children, isFloatingDisabled }) {
   function handleZoomOut() {
     mapContext.map.map.zoomOut();
   }
+
+  React.useEffect(() => {
+    setToggleButtonPosition((prevPosition) => {
+      if (prevPosition === 0) return 568; // width of the drawer
+      return 0;
+    });
+  }, [isDrawerOpen]);
+
   return (
     <>
       <Box
@@ -114,26 +123,25 @@ export default function Layout({ children, isFloatingDisabled }) {
               </Box>
             </Box>
           </Drawer>
-          {isDrawerOpen && (
-            <Paper
-              onClick={handleDrawerToggle}
-              sx={{
-                cursor: 'pointer',
-                position: 'absolute',
-                left: 568,
-                width: 23,
-                height: 48,
-                display: 'flex',
-                borderRadius: '0px 5px 5px 0',
-                zIndex: 1200,
-                top: 13,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <ArrowLeft />
-            </Paper>
-          )}
+          <Paper
+            onClick={handleDrawerToggle}
+            sx={{
+              cursor: 'pointer',
+              position: 'absolute',
+              top: 13,
+              transform: `translate(${toggleButtonPosition}px, 0)`,
+              transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+              width: 23,
+              height: 48,
+              display: 'flex',
+              borderRadius: '0px 5px 5px 0',
+              zIndex: 1200,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {isDrawerOpen ? <ArrowLeft /> : <ArrowRight />}
+          </Paper>
         </>
       )}
 
@@ -151,27 +159,6 @@ export default function Layout({ children, isFloatingDisabled }) {
           <SearchFilter />
         </Box>
       )}
-      {!isDrawerOpen && (
-        <Paper
-          onClick={handleDrawerToggle}
-          sx={{
-            cursor: 'pointer',
-            position: 'absolute',
-            left: 0,
-            width: 23,
-            height: 48,
-            display: 'flex',
-            borderRadius: '0px 5px 5px 0',
-            zIndex: 1200,
-            top: 13,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <ArrowRight />
-        </Paper>
-      )}
-
       {false && isFloatingDisabled && (
         <Box
           sx={{
@@ -198,7 +185,7 @@ export default function Layout({ children, isFloatingDisabled }) {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img alt="fullscreen" src={max} />
+        <img alt="fullscreen" src={minIcon} />
       </Box>
 
       <Box
@@ -269,7 +256,12 @@ export default function Layout({ children, isFloatingDisabled }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img alt="zoom-in" src={zoomIn} />
           </Box>
-          <Box onClick={handleZoomOut}>
+          <Box
+            onClick={handleZoomOut}
+            sx={{
+              '& img': { display: 'block' },
+            }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img alt="zoom-out" src={zoomOut} />
           </Box>

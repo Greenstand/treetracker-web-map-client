@@ -57,7 +57,7 @@
     "expect-runtime": "^0.4.0",
     "i18n-iso-countries": "^7.2.0",
     "keycloak-connect": "^17.0.1",
-    "keycloak-js": "^11.0.3",
+    "keycloak-js": "^10.0.1",
     "leaflet": "^1.7.1",
     "leaflet-utfgrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
     "leaflet.gridlayer.googlemutant": "^0.12.1",
@@ -72,7 +72,8 @@
     "source-map-explorer": "^2.5.2",
     "treetracker-web-map-core": "^1.11.0",
     "tss-react": "^2.0.3",
-    "url-join-ts": "^1.0.5"
+    "url-join-ts": "^1.0.5",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
@@ -86,6 +87,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.4.1",
+    "axios-mock-adapter": "^1.21.1",
     "concurrently": "^6.3.0",
     "cypress": "^8.7.0",
     "cypress-watch-and-reload": "^1.5.4",
@@ -110,7 +112,6 @@
     "prettier": "^2.4.1",
     "sort-package-json": "^1.53.1",
     "start-server-and-test": "^1.14.0",
-    "webfontloader": "^1.6.28",
     "webpack": "^5.64.1",
     "webpack-dev-server": "^4.6.0"
   },
