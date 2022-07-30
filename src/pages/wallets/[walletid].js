@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -21,9 +21,9 @@ import CustomCard from '../../components/common/CustomCard';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import planterBackground from '../../images/background.png';
-import calendarIcon from '../../images/icons/calendar.svg';
-import treeIcon from '../../images/icons/tree.svg';
-import searchIcon from '../../images/search.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import TreeIcon from '../../images/icons/tree.svg';
+import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -108,7 +108,12 @@ export default function Wallet(props) {
           <BackButton />
           <Box>
             {}
-            <img src={searchIcon} alt="search" />
+            <SvgIcon
+              component={SearchIcon}
+              inheritViewBox
+              fontSize="large"
+              alt="search"
+            />
           </Box>
         </Box>
       )}
@@ -149,7 +154,7 @@ export default function Wallet(props) {
             <Typography variant="h2">{wallet.name} </Typography>
             <Box sx={{ mt: 2 }}>
               <Info
-                iconURI={calendarIcon}
+                iconURI={CalendarIcon}
                 info={`wallet since ${moment().format('MMMM DD, YYYY')}`}
               />
             </Box>
@@ -171,7 +176,7 @@ export default function Wallet(props) {
           <Typography variant="h2">{wallet.name} </Typography>
           <Box sx={{ mt: 2 }}>
             <Info
-              iconURI={calendarIcon}
+              iconURI={CalendarIcon}
               info={`wallet since ${moment(wallet.created_at).format(
                 'MMMM DD, YYYY',
               )}`}
@@ -190,7 +195,7 @@ export default function Wallet(props) {
         }}
       >
         <Grid item sx={{ width: '49%' }}>
-          <CustomCard iconURI={treeIcon} title="Tokens" text={tokenCount} />
+          <CustomCard iconURI={TreeIcon} title="Tokens" text={tokenCount} />
         </Grid>
       </Grid>
 

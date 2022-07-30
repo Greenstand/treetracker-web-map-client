@@ -28,11 +28,11 @@ import DrawerTitle from '../../components/common/DrawerTitle';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import planterBackground from '../../images/background.png';
-import calendarIcon from '../../images/icons/calendar.svg';
-import locationIcon from '../../images/icons/location.svg';
-import peopleIcon from '../../images/icons/people.svg';
-import treeIcon from '../../images/icons/tree.svg';
-import searchIcon from '../../images/search.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import LocationIcon from '../../images/icons/location.svg';
+import PeopleIcon from '../../images/icons/people.svg';
+import TreeIcon from '../../images/icons/tree.svg';
+import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
@@ -160,7 +160,13 @@ export default function Planter(props) {
             <BackButton />
             <Box>
               {}
-              <img src={searchIcon} alt="search" />
+              <SvgIcon
+                component={SearchIcon}
+                htmlColor="white"
+                inheritViewBox
+                fontsize="large"
+                alt="search"
+              />
             </Box>
           </Box>
         )}
@@ -204,12 +210,12 @@ export default function Planter(props) {
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
-                  iconURI={calendarIcon}
+                  iconURI={CalendarIcon}
                   info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
               </Box>
               <Box
                 sx={{
@@ -249,12 +255,12 @@ export default function Planter(props) {
             </Typography>
             <Box sx={{ mt: 2 }}>
               <Info
-                iconURI={calendarIcon}
+                iconURI={CalendarIcon}
                 info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
             </Box>
             <Box
               sx={{
@@ -285,7 +291,7 @@ export default function Planter(props) {
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
               handleClick={() => setIsPlanterTab(true)}
-              iconURI={treeIcon}
+              iconURI={TreeIcon}
               title="Trees Planted"
               text={treeCount}
               disabled={!isPlanterTab}
@@ -294,7 +300,7 @@ export default function Planter(props) {
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
               handleClick={() => setIsPlanterTab(false)}
-              iconURI={peopleIcon}
+              iconURI={PeopleIcon}
               title="Ass. Orgs"
               text={planter.associatedOrganizations.length || '---'}
               disabled={isPlanterTab}

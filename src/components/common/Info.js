@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-import { Box, Typography } from '@mui/material';
+ 
+import { Box, Typography, SvgIcon } from '@mui/material';
 
 export default function Info({ info, iconURI }) {
   return (
@@ -16,7 +16,7 @@ export default function Info({ info, iconURI }) {
         },
       }}
     >
-      <img src={iconURI} alt="join time" />
+      <SvgIcon component={iconURI} inheritViewBox alt="join time" />
       <Typography variant="h6">{info}</Typography>
     </Box>
   );

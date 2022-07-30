@@ -96,7 +96,6 @@ export default function Layout({ children }) {
               inheritViewBox
               fontSize="large"
               sx={{ mb: '2rem' }}
-              marginBottom="2rem"
               onClick={handleZoomOut}
             />
           </Box>

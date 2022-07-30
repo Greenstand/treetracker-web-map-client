@@ -63,7 +63,7 @@ module.exports = {
   webpack(config) {
     config.module.rules.push(
       {
-        test: /\fullscreenfullscreen.svg$/i,
+        test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
         use: [
           {
@@ -76,7 +76,7 @@ module.exports = {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: 'url-loader',
             options: {},
           },
         ],

@@ -1,6 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { Box } from '@mui/material';
+import { Box, SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
@@ -45,7 +44,7 @@ function CustomCard(props) {
               : theme.palette.success.main,
           }}
         >
-          <img src={iconURI} alt="icon" />
+          <SvgIcon component={iconURI} inheritViewBox alt="icon" />
         </Avatar>
       </Box>
       <Box
@@ -53,26 +52,28 @@ function CustomCard(props) {
           ml: [3, 6],
         }}
       >
-        <Typography variant="body1" color="darkGrey.main"
+        <Typography
+          variant="body1"
+          color="darkGrey.main"
           sx={{
-            display: "inline-block"
+            display: 'inline-block',
           }}
         >
           {title}
         </Typography>
-        
-        {tooltip && ( 
+
+        {tooltip && (
           <Tooltip title={tooltip}>
-            <HelpOutlineIcon 
+            <HelpOutlineIcon
               sx={{
-                fontSize: "small",
-                color: "#6B6E70",
-                marginLeft: 1
-              }} 
+                fontSize: 'small',
+                color: '#6B6E70',
+                marginLeft: 1,
+              }}
             />
           </Tooltip>
         )}
-  
+
         <Typography
           variant="h2"
           color="nearBlack.main"
