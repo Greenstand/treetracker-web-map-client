@@ -306,7 +306,7 @@ export default function Token({ token, wallet }) {
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { tokenid } = params;
   const token = await getTokenById(tokenid);
   const { wallet_id } = token;
@@ -317,14 +317,5 @@ export async function getStaticProps({ params }) {
       token,
       wallet,
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 180,
-  };
-}
-
-// eslint-disable-next-line require-await
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 }
