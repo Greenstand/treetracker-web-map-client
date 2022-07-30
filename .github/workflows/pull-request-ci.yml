@@ -40,6 +40,7 @@ jobs:
           # use mock api
           env: nock=true
           spec: cypress/tests/integration/**/*.cy.js
+          browser: chrome
 
       - name: Save screenshots
         # step runs even if other steps fail

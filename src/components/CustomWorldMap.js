@@ -94,13 +94,27 @@ function ToolTip({ totalTrees, con }) {
 
 function CustomWorldMap({ totalTrees, con }) {
   const { classes } = useStyles();
-  const continentAbr = mapContinentName(con);
-  const [selected, onSelect] = React.useState(continentAbr);
+
+  let contArr = con;
+  let totalTreesArr = totalTrees;
+
+  if (!Array.isArray(totalTrees) && !Array.isArray(con)) {
+    contArr = [con];
+    totalTreesArr = [totalTrees];
+  }
+  const continentAbr = contArr.map((c) => mapContinentName(c));
 
   return (
     <Box className={classes.root}>
-      <WorldMap selected={selected} onSelect={onSelect} />
-      <ToolTip totalTrees={totalTrees} pos={toolTipPos} con={continentAbr} />
+      <WorldMap selected={continentAbr} onSelect={() => null} />
+      {continentAbr.map((cont, ind) => (
+        <ToolTip
+          key={cont}
+          totalTrees={totalTreesArr[ind]}
+          pos={toolTipPos}
+          con={cont}
+        />
+      ))}
     </Box>
   );
 }

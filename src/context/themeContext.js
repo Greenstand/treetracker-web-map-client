@@ -1,6 +1,9 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import axios from 'axios';
+import log from 'loglevel';
 import React from 'react';
 import useLocalStorage from 'hooks/useLocalStorage';
+import { loadFonts } from '../models/utils';
 
 const CustomThemeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -86,7 +89,6 @@ export function buildTheme(theMode) {
       },
     },
     palette: {
-      themeMode,
       background: {
         ...(themeMode === 'light'
           ? {
@@ -324,6 +326,11 @@ export function buildTheme(theMode) {
 
 export function CustomThemeProvider({ children }) {
   const [mode, setMode] = useLocalStorage('theme', 'light');
+  const [theme, setTheme] = React.useState(buildTheme(mode));
+  const [themeObject, setThemeObject] = useLocalStorage(
+    'themeObject',
+    undefined,
+  );
 
   const colorMode = React.useMemo(
     () => ({
@@ -334,9 +341,69 @@ export function CustomThemeProvider({ children }) {
     [],
   );
 
-  const theme = buildTheme(mode);
+  const createThemeFromThemeObject = () =>
+    createTheme({
+      ...themeObject,
+      palette: themeObject.palette[mode],
+      components: themeObject.components[mode],
+      spacing: theme.spacing,
+    });
 
-  console.warn('theme:', theme);
+  function loadThemeFromServer() {
+    const url = `${process.env.NEXT_PUBLIC_CONFIG_API}/organizations/1/theme`;
+    axios.get(url).then((response) => {
+      log.warn('loaded theme from server:', response);
+      /**
+       * !! should store the theme from server to the themeObject state !!
+       * themeObject is used for customization has light/dark version
+       * theme is the actual theme
+       */
+      setTheme(createTheme(response.data.theme));
+    });
+  }
+
+  React.useEffect(() => {
+    if (themeObject) {
+      setTheme(createThemeFromThemeObject());
+
+      loadFonts(themeObject.fonts).then((fontsLoaded) => {
+        log.warn('custom fonts loaded:', fontsLoaded);
+      });
+    }
+    if (process.env.NEXT_PUBLIC_CONFIG_API) {
+      log.warn('to load theme from server');
+      loadThemeFromServer();
+    } else {
+      log.warn(
+        "There isn't setting's for config api, do not load theme from server",
+      );
+    }
+
+    const handlePreviewEvent = (e) => {
+      setThemeObject(e.detail.theme);
+    };
+
+    window.addEventListener(
+      'playground:theme-update',
+      handlePreviewEvent,
+      false,
+    );
+
+    return () => {
+      // remove event listener on unmount
+      window.removeEventListener('playground:theme-update', handlePreviewEvent);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!themeObject) return;
+    // set the theme to correct mode when the mode changes
+    setTheme(createThemeFromThemeObject);
+  }, [mode, themeObject]);
+
+  React.useEffect(() => {
+    log.warn('theme changed', theme);
+  }, [theme]);
 
   const value = React.useMemo(
     () => ({

@@ -415,7 +415,7 @@ export default function Tree({
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
@@ -431,14 +431,5 @@ export async function getStaticProps({ params }) {
       planter,
       organization,
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 180,
-  };
-}
-
-// eslint-disable-next-line require-await
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 }

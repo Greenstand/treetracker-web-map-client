@@ -160,6 +160,7 @@ export default function TreeInfoDialog(props) {
           py: { xs: 9, md: 4 },
           fontFamily: 'Lato',
           height: { xs: 'calc(100vh - 36)' },
+          zIndex: 9999, // same index as zoom buttons
         }}
       >
         <DialogTitle>

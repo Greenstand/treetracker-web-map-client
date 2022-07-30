@@ -180,7 +180,7 @@ function Top({ trees, planters, countries, organizations }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const [trees, countries, planters, organizations] = await Promise.all([
     getFeaturedTrees(), //
     getCountryLeaderboard(),
@@ -202,7 +202,6 @@ export async function getStaticProps() {
       planters,
       organizations,
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 60,
   };
 }
 
