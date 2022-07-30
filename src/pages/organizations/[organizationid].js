@@ -9,6 +9,7 @@ import {
   useMediaQuery,
   Avatar,
   useTheme,
+  SvgIcon,
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
