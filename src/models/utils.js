@@ -163,7 +163,7 @@ const loadFonts = (fonts) =>
  */
 const optimizeThemeFonts = (theme) => {
   const temp = { ...theme };
-  const {typography} = theme;
+  const { typography } = theme;
   const usedFonts = new Set();
   // loop over all props in typography
   Object.keys(typography).forEach((key) => {
@@ -182,6 +182,28 @@ const optimizeThemeFonts = (theme) => {
   return temp;
 };
 
+/**
+ * @param {object[] || Object} fonts - list of google font names
+ *
+ * @returns {Array || string} - array of font objs or font string
+ */
+const convertFontObjToFontArr = (fontObjArr) => {
+  console.log('fontObjarr', fontObjArr);
+  const converter = (fontObj) => {
+    console.log('fontObj', fontObj);
+    const { name, weights } = fontObj;
+    const weightedName =
+      weights.length > 0 ? `name:${weights.join(',')}` : name;
+    return weightedName;
+  };
+
+  if (!Array.isArray(fontObjArr)) {
+    return converter(fontObjArr);
+  }
+
+  return fontObjArr.map((fontObj) => converter(fontObj));
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -195,4 +217,5 @@ export {
   debounce,
   loadFonts,
   optimizeThemeFonts,
+  convertFontObjToFontArr,
 };
