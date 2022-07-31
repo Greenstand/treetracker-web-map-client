@@ -115,7 +115,20 @@ export const customizeOptions = {
   },
 };
 
-export const predefinedFonts = ['Lato', 'Montserrat', 'Roboto'];
+export const predefinedFonts = [
+  {
+    name: 'Lato',
+    weights: [],
+  },
+  {
+    name: 'Monstserrat',
+    weights: [],
+  },
+  {
+    name: 'Roboto',
+    weights: [],
+  },
+];
 
 export const propRules = {
   color:

@@ -8,7 +8,7 @@ import React, {
 import { buildTheme } from './themeContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { predefinedFonts } from '../models/themePlaygroundOptions';
-import { loadFonts } from '../models/utils';
+import { loadFonts, convertFontObjToFontArr } from '../models/utils';
 
 const getInitialTheme = () => {
   // init default theme
@@ -37,7 +37,7 @@ export function PlaygroundProvider({ children }) {
     'themeObject',
     undefined,
   );
-  const [fonts, setFonts] = useState(predefinedFonts);
+  const [fonts, setFonts] = useState(() => predefinedFonts);
   const [theme, setTheme] = useState(getInitialTheme());
 
   useEffect(() => {
@@ -49,8 +49,8 @@ export function PlaygroundProvider({ children }) {
     }));
 
     if (!themeObject.fonts) return;
-
-    loadFonts(themeObject.fonts).then((fontsLoaded) => {
+    const fontArr = convertFontObjToFontArr(themeObject.fonts);
+    loadFonts(fontArr).then((fontsLoaded) => {
       if (!fontsLoaded) return;
       setFonts((prevFonts) => {
         const newFonts = new Set([...prevFonts, ...themeObject.fonts]);
