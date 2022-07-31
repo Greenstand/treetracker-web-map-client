@@ -21,7 +21,8 @@ function FontsList(props) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = async (font) => {
-    if (fonts.indexOf(font) > -1) return false;
+    // if (fonts.indexOf(font) > -1) return false;
+    if (fonts.some((fontObj) => fontObj.name === font)) return false;
 
     const formattedName = font.charAt(0).toUpperCase() + font.slice(1);
 
@@ -30,7 +31,10 @@ function FontsList(props) {
       setLoading(false);
       if (!hasFont) return false;
 
-      setFonts((prevFonts) => [...prevFonts, formattedName]);
+      setFonts((prevFonts) => [
+        ...prevFonts,
+        { name: formattedName, weights: [] },
+      ]);
       return true;
     });
     return true;
@@ -75,23 +79,25 @@ function FontsList(props) {
             {list.map((font) => (
               <Grid
                 item
-                key={`fonts-customization-${font}${canAddItems && '-addable'}`}
+                key={`fonts-customization-${font.name}${
+                  canAddItems && '-addable'
+                }`}
               >
                 {canAddItems ? (
                   <Chip
-                    label={font}
+                    label={font.name}
                     icon={<AddIcon />}
-                    onClick={() => handleClick(font)}
+                    onClick={() => handleClick(font.name)}
                     sx={{
                       textTransform: 'capitalize',
                     }}
                   />
                 ) : (
                   <Chip
-                    label={font}
+                    label={font.name}
                     sx={{
                       textTransform: 'capitalize',
-                      fontFamily: font,
+                      fontFamily: font.name,
                     }}
                   />
                 )}
