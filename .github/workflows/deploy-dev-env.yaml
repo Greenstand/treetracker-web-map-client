@@ -1,11 +1,9 @@
-name: Deploy 2.0 to dev
+name: Beta, Frontend Dev CI/CD Pipeline
 
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'git-tag'
-        required: true
+  push:
+    branches:
+      - beta
 
 env:
   project-directory: ./
@@ -19,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.git-tag }}
+          ref: beta
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
