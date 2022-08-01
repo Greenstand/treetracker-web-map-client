@@ -1,3 +1,10 @@
+# [2.0.0-beta.13](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.12...v2.0.0-beta.13) (2022-08-01)
+
+
+### Bug Fixes
+
+* made cursor to pointer on slider hover ([c4ba92b](https://github.com/Greenstand/treetracker-web-map-client/commit/c4ba92b0d99a8f6a8a712e6260922d87831d5e0e))
+
 # [2.0.0-beta.12](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.11...v2.0.0-beta.12) (2022-08-01)
 
 
