@@ -112,7 +112,6 @@ function FeaturedPlantersSlider({
                 padding: (theme) => theme.spacing(5),
                 borderRadius: (theme) => theme.spacing(4),
                 overflow: 'initial',
-                cursor:"pointer",
                 bgcolor: (t) =>
                   t.palette.mode === 'light'
                     ? d3
@@ -130,7 +129,6 @@ function FeaturedPlantersSlider({
                   window.location.href = link(planter.id);
                 }}
                 component="img"
-                
                 image="https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg"
                 alt="tree"
                 sx={{
