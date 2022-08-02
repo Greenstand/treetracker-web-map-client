@@ -1,3 +1,10 @@
+# [2.0.0-beta.14](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.13...v2.0.0-beta.14) (2022-08-02)
+
+
+### Bug Fixes
+
+* planter link on top page ([83bdf2d](https://github.com/Greenstand/treetracker-web-map-client/commit/83bdf2dd9212ab129688c401ba94b4de0d0a77eb))
+
 # [2.0.0-beta.13](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.12...v2.0.0-beta.13) (2022-08-01)
 
 
