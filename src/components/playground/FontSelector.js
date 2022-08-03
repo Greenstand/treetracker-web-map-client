@@ -43,10 +43,10 @@ function FontSelector(props) {
       >
         {fonts.map((font) => (
           <MenuItem
-            key={`font-selector-menutitem-${font}`}
-            onClick={() => handleClose(font)}
+            key={`font-selector-menutitem-${font.name}`}
+            onClick={() => handleClose(font.name)}
           >
-            {font}
+            {font.name}
           </MenuItem>
         ))}
       </Menu>
