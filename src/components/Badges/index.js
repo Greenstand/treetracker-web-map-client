@@ -1,10 +1,10 @@
-import VerifiedBadge from '../../../components/VerifiedBadge';
+import VerifiedBadge from '../VerifiedBadge';
 
 function Badges({ tokenId, verified }) {
   return (
     <>
       <VerifiedBadge
-        color="primary"
+        color={!verified ? 'greyLight' : 'primary'}
         verified={verified}
         badgeName={!verified ? 'Waiting for verify' : 'Verified Planter'}
       />
