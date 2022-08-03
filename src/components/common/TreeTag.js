@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
@@ -56,6 +57,11 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
             variant="body2"
           >
             {TreeTagValue}
+            {title === 'Age'
+              ? ' Years'
+              : title === 'Diameter at Breast Height'
+              ? ' cm'
+              : ''}
           </Typography>
         </Box>
       }

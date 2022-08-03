@@ -24,9 +24,11 @@ import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
 import accuracyIcon from '../../images/icons/accuracy.svg';
 import calendarIcon from '../../images/icons/calendar.svg';
+import diameterIcon from '../../images/icons/diameter.svg';
 import globalIcon from '../../images/icons/global.svg';
 import historyIcon from '../../images/icons/history.svg';
 import location from '../../images/icons/location.svg';
+import originIcon from '../../images/icons/origin.svg';
 import shareIcon from '../../images/icons/share.svg';
 import tokenIcon from '../../images/icons/token.svg';
 import searchIcon from '../../images/search.svg';
@@ -97,7 +99,9 @@ export default function Tree({
       verifiedToken: tree.token_id,
       verifiedTree: tree.verified,
     });
-  }, [setTitlesData, tree.id, tree.token_id, tree.verified]);
+    // eslint-disable-next-line no-console, prefer-template, no-useless-concat
+    console.log('the tree data' + '' + JSON.stringify(tree));
+  }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
 
   useEffect(() => {
     // manipulate the map
@@ -385,6 +389,14 @@ export default function Tree({
             icon={<img src={historyIcon} alt="age" />}
           />
         )}
+        {tree.species && (
+          <TreeTag
+            TreeTagValue={tree.species}
+            title="Natural Origin"
+            icon={<img src={originIcon} alt="origin" />}
+          />
+        )}
+
         {tree.gps_accuracy && (
           <TreeTag
             TreeTagValue={tree.gps_accuracy}
@@ -392,6 +404,15 @@ export default function Tree({
             icon={<img src={accuracyIcon} alt="accuracy" />}
           />
         )}
+
+        {tree.morphology && (
+          <TreeTag
+            TreeTagValue={tree.morphology}
+            title="Diameter at Breast Height"
+            icon={<img src={diameterIcon} alt="diameter" />}
+          />
+        )}
+
         {tree.lat && tree.lon && (
           <TreeTag
             TreeTagValue={`${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
