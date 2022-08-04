@@ -15,11 +15,11 @@ import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import Badges from '../../components/Badges';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
 import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
-import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
 import accuracyIcon from '../../images/icons/accuracy.svg';
@@ -151,12 +151,7 @@ export default function Tree({
                 mt: 2,
               }}
             >
-              <VerifiedBadge
-                color="primary"
-                verified
-                badgeName="Verified Planter"
-              />
-              <VerifiedBadge color="secondary" badgeName="Token Issued" />
+              <Badges tokenId={tree.token_id} verified={tree.verified} />
             </Box>
           </Box>
         </Portal>
@@ -304,12 +299,7 @@ export default function Tree({
                 mt: 2,
               }}
             >
-              <VerifiedBadge
-                color="primary"
-                verified
-                badgeName="Verified Planter"
-              />
-              <VerifiedBadge color="secondary" badgeName="Token Issued" />
+              <Badges tokenId={tree.token_id} verified={tree.verified} />
             </Box>
           </Box>
         )}
