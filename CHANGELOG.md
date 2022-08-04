@@ -1,3 +1,18 @@
+# [2.0.0-beta.16](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2022-08-04)
+
+
+### Bug Fixes
+
+* added unit test cases and corrected color ([566e6f7](https://github.com/Greenstand/treetracker-web-map-client/commit/566e6f7a20fbdd9ad93bc06508776f0410ec4d2a))
+* broken test ([e90e291](https://github.com/Greenstand/treetracker-web-map-client/commit/e90e2910ec27f830684a70e428c8a926cd1bc54f))
+* image url ([e7c0354](https://github.com/Greenstand/treetracker-web-map-client/commit/e7c03542bbd0ea7a479707e82dbcf425d5c20825))
+* tree badges are now dynamic ([ad06f73](https://github.com/Greenstand/treetracker-web-map-client/commit/ad06f737550e70d8a656be5d20b0d068c7a1ae9d))
+
+
+### Features
+
+* top page use real featured org,planter ([c0b2fae](https://github.com/Greenstand/treetracker-web-map-client/commit/c0b2fae27867f2311aeac4df1f4854e8f8471627))
+
 # [2.0.0-beta.15](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2022-08-03)
 
 
