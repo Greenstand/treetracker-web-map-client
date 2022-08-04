@@ -1,3 +1,10 @@
+# [2.0.0-beta.17](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.16...v2.0.0-beta.17) (2022-08-04)
+
+
+### Bug Fixes
+
+* increased opacity and centered slider button ([d459dd6](https://github.com/Greenstand/treetracker-web-map-client/commit/d459dd615bdb72cea41302e43960b63721f0e9ca))
+
 # [2.0.0-beta.16](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2022-08-04)
 
 
