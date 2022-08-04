@@ -69,7 +69,9 @@ function FeaturedPlantersSlider({
             position: 'absolute',
             borderRadius: ' 0 40px 40px 0',
             zIndex: 3,
-            bottom: '47%',
+            bottom: '0',
+            top: '0',
+            margin: 'auto 0',
             minWidth: '35px',
             height: '75px',
             cursor: 'pointer',
@@ -77,7 +79,7 @@ function FeaturedPlantersSlider({
             '& svg': {
               marginRight: -4,
             },
-            opacity: 0.4,
+            opacity: 0.7,
           }}
           variant="contained"
         >
@@ -175,7 +177,9 @@ function FeaturedPlantersSlider({
             position: 'absolute',
             borderRadius: '40px 0 0 40px',
             zIndex: 3,
-            bottom: '47%',
+            bottom: '0',
+            top: '0',
+            margin: 'auto 0',
             minWidth: '35px',
             height: '75px',
             cursor: 'pointer',
@@ -183,7 +187,7 @@ function FeaturedPlantersSlider({
             '& svg': {
               marginLeft: -4,
             },
-            opacity: 0.4,
+            opacity: 0.7,
           }}
           variant="contained"
         >
