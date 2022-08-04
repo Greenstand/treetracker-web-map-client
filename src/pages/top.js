@@ -185,12 +185,12 @@ export async function getServerSideProps() {
     getFeaturedTrees(), //
     getCountryLeaderboard(),
     (async () => {
-      const data = await utils.requestAPI('/planters?limit=10');
+      const data = await utils.requestAPI('/planters/featured');
       log.warn('planters', data);
       return data.planters;
     })(),
     (async () => {
-      const data = await utils.requestAPI('/organizations?limit=10');
+      const data = await utils.requestAPI('/organizations/featured');
       log.warn('organizations', data);
       return data.organizations;
     })(),

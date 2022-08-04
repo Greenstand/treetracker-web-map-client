@@ -128,7 +128,7 @@ function FeaturedPlantersSlider({
               >
                 <CardMedia
                   component="img"
-                  image="https://treetracker-production.nyc3.digitaloceanspaces.com/2019.07.10.18.32.42_b4fad89a-10b6-40cc-a134-0085d0e581d2_IMG_20190710_183201_8089920786231467340.jpg"
+                  image={planter.logo_url || planter.image_url}
                   alt="tree"
                   sx={{
                     width: 136,
