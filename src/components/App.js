@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import 'leaflet/dist/leaflet.css';
 
 import Alert from '@mui/material/Alert';
@@ -69,20 +71,10 @@ function MapComponent() {
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
     const path = window.location.pathname.match(
-      /^\/(planters|organizations)\/\d+$/,
+      /^(\/(planters|organizations)\/\d+)?\/trees\/\d+$/,
     );
-    const isEmbed = window.location.search.match(/embed=true/);
-    let prefix = '';
-    if (path) {
-      prefix = window.location.pathname;
-    }
-    const url = new URL(window.location.href);
-    const { timeline } = url.searchParams;
-    router.push(
-      `${prefix}/trees/${tree.id}?embed=${isEmbed ? 'true' : 'false'}${
-        timeline ? `&timeline=${timeline}` : ''
-      }`,
-    );
+    const search = window.location.search || '';
+    router.push(`${path[1] || ''}/trees/${tree.id}${search}`);
   }
 
   function injectApp() {
@@ -130,10 +122,15 @@ function MapComponent() {
     });
     map.on('move-end', () => {
       log.warn('update url');
+      const embedParam = window.location.search.match(
+        /(?:embed=)(true|false)/g,
+      );
       window.history.pushState(
         'treetrakcer',
         '',
-        `${window.location.pathname}?bounds=${map.getCurrentBounds()}`,
+        `${window.location.pathname}?bounds=${map.getCurrentBounds()}${
+          embedParam ? `&${embedParam}` : ''
+        }`,
       );
     });
     map.mount(mapRef.current);
