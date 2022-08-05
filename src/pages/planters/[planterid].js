@@ -427,11 +427,15 @@ export default function Planter(props) {
 
 export async function getServerSideProps({ params }) {
   const id = params.planterid;
-  const planter = await getPlanterById(id);
-  const data = await getOrgLinks(planter.links);
-  return {
-    props: {
-      planter: { ...planter, ...data },
-    },
-  };
+  try {
+    const planter = await getPlanterById(id);
+    const data = await getOrgLinks(planter.links);
+    return {
+      props: {
+        planter: { ...planter, ...data },
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }
