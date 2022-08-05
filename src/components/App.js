@@ -48,6 +48,8 @@ function MapComponent() {
   const mapContext = useMapContext();
   const router = useRouter();
 
+  console.log(mapRef, mapContext);
+
   function handleMessageClose() {
     setMessage({
       open: false,
@@ -107,27 +109,30 @@ function MapComponent() {
 
   // load map
   useEffect(() => {
-    if (mapContext.map) return;
+    if (mapContext.map && mapRef.current.map) return;
     log.info('load map...');
     // disable waiting for loading
     // loaded();
-    const script = document.createElement('script');
+    const script =
+      document.getElementById('googleMaps') || document.createElement('script');
     script.src =
       'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
     script.id = 'googleMaps';
     document.body.appendChild(script);
     const parameters = getParameters();
-    const map = new Map({
-      onLoad: () => {
-        log.warn('mock onload');
-      },
-      onClickTree: handleClickTree,
-      onError: handleError,
-      filters: parameters,
-      iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
-      zoomControl: true,
-      zoomControlPosition: 'bottomright',
-    });
+    const map =
+      mapContext.map ||
+      new Map({
+        onLoad: () => {
+          log.warn('mock onload');
+        },
+        onClickTree: handleClickTree,
+        onError: handleError,
+        filters: parameters,
+        iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
+        zoomControl: true,
+        zoomControlPosition: 'bottomright',
+      });
     map.on('moveEnd', () => {
       log.warn('update url');
       window.history.pushState(

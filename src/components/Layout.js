@@ -47,14 +47,15 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export default function Layout({ children }) {
+export default function Layout({
+  children,
+  nextExtraIsEmbed,
+  nextExtraIsEmbedCallback,
+}) {
   const mapContext = useMapContext();
   const { classes } = useStyles();
   function handleFullScreen() {
-    // navigate to /container page through next.js's api
-    const url = new URL(window.location.href);
-    url.searchParams.set('embed', true);
-    window.location.href = url.toString();
+    nextExtraIsEmbedCallback(!nextExtraIsEmbed);
   }
 
   function handleZoomIn() {
