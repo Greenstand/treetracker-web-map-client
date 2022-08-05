@@ -17,13 +17,13 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/planters/:planter_id(\\d{1,})/trees/:tree_id(\\d{1,})',
-        destination: '/trees/:tree_id(\\d{1,})',
+        source: '/planters/:planterId(\\d{1,})/trees/:treeId(\\d{1,})',
+        destination: '/trees/:treeId(\\d{1,})',
       },
       {
         source:
-          '/organizations/:organization_id(\\d{1,})/trees/:tree_id(\\d{1,})',
-        destination: '/trees/:tree_id(\\d{1,})',
+          '/organizations/:organizationId(\\d{1,})/trees/:treeId(\\d{1,})',
+        destination: '/trees/:treeId(\\d{1,})',
       },
       {
         source: '/map/:map_name(\\d{1,})',
