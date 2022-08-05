@@ -14,6 +14,7 @@ import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
 import { requestAPI } from 'models/utils';
+import ImpactSection from '../../components/ImpactSection';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
@@ -241,6 +242,13 @@ export default function Wallet(props) {
       <Typography sx={{ mt: [2.5, 5] }} variant="body2">
         {placeholderText}
       </Typography>
+      <Divider
+        varian="fullwidth"
+        sx={{
+          mt: [10, 20],
+        }}
+      />
+      <ImpactSection />
     </Box>
   );
 }
