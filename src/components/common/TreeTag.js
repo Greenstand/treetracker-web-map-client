@@ -1,10 +1,14 @@
+/* eslint-disable no-nested-ternary */
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
-import CompareTreeTagInfo from '../CompareTreeTagInfo';
+import { makeStyles } from 'models/makeStyles';
+
+const useStyles = makeStyles()((theme) => ({}));
 
 function TreeTagComponent({ TreeTagValue, title, icon }) {
+  const { classes } = useStyles();
   return (
     <Chip
       sx={{
@@ -53,7 +57,11 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
             variant="body2"
           >
             {TreeTagValue}
-            <CompareTreeTagInfo title={title} />
+            {title === 'Age'
+              ? ' Years'
+              : title === 'Diameter at Breast Height'
+              ? ' cm'
+              : ''}
           </Typography>
         </Box>
       }
