@@ -1,3 +1,22 @@
+# [2.0.0-beta.20](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.19...v2.0.0-beta.20) (2022-08-06)
+
+
+### Bug Fixes
+
+*  update tree tag value ([1b7b37d](https://github.com/Greenstand/treetracker-web-map-client/commit/1b7b37de228b5322007ec0462bbfa87abdd44a6a))
+* remove conditional ([0bcdbeb](https://github.com/Greenstand/treetracker-web-map-client/commit/0bcdbeb162518291a896cd943c45877fb5793082))
+
+
+### Features
+
+* compare tree tag info ([8a59340](https://github.com/Greenstand/treetracker-web-map-client/commit/8a593403cf4a420f31cc01aed4ec91ddf8e15566))
+* display more tree tag ([6fac813](https://github.com/Greenstand/treetracker-web-map-client/commit/6fac81383986838c4732cecdb398022a6873c5a6))
+
+
+### Reverts
+
+* Revert "Reverting to display more tree tag due to unnecessary component" ([868891c](https://github.com/Greenstand/treetracker-web-map-client/commit/868891c8f98a16e80353e77bd3c53aa8b585f3d7))
+
 # [2.0.0-beta.19](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.18...v2.0.0-beta.19) (2022-08-06)
 
 
