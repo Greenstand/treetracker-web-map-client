@@ -1,3 +1,10 @@
+# [2.0.0-beta.18](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.17...v2.0.0-beta.18) (2022-08-06)
+
+
+### Bug Fixes
+
+* lost context ([36419c7](https://github.com/Greenstand/treetracker-web-map-client/commit/36419c7718cdc4995a82701e205c134baa551274))
+
 # [2.0.0-beta.17](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.16...v2.0.0-beta.17) (2022-08-04)
 
 
