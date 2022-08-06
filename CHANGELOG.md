@@ -1,3 +1,10 @@
+# [2.0.0-beta.19](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.18...v2.0.0-beta.19) (2022-08-06)
+
+
+### Features
+
+* redirect legacy queries ([538ea54](https://github.com/Greenstand/treetracker-web-map-client/commit/538ea544e25ed53cc0fa793a369377d2846b662f))
+
 # [2.0.0-beta.18](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.17...v2.0.0-beta.18) (2022-08-06)
 
 
