@@ -384,7 +384,7 @@ export default function Tree({
         />
         {tree.age && (
           <TreeTag
-            TreeTagValue={tree.age}
+            TreeTagValue={`${tree.age} Years`}
             title="Age"
             icon={<img src={historyIcon} alt="age" />}
           />
@@ -407,7 +407,7 @@ export default function Tree({
 
         {tree.morphology && (
           <TreeTag
-            TreeTagValue={tree.morphology}
+            TreeTagValue={`${tree.morphology} cm`}
             title="Diameter at Breast Height"
             icon={<img src={diameterIcon} alt="diameter" />}
           />
