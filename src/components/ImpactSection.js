@@ -2,6 +2,7 @@ import { Typography, Grid, Box } from '@mui/material';
 import { useState } from 'react';
 import CustomCard from './common/CustomCard';
 import treeIcon from '../images/icons/tree.svg';
+import staticGraph from '../images/static-graph.svg';
 
 function ImpactSection() {
   const [isPlanterTab, setIsPlanterTab] = useState(true);
@@ -48,24 +49,16 @@ function ImpactSection() {
       </Grid>
       <Box
         sx={{
-          height: '600px',
+          height: '480px',
           mt: 14,
           mb: 6,
-          borderRadius: 4,
-          backgroundColor: (t) => t.palette.greyLight.main,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          backgroundImage: `url(${staticGraph})`,
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
         }}
       >
-        <Typography
-          variant="h5"
-          sx={{
-            color: (t) => t.palette.greyLight.contrastText,
-          }}
-        >
-          Graphical Data Coming Soon!
-        </Typography>
+        <Typography variant="h5">Graphical Data Coming Soon!</Typography>
       </Box>
     </>
   );
