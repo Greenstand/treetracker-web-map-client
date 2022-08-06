@@ -4,13 +4,17 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '../../models/makeStyles';
+import Tooltip from '@mui/material/Tooltip';
+import { display } from '@mui/system';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+
 
 const useStyles = makeStyles()((theme) => ({}));
 
 function CustomCard(props) {
   const { classes } = useStyles(props);
   const theme = useTheme();
-  const { iconURI, title, text, handleClick, disabled } = props;
+  const { iconURI, title, text, handleClick, disabled, tooltip } = props;
 
   return (
     <Box
@@ -51,9 +55,26 @@ function CustomCard(props) {
           ml: [3, 6],
         }}
       >
-        <Typography variant="body1" color="darkGrey.main">
+        <Typography variant="body1" color="darkGrey.main"
+          sx={{
+            display: "inline-block"
+          }}
+        >
           {title}
         </Typography>
+        
+        {tooltip && ( 
+          <Tooltip title="tooltip">
+            <HelpOutlineIcon 
+              sx={{
+                fontSize: "small",
+                color: "#6B6E70",
+                marginLeft: 1
+              }} 
+            />
+          </Tooltip>
+        )}
+  
         <Typography
           variant="h2"
           color="nearBlack.main"
