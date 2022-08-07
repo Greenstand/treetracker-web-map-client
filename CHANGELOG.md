@@ -1,3 +1,12 @@
+# [2.0.0-beta.21](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.20...v2.0.0-beta.21) (2022-08-07)
+
+
+### Features
+
+* add graph image ([45a9afb](https://github.com/Greenstand/treetracker-web-map-client/commit/45a9afb8fb373310dba9937ece40da39e4f5e4c9))
+* add impact section ([92d73cc](https://github.com/Greenstand/treetracker-web-map-client/commit/92d73ccd88e68040398c1e992a2075864f734a71))
+* add impact section to pages ([174a333](https://github.com/Greenstand/treetracker-web-map-client/commit/174a33324d7621b00679f0503a0f6a101c21bf26))
+
 # [2.0.0-beta.20](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.19...v2.0.0-beta.20) (2022-08-06)
 
 
