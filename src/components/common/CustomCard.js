@@ -64,7 +64,7 @@ function CustomCard(props) {
         </Typography>
         
         {tooltip && ( 
-          <Tooltip title="tooltip">
+          <Tooltip title={tooltip}>
             <HelpOutlineIcon 
               sx={{
                 fontSize: "small",

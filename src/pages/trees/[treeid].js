@@ -31,7 +31,6 @@ import shareIcon from '../../images/icons/share.svg';
 import tokenIcon from '../../images/icons/token.svg';
 import searchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
-import CustomCard from 'components/common/CustomCard';
 
 const useStyles = makeStyles()((theme) => ({
   imageContainer: {
