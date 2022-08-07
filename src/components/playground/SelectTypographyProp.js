@@ -55,16 +55,18 @@ function SelectTypographyProp(props) {
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {options.map((option) => (
-              <ListItem
-                key={`typography-input-${option}`}
-                sx={{
-                  px: 0,
-                }}
-              >
-                <TypographyInput path={`${path}.${option}`} label={option} />
-              </ListItem>
-            ))}
+            {options.map((option) =>
+              option === 'fontWeight' ? null : (
+                <ListItem
+                  key={`typography-input-${option}`}
+                  sx={{
+                    px: 0,
+                  }}
+                >
+                  <TypographyInput path={`${path}.${option}`} label={option} />
+                </ListItem>
+              ),
+            )}
           </List>
         </AccordionDetails>
       </Accordion>
