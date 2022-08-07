@@ -115,20 +115,11 @@ export const customizeOptions = {
   },
 };
 
-export const predefinedFonts = [
-  {
-    name: 'Lato',
-    weights: [],
-  },
-  {
-    name: 'Monstserrat',
-    weights: [],
-  },
-  {
-    name: 'Roboto',
-    weights: [],
-  },
-];
+export const predefinedFonts = {
+  Lato: [],
+  Montserrat: [],
+  Roboto: [],
+};
 
 export const propRules = {
   color:
@@ -139,7 +130,9 @@ export const propRules = {
   fontSize:
     /^-?(?:\d+(\.\d+)?(px|rem|em|ex)|\d{1,2}%|smaller|larger|medium|(x{1,2}-)?small|(x{1,3}-)?large|inherit|initial|revert|revert-layer|unset)$/i,
   fontWeight:
-    /^(normal|bold|lighter|bolder|inherit|initial|revert|revert-layer|unset)$/i,
+    // /^(normal|bold|lighter|bolder|inherit|initial|revert|revert-layer|unset)$/i,
+    // /^-?(?:\d+(\.\d)|normal|inherit|initial|revert|revert-layer|unset)$/i,
+    /.*/i,
   fontStyle:
     /^(normal|italic|oblique( [123]?\d{1,2}deg)?|inherit|initial|revert|revert-layer|unset)$/i,
   lineHeight:
