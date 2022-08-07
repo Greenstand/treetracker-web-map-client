@@ -1,3 +1,16 @@
+# [2.0.0-beta.22](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.21...v2.0.0-beta.22) (2022-08-07)
+
+
+### Bug Fixes
+
+* fixed eslint error ([c916984](https://github.com/Greenstand/treetracker-web-map-client/commit/c91698474a4f5e3d94e51996689fc8dffe149ca3))
+* removed unused import and made tooltip text dynamic ([5a6f51b](https://github.com/Greenstand/treetracker-web-map-client/commit/5a6f51b9d43a85ee855682531a43e969d5778290))
+
+
+### Features
+
+* added tooltip to CustomCard ([52e4d9f](https://github.com/Greenstand/treetracker-web-map-client/commit/52e4d9f7c1417c8acee013f3e70749c03340d2fb))
+
 # [2.0.0-beta.21](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.20...v2.0.0-beta.21) (2022-08-07)
 
 
