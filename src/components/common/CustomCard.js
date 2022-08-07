@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '../../models/makeStyles';
-import Tooltip from '@mui/material/Tooltip';
-import { display } from '@mui/system';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-
 
 const useStyles = makeStyles()((theme) => ({}));
 
