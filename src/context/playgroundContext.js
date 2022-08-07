@@ -24,7 +24,7 @@ const getInitialTheme = () => {
       dark: darkTheme.palette,
       light: lightTheme.palette,
     },
-    fonts: [...predefinedFonts],
+    fonts: { ...predefinedFonts },
   };
   return initialTheme;
 };
@@ -62,7 +62,7 @@ export function PlaygroundProvider({ children }) {
   useEffect(() => {
     setTheme((prevTheme) => ({
       ...prevTheme,
-      fonts: [...fonts],
+      fonts: { ...fonts },
     }));
   }, [fonts]);
 

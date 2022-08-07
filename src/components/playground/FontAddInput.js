@@ -10,17 +10,12 @@ import {
   CircularProgress,
   InputAdornment,
 } from '@mui/material';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { usePlaygroundFonts } from '../../context/playgroundContext';
 import { loadFonts } from '../../models/utils';
 
 // eslint-disable-next-line prefer-regex-literals
 const numberValidator = new RegExp('^[0-9]*$');
-
-function compareArrays(arr1, arr2) {
-  const distinctArr = arr1.filter((a) => !arr2.includes(a));
-  return distinctArr;
-}
 
 function FontAddInput() {
   const [value, setValue] = useState('');
@@ -38,13 +33,14 @@ function FontAddInput() {
 
   const handleSubmit = useCallback(
     async (e) => {
+      e.preventDefault();
+      e.persist();
+
       const fontWeightArr =
         fontWeightValues.trim().length > 0
           ? fontWeightValues.split(',').map((w) => parseInt(w.trim(), 10))
           : [];
 
-      e.preventDefault();
-      e.persist();
       if (fontWeightError) return false;
 
       const formattedName = value.charAt(0).toUpperCase() + value.slice(1);
@@ -53,13 +49,12 @@ function FontAddInput() {
       let fontPresentInTheme = false;
       let prevWeights = [];
 
-      for (let i = 0; i < fonts.length; i += 1) {
-        if (fonts[i].name === formattedName) {
-          distinctWeights = compareArrays(fontWeightArr, fonts[i].weights);
-          prevWeights = fonts[i].weights;
-          fontPresentInTheme = true;
-          break;
-        }
+      if (fonts[formattedName]) {
+        distinctWeights = fontWeightArr.filter(
+          (w) => !fonts[formattedName].includes(w),
+        );
+        prevWeights = fonts[formattedName];
+        fontPresentInTheme = true;
       }
 
       const shouldLoadFonts =
@@ -75,6 +70,7 @@ function FontAddInput() {
         fontValue: !fontPresentInTheme,
         fontWeights: distinctWeights.length > 0,
       });
+
       await loadFonts([fontNameWithWeights]).then((hasFont) => {
         setLoading({
           fontValue: false,
@@ -82,16 +78,10 @@ function FontAddInput() {
         });
         if (!hasFont) return setError('Font could not be loaded');
         const updatedFont = {
-          name: formattedName,
-          weights: [...prevWeights, ...distinctWeights],
+          [formattedName]: [...prevWeights, ...distinctWeights],
         };
-        if (fontPresentInTheme)
-          setFonts((prevFonts) =>
-            prevFonts.map((prevFont) =>
-              prevFont.name === formattedName ? updatedFont : prevFont,
-            ),
-          );
-        else setFonts((prevFonts) => [...prevFonts, { ...updatedFont }]);
+        setFonts((prevFonts) => ({ ...prevFonts, ...updatedFont }));
+
         setValue('');
         setFontWeightValues('');
         return true;

@@ -22,7 +22,7 @@ function FontsList(props) {
 
   const handleClick = async (font) => {
     // if (fonts.indexOf(font) > -1) return false;
-    if (fonts.some((fontObj) => fontObj.name === font)) return false;
+    if (fonts[font]) return false;
 
     const formattedName = font.charAt(0).toUpperCase() + font.slice(1);
 
@@ -31,10 +31,10 @@ function FontsList(props) {
       setLoading(false);
       if (!hasFont) return false;
 
-      setFonts((prevFonts) => [
+      setFonts((prevFonts) => ({
         ...prevFonts,
-        { name: formattedName, weights: [] },
-      ]);
+        ...{ [formattedName]: [] },
+      }));
       return true;
     });
     return true;
@@ -76,28 +76,26 @@ function FontsList(props) {
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={1}>
-            {list.map((font) => (
+            {Object.keys(list).map((font) => (
               <Grid
                 item
-                key={`fonts-customization-${font.name}${
-                  canAddItems && '-addable'
-                }`}
+                key={`fonts-customization-${font}${canAddItems && '-addable'}`}
               >
                 {canAddItems ? (
                   <Chip
-                    label={font.name}
+                    label={font}
                     icon={<AddIcon />}
-                    onClick={() => handleClick(font.name)}
+                    onClick={() => handleClick(font)}
                     sx={{
                       textTransform: 'capitalize',
                     }}
                   />
                 ) : (
                   <Chip
-                    label={font.name}
+                    label={font}
                     sx={{
                       textTransform: 'capitalize',
-                      fontFamily: font.name,
+                      fontFamily: font,
                     }}
                   />
                 )}

@@ -3,29 +3,21 @@ import FontAddInput from './FontAddInput';
 import FontsList from './FontsList';
 import { usePlaygroundFonts } from '../../context/playgroundContext';
 
-const popularFonts = [
-  { name: 'Lora', weights: [] },
-  { name: 'Oswald', weights: [] },
-  { name: 'PT Sans', weights: [] },
-  { name: 'Raleway', weights: [] },
-  { name: 'Slabo 27px', weights: [] },
-  { name: 'Source Sans Pro', weights: [] },
-  { name: 'Open Sans', weights: [] },
-];
+const popularFonts = {
+  Lora: [],
+  Oswald: [],
+  'PT Sans': [],
+  Raleway: [],
+  'Slabo 27px': [],
+  'Source San': [],
+  'Open Sans': [],
+};
 
 const getDefaultFonts = (fonts, defaultFonts) => {
-  const temp = [];
-  defaultFonts.forEach((font) => {
-    // if (fonts.indexOf(font) < 0) temp.push(font);
-    let found = false;
-    for (let i = 0; i < fonts.length; i += 1) {
-      if (font.name === fonts[i].name) {
-        found = true;
-        break;
-      }
-    }
+  const temp = {};
 
-    if (!found) temp.push(font);
+  Object.keys(defaultFonts).forEach((font) => {
+    if (!fonts[font]) temp[font] = [];
   });
   return temp;
 };

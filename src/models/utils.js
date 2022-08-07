@@ -183,25 +183,18 @@ const optimizeThemeFonts = (theme) => {
 };
 
 /**
- * @param {object[] || Object} fonts - list of google font names
+ * @param {Object} fonts - list of google font names
  *
- * @returns {Array || string} - array of font objs or font string
+ * @returns {string[]} - array of fonts
  */
-const convertFontObjToFontArr = (fontObjArr) => {
-  console.log('fontObjarr', fontObjArr);
-  const converter = (fontObj) => {
-    console.log('fontObj', fontObj);
-    const { name, weights } = fontObj;
+const convertFontObjToFontArr = (fontObj) => {
+  const fontWeightNames = Object.keys(fontObj).map((key) => {
     const weightedName =
-      weights.length > 0 ? `name:${weights.join(',')}` : name;
+      fontObj[key].length > 0 ? `${key}:${fontObj[key].join(',')}` : key;
     return weightedName;
-  };
+  });
 
-  if (!Array.isArray(fontObjArr)) {
-    return converter(fontObjArr);
-  }
-
-  return fontObjArr.map((fontObj) => converter(fontObj));
+  return fontWeightNames;
 };
 
 export {
