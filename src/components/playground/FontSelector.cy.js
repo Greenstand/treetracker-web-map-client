@@ -3,11 +3,11 @@ import { PlaygroundProvider } from '../../context/playgroundContext';
 import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Font Selector', () => {
-  const defaultFonts = [
-    { name: 'Lato', weights: [] },
-    { name: 'Monstserrat', weights: [] },
-    { name: 'Roboto', weights: [] },
-  ];
+  const defaultFonts = {
+    Lato: [],
+    Montserrat: [],
+    Roboto: [],
+  };
 
   it('renders', () => {
     mount(
@@ -16,8 +16,8 @@ describe('Font Selector', () => {
       </PlaygroundProvider>,
     );
     cy.get('[data-testid=AddIcon]').click();
-    defaultFonts.forEach((font) => {
-      cy.get('.MuiList-root').contains(font.name);
+    Object.keys(defaultFonts).forEach((font) => {
+      cy.get('.MuiList-root').contains(font);
     });
   });
 });
