@@ -4,7 +4,13 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import { useMediaQuery, useTheme, SvgIcon, Avatar } from '@mui/material';
+import {
+  useMediaQuery,
+  useTheme,
+  SvgIcon,
+  Avatar,
+  Divider,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -16,6 +22,7 @@ import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import Badges from '../../components/Badges';
+import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
 import Share from '../../components/Share';
@@ -421,6 +428,13 @@ export default function Tree({
           />
         )}
       </Box>
+      <Divider
+        varian="fullwidth"
+        sx={{
+          mt: [10, 20],
+        }}
+      />
+      <ImpactSection />
       <Box height={20} />
       {nextExtraIsEmbed && (
         <Portal container={document.getElementById('embed-logo-container')}>

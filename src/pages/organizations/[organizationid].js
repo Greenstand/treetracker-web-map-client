@@ -24,6 +24,7 @@ import DrawerTitle from 'components/common/DrawerTitle';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import ImpactSection from '../../components/ImpactSection';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
@@ -481,6 +482,13 @@ export default function Organization(props) {
             blanditiis officia excepturi, natus explicabo laborum delectus
             repudiandae placeat eligendi.
           </Typography>
+          <Divider
+            varian="fullwidth"
+            sx={{
+              mt: [10, 20],
+            }}
+          />
+          <ImpactSection />
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>
