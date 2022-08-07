@@ -427,6 +427,7 @@ export default function Tree({
             icon={<img src={tokenIcon} alt="token" />}
           />
         )}
+        
       </Box>
       <Divider
         varian="fullwidth"
