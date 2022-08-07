@@ -184,7 +184,11 @@ export default function Layout({ children, isFloatingDisabled }) {
           cursor: 'pointer',
         }}
       >
-        <SvgIcon component={MinIcon} inheritViewBox fontSize="large" />
+        <SvgIcon
+          component={MinIcon}
+          inheritViewBox
+          sx={{ height: 52, width: 52 }}
+        />
       </Box>
 
       <Box
@@ -235,7 +239,12 @@ export default function Layout({ children, isFloatingDisabled }) {
                 mt: '-3px',
               }}
             >
-              <SvgIcon component={LogoIcon} inheritViewBox />
+              <SvgIcon
+                component={LogoIcon}
+                // TODO: logo.png in beta repo is currently broken. Need to use .svg file for this to work anyways
+                sx={{ height: 36, width: 45 }}
+                inheritViewBox
+              />
             </Box>
           </Box>
         </Paper>
@@ -251,19 +260,29 @@ export default function Layout({ children, isFloatingDisabled }) {
             flexDirection: 'column',
           }}
         >
-          <SvgIcon
-            onClick={handleZoomIn}
-            inheritViewBox
-            component={ZoomIn}
-            fontSize="large"
-          />
-
-          <SvgIcon
+          <Box onClick={handleZoomIn}>
+            { }
+            <SvgIcon
+              alt="zoom-in"
+              component={ZoomIn}
+              inheritViewBox
+              sx={{ width: 52, height: 52 }}
+            />
+          </Box>
+          <Box
             onClick={handleZoomOut}
-            component={ZoomOut}
-            fontSize="large"
-            inheritViewBox
-          />
+            sx={{
+              '& svg': { display: 'block' },
+            }}
+          >
+            { }
+            <SvgIcon
+              alt="zoom-out"
+              component={ZoomOut}
+              inheritViewBox
+              sx={{ width: 52, height: 52 }}
+            />
+          </Box>
         </Box>
       </Box>
       {/* <Box className={classes.root}>

@@ -82,22 +82,22 @@ export default function Layout({ children }) {
               flexDirection: 'column',
             }}
           >
-            <SvgIcon
-              onClick={handleZoomIn}
-              alt="zoom-in"
-              component={ZoomIn}
-              inheritViewBox
-              fontSize="large"
-              sx={{ mb: '10px' }}
-            />
-            <SvgIcon
-              alt="zoom-out"
-              component={ZoomOut}
-              inheritViewBox
-              fontSize="large"
-              sx={{ mb: '2rem' }}
-              onClick={handleZoomOut}
-            />
+            <Box onClick={handleZoomIn}>
+              <SvgIcon
+                alt="zoom-in"
+                component={ZoomIn}
+                inheritViewBox
+                sx={{ height: 52, width: 52 }}
+              />
+            </Box>
+            <Box marginBottom="2rem" onClick={handleZoomOut}>
+              <SvgIcon
+                alt="zoom-out"
+                component={ZoomOut}
+                inheritViewBox
+                sx={{ width: 52, height: 52 }}
+              />
+            </Box>
           </Box>
         </Box>
         {/* <Box

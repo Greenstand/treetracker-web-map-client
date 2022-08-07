@@ -94,11 +94,19 @@ function Top({ trees, planters, countries, organizations }) {
         >
           <Typography variant="h4">Featured trees this week</Typography>
           <SvgIcon
-            fontSize="large"
             component={Search}
-            viewBox="0 0 48 48"
-            // TODO:
-            htmlColor="white"
+            inheritViewBox
+            sx={{
+              width: 48,
+              height: 48,
+              fill: 'transparent',
+              '& path': {
+                fill: 'grey',
+              },
+              '& rect': {
+                stroke: 'grey',
+              },
+            }}
           />
         </Box>
         {false && ( // going to be replaced by search filter component

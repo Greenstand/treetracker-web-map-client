@@ -68,6 +68,7 @@ function ToolTip({ totalTrees, con }) {
 
   return (
     <Box
+      className={classes.tooltipImg}
       sx={{
         position: 'absolute',
         top: isMobileScreen ? mobileToolTipPos[con].top : toolTipPos[con].top,
@@ -77,11 +78,10 @@ function ToolTip({ totalTrees, con }) {
       }}
     >
       <SvgIcon
+        sx={{ width: 68, height: 77 }}
         component={TreeTooltip}
         alt="tree icon"
         inheritViewBox
-        fontSize="large"
-        className={classes.tooltipImg}
       />
       <Typography
         color="nearBlack.main"

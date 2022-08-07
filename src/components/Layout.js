@@ -85,8 +85,12 @@ export default function Layout({ children }) {
               cursor: 'pointer',
             }}
           >
-            { }
-            <SvgIcon component={Max} inheritViewBox fontSize="large" />
+            {}
+            <SvgIcon
+              component={Max}
+              sx={{ height: 52, width: 52 }}
+              inheritViewBox
+            />
           </Box>
           <Box
             sx={{
@@ -104,14 +108,13 @@ export default function Layout({ children }) {
               onClick={handleZoomIn}
               component={ZoomIn}
               inheritViewBox
-              fontSize="large"
-              sx={{ mb: '10px' }}
+              sx={{ mb: '10px', height: 52, width: 52 }}
             />
             <SvgIcon
               onClick={handleZoomOut}
               component={ZoomOut}
               inheritViewBox
-              fontSize="large"
+              sx={{ height: 52, width: 52 }}
             />
           </Box>
           <App />

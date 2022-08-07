@@ -103,8 +103,14 @@ function TreeImage() {
     <SvgIcon
       component={TreeIcon}
       inheritViewBox
-      width={!isMobileScreen ? 13.5 : 12}
-      height={!isMobileScreen ? 18 : 14}
+      sx={
+        // `${!isMobileScreen ? 'width: 13.5px; height: 18px;' : 'width: 12px; height: 14px;'}`
+        // eslint-disable-next-line no-sequences
+        (`${!isMobileScreen ? 'width: 13.5px' : 'width: 12px'}`,
+        `${!isMobileScreen ? 'height: 18px' : 'width: 14px'}`)
+        // { height: `${!isMobileScreen ? 18 : 14}` })
+      }
+      alt="tree icon"
     />
   );
 }

@@ -253,20 +253,17 @@ export default function Tree({
             <Share
               shareUrl={typeof window !== 'undefined' && window.location.href}
               icon={
-                <Box
-                  onClick={handleShare}
-                  sx={{
-                    cursor: 'pointer',
-                    '& img': {
-                      width: [40, 52],
-                      height: [40, 52],
-                    },
-                  }}
-                >
+                <Box onClick={handleShare}>
                   <SvgIcon
                     component={ShareIcon}
-                    fontSize="large"
-                    viewBox="0 0 40 40"
+                    sx={{
+                      cursor: 'pointer',
+                      '& svg': {
+                        width: [40, 52],
+                        height: [40, 52],
+                      },
+                    }}
+                    inheritViewBox
                   />
                 </Box>
               }
@@ -421,7 +418,7 @@ export default function Tree({
               5,
             )}`}
             title="Latitude, Longitude"
-            icon={<SvgIcon component={GlobalIcon} />}
+            icon={<SvgIcon component={GlobalIcon} color="pink" />}
           />
         )}
         {tree.token_id && (
