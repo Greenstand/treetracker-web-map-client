@@ -36,6 +36,7 @@ import CalendarIcon from '../../images/icons/calendar.svg';
 import LocationIcon from '../../images/icons/location.svg';
 import PeopleIcon from '../../images/icons/people.svg';
 import TreeIcon from '../../images/icons/tree.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
 import orgBackground from '../../images/org-background.png';
 import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
@@ -184,7 +185,8 @@ export default function Organization(props) {
           >
             <img src={`${router.basePath}${orgBackground}`} alt="profile" />
             <Avatar
-              src={organization.image_url}
+              src={imagePlaceholder}
+              // src={organization.image_url}
               sx={{
                 width: [120, 189],
                 height: [120, 189],
@@ -321,7 +323,8 @@ export default function Organization(props) {
                 }}
               >
                 <Avatar
-                  src={organization.image_url}
+                  // src={organization.image_url}
+                  src={imagePlaceholder}
                   sx={{
                     width: 32,
                     height: 32,
@@ -516,7 +519,8 @@ export default function Organization(props) {
               height: '120px',
               margin: '10px',
             }}
-            src={organization.image_url}
+            // src={organization.image_url}
+            src={imagePlaceholder}
             variant="rounded"
           />
         </Portal>

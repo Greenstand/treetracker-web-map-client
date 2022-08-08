@@ -23,6 +23,7 @@ import { useDrawerContext } from '../../context/DrawerContext';
 import planterBackground from '../../images/background.png';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import TreeIcon from '../../images/icons/tree.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
@@ -138,7 +139,8 @@ export default function Wallet(props) {
       >
         <img src={`${router.basePath}${planterBackground}`} alt="profile" />
         <Avatar
-          src={wallet.logo_url}
+          src={imagePlaceholder}
+          // src={wallet.logo_url}
           sx={{
             width: [120, 189],
             height: [120, 189],

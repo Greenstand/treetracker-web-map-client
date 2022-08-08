@@ -161,6 +161,7 @@ export default function Token({ token, wallet }) {
         <img src={`${token.tree_image_url}`} alt="token" />
         <Avatar
           src={imagePlaceholder}
+          // src={wallet.logo_url}
           sx={{
             width: [120, 189],
             height: [120, 189],
@@ -293,6 +294,7 @@ export default function Token({ token, wallet }) {
           entityType="Wallet"
           buttonText="View the Wallet"
           cardImageSrc={imagePlaceholder}
+          // cardImageSrc={wallet?.logo_url}
           link={`/wallets/${wallet.id}`}
         />
       </Box>
