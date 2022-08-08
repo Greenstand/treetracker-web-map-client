@@ -1,7 +1,7 @@
 import { Typography, Grid, Box } from '@mui/material';
 import { useState } from 'react';
 import CustomCard from './common/CustomCard';
-import treeIcon from '../images/icons/tree.svg';
+import TreeIcon from '../images/icons/tree.svg';
 import staticGraph from '../images/static-graph.svg';
 
 function ImpactSection() {
@@ -31,7 +31,8 @@ function ImpactSection() {
         <Grid item sx={{ width: '49%' }}>
           <CustomCard
             handleClick={() => setIsPlanterTab(true)}
-            iconURI={treeIcon}
+            iconURI={TreeIcon}
+            sx={{ width: 26, height: 34 }}
             title="Current Value"
             text="---"
             disabled={!isPlanterTab}
@@ -40,7 +41,8 @@ function ImpactSection() {
         <Grid item sx={{ width: '49%' }}>
           <CustomCard
             handleClick={() => setIsPlanterTab(false)}
-            iconURI={treeIcon}
+            iconURI={TreeIcon}
+            sx={{ width: 26, height: 34 }}
             title="Carbon Capture"
             text="---"
             disabled={isPlanterTab}

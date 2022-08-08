@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
@@ -140,7 +141,11 @@ export default function TreeInfoDialog(props) {
           },
         }}
       >
-        <SvgIcon inheritViewBox component={MaxIcon} fontSize="large" />
+        <SvgIcon
+          inheritViewBox
+          component={MaxIcon}
+          sx={{ width: 52, height: 52 }}
+        />
       </Box>
       <Dialog
         fullScreen={fullScreen}
@@ -273,7 +278,13 @@ export default function TreeInfoDialog(props) {
                 }}
               >
                 <Button
-                  startIcon={<SvgIcon inheritViewBox component={HeartIcon} />}
+                  startIcon={
+                    <SvgIcon
+                      inheritViewBox
+                      sx={{ height: 22, width: 24 }}
+                      component={HeartIcon}
+                    />
+                  }
                   disableElevation
                   variant="contained"
                   color="primary"
@@ -289,7 +300,13 @@ export default function TreeInfoDialog(props) {
                   200
                 </Button>
                 <Button
-                  startIcon={<SvgIcon inheritViewBox component={ShareIcon} />}
+                  startIcon={
+                    <SvgIcon
+                      inheritViewBox
+                      component={ShareIcon}
+                      sx={{ height: 22, width: 16 }}
+                    />
+                  }
                   disableElevation
                   variant="contained"
                   color="background"

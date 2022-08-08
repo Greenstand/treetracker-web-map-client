@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {
@@ -158,8 +159,17 @@ export default function Organization(props) {
               <SvgIcon
                 component={SearchIcon}
                 inheritViewBox
-                htmlColor="white"
-                fontSize="large"
+                sx={{
+                  width: 48,
+                  height: 48,
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+                  '& rect': {
+                    stroke: 'grey',
+                  },
+                }}
               />
             </Box>
           )}
@@ -336,6 +346,7 @@ export default function Organization(props) {
               <CustomCard
                 handleClick={() => setIsPlanterTab(true)}
                 iconURI={TreeIcon}
+                sx={{ width: 26, height: 34 }}
                 title="Trees Planted"
                 text={organization?.featuredTrees?.trees.length || '---'}
                 disabled={!isPlanterTab}
@@ -345,6 +356,7 @@ export default function Organization(props) {
               <CustomCard
                 handleClick={() => setIsPlanterTab(false)}
                 iconURI={PeopleIcon}
+                sx={{ height: 36, width: 36 }}
                 title="Hired Planters"
                 text={
                   organization?.associatedPlanters?.planters.length || '---'

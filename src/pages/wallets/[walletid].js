@@ -111,8 +111,17 @@ export default function Wallet(props) {
             <SvgIcon
               component={SearchIcon}
               inheritViewBox
-              fontSize="large"
-              alt="search"
+              sx={{
+                width: 48,
+                height: 48,
+                fill: 'transparent',
+                '& path': {
+                  fill: 'grey',
+                },
+                '& rect': {
+                  stroke: 'grey',
+                },
+              }}
             />
           </Box>
         </Box>
@@ -195,7 +204,12 @@ export default function Wallet(props) {
         }}
       >
         <Grid item sx={{ width: '49%' }}>
-          <CustomCard iconURI={TreeIcon} title="Tokens" text={tokenCount} />
+          <CustomCard
+            iconURI={TreeIcon}
+            sx={{ width: 26, height: 34 }}
+            title="Tokens"
+            text={tokenCount}
+          />
         </Grid>
       </Grid>
 

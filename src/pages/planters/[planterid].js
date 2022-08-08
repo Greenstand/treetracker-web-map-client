@@ -162,10 +162,18 @@ export default function Planter(props) {
               {}
               <SvgIcon
                 component={SearchIcon}
-                htmlColor="white"
                 inheritViewBox
-                fontsize="large"
-                alt="search"
+                sx={{
+                  width: 48,
+                  height: 48,
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+                  '& rect': {
+                    stroke: 'grey',
+                  },
+                }}
               />
             </Box>
           </Box>
@@ -292,6 +300,7 @@ export default function Planter(props) {
             <CustomCard
               handleClick={() => setIsPlanterTab(true)}
               iconURI={TreeIcon}
+              sx={{ height: 34, width: 26 }}
               title="Trees Planted"
               text={treeCount}
               disabled={!isPlanterTab}
@@ -301,6 +310,7 @@ export default function Planter(props) {
             <CustomCard
               handleClick={() => setIsPlanterTab(false)}
               iconURI={PeopleIcon}
+              sx={{ height: 36, width: 36 }}
               title="Ass. Orgs"
               text={planter.associatedOrganizations.length || '---'}
               disabled={isPlanterTab}

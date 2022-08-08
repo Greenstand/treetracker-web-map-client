@@ -11,7 +11,7 @@ const useStyles = makeStyles()((theme) => ({}));
 function CustomCard(props) {
   const { classes } = useStyles(props);
   const theme = useTheme();
-  const { iconURI, title, text, handleClick, disabled, tooltip } = props;
+  const { iconURI, title, text, handleClick, disabled, tooltip, sx } = props;
 
   return (
     <Box
@@ -44,7 +44,7 @@ function CustomCard(props) {
               : theme.palette.success.main,
           }}
         >
-          <SvgIcon component={iconURI} inheritViewBox alt="icon" />
+          <SvgIcon sx={sx} component={iconURI} inheritViewBox alt="icon" />
         </Avatar>
       </Box>
       <Box

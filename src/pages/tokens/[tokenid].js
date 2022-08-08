@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useMediaQuery, useTheme, Avatar } from '@mui/material';
+import { useMediaQuery, useTheme, Avatar, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -14,10 +14,10 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Info from '../../components/common/Info';
 import TreeTag from '../../components/common/TreeTag';
-import calendarIcon from '../../images/icons/calendar.svg';
-import shareIcon from '../../images/icons/share.svg';
-import tokenIcon from '../../images/icons/token.svg';
-import searchIcon from '../../images/search.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import ShareIcon from '../../images/icons/share.svg';
+import TokenIcon from '../../images/icons/token.svg';
+import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
@@ -85,7 +85,21 @@ export default function Token({ token, wallet }) {
           <BackButton />
           <Box>
             {}
-            <img src={searchIcon} alt="search" />
+            <SvgIcon
+              component={SearchIcon}
+              inheritViewBox
+              sx={{
+                width: 48,
+                height: 48,
+                fill: 'transparent',
+                '& path': {
+                  fill: 'grey',
+                },
+                '& rect': {
+                  stroke: 'grey',
+                },
+              }}
+            />
           </Box>
         </Box>
       )}
@@ -127,13 +141,17 @@ export default function Token({ token, wallet }) {
                   onClick={handleShare}
                   sx={{
                     cursor: 'pointer',
-                    '& img': {
+                    '& svg': {
                       width: [40, 52],
                       height: [40, 52],
                     },
                   }}
                 >
-                  <img alt="share the link" src={shareIcon} />
+                  <SvgIcon
+                    alt="share the link"
+                    component={ShareIcon}
+                    inheritViewBox
+                  />
                 </Box>
               }
             />
@@ -293,12 +311,12 @@ export default function Token({ token, wallet }) {
         <TreeTag
           TreeTagValue={new Date(token.created_at).toLocaleDateString()}
           title="Created At"
-          icon={<img src={calendarIcon} alt="calendar" />}
+          icon={<SvgIcon component={CalendarIcon} inheritViewBox />}
         />
         <TreeTag
           TreeTagValue={token.id}
           title="Token ID"
-          icon={<img src={tokenIcon} alt="token" />}
+          icon={<SvgIcon component={TokenIcon} inheritViewBox />}
         />
       </Box>
       <Box height={20} />

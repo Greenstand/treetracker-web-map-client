@@ -1,4 +1,3 @@
- 
 import { Box, Typography, SvgIcon } from '@mui/material';
 
 export default function Info({ info, iconURI }) {
@@ -9,14 +8,14 @@ export default function Info({ info, iconURI }) {
         display: 'flex',
         alignItems: 'center',
         gap: 3,
-        '& img': {
+        '& svg': {
           filter: 'opacity(0.5)',
           maxWidth: 16,
           maxHeight: 16,
         },
       }}
     >
-      <SvgIcon component={iconURI} inheritViewBox alt="join time" />
+      <SvgIcon component={iconURI} inheritViewBox />
       <Typography variant="h6">{info}</Typography>
     </Box>
   );

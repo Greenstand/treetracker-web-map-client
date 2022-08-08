@@ -31,11 +31,11 @@ import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
 import CalendarIcon from '../../images/icons/calendar.svg';
-import diameterIcon from '../../images/icons/diameter.svg';
+import DiameterIcon from '../../images/icons/diameter.svg';
 import GlobalIcon from '../../images/icons/global.svg';
 import HistoryIcon from '../../images/icons/history.svg';
 import LocationIcon from '../../images/icons/location.svg';
-import originIcon from '../../images/icons/origin.svg';
+import OriginIcon from '../../images/icons/origin.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
 import SearchIcon from '../../images/search.svg';
@@ -204,7 +204,22 @@ export default function Tree({
             <BackButton />
             <Box>
               {}
-              <SvgIcon component={SearchIcon} />
+              <SvgIcon
+                component={SearchIcon}
+                inheritViewBox
+                sx={{
+                  width: 48,
+                  height: 48,
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+
+                  '& rect': {
+                    stroke: 'grey',
+                  },
+                }}
+              />
             </Box>
           </Box>
         </>
@@ -253,16 +268,19 @@ export default function Tree({
             <Share
               shareUrl={typeof window !== 'undefined' && window.location.href}
               icon={
-                <Box onClick={handleShare}>
+                <Box
+                  onClick={handleShare}
+                  sx={{
+                    cursor: 'pointer',
+                    '& svg': {
+                      width: [40, 52],
+                      height: [40, 52],
+                    },
+                  }}
+                >
                   <SvgIcon
+                    alt="share the link"
                     component={ShareIcon}
-                    sx={{
-                      cursor: 'pointer',
-                      '& svg': {
-                        width: [40, 52],
-                        height: [40, 52],
-                      },
-                    }}
                     inheritViewBox
                   />
                 </Box>
@@ -391,7 +409,9 @@ export default function Tree({
           <TreeTag
             TreeTagValue={tree.species}
             title="Natural Origin"
-            icon={<img src={originIcon} alt="origin" />}
+            icon={
+              <SvgIcon component={OriginIcon} inheritViewBox alt="origin" />
+            }
           />
         )}
 
@@ -407,7 +427,9 @@ export default function Tree({
           <TreeTag
             TreeTagValue={`${tree.morphology} cm`}
             title="Diameter at Breast Height"
-            icon={<img src={diameterIcon} alt="diameter" />}
+            icon={
+              <SvgIcon component={DiameterIcon} inheritViewBox alt="diameter" />
+            }
           />
         )}
 
