@@ -420,19 +420,23 @@ export default function Tree({
 
 export async function getServerSideProps({ params }) {
   const { treeid } = params;
-  const tree = await getTreeById(treeid);
-  const { planter_id, planting_organization_id } = tree;
-  const planter = await getPlanterById(planter_id);
-  let organization = null;
-  if (planting_organization_id) {
-    organization = await getOrganizationById(planting_organization_id);
-  }
+  try {
+    const tree = await getTreeById(treeid);
+    const { planter_id, planting_organization_id } = tree;
+    const planter = await getPlanterById(planter_id);
+    let organization = null;
+    if (planting_organization_id) {
+      organization = await getOrganizationById(planting_organization_id);
+    }
 
-  return {
-    props: {
-      tree,
-      planter,
-      organization,
-    },
-  };
+    return {
+      props: {
+        tree,
+        planter,
+        organization,
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }

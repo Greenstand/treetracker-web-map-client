@@ -503,14 +503,18 @@ export default function Organization(props) {
 
 export async function getServerSideProps({ params }) {
   const id = params.organizationid;
-  const organization = await getOrganizationById(id);
-  const orgLinks = await getOrgLinks(organization.links);
-  return {
-    props: {
-      organization: {
-        ...organization,
-        ...orgLinks,
+  try {
+    const organization = await getOrganizationById(id);
+    const orgLinks = await getOrgLinks(organization.links);
+    return {
+      props: {
+        organization: {
+          ...organization,
+          ...orgLinks,
+        },
       },
-    },
-  };
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }
