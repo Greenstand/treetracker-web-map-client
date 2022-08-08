@@ -1,3 +1,10 @@
+# [2.0.0-beta.23](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.22...v2.0.0-beta.23) (2022-08-08)
+
+
+### Bug Fixes
+
+* **playground:** preview button not working ([4be399c](https://github.com/Greenstand/treetracker-web-map-client/commit/4be399c270f517258c5772e99f5b46743771429d))
+
 # [2.0.0-beta.22](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.21...v2.0.0-beta.22) (2022-08-07)
 
 
