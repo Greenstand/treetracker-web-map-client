@@ -1,3 +1,14 @@
+# [2.0.0-beta.24](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.23...v2.0.0-beta.24) (2022-08-08)
+
+
+### Bug Fixes
+
+* fixed changes talked about ([a4640a1](https://github.com/Greenstand/treetracker-web-map-client/commit/a4640a1af6afa80ea4750041d8f995206c23dd31))
+* improve svg handling ([6d6256e](https://github.com/Greenstand/treetracker-web-map-client/commit/6d6256e11cb000654d0d4fe1653c2423e5ee30f0))
+* improved svg loading ([a9d7a50](https://github.com/Greenstand/treetracker-web-map-client/commit/a9d7a503c0fb5cf90046c6b70ca26fbce60deb35))
+* svg improvements ([9145815](https://github.com/Greenstand/treetracker-web-map-client/commit/9145815ec2b24a092a8fc9a60a2f4ee03f30eb92))
+* talked about changes ([0b7454f](https://github.com/Greenstand/treetracker-web-map-client/commit/0b7454f4f8063b7f91c9670dabfb8daf8eee3bcb))
+
 # [2.0.0-beta.23](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.22...v2.0.0-beta.23) (2022-08-08)
 
 
