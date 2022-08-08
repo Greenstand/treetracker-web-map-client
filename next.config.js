@@ -60,4 +60,28 @@ module.exports = {
     ];
   },
   basePath: process.env.NEXT_PUBLIC_BASE,
+  webpack(config) {
+    config.module.rules.push(
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: { icon: true },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {},
+          },
+        ],
+      },
+    );
+    return config;
+  },
 };

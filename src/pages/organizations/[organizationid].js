@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {
@@ -9,6 +10,7 @@ import {
   useMediaQuery,
   Avatar,
   useTheme,
+  SvgIcon,
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
@@ -30,12 +32,12 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
 import Info from '../../components/common/Info';
-import calendarIcon from '../../images/icons/calendar.svg';
-import locationIcon from '../../images/icons/location.svg';
-import peopleIcon from '../../images/icons/people.svg';
-import treeIcon from '../../images/icons/tree.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import LocationIcon from '../../images/icons/location.svg';
+import PeopleIcon from '../../images/icons/people.svg';
+import TreeIcon from '../../images/icons/tree.svg';
 import orgBackground from '../../images/org-background.png';
-import searchIcon from '../../images/search.svg';
+import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
@@ -111,7 +113,7 @@ export default function Organization(props) {
         map.setFilters({
           map_name: organization.name,
         });
-        // TODO why I must try/catche this?
+        // TODO why I must try/catch this?
         try {
           await map.loadInitialView();
           map.rerender();
@@ -153,10 +155,22 @@ export default function Organization(props) {
               }}
             >
               <BackButton />
-              <Box>
-                {}
-                <img src={searchIcon} alt="search" />
-              </Box>
+
+              <SvgIcon
+                component={SearchIcon}
+                inheritViewBox
+                sx={{
+                  width: 48,
+                  height: 48,
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+                  '& rect': {
+                    stroke: 'grey',
+                  },
+                }}
+              />
             </Box>
           )}
           <Box
@@ -191,14 +205,14 @@ export default function Organization(props) {
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
-                  iconURI={calendarIcon}
+                  iconURI={CalendarIcon}
                   info={`Organization since ${moment().format(
                     'MMMM DD, YYYY',
                   )}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
               </Box>
               <Box
                 sx={{
@@ -223,14 +237,14 @@ export default function Organization(props) {
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
-                  iconURI={calendarIcon}
+                  iconURI={CalendarIcon}
                   info={`Organization since ${moment().format(
                     'MMMM DD, YYYY',
                   )}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
               </Box>
               <Box
                 sx={{
@@ -264,14 +278,14 @@ export default function Organization(props) {
                 </Typography>
                 <Box sx={{ mt: 2 }}>
                   <Info
-                    iconURI={calendarIcon}
+                    iconURI={CalendarIcon}
                     info={`Organization since ${moment().format(
                       'MMMM DD, YYYY',
                     )}`}
                   />
                 </Box>
                 <Box sx={{ mt: 2 }}>
-                  <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+                  <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
                 </Box>
                 <Box
                   sx={{
@@ -331,7 +345,8 @@ export default function Organization(props) {
             <Grid item sx={{ width: '49%' }}>
               <CustomCard
                 handleClick={() => setIsPlanterTab(true)}
-                iconURI={treeIcon}
+                iconURI={TreeIcon}
+                sx={{ width: 26, height: 34 }}
                 title="Trees Planted"
                 text={organization?.featuredTrees?.trees.length || '---'}
                 disabled={!isPlanterTab}
@@ -340,7 +355,8 @@ export default function Organization(props) {
             <Grid item sx={{ width: '49%' }}>
               <CustomCard
                 handleClick={() => setIsPlanterTab(false)}
-                iconURI={peopleIcon}
+                iconURI={PeopleIcon}
+                sx={{ height: 36, width: 36 }}
                 title="Hired Planters"
                 text={
                   organization?.associatedPlanters?.planters.length || '---'
