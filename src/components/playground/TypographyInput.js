@@ -13,6 +13,19 @@ import {
 } from '../../context/playgroundContext';
 import { propRules } from '../../models/themePlaygroundOptions';
 
+const allowedFontWeights = new Set([
+  'normal',
+  'bold',
+  'BloodtypeOutlined',
+  'lighter',
+  'bolder',
+  'inherit',
+  'initial',
+  'revert',
+  'revert-layer',
+  'unset',
+]);
+
 function FontFamilyWeightElm(props) {
   const { label, path, fontValue } = props;
   const { getPropByPath, setPropByPath } = usePlaygroundUtils();
@@ -31,11 +44,18 @@ function FontFamilyWeightElm(props) {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      // todo set some fontWeightValidation
+
+      if (error) return false;
       if (!fonts[fontValue]) return false;
       if (value.trim() === '') return false;
       if (fontValue === '')
         return setError('please add aleast one font family.');
+
+      if (allowedFontWeights.has(value)) {
+        setPropByPath(path, value);
+        return true;
+      }
+
       const userInput = parseInt(value.trim(), 10);
       const fontFamilytoLoad = [];
 
@@ -62,11 +82,16 @@ function FontFamilyWeightElm(props) {
 
       return true;
     },
-    [fontValue, fonts, path, setFonts, setPropByPath, value],
+    [error, fontValue, fonts, path, setFonts, setPropByPath, value],
   );
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    const userInput = e.target.value;
+    setValue(userInput);
+    if (!propRules[label].test(userInput)) {
+      setError('Invalid fontWeight');
+      return;
+    }
     setError('');
   };
 
@@ -150,7 +175,7 @@ function FontFamily(props) {
         }}
       />
       <FontFamilyWeightElm
-        label={label}
+        label="fontWeight"
         path={fontWeightPath}
         fontValue={value}
       />
