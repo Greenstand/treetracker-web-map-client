@@ -1,3 +1,11 @@
+# [2.0.0-beta.26](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.25...v2.0.0-beta.26) (2022-08-09)
+
+
+### Bug Fixes
+
+* added more img placeholders ([8345be3](https://github.com/Greenstand/treetracker-web-map-client/commit/8345be3a7b3be854bd977443e2c1c42debd86dfe))
+* added placeholder to tokekid and reverted svg ([ed67b5e](https://github.com/Greenstand/treetracker-web-map-client/commit/ed67b5e859eab032e057888e8da50fb8accec756))
+
 # [2.0.0-beta.25](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.24...v2.0.0-beta.25) (2022-08-09)
 
 
