@@ -1,3 +1,10 @@
+# [2.0.0-beta.28](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2022-08-09)
+
+
+### Features
+
+* localStorage for embed ([c7ef5f6](https://github.com/Greenstand/treetracker-web-map-client/commit/c7ef5f668d991e9f4064ecff88075dbe277a717e))
+
 # [2.0.0-beta.27](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.26...v2.0.0-beta.27) (2022-08-09)
 
 
