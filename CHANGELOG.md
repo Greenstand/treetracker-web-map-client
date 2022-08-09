@@ -1,3 +1,10 @@
+# [2.0.0-beta.30](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2022-08-09)
+
+
+### Bug Fixes
+
+* fixed the impact graph to the new svg icon ([ce39e8b](https://github.com/Greenstand/treetracker-web-map-client/commit/ce39e8bedb2070a3abeddcedd946b88a57c291d9))
+
 # [2.0.0-beta.29](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2022-08-09)
 
 
