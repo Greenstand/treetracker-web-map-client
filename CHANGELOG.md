@@ -1,3 +1,10 @@
+# [2.0.0-beta.27](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.26...v2.0.0-beta.27) (2022-08-09)
+
+
+### Features
+
+* single tree selector ([65d6b89](https://github.com/Greenstand/treetracker-web-map-client/commit/65d6b896f852f2d8c4cd413147082f5c5e4a2e2a))
+
 # [2.0.0-beta.26](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.25...v2.0.0-beta.26) (2022-08-09)
 
 
