@@ -267,6 +267,7 @@ export default function Wallet(props) {
         varian="fullwidth"
         sx={{
           mt: [10, 20],
+          pb: 2.5,
         }}
       />
       <ImpactSection />
