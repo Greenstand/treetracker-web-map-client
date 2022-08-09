@@ -49,18 +49,31 @@ function ImpactSection() {
           />
         </Grid>
       </Grid>
-      <Box>
+      <Box
+        sx={{
+          position: 'relative',
+          mt: 14,
+          mb: 6,
+        }}
+      >
         <SvgIcon
           component={StaticGraph}
           inheritViewBox
           sx={{
             height: 487,
             width: '100%',
-            mt: 14,
-            mb: 6,
           }}
         />
-        <Typography variant="h5">Graphical Data Coming Soon!</Typography>
+        <Typography
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+          variant="h5"
+        >
+          Graphical Data Coming Soon!
+        </Typography>
       </Box>
     </>
   );
