@@ -1,3 +1,11 @@
+# [2.0.0-beta.25](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.24...v2.0.0-beta.25) (2022-08-09)
+
+
+### Features
+
+* handle no data all pages ([c2bbf19](https://github.com/Greenstand/treetracker-web-map-client/commit/c2bbf19f54f267eaa08e539393d99d976fecf42c))
+* handle no data planter page ([cabbfdc](https://github.com/Greenstand/treetracker-web-map-client/commit/cabbfdc65c41fd17f43b47e7f97f9bf7f98dd55c))
+
 # [2.0.0-beta.24](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.23...v2.0.0-beta.24) (2022-08-08)
 
 
