@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useMediaQuery, useTheme, Avatar } from '@mui/material';
+import { useMediaQuery, useTheme, Avatar, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -14,10 +14,11 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Info from '../../components/common/Info';
 import TreeTag from '../../components/common/TreeTag';
-import calendarIcon from '../../images/icons/calendar.svg';
-import shareIcon from '../../images/icons/share.svg';
-import tokenIcon from '../../images/icons/token.svg';
-import searchIcon from '../../images/search.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import ShareIcon from '../../images/icons/share.svg';
+import TokenIcon from '../../images/icons/token.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
+import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
@@ -85,7 +86,21 @@ export default function Token({ token, wallet }) {
           <BackButton />
           <Box>
             {}
-            <img src={searchIcon} alt="search" />
+            <SvgIcon
+              component={SearchIcon}
+              inheritViewBox
+              sx={{
+                width: 48,
+                height: 48,
+                fill: 'transparent',
+                '& path': {
+                  fill: 'grey',
+                },
+                '& rect': {
+                  stroke: 'grey',
+                },
+              }}
+            />
           </Box>
         </Box>
       )}
@@ -127,13 +142,17 @@ export default function Token({ token, wallet }) {
                   onClick={handleShare}
                   sx={{
                     cursor: 'pointer',
-                    '& img': {
+                    '& svg': {
                       width: [40, 52],
                       height: [40, 52],
                     },
                   }}
                 >
-                  <img alt="share the link" src={shareIcon} />
+                  <SvgIcon
+                    alt="share the link"
+                    component={ShareIcon}
+                    inheritViewBox
+                  />
                 </Box>
               }
             />
@@ -141,7 +160,8 @@ export default function Token({ token, wallet }) {
         </Box>
         <img src={`${token.tree_image_url}`} alt="token" />
         <Avatar
-          src={wallet.logo_url}
+          src={imagePlaceholder}
+          // src={wallet.logo_url}
           sx={{
             width: [120, 189],
             height: [120, 189],
@@ -273,7 +293,8 @@ export default function Token({ token, wallet }) {
           entityName={`${wallet.name} `}
           entityType="Wallet"
           buttonText="View the Wallet"
-          cardImageSrc={wallet?.logo_url}
+          cardImageSrc={imagePlaceholder}
+          // cardImageSrc={wallet?.logo_url}
           link={`/wallets/${wallet.id}`}
         />
       </Box>
@@ -293,12 +314,12 @@ export default function Token({ token, wallet }) {
         <TreeTag
           TreeTagValue={new Date(token.created_at).toLocaleDateString()}
           title="Created At"
-          icon={<img src={calendarIcon} alt="calendar" />}
+          icon={<SvgIcon component={CalendarIcon} inheritViewBox />}
         />
         <TreeTag
           TreeTagValue={token.id}
           title="Token ID"
-          icon={<img src={tokenIcon} alt="token" />}
+          icon={<SvgIcon component={TokenIcon} inheritViewBox />}
         />
       </Box>
       <Box height={20} />
@@ -308,14 +329,18 @@ export default function Token({ token, wallet }) {
 
 export async function getServerSideProps({ params }) {
   const { tokenid } = params;
-  const token = await getTokenById(tokenid);
-  const { wallet_id } = token;
-  const wallet = await getWalletById(wallet_id);
+  try {
+    const token = await getTokenById(tokenid);
+    const { wallet_id } = token;
+    const wallet = await getWalletById(wallet_id);
 
-  return {
-    props: {
-      token,
-      wallet,
-    },
-  };
+    return {
+      props: {
+        token,
+        wallet,
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }

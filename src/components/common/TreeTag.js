@@ -1,13 +1,10 @@
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
-import { makeStyles } from 'models/makeStyles';
-
-const useStyles = makeStyles()((theme) => ({}));
 
 function TreeTagComponent({ TreeTagValue, title, icon }) {
-  const { classes } = useStyles();
   return (
     <Chip
       sx={{
