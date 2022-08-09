@@ -1,4 +1,4 @@
-import { useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
@@ -13,7 +13,7 @@ import LeaderBoard from '../components/LeaderBoard';
 // import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Filter from '../components/common/Filter';
-import search from '../images/search.svg';
+import Search from '../images/search.svg';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
@@ -93,10 +93,21 @@ function Top({ trees, planters, countries, organizations }) {
           }}
         >
           <Typography variant="h4">Featured trees this week</Typography>
-          <Box>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={search} alt="search" />
-          </Box>
+          <SvgIcon
+            component={Search}
+            inheritViewBox
+            sx={{
+              width: 48,
+              height: 48,
+              fill: 'transparent',
+              '& path': {
+                fill: 'grey',
+              },
+              '& rect': {
+                stroke: 'grey',
+              },
+            }}
+          />
         </Box>
         {false && ( // going to be replaced by search filter component
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -104,7 +115,7 @@ function Top({ trees, planters, countries, organizations }) {
           </Box>
         )}
         <Box>
-          <FeaturedTreesSlider trees={trees} />
+          <FeaturedTreesSlider trees={trees} isMobile={isMobileScreen} />
         </Box>
         <Box sx={{ mt: [4, 8] }} />
         <Typography variant="h4">Featured organizations this week</Typography>
@@ -112,6 +123,7 @@ function Top({ trees, planters, countries, organizations }) {
           link={(id) => `/organizations/${id}`}
           color="primary"
           planters={organizations}
+          isMobile={isMobileScreen}
         />
         <Box
           sx={{
@@ -124,6 +136,7 @@ function Top({ trees, planters, countries, organizations }) {
           link={(id) => `/planters/${id}`}
           color="secondary"
           planters={planters}
+          isMobile={isMobileScreen}
         />
         <Typography
           variant="h4"
@@ -178,17 +191,17 @@ function Top({ trees, planters, countries, organizations }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const [trees, countries, planters, organizations] = await Promise.all([
     getFeaturedTrees(), //
     getCountryLeaderboard(),
     (async () => {
-      const data = await utils.requestAPI('/planters?limit=10');
+      const data = await utils.requestAPI('/planters/featured');
       log.warn('planters', data);
       return data.planters;
     })(),
     (async () => {
-      const data = await utils.requestAPI('/organizations?limit=10');
+      const data = await utils.requestAPI('/organizations/featured');
       log.warn('organizations', data);
       return data.organizations;
     })(),
@@ -200,7 +213,6 @@ export async function getStaticProps() {
       planters,
       organizations,
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 60,
   };
 }
 

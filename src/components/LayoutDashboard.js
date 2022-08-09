@@ -6,21 +6,24 @@ import log from 'loglevel';
 
 const keycloakCfg = {
   url: 'https://dev-k8s.treetracker.org/auth',
-  realm: 'greenstand',
+  realm: 'treetracker',
   clientId: 'webmap',
   // realm: 'quickstart',
   // clientId: 'webmap-client',
 };
 
 function Layout({ children, cookies }) {
-  return (
-    <SSRKeycloakProvider
-      keycloakConfig={keycloakCfg}
-      persistor={SSRCookies(cookies)}
-    >
-      {children}
-    </SSRKeycloakProvider>
-  );
+  return <div>{children}</div>;
+
+  // disable keycloak for now
+  // return (
+  //   <SSRKeycloakProvider
+  //     keycloakConfig={keycloakCfg}
+  //     persistor={SSRCookies(cookies)}
+  //   >
+  //     {children}
+  //   </SSRKeycloakProvider>
+  // );
 }
 
 function parseCookies(req) {

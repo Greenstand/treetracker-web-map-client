@@ -4,31 +4,41 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
+import {
+  useMediaQuery,
+  useTheme,
+  SvgIcon,
+  Avatar,
+  Divider,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import Badges from '../../components/Badges';
+import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
 import Share from '../../components/Share';
-import VerifiedBadge from '../../components/VerifiedBadge';
+import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
-import accuracyIcon from '../../images/icons/accuracy.svg';
-import calendarIcon from '../../images/icons/calendar.svg';
-import globalIcon from '../../images/icons/global.svg';
-import historyIcon from '../../images/icons/history.svg';
-import location from '../../images/icons/location.svg';
-import shareIcon from '../../images/icons/share.svg';
-import tokenIcon from '../../images/icons/token.svg';
-import maxIcon from '../../images/max.svg';
-import searchIcon from '../../images/search.svg';
+import AccuracyIcon from '../../images/icons/accuracy.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import DiameterIcon from '../../images/icons/diameter.svg';
+import GlobalIcon from '../../images/icons/global.svg';
+import HistoryIcon from '../../images/icons/history.svg';
+import LocationIcon from '../../images/icons/location.svg';
+import OriginIcon from '../../images/icons/origin.svg';
+import ShareIcon from '../../images/icons/share.svg';
+import TokenIcon from '../../images/icons/token.svg';
+import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
 const useStyles = makeStyles()((theme) => ({
@@ -68,6 +78,8 @@ export default function Tree({
   const mapContext = useMapContext();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const router = useRouter();
+  const userCameFromPlanterPage = router.asPath.includes('planters');
 
   const { setTitlesData } = useDrawerContext();
 
@@ -94,7 +106,9 @@ export default function Tree({
       verifiedToken: tree.token_id,
       verifiedTree: tree.verified,
     });
-  }, [setTitlesData, tree.id, tree.token_id, tree.verified]);
+    // eslint-disable-next-line no-console, prefer-template, no-useless-concat
+    console.log('the tree data' + '' + JSON.stringify(tree));
+  }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
 
   useEffect(() => {
     // manipulate the map
@@ -148,12 +162,7 @@ export default function Tree({
                 mt: 2,
               }}
             >
-              <VerifiedBadge
-                color="primary"
-                verified
-                badgeName="Verified Planter"
-              />
-              <VerifiedBadge color="secondary" badgeName="Token Issued" />
+              <Badges tokenId={tree.token_id} verified={tree.verified} />
             </Box>
           </Box>
         </Portal>
@@ -167,21 +176,53 @@ export default function Tree({
           </Box>
         </Portal>
       )}
-      {!isMobile && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            alignItems: 'center',
-          }}
-        >
-          <BackButton />
-          <Box>
-            {}
-            <img src={searchIcon} alt="search" />
+      {!isMobile && userCameFromPlanterPage && (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar className={classes.media} src={planter.image_url} />
+            <Box sx={{ marginLeft: 3 }}>
+              <Typography variant="h5">
+                {planter.first_name} {planter.last_name}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <BackButton />
+            <Box>
+              {}
+              <SvgIcon
+                component={SearchIcon}
+                inheritViewBox
+                sx={{
+                  width: 48,
+                  height: 48,
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+
+                  '& rect': {
+                    stroke: 'grey',
+                  },
+                }}
+              />
+            </Box>
+          </Box>
+        </>
       )}
       <Box
         sx={[
@@ -231,28 +272,25 @@ export default function Tree({
                   onClick={handleShare}
                   sx={{
                     cursor: 'pointer',
-                    '& img': {
+                    '& svg': {
                       width: [40, 52],
                       height: [40, 52],
                     },
                   }}
                 >
-                  <img alt="share the link" src={shareIcon} />
+                  <SvgIcon
+                    alt="share the link"
+                    component={ShareIcon}
+                    inheritViewBox
+                  />
                 </Box>
               }
             />
-            <Box
-              onClick={() => handleMax(tree.image_url)}
-              sx={{
-                cursor: 'pointer',
-                '& img': {
-                  width: [40, 52],
-                  height: [40, 52],
-                },
-              }}
-            >
-              <img alt="fullscreen" src={maxIcon} />
-            </Box>
+            <TreeInfoDialog
+              tree={tree}
+              planter={planter}
+              organization={organization}
+            />
           </Box>
         </Box>
         <img src={tree.image_url} alt="tree" />
@@ -291,12 +329,7 @@ export default function Tree({
                 mt: 2,
               }}
             >
-              <VerifiedBadge
-                color="primary"
-                verified
-                badgeName="Verified Planter"
-              />
-              <VerifiedBadge color="secondary" badgeName="Token Issued" />
+              <Badges tokenId={tree.token_id} verified={tree.verified} />
             </Box>
           </Box>
         )}
@@ -358,27 +391,48 @@ export default function Tree({
         <TreeTag
           TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
           title="Planted on"
-          icon={<img src={calendarIcon} alt="calendar" />}
+          icon={<SvgIcon component={CalendarIcon} />}
         />
         <TreeTag
           TreeTagValue="Tanzania"
           title="Located in"
-          icon={<img src={location} alt="location" />}
+          icon={<SvgIcon component={LocationIcon} />}
         />
         {tree.age && (
           <TreeTag
-            TreeTagValue={tree.age}
+            TreeTagValue={`${tree.age} Years`}
             title="Age"
-            icon={<img src={historyIcon} alt="age" />}
+            icon={<SvgIcon component={HistoryIcon} />}
           />
         )}
+        {tree.species && (
+          <TreeTag
+            TreeTagValue={tree.species}
+            title="Natural Origin"
+            icon={
+              <SvgIcon component={OriginIcon} inheritViewBox alt="origin" />
+            }
+          />
+        )}
+
         {tree.gps_accuracy && (
           <TreeTag
             TreeTagValue={tree.gps_accuracy}
             title="GPS Accuracy"
-            icon={<img src={accuracyIcon} alt="accuracy" />}
+            icon={<SvgIcon component={AccuracyIcon} />}
           />
         )}
+
+        {tree.morphology && (
+          <TreeTag
+            TreeTagValue={`${tree.morphology} cm`}
+            title="Diameter at Breast Height"
+            icon={
+              <SvgIcon component={DiameterIcon} inheritViewBox alt="diameter" />
+            }
+          />
+        )}
+
         {tree.lat && tree.lon && (
           <TreeTag
             TreeTagValue={`${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
@@ -386,23 +440,43 @@ export default function Tree({
               5,
             )}`}
             title="Latitude, Longitude"
-            icon={<img src={globalIcon} alt="lat,lon" />}
+            icon={<SvgIcon component={GlobalIcon} color="pink" />}
           />
         )}
         {tree.token_id && (
           <TreeTag
             TreeTagValue={tree.token_id}
             title="Token ID"
-            icon={<img src={tokenIcon} alt="token" />}
+            icon={<SvgIcon component={TokenIcon} />}
           />
         )}
       </Box>
+      <Divider
+        varian="fullwidth"
+        sx={{
+          mt: [10, 20],
+        }}
+      />
+      <ImpactSection />
       <Box height={20} />
+      {nextExtraIsEmbed && (
+        <Portal container={document.getElementById('embed-logo-container')}>
+          <Avatar
+            sx={{
+              width: '120px',
+              height: '120px',
+              margin: '10px',
+            }}
+            src={planter.image_url}
+            variant="rounded"
+          />
+        </Portal>
+      )}
     </Box>
   );
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
@@ -418,14 +492,5 @@ export async function getStaticProps({ params }) {
       planter,
       organization,
     },
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 180,
-  };
-}
-
-// eslint-disable-next-line require-await
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 }

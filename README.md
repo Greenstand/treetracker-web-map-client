@@ -9,7 +9,7 @@
     - [Test File Naming Conventions](#test-file-naming-conventions)
   - [How to Build Components](#how-to-build-components)
     - [Adding Material UI Theme to Component Tests](#adding-material-ui-theme-to-component-tests)
-    - [Our Theme System](#our-theme-systeme)
+    - [Our Theme System](#our-theme-system)
     - [Using Correct Link Component](#using-correct-link-component)
     - [Material UI styles](#material-ui-styles)
     - [Mocking NextJs Router in Component Tests](#mocking-nextjs-router-in-component-tests)
@@ -51,7 +51,7 @@ For the new web map beta development, we are working on the branch: beta, now we
 
 The current version online is still deployed from master.
 
-So, for issues, the issue for the new web map beta, should use the branch: `beta`, the issue for the current version online, like fix bug, add tiny features, should use `master`, generally, we will freeze new big feature on the `master` branch.
+So, for issues, the issue for the new web map beta, should use the branch: `beta`, the issue for the current version online, like fix bug, add tiny features, should use `master`, generally, we will freeze new big features on the `master` branch.
 
 ## Development Environment Quick Start
 
@@ -93,11 +93,11 @@ We encourage Test Driven Development, with tool like Cypress, especially the com
 
 ### Glossary
 
-- Unit test: tests against a single class, object, function or file, covering the most small unit in codebase. It's a good practice to code in TDD, but we don't enforce writing a unit test for every unit. Use Cypress component-testing to cover component units and Jest test to cover model file and utility functions.
+- Unit test: tests against a single class, object, function or file, covering the most small unit in codebase. It's good practice to code in TDD, but we don't enforce writing a unit test for every unit. Use Cypress component-testing to cover component units and Jest test to cover model file and utility functions.
 
-- Integration test: test a single piece of functionality in the app, like: a page, a module, an API endpoint. We require integration test for every page. Use Cypress for page integration tests
+- Integration test: test a single piece of functionality in the app, like: a page, a module, an API endpoint. We require an integration test for every page. Use Cypress for page integration tests
 
-- End to End test: test the real app like a human being, against real app/environment. We will implement few E2E test to cover most basic workflow, like: visit the root of the website, then jump into the detailed pages. Use Cypress to cover E2E tests.
+- End to End test: test the real app like a human being, against real app/environment. We will implement few a E2E tests to cover the most basic workflow, like: visit the root of the website, then jump into the detailed pages. Use Cypress to cover E2E tests.
 
 ### Test File Naming Conventions
 
@@ -143,7 +143,7 @@ We heavely use the MaterialUI theme as the source of style, including: color, fo
 
 The color system defined several named color as the brand color on Greenstand, check code in the theme file and in the pallete section, these color is also defined in our Figma file, check link below to find the design file.
 
-For convenience, run `npm run cyu` and find the page of `DesignSandbox`, you can directly check the theme settings, and pick appropriate ones for your coding. 
+For convenience, run `npm run cyu` and find the page of `DesignSandbox`, you can directly check the theme settings, and pick appropriate ones for your coding.
 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/5744708/169634253-1c391f1e-8163-4cc0-8054-946b66dadbe3.png">
 

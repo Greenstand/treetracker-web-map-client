@@ -1,16 +1,26 @@
-/* eslint-disable @next/next/no-img-element */
-import { Avatar, Button, Box, Grid, Typography, useTheme } from '@mui/material';
+ 
+import {
+  Avatar,
+  Button,
+  Box,
+  Grid,
+  Typography,
+  useTheme,
+  SvgIcon,
+} from '@mui/material';
 import * as d3 from 'd3';
 import moment from 'moment';
 import Image from 'next/image';
 import ColorButton from './common/ColorButton';
 import DataTag from './common/DataTag';
 import Info from './common/Info';
-import calendarIcon from '../images/icons/calendar.svg';
-import locationIcon from '../images/icons/location.svg';
-import peopleIcon from '../images/icons/people.svg';
-import quoteImgReverse from '../images/quote-reverse.svg';
-import quoteImg from '../images/quote-symbol.svg';
+import CalendarIcon from '../images/icons/calendar.svg';
+import LocationIcon from '../images/icons/location.svg';
+import PeopleIcon from '../images/icons/people.svg';
+import QuoteImgReverse from '../images/quote-reverse.svg';
+import QuoteImg from '../images/quote-symbol.svg';
+
+// TODO: something is wrong with quote-symbol.svg and quote-reverse.svg, they show a blank space. The svg files pull up as blanks. Not sure how to fix them, putting up an issue as this is something totally different than what I'm working on.
 
 function PlanterQuote({
   quote,
@@ -77,7 +87,12 @@ function PlanterQuote({
                 transform: ['scale(.5)', ''],
               }}
             >
-              <img src={quoteImg} alt="quote" />
+              <SvgIcon
+                component={QuoteImg}
+                inheritViewBox
+                alt="quote"
+                fontSize="large"
+              />
             </Box>
             <Typography variant="body1">{quote}</Typography>
             <Typography
@@ -90,12 +105,12 @@ function PlanterQuote({
             </Typography>
             <Box sx={{ mt: [1.5, 3] }}>
               <Info
-                iconURI={calendarIcon}
+                iconURI={CalendarIcon}
                 info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
             </Box>
           </Box>
         </Box>
@@ -122,7 +137,12 @@ function PlanterQuote({
                 transform: ['scale(.5)', ''],
               }}
             >
-              <img src={quoteImgReverse} alt="quote" />
+              <SvgIcon
+                component={QuoteImgReverse}
+                inheritViewBox
+                fontSize="large"
+                alt="quote"
+              />
             </Box>
             <Typography variant="body1">&ldquo;{quote}&ldquo;</Typography>
             <Typography
@@ -135,12 +155,12 @@ function PlanterQuote({
             </Typography>
             <Box sx={{ mt: [1.5, 3] }}>
               <Info
-                iconURI={calendarIcon}
+                iconURI={CalendarIcon}
                 info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
             </Box>
           </Box>
           <Avatar

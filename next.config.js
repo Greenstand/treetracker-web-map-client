@@ -1,3 +1,5 @@
+/* eslint-disable require-await */
+
 const withImages = require('next-images');
 
 module.exports = {
@@ -12,19 +14,74 @@ module.exports = {
     ],
     disableStaticImages: true,
   },
-  // eslint-disable-next-line require-await
   async rewrites() {
     return [
       {
-        source: '/planters/:planter_id(\\d{1,})/trees/:tree_id(\\d{1,})',
-        destination: '/trees/:tree_id(\\d{1,})',
+        source: '/planters/:planterId(\\d{1,})/trees/:treeId(\\d{1,})',
+        destination: '/trees/:treeId(\\d{1,})',
       },
       {
         source:
-          '/organizations/:organization_id(\\d{1,})/trees/:tree_id(\\d{1,})',
-        destination: '/trees/:tree_id(\\d{1,})',
+          '/organizations/:organizationId(\\d{1,})/trees/:treeId(\\d{1,})',
+        destination: '/trees/:treeId(\\d{1,})',
+      },
+      {
+        source: '/map/:map_name(\\d{1,})',
+        destination: '/?map=:map_name',
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: '/:path((?!trees).*)',
+        has: [
+          {
+            type: 'query',
+            key: 'treeid',
+            value: '(?<treeId>(\\d{1,}))',
+          },
+        ],
+        destination: '/trees/:treeId(\\d{1,})',
+        permanent: true,
+      },
+      {
+        source: '/:path((?!planters).*)',
+        has: [
+          {
+            type: 'query',
+            key: 'userid',
+            value: '(?<planterId>(\\d{1,}))',
+          },
+        ],
+        destination: '/planters/:planterId(\\d{1,})',
+        permanent: true,
       },
     ];
   },
   basePath: process.env.NEXT_PUBLIC_BASE,
+  webpack(config) {
+    config.module.rules.push(
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: { icon: true },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {},
+          },
+        ],
+      },
+    );
+    return config;
+  },
 };

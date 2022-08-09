@@ -1,4 +1,4 @@
-import { useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import React from 'react';
@@ -47,6 +47,20 @@ const mobileToolTipPos = {
   oc: { top: '45%', left: '78%' },
 };
 
+const mapContinentName = (continentName) => {
+  if (!continentName) return undefined;
+
+  const nameArray = continentName.toLowerCase().split(' ');
+  if (nameArray.length > 1) {
+    return nameArray[0][0] + nameArray[1][0];
+  }
+  if (nameArray.length === 1) {
+    return nameArray[0][0] + nameArray[0][1];
+  }
+
+  return undefined;
+};
+
 function ToolTip({ totalTrees, con }) {
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -54,6 +68,7 @@ function ToolTip({ totalTrees, con }) {
 
   return (
     <Box
+      className={classes.tooltipImg}
       sx={{
         position: 'absolute',
         top: isMobileScreen ? mobileToolTipPos[con].top : toolTipPos[con].top,
@@ -62,7 +77,12 @@ function ToolTip({ totalTrees, con }) {
           : toolTipPos[con].left,
       }}
     >
-      <img src={TreeTooltip} alt="tree icon" className={classes.tooltipImg} />
+      <SvgIcon
+        sx={{ width: 68, height: 77 }}
+        component={TreeTooltip}
+        alt="tree icon"
+        inheritViewBox
+      />
       <Typography
         color="nearBlack.main"
         sx={{
@@ -80,12 +100,27 @@ function ToolTip({ totalTrees, con }) {
 
 function CustomWorldMap({ totalTrees, con }) {
   const { classes } = useStyles();
-  const [selected, onSelect] = React.useState(con);
+
+  let contArr = con;
+  let totalTreesArr = totalTrees;
+
+  if (!Array.isArray(totalTrees) && !Array.isArray(con)) {
+    contArr = [con];
+    totalTreesArr = [totalTrees];
+  }
+  const continentAbr = contArr.map((c) => mapContinentName(c));
 
   return (
     <Box className={classes.root}>
-      <WorldMap selected={selected} onSelect={onSelect} />
-      <ToolTip totalTrees={totalTrees} pos={toolTipPos} con={con} />
+      <WorldMap selected={continentAbr} onSelect={() => null} />
+      {continentAbr.map((cont, ind) => (
+        <ToolTip
+          key={cont}
+          totalTrees={totalTreesArr[ind]}
+          pos={toolTipPos}
+          con={cont}
+        />
+      ))}
     </Box>
   );
 }

@@ -1,14 +1,14 @@
 import { ArrowRight, ArrowLeft } from '@mui/icons-material';
-import { Paper, Typography } from '@mui/material';
+import { Paper, Typography, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import SearchFilter from './SearchFilter';
-import logoIcon from '../images/logo.png';
-import max from '../images/max.svg';
-import zoomIn from '../images/zoom-in.svg';
-import zoomOut from '../images/zoom-out.svg';
+import LogoIcon from '../images/greenstand_logo.svg';
+import MinIcon from '../images/min.svg';
+import ZoomIn from '../images/zoom-in.svg';
+import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 // import { makeStyles } from 'models/makeStyles';
 
@@ -55,6 +55,7 @@ export default function Layout({
   isFloatingDisabled,
 }) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
+  const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
   // const { _classes } = useStyles();
   const mapContext = useMapContext();
   function handleFullScreen() {
@@ -72,6 +73,14 @@ export default function Layout({
   function handleZoomOut() {
     mapContext.map.map.zoomOut();
   }
+
+  React.useEffect(() => {
+    setToggleButtonPosition((prevPosition) => {
+      if (prevPosition === 0) return 568; // width of the drawer
+      return 0;
+    });
+  }, [isDrawerOpen]);
+
   return (
     <>
       <Box
@@ -118,26 +127,25 @@ export default function Layout({
               </Box>
             </Box>
           </Drawer>
-          {isDrawerOpen && (
-            <Paper
-              onClick={handleDrawerToggle}
-              sx={{
-                cursor: 'pointer',
-                position: 'absolute',
-                left: 568,
-                width: 23,
-                height: 48,
-                display: 'flex',
-                borderRadius: '0px 5px 5px 0',
-                zIndex: 1200,
-                top: 13,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <ArrowLeft />
-            </Paper>
-          )}
+          <Paper
+            onClick={handleDrawerToggle}
+            sx={{
+              cursor: 'pointer',
+              position: 'absolute',
+              top: 13,
+              transform: `translate(${toggleButtonPosition}px, 0)`,
+              transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+              width: 23,
+              height: 48,
+              display: 'flex',
+              borderRadius: '0px 5px 5px 0',
+              zIndex: 1200,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {isDrawerOpen ? <ArrowLeft /> : <ArrowRight />}
+          </Paper>
         </>
       )}
 
@@ -155,27 +163,6 @@ export default function Layout({
           <SearchFilter />
         </Box>
       )}
-      {!isDrawerOpen && (
-        <Paper
-          onClick={handleDrawerToggle}
-          sx={{
-            cursor: 'pointer',
-            position: 'absolute',
-            left: 0,
-            width: 23,
-            height: 48,
-            display: 'flex',
-            borderRadius: '0px 5px 5px 0',
-            zIndex: 1200,
-            top: 13,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <ArrowRight />
-        </Paper>
-      )}
-
       {false && isFloatingDisabled && (
         <Box
           sx={{
@@ -201,8 +188,11 @@ export default function Layout({
           cursor: 'pointer',
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img alt="fullscreen" src={max} />
+        <SvgIcon
+          component={MinIcon}
+          inheritViewBox
+          sx={{ height: 52, width: 52 }}
+        />
       </Box>
 
       <Box
@@ -253,7 +243,12 @@ export default function Layout({
                 mt: '-3px',
               }}
             >
-              <img width="100%" alt="logo" src={logoIcon} />
+              <SvgIcon
+                component={LogoIcon}
+                // TODO: logo.png in beta repo is currently broken. Need to use .svg file for this to work anyways
+                sx={{ height: 36, width: 45 }}
+                inheritViewBox
+              />
             </Box>
           </Box>
         </Paper>
@@ -270,12 +265,27 @@ export default function Layout({
           }}
         >
           <Box onClick={handleZoomIn}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="zoom-in" src={zoomIn} />
+            { }
+            <SvgIcon
+              alt="zoom-in"
+              component={ZoomIn}
+              inheritViewBox
+              sx={{ width: 52, height: 52 }}
+            />
           </Box>
-          <Box onClick={handleZoomOut}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="zoom-out" src={zoomOut} />
+          <Box
+            onClick={handleZoomOut}
+            sx={{
+              '& svg': { display: 'block' },
+            }}
+          >
+            { }
+            <SvgIcon
+              alt="zoom-out"
+              component={ZoomOut}
+              inheritViewBox
+              sx={{ width: 52, height: 52 }}
+            />
           </Box>
         </Box>
       </Box>

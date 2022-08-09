@@ -1,14 +1,15 @@
+import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-import Drawer from './Drawer';
 import SearchFilter from './SearchFilter';
-import zoomIn from '../images/zoom-in.svg';
-import zoomOut from '../images/zoom-out.svg';
+import ZoomIn from '../images/zoom-in.svg';
+import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
+const Drawer = dynamic(() => import('./Drawer'), { ssr: false });
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -82,12 +83,20 @@ export default function Layout({ children }) {
             }}
           >
             <Box onClick={handleZoomIn}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-in" src={zoomIn} />
+              <SvgIcon
+                alt="zoom-in"
+                component={ZoomIn}
+                inheritViewBox
+                sx={{ height: 52, width: 52 }}
+              />
             </Box>
             <Box marginBottom="2rem" onClick={handleZoomOut}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-out" src={zoomOut} />
+              <SvgIcon
+                alt="zoom-out"
+                component={ZoomOut}
+                inheritViewBox
+                sx={{ width: 52, height: 52 }}
+              />
             </Box>
           </Box>
         </Box>

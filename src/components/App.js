@@ -71,12 +71,14 @@ function MapComponent() {
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
     const path = window.location.pathname.match(
-      /^\/(planters|organizations)\/\d+$/,
+      // /^\/(planters|organizations)\/\d+$/,
+      /^(\/(planters|organizations)\/\d+)(\/trees\/\d+)?$/,
     );
+    log.warn('parsed path:', path);
     const isEmbed = window.location.search.match(/embed=true/);
     let prefix = '';
     if (path) {
-      prefix = window.location.pathname;
+      [prefix] = path;
     }
     const url = new URL(window.location.href);
     const { timeline } = url.searchParams;
@@ -131,7 +133,7 @@ function MapComponent() {
       zoomControl: true,
       zoomControlPosition: 'bottomright',
     });
-    map.on('moveEnd', () => {
+    map.on('move-end', () => {
       log.warn('update url');
       window.history.pushState(
         'treetrakcer',
