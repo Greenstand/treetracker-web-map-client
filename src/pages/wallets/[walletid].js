@@ -274,26 +274,30 @@ export default function Wallet(props) {
 
 export async function getServerSideProps({ params }) {
   const id = params.walletid;
-  const [wallet, species, tokenCount, tokenRegionCount] = await Promise.all([
-    getWalletById(id),
-    getSpeciesByWalletId(id),
-    (async () => {
-      // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
-      const data = await requestAPI(`/tokens?wallet=${id}`);
-      return data.total;
-    })(),
-    (async () => {
-      // return total no.trees/tokens per country
-      const data = await requestAPI(`/wallets/${id}/token-region-count`);
-      return data.walletStatistics;
-    })(),
-  ]);
-  return {
-    props: {
-      wallet,
-      species: species.species,
-      tokenCount,
-      tokenRegionCount,
-    },
-  };
+  try {
+    const [wallet, species, tokenCount, tokenRegionCount] = await Promise.all([
+      getWalletById(id),
+      getSpeciesByWalletId(id),
+      (async () => {
+        // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
+        const data = await requestAPI(`/tokens?wallet=${id}`);
+        return data.total;
+      })(),
+      (async () => {
+        // return total no.trees/tokens per country
+        const data = await requestAPI(`/wallets/${id}/token-region-count`);
+        return data.walletStatistics;
+      })(),
+    ]);
+    return {
+      props: {
+        wallet,
+        species: species.species,
+        tokenCount,
+        tokenRegionCount,
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }

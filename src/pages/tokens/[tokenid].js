@@ -326,14 +326,18 @@ export default function Token({ token, wallet }) {
 
 export async function getServerSideProps({ params }) {
   const { tokenid } = params;
-  const token = await getTokenById(tokenid);
-  const { wallet_id } = token;
-  const wallet = await getWalletById(wallet_id);
+  try {
+    const token = await getTokenById(tokenid);
+    const { wallet_id } = token;
+    const wallet = await getWalletById(wallet_id);
 
-  return {
-    props: {
-      token,
-      wallet,
-    },
-  };
+    return {
+      props: {
+        token,
+        wallet,
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }
