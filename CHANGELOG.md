@@ -1,3 +1,16 @@
+# [2.0.0-beta.29](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2022-08-09)
+
+
+### Bug Fixes
+
+* failed lock file ([a238bdb](https://github.com/Greenstand/treetracker-web-map-client/commit/a238bdb9422cb3553e5273db971c266eb4b9af75))
+* upgrade core to solve bug ([af4861e](https://github.com/Greenstand/treetracker-web-map-client/commit/af4861ecce800073648fce4774d3171b126e0b69))
+
+
+### Features
+
+* single tree highlight ([10a8e86](https://github.com/Greenstand/treetracker-web-map-client/commit/10a8e86271b8144f66cf17817ac1f154255d311a))
+
 # [2.0.0-beta.28](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2022-08-09)
 
 ### Features
