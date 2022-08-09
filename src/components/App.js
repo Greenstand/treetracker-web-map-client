@@ -120,19 +120,17 @@ function MapComponent() {
     script.id = 'googleMaps';
     document.body.appendChild(script);
     const parameters = getParameters();
-    const map =
-      mapContext.map ||
-      new Map({
-        onLoad: () => {
-          log.warn('mock onload');
-        },
-        onClickTree: handleClickTree,
-        onError: handleError,
-        filters: parameters,
-        iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
-        zoomControl: true,
-        zoomControlPosition: 'bottomright',
-      });
+    const map = new Map({
+      onLoad: () => {
+        log.warn('mock onload');
+      },
+      onClickTree: handleClickTree,
+      onError: handleError,
+      filters: parameters,
+      iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
+      zoomControl: true,
+      zoomControlPosition: 'bottomright',
+    });
     map.on('moveEnd', () => {
       log.warn('update url');
       window.history.pushState(
