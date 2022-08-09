@@ -44,7 +44,15 @@ function CustomCard(props) {
               : theme.palette.success.main,
           }}
         >
-          <SvgIcon sx={sx} component={iconURI} inheritViewBox alt="icon" />
+          <SvgIcon
+            sx={{
+              ...sx,
+              fill: 'none',
+            }}
+            component={iconURI}
+            inheritViewBox
+            alt="icon"
+          />
         </Avatar>
       </Box>
       <Box
