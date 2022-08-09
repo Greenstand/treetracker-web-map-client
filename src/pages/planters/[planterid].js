@@ -32,6 +32,7 @@ import CalendarIcon from '../../images/icons/calendar.svg';
 import LocationIcon from '../../images/icons/location.svg';
 import PeopleIcon from '../../images/icons/people.svg';
 import TreeIcon from '../../images/icons/tree.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
@@ -392,6 +393,7 @@ export default function Planter(props) {
               entityType="Planting Organization"
               buttonText="Meet the Organization"
               link="/organizations/1"
+              cardImageSrc={imagePlaceholder}
             />
             <Box sx={{ mt: [6, 12] }} />
             <InformationCard1
@@ -399,6 +401,7 @@ export default function Planter(props) {
               entityType="Planting Organization"
               buttonText="Meet the Organization"
               link="/organizations/1"
+              cardImageSrc={imagePlaceholder}
             />
           </Box>
         )}

@@ -17,6 +17,7 @@ import TreeTag from '../../components/common/TreeTag';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
@@ -159,7 +160,8 @@ export default function Token({ token, wallet }) {
         </Box>
         <img src={`${token.tree_image_url}`} alt="token" />
         <Avatar
-          src={wallet.logo_url}
+          src={imagePlaceholder}
+          // src={wallet.logo_url}
           sx={{
             width: [120, 189],
             height: [120, 189],
@@ -291,7 +293,8 @@ export default function Token({ token, wallet }) {
           entityName={`${wallet.name} `}
           entityType="Wallet"
           buttonText="View the Wallet"
-          cardImageSrc={wallet?.logo_url}
+          cardImageSrc={imagePlaceholder}
+          // cardImageSrc={wallet?.logo_url}
           link={`/wallets/${wallet.id}`}
         />
       </Box>
