@@ -112,10 +112,22 @@ export default function Tree({
   }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
 
   useEffect(() => {
-    // manipulate the map
-    if (mapContext.map && tree?.lat && tree?.lon) {
-      mapContext.map.flyTo(tree.lat, tree.lon, 16);
+    async function draw() {
+      // manipulate the map
+      const { map } = mapContext;
+      if (map && tree?.lat && tree?.lon) {
+        map.setFilters({
+          treeid: tree.id,
+        });
+        try {
+          await map.loadInitialView();
+        } catch (err) {
+          log.warn('error:', err);
+        }
+        map.rerender();
+      }
     }
+    draw();
   }, [mapContext.map, tree.lat, tree.lon]);
 
   return (
