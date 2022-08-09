@@ -1,14 +1,14 @@
 import { ArrowRight, ArrowLeft } from '@mui/icons-material';
-import { Paper, Typography } from '@mui/material';
+import { Paper, Typography, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import SearchFilter from './SearchFilter';
-import logoIcon from '../images/logo.png';
-import minIcon from '../images/min.svg';
-import zoomIn from '../images/zoom-in.svg';
-import zoomOut from '../images/zoom-out.svg';
+import LogoIcon from '../images/greenstand_logo.svg';
+import MinIcon from '../images/min.svg';
+import ZoomIn from '../images/zoom-in.svg';
+import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 // import { makeStyles } from 'models/makeStyles';
 
@@ -48,14 +48,18 @@ const App = dynamic(() => import('./App'), { ssr: false });
 //   },
 // }));
 
-export default function Layout({ children, isFloatingDisabled }) {
+export default function Layout({
+  children,
+  nextExtraIsEmbed,
+  nextExtraIsEmbedCallback,
+  isFloatingDisabled,
+}) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
   // const { _classes } = useStyles();
   const mapContext = useMapContext();
   function handleFullScreen() {
-    // navigate to /container page through next.js's api
-    window.location.href = window.location.href.replace(/embed=true/, '');
+    nextExtraIsEmbedCallback(!nextExtraIsEmbed);
   }
 
   function handleDrawerToggle() {
@@ -184,8 +188,11 @@ export default function Layout({ children, isFloatingDisabled }) {
           cursor: 'pointer',
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img alt="fullscreen" src={minIcon} />
+        <SvgIcon
+          component={MinIcon}
+          inheritViewBox
+          sx={{ height: 52, width: 52 }}
+        />
       </Box>
 
       <Box
@@ -236,7 +243,12 @@ export default function Layout({ children, isFloatingDisabled }) {
                 mt: '-3px',
               }}
             >
-              <img width="100%" alt="logo" src={logoIcon} />
+              <SvgIcon
+                component={LogoIcon}
+                // TODO: logo.png in beta repo is currently broken. Need to use .svg file for this to work anyways
+                sx={{ height: 36, width: 45 }}
+                inheritViewBox
+              />
             </Box>
           </Box>
         </Paper>
@@ -253,17 +265,27 @@ export default function Layout({ children, isFloatingDisabled }) {
           }}
         >
           <Box onClick={handleZoomIn}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="zoom-in" src={zoomIn} />
+            {}
+            <SvgIcon
+              alt="zoom-in"
+              component={ZoomIn}
+              inheritViewBox
+              sx={{ width: 52, height: 52 }}
+            />
           </Box>
           <Box
             onClick={handleZoomOut}
             sx={{
-              '& img': { display: 'block' },
+              '& svg': { display: 'block' },
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="zoom-out" src={zoomOut} />
+            {}
+            <SvgIcon
+              alt="zoom-out"
+              component={ZoomOut}
+              inheritViewBox
+              sx={{ width: 52, height: 52 }}
+            />
           </Box>
         </Box>
       </Box>

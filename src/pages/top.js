@@ -1,4 +1,4 @@
-import { useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
@@ -13,7 +13,7 @@ import LeaderBoard from '../components/LeaderBoard';
 // import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Filter from '../components/common/Filter';
-import search from '../images/search.svg';
+import Search from '../images/search.svg';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
@@ -93,10 +93,21 @@ function Top({ trees, planters, countries, organizations }) {
           }}
         >
           <Typography variant="h4">Featured trees this week</Typography>
-          <Box>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={search} alt="search" />
-          </Box>
+          <SvgIcon
+            component={Search}
+            inheritViewBox
+            sx={{
+              width: 48,
+              height: 48,
+              fill: 'transparent',
+              '& path': {
+                fill: 'grey',
+              },
+              '& rect': {
+                stroke: 'grey',
+              },
+            }}
+          />
         </Box>
         {false && ( // going to be replaced by search filter component
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

@@ -18,6 +18,7 @@ import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { getPlanterById, getOrgLinks } from 'models/api';
+import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
@@ -27,11 +28,12 @@ import DrawerTitle from '../../components/common/DrawerTitle';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import planterBackground from '../../images/background.png';
-import calendarIcon from '../../images/icons/calendar.svg';
-import locationIcon from '../../images/icons/location.svg';
-import peopleIcon from '../../images/icons/people.svg';
-import treeIcon from '../../images/icons/tree.svg';
-import searchIcon from '../../images/search.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import LocationIcon from '../../images/icons/location.svg';
+import PeopleIcon from '../../images/icons/people.svg';
+import TreeIcon from '../../images/icons/tree.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
+import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
@@ -159,7 +161,21 @@ export default function Planter(props) {
             <BackButton />
             <Box>
               {}
-              <img src={searchIcon} alt="search" />
+              <SvgIcon
+                component={SearchIcon}
+                inheritViewBox
+                sx={{
+                  width: 48,
+                  height: 48,
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+                  '& rect': {
+                    stroke: 'grey',
+                  },
+                }}
+              />
             </Box>
           </Box>
         )}
@@ -203,12 +219,12 @@ export default function Planter(props) {
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
-                  iconURI={calendarIcon}
+                  iconURI={CalendarIcon}
                   info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
               </Box>
               <Box
                 sx={{
@@ -248,12 +264,12 @@ export default function Planter(props) {
             </Typography>
             <Box sx={{ mt: 2 }}>
               <Info
-                iconURI={calendarIcon}
+                iconURI={CalendarIcon}
                 info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
             </Box>
             <Box
               sx={{
@@ -284,7 +300,8 @@ export default function Planter(props) {
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
               handleClick={() => setIsPlanterTab(true)}
-              iconURI={treeIcon}
+              iconURI={TreeIcon}
+              sx={{ height: 34, width: 26 }}
               title="Trees Planted"
               text={treeCount}
               disabled={!isPlanterTab}
@@ -293,7 +310,8 @@ export default function Planter(props) {
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
               handleClick={() => setIsPlanterTab(false)}
-              iconURI={peopleIcon}
+              iconURI={PeopleIcon}
+              sx={{ height: 36, width: 36 }}
               title="Ass. Orgs"
               text={planter.associatedOrganizations.length || '---'}
               disabled={isPlanterTab}
@@ -375,6 +393,7 @@ export default function Planter(props) {
               entityType="Planting Organization"
               buttonText="Meet the Organization"
               link="/organizations/1"
+              cardImageSrc={imagePlaceholder}
             />
             <Box sx={{ mt: [6, 12] }} />
             <InformationCard1
@@ -382,6 +401,7 @@ export default function Planter(props) {
               entityType="Planting Organization"
               buttonText="Meet the Organization"
               link="/organizations/1"
+              cardImageSrc={imagePlaceholder}
             />
           </Box>
         )}
@@ -406,6 +426,13 @@ export default function Planter(props) {
           {placeholderText}
           {planter.about}
         </Typography>
+        <Divider
+          varian="fullwidth"
+          sx={{
+            mt: [10, 20],
+          }}
+        />
+        <ImpactSection />
         <Box sx={{ height: 40 }} />
       </Box>
       {nextExtraIsEmbed && (
@@ -427,11 +454,15 @@ export default function Planter(props) {
 
 export async function getServerSideProps({ params }) {
   const id = params.planterid;
-  const planter = await getPlanterById(id);
-  const data = await getOrgLinks(planter.links);
-  return {
-    props: {
-      planter: { ...planter, ...data },
-    },
-  };
+  try {
+    const planter = await getPlanterById(id);
+    const data = await getOrgLinks(planter.links);
+    return {
+      props: {
+        planter: { ...planter, ...data },
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }

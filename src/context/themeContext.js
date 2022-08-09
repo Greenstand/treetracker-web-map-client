@@ -401,9 +401,9 @@ export function CustomThemeProvider({ children }) {
     if (!themeObject) {
       setTheme(mode === 'light' ? defaultDarkTheme : defaultLightTheme);
     } else {
-      setTheme(createThemeFromThemeObject);
+      setTheme(createThemeFromThemeObject());
     }
-  }, [mode]);
+  }, [mode, themeObject]);
 
   React.useEffect(() => {
     log.warn('theme changed', theme);

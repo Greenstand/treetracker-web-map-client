@@ -5,6 +5,7 @@ import { CacheProvider } from '@emotion/react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
+import useLocalStorage from 'hooks/useLocalStorage';
 import Layout from '../components/Layout';
 import LayoutDashboard from '../components/LayoutDashboard';
 import LayoutEmbed from '../components/LayoutEmbed';
@@ -33,18 +34,20 @@ export const createMuiCache = () =>
 
 function TreetrackerApp({ Component, pageProps }) {
   const theme = useTheme();
+  const router = useRouter();
   const nextExtraIsDesktop = useMediaQuery(theme.breakpoints.up('sm'));
-  const nextExtraIsEmbed = useEmbed();
+  const embedLocalStorage = useLocalStorage('embed', false);
+  const nextExtraIsEmbed = useEmbed() === true ? true : embedLocalStorage[0];
   log.warn('app: isDesktop: ', nextExtraIsDesktop);
   log.warn('app: component: ', Component);
   // log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
-  const router = useRouter();
   log.warn('router:', router);
   const nextExtraKeyword = router.query.keyword;
 
   const extraProps = {
     nextExtraIsEmbed,
+    nextExtraIsEmbedCallback: embedLocalStorage[1],
     nextExtraIsDesktop,
     nextExtraKeyword,
   };
@@ -64,12 +67,15 @@ function TreetrackerApp({ Component, pageProps }) {
         <DrawerProvider>
           <MapContextProvider>
             {nextExtraIsDesktop && !nextExtraIsEmbed && (
-              <Layout>
+              <Layout {...extraProps}>
                 <Component {...pageProps} {...extraProps} />
               </Layout>
             )}
             {nextExtraIsDesktop && nextExtraIsEmbed && (
-              <LayoutEmbed isFloatingDisabled={Component.isFloatingDisabled}>
+              <LayoutEmbed
+                {...extraProps}
+                isFloatingDisabled={Component.isFloatingDisabled}
+              >
                 <Component {...pageProps} {...extraProps} />
               </LayoutEmbed>
             )}

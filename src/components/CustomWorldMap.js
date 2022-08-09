@@ -1,4 +1,4 @@
-import { useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import React from 'react';
@@ -68,6 +68,7 @@ function ToolTip({ totalTrees, con }) {
 
   return (
     <Box
+      className={classes.tooltipImg}
       sx={{
         position: 'absolute',
         top: isMobileScreen ? mobileToolTipPos[con].top : toolTipPos[con].top,
@@ -76,7 +77,12 @@ function ToolTip({ totalTrees, con }) {
           : toolTipPos[con].left,
       }}
     >
-      <img src={TreeTooltip} alt="tree icon" className={classes.tooltipImg} />
+      <SvgIcon
+        sx={{ width: 68, height: 77 }}
+        component={TreeTooltip}
+        alt="tree icon"
+        inheritViewBox
+      />
       <Typography
         color="nearBlack.main"
         sx={{
