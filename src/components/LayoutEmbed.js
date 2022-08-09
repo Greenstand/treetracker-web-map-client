@@ -265,7 +265,7 @@ export default function Layout({
           }}
         >
           <Box onClick={handleZoomIn}>
-            { }
+            {}
             <SvgIcon
               alt="zoom-in"
               component={ZoomIn}
@@ -279,7 +279,7 @@ export default function Layout({
               '& svg': { display: 'block' },
             }}
           >
-            { }
+            {}
             <SvgIcon
               alt="zoom-out"
               component={ZoomOut}
