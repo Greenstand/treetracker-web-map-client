@@ -2,10 +2,12 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
-import useLocalStorage from 'hooks/useLocalStorage';
+import { useLocalStorage } from 'hooks/globalHooks';
 import { loadFonts } from '../models/utils';
 
-const CustomThemeContext = React.createContext({ toggleColorMode: () => {} });
+export const CustomThemeContext = React.createContext({
+  toggleColorMode: () => {},
+});
 
 export function buildTheme(theMode) {
   const getDesign = (themeMode) => ({
@@ -422,8 +424,4 @@ export function CustomThemeProvider({ children }) {
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </CustomThemeContext.Provider>
   );
-}
-
-export function useCustomThemeContext() {
-  return React.useContext(CustomThemeContext);
 }

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { Stack, useMediaQuery, useTheme, SvgIcon } from '@mui/material';
+import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -27,6 +27,7 @@ import DataTag from '../../components/common/DataTag';
 import DrawerTitle from '../../components/common/DrawerTitle';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
+import { useMobile } from '../../hooks/globalHooks';
 import planterBackground from '../../images/background.png';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import LocationIcon from '../../images/icons/location.svg';
@@ -59,12 +60,7 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
 }));
-const IsMobileScreen = styled(Box)(({ theme }) => ({
-  display: 'block',
-  [theme.breakpoints.down('md')]: {
-    display: 'none',
-  },
-}));
+
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
         velit ipsa illo, odit unde atque doloribus tempora distinctio facere
@@ -78,10 +74,9 @@ export default function Planter(props) {
   const { featuredTrees } = planter;
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
+  const isMobile = useMobile();
 
   const router = useRouter();
-
-  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
 

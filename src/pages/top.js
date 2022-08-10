@@ -1,4 +1,4 @@
-import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
+import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
@@ -13,6 +13,7 @@ import LeaderBoard from '../components/LeaderBoard';
 // import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Filter from '../components/common/Filter';
+import { useFullscreen } from '../hooks/globalHooks';
 import Search from '../images/search.svg';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
@@ -20,9 +21,7 @@ import * as utils from '../models/utils';
 function Top({ trees, planters, countries, organizations }) {
   // use map context to get the map
   const { map } = useMapContext();
-
-  const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isFullscreen = useFullscreen();
 
   const continentTags = [
     'Global',
@@ -72,13 +71,13 @@ function Top({ trees, planters, countries, organizations }) {
   return (
     <>
       <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
-        {!isMobileScreen && false && (
+        {!isFullscreen && false && (
           <Stack direction="row" justifyContent="flex-end" mb={6.125}>
             <SearchButton />
           </Stack>
         )}
 
-        {/* {!isMobileScreen && <SearchFilter />} */}
+        {/* {!isFullscreen && <SearchFilter />} */}
 
         <Box
           sx={{
@@ -115,7 +114,7 @@ function Top({ trees, planters, countries, organizations }) {
           </Box>
         )}
         <Box>
-          <FeaturedTreesSlider trees={trees} isMobile={isMobileScreen} />
+          <FeaturedTreesSlider trees={trees} isMobile={isFullscreen} />
         </Box>
         <Box sx={{ mt: [4, 8] }} />
         <Typography variant="h4">Featured organizations this week</Typography>
@@ -123,7 +122,7 @@ function Top({ trees, planters, countries, organizations }) {
           link={(id) => `/organizations/${id}`}
           color="primary"
           planters={organizations}
-          isMobile={isMobileScreen}
+          isMobile={isFullscreen}
         />
         <Box
           sx={{
@@ -136,7 +135,7 @@ function Top({ trees, planters, countries, organizations }) {
           link={(id) => `/planters/${id}`}
           color="secondary"
           planters={planters}
-          isMobile={isMobileScreen}
+          isMobile={isFullscreen}
         />
         <Typography
           variant="h4"
@@ -164,7 +163,7 @@ function Top({ trees, planters, countries, organizations }) {
           handleCountryClick={handleCountryClick}
         />
       </Box>
-      {isMobileScreen && (
+      {isFullscreen && (
         <Portal container={document.getElementById('drawer-title-container')}>
           <Box
             sx={{
@@ -178,7 +177,7 @@ function Top({ trees, planters, countries, organizations }) {
           </Box>
         </Portal>
       )}
-      {isMobileScreen && (
+      {isFullscreen && (
         <Portal
           container={document.getElementById('drawer-title-container-min')}
         >

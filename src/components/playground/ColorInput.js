@@ -1,6 +1,6 @@
 import { Box, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { usePlaygroundUtils } from '../../context/playgroundContext';
+import { usePlaygroundUtils } from '../../hooks/contextHooks';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 function ColorInput(props) {

@@ -16,11 +16,10 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  useMediaQuery,
-  useTheme,
   SvgIcon,
 } from '@mui/material';
 import { useState } from 'react';
+import { useFullscreen } from '../hooks/globalHooks';
 import HeartIcon from '../images/icons/heart.svg';
 import ShareIcon from '../images/icons/share-icon.svg';
 import MaxIcon from '../images/max.svg';
@@ -116,10 +115,9 @@ function CustomImageItem(props) {
 export default function TreeInfoDialog(props) {
   const { tree, planter, organization } = props;
   const { classes } = useStyles();
-  /* eslint-disable no-shadow */
-  const theme = useTheme();
+   
   const [open, setOpen] = useState(false);
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isFullscreen = useFullscreen();
 
   const handleOpen = () => {
     setOpen(true);
@@ -148,11 +146,11 @@ export default function TreeInfoDialog(props) {
         />
       </Box>
       <Dialog
-        fullScreen={fullScreen}
+        isFullscreen={isFullscreen}
         fullWidth
         open={open}
         onClose={handleClose}
-        scroll={fullScreen ? 'paper' : 'body'}
+        scroll={isFullscreen ? 'paper' : 'body'}
         PaperProps={{
           sx: {
             borderRadius: { sm: 0, md: 4 },

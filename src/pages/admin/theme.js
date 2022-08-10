@@ -9,6 +9,7 @@ import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useLocalStorage } from 'hooks/globalHooks';
 import {
   SelectColorProp,
   SelectTypographyProp,
@@ -18,13 +19,12 @@ import {
   getTabProps,
   FontCustomization,
 } from '../../components/playground';
+import { PlaygroundProvider } from '../../context/playgroundContext';
 import {
-  PlaygroundProvider,
   usePlaygroundTheme,
   usePlaygroundThemeType,
   usePlaygroundUtils,
-} from '../../context/playgroundContext';
-import useLocalStorage from '../../hooks/useLocalStorage';
+} from '../../hooks/contextHooks';
 import { customizeOptions } from '../../models/themePlaygroundOptions';
 import { optimizeThemeFonts } from '../../models/utils';
 
