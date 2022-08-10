@@ -18,6 +18,7 @@ import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
@@ -159,7 +160,8 @@ export default function Token({ token, wallet }) {
         </Box>
         <img src={`${token.tree_image_url}`} alt="token" />
         <Avatar
-          src={wallet.logo_url}
+          src={imagePlaceholder}
+          // src={wallet.logo_url}
           sx={{
             width: [120, 189],
             height: [120, 189],
@@ -291,7 +293,8 @@ export default function Token({ token, wallet }) {
           entityName={`${wallet.name} `}
           entityType="Wallet"
           buttonText="View the Wallet"
-          cardImageSrc={wallet?.logo_url}
+          cardImageSrc={imagePlaceholder}
+          // cardImageSrc={wallet?.logo_url}
           link={`/wallets/${wallet.id}`}
         />
       </Box>
@@ -326,14 +329,18 @@ export default function Token({ token, wallet }) {
 
 export async function getServerSideProps({ params }) {
   const { tokenid } = params;
-  const token = await getTokenById(tokenid);
-  const { wallet_id } = token;
-  const wallet = await getWalletById(wallet_id);
+  try {
+    const token = await getTokenById(tokenid);
+    const { wallet_id } = token;
+    const wallet = await getWalletById(wallet_id);
 
-  return {
-    props: {
-      token,
-      wallet,
-    },
-  };
+    return {
+      props: {
+        token,
+        wallet,
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }

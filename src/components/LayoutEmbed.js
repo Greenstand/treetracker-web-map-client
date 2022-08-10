@@ -48,14 +48,18 @@ const App = dynamic(() => import('./App'), { ssr: false });
 //   },
 // }));
 
-export default function Layout({ children, isFloatingDisabled }) {
+export default function Layout({
+  children,
+  nextExtraIsEmbed,
+  nextExtraIsEmbedCallback,
+  isFloatingDisabled,
+}) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
   // const { _classes } = useStyles();
   const mapContext = useMapContext();
   function handleFullScreen() {
-    // navigate to /container page through next.js's api
-    window.location.href = window.location.href.replace(/embed=true/, '');
+    nextExtraIsEmbedCallback(!nextExtraIsEmbed);
   }
 
   function handleDrawerToggle() {
@@ -261,7 +265,7 @@ export default function Layout({ children, isFloatingDisabled }) {
           }}
         >
           <Box onClick={handleZoomIn}>
-            { }
+            {}
             <SvgIcon
               alt="zoom-in"
               component={ZoomIn}
@@ -275,7 +279,7 @@ export default function Layout({ children, isFloatingDisabled }) {
               '& svg': { display: 'block' },
             }}
           >
-            { }
+            {}
             <SvgIcon
               alt="zoom-out"
               component={ZoomOut}

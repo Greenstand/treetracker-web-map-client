@@ -33,6 +33,7 @@ import LocationIcon from '../../images/icons/location.svg';
 import OriginIcon from '../../images/icons/origin.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
@@ -106,10 +107,22 @@ export default function Tree({
   }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
 
   useEffect(() => {
-    // manipulate the map
-    if (mapContext.map && tree?.lat && tree?.lon) {
-      mapContext.map.flyTo(tree.lat, tree.lon, 16);
+    async function draw() {
+      // manipulate the map
+      const { map } = mapContext;
+      if (map && tree?.lat && tree?.lon) {
+        map.setFilters({
+          treeid: tree.id,
+        });
+        try {
+          await map.loadInitialView();
+        } catch (err) {
+          log.warn('error:', err);
+        }
+        map.rerender();
+      }
     }
+    draw();
   }, [mapContext.map, tree.lat, tree.lon]);
 
   return (
@@ -349,7 +362,8 @@ export default function Tree({
             entityName={organization.name}
             entityType="Planting Organization"
             buttonText="Meet the Organization"
-            cardImageSrc={organization?.photo_url}
+            // cardImageSrc={organization?.photo_url}
+            cardImageSrc={imagePlaceholder}
             link={`/organizations/${organization.id}?embed=${nextExtraIsEmbed}&keyword=${nextExtraKeyword}`}
           />
         </Box>
@@ -473,19 +487,23 @@ export default function Tree({
 
 export async function getServerSideProps({ params }) {
   const { treeid } = params;
-  const tree = await getTreeById(treeid);
-  const { planter_id, planting_organization_id } = tree;
-  const planter = await getPlanterById(planter_id);
-  let organization = null;
-  if (planting_organization_id) {
-    organization = await getOrganizationById(planting_organization_id);
-  }
+  try {
+    const tree = await getTreeById(treeid);
+    const { planter_id, planting_organization_id } = tree;
+    const planter = await getPlanterById(planter_id);
+    let organization = null;
+    if (planting_organization_id) {
+      organization = await getOrganizationById(planting_organization_id);
+    }
 
-  return {
-    props: {
-      tree,
-      planter,
-      organization,
-    },
-  };
+    return {
+      props: {
+        tree,
+        planter,
+        organization,
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }

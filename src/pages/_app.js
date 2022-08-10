@@ -45,6 +45,7 @@ function TreetrackerApp({ Component, pageProps }) {
 
   const extraProps = {
     nextExtraIsEmbed,
+    nextExtraIsEmbedCallback: embedLocalStorage[1],
     nextExtraIsDesktop,
     nextExtraKeyword,
   };
@@ -64,12 +65,15 @@ function TreetrackerApp({ Component, pageProps }) {
         <DrawerProvider>
           <MapContextProvider>
             {nextExtraIsDesktop && !nextExtraIsEmbed && (
-              <Layout>
+              <Layout {...extraProps}>
                 <Component {...pageProps} {...extraProps} />
               </Layout>
             )}
             {nextExtraIsDesktop && nextExtraIsEmbed && (
-              <LayoutEmbed isFloatingDisabled={Component.isFloatingDisabled}>
+              <LayoutEmbed
+                {...extraProps}
+                isFloatingDisabled={Component.isFloatingDisabled}
+              >
                 <Component {...pageProps} {...extraProps} />
               </LayoutEmbed>
             )}

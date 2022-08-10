@@ -22,6 +22,7 @@ import { useState } from 'react';
 import { useFullscreen } from '../hooks/globalHooks';
 import HeartIcon from '../images/icons/heart.svg';
 import ShareIcon from '../images/icons/share-icon.svg';
+import imagePlaceholder from '../images/image-placeholder.png';
 import MaxIcon from '../images/max.svg';
 import { makeStyles } from '../models/makeStyles';
 
@@ -115,7 +116,7 @@ function CustomImageItem(props) {
 export default function TreeInfoDialog(props) {
   const { tree, planter, organization } = props;
   const { classes } = useStyles();
-   
+
   const [open, setOpen] = useState(false);
   const isFullscreen = useFullscreen();
 
@@ -258,7 +259,8 @@ export default function TreeInfoDialog(props) {
                   {organization && (
                     <ListItem sx={{ pl: 0 }}>
                       <CustomListAvatar
-                        src={organization.logo_url}
+                        // src={organization.logo_url}
+                        src={imagePlaceholder}
                         alt={organization.name}
                       />
                       <CustomListText

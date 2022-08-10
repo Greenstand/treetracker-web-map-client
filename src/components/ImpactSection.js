@@ -1,8 +1,8 @@
-import { Typography, Grid, Box } from '@mui/material';
+import { Typography, Grid, Box, SvgIcon } from '@mui/material';
 import { useState } from 'react';
 import CustomCard from './common/CustomCard';
 import TreeIcon from '../images/icons/tree.svg';
-import staticGraph from '../images/static-graph.svg';
+import StaticGraph from '../images/static-graph.svg';
 
 function ImpactSection() {
   const [isPlanterTab, setIsPlanterTab] = useState(true);
@@ -49,17 +49,17 @@ function ImpactSection() {
           />
         </Grid>
       </Grid>
-      <Box
-        sx={{
-          height: '480px',
-          mt: 14,
-          mb: 6,
-          backgroundImage: `url(${staticGraph})`,
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-        }}
-      >
+      <Box>
+        <SvgIcon
+          component={StaticGraph}
+          inheritViewBox
+          sx={{
+            height: 487,
+            width: '100%',
+            mt: 14,
+            mb: 6,
+          }}
+        />
         <Typography variant="h5">Graphical Data Coming Soon!</Typography>
       </Box>
     </>
