@@ -1,4 +1,12 @@
-import { Avatar, Button, Box, Grid, Typography, SvgIcon } from '@mui/material';
+import {
+  Avatar,
+  Button,
+  Box,
+  Grid,
+  Typography,
+  useTheme,
+  SvgIcon,
+} from '@mui/material';
 import * as d3 from 'd3';
 import moment from 'moment';
 import Image from 'next/image';

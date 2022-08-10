@@ -12,7 +12,7 @@ import LayoutMobileB from '../components/LayoutMobileB';
 import LayoutMobileC from '../components/LayoutMobileC';
 import { DrawerProvider } from '../context/DrawerContext';
 import { CustomThemeProvider } from '../context/themeContext';
-import { useMobile, useEmbed } from '../hooks/globalHooks';
+import { useLocalStorage, useMobile, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -31,15 +31,17 @@ export const createMuiCache = () =>
   }));
 
 function TreetrackerApp({ Component, pageProps }) {
+  const router = useRouter();
+  const embedLocalStorage = useLocalStorage('embed', false);
   const nextExtraIsDesktop = !useMobile();
-  const nextExtraIsEmbed = useEmbed();
+  const nextExtraIsEmbed = useEmbed() === true ? true : embedLocalStorage[0];
+  const nextExtraKeyword = router.query.keyword;
+
   log.warn('app: isDesktop: ', nextExtraIsDesktop);
   log.warn('app: component: ', Component);
   // log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
-  const router = useRouter();
   log.warn('router:', router);
-  const nextExtraKeyword = router.query.keyword;
 
   const extraProps = {
     nextExtraIsEmbed,
