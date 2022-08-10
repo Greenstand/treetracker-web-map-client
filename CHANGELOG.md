@@ -1,3 +1,15 @@
+# [2.0.0-beta.31](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.30...v2.0.0-beta.31) (2022-08-10)
+
+
+### Bug Fixes
+
+* broken test ([079dd55](https://github.com/Greenstand/treetracker-web-map-client/commit/079dd5591d01bfc1fd5ed3d57b08cff2ebeee935))
+
+
+### Features
+
+* use real org to poplulate the planter page ([d969b45](https://github.com/Greenstand/treetracker-web-map-client/commit/d969b457879fa6ce62cc0d253e52a2bffd9ac8d8))
+
 # [2.0.0-beta.30](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2022-08-09)
 
 
