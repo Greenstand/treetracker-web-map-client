@@ -7,7 +7,7 @@ describe('Filter', () => {
     mount(<Filter />);
   });
 
-  it('Submit is success when startDate is less than endDate', () => {
+  it.skip('Submit is success when startDate is less than endDate', () => {
     const handleFilter = cy.stub();
 
     mount(<Filter onFilter={handleFilter} />);
@@ -30,7 +30,7 @@ describe('Filter', () => {
       });
   });
 
-  it('Submit is Failed when startDate is greater than endDate', () => {
+  it.skip('Submit is Failed when startDate is greater than endDate', () => {
     const handleFilter = cy.stub();
 
     mount(<Filter onFilter={handleFilter} />);
@@ -49,7 +49,7 @@ describe('Filter', () => {
       });
   });
 
-  it('Cancel Button hides the filters', () => {
+  it.skip('Cancel Button hides the filters', () => {
     mount(<Filter />);
     cy.contains(/Filters/i).click();
 
