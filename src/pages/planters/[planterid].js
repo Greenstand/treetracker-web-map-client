@@ -74,7 +74,7 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
         excepturi, natus explicabo laborum delectus repudiandae placeat
         eligendi.`;
 export default function Planter(props) {
-  log.info('props for planter page:', props);
+  log.warn('props for planter page:', props);
   const { planter, nextExtraIsEmbed } = props;
   const { featuredTrees } = planter;
   const treeCount = featuredTrees.trees.length;
@@ -313,7 +313,9 @@ export default function Planter(props) {
               iconURI={PeopleIcon}
               sx={{ height: 36, width: 36 }}
               title="Ass. Orgs"
-              text={planter.associatedOrganizations.length || '---'}
+              text={
+                planter.associatedOrganizations.organizations.length || '---'
+              }
               disabled={isPlanterTab}
             />
           </Grid>
@@ -368,19 +370,6 @@ export default function Planter(props) {
             </Box>
           </Box>
         )}
-        {/* {!isPlanterTab &&
-        planter.associatedOrganizations.organizations.map((org) => (
-          <div key={org.id}>
-            <InformationCard1
-              entityName={org.name}
-              entityType="Planting Organization"
-              buttonText="Meet the Organization"
-              cardImageSrc={org?.logo_url}
-              link={`/organizations/${org.id}`}
-            />
-          </div>
-        ))} */}
-        {/* placeholder until API can return the correct data, should be removed */}
         {!isPlanterTab && (
           <Box
             sx={{
@@ -388,21 +377,18 @@ export default function Planter(props) {
               mt: [11, 22],
             }}
           >
-            <InformationCard1
-              entityName="Greenway International Foundation"
-              entityType="Planting Organization"
-              buttonText="Meet the Organization"
-              link="/organizations/1"
-              cardImageSrc={imagePlaceholder}
-            />
-            <Box sx={{ mt: [6, 12] }} />
-            <InformationCard1
-              entityName="One Tree Planted"
-              entityType="Planting Organization"
-              buttonText="Meet the Organization"
-              link="/organizations/1"
-              cardImageSrc={imagePlaceholder}
-            />
+            {planter.associatedOrganizations.organizations.map((org) => (
+              <>
+                <InformationCard1
+                  entityName={org.name}
+                  entityType="Planting Organization"
+                  buttonText="Meet the Organization"
+                  link={`/organizations/${org.id}`}
+                  cardImageSrc={org?.logo_url}
+                />
+                <Box sx={{ mt: [6, 12] }} />
+              </>
+            ))}
           </Box>
         )}
         <Divider
