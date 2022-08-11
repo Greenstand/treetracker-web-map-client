@@ -1,3 +1,10 @@
+# [2.0.0-beta.32](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.31...v2.0.0-beta.32) (2022-08-11)
+
+
+### Features
+
+* add correct impact icons ([7716c63](https://github.com/Greenstand/treetracker-web-map-client/commit/7716c632c2549e8c7fc54becfc04b4f414358703))
+
 # [2.0.0-beta.31](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.30...v2.0.0-beta.31) (2022-08-10)
 
 
