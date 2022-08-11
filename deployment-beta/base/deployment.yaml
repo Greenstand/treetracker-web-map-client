@@ -30,8 +30,8 @@ spec:
           image: greenstand/treetracker-web-map-client:2.0.0-beta.30
           env:
             - name: NEXT_PUBLIC_API
-              value: https://prod-k8s.treetracker.org/query
+              value: https://dev-k8s.treetracker.org/query
             - name: NEXT_PUBLIC_TILE_SERVER_URL
               value: https://{s}.treetracker.org/tiles/
             - name: NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS
-              value: prod-k8s
+              value: dev-k8s
