@@ -43,7 +43,13 @@ function ImpactSection() {
           <CustomCard
             handleClick={() => setIsPlanterTab(false)}
             iconURI={CarbonIcon}
-            sx={{ width: 26, height: 34 }}
+            sx={{
+              width: 26,
+              height: 34,
+              '& path': {
+                stroke: ({ palette }) => palette.text.primary,
+              },
+            }}
             title="Carbon Capture"
             text="---"
             disabled={isPlanterTab}
