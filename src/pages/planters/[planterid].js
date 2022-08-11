@@ -198,7 +198,7 @@ export default function Planter(props) {
         >
           <img
             className={classes.profileImg}
-            src={planter?.featuredTrees?.trees?.[0]?.image_url}
+            src={backgroundPic}
             alt="profile"
           />
           <Avatar
