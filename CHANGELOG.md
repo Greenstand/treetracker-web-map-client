@@ -1,3 +1,10 @@
+# [2.0.0-beta.34](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.33...v2.0.0-beta.34) (2022-08-11)
+
+
+### Features
+
+* **playground:** can preview on mobile/desktop ([5e64a05](https://github.com/Greenstand/treetracker-web-map-client/commit/5e64a0506952d770b5f355601e5763f210fc3d51))
+
 # [2.0.0-beta.33](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2022-08-11)
 
 
