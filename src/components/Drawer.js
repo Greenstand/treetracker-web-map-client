@@ -7,6 +7,7 @@ import React from 'react';
 export default function Drawer(props) {
   const { children } = props;
   const rootRef = React.useRef(null);
+  const headerRef = React.useRef(null);
   const buttonRef = React.useRef(null);
   const contentRef = React.useRef(null);
 
@@ -148,9 +149,9 @@ export default function Drawer(props) {
 
   React.useEffect(() => {
     log.warn('mount listener...');
-    rootRef.current.addEventListener('touchstart', handleTouchStart);
-    rootRef.current.addEventListener('touchmove', handleTouchMove);
-    rootRef.current.addEventListener('touchend', handleTouchEnd);
+    headerRef.current.addEventListener('touchstart', handleTouchStart);
+    headerRef.current.addEventListener('touchmove', handleTouchMove);
+    headerRef.current.addEventListener('touchend', handleTouchEnd);
     buttonRef.current.addEventListener('touchstart', handleButtonTouchStart);
     buttonRef.current.addEventListener('touchmove', handleButtonTouchMove);
     buttonRef.current.addEventListener('touchend', handleButtonTouchEnd);
@@ -163,9 +164,9 @@ export default function Drawer(props) {
       if (rootRef.current === null) return;
       if (buttonRef.current === null) return;
       log.warn('unmount listener...');
-      rootRef.current.removeEventListener('touchstart', handleTouchStart);
-      rootRef.current.removeEventListener('touchmove', handleTouchMove);
-      rootRef.current.removeEventListener('touchend', handleTouchEnd);
+      headerRef.current.removeEventListener('touchstart', handleTouchStart);
+      headerRef.current.removeEventListener('touchmove', handleTouchMove);
+      headerRef.current.removeEventListener('touchend', handleTouchEnd);
       buttonRef.current.removeEventListener(
         'touchstart',
         handleButtonTouchStart,
@@ -257,6 +258,7 @@ export default function Drawer(props) {
       >
         <Box
           id="drawer-header"
+          ref={headerRef}
           sx={{
             display: 'flex',
             // marginBottom: [0, 4],
