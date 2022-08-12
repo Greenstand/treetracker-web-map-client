@@ -61,7 +61,7 @@ function ImpactSection() {
           component={StaticGraph}
           inheritViewBox
           sx={{
-            height: 487,
+            height: ['100%', 487],
             width: '100%',
             mt: 14,
             mb: 6,
