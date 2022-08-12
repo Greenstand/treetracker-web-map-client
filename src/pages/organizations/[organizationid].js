@@ -367,17 +367,16 @@ export default function Organization(props) {
                   />
                 ))}
                 {/* Placeholder, remove after API fixed */}
-                <TreeSpeciesCard
-                  name="Baobab Tree"
-                  subTitle="Adansonia"
-                  count={10}
-                />
-                <Box sx={{ mt: [2, 4] }} />
-                <TreeSpeciesCard
-                  name="Wattle Tree"
-                  subTitle="Acacia sensu lato"
-                  count={2}
-                />
+                {organization?.species?.species?.map((s) => (
+                  <>
+                    <TreeSpeciesCard
+                      name={s.name}
+                      subTitle={s.desc || '---'}
+                      count={s.total}
+                    />
+                    <Box sx={{ mt: [2, 4] }} />
+                  </>
+                ))}
               </Box>
             </Box>
           )}
@@ -400,7 +399,7 @@ export default function Organization(props) {
             />
           ))} */}
             {/* Placeholder quote card, remove after API gets data */}
-            {[
+            {/* {[
               {
                 name: 'Jirgna O',
                 quote: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -421,9 +420,10 @@ export default function Organization(props) {
                   'https://treetracker-production.nyc3.digitaloceanspaces.com/2018.11.20.12.11.07_e7a81cf4-2d37-45ee-9d5a-47bdfd7c43cc_IMG_20181120_121037_7990135604649410080.jpg',
                 location: 'Addis Ababa, Ethisa',
               },
-            ].map((planter, i) => (
+            ].map((planter, i) => ( */}
+            {organization?.associatedPlanters?.planters?.map((planter, i) => (
               <Box sx={{ mt: [6, 12] }} key={planter.name}>
-                <PlanterQuote {...planter} reverse={i % 2 !== 0} />
+                <PlanterQuote planter reverse={i % 2 !== 0} />
               </Box>
             ))}
           </Box>
