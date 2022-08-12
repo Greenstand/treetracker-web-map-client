@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import Home from '../components/Home';
 
-export default function Homepage() {
+export default function Homepage({ nextExtraIsEmbed }) {
+  console.log(nextExtraIsEmbed);
   return (
     <>
       <Head>
@@ -19,7 +20,7 @@ export default function Homepage() {
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         <title>Treetracker by Greenstand</title>
       </Head>
-      <Home />
+      {nextExtraIsEmbed || <Home />}
     </>
   );
 }
