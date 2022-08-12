@@ -71,24 +71,17 @@ function MapComponent() {
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
     const path = window.location.pathname.match(
-      // /^\/(planters|organizations)\/\d+$/,
-      /^(\/(planters|organizations)\/\d+)(\/trees\/\d+)?$/,
+      /^(\/(planters|organizations)\/\d+)?(\/trees\/\d+)?$/,
     );
     log.warn('parsed path:', path);
 
-    let prefix = '';
-    if (path) {
-      [prefix] = path;
-    }
-
     const optionalParams = {
-      
-      ...router.query.embed && { embed: router.query.embed },
-      ...router.query.timeline && { timeline: router.query.timeline },
+      ...(router.query.embed && { embed: router.query.embed }),
+      ...(router.query.timeline && { timeline: router.query.timeline }),
     };
 
     router.push({
-      pathname: `${prefix}/trees/${tree.id}`,
+      pathname: `${path[1] || ''}/trees/${tree.id}`,
       query: optionalParams,
     });
   }
