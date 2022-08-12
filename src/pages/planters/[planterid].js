@@ -199,11 +199,7 @@ export default function Planter(props) {
             },
           }}
         >
-          <img
-            // width="100%"
-            src={backgroundPic}
-            alt="profile"
-          />
+          <img src={backgroundPic} alt="profile" />
 
           <Avatar
             src={planter.image_url}
