@@ -329,7 +329,9 @@ const defaultDarkTheme = buildTheme('dark');
 
 export function CustomThemeProvider({ children }) {
   const [mode, setMode] = useLocalStorage('theme', 'light');
-  const [theme, setTheme] = React.useState(buildTheme(mode));
+  const [theme, setTheme] = React.useState(
+    mode === 'light' ? defaultLightTheme : defaultDarkTheme,
+  );
   const [themeObject, setThemeObject] = useLocalStorage('themeObject', null);
 
   const colorMode = React.useMemo(
@@ -399,7 +401,7 @@ export function CustomThemeProvider({ children }) {
     // set the theme to correct mode when the mode changes
     // if there is no custom theme set it to the default
     if (!themeObject) {
-      setTheme(mode === 'light' ? defaultDarkTheme : defaultLightTheme);
+      setTheme(mode === 'light' ? defaultLightTheme : defaultDarkTheme);
     } else {
       setTheme(createThemeFromThemeObject());
     }
