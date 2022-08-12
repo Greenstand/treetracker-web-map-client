@@ -16,7 +16,6 @@ import { propRules } from '../../models/themePlaygroundOptions';
 const allowedFontWeights = new Set([
   'normal',
   'bold',
-  'BloodtypeOutlined',
   'lighter',
   'bolder',
   'inherit',
@@ -31,32 +30,28 @@ function FontFamilyWeightElm(props) {
   const { getPropByPath, setPropByPath } = usePlaygroundUtils();
   const [fonts, setFonts] = usePlaygroundFonts();
   const initialValue = getPropByPath(path);
-  const [value, setValue] = useState(initialValue.toString());
+  const [value, setValue] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (fonts[fontValue]) {
-      setValue(initialValue.toString());
-    }
-  }, [fontValue, fonts, initialValue]);
+    setValue(initialValue.toString());
+    setError('');
+  }, [fontValue, initialValue]);
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-
-      if (error) return false;
+  const loadWeight = useCallback(
+    (weightValue) => {
       if (!fonts[fontValue]) return false;
-      if (value.trim() === '') return false;
+      if (weightValue.trim() === '') return false;
       if (fontValue === '')
         return setError('please add aleast one font family.');
 
-      if (allowedFontWeights.has(value)) {
-        setPropByPath(path, value);
+      if (allowedFontWeights.has(weightValue)) {
+        setPropByPath(path, weightValue);
         return true;
       }
 
-      const userInput = parseInt(value.trim(), 10);
+      const userInput = parseInt(weightValue.trim(), 10);
       const fontFamilytoLoad = [];
 
       if (fonts[fontValue]) {
@@ -82,7 +77,7 @@ function FontFamilyWeightElm(props) {
 
       return true;
     },
-    [error, fontValue, fonts, path, setFonts, setPropByPath, value],
+    [fontValue, fonts, path, setFonts, setPropByPath],
   );
 
   const handleChange = (e) => {
@@ -92,30 +87,31 @@ function FontFamilyWeightElm(props) {
       setError('Invalid fontWeight');
       return;
     }
+
+    e.target.blur();
+    loadWeight(userInput);
     setError('');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        variant="standard"
-        error={error.length > 0}
-        label="Font Weight"
-        value={value}
-        onChange={handleChange}
-        sx={{
-          width: 1,
-        }}
-        helperText={error || 'press enter to load the weight.'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              {loading ? <CircularProgress size="1.5rem" /> : null}
-            </InputAdornment>
-          ),
-        }}
-      />
-    </form>
+    <TextField
+      variant="standard"
+      error={error.length > 0}
+      label="Font Weight"
+      value={value}
+      onChange={handleChange}
+      sx={{
+        width: 1,
+      }}
+      helperText={error || 'Load Font weight.'}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            {loading ? <CircularProgress size="1.5rem" /> : null}
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 }
 
@@ -168,6 +164,7 @@ function FontFamily(props) {
                 handleChange={(val) => {
                   setValue(val);
                   setPropByPath(path, val);
+                  setError('');
                 }}
               />
             </InputAdornment>
