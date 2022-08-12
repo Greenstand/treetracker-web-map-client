@@ -1,3 +1,10 @@
+# [2.0.0-beta.35](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2022-08-12)
+
+
+### Bug Fixes
+
+* icon no dark mode support ([51b329b](https://github.com/Greenstand/treetracker-web-map-client/commit/51b329b74890fd13cd2496f7f75863f4f79cf1b9))
+
 # [2.0.0-beta.34](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.33...v2.0.0-beta.34) (2022-08-11)
 
 
