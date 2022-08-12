@@ -14,102 +14,41 @@ import { useState, useCallback } from 'react';
 import { usePlaygroundFonts } from '../../context/playgroundContext';
 import { loadFonts } from '../../models/utils';
 
-// eslint-disable-next-line prefer-regex-literals
-const numberValidator = new RegExp('^[0-9]*$');
-
 function FontAddInput() {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
-  const [fontWeightValues, setFontWeightValues] = useState('');
-  const [fontWeightError, setFontWeightError] = useState('');
   const [fonts, setFonts] = usePlaygroundFonts();
-
-  const submitDisabled = error.length > 0 || fontWeightError.length > 0;
-
-  const [loading, setLoading] = useState({
-    fontValue: false,
-    fontWeights: false,
-  });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
       e.persist();
 
-      const fontWeightArr =
-        fontWeightValues.trim().length > 0
-          ? fontWeightValues.split(',').map((w) => parseInt(w.trim(), 10))
-          : [];
-
-      if (fontWeightError) return false;
+      if (error) return false;
 
       const formattedName = value.charAt(0).toUpperCase() + value.slice(1);
-      let fontNameWithWeights = '';
-      let distinctWeights = [...fontWeightArr];
-      let fontPresentInTheme = false;
-      let prevWeights = [];
+      const fontPresentInTheme = !!fonts[formattedName];
+      if (fontPresentInTheme) return setError('Font Already Loaded');
 
-      if (fonts[formattedName]) {
-        distinctWeights = fontWeightArr.filter(
-          (w) => !fonts[formattedName].includes(w),
-        );
-        prevWeights = fonts[formattedName];
-        fontPresentInTheme = true;
-      }
+      setLoading(true);
 
-      const shouldLoadFonts =
-        !fontPresentInTheme ||
-        (fontPresentInTheme && distinctWeights.length > 0);
-      if (!shouldLoadFonts) return setError('Font Already Loaded');
-
-      fontNameWithWeights =
-        distinctWeights.length > 0
-          ? `${formattedName}:${distinctWeights.join()}`
-          : formattedName;
-      setLoading({
-        fontValue: !fontPresentInTheme,
-        fontWeights: distinctWeights.length > 0,
-      });
-
-      await loadFonts([fontNameWithWeights]).then((hasFont) => {
-        setLoading({
-          fontValue: false,
-          fontWeights: false,
-        });
+      await loadFonts([formattedName]).then((hasFont) => {
+        setLoading(false);
         if (!hasFont) return setError('Font could not be loaded');
-        const updatedFont = {
-          [formattedName]: [...prevWeights, ...distinctWeights],
-        };
-        setFonts((prevFonts) => ({ ...prevFonts, ...updatedFont }));
-
+        setFonts((prevFonts) => ({ ...prevFonts, [formattedName]: [] }));
         setValue('');
-        setFontWeightValues('');
         return true;
       });
       return true;
     },
-    [fontWeightError, fontWeightValues, fonts, setFonts, value],
+    [error, fonts, setFonts, value],
   );
 
-  const handleChange = (e, type) => {
-    if (type === 'font') {
-      const userInput = e.target.value;
-      setValue(userInput);
-      if (error) setError('');
-    }
-    if (type === 'weight') {
-      setFontWeightValues(e.target.value);
-      const weights = e.target.value;
-      const splittedWeights = weights.split(',');
-      for (let i = 0; i < splittedWeights.length; i += 1) {
-        if (!numberValidator.test(splittedWeights[i].trim())) {
-          setFontWeightError('font Weights must be formatted properly');
-          return;
-        }
-      }
-      setFontWeightError('');
-      setError('');
-    }
+  const handleChange = (e) => {
+    const userInput = e.target.value;
+    setValue(userInput);
+    if (error) setError('');
   };
 
   return (
@@ -138,13 +77,13 @@ function FontAddInput() {
           <Typography>Add New Font</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <form>
+          <form onSubmit={handleSubmit}>
             <TextField
               variant="standard"
               error={error.length > 0}
               label="Font Name"
               value={value}
-              onChange={(e) => handleChange(e, 'font')}
+              onChange={(e) => handleChange(e)}
               sx={{
                 width: 1,
               }}
@@ -152,47 +91,11 @@ function FontAddInput() {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    {loading.fontValue ? (
-                      <CircularProgress size="1.5rem" />
-                    ) : (
-                      <AddIcon />
-                    )}
+                    {loading ? <CircularProgress size="1.5rem" /> : <AddIcon />}
                   </InputAdornment>
                 ),
               }}
             />
-            <TextField
-              variant="standard"
-              error={fontWeightError.length > 0}
-              label="Font weights"
-              value={fontWeightValues}
-              onChange={(e) => handleChange(e, 'weight')}
-              sx={{
-                width: 1,
-              }}
-              helperText={
-                fontWeightError || 'Add font weights e.g(500 or 500,700)'
-              }
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {loading.fontWeights ? (
-                      <CircularProgress size="1.5rem" />
-                    ) : (
-                      <AddIcon />
-                    )}
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={submitDisabled}
-            >
-              submit
-            </button>
           </form>
         </AccordionDetails>
       </Accordion>
