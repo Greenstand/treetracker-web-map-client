@@ -75,6 +75,7 @@ export default function Tree({
   nextExtraIsEmbed,
   nextExtraKeyword,
 }) {
+  log.warn('tree: ', tree);
   const { classes } = useStyles();
   const mapContext = useMapContext();
   const theme = useTheme();
@@ -333,7 +334,7 @@ export default function Tree({
               variant="h5"
               color={theme.palette.common.white}
             >
-              Palm tree
+              {tree.species_name || 'Unkown species'}
             </Typography>
             <Box
               sx={{
