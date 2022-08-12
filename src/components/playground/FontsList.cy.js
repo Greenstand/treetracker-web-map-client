@@ -5,7 +5,7 @@ describe('Change Theme Button', () => {
   const list = {
     Roboto: [],
     Arial: [],
-    Montsrrathts: [],
+    Montserrat: [],
     Lato: [],
   };
 

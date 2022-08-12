@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import FontAddInput from './FontAddInput';
 import FontsList from './FontsList';
 import { usePlaygroundFonts } from '../../context/playgroundContext';
@@ -9,7 +8,7 @@ const popularFonts = {
   'PT Sans': [],
   Raleway: [],
   'Slabo 27px': [],
-  'Source San': [],
+  'Source Sans Pro': [],
   'Open Sans': [],
 };
 
