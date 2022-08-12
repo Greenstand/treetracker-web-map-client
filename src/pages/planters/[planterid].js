@@ -193,14 +193,18 @@ export default function Planter(props) {
             mt: 6,
             '& img': {
               width: '100%',
+              borderRadius: '16px',
+              maxHeight: [212, 328],
+              objectFit: 'cover',
             },
           }}
         >
           <img
-            className={classes.profileImg}
+            // width="100%"
             src={backgroundPic}
             alt="profile"
           />
+
           <Avatar
             src={planter.image_url}
             sx={{
