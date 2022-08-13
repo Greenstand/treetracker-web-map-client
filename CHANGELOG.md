@@ -1,3 +1,16 @@
+# [2.0.0-beta.38](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.37...v2.0.0-beta.38) (2022-08-13)
+
+
+### Bug Fixes
+
+* drawer expand icon color ([7948562](https://github.com/Greenstand/treetracker-web-map-client/commit/794856298fc6e0247b6955c248abcda3c74085cc))
+* inverted initial theme mode ([c5336a5](https://github.com/Greenstand/treetracker-web-map-client/commit/c5336a53e82748a14f541d730fce853415ff07ad))
+
+
+### Features
+
+* move hooks into indexed folder ([22c8c89](https://github.com/Greenstand/treetracker-web-map-client/commit/22c8c89c722b377138e71d2d47e2716a333cfa2e))
+
 # [2.0.0-beta.37](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.36...v2.0.0-beta.37) (2022-08-13)
 
 
