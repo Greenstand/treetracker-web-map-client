@@ -101,7 +101,7 @@ function Share(props) {
       `<iframe width="560" height="315" src="${shareUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
     );
     setLink(`${shareUrl}`);
-  }, []);
+  }, [shareUrl]);
 
   function handleCopy() {
     log.log('copy...');
