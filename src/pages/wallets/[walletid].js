@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useMediaQuery, useTheme, SvgIcon } from '@mui/material';
+import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -20,6 +20,7 @@ import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
+import { useMobile } from '../../hooks/globalHooks';
 import planterBackground from '../../images/background.png';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import TreeIcon from '../../images/icons/tree.svg';
@@ -39,6 +40,7 @@ export default function Wallet(props) {
   log.info('props for wallet page:', props);
 
   const { wallet, species, tokenCount } = props;
+  const isMobile = useMobile();
   // eslint-disable-next-line react/destructuring-assignment
   const tokenRegionStatistics = props.tokenRegionCount.filter(
     (statistics) => statistics.continent !== null,
@@ -53,8 +55,6 @@ export default function Wallet(props) {
   const mapContext = useMapContext();
 
   const router = useRouter();
-
-  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
   const { setTitlesData } = useDrawerContext();
 

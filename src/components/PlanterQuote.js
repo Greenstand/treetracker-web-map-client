@@ -13,6 +13,7 @@ import Image from 'next/image';
 import ColorButton from './common/ColorButton';
 import DataTag from './common/DataTag';
 import Info from './common/Info';
+import { useMobile } from '../hooks/globalHooks';
 import CalendarIcon from '../images/icons/calendar.svg';
 import LocationIcon from '../images/icons/location.svg';
 import PeopleIcon from '../images/icons/people.svg';
@@ -29,8 +30,7 @@ function PlanterQuote({
   location,
   reverse = false,
 }) {
-  const theme = useTheme();
-  const isMobile = theme.breakpoints.down('sm');
+  const isMobile = useMobile();
   return (
     <Box
       sx={{

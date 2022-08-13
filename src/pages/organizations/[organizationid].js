@@ -5,11 +5,10 @@ import {
   Box,
   Divider,
   Grid,
-  Stack,
-  Typography,
-  useMediaQuery,
-  Avatar,
   useTheme,
+  useMediaQuery,
+  Typography,
+  Avatar,
   SvgIcon,
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
@@ -32,6 +31,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
 import Info from '../../components/common/Info';
+import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import LocationIcon from '../../images/icons/location.svg';
 import PeopleIcon from '../../images/icons/people.svg';
@@ -83,9 +83,8 @@ export default function Organization(props) {
   const [isPlanterTab, setIsPlanterTab] = React.useState(true);
   // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
   const router = useRouter();
+  const isMobile = useMobile();
 
   const { setTitlesData } = useDrawerContext();
 

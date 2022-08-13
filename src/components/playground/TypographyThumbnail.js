@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { usePlaygroundUtils } from '../../context/playgroundContext';
+import { usePlaygroundUtils } from '../../hooks/contextHooks';
 
 function TypographyThumbnail({ text, path }) {
   const { getPropByPath } = usePlaygroundUtils();

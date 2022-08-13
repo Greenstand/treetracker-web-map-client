@@ -47,35 +47,30 @@
 
 # [2.0.0-beta.31](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.30...v2.0.0-beta.31) (2022-08-10)
 
-
 ### Bug Fixes
 
-* broken test ([079dd55](https://github.com/Greenstand/treetracker-web-map-client/commit/079dd5591d01bfc1fd5ed3d57b08cff2ebeee935))
-
+- broken test ([079dd55](https://github.com/Greenstand/treetracker-web-map-client/commit/079dd5591d01bfc1fd5ed3d57b08cff2ebeee935))
 
 ### Features
 
-* use real org to poplulate the planter page ([d969b45](https://github.com/Greenstand/treetracker-web-map-client/commit/d969b457879fa6ce62cc0d253e52a2bffd9ac8d8))
+- use real org to poplulate the planter page ([d969b45](https://github.com/Greenstand/treetracker-web-map-client/commit/d969b457879fa6ce62cc0d253e52a2bffd9ac8d8))
 
 # [2.0.0-beta.30](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2022-08-09)
 
-
 ### Bug Fixes
 
-* fixed the impact graph to the new svg icon ([ce39e8b](https://github.com/Greenstand/treetracker-web-map-client/commit/ce39e8bedb2070a3abeddcedd946b88a57c291d9))
+- fixed the impact graph to the new svg icon ([ce39e8b](https://github.com/Greenstand/treetracker-web-map-client/commit/ce39e8bedb2070a3abeddcedd946b88a57c291d9))
 
 # [2.0.0-beta.29](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2022-08-09)
 
-
 ### Bug Fixes
 
-* failed lock file ([a238bdb](https://github.com/Greenstand/treetracker-web-map-client/commit/a238bdb9422cb3553e5273db971c266eb4b9af75))
-* upgrade core to solve bug ([af4861e](https://github.com/Greenstand/treetracker-web-map-client/commit/af4861ecce800073648fce4774d3171b126e0b69))
-
+- failed lock file ([a238bdb](https://github.com/Greenstand/treetracker-web-map-client/commit/a238bdb9422cb3553e5273db971c266eb4b9af75))
+- upgrade core to solve bug ([af4861e](https://github.com/Greenstand/treetracker-web-map-client/commit/af4861ecce800073648fce4774d3171b126e0b69))
 
 ### Features
 
-* single tree highlight ([10a8e86](https://github.com/Greenstand/treetracker-web-map-client/commit/10a8e86271b8144f66cf17817ac1f154255d311a))
+- single tree highlight ([10a8e86](https://github.com/Greenstand/treetracker-web-map-client/commit/10a8e86271b8144f66cf17817ac1f154255d311a))
 
 # [2.0.0-beta.28](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2022-08-09)
 

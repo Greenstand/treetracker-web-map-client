@@ -12,7 +12,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useState } from 'react';
-import { usePlaygroundFonts } from '../../context/playgroundContext';
+import { usePlaygroundFonts } from '../../hooks/contextHooks';
 import { loadFonts } from '../../models/utils';
 
 function FontsList(props) {

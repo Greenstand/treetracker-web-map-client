@@ -1,7 +1,7 @@
 import { Box, TextField, InputAdornment } from '@mui/material';
 import { useState, useEffect } from 'react';
 import FontSelector from './FontSelector';
-import { usePlaygroundUtils } from '../../context/playgroundContext';
+import { usePlaygroundUtils } from '../../hooks/contextHooks';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 function TypographyInput(props) {

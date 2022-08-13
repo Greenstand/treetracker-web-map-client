@@ -1,7 +1,6 @@
-import log from 'loglevel';
 import { useState, useEffect } from 'react';
 
-// Get values from localstorage
+// Get value from localStorage if possible, otherwise return provided default
 function getStorageValue(key, defaultValue) {
   if (typeof window !== 'undefined') {
     const value = localStorage.getItem(key);
