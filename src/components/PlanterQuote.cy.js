@@ -25,14 +25,14 @@ const info = {
 describe('PlanterQuote', () => {
   it('PlanterQuoteDesktop', () => {
     cy.viewport(720, 360);
-    mount(<PlanterQuote {...info} />);
+    mount(<PlanterQuote planter={info} />);
   });
   it('PlanterQuoteDesktopReverse', () => {
     cy.viewport(720, 360);
-    mount(<PlanterQuote {...info} reverse />);
+    mount(<PlanterQuote planter={info} reverse />);
   });
   it('PlanterQuoteMobile', () => {
     cy.viewport(375, 500);
-    mount(<PlanterQuote {...info} />);
+    mount(<PlanterQuote planter={info} />);
   });
 });

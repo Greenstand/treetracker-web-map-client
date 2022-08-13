@@ -77,6 +77,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Organization(props) {
+  log.warn('props:', props);
   const { organization, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
   const { classes } = useStyles();
@@ -129,6 +130,9 @@ export default function Organization(props) {
     updateContinent();
     // eslint-disable-next-line
   }, [mapContext, organization]);
+
+  const logo_url = organization.logo_url || imagePlaceholder;
+  const name = organization.name || '---';
 
   return (
     <>
@@ -184,14 +188,14 @@ export default function Organization(props) {
           >
             <img src={`${router.basePath}${orgBackground}`} alt="profile" />
             <Avatar
-              src={imagePlaceholder}
-              // src={organization.image_url}
+              src={logo_url}
               sx={{
                 width: [120, 189],
                 height: [120, 189],
                 borderWidth: [4, 9],
                 borderStyle: 'solid',
                 borderColor: (t) => t.palette.background.paper,
+                backgroundColor: (t) => t.palette.background.paper,
                 boxSizing: 'border-box',
                 ml: [4, 8],
                 mt: [-98 / 4, -146 / 4],
@@ -201,41 +205,7 @@ export default function Organization(props) {
 
           {!isMobile && (
             <Box sx={{ mt: 6 }}>
-              <Typography variant="h2">
-                {organization.first_name || '---'} {organization.last_name}
-              </Typography>
-              <Box sx={{ mt: 2 }}>
-                <Info
-                  iconURI={CalendarIcon}
-                  info={`Organization since ${moment().format(
-                    'MMMM DD, YYYY',
-                  )}`}
-                />
-              </Box>
-              <Box sx={{ mt: 2 }}>
-                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
-              </Box>
-              <Box
-                sx={{
-                  mt: 4,
-                  gap: 2,
-                  display: 'flex',
-                }}
-              >
-                <VerifiedBadge
-                  color="primary"
-                  verified
-                  badgeName="Verified Organization"
-                />
-                <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
-              </Box>
-            </Box>
-          )}
-          {!isMobile && (
-            <Box sx={{ mt: 6 }}>
-              <Typography variant="h2">
-                {organization.first_name || '---'} {organization.last_name}
-              </Typography>
+              <Typography variant="h2">{name}</Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
@@ -274,9 +244,7 @@ export default function Organization(props) {
                   pb: 4,
                 }}
               >
-                <Typography variant="h2">
-                  {organization.first_name || '---'} {organization.last_name}
-                </Typography>
+                <Typography variant="h2">{name}</Typography>
                 <Box sx={{ mt: 2 }}>
                   <Info
                     iconURI={CalendarIcon}
@@ -322,16 +290,13 @@ export default function Organization(props) {
                 }}
               >
                 <Avatar
-                  // src={organization.image_url}
-                  src={imagePlaceholder}
+                  src={logo_url}
                   sx={{
                     width: 32,
                     height: 32,
                   }}
                 />
-                <Typography variant="h2">
-                  {organization.first_name || '---'} {organization.last_name}
-                </Typography>
+                <Typography variant="h2">{name}</Typography>
               </Box>
             </Portal>
           )}
@@ -401,17 +366,16 @@ export default function Organization(props) {
                   />
                 ))}
                 {/* Placeholder, remove after API fixed */}
-                <TreeSpeciesCard
-                  name="Baobab Tree"
-                  subTitle="Adansonia"
-                  count={10}
-                />
-                <Box sx={{ mt: [2, 4] }} />
-                <TreeSpeciesCard
-                  name="Wattle Tree"
-                  subTitle="Acacia sensu lato"
-                  count={2}
-                />
+                {organization?.species?.species?.map((s) => (
+                  <>
+                    <TreeSpeciesCard
+                      name={s.name}
+                      subTitle={s.desc || '---'}
+                      count={s.total}
+                    />
+                    <Box sx={{ mt: [2, 4] }} />
+                  </>
+                ))}
               </Box>
             </Box>
           )}
@@ -434,7 +398,7 @@ export default function Organization(props) {
             />
           ))} */}
             {/* Placeholder quote card, remove after API gets data */}
-            {[
+            {/* {[
               {
                 name: 'Jirgna O',
                 quote: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -455,9 +419,10 @@ export default function Organization(props) {
                   'https://treetracker-production.nyc3.digitaloceanspaces.com/2018.11.20.12.11.07_e7a81cf4-2d37-45ee-9d5a-47bdfd7c43cc_IMG_20181120_121037_7990135604649410080.jpg',
                 location: 'Addis Ababa, Ethisa',
               },
-            ].map((planter, i) => (
+            ].map((planter, i) => ( */}
+            {organization?.associatedPlanters?.planters?.map((planter, i) => (
               <Box sx={{ mt: [6, 12] }} key={planter.name}>
-                <PlanterQuote {...planter} reverse={i % 2 !== 0} />
+                <PlanterQuote planter reverse={i % 2 !== 0} />
               </Box>
             ))}
           </Box>

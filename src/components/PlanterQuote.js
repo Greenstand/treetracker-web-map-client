@@ -17,19 +17,25 @@ import { useMobile } from '../hooks/globalHooks';
 import CalendarIcon from '../images/icons/calendar.svg';
 import LocationIcon from '../images/icons/location.svg';
 import PeopleIcon from '../images/icons/people.svg';
+import imagePlaceholder from '../images/image-placeholder.png';
 import QuoteImgReverse from '../images/quote-reverse.svg';
 import QuoteImg from '../images/quote-symbol.svg';
 
 // TODO: something is wrong with quote-symbol.svg and quote-reverse.svg, they show a blank space. The svg files pull up as blanks. Not sure how to fix them, putting up an issue as this is something totally different than what I'm working on.
 
-function PlanterQuote({
-  quote,
-  name,
-  photo,
-  initialDate,
-  location,
-  reverse = false,
-}) {
+function PlanterQuote({ planter, reverse = false }) {
+  const {
+    quote: quote2,
+    name,
+    image_url: photo2,
+    initialDate,
+    location,
+  } = planter;
+
+  const quote = quote2 || "the planter hasn't left any quote yet";
+  const photo = photo2 || imagePlaceholder;
+
+  const theme = useTheme();
   const isMobile = useMobile();
   return (
     <Box
@@ -78,22 +84,27 @@ function PlanterQuote({
               position: 'relative',
             }}
           >
-            <Box
+            <SvgIcon
+              component={QuoteImg}
+              inheritViewBox
+              alt="quote"
+              fontSize="large"
               sx={{
                 position: 'absolute',
-                top: -42,
-                left: -80,
-                transform: ['scale(.5)', ''],
+                top: [1, -19],
+                left: [-22, -23],
+                transform: ['scale(2.5)', 'scale(3.5)'],
+              }}
+            />
+            <Typography
+              variant="body1"
+              sx={{
+                minHeight: [45, 95],
+                minWidth: [200, 410],
               }}
             >
-              <SvgIcon
-                component={QuoteImg}
-                inheritViewBox
-                alt="quote"
-                fontSize="large"
-              />
-            </Box>
-            <Typography variant="body1">{quote}</Typography>
+              {quote}
+            </Typography>
             <Typography
               sx={{
                 mt: [4, 8],
@@ -128,22 +139,27 @@ function PlanterQuote({
               position: 'relative',
             }}
           >
-            <Box
+            <SvgIcon
+              component={QuoteImgReverse}
+              inheritViewBox
+              fontSize="large"
+              alt="quote"
               sx={{
                 position: 'absolute',
-                top: -42,
-                right: -103,
-                transform: ['scale(.5)', ''],
+                top: [-7, -7],
+                right: [-11, -11],
+                transform: ['scale(2.5)', 'scale(3.5)'],
+              }}
+            />
+            <Typography
+              variant="body1"
+              sx={{
+                minHeight: [45, 95],
+                minWidth: [200, 410],
               }}
             >
-              <SvgIcon
-                component={QuoteImgReverse}
-                inheritViewBox
-                fontSize="large"
-                alt="quote"
-              />
-            </Box>
-            <Typography variant="body1">&ldquo;{quote}&ldquo;</Typography>
+              {quote}
+            </Typography>
             <Typography
               sx={{
                 mt: [4, 8],
