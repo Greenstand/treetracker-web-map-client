@@ -59,6 +59,13 @@ const useStyles = makeStyles()((theme) => ({
       marginBottom: theme.spacing(14),
     },
   },
+  profileImg: {
+    maxHeight: '764px',
+    borderRadius: '16px',
+    [theme.breakpoints.down('md')]: {
+      height: '332px',
+    },
+  },
 }));
 const IsMobileScreen = styled(Box)(({ theme }) => ({
   display: 'block',
@@ -186,10 +193,14 @@ export default function Planter(props) {
             mt: 6,
             '& img': {
               width: '100%',
+              borderRadius: '16px',
+              maxHeight: [212, 328],
+              objectFit: 'cover',
             },
           }}
         >
           <img src={backgroundPic} alt="profile" />
+
           <Avatar
             src={planter.image_url}
             sx={{
