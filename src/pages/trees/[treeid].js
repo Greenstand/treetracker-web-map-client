@@ -195,7 +195,11 @@ export default function Tree({
             alignItems: 'center',
           }}
         >
-          <BackButton />
+          <BackButton
+            onClick={() => {
+              window.history.back();
+            }}
+          />
           <Box>
             {}
             <SvgIcon
