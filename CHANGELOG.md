@@ -1,3 +1,17 @@
+# [2.0.0-beta.39](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.38...v2.0.0-beta.39) (2022-08-13)
+
+
+### Bug Fixes
+
+* setting for dev ([2f95158](https://github.com/Greenstand/treetracker-web-map-client/commit/2f951583180f5b2645f4fe9ac8b1b618a208dff4))
+
+
+### Features
+
+* planter quote layout, species data ([3ad9527](https://github.com/Greenstand/treetracker-web-map-client/commit/3ad9527af9dd3c02eb205487fdde5926ecb17bca))
+* put real data ([06d2d25](https://github.com/Greenstand/treetracker-web-map-client/commit/06d2d255a64c3ad0518fb0b81e2e3e89c4a079e7))
+* tree species ([5625449](https://github.com/Greenstand/treetracker-web-map-client/commit/562544949352408c8a867057b17c51a0b2c43a13))
+
 # [2.0.0-beta.38](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.37...v2.0.0-beta.38) (2022-08-13)
 
 ### Bug Fixes
