@@ -4,7 +4,7 @@ import Email from '@mui/icons-material/Email';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import ShareIcon from '@mui/icons-material/Share';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { Box, Typography, Tooltip } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -122,11 +122,6 @@ function Share(props) {
   function handleMessageClose() {
     setMessageOpen(false);
     setMessage('');
-  }
-
-  function showMessage(text) {
-    setMessage(text);
-    setMessageOpen(true);
   }
 
   return (
