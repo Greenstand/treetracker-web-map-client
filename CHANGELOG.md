@@ -1,3 +1,14 @@
+# [2.0.0-beta.36](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.35...v2.0.0-beta.36) (2022-08-13)
+
+
+### Bug Fixes
+
+* changedd a mistake I made on the img file ([2de5ccd](https://github.com/Greenstand/treetracker-web-map-client/commit/2de5ccdd06fedc9c27b231674057b00df6558849))
+* deleted some comments ([205566d](https://github.com/Greenstand/treetracker-web-map-client/commit/205566d7861a49f174dc54805bd57d9ecba0dabc))
+* made images look better ([8eff9ba](https://github.com/Greenstand/treetracker-web-map-client/commit/8eff9babafbc2b6b333b062648fa5202ed54af4d))
+* miss-aligned text ([74b4167](https://github.com/Greenstand/treetracker-web-map-client/commit/74b41676661316804f0ad7ddf26a1a39690a1f7a))
+* more adjustments ([baa7f31](https://github.com/Greenstand/treetracker-web-map-client/commit/baa7f31d94d593928e43a5ffaf49de332fdd458a))
+
 # [2.0.0-beta.35](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2022-08-12)
 
 
