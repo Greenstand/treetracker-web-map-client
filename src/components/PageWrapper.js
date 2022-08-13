@@ -1,4 +1,3 @@
-import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import clsx from 'clsx';
 import dynamic from 'next/dynamic';
@@ -6,6 +5,7 @@ import { useRouter } from 'next/router';
 import { makeStyles } from 'models/makeStyles';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
+import { useMobile } from '../hooks/globalHooks';
 
 const Share = dynamic(() => import('./ShareDeprecated')); // needed to access window object in component
 
@@ -45,9 +45,7 @@ const useStyles = makeStyles()((theme) => ({
 export default function PageWrapper({ children, className, ...otherProps }) {
   const { classes } = useStyles();
   const router = useRouter();
-
-  const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMobile();
 
   const onBackHandler = () => {
     router.back();
@@ -55,7 +53,7 @@ export default function PageWrapper({ children, className, ...otherProps }) {
 
   return (
     <Box className={classes.pageContainer}>
-      {false && !isMobileScreen && (
+      {false && !isMobile && (
         <Box className={classes.top}>
           <BackButton onBackHandler={onBackHandler} />
           <Box className={classes.topRight}>
@@ -66,7 +64,7 @@ export default function PageWrapper({ children, className, ...otherProps }) {
           </Box>
         </Box>
       )}
-      {/* {!isMobileScreen && <SearchFilter />} */}
+      {/* {!isMobile && <SearchFilter />} */}
 
       <Box className={clsx(classes.main, className)} {...otherProps}>
         {children}

@@ -6,8 +6,6 @@ import {
   MenuItem,
   Toolbar,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -15,6 +13,7 @@ import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
+import { useMobile } from '../hooks/globalHooks';
 
 const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
 
@@ -61,9 +60,8 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function Navbar() {
-  const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = useState(null);
+  const isMobile = useMobile();
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -81,7 +79,7 @@ function Navbar() {
       position="static"
     >
       <Link href="/" className={classes.logo}>
-        {isMobileScreen && (
+        {isMobile && (
           <Box
             sx={{
               display: 'flex',
@@ -98,7 +96,7 @@ function Navbar() {
             />
           </Box>
         )}
-        {!isMobileScreen && (
+        {!isMobile && (
           <Box
             sx={{
               display: 'flex',

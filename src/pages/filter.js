@@ -1,11 +1,11 @@
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React from 'react';
 import SearchFilter from '../components/SearchFilter';
+import { useMobile } from '../hooks/globalHooks';
 
 export default function FilterPage() {
   const [filter, setFilter] = React.useState(null);
-  const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMobile();
 
   React.useEffect(() => {
     const url = new URL(window.location.href);
@@ -18,7 +18,7 @@ export default function FilterPage() {
 
   return (
     <Box>
-      {!isMobileScreen && (
+      {!isMobile && (
         <Box>
           <SearchFilter />
         </Box>

@@ -1,7 +1,7 @@
 import DarkMode from '@mui/icons-material/DarkMode';
 import LightMode from '@mui/icons-material/LightMode';
 import IconButton from '@mui/material/IconButton';
-import { useCustomThemeContext } from '../context/themeContext';
+import { useCustomThemeContext } from '../hooks/contextHooks';
 
 export default function ChangeThemeButton() {
   const { colorMode, theme } = useCustomThemeContext();

@@ -1,48 +1,81 @@
-# [2.0.0-beta.33](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2022-08-11)
-
+# [2.0.0-beta.38](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.37...v2.0.0-beta.38) (2022-08-13)
 
 ### Bug Fixes
 
-* setting for dev ([e9d3893](https://github.com/Greenstand/treetracker-web-map-client/commit/e9d3893df3055f5f384b76dc0069f36418bf72e3))
+- drawer expand icon color ([7948562](https://github.com/Greenstand/treetracker-web-map-client/commit/794856298fc6e0247b6955c248abcda3c74085cc))
+- inverted initial theme mode ([c5336a5](https://github.com/Greenstand/treetracker-web-map-client/commit/c5336a53e82748a14f541d730fce853415ff07ad))
+
+### Features
+
+- move hooks into indexed folder ([22c8c89](https://github.com/Greenstand/treetracker-web-map-client/commit/22c8c89c722b377138e71d2d47e2716a333cfa2e))
+
+# [2.0.0-beta.37](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.36...v2.0.0-beta.37) (2022-08-13)
+
+### Bug Fixes
+
+- impact graph mobile height ([c443b5e](https://github.com/Greenstand/treetracker-web-map-client/commit/c443b5e92c1b44377c1f1c827d863995d895127e))
+- svg graph fixed height ([e9d41f8](https://github.com/Greenstand/treetracker-web-map-client/commit/e9d41f87a4b3d03cd781b6c15f0187bf0bc34499))
+
+# [2.0.0-beta.36](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.35...v2.0.0-beta.36) (2022-08-13)
+
+### Bug Fixes
+
+- changedd a mistake I made on the img file ([2de5ccd](https://github.com/Greenstand/treetracker-web-map-client/commit/2de5ccdd06fedc9c27b231674057b00df6558849))
+- deleted some comments ([205566d](https://github.com/Greenstand/treetracker-web-map-client/commit/205566d7861a49f174dc54805bd57d9ecba0dabc))
+- made images look better ([8eff9ba](https://github.com/Greenstand/treetracker-web-map-client/commit/8eff9babafbc2b6b333b062648fa5202ed54af4d))
+- miss-aligned text ([74b4167](https://github.com/Greenstand/treetracker-web-map-client/commit/74b41676661316804f0ad7ddf26a1a39690a1f7a))
+- more adjustments ([baa7f31](https://github.com/Greenstand/treetracker-web-map-client/commit/baa7f31d94d593928e43a5ffaf49de332fdd458a))
+
+# [2.0.0-beta.35](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2022-08-12)
+
+### Bug Fixes
+
+- icon no dark mode support ([51b329b](https://github.com/Greenstand/treetracker-web-map-client/commit/51b329b74890fd13cd2496f7f75863f4f79cf1b9))
+
+# [2.0.0-beta.34](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.33...v2.0.0-beta.34) (2022-08-11)
+
+### Features
+
+- **playground:** can preview on mobile/desktop ([5e64a05](https://github.com/Greenstand/treetracker-web-map-client/commit/5e64a0506952d770b5f355601e5763f210fc3d51))
+
+# [2.0.0-beta.33](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2022-08-11)
+
+### Bug Fixes
+
+- setting for dev ([e9d3893](https://github.com/Greenstand/treetracker-web-map-client/commit/e9d3893df3055f5f384b76dc0069f36418bf72e3))
 
 # [2.0.0-beta.32](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.31...v2.0.0-beta.32) (2022-08-11)
 
-
 ### Features
 
-* add correct impact icons ([7716c63](https://github.com/Greenstand/treetracker-web-map-client/commit/7716c632c2549e8c7fc54becfc04b4f414358703))
+- add correct impact icons ([7716c63](https://github.com/Greenstand/treetracker-web-map-client/commit/7716c632c2549e8c7fc54becfc04b4f414358703))
 
 # [2.0.0-beta.31](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.30...v2.0.0-beta.31) (2022-08-10)
 
-
 ### Bug Fixes
 
-* broken test ([079dd55](https://github.com/Greenstand/treetracker-web-map-client/commit/079dd5591d01bfc1fd5ed3d57b08cff2ebeee935))
-
+- broken test ([079dd55](https://github.com/Greenstand/treetracker-web-map-client/commit/079dd5591d01bfc1fd5ed3d57b08cff2ebeee935))
 
 ### Features
 
-* use real org to poplulate the planter page ([d969b45](https://github.com/Greenstand/treetracker-web-map-client/commit/d969b457879fa6ce62cc0d253e52a2bffd9ac8d8))
+- use real org to poplulate the planter page ([d969b45](https://github.com/Greenstand/treetracker-web-map-client/commit/d969b457879fa6ce62cc0d253e52a2bffd9ac8d8))
 
 # [2.0.0-beta.30](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2022-08-09)
 
-
 ### Bug Fixes
 
-* fixed the impact graph to the new svg icon ([ce39e8b](https://github.com/Greenstand/treetracker-web-map-client/commit/ce39e8bedb2070a3abeddcedd946b88a57c291d9))
+- fixed the impact graph to the new svg icon ([ce39e8b](https://github.com/Greenstand/treetracker-web-map-client/commit/ce39e8bedb2070a3abeddcedd946b88a57c291d9))
 
 # [2.0.0-beta.29](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2022-08-09)
 
-
 ### Bug Fixes
 
-* failed lock file ([a238bdb](https://github.com/Greenstand/treetracker-web-map-client/commit/a238bdb9422cb3553e5273db971c266eb4b9af75))
-* upgrade core to solve bug ([af4861e](https://github.com/Greenstand/treetracker-web-map-client/commit/af4861ecce800073648fce4774d3171b126e0b69))
-
+- failed lock file ([a238bdb](https://github.com/Greenstand/treetracker-web-map-client/commit/a238bdb9422cb3553e5273db971c266eb4b9af75))
+- upgrade core to solve bug ([af4861e](https://github.com/Greenstand/treetracker-web-map-client/commit/af4861ecce800073648fce4774d3171b126e0b69))
 
 ### Features
 
-* single tree highlight ([10a8e86](https://github.com/Greenstand/treetracker-web-map-client/commit/10a8e86271b8144f66cf17817ac1f154255d311a))
+- single tree highlight ([10a8e86](https://github.com/Greenstand/treetracker-web-map-client/commit/10a8e86271b8144f66cf17817ac1f154255d311a))
 
 # [2.0.0-beta.28](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2022-08-09)
 
