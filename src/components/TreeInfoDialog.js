@@ -96,7 +96,7 @@ function CustomImageItem(props) {
   return (
     <ImageListItem
       sx={{
-        background: (t) => (isActive ? t.palette.primary.main : ''),
+        background: (t) => (isActive ? t.palette.primaryLight.main : ''),
         borderRadius: 6,
         maxWidth: '132px',
         p: 2,
@@ -155,16 +155,14 @@ export default function TreeInfoDialog(props) {
         PaperProps={{
           sx: {
             borderRadius: { sm: 0, md: 4 },
-            mt: { xs: 18, md: 16 },
-            mx: 0,
+            m: 0,
             maxWidth: 1,
             width: '100vw',
+            height: '100vh',
           },
         }}
         sx={{
-          py: { xs: 9, md: 4 },
           fontFamily: 'Lato',
-          height: { xs: 'calc(100vh - 36)' },
           zIndex: 9999, // same index as zoom buttons
         }}
       >
@@ -184,16 +182,27 @@ export default function TreeInfoDialog(props) {
         </DialogTitle>
         <DialogContent
           sx={{
-            pb: 9,
+            height: 'calc(100% - 32px)',
           }}
         >
           <Grid
             container
             columns={{ sm: 1, md: 4 }}
-            spacing={6}
-            sx={{ pb: { sm: 6, md: 0 } }}
+            sx={{
+              height: 1,
+              pb: 4,
+            }}
           >
             <Grid item md={1}>
+              <Typography
+                sx={{
+                  mr: 3.75,
+                }}
+                variant="h4"
+                fontSize="24px"
+              >
+                Captures
+              </Typography>
               <ImageList
                 rowHeight={156}
                 gap={8}
@@ -207,6 +216,7 @@ export default function TreeInfoDialog(props) {
                   },
                   justifyItems: 'center',
                   my: 0,
+                  mt: 2,
                 }}
               >
                 <CustomImageItem
@@ -216,19 +226,29 @@ export default function TreeInfoDialog(props) {
                 />
               </ImageList>
             </Grid>
-            <Grid item md={2}>
+            <Grid
+              item
+              md={2}
+              sx={{
+                maxHeight: 1,
+                px: 4,
+              }}
+            >
               <Box
                 sx={{
                   maxWidth: 1,
-                  maxHeight: [512, 'calc(100vh - 196px)'],
-                  overflow: 'hidden',
+                  overflow: 'scroll',
                   borderRadius: 4,
+                  maxHeight: 1,
                 }}
               >
                 <img
                   src={tree.image_url}
                   alt={`tree - #${tree.id}`}
                   className={classes.imageLarge}
+                  style={{
+                    maxHeight: '100%',
+                  }}
                 />
               </Box>
             </Grid>
