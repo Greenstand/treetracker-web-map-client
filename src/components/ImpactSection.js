@@ -66,8 +66,9 @@ function ImpactSection() {
         <SvgIcon
           component={StaticGraph}
           inheritViewBox
+          height="100%"
           sx={{
-            height: 487,
+            height: ['100%', 487],
             width: '100%',
           }}
         />
