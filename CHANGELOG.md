@@ -1,3 +1,11 @@
+# [2.0.0-beta.37](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.36...v2.0.0-beta.37) (2022-08-13)
+
+
+### Bug Fixes
+
+* impact graph mobile height ([c443b5e](https://github.com/Greenstand/treetracker-web-map-client/commit/c443b5e92c1b44377c1f1c827d863995d895127e))
+* svg graph fixed height ([e9d41f8](https://github.com/Greenstand/treetracker-web-map-client/commit/e9d41f87a4b3d03cd781b6c15f0187bf0bc34499))
+
 # [2.0.0-beta.36](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.35...v2.0.0-beta.36) (2022-08-13)
 
 
