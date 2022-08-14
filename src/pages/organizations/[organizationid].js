@@ -1,14 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {
   Box,
   Divider,
   Grid,
-  Stack,
-  Typography,
-  useMediaQuery,
-  Avatar,
   useTheme,
+  useMediaQuery,
+  Typography,
+  Avatar,
+  SvgIcon,
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
@@ -24,17 +25,20 @@ import DrawerTitle from 'components/common/DrawerTitle';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import ImpactSection from '../../components/ImpactSection';
 import PageWrapper from '../../components/PageWrapper';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
 import Info from '../../components/common/Info';
-import calendarIcon from '../../images/icons/calendar.svg';
-import locationIcon from '../../images/icons/location.svg';
-import peopleIcon from '../../images/icons/people.svg';
-import treeIcon from '../../images/icons/tree.svg';
+import { useMobile } from '../../hooks/globalHooks';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import LocationIcon from '../../images/icons/location.svg';
+import PeopleIcon from '../../images/icons/people.svg';
+import TreeIcon from '../../images/icons/tree.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
 import orgBackground from '../../images/org-background.png';
-import searchIcon from '../../images/search.svg';
+import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as utils from '../../models/utils';
@@ -73,15 +77,15 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Organization(props) {
+  log.warn('props:', props);
   const { organization, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
   const { classes } = useStyles();
   const [isPlanterTab, setIsPlanterTab] = React.useState(true);
   // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
   const router = useRouter();
+  const isMobile = useMobile();
 
   const { setTitlesData } = useDrawerContext();
 
@@ -110,7 +114,7 @@ export default function Organization(props) {
         map.setFilters({
           map_name: organization.name,
         });
-        // TODO why I must try/catche this?
+        // TODO why I must try/catch this?
         try {
           await map.loadInitialView();
           map.rerender();
@@ -126,6 +130,9 @@ export default function Organization(props) {
     updateContinent();
     // eslint-disable-next-line
   }, [mapContext, organization]);
+
+  const logo_url = organization.logo_url || imagePlaceholder;
+  const name = organization.name || '---';
 
   return (
     <>
@@ -152,10 +159,22 @@ export default function Organization(props) {
               }}
             >
               <BackButton />
-              <Box>
-                {}
-                <img src={searchIcon} alt="search" />
-              </Box>
+
+              <SvgIcon
+                component={SearchIcon}
+                inheritViewBox
+                sx={{
+                  width: 48,
+                  height: 48,
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+                  '& rect': {
+                    stroke: 'grey',
+                  },
+                }}
+              />
             </Box>
           )}
           <Box
@@ -169,13 +188,14 @@ export default function Organization(props) {
           >
             <img src={`${router.basePath}${orgBackground}`} alt="profile" />
             <Avatar
-              src={organization.image_url}
+              src={logo_url}
               sx={{
                 width: [120, 189],
                 height: [120, 189],
                 borderWidth: [4, 9],
                 borderStyle: 'solid',
                 borderColor: (t) => t.palette.background.paper,
+                backgroundColor: (t) => t.palette.background.paper,
                 boxSizing: 'border-box',
                 ml: [4, 8],
                 mt: [-98 / 4, -146 / 4],
@@ -185,51 +205,17 @@ export default function Organization(props) {
 
           {!isMobile && (
             <Box sx={{ mt: 6 }}>
-              <Typography variant="h2">
-                {organization.first_name || '---'} {organization.last_name}
-              </Typography>
+              <Typography variant="h2">{name}</Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
-                  iconURI={calendarIcon}
+                  iconURI={CalendarIcon}
                   info={`Organization since ${moment().format(
                     'MMMM DD, YYYY',
                   )}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
-              </Box>
-              <Box
-                sx={{
-                  mt: 4,
-                  gap: 2,
-                  display: 'flex',
-                }}
-              >
-                <VerifiedBadge
-                  color="primary"
-                  verified
-                  badgeName="Verified Organization"
-                />
-                <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
-              </Box>
-            </Box>
-          )}
-          {!isMobile && (
-            <Box sx={{ mt: 6 }}>
-              <Typography variant="h2">
-                {organization.first_name || '---'} {organization.last_name}
-              </Typography>
-              <Box sx={{ mt: 2 }}>
-                <Info
-                  iconURI={calendarIcon}
-                  info={`Organization since ${moment().format(
-                    'MMMM DD, YYYY',
-                  )}`}
-                />
-              </Box>
-              <Box sx={{ mt: 2 }}>
-                <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
               </Box>
               <Box
                 sx={{
@@ -258,19 +244,17 @@ export default function Organization(props) {
                   pb: 4,
                 }}
               >
-                <Typography variant="h2">
-                  {organization.first_name || '---'} {organization.last_name}
-                </Typography>
+                <Typography variant="h2">{name}</Typography>
                 <Box sx={{ mt: 2 }}>
                   <Info
-                    iconURI={calendarIcon}
+                    iconURI={CalendarIcon}
                     info={`Organization since ${moment().format(
                       'MMMM DD, YYYY',
                     )}`}
                   />
                 </Box>
                 <Box sx={{ mt: 2 }}>
-                  <Info iconURI={locationIcon} info="Shirimatunda, Tanzania" />
+                  <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
                 </Box>
                 <Box
                   sx={{
@@ -306,15 +290,13 @@ export default function Organization(props) {
                 }}
               >
                 <Avatar
-                  src={organization.image_url}
+                  src={logo_url}
                   sx={{
                     width: 32,
                     height: 32,
                   }}
                 />
-                <Typography variant="h2">
-                  {organization.first_name || '---'} {organization.last_name}
-                </Typography>
+                <Typography variant="h2">{name}</Typography>
               </Box>
             </Portal>
           )}
@@ -330,7 +312,8 @@ export default function Organization(props) {
             <Grid item sx={{ width: '49%' }}>
               <CustomCard
                 handleClick={() => setIsPlanterTab(true)}
-                iconURI={treeIcon}
+                iconURI={TreeIcon}
+                sx={{ width: 26, height: 34 }}
                 title="Trees Planted"
                 text={organization?.featuredTrees?.trees.length || '---'}
                 disabled={!isPlanterTab}
@@ -339,7 +322,8 @@ export default function Organization(props) {
             <Grid item sx={{ width: '49%' }}>
               <CustomCard
                 handleClick={() => setIsPlanterTab(false)}
-                iconURI={peopleIcon}
+                iconURI={PeopleIcon}
+                sx={{ height: 36, width: 36 }}
                 title="Hired Planters"
                 text={
                   organization?.associatedPlanters?.planters.length || '---'
@@ -382,17 +366,16 @@ export default function Organization(props) {
                   />
                 ))}
                 {/* Placeholder, remove after API fixed */}
-                <TreeSpeciesCard
-                  name="Baobab Tree"
-                  subTitle="Adansonia"
-                  count={10}
-                />
-                <Box sx={{ mt: [2, 4] }} />
-                <TreeSpeciesCard
-                  name="Wattle Tree"
-                  subTitle="Acacia sensu lato"
-                  count={2}
-                />
+                {organization?.species?.species?.map((s) => (
+                  <>
+                    <TreeSpeciesCard
+                      name={s.name}
+                      subTitle={s.desc || '---'}
+                      count={s.total}
+                    />
+                    <Box sx={{ mt: [2, 4] }} />
+                  </>
+                ))}
               </Box>
             </Box>
           )}
@@ -415,7 +398,7 @@ export default function Organization(props) {
             />
           ))} */}
             {/* Placeholder quote card, remove after API gets data */}
-            {[
+            {/* {[
               {
                 name: 'Jirgna O',
                 quote: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -436,9 +419,10 @@ export default function Organization(props) {
                   'https://treetracker-production.nyc3.digitaloceanspaces.com/2018.11.20.12.11.07_e7a81cf4-2d37-45ee-9d5a-47bdfd7c43cc_IMG_20181120_121037_7990135604649410080.jpg',
                 location: 'Addis Ababa, Ethisa',
               },
-            ].map((planter, i) => (
+            ].map((planter, i) => ( */}
+            {organization?.associatedPlanters?.planters?.map((planter, i) => (
               <Box sx={{ mt: [6, 12] }} key={planter.name}>
-                <PlanterQuote {...planter} reverse={i % 2 !== 0} />
+                <PlanterQuote planter reverse={i % 2 !== 0} />
               </Box>
             ))}
           </Box>
@@ -481,6 +465,13 @@ export default function Organization(props) {
             blanditiis officia excepturi, natus explicabo laborum delectus
             repudiandae placeat eligendi.
           </Typography>
+          <Divider
+            varian="fullwidth"
+            sx={{
+              mt: [10, 20],
+            }}
+          />
+          <ImpactSection />
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>
@@ -492,7 +483,8 @@ export default function Organization(props) {
               height: '120px',
               margin: '10px',
             }}
-            src={organization.image_url}
+            // src={organization.image_url}
+            src={imagePlaceholder}
             variant="rounded"
           />
         </Portal>
@@ -503,14 +495,18 @@ export default function Organization(props) {
 
 export async function getServerSideProps({ params }) {
   const id = params.organizationid;
-  const organization = await getOrganizationById(id);
-  const orgLinks = await getOrgLinks(organization.links);
-  return {
-    props: {
-      organization: {
-        ...organization,
-        ...orgLinks,
+  try {
+    const organization = await getOrganizationById(id);
+    const orgLinks = await getOrgLinks(organization.links);
+    return {
+      props: {
+        organization: {
+          ...organization,
+          ...orgLinks,
+        },
       },
-    },
-  };
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }

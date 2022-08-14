@@ -1,6 +1,6 @@
 import FontAddInput from './FontAddInput';
 import FontsList from './FontsList';
-import { usePlaygroundFonts } from '../../context/playgroundContext';
+import { usePlaygroundFonts } from '../../hooks/contextHooks';
 
 const popularFonts = {
   Lora: [],

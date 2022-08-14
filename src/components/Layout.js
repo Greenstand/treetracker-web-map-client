@@ -1,10 +1,11 @@
+import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-import max from '../images/max.svg';
-import zoomIn from '../images/zoom-in.svg';
-import zoomOut from '../images/zoom-out.svg';
+import Max from '../images/max.svg';
+import ZoomIn from '../images/zoom-in.svg';
+import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -47,14 +48,15 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export default function Layout({ children }) {
+export default function Layout({
+  children,
+  nextExtraIsEmbed,
+  nextExtraIsEmbedCallback,
+}) {
   const mapContext = useMapContext();
   const { classes } = useStyles();
   function handleFullScreen() {
-    // navigate to /container page through next.js's api
-    const url = new URL(window.location.href);
-    url.searchParams.set('embed', true);
-    window.location.href = url.toString();
+    nextExtraIsEmbedCallback(!nextExtraIsEmbed);
   }
 
   function handleZoomIn() {
@@ -84,8 +86,12 @@ export default function Layout({ children }) {
               cursor: 'pointer',
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="fullscreen" src={max} />
+            {}
+            <SvgIcon
+              component={Max}
+              sx={{ height: 52, width: 52 }}
+              inheritViewBox
+            />
           </Box>
           <Box
             sx={{
@@ -99,14 +105,18 @@ export default function Layout({ children }) {
               flexDirection: 'column',
             }}
           >
-            <Box onClick={handleZoomIn}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-in" src={zoomIn} />
-            </Box>
-            <Box onClick={handleZoomOut}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt="zoom-out" src={zoomOut} />
-            </Box>
+            <SvgIcon
+              onClick={handleZoomIn}
+              component={ZoomIn}
+              inheritViewBox
+              sx={{ mb: '10px', height: 52, width: 52 }}
+            />
+            <SvgIcon
+              onClick={handleZoomOut}
+              component={ZoomOut}
+              inheritViewBox
+              sx={{ height: 52, width: 52 }}
+            />
           </Box>
           <App />
         </Box>

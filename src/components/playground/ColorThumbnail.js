@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { usePlaygroundUtils } from '../../context/playgroundContext';
+import { usePlaygroundUtils } from '../../hooks/contextHooks';
 
 function ColorThumbnail({ path }) {
   const { getPropByPath } = usePlaygroundUtils();

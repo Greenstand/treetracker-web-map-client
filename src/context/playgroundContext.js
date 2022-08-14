@@ -1,12 +1,6 @@
-import React, {
-  useEffect,
-  createContext,
-  useState,
-  useContext,
-  useCallback,
-} from 'react';
+import React, { useEffect, createContext, useState, useCallback } from 'react';
 import { buildTheme } from './themeContext';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/globalHooks';
 import { predefinedFonts } from '../models/themePlaygroundOptions';
 import { loadFonts, convertFontObjToFontArr } from '../models/utils';
 
@@ -153,24 +147,3 @@ export function PlaygroundProvider({ children }) {
     </PlaygroundContext.Provider>
   );
 }
-
-export const usePlaygroundTheme = () => {
-  const { theme, setTheme } = useContext(PlaygroundContext);
-  return [theme, setTheme];
-};
-
-export const usePlaygroundThemeType = () => {
-  const { themeType, setThemeType } = useContext(PlaygroundContext);
-  return [themeType, setThemeType];
-};
-
-export const usePlaygroundFonts = () => {
-  const { fonts, setFonts } = useContext(PlaygroundContext);
-  return [fonts, setFonts];
-};
-
-export const usePlaygroundUtils = () => {
-  const { resetTheme, getPropByPath, setPropByPath } =
-    useContext(PlaygroundContext);
-  return { resetTheme, getPropByPath, setPropByPath };
-};

@@ -1,9 +1,10 @@
-import { useMediaQuery, useTheme } from '@mui/material';
+import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import WorldMap from 'react-world-map';
 import { makeStyles } from 'models/makeStyles';
+import { useMobile } from '../hooks/globalHooks';
 import TreeTooltip from '../images/tree_tooltip.svg';
 
 const useStyles = makeStyles()((theme) => ({
@@ -62,21 +63,24 @@ const mapContinentName = (continentName) => {
 };
 
 function ToolTip({ totalTrees, con }) {
-  const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { classes } = useStyles();
+  const isMobile = useMobile();
 
   return (
     <Box
+      className={classes.tooltipImg}
       sx={{
         position: 'absolute',
-        top: isMobileScreen ? mobileToolTipPos[con].top : toolTipPos[con].top,
-        left: isMobileScreen
-          ? mobileToolTipPos[con].left
-          : toolTipPos[con].left,
+        top: isMobile ? mobileToolTipPos[con].top : toolTipPos[con].top,
+        left: isMobile ? mobileToolTipPos[con].left : toolTipPos[con].left,
       }}
     >
-      <img src={TreeTooltip} alt="tree icon" className={classes.tooltipImg} />
+      <SvgIcon
+        sx={{ width: 68, height: 77 }}
+        component={TreeTooltip}
+        alt="tree icon"
+        inheritViewBox
+      />
       <Typography
         color="nearBlack.main"
         sx={{

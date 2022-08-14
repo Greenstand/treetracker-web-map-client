@@ -48,6 +48,8 @@ function MapComponent() {
   const mapContext = useMapContext();
   const router = useRouter();
 
+  console.log(mapRef, mapContext);
+
   function handleMessageClose() {
     setMessage({
       open: false,
@@ -69,12 +71,14 @@ function MapComponent() {
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
     const path = window.location.pathname.match(
-      /^\/(planters|organizations)\/\d+$/,
+      // /^\/(planters|organizations)\/\d+$/,
+      /^(\/(planters|organizations)\/\d+)(\/trees\/\d+)?$/,
     );
+    log.warn('parsed path:', path);
     const isEmbed = window.location.search.match(/embed=true/);
     let prefix = '';
     if (path) {
-      prefix = window.location.pathname;
+      [prefix] = path;
     }
     const url = new URL(window.location.href);
     const { timeline } = url.searchParams;
@@ -107,11 +111,12 @@ function MapComponent() {
 
   // load map
   useEffect(() => {
-    if (mapContext.map) return;
+    if (mapContext.map && mapRef.current.map) return;
     log.info('load map...');
     // disable waiting for loading
     // loaded();
-    const script = document.createElement('script');
+    const script =
+      document.getElementById('googleMaps') || document.createElement('script');
     script.src =
       'https://maps.googleapis.com/maps/api/js?key=AIzaSyDUGv1-FFd7NFUS6HWNlivbKwETzuIPdKE&libraries=geometry';
     script.id = 'googleMaps';

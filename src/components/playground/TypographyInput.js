@@ -10,7 +10,7 @@ import FontSelector from './FontSelector';
 import {
   usePlaygroundUtils,
   usePlaygroundFonts,
-} from '../../context/playgroundContext';
+} from '../../hooks/contextHooks';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 const allowedFontWeights = new Set([

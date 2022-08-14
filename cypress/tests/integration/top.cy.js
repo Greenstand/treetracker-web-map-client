@@ -15,7 +15,7 @@ describe('top', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/organizations?limit=10',
+      path: '/query/organizations/featured',
       statusCode: 200,
       body: {
         organizations: [organization1],
@@ -25,7 +25,7 @@ describe('top', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/planters?limit=10',
+      path: '/query/planters/featured',
       statusCode: 200,
       body: {
         planters: [planter940],

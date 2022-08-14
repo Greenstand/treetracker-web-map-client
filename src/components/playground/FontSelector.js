@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
-import { usePlaygroundFonts } from '../../context/playgroundContext';
+import { usePlaygroundFonts } from '../../hooks/contextHooks';
 
 function FontSelector(props) {
   const { handleChange } = props;

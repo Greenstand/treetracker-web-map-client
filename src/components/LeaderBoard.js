@@ -1,17 +1,11 @@
-import {
-  Paper,
-  Box,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Paper, Box, Grid, Typography, SvgIcon } from '@mui/material';
 import countries from 'i18n-iso-countries';
 import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
 import { fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
-import treeIcon from '../images/icons/tree.svg';
+import { useMobile } from '../hooks/globalHooks';
+import TreeIcon from '../images/icons/tree.svg';
 
 const useStyles = makeStyles()((theme) => ({
   flagContainer: {
@@ -95,23 +89,24 @@ function RibbonWrapper({ fill, index }) {
   );
 }
 
-function TreeImage() {
-  const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+function TreeImage(isMobile) {
   return (
-    <Image
-      src={treeIcon}
+    <SvgIcon
+      component={TreeIcon}
+      inheritViewBox
+      sx={`${
+        !isMobile
+          ? 'width: 13.5px; height: 18px;'
+          : 'width: 12px; height: 14px;'
+      }`}
       alt="tree icon"
-      width={!isMobileScreen ? 13.5 : 12}
-      height={!isMobileScreen ? 18 : 14}
     />
   );
 }
 
 function LeaderBoard(props) {
   const { countries: rankedCountries, handleCountryClick } = props;
-  const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMobile();
 
   const fixedCountries = fixCountryNames(rankedCountries);
 
@@ -177,7 +172,7 @@ function LeaderBoard(props) {
             >
               TREES PLANTED
             </Typography>
-            <TreeImage />
+            <TreeImage isMobile={isMobile} />
           </Grid>
           <Grid item xs={1} />
         </Grid>
@@ -188,7 +183,7 @@ function LeaderBoard(props) {
           <Paper
             key={country.id}
             onClick={() => handleCountryClick(country.id)}
-            elevation={isMobileScreen ? 2 : 5}
+            elevation={isMobile ? 2 : 5}
             sx={{
               borderRadius: '100px',
               // boxShadow: '0 4px 10px 0px rgba(0, 0, 0, 0.15)',

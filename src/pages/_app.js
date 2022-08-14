@@ -2,7 +2,6 @@ import '../style.css';
 
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { useMediaQuery, useTheme } from '@mui/material';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
@@ -13,7 +12,7 @@ import LayoutMobileB from '../components/LayoutMobileB';
 import LayoutMobileC from '../components/LayoutMobileC';
 import { DrawerProvider } from '../context/DrawerContext';
 import { CustomThemeProvider } from '../context/themeContext';
-import useEmbed from '../hooks/useEmbed';
+import { useLocalStorage, useMobile, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -32,19 +31,21 @@ export const createMuiCache = () =>
   }));
 
 function TreetrackerApp({ Component, pageProps }) {
-  const theme = useTheme();
-  const nextExtraIsDesktop = useMediaQuery(theme.breakpoints.up('sm'));
-  const nextExtraIsEmbed = useEmbed();
+  const router = useRouter();
+  const embedLocalStorage = useLocalStorage('embed', false);
+  const nextExtraIsDesktop = !useMobile();
+  const nextExtraIsEmbed = useEmbed() === true ? true : embedLocalStorage[0];
+  const nextExtraKeyword = router.query.keyword;
+
   log.warn('app: isDesktop: ', nextExtraIsDesktop);
   log.warn('app: component: ', Component);
   // log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
-  const router = useRouter();
   log.warn('router:', router);
-  const nextExtraKeyword = router.query.keyword;
 
   const extraProps = {
     nextExtraIsEmbed,
+    nextExtraIsEmbedCallback: embedLocalStorage[1],
     nextExtraIsDesktop,
     nextExtraKeyword,
   };
@@ -64,12 +65,15 @@ function TreetrackerApp({ Component, pageProps }) {
         <DrawerProvider>
           <MapContextProvider>
             {nextExtraIsDesktop && !nextExtraIsEmbed && (
-              <Layout>
+              <Layout {...extraProps}>
                 <Component {...pageProps} {...extraProps} />
               </Layout>
             )}
             {nextExtraIsDesktop && nextExtraIsEmbed && (
-              <LayoutEmbed isFloatingDisabled={Component.isFloatingDisabled}>
+              <LayoutEmbed
+                {...extraProps}
+                isFloatingDisabled={Component.isFloatingDisabled}
+              >
                 <Component {...pageProps} {...extraProps} />
               </LayoutEmbed>
             )}

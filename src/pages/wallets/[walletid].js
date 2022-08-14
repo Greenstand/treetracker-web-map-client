@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useMediaQuery, useTheme } from '@mui/material';
+import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -14,15 +14,18 @@ import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
 import { requestAPI } from 'models/utils';
+import ImpactSection from '../../components/ImpactSection';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
+import { useMobile } from '../../hooks/globalHooks';
 import planterBackground from '../../images/background.png';
-import calendarIcon from '../../images/icons/calendar.svg';
-import treeIcon from '../../images/icons/tree.svg';
-import searchIcon from '../../images/search.svg';
+import CalendarIcon from '../../images/icons/calendar.svg';
+import TreeIcon from '../../images/icons/tree.svg';
+import imagePlaceholder from '../../images/image-placeholder.png';
+import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -37,6 +40,7 @@ export default function Wallet(props) {
   log.info('props for wallet page:', props);
 
   const { wallet, species, tokenCount } = props;
+  const isMobile = useMobile();
   // eslint-disable-next-line react/destructuring-assignment
   const tokenRegionStatistics = props.tokenRegionCount.filter(
     (statistics) => statistics.continent !== null,
@@ -51,8 +55,6 @@ export default function Wallet(props) {
   const mapContext = useMapContext();
 
   const router = useRouter();
-
-  const isMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
   const { setTitlesData } = useDrawerContext();
 
@@ -107,7 +109,21 @@ export default function Wallet(props) {
           <BackButton />
           <Box>
             {}
-            <img src={searchIcon} alt="search" />
+            <SvgIcon
+              component={SearchIcon}
+              inheritViewBox
+              sx={{
+                width: 48,
+                height: 48,
+                fill: 'transparent',
+                '& path': {
+                  fill: 'grey',
+                },
+                '& rect': {
+                  stroke: 'grey',
+                },
+              }}
+            />
           </Box>
         </Box>
       )}
@@ -123,7 +139,8 @@ export default function Wallet(props) {
       >
         <img src={`${router.basePath}${planterBackground}`} alt="profile" />
         <Avatar
-          src={wallet.logo_url}
+          src={imagePlaceholder}
+          // src={wallet.logo_url}
           sx={{
             width: [120, 189],
             height: [120, 189],
@@ -148,7 +165,7 @@ export default function Wallet(props) {
             <Typography variant="h2">{wallet.name} </Typography>
             <Box sx={{ mt: 2 }}>
               <Info
-                iconURI={calendarIcon}
+                iconURI={CalendarIcon}
                 info={`wallet since ${moment().format('MMMM DD, YYYY')}`}
               />
             </Box>
@@ -170,7 +187,7 @@ export default function Wallet(props) {
           <Typography variant="h2">{wallet.name} </Typography>
           <Box sx={{ mt: 2 }}>
             <Info
-              iconURI={calendarIcon}
+              iconURI={CalendarIcon}
               info={`wallet since ${moment(wallet.created_at).format(
                 'MMMM DD, YYYY',
               )}`}
@@ -189,7 +206,12 @@ export default function Wallet(props) {
         }}
       >
         <Grid item sx={{ width: '49%' }}>
-          <CustomCard iconURI={treeIcon} title="Tokens" text={tokenCount} />
+          <CustomCard
+            iconURI={TreeIcon}
+            sx={{ width: 26, height: 34 }}
+            title="Tokens"
+            text={tokenCount}
+          />
         </Grid>
       </Grid>
 
@@ -241,32 +263,43 @@ export default function Wallet(props) {
       <Typography sx={{ mt: [2.5, 5] }} variant="body2">
         {placeholderText}
       </Typography>
+      <Divider
+        varian="fullwidth"
+        sx={{
+          mt: [10, 20],
+        }}
+      />
+      <ImpactSection />
     </Box>
   );
 }
 
 export async function getServerSideProps({ params }) {
   const id = params.walletid;
-  const [wallet, species, tokenCount, tokenRegionCount] = await Promise.all([
-    getWalletById(id),
-    getSpeciesByWalletId(id),
-    (async () => {
-      // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
-      const data = await requestAPI(`/tokens?wallet=${id}`);
-      return data.total;
-    })(),
-    (async () => {
-      // return total no.trees/tokens per country
-      const data = await requestAPI(`/wallets/${id}/token-region-count`);
-      return data.walletStatistics;
-    })(),
-  ]);
-  return {
-    props: {
-      wallet,
-      species: species.species,
-      tokenCount,
-      tokenRegionCount,
-    },
-  };
+  try {
+    const [wallet, species, tokenCount, tokenRegionCount] = await Promise.all([
+      getWalletById(id),
+      getSpeciesByWalletId(id),
+      (async () => {
+        // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
+        const data = await requestAPI(`/tokens?wallet=${id}`);
+        return data.total;
+      })(),
+      (async () => {
+        // return total no.trees/tokens per country
+        const data = await requestAPI(`/wallets/${id}/token-region-count`);
+        return data.walletStatistics;
+      })(),
+    ]);
+    return {
+      props: {
+        wallet,
+        species: species.species,
+        tokenCount,
+        tokenRegionCount,
+      },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }

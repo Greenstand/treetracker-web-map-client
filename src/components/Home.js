@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
-import useEmbed from '../hooks/useEmbed';
+import { useEmbed } from '../hooks/globalHooks';
 
 const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.png`;
 const useStyles = makeStyles()((theme) => ({

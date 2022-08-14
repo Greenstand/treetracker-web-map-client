@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
@@ -15,13 +16,14 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  useMediaQuery,
-  useTheme,
+  SvgIcon,
 } from '@mui/material';
 import { useState } from 'react';
-import heartIcon from '../images/icons/heart.svg';
-import shareIcon from '../images/icons/share-icon.svg';
-import maxIcon from '../images/max.svg';
+import { useFullscreen } from '../hooks/globalHooks';
+import HeartIcon from '../images/icons/heart.svg';
+import ShareIcon from '../images/icons/share-icon.svg';
+import imagePlaceholder from '../images/image-placeholder.png';
+import MaxIcon from '../images/max.svg';
 import { makeStyles } from '../models/makeStyles';
 
 const useStyles = makeStyles()(() => ({
@@ -114,10 +116,9 @@ function CustomImageItem(props) {
 export default function TreeInfoDialog(props) {
   const { tree, planter, organization } = props;
   const { classes } = useStyles();
-  /* eslint-disable no-shadow */
-  const theme = useTheme();
+
   const [open, setOpen] = useState(false);
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isFullscreen = useFullscreen();
 
   const handleOpen = () => {
     setOpen(true);
@@ -139,14 +140,18 @@ export default function TreeInfoDialog(props) {
           },
         }}
       >
-        <img alt="fullscreen" src={maxIcon} />
+        <SvgIcon
+          inheritViewBox
+          component={MaxIcon}
+          sx={{ width: 52, height: 52 }}
+        />
       </Box>
       <Dialog
-        fullScreen={fullScreen}
+        isFullscreen={isFullscreen}
         fullWidth
         open={open}
         onClose={handleClose}
-        scroll={fullScreen ? 'paper' : 'body'}
+        scroll={isFullscreen ? 'paper' : 'body'}
         PaperProps={{
           sx: {
             borderRadius: { sm: 0, md: 4 },
@@ -254,7 +259,8 @@ export default function TreeInfoDialog(props) {
                   {organization && (
                     <ListItem sx={{ pl: 0 }}>
                       <CustomListAvatar
-                        src={organization.logo_url}
+                        // src={organization.logo_url}
+                        src={imagePlaceholder}
                         alt={organization.name}
                       />
                       <CustomListText
@@ -272,7 +278,13 @@ export default function TreeInfoDialog(props) {
                 }}
               >
                 <Button
-                  startIcon={<img src={heartIcon} />}
+                  startIcon={
+                    <SvgIcon
+                      inheritViewBox
+                      sx={{ height: 22, width: 24 }}
+                      component={HeartIcon}
+                    />
+                  }
                   disableElevation
                   variant="contained"
                   color="primary"
@@ -288,7 +300,13 @@ export default function TreeInfoDialog(props) {
                   200
                 </Button>
                 <Button
-                  startIcon={<img src={shareIcon} />}
+                  startIcon={
+                    <SvgIcon
+                      inheritViewBox
+                      component={ShareIcon}
+                      sx={{ height: 22, width: 16 }}
+                    />
+                  }
                   disableElevation
                   variant="contained"
                   color="background"

@@ -1,5 +1,7 @@
 import AutoRenewIcon from '@mui/icons-material/Autorenew';
+import ComputerIcon from '@mui/icons-material/Computer';
 import FontDownloadIcon from '@mui/icons-material/FontDownload';
+import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
 import PaletteIcon from '@mui/icons-material/Palette';
 import PreviewIcon from '@mui/icons-material/Preview';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -9,6 +11,7 @@ import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useLocalStorage } from 'hooks/globalHooks';
 import {
   SelectColorProp,
   SelectTypographyProp,
@@ -18,13 +21,12 @@ import {
   getTabProps,
   FontCustomization,
 } from '../../components/playground';
+import { PlaygroundProvider } from '../../context/playgroundContext';
 import {
-  PlaygroundProvider,
   usePlaygroundTheme,
   usePlaygroundThemeType,
   usePlaygroundUtils,
-} from '../../context/playgroundContext';
-import useLocalStorage from '../../hooks/useLocalStorage';
+} from '../../hooks/contextHooks';
 import { customizeOptions } from '../../models/themePlaygroundOptions';
 import { optimizeThemeFonts } from '../../models/utils';
 
@@ -41,6 +43,7 @@ function ThemeConfig() {
   const [themeType, setThemeType] = usePlaygroundThemeType();
   const { resetTheme } = usePlaygroundUtils();
   const [autoReload, setAutoReload] = useState(false);
+  const [viewMobile, setViewMobile] = useState(false);
 
   const [tabIndex, setTabIndex] = useState(0);
   const handleTabChange = (_, newIndex) => {
@@ -386,14 +389,23 @@ function ThemeConfig() {
         height: '100vh',
       }}
     >
-      <Grid item xs={9}>
+      <Grid
+        item
+        xs={9}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <iframe
           ref={iframeRef}
+          key={viewMobile}
           title="sandbox"
           src="http://localhost:3000/top"
           style={{
-            width: '100%',
-            height: '100%',
+            height: viewMobile ? '740px' : '100%',
+            width: viewMobile ? '360px' : '100%',
             border: 'none',
           }}
         />
@@ -417,6 +429,11 @@ function ThemeConfig() {
             icon={<PreviewIcon />}
             tooltip="Reload Preview"
             onClick={handlePreview}
+          />
+          <SquareIconButton
+            icon={viewMobile ? <ComputerIcon /> : <MobileFriendlyIcon />}
+            tooltip={`Toggle ${viewMobile ? 'Desktop' : 'Mobile'}`}
+            onClick={() => setViewMobile((prev) => !prev)}
           />
           <Button onClick={handleSave}>save</Button>
           <Button onClick={handleLoad}>load</Button>

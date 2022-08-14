@@ -2,6 +2,10 @@ name: Deploy beta channel to prod
 
 on:
   workflow_dispatch:
+    inputs:
+      git-tag:
+        description: 'Branch/hash/tag'
+        required: true
 
 env:
   project-directory: ./
@@ -30,12 +34,12 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - id: export_bumped_version
         run: |
-          export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
+          export BUMPED_VERSION="${{ github.event.inputs.git-tag }}"
           echo "::set-output name=bumped_version::${BUMPED_VERSION}"
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
-        run: (cd deployment-beta/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ steps.export_bumped_version.outputs.bumped_version }} )
+        run: (cd deployment-beta/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ github.event.inputs.git-tag }} )
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
