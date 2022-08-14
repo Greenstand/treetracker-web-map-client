@@ -2,8 +2,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
-import { useLocalStorage } from 'hooks/globalHooks';
-import { loadFonts } from '../models/utils';
+import { useLocalStorage } from '../hooks/globalHooks';
+import { loadFonts, convertFontObjToFontArr } from '../models/utils';
 
 export const CustomThemeContext = React.createContext({
   toggleColorMode: () => {},
@@ -369,8 +369,8 @@ export function CustomThemeProvider({ children }) {
   React.useEffect(() => {
     if (themeObject) {
       setTheme(createThemeFromThemeObject());
-
-      loadFonts(themeObject.fonts).then((fontsLoaded) => {
+      const fontArr = convertFontObjToFontArr(themeObject.fonts);
+      loadFonts(fontArr).then((fontsLoaded) => {
         log.warn('custom fonts loaded:', fontsLoaded);
       });
     }
