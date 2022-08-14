@@ -52,10 +52,10 @@ export function PlaygroundProvider({ children }) {
     const fontArr = convertFontObjToFontArr(themeObject.fonts);
     loadFonts(fontArr).then((fontsLoaded) => {
       if (!fontsLoaded) return;
-      setFonts((prevFonts) => {
-        const newFonts = new Set([...prevFonts, ...themeObject.fonts]);
-        return [...newFonts];
-      });
+      setFonts((prevFonts) => ({
+          ...prevFonts,
+          ...themeObject.fonts,
+        }));
     });
   }, []);
 

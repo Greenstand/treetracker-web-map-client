@@ -164,7 +164,7 @@ const loadFonts = (fonts) =>
 const optimizeThemeFonts = (theme) => {
   const temp = { ...theme };
   const { typography } = theme;
-  const usedFonts = new Set();
+  const usedFonts = {};
   // loop over all props in typography
   Object.keys(typography).forEach((key) => {
     // filter out the fontSize, htmlFontSize, etc props
@@ -173,12 +173,17 @@ const optimizeThemeFonts = (theme) => {
     // check if font has fallbacks
     // if fallbacks -> not custom font
     const font = typography[key].fontFamily;
-    if (/,/.test(font)) return;
+    if (!font || /,/.test(font)) return;
 
-    // finally add font to set
-    usedFonts.add(font);
+    const weight = typography[key].fontWeight;
+
+    // finally add font and corresponding weight
+    if (!usedFonts[font]) {
+      usedFonts[font] = [];
+    }
+    usedFonts[font].push(weight);
   });
-  temp.fonts = [...usedFonts];
+  temp.fonts = usedFonts;
   return temp;
 };
 
