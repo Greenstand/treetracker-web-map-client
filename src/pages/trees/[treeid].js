@@ -22,8 +22,8 @@ import LikeButton from '../../components/LikeButton';
 import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
+import MobileView from '../../components/common/MobileView';
 import TreeTag from '../../components/common/TreeTag';
-import { useMobile } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import DiameterIcon from '../../images/icons/diameter.svg';
@@ -76,7 +76,6 @@ export default function Tree({
   const theme = useTheme();
   const router = useRouter();
   const userCameFromPlanterPage = router.asPath.includes('planters');
-  const isMobile = useMobile();
 
   const { setTitlesData } = useDrawerContext();
 
@@ -139,11 +138,10 @@ export default function Tree({
         },
       ]}
     >
-      {/* <IsMobileScreen>
-        <DrawerTitle />
-      </IsMobileScreen> */}
-      {isMobile && (
-        <Portal container={document.getElementById('drawer-title-container')}>
+      <MobileView>
+        <Portal
+          container={() => document.getElementById('drawer-title-container')}
+        >
           <Box
             sx={{
               width: 1,
@@ -175,64 +173,66 @@ export default function Tree({
             </Box>
           </Box>
         </Portal>
-      )}
-      {isMobile && (
         <Portal
-          container={document.getElementById('drawer-title-container-min')}
+          container={() =>
+            document.getElementById('drawer-title-container-min')
+          }
         >
           <Box sx={{}}>
             <Typography variant="h2">Tree - #{tree.id}</Typography>
           </Box>
         </Portal>
-      )}
-      {!isMobile && userCameFromPlanterPage && (
-        <>
-          <Box
-            sx={{
-              display: 'flex',
-              width: '100%',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar className={classes.media} src={planter.image_url} />
-            <Box sx={{ marginLeft: 3 }}>
-              <Typography variant="h5">
-                {planter.first_name} {planter.last_name}
-              </Typography>
+      </MobileView>
+      <MobileView hide>
+        {userCameFromPlanterPage && (
+          <>
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                alignItems: 'center',
+              }}
+            >
+              <Avatar className={classes.media} src={planter.image_url} />
+              <Box sx={{ marginLeft: 3 }}>
+                <Typography variant="h5">
+                  {planter.first_name} {planter.last_name}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
 
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
-              alignItems: 'center',
-            }}
-          >
-            <BackButton />
-            <Box>
-              {}
-              <SvgIcon
-                component={SearchIcon}
-                inheritViewBox
-                sx={{
-                  width: 48,
-                  height: 48,
-                  fill: 'transparent',
-                  '& path': {
-                    fill: 'grey',
-                  },
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+                alignItems: 'center',
+              }}
+            >
+              <BackButton />
+              <Box>
+                {}
+                <SvgIcon
+                  component={SearchIcon}
+                  inheritViewBox
+                  sx={{
+                    width: 48,
+                    height: 48,
+                    fill: 'transparent',
+                    '& path': {
+                      fill: 'grey',
+                    },
 
-                  '& rect': {
-                    stroke: 'grey',
-                  },
-                }}
-              />
+                    '& rect': {
+                      stroke: 'grey',
+                    },
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
-        </>
-      )}
+          </>
+        )}
+      </MobileView>
       <Box
         sx={[
           {
@@ -303,7 +303,7 @@ export default function Tree({
           </Box>
         </Box>
         <img src={tree.image_url} alt="tree" />
-        {!isMobile && (
+        <MobileView hide>
           <Box
             sx={{
               position: 'absolute',
@@ -341,7 +341,7 @@ export default function Tree({
               <Badges tokenId={tree.token_id} verified={tree.verified} />
             </Box>
           </Box>
-        )}
+        </MobileView>
       </Box>
       {/* <CustomImageWrapper
         imageUrl={tree.image_url}
