@@ -2,7 +2,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
-import useLocalStorage from '../hooks/globalHooks';
+import { useLocalStorage } from '../hooks/globalHooks';
 import { loadFonts, convertFontObjToFontArr } from '../models/utils';
 
 export const CustomThemeContext = React.createContext({
