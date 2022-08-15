@@ -163,7 +163,7 @@ const loadFonts = (fonts) =>
  */
 const optimizeThemeFonts = (theme) => {
   const temp = { ...theme };
-  const {typography} = theme;
+  const { typography } = theme;
   const usedFonts = new Set();
   // loop over all props in typography
   Object.keys(typography).forEach((key) => {
@@ -182,6 +182,10 @@ const optimizeThemeFonts = (theme) => {
   return temp;
 };
 
+function getPlanterName(firstName, lastName) {
+  return `${firstName} ${(lastName && lastName.slice(0, 1)) || ''}`;
+}
+
 export {
   hideLastName,
   parseDomain,
@@ -195,4 +199,5 @@ export {
   debounce,
   loadFonts,
   optimizeThemeFonts,
+  getPlanterName,
 };

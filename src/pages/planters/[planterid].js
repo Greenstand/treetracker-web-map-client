@@ -220,8 +220,7 @@ export default function Planter(props) {
               }}
             >
               <Typography variant="h2">
-                {planter.first_name}{' '}
-                {planter.last_name && planter.last_name.slice(0, 1)}.
+                {utils.getPlanterName(planter.first_name, planter.last_name)}
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
