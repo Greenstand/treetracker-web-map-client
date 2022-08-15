@@ -1,3 +1,11 @@
+# [2.0.0-beta.41](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.40...v2.0.0-beta.41) (2022-08-15)
+
+
+### Bug Fixes
+
+* remove showmessage ([01d082f](https://github.com/Greenstand/treetracker-web-map-client/commit/01d082f0012202f0f9f398a4673c7f016ead87ff))
+* run useeffect on state change ([a89159c](https://github.com/Greenstand/treetracker-web-map-client/commit/a89159cca2764f9f1a818185ea640a882ef88b9c))
+
 # [2.0.0-beta.40](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2022-08-14)
 
 
