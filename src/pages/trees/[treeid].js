@@ -185,6 +185,41 @@ export default function Tree({
           </Box>
         </Portal>
       )}
+
+      {!isMobile && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+            alignItems: 'center',
+          }}
+        >
+          <BackButton
+            onClick={() => {
+              window.history.back();
+            }}
+          />
+          <Box>
+            {}
+            <SvgIcon
+              component={SearchIcon}
+              inheritViewBox
+              sx={{
+                width: 48,
+                height: 48,
+                fill: 'transparent',
+                '& path': {
+                  fill: 'grey',
+                },
+                '& rect': {
+                  stroke: 'grey',
+                },
+              }}
+            />
+          </Box>
+        </Box>
+      )}
       {!isMobile && userCameFromPlanterPage && (
         <>
           <Box

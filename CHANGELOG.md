@@ -1,51 +1,46 @@
 # [2.0.0-beta.41](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.40...v2.0.0-beta.41) (2022-08-15)
 
-
 ### Bug Fixes
 
-* remove showmessage ([01d082f](https://github.com/Greenstand/treetracker-web-map-client/commit/01d082f0012202f0f9f398a4673c7f016ead87ff))
-* run useeffect on state change ([a89159c](https://github.com/Greenstand/treetracker-web-map-client/commit/a89159cca2764f9f1a818185ea640a882ef88b9c))
+- remove showmessage ([01d082f](https://github.com/Greenstand/treetracker-web-map-client/commit/01d082f0012202f0f9f398a4673c7f016ead87ff))
+- run useeffect on state change ([a89159c](https://github.com/Greenstand/treetracker-web-map-client/commit/a89159cca2764f9f1a818185ea640a882ef88b9c))
 
 # [2.0.0-beta.40](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.39...v2.0.0-beta.40) (2022-08-14)
 
-
 ### Bug Fixes
 
-* fixed typos ([8b9b04e](https://github.com/Greenstand/treetracker-web-map-client/commit/8b9b04e1e08671977ee02b0c47189e681dc78cf3))
-* incorrect import ([154bb09](https://github.com/Greenstand/treetracker-web-map-client/commit/154bb0972e0484deaeba74236ab26c825807e9b9))
-* new data structure issues ([f9ade81](https://github.com/Greenstand/treetracker-web-map-client/commit/f9ade81d9925332d7e9e4c6452fc44ea70125af2))
-
+- fixed typos ([8b9b04e](https://github.com/Greenstand/treetracker-web-map-client/commit/8b9b04e1e08671977ee02b0c47189e681dc78cf3))
+- incorrect import ([154bb09](https://github.com/Greenstand/treetracker-web-map-client/commit/154bb0972e0484deaeba74236ab26c825807e9b9))
+- new data structure issues ([f9ade81](https://github.com/Greenstand/treetracker-web-map-client/commit/f9ade81d9925332d7e9e4c6452fc44ea70125af2))
 
 ### Features
 
-* added another input element for weights ([8d0131c](https://github.com/Greenstand/treetracker-web-map-client/commit/8d0131c39b758cf8bb64428c970a9114167d3fa1))
-* added font weight validation ([852ce8b](https://github.com/Greenstand/treetracker-web-map-client/commit/852ce8b2b6ea980cc03e183873be3ce44cfe5efd))
-* added util methods for converting fontObjArr to normalized Google font Arr ([36c98d1](https://github.com/Greenstand/treetracker-web-map-client/commit/36c98d1395c48700462c32f77e7151d2c2d6bd9e))
-* converted fontObj Arr to google font libs normalized arr ([1e8adb0](https://github.com/Greenstand/treetracker-web-map-client/commit/1e8adb0f9ff33ce9d3f51bfd9e7cb52f43322498))
-* modified font List Comp to work with new type of form data ([975f533](https://github.com/Greenstand/treetracker-web-map-client/commit/975f5333e4939b4ffa1c9ca2e19bb242da96ebc0))
-* removed fontWeight input from fonts section ([bd8a003](https://github.com/Greenstand/treetracker-web-map-client/commit/bd8a0037d3c64496699a4a0bc8675f2f5aa564ea))
-* removed validation from fontWeights for now ([62881a4](https://github.com/Greenstand/treetracker-web-map-client/commit/62881a4cea9282c686e69fcc2356d9fc576d265e))
-* updated font selector component acc to new strurcture of font and weights ([ea5ae9b](https://github.com/Greenstand/treetracker-web-map-client/commit/ea5ae9bad1ed9e8719c5679d52f7f8c3424211d5))
-* updated font structure acc -> {'name': weight[]} ([9bc94f1](https://github.com/Greenstand/treetracker-web-map-client/commit/9bc94f1bd6a8fc86a8dc0785f2c0344fc75eb2c4))
-* updated fontWeight validation and fontWeight now loads whenever user types validated fontWeght ([9dd2d3c](https://github.com/Greenstand/treetracker-web-map-client/commit/9dd2d3ca91260d9e5434eee3ceb305192131f09f))
-* updated test ([bce2df4](https://github.com/Greenstand/treetracker-web-map-client/commit/bce2df449fea152f074e76cf20c0458f65fc61ec))
-* updated test acc to new font weight structure ([4825f19](https://github.com/Greenstand/treetracker-web-map-client/commit/4825f196a51431c2251422f89e82df0a1b3d4a40))
-* updated unit tests according to new structure of font and weights ([a872e7b](https://github.com/Greenstand/treetracker-web-map-client/commit/a872e7b4b02503de034adc07c3720c46ebd30f06))
-* user can now load font weights from typography component ([bbe98a5](https://github.com/Greenstand/treetracker-web-map-client/commit/bbe98a5eafb3dba043a2c260bb284051f821ed91))
+- added another input element for weights ([8d0131c](https://github.com/Greenstand/treetracker-web-map-client/commit/8d0131c39b758cf8bb64428c970a9114167d3fa1))
+- added font weight validation ([852ce8b](https://github.com/Greenstand/treetracker-web-map-client/commit/852ce8b2b6ea980cc03e183873be3ce44cfe5efd))
+- added util methods for converting fontObjArr to normalized Google font Arr ([36c98d1](https://github.com/Greenstand/treetracker-web-map-client/commit/36c98d1395c48700462c32f77e7151d2c2d6bd9e))
+- converted fontObj Arr to google font libs normalized arr ([1e8adb0](https://github.com/Greenstand/treetracker-web-map-client/commit/1e8adb0f9ff33ce9d3f51bfd9e7cb52f43322498))
+- modified font List Comp to work with new type of form data ([975f533](https://github.com/Greenstand/treetracker-web-map-client/commit/975f5333e4939b4ffa1c9ca2e19bb242da96ebc0))
+- removed fontWeight input from fonts section ([bd8a003](https://github.com/Greenstand/treetracker-web-map-client/commit/bd8a0037d3c64496699a4a0bc8675f2f5aa564ea))
+- removed validation from fontWeights for now ([62881a4](https://github.com/Greenstand/treetracker-web-map-client/commit/62881a4cea9282c686e69fcc2356d9fc576d265e))
+- updated font selector component acc to new strurcture of font and weights ([ea5ae9b](https://github.com/Greenstand/treetracker-web-map-client/commit/ea5ae9bad1ed9e8719c5679d52f7f8c3424211d5))
+- updated font structure acc -> {'name': weight[]} ([9bc94f1](https://github.com/Greenstand/treetracker-web-map-client/commit/9bc94f1bd6a8fc86a8dc0785f2c0344fc75eb2c4))
+- updated fontWeight validation and fontWeight now loads whenever user types validated fontWeght ([9dd2d3c](https://github.com/Greenstand/treetracker-web-map-client/commit/9dd2d3ca91260d9e5434eee3ceb305192131f09f))
+- updated test ([bce2df4](https://github.com/Greenstand/treetracker-web-map-client/commit/bce2df449fea152f074e76cf20c0458f65fc61ec))
+- updated test acc to new font weight structure ([4825f19](https://github.com/Greenstand/treetracker-web-map-client/commit/4825f196a51431c2251422f89e82df0a1b3d4a40))
+- updated unit tests according to new structure of font and weights ([a872e7b](https://github.com/Greenstand/treetracker-web-map-client/commit/a872e7b4b02503de034adc07c3720c46ebd30f06))
+- user can now load font weights from typography component ([bbe98a5](https://github.com/Greenstand/treetracker-web-map-client/commit/bbe98a5eafb3dba043a2c260bb284051f821ed91))
 
 # [2.0.0-beta.39](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.38...v2.0.0-beta.39) (2022-08-13)
 
-
 ### Bug Fixes
 
-* setting for dev ([2f95158](https://github.com/Greenstand/treetracker-web-map-client/commit/2f951583180f5b2645f4fe9ac8b1b618a208dff4))
-
+- setting for dev ([2f95158](https://github.com/Greenstand/treetracker-web-map-client/commit/2f951583180f5b2645f4fe9ac8b1b618a208dff4))
 
 ### Features
 
-* planter quote layout, species data ([3ad9527](https://github.com/Greenstand/treetracker-web-map-client/commit/3ad9527af9dd3c02eb205487fdde5926ecb17bca))
-* put real data ([06d2d25](https://github.com/Greenstand/treetracker-web-map-client/commit/06d2d255a64c3ad0518fb0b81e2e3e89c4a079e7))
-* tree species ([5625449](https://github.com/Greenstand/treetracker-web-map-client/commit/562544949352408c8a867057b17c51a0b2c43a13))
+- planter quote layout, species data ([3ad9527](https://github.com/Greenstand/treetracker-web-map-client/commit/3ad9527af9dd3c02eb205487fdde5926ecb17bca))
+- put real data ([06d2d25](https://github.com/Greenstand/treetracker-web-map-client/commit/06d2d255a64c3ad0518fb0b81e2e3e89c4a079e7))
+- tree species ([5625449](https://github.com/Greenstand/treetracker-web-map-client/commit/562544949352408c8a867057b17c51a0b2c43a13))
 
 # [2.0.0-beta.38](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.37...v2.0.0-beta.38) (2022-08-13)
 

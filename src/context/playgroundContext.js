@@ -47,9 +47,9 @@ export function PlaygroundProvider({ children }) {
     loadFonts(fontArr).then((fontsLoaded) => {
       if (!fontsLoaded) return;
       setFonts((prevFonts) => ({
-          ...prevFonts,
-          ...themeObject.fonts,
-        }));
+        ...prevFonts,
+        ...themeObject.fonts,
+      }));
     });
   }, []);
 

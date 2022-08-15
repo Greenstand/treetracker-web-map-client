@@ -187,6 +187,10 @@ const optimizeThemeFonts = (theme) => {
   return temp;
 };
 
+function getPlanterName(firstName, lastName) {
+  return `${firstName} ${(lastName && lastName.slice(0, 1)) || ''}`;
+}
+
 /**
  * @param {Object} fonts - list of google font names
  *
@@ -215,5 +219,6 @@ export {
   debounce,
   loadFonts,
   optimizeThemeFonts,
+  getPlanterName,
   convertFontObjToFontArr,
 };
