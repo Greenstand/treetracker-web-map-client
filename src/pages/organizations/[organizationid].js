@@ -110,14 +110,17 @@ export default function Organization(props) {
       // manipulate the map
       const { map } = mapContext;
       if (map && organization) {
-        // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
-          map_name: organization.name,
-        });
         // TODO why I must try/catch this?
         try {
-          await map.loadInitialView();
-          map.rerender();
+          if (router.query.bounds) {
+            await map.goToBounds(router.query.bounds);
+          } else {
+            map.setFilters({
+              map_name: organization.name,
+            });
+            await map.loadInitialView();
+            map.rerender();
+          }
         } catch (e) {
           log.error('rendering map:', e);
         }

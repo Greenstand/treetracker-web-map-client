@@ -116,11 +116,15 @@ export default function Planter(props) {
       const { map } = mapContext;
       if (map && planter) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
-          userid: planter.id,
-        });
         try {
-          await map.loadInitialView();
+          if (router.query.bounds) {
+            await map.goToBounds(router.query.bounds);
+          } else {
+            map.setFilters({
+              userid: planter.id,
+            });
+            await map.loadInitialView();
+          }
         } catch (err) {
           log.warn('error:', err);
         }
@@ -129,7 +133,7 @@ export default function Planter(props) {
       }
     }
     reload();
-  }, [mapContext, planter]);
+  }, [mapContext, planter, router]);
 
   return (
     <>

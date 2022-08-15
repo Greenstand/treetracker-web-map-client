@@ -70,12 +70,15 @@ export default function Wallet(props) {
       // manipulate the map
       const { map } = mapContext;
       if (map && wallet) {
-        // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
-          wallet: wallet.name,
-        });
         try {
-          await map.loadInitialView();
+          if (router.query.bounds) {
+            await map.goToBounds(router.query.bounds);
+          } else {
+            map.setFilters({
+              wallet: wallet.name,
+            });
+            await map.loadInitialView();
+          }
         } catch (err) {
           log.warn('error:', err);
         }
@@ -84,7 +87,7 @@ export default function Wallet(props) {
       }
     }
     reload();
-  }, [mapContext, wallet]);
+  }, [mapContext, wallet, router]);
 
   return (
     <Box

@@ -112,19 +112,23 @@ export default function Tree({
       // manipulate the map
       const { map } = mapContext;
       if (map && tree?.lat && tree?.lon) {
-        map.setFilters({
-          treeid: tree.id,
-        });
         try {
-          await map.loadInitialView();
+          if (router.query.bounds) {
+            await map.goToBounds(router.query.bounds);
+          } else {
+            map.setFilters({
+              treeid: tree.id,
+            });
+            await map.loadInitialView();
+            map.rerender();
+          }
         } catch (err) {
           log.warn('error:', err);
         }
-        map.rerender();
       }
     }
     draw();
-  }, [mapContext.map, tree.lat, tree.lon]);
+  }, [mapContext.map, tree.lat, tree.lon, router]);
 
   return (
     <Box

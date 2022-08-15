@@ -5,6 +5,7 @@ import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { getWalletById, getTokenById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
@@ -40,6 +41,7 @@ export default function Token({ token, wallet }) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
   const isMobile = useMobile();
+  const router = useRouter();
 
   log.warn('map:', mapContext);
 
@@ -49,20 +51,25 @@ export default function Token({ token, wallet }) {
       const { map } = mapContext;
       if (map && token) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
-          token: token.id,
-        });
+
         try {
-          await map.loadInitialView();
+          if (router.query.bounds) {
+            await map.goToBounds(router.query.bounds);
+          } else {
+            map.setFilters({
+              token: token.id,
+            });
+            await map.loadInitialView();
+            map.rerender();
+          }
         } catch (err) {
           log.warn('error:', err);
         }
-        map.rerender();
-        log.warn('no data:', map, token);
+        log.warn('no data:', map, token, router);
       }
     }
     reload();
-  }, [mapContext, token]);
+  }, [mapContext, token, router]);
 
   return (
     <Box
