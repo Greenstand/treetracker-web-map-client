@@ -18,8 +18,11 @@ describe('Toggle Theme Mode', () => {
       </PlaygroundProvider>,
     );
     cy.get('.MuiAccordionSummary-content').click();
-    cy.get('.MuiFormControl-root').type('Splash{enter}');
-    cy.get('[data-testid=AddIcon]');
+    cy.get('.MuiFormControl-root').eq(0).type('lora{enter}');
+    cy.get('.MuiFormControl-root')
+      .eq(0)
+      .contains('Font could not be loaded')
+      .should('not.exist');
   });
 
   it('error when searching non existinig font', () => {
@@ -29,8 +32,7 @@ describe('Toggle Theme Mode', () => {
       </PlaygroundProvider>,
     );
     cy.get('.MuiAccordionSummary-content').click();
-    cy.get('.MuiFormControl-root')
-      .type('nonexisting{enter}')
-      .contains('Font could not be loaded');
+    cy.get('.MuiFormControl-root').eq(0).type('void void vpid{enter}');
+    cy.get('.MuiFormControl-root').eq(0).contains('Font could not be loaded');
   });
 });

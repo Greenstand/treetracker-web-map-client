@@ -41,7 +41,7 @@ function FontSelector(props) {
           'aria-labelledby': 'font-family-button',
         }}
       >
-        {fonts.map((font) => (
+        {Object.keys(fonts).map((font) => (
           <MenuItem
             key={`font-selector-menutitem-${font}`}
             onClick={() => handleClose(font)}
