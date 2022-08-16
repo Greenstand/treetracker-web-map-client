@@ -26,7 +26,7 @@ function CustomCard(props) {
         borderRadius: [2, 4],
         p: [3, 6],
         display: 'flex',
-        cursor: 'pointer',
+        cursor: handleClick ? 'pointer' : 'inherit',
         alignItems: 'center',
       }}
     >

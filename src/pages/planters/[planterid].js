@@ -314,12 +314,20 @@ export default function Planter(props) {
           </Grid>
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
-              handleClick={() => setIsPlanterTab(false)}
               iconURI={PeopleIcon}
               sx={{ height: 36, width: 36 }}
               title="Ass. Orgs"
               text={
-                planter.associatedOrganizations.organizations.length || '---'
+                planter.associatedOrganizations.organizations.length || (
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      minHeight: [44],
+                    }}
+                  >
+                    Individual planter
+                  </Typography>
+                )
               }
               disabled={isPlanterTab}
             />
@@ -358,20 +366,9 @@ export default function Planter(props) {
                 <TreeSpeciesCard
                   key={species.id}
                   name={species.name}
-                  count={species.count}
+                  count={species.total}
                 />
               ))}
-              {/* Placeholder, remove after API fixed */}
-              <TreeSpeciesCard
-                name="Baobab Tree"
-                subTitle="Adansonia"
-                count={10}
-              />
-              <TreeSpeciesCard
-                name="Wattle Tree"
-                subTitle="Acacia sensu lato"
-                count={2}
-              />
             </Box>
           </Box>
         )}
