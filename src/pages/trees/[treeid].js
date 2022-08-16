@@ -96,10 +96,6 @@ export default function Tree({
     return shortenNum / multiplier;
   }
 
-  function handleMax(url) {
-    window.open(url, '_blank');
-  }
-
   useEffect(() => {
     setTitlesData({
       treeId: tree.id,
@@ -358,14 +354,14 @@ export default function Tree({
               alignItems: 'flex-start',
             }}
           >
-            <Typography variant="h2">Tree - #{tree.id}</Typography>
+            <Typography variant="h2">Tree #{tree.id}</Typography>
             <Typography
               sx={{
                 fontWeight: 400,
               }}
               variant="h5"
             >
-              Palm tree
+              {tree.species_name || 'Unkown species'}
             </Typography>
             <Box
               sx={{
@@ -384,7 +380,7 @@ export default function Tree({
           container={document.getElementById('drawer-title-container-min')}
         >
           <Box sx={{}}>
-            <Typography variant="h2">Tree - #{tree.id}</Typography>
+            <Typography variant="h2">Tree #{tree.id}</Typography>
           </Box>
         </Portal>
       )}
@@ -647,19 +643,6 @@ export default function Tree({
       />
       <ImpactSection />
       <Box height={20} />
-      {nextExtraIsEmbed && (
-        <Portal container={document.getElementById('embed-logo-container')}>
-          <Avatar
-            sx={{
-              width: '120px',
-              height: '120px',
-              margin: '10px',
-            }}
-            src={planter.image_url}
-            variant="rounded"
-          />
-        </Portal>
-      )}
     </Box>
   );
 }

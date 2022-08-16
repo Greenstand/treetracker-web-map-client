@@ -44,15 +44,27 @@ function TreeTagComponent({ TreeTagValue, title, icon, disabled = false }) {
         borderColor: disabled ? 'greyLight.main' : 'secondary.main',
         borderWidth: '1px',
         borderStyle: 'solid',
-        p: (t) => [t.spacing(3, 4), t.spacing(4.75, 6)],
+        p: (t) => [t.spacing(2, 2), t.spacing(4.75, 6)],
         height: 'auto',
       }}
       color="secondary"
-      icon={<Box m={1}>{icon}</Box>}
+      icon={
+        <Box
+          sx={{
+            '& svg': {
+              width: [20, 24],
+              height: [20, 24],
+            },
+          }}
+          m={1}
+        >
+          {icon}
+        </Box>
+      }
       label={
         <Box
           sx={{
-            ml: [4, 6],
+            ml: [2, 6],
           }}
         >
           <Typography variant="body1">{title}</Typography>

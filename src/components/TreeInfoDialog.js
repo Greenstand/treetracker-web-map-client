@@ -19,7 +19,7 @@ import {
   SvgIcon,
 } from '@mui/material';
 import { useState } from 'react';
-import { useFullscreen , useMobile } from '../hooks/globalHooks';
+import { useFullscreen, useMobile } from '../hooks/globalHooks';
 import HeartIcon from '../images/icons/heart.svg';
 import ShareIcon from '../images/icons/share-icon.svg';
 import imagePlaceholder from '../images/image-placeholder.png';
@@ -136,7 +136,7 @@ export default function TreeInfoDialog(props) {
         onClick={handleOpen}
         sx={{
           cursor: 'pointer',
-          '& img': {
+          '& svg': {
             width: [40, 52],
             height: [40, 52],
           },
