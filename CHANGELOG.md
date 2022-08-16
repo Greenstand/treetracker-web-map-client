@@ -1,3 +1,14 @@
+# [2.0.0-beta.43](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.42...v2.0.0-beta.43) (2022-08-16)
+
+
+### Features
+
+* custom card in planter ([5729b7c](https://github.com/Greenstand/treetracker-web-map-client/commit/5729b7c42b307b26060238dcfcf9c2d05637d33e))
+* layout, details ([45ea0aa](https://github.com/Greenstand/treetracker-web-map-client/commit/45ea0aa1ab9c34efee5e1b18681f08dcb5a57c3f))
+* new layout for the tags, org data loading ([40362c2](https://github.com/Greenstand/treetracker-web-map-client/commit/40362c2c9ae4afe2b2dcfa091212f1acb2bc4c1a))
+* switcher for leader board ([0ae02e8](https://github.com/Greenstand/treetracker-web-map-client/commit/0ae02e8ab8e9865bcec14f21b704d485e30cc8e6))
+* tree mobile page ([9b4fc62](https://github.com/Greenstand/treetracker-web-map-client/commit/9b4fc622967f6d85f9bdc21608bdf23d8e780540))
+
 # [2.0.0-beta.42](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.41...v2.0.0-beta.42) (2022-08-15)
 
 
