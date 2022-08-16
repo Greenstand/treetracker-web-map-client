@@ -291,6 +291,8 @@ export default function Tree({
         TreeTagValue={tree.token_id}
         title="Token ID"
         icon={<SvgIcon component={TokenIcon} />}
+        subtitle="click to enter"
+        link={`/token/${tree.token_id}`}
       />,
     );
   } else {

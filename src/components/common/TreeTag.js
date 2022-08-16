@@ -3,9 +3,17 @@ import Chip from '@mui/material/Chip';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
+import Link from '../Link';
 
-function TreeTagComponent({ TreeTagValue, title, icon, disabled = false }) {
-  return (
+function TreeTagComponent({
+  TreeTagValue,
+  title,
+  subtitle,
+  icon,
+  disabled = false,
+  link,
+}) {
+  const chip = (
     <Chip
       sx={{
         bgcolor: (t) =>
@@ -46,6 +54,7 @@ function TreeTagComponent({ TreeTagValue, title, icon, disabled = false }) {
         borderStyle: 'solid',
         p: (t) => [t.spacing(2, 2), t.spacing(4.75, 6)],
         height: 'auto',
+        maxHeight: [55.6, 87.2],
       }}
       color="secondary"
       icon={
@@ -76,9 +85,31 @@ function TreeTagComponent({ TreeTagValue, title, icon, disabled = false }) {
           >
             {TreeTagValue}
           </Typography>
+          {subtitle && (
+            <Typography sx={{}} variant="caption">
+              {subtitle}
+            </Typography>
+          )}
         </Box>
       }
     />
+  );
+  return (
+    <>
+      {link && (
+        <Box
+          sx={{
+            // mouse pointer
+            '& div': {
+              cursor: 'pointer',
+            },
+          }}
+        >
+          <Link href={link}>{chip}</Link>
+        </Box>
+      )}
+      {!link && chip}
+    </>
   );
 }
 
