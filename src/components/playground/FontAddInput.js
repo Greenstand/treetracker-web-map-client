@@ -10,8 +10,8 @@ import {
   CircularProgress,
   InputAdornment,
 } from '@mui/material';
-import { useState } from 'react';
-import { usePlaygroundFonts } from '../../context/playgroundContext';
+import { useState, useCallback } from 'react';
+import { usePlaygroundFonts } from '../../hooks/contextHooks';
 import { loadFonts } from '../../models/utils';
 
 function FontAddInput() {
@@ -20,25 +20,30 @@ function FontAddInput() {
   const [fonts, setFonts] = usePlaygroundFonts();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    e.persist();
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      e.persist();
 
-    const formattedName = value.charAt(0).toUpperCase() + value.slice(1);
-    if (fonts.indexOf(formattedName) > -1)
-      return setError('Font already loaded');
+      if (error) return false;
 
-    setLoading(true);
-    await loadFonts([formattedName]).then((hasFont) => {
-      setLoading(false);
-      if (!hasFont) return setError('Font could not be loaded');
+      const formattedName = value.charAt(0).toUpperCase() + value.slice(1);
+      const fontPresentInTheme = !!fonts[formattedName];
+      if (fontPresentInTheme) return setError('Font Already Loaded');
 
-      setFonts((prevFonts) => [...prevFonts, formattedName]);
-      setValue('');
+      setLoading(true);
+
+      await loadFonts([formattedName]).then((hasFont) => {
+        setLoading(false);
+        if (!hasFont) return setError('Font could not be loaded');
+        setFonts((prevFonts) => ({ ...prevFonts, [formattedName]: [] }));
+        setValue('');
+        return true;
+      });
       return true;
-    });
-    return true;
-  };
+    },
+    [error, fonts, setFonts, value],
+  );
 
   const handleChange = (e) => {
     const userInput = e.target.value;
@@ -78,7 +83,7 @@ function FontAddInput() {
               error={error.length > 0}
               label="Font Name"
               value={value}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               sx={{
                 width: 1,
               }}

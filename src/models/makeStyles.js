@@ -1,5 +1,5 @@
 import { createMakeAndWithStyles } from 'tss-react';
-import { useCustomThemeContext } from 'context/themeContext';
+import { useCustomThemeContext } from 'hooks/contextHooks';
 
 function useTheme() {
   const { theme } = useCustomThemeContext();

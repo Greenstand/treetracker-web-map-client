@@ -2,10 +2,12 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
-import useLocalStorage from 'hooks/useLocalStorage';
-import { loadFonts } from '../models/utils';
+import { useLocalStorage } from '../hooks/globalHooks';
+import { loadFonts, convertFontObjToFontArr } from '../models/utils';
 
-const CustomThemeContext = React.createContext({ toggleColorMode: () => {} });
+export const CustomThemeContext = React.createContext({
+  toggleColorMode: () => {},
+});
 
 export function buildTheme(theMode) {
   const getDesign = (themeMode) => ({
@@ -329,7 +331,9 @@ const defaultDarkTheme = buildTheme('dark');
 
 export function CustomThemeProvider({ children }) {
   const [mode, setMode] = useLocalStorage('theme', 'light');
-  const [theme, setTheme] = React.useState(buildTheme(mode));
+  const [theme, setTheme] = React.useState(
+    mode === 'light' ? defaultLightTheme : defaultDarkTheme,
+  );
   const [themeObject, setThemeObject] = useLocalStorage('themeObject', null);
 
   const colorMode = React.useMemo(
@@ -365,8 +369,8 @@ export function CustomThemeProvider({ children }) {
   React.useEffect(() => {
     if (themeObject) {
       setTheme(createThemeFromThemeObject());
-
-      loadFonts(themeObject.fonts).then((fontsLoaded) => {
+      const fontArr = convertFontObjToFontArr(themeObject.fonts);
+      loadFonts(fontArr).then((fontsLoaded) => {
         log.warn('custom fonts loaded:', fontsLoaded);
       });
     }
@@ -399,7 +403,7 @@ export function CustomThemeProvider({ children }) {
     // set the theme to correct mode when the mode changes
     // if there is no custom theme set it to the default
     if (!themeObject) {
-      setTheme(mode === 'light' ? defaultDarkTheme : defaultLightTheme);
+      setTheme(mode === 'light' ? defaultLightTheme : defaultDarkTheme);
     } else {
       setTheme(createThemeFromThemeObject());
     }
@@ -422,8 +426,4 @@ export function CustomThemeProvider({ children }) {
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </CustomThemeContext.Provider>
   );
-}
-
-export function useCustomThemeContext() {
-  return React.useContext(CustomThemeContext);
 }

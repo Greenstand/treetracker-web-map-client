@@ -1,14 +1,8 @@
-import React, {
-  useEffect,
-  createContext,
-  useState,
-  useContext,
-  useCallback,
-} from 'react';
+import React, { useEffect, createContext, useState, useCallback } from 'react';
 import { buildTheme } from './themeContext';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/globalHooks';
 import { predefinedFonts } from '../models/themePlaygroundOptions';
-import { loadFonts } from '../models/utils';
+import { loadFonts, convertFontObjToFontArr } from '../models/utils';
 
 const getInitialTheme = () => {
   // init default theme
@@ -24,7 +18,7 @@ const getInitialTheme = () => {
       dark: darkTheme.palette,
       light: lightTheme.palette,
     },
-    fonts: [...predefinedFonts],
+    fonts: { ...predefinedFonts },
   };
   return initialTheme;
 };
@@ -37,7 +31,7 @@ export function PlaygroundProvider({ children }) {
     'themeObject',
     undefined,
   );
-  const [fonts, setFonts] = useState(predefinedFonts);
+  const [fonts, setFonts] = useState(() => predefinedFonts);
   const [theme, setTheme] = useState(getInitialTheme());
 
   useEffect(() => {
@@ -49,20 +43,20 @@ export function PlaygroundProvider({ children }) {
     }));
 
     if (!themeObject.fonts) return;
-
-    loadFonts(themeObject.fonts).then((fontsLoaded) => {
+    const fontArr = convertFontObjToFontArr(themeObject.fonts);
+    loadFonts(fontArr).then((fontsLoaded) => {
       if (!fontsLoaded) return;
-      setFonts((prevFonts) => {
-        const newFonts = new Set([...prevFonts, ...themeObject.fonts]);
-        return [...newFonts];
-      });
+      setFonts((prevFonts) => ({
+        ...prevFonts,
+        ...themeObject.fonts,
+      }));
     });
   }, []);
 
   useEffect(() => {
     setTheme((prevTheme) => ({
       ...prevTheme,
-      fonts: [...fonts],
+      fonts: { ...fonts },
     }));
   }, [fonts]);
 
@@ -153,24 +147,3 @@ export function PlaygroundProvider({ children }) {
     </PlaygroundContext.Provider>
   );
 }
-
-export const usePlaygroundTheme = () => {
-  const { theme, setTheme } = useContext(PlaygroundContext);
-  return [theme, setTheme];
-};
-
-export const usePlaygroundThemeType = () => {
-  const { themeType, setThemeType } = useContext(PlaygroundContext);
-  return [themeType, setThemeType];
-};
-
-export const usePlaygroundFonts = () => {
-  const { fonts, setFonts } = useContext(PlaygroundContext);
-  return [fonts, setFonts];
-};
-
-export const usePlaygroundUtils = () => {
-  const { resetTheme, getPropByPath, setPropByPath } =
-    useContext(PlaygroundContext);
-  return { resetTheme, getPropByPath, setPropByPath };
-};

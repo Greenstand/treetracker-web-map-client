@@ -4,13 +4,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import {
-  useMediaQuery,
-  useTheme,
-  SvgIcon,
-  Avatar,
-  Divider,
-} from '@mui/material';
+import { useTheme, SvgIcon, Avatar, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -29,6 +23,7 @@ import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
+import { useMobile } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import DiameterIcon from '../../images/icons/diameter.svg';
@@ -75,12 +70,13 @@ export default function Tree({
   nextExtraIsEmbed,
   nextExtraKeyword,
 }) {
+  log.warn('tree: ', tree);
   const { classes } = useStyles();
   const mapContext = useMapContext();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const router = useRouter();
   const userCameFromPlanterPage = router.asPath.includes('planters');
+  const isMobile = useMobile();
 
   const { setTitlesData } = useDrawerContext();
 
@@ -188,6 +184,41 @@ export default function Tree({
             <Typography variant="h2">Tree - #{tree.id}</Typography>
           </Box>
         </Portal>
+      )}
+
+      {!isMobile && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+            alignItems: 'center',
+          }}
+        >
+          <BackButton
+            onClick={() => {
+              window.history.back();
+            }}
+          />
+          <Box>
+            {}
+            <SvgIcon
+              component={SearchIcon}
+              inheritViewBox
+              sx={{
+                width: 48,
+                height: 48,
+                fill: 'transparent',
+                '& path': {
+                  fill: 'grey',
+                },
+                '& rect': {
+                  stroke: 'grey',
+                },
+              }}
+            />
+          </Box>
+        </Box>
       )}
       {!isMobile && userCameFromPlanterPage && (
         <>
@@ -333,7 +364,7 @@ export default function Tree({
               variant="h5"
               color={theme.palette.common.white}
             >
-              Palm tree
+              {tree.species_name || 'Unkown species'}
             </Typography>
             <Box
               sx={{

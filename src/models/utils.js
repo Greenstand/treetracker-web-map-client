@@ -163,8 +163,8 @@ const loadFonts = (fonts) =>
  */
 const optimizeThemeFonts = (theme) => {
   const temp = { ...theme };
-  const {typography} = theme;
-  const usedFonts = new Set();
+  const { typography } = theme;
+  const usedFonts = {};
   // loop over all props in typography
   Object.keys(typography).forEach((key) => {
     // filter out the fontSize, htmlFontSize, etc props
@@ -173,13 +173,37 @@ const optimizeThemeFonts = (theme) => {
     // check if font has fallbacks
     // if fallbacks -> not custom font
     const font = typography[key].fontFamily;
-    if (/,/.test(font)) return;
+    if (!font || /,/.test(font)) return;
 
-    // finally add font to set
-    usedFonts.add(font);
+    const weight = typography[key].fontWeight;
+
+    // finally add font and corresponding weight
+    if (!usedFonts[font]) {
+      usedFonts[font] = [];
+    }
+    usedFonts[font].push(weight);
   });
-  temp.fonts = [...usedFonts];
+  temp.fonts = usedFonts;
   return temp;
+};
+
+function getPlanterName(firstName, lastName) {
+  return `${firstName} ${(lastName && lastName.slice(0, 1)) || ''}`;
+}
+
+/**
+ * @param {Object} fonts - list of google font names
+ *
+ * @returns {string[]} - array of fonts
+ */
+const convertFontObjToFontArr = (fontObj) => {
+  const fontWeightNames = Object.keys(fontObj).map((key) => {
+    const weightedName =
+      fontObj[key].length > 0 ? `${key}:${fontObj[key].join(',')}` : key;
+    return weightedName;
+  });
+
+  return fontWeightNames;
 };
 
 export {
@@ -195,4 +219,6 @@ export {
   debounce,
   loadFonts,
   optimizeThemeFonts,
+  getPlanterName,
+  convertFontObjToFontArr,
 };

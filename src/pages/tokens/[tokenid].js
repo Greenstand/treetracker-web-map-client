@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useMediaQuery, useTheme, Avatar, SvgIcon } from '@mui/material';
+import { Avatar, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -14,6 +14,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Info from '../../components/common/Info';
 import TreeTag from '../../components/common/TreeTag';
+import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
@@ -38,8 +39,7 @@ function handleShare() {}
 export default function Token({ token, wallet }) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMobile();
 
   log.warn('map:', mapContext);
 

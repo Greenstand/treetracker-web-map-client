@@ -12,7 +12,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useState } from 'react';
-import { usePlaygroundFonts } from '../../context/playgroundContext';
+import { usePlaygroundFonts } from '../../hooks/contextHooks';
 import { loadFonts } from '../../models/utils';
 
 function FontsList(props) {
@@ -21,7 +21,8 @@ function FontsList(props) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = async (font) => {
-    if (fonts.indexOf(font) > -1) return false;
+    // if (fonts.indexOf(font) > -1) return false;
+    if (fonts[font]) return false;
 
     const formattedName = font.charAt(0).toUpperCase() + font.slice(1);
 
@@ -30,7 +31,10 @@ function FontsList(props) {
       setLoading(false);
       if (!hasFont) return false;
 
-      setFonts((prevFonts) => [...prevFonts, formattedName]);
+      setFonts((prevFonts) => ({
+        ...prevFonts,
+        ...{ [formattedName]: [] },
+      }));
       return true;
     });
     return true;
@@ -72,7 +76,7 @@ function FontsList(props) {
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={1}>
-            {list.map((font) => (
+            {Object.keys(list).map((font) => (
               <Grid
                 item
                 key={`fonts-customization-${font}${canAddItems && '-addable'}`}

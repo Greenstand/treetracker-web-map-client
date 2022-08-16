@@ -1,22 +1,22 @@
-import { useState } from 'react';
 import FontAddInput from './FontAddInput';
 import FontsList from './FontsList';
-import { usePlaygroundFonts } from '../../context/playgroundContext';
+import { usePlaygroundFonts } from '../../hooks/contextHooks';
 
-const popularFonts = [
-  'Lora',
-  'Oswald',
-  'PT Sans',
-  'Raleway',
-  'Slabo 27px',
-  'Source Sans Pro',
-  'Open Sans',
-];
+const popularFonts = {
+  Lora: [],
+  Oswald: [],
+  'PT Sans': [],
+  Raleway: [],
+  'Slabo 27px': [],
+  'Source Sans Pro': [],
+  'Open Sans': [],
+};
 
 const getDefaultFonts = (fonts, defaultFonts) => {
-  const temp = [];
-  defaultFonts.forEach((font) => {
-    if (fonts.indexOf(font) < 0) temp.push(font);
+  const temp = {};
+
+  Object.keys(defaultFonts).forEach((font) => {
+    if (!fonts[font]) temp[font] = [];
   });
   return temp;
 };

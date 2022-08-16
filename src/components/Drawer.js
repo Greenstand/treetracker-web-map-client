@@ -1,6 +1,5 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Box, Paper } from '@mui/material';
-import * as d3 from 'd3';
 import log from 'loglevel';
 import React from 'react';
 
@@ -216,11 +215,7 @@ export default function Drawer(props) {
             sx={{
               height: 42,
               width: 42,
-              color: (t) =>
-                d3
-                  .color(t.palette.greyLight.main)
-                  .copy({ opacity: 0.7 })
-                  .formatRgb(),
+              color: (t) => t.palette.text.disabled,
             }}
           />
           <Box
