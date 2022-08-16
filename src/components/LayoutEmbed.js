@@ -5,7 +5,7 @@ import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import SearchFilter from './SearchFilter';
-import useEmbed from '../hooks/useEmbed';
+import useEmbed from '../hooks/globalHooks';
 import LogoIcon from '../images/greenstand_logo.svg';
 import MinIcon from '../images/min.svg';
 import ZoomIn from '../images/zoom-in.svg';
@@ -57,7 +57,6 @@ export default function Layout({
 }) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
-  const isEmbed = useEmbed();
   // const { _classes } = useStyles();
   const mapContext = useMapContext();
   function handleFullScreen() {
@@ -179,7 +178,7 @@ export default function Layout({
           <SearchFilter />
         </Box>
       )}
-      {isEmbed || (
+      {useEmbed || (
         <Box
           onClick={handleFullScreen}
           sx={{

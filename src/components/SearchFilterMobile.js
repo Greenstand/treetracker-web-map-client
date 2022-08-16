@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Link from './Link';
 import Filter from './common/Filter';
+import { useEmbed } from '../hooks/globalHooks';
 
 export default function SearchFilter() {
   const [keyword, setKeyword] = React.useState('');
@@ -15,19 +16,11 @@ export default function SearchFilter() {
   const [isFilterOpen, setIsFilterOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  function embedPath() {
-    const url = new URL(window.location.href);
-    let path = '';
-    if (url.searchParams.get('embed')) {
-      path = '&embed=true';
-    }
-    return path;
-  }
+  const isEmbed = useEmbed();
 
   function handleSearchClick() {
     // jump to search page using next router
-    router.push(`/search?keyword=${keyword}${embedPath()}`);
+    router.push(`/search?keyword=${keyword}${isEmbed ? '&embed=true' : ''}`);
   }
 
   function handleChange(e) {
@@ -37,7 +30,9 @@ export default function SearchFilter() {
   function handleFilter(filter) {
     log.warn('handle filter:', filter);
     router.push(
-      `/filter?timeline=${filter.startDate}_${filter.endDate}${embedPath()}`,
+      `/filter?timeline=${filter.startDate}_${filter.endDate}${
+        isEmbed ? '&embed=true' : ''
+      }`,
     );
     setIsFilterOpen(false);
   }
