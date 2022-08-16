@@ -6,6 +6,7 @@ import HubIcon from '@mui/icons-material/Hub';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import { useTheme, SvgIcon, Avatar, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
@@ -138,6 +139,27 @@ export default function Tree({
       icon={<SvgIcon component={CalendarIcon} />}
     />,
   );
+
+  if (tree.verified) {
+    tags.push(
+      <TreeTag
+        key="verification"
+        TreeTagValue="verifed"
+        title="Verification"
+        icon={<SvgIcon component={VerifiedIcon} />}
+      />,
+    );
+  } else {
+    tagsTail.push(
+      <TreeTag
+        key="located-in"
+        TreeTagValue="not verified"
+        title="Verification"
+        icon={<SvgIcon component={VerifiedIcon} />}
+        disabled
+      />,
+    );
+  }
 
   if (tree.country_name) {
     tags.push(
@@ -279,7 +301,7 @@ export default function Tree({
     tagsTail.push(
       <TreeTag
         key="token-id"
-        TreeTagValue="not assigned"
+        TreeTagValue="Token not issued"
         title="Token ID"
         icon={<SvgIcon component={TokenIcon} />}
         disabled
@@ -290,7 +312,7 @@ export default function Tree({
     tags.push(
       <TreeTag
         key="wallet"
-        TreeTagValue={tree.token_id}
+        TreeTagValue={tree.wallet_name}
         title="Wallet ownner"
         icon={<SvgIcon component={AccountBalanceWalletIcon} />}
       />,
@@ -299,7 +321,7 @@ export default function Tree({
     tagsTail.push(
       <TreeTag
         key="wallet"
-        TreeTagValue="No wallet owns this token"
+        TreeTagValue="No wallet owns it"
         title="Wallet owner"
         icon={<SvgIcon component={AccountBalanceWalletIcon} />}
         disabled
