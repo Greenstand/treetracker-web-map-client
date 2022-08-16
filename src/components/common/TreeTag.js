@@ -3,13 +3,26 @@ import Chip from '@mui/material/Chip';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
+import Link from '../Link';
 
-function TreeTagComponent({ TreeTagValue, title, icon }) {
-  return (
+function TreeTagComponent({
+  TreeTagValue,
+  title,
+  subtitle,
+  icon,
+  disabled = false,
+  link,
+}) {
+  const chip = (
     <Chip
       sx={{
         bgcolor: (t) =>
-          t.palette.mode === 'light'
+          disabled
+            ? d3
+                .color(t.palette.greyLight.main)
+                .copy({ opacity: 0.05 })
+                .formatRgb()
+            : t.palette.mode === 'light'
             ? d3
                 .color(t.palette.secondary.main)
                 .copy({ opacity: 0.05 })
@@ -21,7 +34,12 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
         // hover
         '&:hover': {
           bgcolor: (t) =>
-            t.palette.mode === 'light'
+            disabled
+              ? d3
+                  .color(t.palette.greyLight.main)
+                  .copy({ opacity: 0.1 })
+                  .formatRgb()
+              : t.palette.mode === 'light'
               ? d3
                   .color(t.palette.secondary.main)
                   .copy({ opacity: 0.1 })
@@ -31,18 +49,31 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
                   .copy({ opacity: 0.6 })
                   .formatRgb(),
         },
-        borderColor: 'secondary.main',
+        borderColor: disabled ? 'greyLight.main' : 'secondary.main',
         borderWidth: '1px',
         borderStyle: 'solid',
-        p: (t) => [t.spacing(3, 4), t.spacing(4.75, 6)],
+        p: (t) => [t.spacing(2, 2), t.spacing(4.75, 6)],
         height: 'auto',
+        maxHeight: [55.6, 87.2],
       }}
       color="secondary"
-      icon={<Box m={1}>{icon}</Box>}
+      icon={
+        <Box
+          sx={{
+            '& svg': {
+              width: [20, 24],
+              height: [20, 24],
+            },
+          }}
+          m={1}
+        >
+          {icon}
+        </Box>
+      }
       label={
         <Box
           sx={{
-            ml: [4, 6],
+            ml: [2, 6],
           }}
         >
           <Typography variant="body1">{title}</Typography>
@@ -54,9 +85,31 @@ function TreeTagComponent({ TreeTagValue, title, icon }) {
           >
             {TreeTagValue}
           </Typography>
+          {subtitle && (
+            <Typography sx={{}} variant="caption">
+              {subtitle}
+            </Typography>
+          )}
         </Box>
       }
     />
+  );
+  return (
+    <>
+      {link && (
+        <Box
+          sx={{
+            // mouse pointer
+            '& div': {
+              cursor: 'pointer',
+            },
+          }}
+        >
+          <Link href={link}>{chip}</Link>
+        </Box>
+      )}
+      {!link && chip}
+    </>
   );
 }
 

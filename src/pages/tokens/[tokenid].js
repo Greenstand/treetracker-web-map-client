@@ -218,7 +218,7 @@ export default function Token({ token, wallet }) {
           container={document.getElementById('drawer-title-container-min')}
         >
           <Box sx={{}}>
-            <Typography variant="h2" sx={{ fontsize: 20 }}>
+            <Typography variant="h3" sx={{ fontsize: 20 }}>
               Token - #{token.id}
             </Typography>
             <Box

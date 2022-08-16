@@ -177,7 +177,7 @@ export default function Wallet(props) {
           container={document.getElementById('drawer-title-container-min')}
         >
           <Box sx={{}}>
-            <Typography variant="h2">{wallet.name} </Typography>
+            <Typography variant="h3">{wallet.name} </Typography>
           </Box>
         </Portal>
       )}
