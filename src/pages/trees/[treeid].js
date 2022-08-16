@@ -380,7 +380,7 @@ export default function Tree({
           container={document.getElementById('drawer-title-container-min')}
         >
           <Box sx={{}}>
-            <Typography variant="h2">Tree #{tree.id}</Typography>
+            <Typography variant="h3">Tree #{tree.id}</Typography>
           </Box>
         </Portal>
       )}
