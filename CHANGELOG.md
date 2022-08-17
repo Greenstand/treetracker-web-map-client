@@ -1,3 +1,16 @@
+# [2.0.0-beta.45](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.44...v2.0.0-beta.45) (2022-08-17)
+
+
+### Bug Fixes
+
+* duplicate back button on tree page ([3bcfac0](https://github.com/Greenstand/treetracker-web-map-client/commit/3bcfac009f64962e91e057b4cd4ce717e9822d73))
+
+
+### Features
+
+* add planter link to tree page ([a915557](https://github.com/Greenstand/treetracker-web-map-client/commit/a915557453f3f211f881371bbc489bc81f5b8796))
+* layout wallet page ([4ff9981](https://github.com/Greenstand/treetracker-web-map-client/commit/4ff99813215cda4099d2749726c3251b4d83029a))
+
 # [2.0.0-beta.44](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.43...v2.0.0-beta.44) (2022-08-17)
 
 
