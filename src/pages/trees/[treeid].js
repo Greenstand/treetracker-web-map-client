@@ -423,8 +423,7 @@ export default function Tree({
         </Box>
       )}
       {!isMobile && userCameFromPlanterPage && (
-        <>
-          <Box
+        <Box
             sx={{
               display: 'flex',
               width: '100%',
@@ -438,37 +437,6 @@ export default function Tree({
               </Typography>
             </Box>
           </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
-              alignItems: 'center',
-            }}
-          >
-            <BackButton />
-            <Box>
-              {}
-              <SvgIcon
-                component={SearchIcon}
-                inheritViewBox
-                sx={{
-                  width: 48,
-                  height: 48,
-                  fill: 'transparent',
-                  '& path': {
-                    fill: 'grey',
-                  },
-
-                  '& rect': {
-                    stroke: 'grey',
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-        </>
       )}
       <Box
         sx={[
