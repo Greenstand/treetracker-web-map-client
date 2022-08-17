@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-function LikeButton({ treeId }) {
+function LikeButton({ url }) {
   const loadScript = () =>
     new Promise((resolve, reject) => {
       const loaded = document.getElementById('fbsdk');
@@ -29,7 +29,7 @@ function LikeButton({ treeId }) {
   return (
     <div
       className="fb-like"
-      data-href={`https://map.treetracker.org/trees/${treeId}`}
+      data-href={url}
       data-width=""
       data-layout="box_count"
       data-action="like"

@@ -474,7 +474,7 @@ export default function Tree({
             justifyContent: 'space-between',
           }}
         >
-          <LikeButton treeId={tree.id} />
+          <LikeButton url={`https://map.treetracker.org/trees/${tree.id}`} />
           <Box
             sx={{
               display: 'flex',
