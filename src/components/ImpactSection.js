@@ -6,8 +6,6 @@ import DollarIcon from '../images/icons/dollar.svg';
 import StaticGraph from '../images/static-graph.svg';
 
 function ImpactSection() {
-  const [isPlanterTab, setIsPlanterTab] = useState(true);
-
   return (
     <>
       <Typography
@@ -31,17 +29,17 @@ function ImpactSection() {
       >
         <Grid item sx={{ width: '49%' }}>
           <CustomCard
-            handleClick={() => setIsPlanterTab(true)}
+            handleClick={() => {}}
             iconURI={DollarIcon}
             sx={{ width: 26, height: 34 }}
             title="Current Value"
             text="---"
-            disabled={!isPlanterTab}
+            disabled
           />
         </Grid>
         <Grid item sx={{ width: '49%' }}>
           <CustomCard
-            handleClick={() => setIsPlanterTab(false)}
+            handleClick={() => {}}
             iconURI={CarbonIcon}
             sx={{
               width: 26,
@@ -52,7 +50,7 @@ function ImpactSection() {
             }}
             title="Carbon Capture"
             text="---"
-            disabled={isPlanterTab}
+            disabled
           />
         </Grid>
       </Grid>
