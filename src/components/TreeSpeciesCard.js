@@ -21,7 +21,7 @@ function TreeSpeciesCard(props) {
       sx={{
         borderRadius: 4,
         overflow: 'hidden',
-        my: [2, 4],
+        mb: [2, 4],
       }}
     >
       <Grid
