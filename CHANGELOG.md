@@ -11,12 +11,11 @@
 
 # [2.0.0-beta.42](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.41...v2.0.0-beta.42) (2022-08-15)
 
-
 ### Features
 
-* add back button on tree page ([dfa67f6](https://github.com/Greenstand/treetracker-web-map-client/commit/dfa67f642b42292aeaee7c4acd08852196be4c77))
-* layout refine, fullscreen ([7425b28](https://github.com/Greenstand/treetracker-web-map-client/commit/7425b28281233d7b599955183b6d1b90d5617279))
-* planter name, mobile full screen ([b5a24db](https://github.com/Greenstand/treetracker-web-map-client/commit/b5a24db5a41458e7f226b89cc2b4acda354da84a))
+- add back button on tree page ([dfa67f6](https://github.com/Greenstand/treetracker-web-map-client/commit/dfa67f642b42292aeaee7c4acd08852196be4c77))
+- layout refine, fullscreen ([7425b28](https://github.com/Greenstand/treetracker-web-map-client/commit/7425b28281233d7b599955183b6d1b90d5617279))
+- planter name, mobile full screen ([b5a24db](https://github.com/Greenstand/treetracker-web-map-client/commit/b5a24db5a41458e7f226b89cc2b4acda354da84a))
 
 # [2.0.0-beta.41](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.40...v2.0.0-beta.41) (2022-08-15)
 

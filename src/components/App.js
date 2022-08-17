@@ -71,22 +71,19 @@ function MapComponent() {
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
     const path = window.location.pathname.match(
-      // /^\/(planters|organizations)\/\d+$/,
-      /^(\/(planters|organizations)\/\d+)(\/trees\/\d+)?$/,
+      /^(\/(planters|organizations)\/\d+)?(\/trees\/\d+)?$/,
     );
     log.warn('parsed path:', path);
-    const isEmbed = window.location.search.match(/embed=true/);
-    let prefix = '';
-    if (path) {
-      [prefix] = path;
-    }
-    const url = new URL(window.location.href);
-    const { timeline } = url.searchParams;
-    router.push(
-      `${prefix}/trees/${tree.id}?embed=${isEmbed ? 'true' : 'false'}${
-        timeline ? `&timeline=${timeline}` : ''
-      }`,
-    );
+
+    const optionalParams = {
+      ...(router.query.embed && { embed: router.query.embed }),
+      ...(router.query.timeline && { timeline: router.query.timeline }),
+    };
+
+    router.push({
+      pathname: `${path[1] || ''}/trees/${tree.id}`,
+      query: optionalParams,
+    });
   }
 
   function injectApp() {
@@ -136,9 +133,11 @@ function MapComponent() {
     map.on('move-end', () => {
       log.warn('update url');
       window.history.pushState(
-        'treetrakcer',
+        'treetracker',
         '',
-        `${window.location.pathname}?bounds=${map.getCurrentBounds()}`,
+        `${window.location.pathname}?bounds=${map.getCurrentBounds()}${
+          router.query.timeline ? `&timeline=${router.query.timeline}` : ''
+        }${router.query.embed ? `&embed=true` : ''}`,
       );
     });
     map.mount(mapRef.current);

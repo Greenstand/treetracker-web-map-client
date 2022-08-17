@@ -2,17 +2,11 @@ import { Box } from '@mui/material';
 import axios from 'axios';
 import Link from '../components/Link';
 import SearchFilter from '../components/SearchFilter';
+import { useEmbed } from '../hooks/globalHooks';
 
 export default function Search(props) {
   const { list, keyword } = props;
-  function embedPath() {
-    const url = new URL(window.location.href);
-    let path = '';
-    if (url.searchParams.get('embed')) {
-      path = '&embed=true';
-    }
-    return path;
-  }
+  const isEmbed = useEmbed();
 
   return (
     <Box>
@@ -22,7 +16,11 @@ export default function Search(props) {
       <Box>
         {list.map((item) => (
           <Box key={item.id}>
-            <Link href={`/trees/${item.id}?keyword=${keyword}${embedPath()}`}>
+            <Link
+              href={`/trees/${item.id}?keyword=${keyword}${
+                isEmbed ? '&embed=true' : ''
+              }`}
+            >
               {item.id}
             </Link>
           </Box>

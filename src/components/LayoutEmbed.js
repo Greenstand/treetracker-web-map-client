@@ -5,6 +5,7 @@ import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import SearchFilter from './SearchFilter';
+import useEmbed from '../hooks/globalHooks';
 import LogoIcon from '../images/greenstand_logo.svg';
 import MinIcon from '../images/min.svg';
 import ZoomIn from '../images/zoom-in.svg';
@@ -177,24 +178,25 @@ export default function Layout({
           <SearchFilter />
         </Box>
       )}
-      <Box
-        onClick={handleFullScreen}
-        sx={{
-          position: 'absolute',
-          zIndex: '9999',
-          top: '0px',
-          right: '0px',
-          margin: '20px',
-          cursor: 'pointer',
-        }}
-      >
-        <SvgIcon
-          component={MinIcon}
-          inheritViewBox
-          sx={{ height: 52, width: 52 }}
-        />
-      </Box>
-
+      {useEmbed || (
+        <Box
+          onClick={handleFullScreen}
+          sx={{
+            position: 'absolute',
+            zIndex: '9999',
+            top: '0px',
+            right: '0px',
+            margin: '20px',
+            cursor: 'pointer',
+          }}
+        >
+          <SvgIcon
+            component={MinIcon}
+            inheritViewBox
+            sx={{ height: 52, width: 52 }}
+          />
+        </Box>
+      )}
       <Box
         sx={{
           position: 'absolute',

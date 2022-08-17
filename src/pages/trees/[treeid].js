@@ -26,7 +26,7 @@ import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
 import TreeTag from '../../components/common/TreeTag';
-import { useMobile } from '../../hooks/globalHooks';
+import { useMobile, useEmbed } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import DiameterIcon from '../../images/icons/diameter.svg';
@@ -80,6 +80,7 @@ export default function Tree({
   const router = useRouter();
   const userCameFromPlanterPage = router.asPath.includes('planters');
   const isMobile = useMobile();
+  const isEmbed = useEmbed();
 
   const { setTitlesData } = useDrawerContext();
 
@@ -601,7 +602,9 @@ export default function Tree({
             buttonText="Meet the Organization"
             // cardImageSrc={organization?.photo_url}
             cardImageSrc={imagePlaceholder}
-            link={`/organizations/${organization.id}?embed=${nextExtraIsEmbed}&keyword=${nextExtraKeyword}`}
+            link={`/organizations/${
+              organization.id
+            }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
           />
         </Box>
       )}
@@ -615,7 +618,9 @@ export default function Tree({
           entityType="Planter"
           buttonText="Meet the Planter"
           cardImageSrc={planter?.image_url}
-          link={`/planters/${planter.id}?embed=${nextExtraIsEmbed}&keyword=${nextExtraKeyword}`}
+          link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
+            isEmbed ? '&embed=true' : ''
+          }`}
         />
       </Box>
       <Typography
