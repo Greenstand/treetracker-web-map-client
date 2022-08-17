@@ -22,6 +22,7 @@ import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
+import Link from '../../components/Link';
 import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
@@ -423,7 +424,8 @@ export default function Tree({
         </Box>
       )}
       {!isMobile && userCameFromPlanterPage && (
-        <Box
+        <Link href={`/planters/${planter.id}`}>
+          <Box
             sx={{
               display: 'flex',
               width: '100%',
@@ -437,6 +439,7 @@ export default function Tree({
               </Typography>
             </Box>
           </Box>
+        </Link>
       )}
       <Box
         sx={[
