@@ -136,7 +136,7 @@ export default function TreeInfoDialog(props) {
         onClick={handleOpen}
         sx={{
           cursor: 'pointer',
-          '& img': {
+          '& svg': {
             width: [40, 52],
             height: [40, 52],
           },

@@ -9,9 +9,10 @@ import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import TreeTag from 'components/common/TreeTag';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
 import { requestAPI } from 'models/utils';
 import ImpactSection from '../../components/ImpactSection';
@@ -23,6 +24,7 @@ import { useDrawerContext } from '../../context/DrawerContext';
 import { useMobile } from '../../hooks/globalHooks';
 import planterBackground from '../../images/background.png';
 import CalendarIcon from '../../images/icons/calendar.svg';
+import TokenIcon from '../../images/icons/token.svg';
 import TreeIcon from '../../images/icons/tree.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
@@ -39,7 +41,8 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 export default function Wallet(props) {
   log.info('props for wallet page:', props);
 
-  const { wallet, species, tokenCount } = props;
+  const [isTokenTab, setIsTokenTab] = React.useState(false);
+  const { wallet, species, tokens } = props;
   const isMobile = useMobile();
   // eslint-disable-next-line react/destructuring-assignment
   const tokenRegionStatistics = props.tokenRegionCount.filter(
@@ -139,8 +142,7 @@ export default function Wallet(props) {
       >
         <img src={`${router.basePath}${planterBackground}`} alt="profile" />
         <Avatar
-          src={imagePlaceholder}
-          // src={wallet.logo_url}
+          src={wallet.logo_url || imagePlaceholder}
           sx={{
             width: [120, 189],
             height: [120, 189],
@@ -177,7 +179,7 @@ export default function Wallet(props) {
           container={document.getElementById('drawer-title-container-min')}
         >
           <Box sx={{}}>
-            <Typography variant="h2">{wallet.name} </Typography>
+            <Typography variant="h3">{wallet.name} </Typography>
           </Box>
         </Portal>
       )}
@@ -207,17 +209,49 @@ export default function Wallet(props) {
       >
         <Grid item sx={{ width: '49%' }}>
           <CustomCard
+            handleClick={() => setIsTokenTab(false)}
             iconURI={TreeIcon}
             sx={{ width: 26, height: 34 }}
+            title="Trees"
+            text={tokens.total}
+            disabled={isTokenTab}
+          />
+        </Grid>
+        <Grid item sx={{ width: '49%' }}>
+          <CustomCard
+            handleClick={() => setIsTokenTab(true)}
+            iconURI={TokenIcon}
+            sx={{ height: 36, width: 36 }}
             title="Tokens"
-            text={tokenCount}
+            text={tokens.total}
+            disabled={!isTokenTab}
           />
         </Grid>
       </Grid>
 
-      {tokenRegionName.length > 0 && (
+      {!isTokenTab && tokenRegionName.length > 0 && (
         <Box sx={{ mt: [0, 22] }}>
           <CustomWorldMap totalTrees={tokenRegionCount} con={tokenRegionName} />
+        </Box>
+      )}
+
+      {isTokenTab && (
+        <Box sx={{ mt: [0, 16], p: [2, 4] }}>
+          {tokens.tokens.map((token) => (
+            <Box
+              key={token.id}
+              sx={{
+                mt: [2, 4],
+              }}
+            >
+              <TreeTag
+                TreeTagValue={token.id}
+                title="Token ID"
+                icon={<SvgIcon component={TokenIcon} />}
+                link={`/tokens/${token.id}`}
+              />
+            </Box>
+          ))}
         </Box>
       )}
 
@@ -277,13 +311,13 @@ export default function Wallet(props) {
 export async function getServerSideProps({ params }) {
   const id = params.walletid;
   try {
-    const [wallet, species, tokenCount, tokenRegionCount] = await Promise.all([
+    const [wallet, species, tokens, tokenRegionCount] = await Promise.all([
       getWalletById(id),
       getSpeciesByWalletId(id),
       (async () => {
         // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
         const data = await requestAPI(`/tokens?wallet=${id}`);
-        return data.total;
+        return data;
       })(),
       (async () => {
         // return total no.trees/tokens per country
@@ -295,11 +329,12 @@ export async function getServerSideProps({ params }) {
       props: {
         wallet,
         species: species.species,
-        tokenCount,
+        tokens,
         tokenRegionCount,
       },
     };
   } catch (e) {
+    log.warn('e:', e);
     return { notFound: true };
   }
 }

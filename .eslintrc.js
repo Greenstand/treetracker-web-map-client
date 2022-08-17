@@ -67,6 +67,7 @@ module.exports = {
     '@next/next/no-img-element': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
     'no-unused-vars': 'warn',
+    'no-nested-ternary': 'warn',
   },
 
   reportUnusedDisableDirectives: true,

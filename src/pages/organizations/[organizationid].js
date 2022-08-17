@@ -296,7 +296,7 @@ export default function Organization(props) {
                     height: 32,
                   }}
                 />
-                <Typography variant="h2">{name}</Typography>
+                <Typography variant="h3">{name}</Typography>
               </Box>
             </Portal>
           )}
