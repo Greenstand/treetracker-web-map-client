@@ -1,3 +1,18 @@
+# [2.0.0-beta.44](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.43...v2.0.0-beta.44) (2022-08-17)
+
+
+### Bug Fixes
+
+* home useEmbed merge conflict ([3148536](https://github.com/Greenstand/treetracker-web-map-client/commit/314853688fb9d9d6a0a0837860e8975bf97587ce))
+* pathname regex causing 404s ([9fd313b](https://github.com/Greenstand/treetracker-web-map-client/commit/9fd313b35b93b33d58d844d991b27f95ea74475f))
+* replaced scatter embed check fxs ([dd83b50](https://github.com/Greenstand/treetracker-web-map-client/commit/dd83b501937c2ac497fcc75d2c9d6bccdab02e4c))
+* update urls manually using embed ([b62a7cd](https://github.com/Greenstand/treetracker-web-map-client/commit/b62a7cde57fce1ff116bf906e2a69241f5064092))
+
+
+### Features
+
+* embed param override localStorage embed ([2d020a3](https://github.com/Greenstand/treetracker-web-map-client/commit/2d020a395d8c4ed032fb4540cc3669cbf94d2c9a))
+
 # [2.0.0-beta.43](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.42...v2.0.0-beta.43) (2022-08-16)
 
 
