@@ -22,6 +22,7 @@ import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
+import Link from '../../components/Link';
 import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
@@ -423,7 +424,7 @@ export default function Tree({
         </Box>
       )}
       {!isMobile && userCameFromPlanterPage && (
-        <>
+        <Link href={`/planters/${planter.id}`}>
           <Box
             sx={{
               display: 'flex',
@@ -438,37 +439,7 @@ export default function Tree({
               </Typography>
             </Box>
           </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
-              alignItems: 'center',
-            }}
-          >
-            <BackButton />
-            <Box>
-              {}
-              <SvgIcon
-                component={SearchIcon}
-                inheritViewBox
-                sx={{
-                  width: 48,
-                  height: 48,
-                  fill: 'transparent',
-                  '& path': {
-                    fill: 'grey',
-                  },
-
-                  '& rect': {
-                    stroke: 'grey',
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-        </>
+        </Link>
       )}
       <Box
         sx={[

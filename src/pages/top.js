@@ -10,6 +10,7 @@ import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import FeaturedPlantersSlider from '../components/FeaturedPlantersSlider';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
+import Link from '../components/Link';
 // import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Filter from '../components/common/Filter';
@@ -137,6 +138,10 @@ function Top({ trees, planters, countries, organizations }) {
           planters={planters}
           isMobile={isFullscreen}
         />
+        <h1>The featured wallets (for testing)</h1>
+        <Link href="/wallets/eecdf253-05b6-419a-8425-416a3e5fc9a0">
+          <h2>wallet: Malinda51</h2>
+        </Link>
         <Typography
           variant="h4"
           sx={{
