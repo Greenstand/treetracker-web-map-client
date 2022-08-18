@@ -1,3 +1,10 @@
+# [2.0.0-beta.47](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.46...v2.0.0-beta.47) (2022-08-18)
+
+
+### Bug Fixes
+
+* leaderboard fetch on continent ([883ae25](https://github.com/Greenstand/treetracker-web-map-client/commit/883ae253c26aa37598fe78f782df361226a4c0b7))
+
 # [2.0.0-beta.46](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.45...v2.0.0-beta.46) (2022-08-18)
 
 
