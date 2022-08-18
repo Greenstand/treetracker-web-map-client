@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import { Avatar, SvgIcon, useTheme } from '@mui/material';
+import { Divider , Avatar, SvgIcon, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { getWalletById, getTokenById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import Badges from '../../components/Badges';
+import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
 import Share from '../../components/Share';
@@ -388,6 +389,13 @@ export default function Token({ token, wallet, nextExtraIsEmbed }) {
         {tags}
         {tagsTail}
       </Box>
+      <Divider
+        varian="fullwidth"
+        sx={{
+          mt: [10, 20],
+        }}
+      />
+      <ImpactSection />
       <Box height={20} />
     </Box>
   );
