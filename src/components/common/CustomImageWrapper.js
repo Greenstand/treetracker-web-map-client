@@ -146,7 +146,7 @@ function CustomImageWrapper({ imageUrl, timeCreated, treeId }) {
           width="100%"
           height="100%"
         >
-          <LikeButton treeId={treeId} />
+          <LikeButton url={`https://map.treetracker.org/trees/${treeId}`} />
         </Grid>
       </InfoWrapper>
       <img src={imageUrl} alt="tree" className={classes.image} />
