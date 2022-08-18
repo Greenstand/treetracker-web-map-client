@@ -1,3 +1,15 @@
+# [2.0.0-beta.46](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.45...v2.0.0-beta.46) (2022-08-18)
+
+
+### Bug Fixes
+
+* species component no key ([93c489c](https://github.com/Greenstand/treetracker-web-map-client/commit/93c489c69ef125c190ecf903ed1387bdb5b0465f))
+
+
+### Features
+
+* disable cards on impact section ([7f56ddd](https://github.com/Greenstand/treetracker-web-map-client/commit/7f56ddda5984246747a52f7eedddea9bba130339))
+
 # [2.0.0-beta.45](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.44...v2.0.0-beta.45) (2022-08-17)
 
 
