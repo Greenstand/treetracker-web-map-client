@@ -39,6 +39,8 @@ function Top({ trees, planters, countries, organizations }) {
     React.useState(countries);
 
   React.useEffect(() => {
+    if (process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true')
+      return;
     const fetchCountries = async () => {
       const data = await utils.requestAPI(
         `/countries/leaderboard?continent=${continentTag}`,
