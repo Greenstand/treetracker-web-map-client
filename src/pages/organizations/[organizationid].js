@@ -367,14 +367,14 @@ export default function Organization(props) {
                 ))}
                 {/* Placeholder, remove after API fixed */}
                 {organization?.species?.species?.map((s) => (
-                  <>
+                  <React.Fragment key={s.name}>
                     <TreeSpeciesCard
                       name={s.name}
                       subTitle={s.desc || '---'}
                       count={s.total}
                     />
                     <Box sx={{ mt: [2, 4] }} />
-                  </>
+                  </React.Fragment>
                 ))}
               </Box>
             </Box>
