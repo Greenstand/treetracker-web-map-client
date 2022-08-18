@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import { Avatar, SvgIcon, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
@@ -20,6 +22,7 @@ import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
+import TreeIcon from '../../images/icons/tree.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
@@ -45,6 +48,77 @@ export default function Token({ token, wallet, nextExtraIsEmbed }) {
   const isMobile = useMobile();
 
   log.warn('map:', mapContext);
+
+  const tags = [];
+  const tagsTail = [];
+  tags.push(
+    <TreeTag
+      key="created-at"
+      TreeTagValue={new Date(token.created_at).toLocaleDateString()}
+      title="Created At"
+      icon={<SvgIcon component={CalendarIcon} />}
+    />,
+  );
+
+  tags.push(
+    <TreeTag
+      key="token-id"
+      TreeTagValue={token.id}
+      title="Token ID"
+      icon={<SvgIcon component={TokenIcon} inheritViewBox />}
+    />,
+  );
+
+  tags.push(
+    <TreeTag
+      key="tree-id"
+      TreeTagValue={token.tree_id}
+      title="Tree ID"
+      icon={
+        <SvgIcon
+          sx={{
+            '& path': {
+              fill: 'rgb(71, 75, 79)',
+            },
+          }}
+          component={TreeIcon}
+          inheritViewBox
+        />
+      }
+      subtitle="click to enter"
+      link={`/trees/${token.tree_id}`}
+    />,
+  );
+
+  tags.push(
+    <TreeTag
+      key="claim"
+      TreeTagValue={token.claim ? 'Claimed' : 'Not claimed yet'}
+      title="Claim Status"
+      icon={<SvgIcon component={DoneOutlineIcon} inheritViewBox />}
+    />,
+  );
+
+  if (!token.claim && !token.transfer_pending) {
+    tags.push(
+      <TreeTag
+        key="transferability"
+        TreeTagValue="Can be transferred"
+        title="Transferability"
+        icon={<SvgIcon component={CurrencyExchangeIcon} inheritViewBox />}
+      />,
+    );
+  } else {
+    tagsTail.push(
+      <TreeTag
+        key="transferability"
+        TreeTagValue="Can not be transferred"
+        title="Transferability"
+        icon={<SvgIcon component={CurrencyExchangeIcon} />}
+        disabled
+      />,
+    );
+  }
 
   useEffect(() => {
     async function reload() {
@@ -309,17 +383,10 @@ export default function Token({ token, wallet, nextExtraIsEmbed }) {
       >
         Token Info
       </Typography>
+
       <Box className={classes.tabBox}>
-        <TreeTag
-          TreeTagValue={new Date(token.created_at).toLocaleDateString()}
-          title="Created At"
-          icon={<SvgIcon component={CalendarIcon} inheritViewBox />}
-        />
-        <TreeTag
-          TreeTagValue={token.id}
-          title="Token ID"
-          icon={<SvgIcon component={TokenIcon} inheritViewBox />}
-        />
+        {tags}
+        {tagsTail}
       </Box>
       <Box height={20} />
     </Box>
