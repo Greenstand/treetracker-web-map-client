@@ -1,10 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import { Divider , Avatar, SvgIcon, useTheme } from '@mui/material';
+import Timeline from '@mui/lab/Timeline';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import { Divider, Avatar, SvgIcon, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
 import { useEffect } from 'react';
@@ -14,6 +24,7 @@ import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
+import Link from '../../components/Link';
 import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
@@ -42,7 +53,9 @@ const useStyles = makeStyles()((theme) => ({
 
 function handleShare() {}
 
-export default function Token({ token, wallet, nextExtraIsEmbed }) {
+export default function Token(props) {
+  log.warn('props:', props);
+  const { token, wallet, transactions, nextExtraIsEmbed } = props;
   const theme = useTheme();
   const { classes } = useStyles();
   const mapContext = useMapContext();
@@ -389,6 +402,113 @@ export default function Token({ token, wallet, nextExtraIsEmbed }) {
         {tags}
         {tagsTail}
       </Box>
+
+      <Typography variant="h1">Transaction History</Typography>
+      <Box>
+        <Timeline>
+          <TimelineItem>
+            <TimelineOppositeContent color="text.secondary">
+              {new Date(token.created_at).toLocaleDateString()}
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot color="primary" />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <Typography variant="h6">Token created by:</Typography>
+              <Link href="/planters/940">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Avatar className={classes.media} src={token.image_url} />
+                  <Box sx={{ marginLeft: 3 }}>
+                    <Typography variant="h5">Sebastian G.</Typography>
+                  </Box>
+                </Box>
+              </Link>
+            </TimelineContent>
+          </TimelineItem>
+          {transactions.transactions.map((transaction, index) => (
+            <TimelineItem key={transaction.id}>
+              <TimelineOppositeContent color="text.secondary">
+                {new Date(transaction.processed_at).toLocaleDateString()}
+              </TimelineOppositeContent>
+              <TimelineSeparator>
+                <TimelineDot color="primary" />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Typography variant="h6">Transfer token between:</Typography>
+                <Link href={`/wallets/${transaction.source_wallet_id}`}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      width: '100%',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {transaction.source_wallet_logo_url ? (
+                      <Avatar
+                        className={classes.media}
+                        src={transaction.source_wallet_logo_url}
+                      />
+                    ) : (
+                      <Avatar className={classes.media}>
+                        <AccountBalanceWalletIcon />
+                      </Avatar>
+                    )}
+                    <Box sx={{ marginLeft: 3 }}>
+                      <Typography variant="h5">
+                        {transaction.source_wallet_name}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Link>
+                <ArrowDownwardIcon />
+                <Link href={`/wallets/${transaction.destination_wallet_id}`}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      width: '100%',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {transaction.destination_wallet_logo_url ? (
+                      <Avatar
+                        className={classes.media}
+                        src={transaction.destination_wallet_logo_url}
+                      />
+                    ) : (
+                      <Avatar className={classes.media}>
+                        <AccountBalanceWalletIcon />
+                      </Avatar>
+                    )}
+                    <Box sx={{ marginLeft: 3 }}>
+                      <Typography variant="h5">
+                        {transaction.destination_wallet_name}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Link>
+              </TimelineContent>
+            </TimelineItem>
+          ))}
+          <TimelineItem>
+            <TimelineOppositeContent color="text.secondary">
+              pending
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot />
+            </TimelineSeparator>
+            <TimelineContent>Claim Token</TimelineContent>
+          </TimelineItem>
+        </Timeline>
+      </Box>
+
       <Divider
         varian="fullwidth"
         sx={{
@@ -407,14 +527,21 @@ export async function getServerSideProps({ params }) {
     const token = await getTokenById(tokenid);
     const { wallet_id } = token;
     const wallet = await getWalletById(wallet_id);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+    );
+    const { data } = res;
+    const transactions = data;
 
     return {
       props: {
         token,
         wallet,
+        transactions,
       },
     };
   } catch (e) {
+    log.error('token page:', e);
     return { notFound: true };
   }
 }
