@@ -26,7 +26,7 @@ import Link from '../../components/Link';
 import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
-import TreeTag from '../../components/common/TreeTag';
+import TagList from '../../components/common/TagList';
 import { useMobile, useEmbed } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
 import CalendarIcon from '../../images/icons/calendar.svg';
@@ -127,207 +127,72 @@ export default function Tree({
     draw();
   }, [mapContext.map, tree.lat, tree.lon]);
 
-  const tags = [];
-  const tagsTail = [];
-  tags.push(
-    <TreeTag
-      key="planted-on"
-      TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
-      title="Planted on"
-      icon={<SvgIcon component={CalendarIcon} />}
-    />,
-  );
-
-  if (tree.verified) {
-    tags.push(
-      <TreeTag
-        key="verification"
-        TreeTagValue="verifed"
-        title="Verification"
-        icon={<SvgIcon component={VerifiedIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="located-in"
-        TreeTagValue="not verified"
-        title="Verification"
-        icon={<SvgIcon component={VerifiedIcon} />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.country_name) {
-    tags.push(
-      <TreeTag
-        key="located-in"
-        TreeTagValue={tree.country_name}
-        title="Located in"
-        icon={<SvgIcon component={LocationIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="located-in"
-        TreeTagValue="unknown"
-        title="Located in"
-        icon={<SvgIcon component={LocationIcon} />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.age) {
-    tags.push(
-      <TreeTag
-        key="Age"
-        TreeTagValue={tree.age}
-        title="Age"
-        icon={<SvgIcon component={HistoryIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="Age"
-        TreeTagValue="unknown"
-        title="Age"
-        icon={<SvgIcon component={HistoryIcon} />}
-        disabled
-      />,
-    );
-  }
-  if (tree.species_name) {
-    tags.push(
-      <TreeTag
-        key="species"
-        TreeTagValue={tree.species_name}
-        title="Species"
-        icon={<SvgIcon component={OriginIcon} inheritViewBox alt="origin" />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="species"
-        TreeTagValue="unknown"
-        title="Species"
-        icon={<SvgIcon component={OriginIcon} inheritViewBox alt="origin" />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.gps_accuracy) {
-    tags.push(
-      <TreeTag
-        key="gps-accuracy"
-        TreeTagValue={tree.gps_accuracy}
-        title="GPS Accuracy"
-        icon={<SvgIcon component={AccuracyIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="gps-accuracy"
-        TreeTagValue="unknown"
-        title="GPS Accuracy"
-        icon={<SvgIcon component={AccuracyIcon} />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.morphology) {
-    tags.push(
-      <TreeTag
-        key="morphology"
-        TreeTagValue={tree.morphology}
-        title="Morphology"
-        icon={<SvgIcon component={HubIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="morphology"
-        TreeTagValue="unknown"
-        title="Morphology"
-        icon={<SvgIcon component={HubIcon} />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.lat && tree.lon) {
-    tags.push(
-      <TreeTag
-        key="latitude-longitude"
-        TreeTagValue={`${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
-          tree.lon,
-          5,
-        )}`}
-        title="Latitude, Longitude"
-        icon={<SvgIcon component={GlobalIcon} color="pink" />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="latitude-longitude"
-        TreeTagValue="unknown"
-        title="Latitude, Longitude"
-        icon={<SvgIcon component={GlobalIcon} color="pink" />}
-        disabled
-      />,
-    );
-  }
-  if (tree.token_id) {
-    tags.push(
-      <TreeTag
-        key="token-id"
-        TreeTagValue={tree.token_id}
-        title="Token ID"
-        icon={<SvgIcon component={TokenIcon} />}
-        subtitle="click to enter"
-        link={`/tokens/${tree.token_id}`}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="token-id"
-        TreeTagValue="Token not issued"
-        title="Token ID"
-        icon={<SvgIcon component={TokenIcon} />}
-        disabled
-      />,
-    );
-  }
-  if (tree.wallet_name) {
-    tags.push(
-      <TreeTag
-        key="wallet"
-        TreeTagValue={tree.wallet_name}
-        title="Wallet ownner"
-        icon={<SvgIcon component={AccountBalanceWalletIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="wallet"
-        TreeTagValue="No wallet owns it"
-        title="Wallet owner"
-        icon={<SvgIcon component={AccountBalanceWalletIcon} />}
-        disabled
-      />,
-    );
-  }
+  const tagListInfo = [
+    {
+      value: new Date(tree.time_created).toLocaleDateString(),
+      error: 'no data',
+      title: 'Planted on',
+      icon: CalendarIcon,
+    },
+    {
+      value: tree.verified ? 'verified' : '',
+      error: 'not verified',
+      title: 'Verification',
+      icon: VerifiedIcon,
+    },
+    {
+      value: tree.country_name ? tree.country_name : '',
+      error: 'unknown',
+      title: 'Located in',
+      icon: LocationIcon,
+    },
+    {
+      value: tree.age ? tree.age : '',
+      error: 'unknown',
+      title: 'Age',
+      icon: HistoryIcon,
+    },
+    {
+      value: tree.species_name ? tree.species_name : '',
+      error: 'unknown',
+      title: 'Species',
+      icon: OriginIcon,
+    },
+    {
+      value: tree.gps_accuracy ? tree.gps_accuracy : '',
+      error: 'unknown',
+      title: 'GPS Accuracy',
+      icon: AccuracyIcon,
+    },
+    {
+      value: tree.morphology ? tree.morphology : '',
+      error: 'unknown',
+      title: 'Morphology',
+      icon: HubIcon,
+    },
+    {
+      value: tree.lat
+        ? `${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(tree.lon, 5)}`
+        : '',
+      error: 'unknown',
+      title: 'Latitude, Longitude',
+      icon: GlobalIcon,
+    },
+    {
+      value: tree.token_id ? tree.token_id : '',
+      error: 'Token not issued',
+      title: 'Token ID',
+      icon: TokenIcon,
+      subtitle: 'click to enter',
+      link: tree.token_id ? `/tokens/${tree.token_id}` : '',
+    },
+    {
+      value: tree.wallet_name ? tree.wallet_name : '',
+      error: 'No wallet owns it',
+      title: 'Wallet owner',
+      icon: AccountBalanceWalletIcon,
+    },
+  ];
 
   return (
     <Box
@@ -609,10 +474,7 @@ export default function Tree({
       >
         Tree Info
       </Typography>
-      <Box className={classes.tabBox}>
-        {tags}
-        {tagsTail}
-      </Box>
+      <TagList tagListInfo={tagListInfo} />
       <Divider
         varian="fullwidth"
         sx={{
