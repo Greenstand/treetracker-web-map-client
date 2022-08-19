@@ -150,7 +150,7 @@ export default function TreeInfoDialog(props) {
       </Box>
       <Dialog
         isFullscreen={isFullscreen}
-        fullWidth
+        maxWidth={false}
         open={open}
         onClose={handleClose}
         scroll={isFullscreen ? 'paper' : 'body'}
@@ -158,7 +158,6 @@ export default function TreeInfoDialog(props) {
           sx: {
             borderRadius: { sm: 0, md: 4 },
             m: 0,
-            maxWidth: 1,
             width: '100vw',
             height: '100vh',
           },
@@ -166,27 +165,30 @@ export default function TreeInfoDialog(props) {
         sx={{
           fontFamily: 'Lato',
           zIndex: 9999, // same index as zoom buttons
+          '.MuiDialog-container': {
+            height: 'auto',
+          },
         }}
       >
-        <DialogTitle>
+        <DialogTitle
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h4">Tree - #{tree.id}</Typography>
           <IconButton
             aria-label="close"
             onClick={handleClose}
             sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
+              color: ({ palette }) => palette.grey[500],
             }}
           >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent
-          sx={{
-            height: 'calc(100% - 32px)',
-          }}
-        >
+        <DialogContent>
           {!isMobile && (
             <Grid
               container
