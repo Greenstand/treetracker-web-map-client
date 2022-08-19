@@ -335,6 +335,7 @@ export function CustomThemeProvider({ children }) {
     mode === 'light' ? defaultLightTheme : defaultDarkTheme,
   );
   const [themeObject, setThemeObject] = useLocalStorage('themeObject', null);
+  const [fonts, setFonts] = React.useState([]);
 
   const colorMode = React.useMemo(
     () => ({
@@ -369,10 +370,13 @@ export function CustomThemeProvider({ children }) {
   React.useEffect(() => {
     if (themeObject) {
       setTheme(createThemeFromThemeObject());
+
+      // get fonts array from the themeObject and load them
       const fontArr = convertFontObjToFontArr(themeObject.fonts);
       loadFonts(fontArr).then((fontsLoaded) => {
         log.warn('custom fonts loaded:', fontsLoaded);
       });
+      setFonts(fontArr);
     }
     if (process.env.NEXT_PUBLIC_CONFIG_API) {
       log.warn('to load theme from server');
@@ -407,7 +411,26 @@ export function CustomThemeProvider({ children }) {
     } else {
       setTheme(createThemeFromThemeObject());
     }
-  }, [mode, themeObject]);
+  }, [mode]);
+
+  React.useEffect(() => {
+    if (!themeObject) return;
+    setTheme(() => {
+      // create the new theme
+      const newTheme = createThemeFromThemeObject();
+
+      // create the font array from the new theme and check if there are changes
+      // TODO: should find better method to check for changes
+      const fontArr = convertFontObjToFontArr(newTheme.fonts);
+      if (fontArr.join('-') === fonts.join('-')) return newTheme;
+
+      loadFonts(fontArr).then((fontsLoaded) => {
+        log.warn('custom fonts loaded:', fontsLoaded);
+      });
+      setFonts(fontArr);
+      return newTheme;
+    });
+  }, [themeObject]);
 
   React.useEffect(() => {
     log.warn('theme changed', theme);
