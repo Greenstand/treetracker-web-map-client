@@ -1,3 +1,11 @@
+# [2.0.0-beta.48](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.47...v2.0.0-beta.48) (2022-08-19)
+
+
+### Features
+
+* token page, badget, wallet card, title ([6dbcdb4](https://github.com/Greenstand/treetracker-web-map-client/commit/6dbcdb43f944331b3d1dc2063b71f88f7cabddbd))
+* token tags ([ade062b](https://github.com/Greenstand/treetracker-web-map-client/commit/ade062b27ce8cb02e3aed227de6f1d07b17306dc))
+
 # [2.0.0-beta.47](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.46...v2.0.0-beta.47) (2022-08-18)
 
 
