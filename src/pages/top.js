@@ -222,7 +222,6 @@ export async function getStaticProps() {
       organizations,
     },
     revalidate: 60,
-    fallback: 'blocking',
   };
 }
 
