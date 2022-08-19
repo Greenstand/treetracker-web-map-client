@@ -1,3 +1,10 @@
+# [2.0.0-beta.50](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.49...v2.0.0-beta.50) (2022-08-19)
+
+
+### Features
+
+* **playground:** reduce font weights for loading ([735641b](https://github.com/Greenstand/treetracker-web-map-client/commit/735641b85613cf9d53f8db48e335a83d59004681))
+
 # [2.0.0-beta.49](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.48...v2.0.0-beta.49) (2022-08-19)
 
 
