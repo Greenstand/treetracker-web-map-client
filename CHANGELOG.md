@@ -1,3 +1,10 @@
+# [2.0.0-beta.49](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.48...v2.0.0-beta.49) (2022-08-19)
+
+
+### Bug Fixes
+
+* **playground:** custom fonts not showing on preview ([a1e554d](https://github.com/Greenstand/treetracker-web-map-client/commit/a1e554d2dff1aa24ab90685827cd0aa4a491d036))
+
 # [2.0.0-beta.48](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.47...v2.0.0-beta.48) (2022-08-19)
 
 
