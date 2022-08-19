@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { Avatar, SvgIcon } from '@mui/material';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import { Divider , Avatar, SvgIcon, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -8,7 +10,10 @@ import moment from 'moment';
 import { useEffect } from 'react';
 import { getWalletById, getTokenById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import Badges from '../../components/Badges';
+import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
+import LikeButton from '../../components/LikeButton';
 import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
@@ -18,6 +23,7 @@ import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
+import TreeIcon from '../../images/icons/tree.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
@@ -36,12 +42,84 @@ const useStyles = makeStyles()((theme) => ({
 
 function handleShare() {}
 
-export default function Token({ token, wallet }) {
+export default function Token({ token, wallet, nextExtraIsEmbed }) {
+  const theme = useTheme();
   const { classes } = useStyles();
   const mapContext = useMapContext();
   const isMobile = useMobile();
 
   log.warn('map:', mapContext);
+
+  const tags = [];
+  const tagsTail = [];
+  tags.push(
+    <TreeTag
+      key="created-at"
+      TreeTagValue={new Date(token.created_at).toLocaleDateString()}
+      title="Created At"
+      icon={<SvgIcon component={CalendarIcon} />}
+    />,
+  );
+
+  tags.push(
+    <TreeTag
+      key="token-id"
+      TreeTagValue={token.id}
+      title="Token ID"
+      icon={<SvgIcon component={TokenIcon} inheritViewBox />}
+    />,
+  );
+
+  tags.push(
+    <TreeTag
+      key="tree-id"
+      TreeTagValue={token.tree_id}
+      title="Tree ID"
+      icon={
+        <SvgIcon
+          sx={{
+            '& path': {
+              fill: 'rgb(71, 75, 79)',
+            },
+          }}
+          component={TreeIcon}
+          inheritViewBox
+        />
+      }
+      subtitle="click to enter"
+      link={`/trees/${token.tree_id}`}
+    />,
+  );
+
+  tags.push(
+    <TreeTag
+      key="claim"
+      TreeTagValue={token.claim ? 'Claimed' : 'Not claimed yet'}
+      title="Claim Status"
+      icon={<SvgIcon component={DoneOutlineIcon} inheritViewBox />}
+    />,
+  );
+
+  if (!token.claim && !token.transfer_pending) {
+    tags.push(
+      <TreeTag
+        key="transferability"
+        TreeTagValue="Can be transferred"
+        title="Transferability"
+        icon={<SvgIcon component={CurrencyExchangeIcon} inheritViewBox />}
+      />,
+    );
+  } else {
+    tagsTail.push(
+      <TreeTag
+        key="transferability"
+        TreeTagValue="Can not be transferred"
+        title="Transferability"
+        icon={<SvgIcon component={CurrencyExchangeIcon} />}
+        disabled
+      />,
+    );
+  }
 
   useEffect(() => {
     async function reload() {
@@ -106,28 +184,39 @@ export default function Token({ token, wallet }) {
       )}
 
       <Box
-        sx={{
-          position: 'relative',
-          overflow: 'hidden',
-          borderRadius: 4,
-          mt: 6,
-          '& img': {
-            width: '100%',
+        sx={[
+          {
             borderRadius: 4,
+            maxHeight: [332, 764],
+            mt: 6,
+            position: 'relative',
+            overflow: 'hidden',
+            '& img': {
+              width: '100%',
+            },
           },
-        }}
+          nextExtraIsEmbed && {
+            '& img': {
+              maxHeight: 600,
+              objectFit: 'cover',
+            },
+          },
+        ]}
       >
         <Box
           sx={{
             position: 'absolute',
+            // top: [4, 6],
+            // left: [4, 6],
             pt: [4, 6],
             px: [4, 6],
             width: 1,
             boxSizing: 'border-box',
             display: 'flex',
-            justifyContent: 'end',
+            justifyContent: 'space-between',
           }}
         >
+          <LikeButton url={`https://map.treetracker.org/tokens/${token.id}`} />
           <Box
             sx={{
               display: 'flex',
@@ -158,21 +247,50 @@ export default function Token({ token, wallet }) {
             />
           </Box>
         </Box>
-        <img src={`${token.tree_image_url}`} alt="token" />
-        <Avatar
-          src={imagePlaceholder}
-          // src={wallet.logo_url}
-          sx={{
-            width: [120, 189],
-            height: [120, 189],
-            borderWidth: [4, 9],
-            borderStyle: 'solid',
-            borderColor: (t) => t.palette.background.paper,
-            boxSizing: 'border-box',
-            ml: [4, 8],
-            mt: [-98 / 4, -146 / 4],
-          }}
-        />
+        <img src={token.tree_image_url} alt="tree" />
+        {!isMobile && (
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              background:
+                'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
+              p: 6,
+              width: 1,
+              height: 260,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-start',
+            }}
+          >
+            <Typography variant="h2" color={theme.palette.common.white}>
+              Token #{token.id}
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+              }}
+              variant="h5"
+              color={theme.palette.common.white}
+            >
+              {token.tree_species_name || 'Unkown species'}
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                mt: 2,
+              }}
+            >
+              <VerifiedBadge
+                color="secondary"
+                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
+                verified={false}
+              />
+            </Box>
+          </Box>
+        )}
       </Box>
 
       {isMobile && (
@@ -191,7 +309,15 @@ export default function Token({ token, wallet }) {
                 },
               }}
             >
-              Token - #{token.id}
+              Token #{token.id}
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+              }}
+              variant="h5"
+            >
+              {token.tree_species_name || 'Unkown species'}
             </Typography>
             <Box
               sx={{
@@ -201,13 +327,9 @@ export default function Token({ token, wallet }) {
               }}
             >
               <VerifiedBadge
-                color="primary"
-                verified={token.claim}
-                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-              />
-              <VerifiedBadge
                 color="secondary"
                 badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
+                verified={false}
               />
             </Box>
           </Box>
@@ -229,11 +351,6 @@ export default function Token({ token, wallet }) {
               }}
             >
               <VerifiedBadge
-                color="primary"
-                verified={token.claim}
-                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-              />
-              <VerifiedBadge
                 color="secondary"
                 badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
               />
@@ -242,48 +359,6 @@ export default function Token({ token, wallet }) {
         </Portal>
       )}
 
-      {!isMobile && (
-        <Box sx={{ mt: 6 }}>
-          <Typography variant="h2" sx={{ fontSize: 20 }}>
-            Token - #{token.id}
-          </Typography>
-          <Box sx={{ mt: 2 }}>
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                mt: 2,
-              }}
-            >
-              <VerifiedBadge
-                color="primary"
-                verified={token.claim}
-                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-              />
-              <VerifiedBadge
-                color="secondary"
-                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-              />
-            </Box>
-          </Box>
-        </Box>
-      )}
-
-      <Box
-        sx={[
-          {
-            mt: [6, 14],
-          },
-        ]}
-      >
-        <InformationCard1
-          entityName={token.tree_species_name}
-          entityType="Token Tree"
-          buttonText="View Token Tree"
-          cardImageSrc={token?.tree_image_url}
-          link={`/trees/${token.tree_id}`}
-        />
-      </Box>
       <Box
         sx={{
           mt: [4, 10],
@@ -293,8 +368,7 @@ export default function Token({ token, wallet }) {
           entityName={`${wallet.name} `}
           entityType="Wallet"
           buttonText="View the Wallet"
-          cardImageSrc={imagePlaceholder}
-          // cardImageSrc={wallet?.logo_url}
+          cardImageSrc={wallet.logo_url || imagePlaceholder}
           link={`/wallets/${wallet.id}`}
         />
       </Box>
@@ -310,18 +384,18 @@ export default function Token({ token, wallet }) {
       >
         Token Info
       </Typography>
+
       <Box className={classes.tabBox}>
-        <TreeTag
-          TreeTagValue={new Date(token.created_at).toLocaleDateString()}
-          title="Created At"
-          icon={<SvgIcon component={CalendarIcon} inheritViewBox />}
-        />
-        <TreeTag
-          TreeTagValue={token.id}
-          title="Token ID"
-          icon={<SvgIcon component={TokenIcon} inheritViewBox />}
-        />
+        {tags}
+        {tagsTail}
       </Box>
+      <Divider
+        varian="fullwidth"
+        sx={{
+          mt: [10, 20],
+        }}
+      />
+      <ImpactSection />
       <Box height={20} />
     </Box>
   );
