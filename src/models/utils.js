@@ -179,9 +179,14 @@ const optimizeThemeFonts = (theme) => {
 
     // finally add font and corresponding weight
     if (!usedFonts[font]) {
-      usedFonts[font] = [];
+      usedFonts[font] = new Set();
     }
-    usedFonts[font].push(weight);
+    usedFonts[font].add(weight);
+  });
+  // convert the sets to arrays
+  Object.entries(usedFonts).map(([fontName, weights]) => {
+    usedFonts[fontName] = Array.from(weights).sort();
+    return null;
   });
   temp.fonts = usedFonts;
   return temp;
