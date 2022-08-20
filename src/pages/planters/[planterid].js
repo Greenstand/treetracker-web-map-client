@@ -20,6 +20,7 @@ import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
+import ProfileAvatar from '../../components/ProfileAvatar';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
@@ -195,20 +196,7 @@ export default function Planter(props) {
           }}
         >
           <img src={backgroundPic} alt="profile" />
-
-          <Avatar
-            src={planter.image_url}
-            sx={{
-              width: [120, 189],
-              height: [120, 189],
-              borderWidth: [4, 9],
-              borderStyle: 'solid',
-              borderColor: (t) => t.palette.background.paper,
-              boxSizing: 'border-box',
-              ml: [4, 8],
-              mt: [-98 / 4, -146 / 4],
-            }}
-          />
+          <ProfileAvatar src={planter.image_url} />
         </Box>
 
         {isMobile && (
