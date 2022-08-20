@@ -1,10 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import { Divider , Avatar, SvgIcon, useTheme } from '@mui/material';
+import Timeline from '@mui/lab/Timeline';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import { Divider, Avatar, SvgIcon, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
 import { useEffect } from 'react';
@@ -14,10 +24,12 @@ import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
+import Link from '../../components/Link';
 import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Info from '../../components/common/Info';
+import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
@@ -42,7 +54,9 @@ const useStyles = makeStyles()((theme) => ({
 
 function handleShare() {}
 
-export default function Token({ token, wallet, nextExtraIsEmbed }) {
+export default function Token(props) {
+  log.warn('props:', props);
+  const { token, wallet, transactions, nextExtraIsEmbed } = props;
   const theme = useTheme();
   const { classes } = useStyles();
   const mapContext = useMapContext();
@@ -128,7 +142,7 @@ export default function Token({ token, wallet, nextExtraIsEmbed }) {
       if (map && token) {
         // map.flyTo(tree.lat, tree.lon, 16);
         map.setFilters({
-          token: token.id,
+          treeid: token.tree_id,
         });
         try {
           await map.loadInitialView();
@@ -389,6 +403,154 @@ export default function Token({ token, wallet, nextExtraIsEmbed }) {
         {tags}
         {tagsTail}
       </Box>
+
+      <Typography
+        variant="h4"
+        sx={[
+          {
+            fontSize: [24, 28],
+            lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
+            mt: (t) => [t.spacing(14), t.spacing(18)],
+          },
+        ]}
+      >
+        Transaction History
+      </Typography>
+      <Box>
+        <Timeline>
+          <TimelineItem>
+            <TimelineOppositeContent
+              color="text.secondary"
+              sx={{
+                flex: 0.2,
+              }}
+            >
+              {new Date(token.created_at).toLocaleDateString()}
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot color="primary" />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <Typography variant="h6">Token created by:</Typography>
+              <Box
+                sx={{
+                  p: [2, 4],
+                }}
+              >
+                <Link href="/planters/940">
+                  <SimpleAvatarAndName
+                    image={token.image_url}
+                    name="Sebastian G."
+                  />
+                </Link>
+              </Box>
+            </TimelineContent>
+          </TimelineItem>
+          {transactions.transactions.map((transaction, index) => (
+            <TimelineItem key={transaction.id}>
+              <TimelineOppositeContent
+                sx={{
+                  flex: 0.2,
+                }}
+                color="text.secondary"
+              >
+                {new Date(transaction.processed_at).toLocaleDateString()}
+              </TimelineOppositeContent>
+              <TimelineSeparator>
+                <TimelineDot color="primary" />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Typography variant="h6">Transfer token between:</Typography>
+                <Box
+                  sx={{
+                    p: [2, 4],
+                  }}
+                >
+                  <Link href={`/wallets/${transaction.source_wallet_id}`}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {transaction.source_wallet_logo_url ? (
+                        <Avatar
+                          className={classes.media}
+                          src={transaction.source_wallet_logo_url}
+                        />
+                      ) : (
+                        <Avatar className={classes.media}>
+                          <AccountBalanceWalletIcon />
+                        </Avatar>
+                      )}
+                      <Box sx={{ marginLeft: 3 }}>
+                        <Typography variant="h5">
+                          {transaction.source_wallet_name}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Link>
+                  <Box
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      my: [1, 2],
+                    }}
+                  >
+                    <ArrowDownwardIcon />
+                  </Box>
+                  <Link href={`/wallets/${transaction.destination_wallet_id}`}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {transaction.destination_wallet_logo_url ? (
+                        <Avatar
+                          className={classes.media}
+                          src={transaction.destination_wallet_logo_url}
+                        />
+                      ) : (
+                        <Avatar className={classes.media}>
+                          <AccountBalanceWalletIcon />
+                        </Avatar>
+                      )}
+                      <Box sx={{ marginLeft: 3 }}>
+                        <Typography variant="h5">
+                          {transaction.destination_wallet_name}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Link>
+                </Box>
+              </TimelineContent>
+            </TimelineItem>
+          ))}
+          <TimelineItem>
+            <TimelineOppositeContent
+              sx={{
+                flex: 0.2,
+              }}
+              color="text.secondary"
+            >
+              pending
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot />
+            </TimelineSeparator>
+            <TimelineContent>Claim Token</TimelineContent>
+          </TimelineItem>
+        </Timeline>
+      </Box>
+
       <Divider
         varian="fullwidth"
         sx={{
@@ -407,14 +569,21 @@ export async function getServerSideProps({ params }) {
     const token = await getTokenById(tokenid);
     const { wallet_id } = token;
     const wallet = await getWalletById(wallet_id);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+    );
+    const { data } = res;
+    const transactions = data;
 
     return {
       props: {
         token,
         wallet,
+        transactions,
       },
     };
   } catch (e) {
+    log.error('token page:', e);
     return { notFound: true };
   }
 }
