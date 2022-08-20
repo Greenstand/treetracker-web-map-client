@@ -29,6 +29,7 @@ import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Info from '../../components/common/Info';
+import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
@@ -403,11 +404,27 @@ export default function Token(props) {
         {tagsTail}
       </Box>
 
-      <Typography variant="h1">Transaction History</Typography>
+      <Typography
+        variant="h4"
+        sx={[
+          {
+            fontSize: [24, 28],
+            lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
+            mt: (t) => [t.spacing(14), t.spacing(18)],
+          },
+        ]}
+      >
+        Transaction History
+      </Typography>
       <Box>
         <Timeline>
           <TimelineItem>
-            <TimelineOppositeContent color="text.secondary">
+            <TimelineOppositeContent
+              color="text.secondary"
+              sx={{
+                flex: 0.2,
+              }}
+            >
               {new Date(token.created_at).toLocaleDateString()}
             </TimelineOppositeContent>
             <TimelineSeparator>
@@ -416,25 +433,28 @@ export default function Token(props) {
             </TimelineSeparator>
             <TimelineContent>
               <Typography variant="h6">Token created by:</Typography>
-              <Link href="/planters/940">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    width: '100%',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Avatar className={classes.media} src={token.image_url} />
-                  <Box sx={{ marginLeft: 3 }}>
-                    <Typography variant="h5">Sebastian G.</Typography>
-                  </Box>
-                </Box>
-              </Link>
+              <Box
+                sx={{
+                  p: [2, 4],
+                }}
+              >
+                <Link href="/planters/940">
+                  <SimpleAvatarAndName
+                    image={token.image_url}
+                    name="Sebastian G."
+                  />
+                </Link>
+              </Box>
             </TimelineContent>
           </TimelineItem>
           {transactions.transactions.map((transaction, index) => (
             <TimelineItem key={transaction.id}>
-              <TimelineOppositeContent color="text.secondary">
+              <TimelineOppositeContent
+                sx={{
+                  flex: 0.2,
+                }}
+                color="text.secondary"
+              >
                 {new Date(transaction.processed_at).toLocaleDateString()}
               </TimelineOppositeContent>
               <TimelineSeparator>
@@ -443,62 +463,84 @@ export default function Token(props) {
               </TimelineSeparator>
               <TimelineContent>
                 <Typography variant="h6">Transfer token between:</Typography>
-                <Link href={`/wallets/${transaction.source_wallet_id}`}>
+                <Box
+                  sx={{
+                    p: [2, 4],
+                  }}
+                >
+                  <Link href={`/wallets/${transaction.source_wallet_id}`}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {transaction.source_wallet_logo_url ? (
+                        <Avatar
+                          className={classes.media}
+                          src={transaction.source_wallet_logo_url}
+                        />
+                      ) : (
+                        <Avatar className={classes.media}>
+                          <AccountBalanceWalletIcon />
+                        </Avatar>
+                      )}
+                      <Box sx={{ marginLeft: 3 }}>
+                        <Typography variant="h5">
+                          {transaction.source_wallet_name}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Link>
                   <Box
                     sx={{
+                      width: 40,
+                      height: 40,
                       display: 'flex',
-                      width: '100%',
+                      justifyContent: 'center',
                       alignItems: 'center',
+                      my: [1, 2],
                     }}
                   >
-                    {transaction.source_wallet_logo_url ? (
-                      <Avatar
-                        className={classes.media}
-                        src={transaction.source_wallet_logo_url}
-                      />
-                    ) : (
-                      <Avatar className={classes.media}>
-                        <AccountBalanceWalletIcon />
-                      </Avatar>
-                    )}
-                    <Box sx={{ marginLeft: 3 }}>
-                      <Typography variant="h5">
-                        {transaction.source_wallet_name}
-                      </Typography>
-                    </Box>
+                    <ArrowDownwardIcon />
                   </Box>
-                </Link>
-                <ArrowDownwardIcon />
-                <Link href={`/wallets/${transaction.destination_wallet_id}`}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      width: '100%',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {transaction.destination_wallet_logo_url ? (
-                      <Avatar
-                        className={classes.media}
-                        src={transaction.destination_wallet_logo_url}
-                      />
-                    ) : (
-                      <Avatar className={classes.media}>
-                        <AccountBalanceWalletIcon />
-                      </Avatar>
-                    )}
-                    <Box sx={{ marginLeft: 3 }}>
-                      <Typography variant="h5">
-                        {transaction.destination_wallet_name}
-                      </Typography>
+                  <Link href={`/wallets/${transaction.destination_wallet_id}`}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {transaction.destination_wallet_logo_url ? (
+                        <Avatar
+                          className={classes.media}
+                          src={transaction.destination_wallet_logo_url}
+                        />
+                      ) : (
+                        <Avatar className={classes.media}>
+                          <AccountBalanceWalletIcon />
+                        </Avatar>
+                      )}
+                      <Box sx={{ marginLeft: 3 }}>
+                        <Typography variant="h5">
+                          {transaction.destination_wallet_name}
+                        </Typography>
+                      </Box>
                     </Box>
-                  </Box>
-                </Link>
+                  </Link>
+                </Box>
               </TimelineContent>
             </TimelineItem>
           ))}
           <TimelineItem>
-            <TimelineOppositeContent color="text.secondary">
+            <TimelineOppositeContent
+              sx={{
+                flex: 0.2,
+              }}
+              color="text.secondary"
+            >
               pending
             </TimelineOppositeContent>
             <TimelineSeparator>
