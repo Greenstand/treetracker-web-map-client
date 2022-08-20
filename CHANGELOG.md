@@ -1,3 +1,10 @@
+# [2.0.0-beta.51](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.50...v2.0.0-beta.51) (2022-08-20)
+
+
+### Bug Fixes
+
+* dialog not fullscreen, header spacing ([afd2aba](https://github.com/Greenstand/treetracker-web-map-client/commit/afd2abaab99465940c133253bb4fb7b27eb055ee))
+
 # [2.0.0-beta.50](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.49...v2.0.0-beta.50) (2022-08-19)
 
 
