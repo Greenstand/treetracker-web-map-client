@@ -142,7 +142,7 @@ export default function Token(props) {
       if (map && token) {
         // map.flyTo(tree.lat, tree.lon, 16);
         map.setFilters({
-          token: token.id,
+          treeid: token.tree_id,
         });
         try {
           await map.loadInitialView();

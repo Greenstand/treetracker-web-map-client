@@ -71,7 +71,7 @@ function MapComponent() {
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
     const path = window.location.pathname.match(
-      /^(\/(planters|organizations)\/\d+)?(\/trees\/\d+)?$/,
+      /^(\/(planters|organizations)\/\d+)?(\/(trees|tokens)\/([a-z0-9-]+))?$/,
     );
     log.warn('parsed path:', path);
 
@@ -81,7 +81,9 @@ function MapComponent() {
     };
 
     router.push({
-      pathname: `${path[1] || ''}/trees/${tree.id}`,
+      pathname: `${path[1] || ''}/${path[4]}/${
+        path[4] === 'tokens' ? path[5] : tree.id
+      }`,
       query: optionalParams,
     });
   }
