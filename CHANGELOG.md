@@ -1,3 +1,10 @@
+# [2.0.0-beta.52](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.51...v2.0.0-beta.52) (2022-08-20)
+
+
+### Bug Fixes
+
+* treat useEmbed as function ([be83717](https://github.com/Greenstand/treetracker-web-map-client/commit/be83717c37574e9fa54195221e9e74d760b82f24))
+
 # [2.0.0-beta.51](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.50...v2.0.0-beta.51) (2022-08-20)
 
 
