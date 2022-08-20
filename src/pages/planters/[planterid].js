@@ -38,6 +38,7 @@ import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -83,7 +84,7 @@ export default function Planter(props) {
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
   const isMobile = useMobile();
-
+  
   const router = useRouter();
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
@@ -292,7 +293,18 @@ export default function Planter(props) {
             </Box>
           </Box>
         )}
-
+        
+        <Box
+          sx={{
+            mt: 4
+          }}
+        >
+          <Typography variant="h4">
+            Featured Trees by {planter.first_name}
+          </Typography>
+          <FeaturedTreesSlider trees={featuredTrees.trees} />
+        </Box>
+        
         <Grid
           container
           wrap="nowrap"
