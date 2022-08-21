@@ -3,10 +3,11 @@ import { Paper, Typography, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import React from 'react';
 import SearchFilter from './SearchFilter';
 import { useEmbed } from '../hooks/globalHooks';
-import LogoIcon from '../images/greenstand_logo.svg';
+import LogoIcon from '../images/greenstand_logo_full.png';
 import MinIcon from '../images/min.svg';
 import ZoomIn from '../images/zoom-in.svg';
 import ZoomOut from '../images/zoom-out.svg';
@@ -246,12 +247,11 @@ export default function Layout({
                 mt: '-3px',
               }}
             >
-              <SvgIcon
-                component={LogoIcon}
-                // TODO: logo.png in beta repo is currently broken. Need to use .svg file for this to work anyways
-                sx={{ height: 36, width: 45 }}
-                inheritViewBox
-              />
+              <Link href="https://greenstand.org">
+                <a target="_blank">
+                  <img src={LogoIcon} width="80px" />
+                </a>
+              </Link>
             </Box>
           </Box>
         </Paper>
