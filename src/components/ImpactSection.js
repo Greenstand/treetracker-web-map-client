@@ -31,7 +31,14 @@ function ImpactSection() {
           <CustomCard
             handleClick={() => {}}
             iconURI={DollarIcon}
-            sx={{ width: [24, 32], height: [24, 32] }}
+            sx={{
+              width: [24, 32],
+              height: [24, 32],
+              '& path': {
+                stroke: ({ palette }) => palette.text.disabled,
+                fill: ({ palette }) => palette.text.disabled,
+              },
+            }}
             title="Current Value"
             text="---"
             disabled
@@ -45,7 +52,7 @@ function ImpactSection() {
               width: [24, 32],
               height: [24, 32],
               '& path': {
-                stroke: ({ palette }) => palette.text.primary,
+                stroke: ({ palette }) => palette.text.disabled,
               },
             }}
             title="Carbon Capture"

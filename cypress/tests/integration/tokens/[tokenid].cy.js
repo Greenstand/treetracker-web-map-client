@@ -44,6 +44,15 @@ describe('Token page', () => {
         created_at: '2021-10-07T22:33:20.732Z',
       },
     });
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: '/query/transactions?token_id=6c85c551-ed63-456f-ba0f-8d632897f560',
+      statusCode: 200,
+      body: {
+        transactions: [],
+      },
+    });
 
     cy.visit(path, {
       failOnStatusCode: false,

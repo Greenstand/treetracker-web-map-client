@@ -1,3 +1,40 @@
+# [2.0.0-beta.54](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.53...v2.0.0-beta.54) (2022-08-21)
+
+
+### Bug Fixes
+
+* impact section icon colors ([8e7baed](https://github.com/Greenstand/treetracker-web-map-client/commit/8e7baedc31525c4b66f92b53beae676e35d6e968))
+* ui profile avatar ([348455a](https://github.com/Greenstand/treetracker-web-map-client/commit/348455a5d90f0c9d991729c3d7aa9243864eb614))
+
+# [2.0.0-beta.53](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.52...v2.0.0-beta.53) (2022-08-20)
+
+
+### Bug Fixes
+
+* broken test ([0cdc386](https://github.com/Greenstand/treetracker-web-map-client/commit/0cdc386b329a6639ed7057967113e79cb0ebf7aa))
+
+
+### Features
+
+* layout for transactions ([2a776bd](https://github.com/Greenstand/treetracker-web-map-client/commit/2a776bd38902e8be2303d67b7b2b3e964c5d8669))
+* link kill height ([c4c97ca](https://github.com/Greenstand/treetracker-web-map-client/commit/c4c97cac4166b4d0372e02e88572ea25fac675ba))
+* map for token page ([660bd59](https://github.com/Greenstand/treetracker-web-map-client/commit/660bd59045e313ec66a7ef0cd63f9c7020f8f873))
+* transaction history ([e596b03](https://github.com/Greenstand/treetracker-web-map-client/commit/e596b03a7ccd6447b398e5d492845014c5f19c13))
+
+# [2.0.0-beta.52](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.51...v2.0.0-beta.52) (2022-08-20)
+
+
+### Bug Fixes
+
+* treat useEmbed as function ([be83717](https://github.com/Greenstand/treetracker-web-map-client/commit/be83717c37574e9fa54195221e9e74d760b82f24))
+
+# [2.0.0-beta.51](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.50...v2.0.0-beta.51) (2022-08-20)
+
+
+### Bug Fixes
+
+* dialog not fullscreen, header spacing ([afd2aba](https://github.com/Greenstand/treetracker-web-map-client/commit/afd2abaab99465940c133253bb4fb7b27eb055ee))
+
 # [2.0.0-beta.50](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.49...v2.0.0-beta.50) (2022-08-19)
 
 
