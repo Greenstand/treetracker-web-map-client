@@ -1,3 +1,11 @@
+# [2.0.0-beta.54](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.53...v2.0.0-beta.54) (2022-08-21)
+
+
+### Bug Fixes
+
+* impact section icon colors ([8e7baed](https://github.com/Greenstand/treetracker-web-map-client/commit/8e7baedc31525c4b66f92b53beae676e35d6e968))
+* ui profile avatar ([348455a](https://github.com/Greenstand/treetracker-web-map-client/commit/348455a5d90f0c9d991729c3d7aa9243864eb614))
+
 # [2.0.0-beta.53](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.52...v2.0.0-beta.53) (2022-08-20)
 
 
