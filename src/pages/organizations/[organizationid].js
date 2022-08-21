@@ -27,6 +27,7 @@ import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import ImpactSection from '../../components/ImpactSection';
 import PageWrapper from '../../components/PageWrapper';
+import ProfileAvatar from '../../components/ProfileAvatar';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import CustomCard from '../../components/common/CustomCard';
@@ -187,20 +188,7 @@ export default function Organization(props) {
             }}
           >
             <img src={`${router.basePath}${orgBackground}`} alt="profile" />
-            <Avatar
-              src={logo_url}
-              sx={{
-                width: [120, 189],
-                height: [120, 189],
-                borderWidth: [4, 9],
-                borderStyle: 'solid',
-                borderColor: (t) => t.palette.background.paper,
-                backgroundColor: (t) => t.palette.background.paper,
-                boxSizing: 'border-box',
-                ml: [4, 8],
-                mt: [-98 / 4, -146 / 4],
-              }}
-            />
+            <ProfileAvatar src={logo_url} />
           </Box>
 
           {!isMobile && (
