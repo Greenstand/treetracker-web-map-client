@@ -74,6 +74,7 @@ export default function Wallet(props) {
       const { map } = mapContext;
       if (map && wallet) {
         // map.flyTo(tree.lat, tree.lon, 16);
+        log.warn('set filter for wallet');
         map.setFilters({
           wallet: wallet.name,
         });
