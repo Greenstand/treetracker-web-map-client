@@ -1,3 +1,15 @@
+# [2.0.0-beta.57](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.56...v2.0.0-beta.57) (2022-08-22)
+
+
+### Bug Fixes
+
+* fixed eslint error ([7e08f78](https://github.com/Greenstand/treetracker-web-map-client/commit/7e08f789d280129466471db7ae48afb6bf9ffa94))
+
+
+### Features
+
+* added featured trees for planter ([ba51645](https://github.com/Greenstand/treetracker-web-map-client/commit/ba51645886835bc09a18758085b225d575a6c637))
+
 # [2.0.0-beta.56](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.55...v2.0.0-beta.56) (2022-08-22)
 
 
