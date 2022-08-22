@@ -1,3 +1,10 @@
+# [2.0.0-beta.55](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.54...v2.0.0-beta.55) (2022-08-22)
+
+
+### Bug Fixes
+
+* impact section icon heights ([97317a1](https://github.com/Greenstand/treetracker-web-map-client/commit/97317a14f4e9d259e96fd55cc1e8df46d1263f95))
+
 # [2.0.0-beta.54](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.53...v2.0.0-beta.54) (2022-08-21)
 
 
