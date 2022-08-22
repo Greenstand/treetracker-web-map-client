@@ -15,6 +15,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { getPlanterById, getOrgLinks } from 'models/api';
@@ -38,7 +39,7 @@ import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
-import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
+
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -300,7 +301,7 @@ export default function Planter(props) {
           }}
         >
           <Typography variant="h4">
-            Featured Trees by {planter.first_name}
+            Featured trees by {planter.first_name}
           </Typography>
           <FeaturedTreesSlider trees={featuredTrees.trees} />
         </Box>
