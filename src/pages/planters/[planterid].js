@@ -41,7 +41,6 @@ import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as utils from '../../models/utils';
 
-
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
   imageContainer: {
@@ -86,7 +85,7 @@ export default function Planter(props) {
   const treeCount = featuredTrees.trees.length;
   const mapContext = useMapContext();
   const isMobile = useMobile();
-  
+
   const router = useRouter();
 
   const [isPlanterTab, setIsPlanterTab] = useState(true);
@@ -282,10 +281,10 @@ export default function Planter(props) {
             </Box>
           </Box>
         )}
-        
+
         <Box
           sx={{
-            mt: 4
+            mt: [8, 16],
           }}
         >
           <Typography variant="h4">
@@ -293,7 +292,7 @@ export default function Planter(props) {
           </Typography>
           <FeaturedTreesSlider trees={featuredTrees.trees} />
         </Box>
-        
+
         <Grid
           container
           wrap="nowrap"
