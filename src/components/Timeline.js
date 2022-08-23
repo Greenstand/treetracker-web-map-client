@@ -1,225 +1,132 @@
-import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
-import TimelapseTwoToneIcon from '@mui/icons-material/TimelapseTwoTone';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import Slider from '@mui/material/Slider';
-import Tooltip from '@mui/material/Tooltip';
-import log from 'loglevel';
-import moment from 'moment';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { makeStyles, withStyles } from 'models/makeStyles';
+import { Box, SvgIcon, Typography, InputBase, Divider } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { useState } from 'react';
+import TimeIcon from '../images/icons/time.svg';
 
-const TimelineSlider = withStyles(Slider, {
-  root: {
-    color: '#85c232',
-    height: 8,
-    '& .MuiSlider-markLabel': {
-      color: 'white',
-    },
-    '& .MuiSlider-markLabelActive': {
-      color: 'white',
-    },
-    '& .MuiSlider-markActive': {
-      backgroundColor: 'transparent',
-      display: 'none',
-    },
-    '& .MuiSlider-mark': {
-      backgroundColor: 'transparent',
-      display: 'none',
-    },
-  },
-  thumb: {
-    height: 24,
-    width: 24,
-    backgroundColor: '#fff', // white
-    border: '2px solid currentColor',
-    marginTop: -8,
-    marginLeft: -12,
-    '&:focus, &:hover, &$active': {
-      boxShadow: 'inherit',
-    },
-  },
-  active: {},
-  valueLabel: {
-    left: 'calc(-50% + 4px)',
-  },
-  track: {
-    height: 8,
-    borderRadius: 4,
-  },
-  rail: {
-    height: 8,
-    borderRadius: 4,
-  },
-});
-
-const useStylesTooltip = makeStyles()(() => ({
-  popper: {
-    opacity: 0.5,
-  },
-}));
-
-function ValueLabelComponent(props) {
-  const { children, open, value } = props;
-  const { index } = props;
-  const classes = useStylesTooltip();
-
+function CustomInput({ label, inputRef, inputProps, InputProps }) {
   return (
-    <Tooltip
-      open={open}
-      classes={{ popper: classes.popper }}
-      enterTouchDelay={0}
-      placement={index === 0 ? 'top' : 'bottom'}
-      title={value}
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2,
+        '.MuiInputAdornment-root': {
+          ml: 0,
+        },
+      }}
     >
-      {children}
-    </Tooltip>
+      <Typography color="text.primary">{label}</Typography>
+      <InputBase
+        placeholder={label}
+        ref={inputRef}
+        sx={{
+          width: 96,
+        }}
+        {...inputProps}
+      />
+      {InputProps?.endAdornment}
+    </Box>
   );
 }
 
-ValueLabelComponent.propTypes = {
-  children: PropTypes.element.isRequired,
-  open: PropTypes.bool.isRequired,
-  value: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
-};
-
-const useStyles = makeStyles()((theme) => ({
-  root: {
-    background:
-      'linear-gradient(90deg, rgba(2,0,36,0.70) 10%, rgba(11,11,94,0.41360294117647056) 19%, rgba(203,209,209,0) 37%)',
-    height: '75px',
-    width: '40%',
-    color: 'white',
-    // 'user-select': "none",
-    pointerEvents: 'none',
-    zIndex: 9,
-    position: 'fixed',
-    bottom: 13,
-    [theme.breakpoints.down('xs')]: {
-      left: -5,
-      bottom: 40,
-    },
-  },
-  box1: {
-    pointerEvents: 'none',
-    width: theme.spacing(80),
-    flexWrap: 'nowrap',
-  },
-  box2: {
-    pointerEvents: 'all',
-    padding: theme.spacing(1),
-  },
-  box3: {
-    pointerEvents: 'all',
-    minWidth: theme.spacing(120),
-    [theme.breakpoints.down('xs')]: {
-      minWidth: theme.spacing(40),
-    },
-  },
-}));
-
-const dayRange = Math.round(
-  moment.duration(moment().diff(moment('2015-01-01'))).as('d'),
-);
-
-const marks = ['2015', '2017', '2019', '2021'].map((e) => ({
-  label: e,
-  value: Math.round(
-    moment.duration(moment(`${e}-01-01`).diff(moment(`2015-01-01`))).as('d'),
-  ),
-}));
-
-function valuetext(value) {
-  return moment('2015-01-01').add(value, 'days').format('YYYY-MM-DD');
+function CustomDatePicker({ value, onChange, label }) {
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePicker
+        label={label}
+        value={value}
+        onChange={onChange}
+        renderInput={CustomInput}
+      />
+    </LocalizationProvider>
+  );
 }
 
-function textvalue(begin, end) {
-  return [
-    Math.round(
-      moment.duration(moment(begin).diff(moment('2015-01-01'))).as('d'),
-    ),
-    Math.round(moment.duration(moment(end).diff(moment('2015-01-01'))).as('d')),
-  ];
-}
+function Timeline() {
+  const [showPicker, setShowPicker] = useState(false);
+  const [timeFrame, setTimeFrame] = useState({
+    start: Date.now(),
+    end: Date.now(),
+  });
 
-function Timeline(props) {
-  const { classes } = useStyles();
-  const [slide, setSlide] = React.useState(false);
-  const [value, setValue] = React.useState([0, dayRange]);
-  const { onClose, onDateChange, date } = props;
-
-  function handleClick() {
-    setSlide(!slide);
-
-    /* Hidden the Timeline title  */
-    document.getElementById('txtTimeline').style.display = 'none';
-
-    if (slide) {
-      /* Show up the Timeline title */
-      document.getElementById('txtTimeline').style.display = '';
-
-      setValue([0, dayRange]);
-      onClose && onClose();
-    }
-  }
-
-  // console.warn('value:', value);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const togglePicker = () => {
+    setShowPicker((prev) => !prev);
   };
 
-  const handleChangeCommitted = (unusedEvent, newValue) => {
-    log.debug('trigger change commit:', newValue);
-    onDateChange && onDateChange(newValue.map((e) => valuetext(e)));
+  const handleDatePickerChange = (newValue, frameType) => {
+    setTimeFrame((prevTimeFrame) => ({
+        ...prevTimeFrame,
+        [frameType]: newValue,
+      }));
   };
-
-  React.useEffect(() => {
-    if (date) {
-      setSlide(true);
-      setValue(textvalue(...date));
-    }
-  }, [date]);
 
   return (
-    <div className={classes.root}>
-      <Grid container alignItems="center" className={classes.box1}>
-        <Grid item className={classes.box2}>
-          <Tooltip title="Timeline">
-            <IconButton id="iconButton" onClick={handleClick}>
-              {slide ? (
-                <CancelTwoToneIcon fontSize="large" color="secondary" />
-              ) : (
-                <TimelapseTwoToneIcon fontSize="large" color="secondary" />
-              )}
-            </IconButton>
-          </Tooltip>
-        </Grid>
-
-        <Grid item className={classes.box3}>
-          <span id="txtTimeline" className="text">
-            Timeline
-          </span>
-          {slide && (
-            <TimelineSlider
-              min={0}
-              max={dayRange}
-              value={value}
-              onChange={handleChange}
-              onChangeCommitted={handleChangeCommitted}
-              aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
-              valueLabelFormat={valuetext}
-              marks={marks}
-              valueLabelDisplay="on"
-              ValueLabelComponent={ValueLabelComponent}
+    <Box
+        sx={{
+          position: 'absolute',
+          zIndex: '9999',
+          bottom: '0px',
+          left: '0px',
+          margin: '20px',
+          pr: showPicker && '15px',
+          height: 52,
+          borderRadius: 4,
+          backgroundColor: 'background.paper',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 1,
+          boxSizing: 'border-box',
+        }}
+      >
+        <Box
+          onClick={togglePicker}
+          sx={{
+            height: 52,
+            width: 52,
+            borderRadius: 4,
+            background: 'none',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            cursor: 'pointer',
+          }}
+        >
+          <SvgIcon
+            component={TimeIcon}
+            sx={{
+              width: 22,
+              '& path': {
+                fill: ({ palette }) => palette.primary.main,
+              },
+            }}
+            inheritViewBox
+          />
+        </Box>
+        {showPicker && (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            <CustomDatePicker
+              value={timeFrame.start}
+              onChange={(newValue) => handleDatePickerChange(newValue, 'start')}
+              label="Start"
             />
-          )}
-        </Grid>
-      </Grid>
-    </div>
+            <Divider sx={{ height: 36 }} orientation="vertical" />
+            <CustomDatePicker
+              value={timeFrame.end}
+              onChange={(newValue) => handleDatePickerChange(newValue, 'end')}
+              label="End"
+            />
+          </Box>
+        )}
+      </Box>
   );
 }
 
