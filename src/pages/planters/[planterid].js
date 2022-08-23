@@ -314,6 +314,11 @@ export default function Planter(props) {
           </Grid>
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
+              handleClick={
+                planter.associatedOrganizations.organizations.length
+                  ? () => setIsPlanterTab(false)
+                  : undefined
+              }
               iconURI={PeopleIcon}
               sx={{ height: 36, width: 36 }}
               title="Ass. Orgs"
