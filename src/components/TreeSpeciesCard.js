@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
 import { makeStyles } from 'models/makeStyles';
+import Link from './Link';
 
 const useStyles = makeStyles()((theme) => ({}));
 
@@ -47,7 +48,19 @@ function TreeSpeciesCard(props) {
               mt: 2,
             }}
           >
-            {subTitle || '---'}
+            {subTitle && subTitle.match(/^https?:/) ? (
+              <Link href={subTitle} target="_blank">
+                <Typography
+                  variant="caption"
+                  sx={{ textDecoration: 'underline' }}
+                >
+                  Learn more
+                </Typography>
+              </Link>
+            ) : (
+              subTitle
+            )}
+            {!subTitle && '---'}
           </Typography>
         </Grid>
         <Grid

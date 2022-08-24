@@ -81,7 +81,7 @@ function MapComponent() {
     };
 
     router.push({
-      pathname: `${path[1] || ''}/${path[4]}/${
+      pathname: `${path[1] || ''}/${path[4] || 'trees'}/${
         path[4] === 'tokens' ? path[5] : tree.id
       }`,
       query: optionalParams,
