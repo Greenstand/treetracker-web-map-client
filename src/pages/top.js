@@ -19,7 +19,7 @@ import Search from '../images/search.svg';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
-function Top({ trees, planters, countries, organizations }) {
+function Top({ trees, planters, countries, organizations, wallets }) {
   // use map context to get the map
   const { map } = useMapContext();
   const isFullscreen = useFullscreen();
@@ -140,10 +140,13 @@ function Top({ trees, planters, countries, organizations }) {
           planters={planters}
           isMobile={isFullscreen}
         />
-        <h1>The featured wallets (for testing)</h1>
-        <Link href="/wallets/eecdf253-05b6-419a-8425-416a3e5fc9a0">
-          <h2>wallet: Malinda51</h2>
-        </Link>
+        <h1>Featured wallets this week</h1>
+        <FeaturedPlantersSlider
+          link={(id) => `/wallets/${id}`}
+          color="secondary"
+          planters={wallets}
+          isMobile={isFullscreen}
+        />
         <Typography
           variant="h4"
           sx={{
@@ -220,6 +223,7 @@ export async function getStaticProps() {
       countries,
       planters,
       organizations,
+      wallets,
     },
     revalidate: 60,
   };
