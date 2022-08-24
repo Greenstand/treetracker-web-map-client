@@ -1,3 +1,18 @@
+# [2.0.0-beta.59](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.58...v2.0.0-beta.59) (2022-08-24)
+
+
+### Bug Fixes
+
+* borken test by delete sidepanel ([ffade2a](https://github.com/Greenstand/treetracker-web-map-client/commit/ffade2a09b5e0282e01226ab1a96362701198e93))
+* unclickable of custom card ([9d5cfab](https://github.com/Greenstand/treetracker-web-map-client/commit/9d5cfabb0d34fc4b80be1529f6cae69368764514))
+
+
+### Features
+
+* add spacing for tree slider ([fc3d62a](https://github.com/Greenstand/treetracker-web-map-client/commit/fc3d62a593be2cef2336aa5fa7cad09e7c46afdb))
+* add species in slider ([09a4686](https://github.com/Greenstand/treetracker-web-map-client/commit/09a46865621affcf54963271b41554095a588839))
+* layout for wallet token on mobile ([e5d5c41](https://github.com/Greenstand/treetracker-web-map-client/commit/e5d5c41eb7dd45e6ef9a231caf04942d9ba3ee0e))
+
 # [2.0.0-beta.58](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.57...v2.0.0-beta.58) (2022-08-24)
 
 
