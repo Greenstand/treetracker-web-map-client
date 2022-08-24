@@ -1,3 +1,10 @@
+# [2.0.0-beta.61](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.60...v2.0.0-beta.61) (2022-08-24)
+
+
+### Bug Fixes
+
+* disable country boad ([9863e01](https://github.com/Greenstand/treetracker-web-map-client/commit/9863e018ba425541eb942c0db0d208c3fa398cdd))
+
 # [2.0.0-beta.60](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.59...v2.0.0-beta.60) (2022-08-24)
 
 
