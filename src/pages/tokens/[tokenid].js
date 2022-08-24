@@ -315,16 +315,7 @@ export default function Token(props) {
               pb: 4,
             }}
           >
-            <Typography
-              variant="h2"
-              sx={{
-                '&': {
-                  fontSize: '15px',
-                },
-              }}
-            >
-              Token #{token.id}
-            </Typography>
+            <Typography variant="h2">Token #{token.id}</Typography>
             <Typography
               sx={{
                 fontWeight: 400,
@@ -422,7 +413,7 @@ export default function Token(props) {
             <TimelineOppositeContent
               color="text.secondary"
               sx={{
-                flex: 0.2,
+                flex: [0.4, 0.2],
               }}
             >
               {new Date(token.created_at).toLocaleDateString()}
@@ -451,7 +442,7 @@ export default function Token(props) {
             <TimelineItem key={transaction.id}>
               <TimelineOppositeContent
                 sx={{
-                  flex: 0.2,
+                  flex: [0.4, 0.2],
                 }}
                 color="text.secondary"
               >
@@ -537,7 +528,7 @@ export default function Token(props) {
           <TimelineItem>
             <TimelineOppositeContent
               sx={{
-                flex: 0.2,
+                flex: [0.4, 0.2],
               }}
               color="text.secondary"
             >

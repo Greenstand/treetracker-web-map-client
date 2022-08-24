@@ -54,7 +54,7 @@ function TreeTagComponent({
         borderStyle: 'solid',
         p: (t) => [t.spacing(2, 2), t.spacing(4.75, 6)],
         height: 'auto',
-        maxHeight: [55.6, 87.2],
+        maxHeight: [58.6, 87.2],
       }}
       color="secondary"
       icon={
