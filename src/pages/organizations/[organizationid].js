@@ -113,7 +113,7 @@ export default function Organization(props) {
       if (map && organization) {
         // map.flyTo(tree.lat, tree.lon, 16);
         map.setFilters({
-          map_name: organization.name,
+          map_name: organization.map_name,
         });
         // TODO why I must try/catch this?
         try {
