@@ -2,7 +2,9 @@ import { Box, SvgIcon, Typography, InputBase, Divider } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker as MUIMobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { useState } from 'react';
+import { useMobile } from '../hooks/globalHooks';
 import TimeIcon from '../images/icons/time.svg';
 
 function CustomInput({ label, inputRef, inputProps, InputProps }) {
@@ -17,12 +19,12 @@ function CustomInput({ label, inputRef, inputProps, InputProps }) {
         },
       }}
     >
-      <Typography color="text.primary">{label}</Typography>
+      {label && <Typography color="text.primary">{label}</Typography>}
       <InputBase
         placeholder={label}
         ref={inputRef}
         sx={{
-          width: 96,
+          width: [72, 96],
         }}
         {...inputProps}
       />
@@ -31,20 +33,29 @@ function CustomInput({ label, inputRef, inputProps, InputProps }) {
   );
 }
 
-function CustomDatePicker({ value, onChange, label }) {
+function DesktopDatePicker({ value, onChange, label }) {
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DatePicker
-        label={label}
-        value={value}
-        onChange={onChange}
-        renderInput={CustomInput}
-      />
-    </LocalizationProvider>
+    <DatePicker
+      label={label}
+      value={value}
+      onChange={onChange}
+      renderInput={CustomInput}
+    />
+  );
+}
+
+function MobileDatePicker({ value, onChange }) {
+  return (
+    <MUIMobileDatePicker
+      value={value}
+      onChange={onChange}
+      renderInput={CustomInput}
+    />
   );
 }
 
 function Timeline() {
+  const isMobile = useMobile();
   const [showPicker, setShowPicker] = useState(false);
   const [timeFrame, setTimeFrame] = useState({
     start: Date.now(),
@@ -56,56 +67,60 @@ function Timeline() {
   };
 
   const handleDatePickerChange = (newValue, frameType) => {
+    // TODO: handle loading data with api
     setTimeFrame((prevTimeFrame) => ({
-        ...prevTimeFrame,
-        [frameType]: newValue,
-      }));
+      ...prevTimeFrame,
+      [frameType]: newValue,
+    }));
   };
 
   return (
     <Box
+      sx={{
+        position: 'absolute',
+        zIndex: ['996', '9999'], // 996 is same as used for zoom buttons
+        bottom: '0px',
+        left: '0px',
+        margin: '20px',
+        mb: isMobile && 'calc(2rem + 25px)', // currently based on the zoom buttons
+        pr: showPicker && '15px',
+        height: 52,
+        borderRadius: 4,
+        backgroundColor: 'background.paper',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 1,
+        boxSizing: 'border-box',
+      }}
+    >
+      <Box
+        onClick={togglePicker}
         sx={{
-          position: 'absolute',
-          zIndex: '9999',
-          bottom: '0px',
-          left: '0px',
-          margin: '20px',
-          pr: showPicker && '15px',
           height: 52,
+          width: 52,
           borderRadius: 4,
-          backgroundColor: 'background.paper',
+          background: 'none',
+          '-webkit-tap-highlight-color': 'transparent',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: 1,
-          boxSizing: 'border-box',
+          cursor: 'pointer',
         }}
       >
-        <Box
-          onClick={togglePicker}
+        <SvgIcon
+          component={TimeIcon}
           sx={{
-            height: 52,
-            width: 52,
-            borderRadius: 4,
-            background: 'none',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            cursor: 'pointer',
+            width: 22,
+            '& path': {
+              fill: ({ palette }) => palette.primary.main,
+            },
           }}
-        >
-          <SvgIcon
-            component={TimeIcon}
-            sx={{
-              width: 22,
-              '& path': {
-                fill: ({ palette }) => palette.primary.main,
-              },
-            }}
-            inheritViewBox
-          />
-        </Box>
-        {showPicker && (
+          inheritViewBox
+        />
+      </Box>
+      {showPicker && (
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Box
             sx={{
               display: 'flex',
@@ -113,20 +128,47 @@ function Timeline() {
               gap: 4,
             }}
           >
-            <CustomDatePicker
-              value={timeFrame.start}
-              onChange={(newValue) => handleDatePickerChange(newValue, 'start')}
-              label="Start"
-            />
-            <Divider sx={{ height: 36 }} orientation="vertical" />
-            <CustomDatePicker
-              value={timeFrame.end}
-              onChange={(newValue) => handleDatePickerChange(newValue, 'end')}
-              label="End"
-            />
+            {!isMobile ? (
+              <>
+                <DesktopDatePicker
+                  value={timeFrame.start}
+                  onChange={(newValue) =>
+                    handleDatePickerChange(newValue, 'start')
+                  }
+                  label="Start"
+                />
+                <Divider sx={{ height: 36 }} orientation="vertical" />
+                <DesktopDatePicker
+                  value={timeFrame.end}
+                  onChange={(newValue) =>
+                    handleDatePickerChange(newValue, 'end')
+                  }
+                  label="End"
+                />
+              </>
+            ) : (
+              <>
+                <MobileDatePicker
+                  value={timeFrame.start}
+                  onChange={(newValue) =>
+                    handleDatePickerChange(newValue, 'start')
+                  }
+                  label="Start"
+                />
+                <Typography>to</Typography>
+                <MobileDatePicker
+                  value={timeFrame.end}
+                  onChange={(newValue) =>
+                    handleDatePickerChange(newValue, 'end')
+                  }
+                  label="End"
+                />
+              </>
+            )}
           </Box>
-        )}
-      </Box>
+        </LocalizationProvider>
+      )}
+    </Box>
   );
 }
 

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 import SearchFilter from './SearchFilter';
+import Timeline from './Timeline';
 import ZoomIn from '../images/zoom-in.svg';
 import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
@@ -70,6 +71,7 @@ export default function Layout({ children }) {
         </Box>
         <Drawer>{children}</Drawer>
         <Box className={classes.right}>
+          <Timeline />
           <Box
             sx={{
               position: 'absolute',
