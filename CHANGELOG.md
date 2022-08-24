@@ -1,3 +1,17 @@
+# [2.0.0-beta.60](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.59...v2.0.0-beta.60) (2022-08-24)
+
+
+### Bug Fixes
+
+* can click tree on planter page ([293875e](https://github.com/Greenstand/treetracker-web-map-client/commit/293875e5f2c82eeb7b3e3cb6f3d4223ddd814e13))
+* org map ([d016232](https://github.com/Greenstand/treetracker-web-map-client/commit/d01623227f5611772da50b0ded4803424b85059d))
+* treepage map can not load correctly ([2036baa](https://github.com/Greenstand/treetracker-web-map-client/commit/2036baac5c542ef04ba59ab5d46093a45255a66c))
+
+
+### Features
+
+* add link for species ([13c7abd](https://github.com/Greenstand/treetracker-web-map-client/commit/13c7abddd33e52cc008948b926d0ef91874f7799))
+
 # [2.0.0-beta.59](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.58...v2.0.0-beta.59) (2022-08-24)
 
 
