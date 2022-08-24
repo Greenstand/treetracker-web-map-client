@@ -197,21 +197,21 @@ function Top({ trees, planters, countries, organizations }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const [trees, countries, planters, organizations] = await Promise.all([
-    getFeaturedTrees(),
+    getFeaturedTrees(), //
     process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true'
       ? []
       : getCountryLeaderboard(),
     (async () => {
       const data = await utils.requestAPI('/planters/featured');
       log.warn('planters', data);
-      return [data];
+      return data.planters;
     })(),
     (async () => {
       const data = await utils.requestAPI('/organizations/featured');
       log.warn('organizations', data);
-      return [data];
+      return data.organizations;
     })(),
   ]);
   return {
@@ -221,7 +221,6 @@ export async function getStaticProps() {
       planters,
       organizations,
     },
-    revalidate: 60,
   };
 }
 

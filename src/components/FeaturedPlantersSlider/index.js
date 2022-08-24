@@ -130,9 +130,7 @@ function FeaturedPlantersSlider({
               >
                 <CardMedia
                   component="img"
-                  image={
-                    planter.logo_url || planter.image_url || planter.photo_url
-                  }
+                  image={planter.logo_url || planter.image_url}
                   alt="tree"
                   sx={{
                     width: 136,
