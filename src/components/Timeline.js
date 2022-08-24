@@ -39,6 +39,7 @@ function DesktopDatePicker({ value, onChange, label }) {
       label={label}
       value={value}
       onChange={onChange}
+      maxDate={Date.now()}
       renderInput={CustomInput}
     />
   );
@@ -49,6 +50,7 @@ function MobileDatePicker({ value, onChange }) {
     <MUIMobileDatePicker
       value={value}
       onChange={onChange}
+      maxDate={Date.now()}
       renderInput={CustomInput}
     />
   );
@@ -67,7 +69,13 @@ function Timeline() {
   };
 
   const handleDatePickerChange = (newValue, frameType) => {
+    // check if the start date is before the end date
+    const start = frameType === 'start' ? newValue : timeFrame.start;
+    const end = frameType === 'end' ? newValue : timeFrame.end;
+    if (start > end) return;
+
     // TODO: handle loading data with api
+
     setTimeFrame((prevTimeFrame) => ({
       ...prevTimeFrame,
       [frameType]: newValue,
