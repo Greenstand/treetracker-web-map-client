@@ -1,3 +1,16 @@
+# [2.0.0-beta.58](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.57...v2.0.0-beta.58) (2022-08-24)
+
+
+### Bug Fixes
+
+* removed fallback ([f12da4c](https://github.com/Greenstand/treetracker-web-map-client/commit/f12da4ce51a43ddbf58e187737bb1b036c2dc577))
+* undefined planter photo ([54efa53](https://github.com/Greenstand/treetracker-web-map-client/commit/54efa53d0256263138c342b869700bf900eecf54))
+
+
+### Features
+
+* isr for top ([cf2221c](https://github.com/Greenstand/treetracker-web-map-client/commit/cf2221c1c6964e350a28d9a4a166217231ea24bc))
+
 # [2.0.0-beta.57](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.56...v2.0.0-beta.57) (2022-08-22)
 
 
