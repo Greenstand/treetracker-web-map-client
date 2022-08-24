@@ -346,14 +346,6 @@ export default function Organization(props) {
                   mt: [5, 10],
                 }}
               >
-                {[].map((species) => (
-                  <TreeSpeciesCard
-                    key={species.id}
-                    name={species.name}
-                    count={species.count}
-                  />
-                ))}
-                {/* Placeholder, remove after API fixed */}
                 {organization?.species?.species?.map((s) => (
                   <React.Fragment key={s.name}>
                     <TreeSpeciesCard
