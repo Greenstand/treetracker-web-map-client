@@ -20,11 +20,7 @@ const handlers = [
   rest.get(`${host}/trees*`, (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(trees)),
   ),
-
-  rest.get(`${host}/planters/:id`, (req, res, ctx) =>
-    res(ctx.status(200, 'success'), ctx.json(planter)),
-  ),
-  rest.get(`${host}/planters*`, (req, res, ctx) =>
+  rest.get(`${host}/planters/featured`, (req, res, ctx) =>
     res(
       ctx.status(200, 'success'),
       ctx.json({
@@ -33,16 +29,19 @@ const handlers = [
     ),
   ),
 
-  rest.get(`${host}/organizations/:id`, (req, res, ctx) =>
-    res(ctx.status(200, 'success'), ctx.json(organization)),
+  rest.get(`${host}/planters/:id`, (req, res, ctx) =>
+    res(ctx.status(200, 'success'), ctx.json(planter)),
   ),
-  rest.get(`${host}/organizations*`, (req, res, ctx) =>
+  rest.get(`${host}/organizations/featured`, (req, res, ctx) =>
     res(
       ctx.status(200, 'success'),
       ctx.json({
-        organizations: [organization, organization],
+        organizations: [organization, organization, organization],
       }),
     ),
+  ),
+  rest.get(`${host}/organizations/:id`, (req, res, ctx) =>
+    res(ctx.status(200, 'success'), ctx.json(organization)),
   ),
 
   rest.get(`${host}/species*`, (req, res, ctx) =>

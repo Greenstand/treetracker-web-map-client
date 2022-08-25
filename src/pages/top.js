@@ -197,7 +197,7 @@ function Top({ trees, planters, countries, organizations }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const [trees, countries, planters, organizations] = await Promise.all([
     getFeaturedTrees(), //
     process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true'
@@ -221,6 +221,7 @@ export async function getServerSideProps() {
       planters,
       organizations,
     },
+    revalidate: 60,
   };
 }
 
