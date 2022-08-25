@@ -1,3 +1,10 @@
+# [2.0.0-beta.62](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.61...v2.0.0-beta.62) (2022-08-25)
+
+
+### Bug Fixes
+
+* isr usage of msw ([38cbd8d](https://github.com/Greenstand/treetracker-web-map-client/commit/38cbd8d58e2c6a1a631e7aa7ae988ee191fded2e))
+
 # [2.0.0-beta.61](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.60...v2.0.0-beta.61) (2022-08-24)
 
 
