@@ -46,9 +46,9 @@ function CustomCard(props) {
         >
           <SvgIcon
             sx={{
-              ...sx,
               height: [32, 52],
               width: [32, 52],
+              ...sx,
               fill: 'none',
             }}
             component={iconURI}
