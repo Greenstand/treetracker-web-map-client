@@ -11,7 +11,9 @@ export default function Drawer(props) {
 
   function handleOpen() {
     log.warn('on click!');
-    rootRef.current.style.transform = 'translateY(500px)';
+    rootRef.current.style.transform = `translateY(${
+      window.innerHeight * 0.6
+    }px)`;
     buttonRef.current.style.transform = 'translateY(45px)';
   }
 
@@ -101,7 +103,10 @@ export default function Drawer(props) {
   }, []);
 
   React.useEffect(() => {
-    rootRef.current.style.transform = 'translateY(500px)';
+    log.warn('window.innerHeight:', window.innerHeight);
+    rootRef.current.style.transform = `translateY(${
+      window.innerHeight * 0.6
+    }px)`;
     rootRef.current.buttonTouchCache = {
       startY: 0,
     };
@@ -123,7 +128,7 @@ export default function Drawer(props) {
     // touchCache.lastTime = Date.now();
     // touchCache.lastTranslateY = translateY;
     // touchCache.lastPageY = event.touches[0].pageY;
-    // rootRef.current.style.transform = `translateY(${translateY}px)`;
+    // rootRef.current.style.transform = `translateY(${ translateY }px)`;
   }, []);
 
   const handleButtonTouchMove = React.useCallback((event) => {
@@ -145,6 +150,14 @@ export default function Drawer(props) {
     buttonRef.current.style.transform = `translateY(0px)`;
   }, []);
 
+  const handleContentTouchMove = React.useCallback((event) => {
+    log.warn('content touch move: ', event);
+    log.warn('content rect:', contentRef.current.scrollTop);
+    if (contentRef.current.scrollTop > 0) {
+      event.stopPropagation();
+    }
+  }, []);
+
   React.useEffect(() => {
     log.warn('mount listener...');
     rootRef.current.addEventListener('touchstart', handleTouchStart);
@@ -153,6 +166,7 @@ export default function Drawer(props) {
     buttonRef.current.addEventListener('touchstart', handleButtonTouchStart);
     buttonRef.current.addEventListener('touchmove', handleButtonTouchMove);
     buttonRef.current.addEventListener('touchend', handleButtonTouchEnd);
+    contentRef.current.addEventListener('touchmove', handleContentTouchMove);
 
     // contentRef.current.addEventListener("touchstart", e => { e.stopPropagation(); }, { passive: false })
     // contentRef.current.addEventListener("touchmove", e => { e.stopPropagation(); }, { passive: false })
@@ -171,6 +185,10 @@ export default function Drawer(props) {
       );
       buttonRef.current.removeEventListener('touchmove', handleButtonTouchMove);
       buttonRef.current.removeEventListener('touchend', handleButtonTouchEnd);
+      contentRef.current.removeEventListener(
+        'touchmove',
+        handleContentTouchMove,
+      );
       // contentRef.current.removeEventListener("touchstart");
       // contentRef.current.addEventListener("touchmove");
       // contentRef.current.addEventListener("touchend");
