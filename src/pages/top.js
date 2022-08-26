@@ -201,22 +201,28 @@ function Top({ trees, planters, countries, organizations, wallets }) {
 }
 
 export async function getStaticProps() {
-  const [trees, countries, planters, organizations] = await Promise.all([
-    getFeaturedTrees(), //
-    process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true'
-      ? []
-      : getCountryLeaderboard(),
-    (async () => {
-      const data = await utils.requestAPI('/planters/featured');
-      log.warn('planters', data);
-      return data.planters;
-    })(),
-    (async () => {
-      const data = await utils.requestAPI('/organizations/featured');
-      log.warn('organizations', data);
-      return data.organizations;
-    })(),
-  ]);
+  const [trees, countries, planters, organizations, wallets] =
+    await Promise.all([
+      getFeaturedTrees(), //
+      process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true'
+        ? []
+        : getCountryLeaderboard(),
+      (async () => {
+        const data = await utils.requestAPI('/planters/featured');
+        log.warn('planters', data);
+        return data.planters;
+      })(),
+      (async () => {
+        const data = await utils.requestAPI('/organizations/featured');
+        log.warn('organizations', data);
+        return data.organizations;
+      })(),
+      (async () => {
+        const data = await utils.requestAPI('/wallets');
+        log.warn('wallets', data);
+        return data.wallets;
+      })(),
+    ]);
   return {
     props: {
       trees,
