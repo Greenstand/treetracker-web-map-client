@@ -1,3 +1,17 @@
+# [2.0.0-beta.63](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.62...v2.0.0-beta.63) (2022-08-26)
+
+
+### Bug Fixes
+
+* timeline test ([c98686e](https://github.com/Greenstand/treetracker-web-map-client/commit/c98686e75a3e344c701fb2c5d1b0c4162a324fe2))
+
+
+### Features
+
+* add timeline desktop ([4895149](https://github.com/Greenstand/treetracker-web-map-client/commit/489514925a5c0da67c89618a0cf0fd77b1cbeed0))
+* add timeline input validation ([1849e05](https://github.com/Greenstand/treetracker-web-map-client/commit/1849e055094f8f162e1aff252ed04234f65c0c65))
+* add timeline mobile ([36d199f](https://github.com/Greenstand/treetracker-web-map-client/commit/36d199f49e65affdc6f25dc6f3795f2fcc0457bb))
+
 # [2.0.0-beta.62](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.61...v2.0.0-beta.62) (2022-08-25)
 
 
