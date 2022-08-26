@@ -246,8 +246,6 @@ export default function Drawer(props) {
           transition: 'transform 125ms cubic-bezier(0, 0, 0.2, 1) 0ms',
           // transform: 'translateY(500px)',
           zIndex: '999',
-          display: 'flex',
-          flexDirection: 'column',
         }}
       >
         <Box
@@ -274,7 +272,6 @@ export default function Drawer(props) {
             sx={{
               width: 1,
               pointerEvents: 'none',
-              flex: 1,
             }}
             id="drawer-title-container"
           />
@@ -285,9 +282,8 @@ export default function Drawer(props) {
           sx={{
             position: 'relative',
             overflow: 'scroll',
-            minHeight: 'min-content',
+            minHeight: 200,
             height: 'auto',
-            pb: 18,
           }}
           className="drawer-content"
         >
