@@ -1,3 +1,12 @@
+# [2.0.0-beta.65](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.64...v2.0.0-beta.65) (2022-08-26)
+
+
+### Features
+
+* avoid drawer move when touch ([a13015a](https://github.com/Greenstand/treetracker-web-map-client/commit/a13015a9f3eff7b5cc47d0324ddd03efec31e914))
+* disable pull to refresh ([321f5e3](https://github.com/Greenstand/treetracker-web-map-client/commit/321f5e3650ddf78417c48e481b1208357660c5d1))
+* initial position ([4aa4994](https://github.com/Greenstand/treetracker-web-map-client/commit/4aa4994618bf408f3d5b57b43b38b58c075a505e))
+
 # [2.0.0-beta.64](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.63...v2.0.0-beta.64) (2022-08-26)
 
 
