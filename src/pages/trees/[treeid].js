@@ -321,6 +321,8 @@ export default function Tree({
         TreeTagValue={tree.wallet_name}
         title="Wallet ownner"
         icon={<SvgIcon component={AccountBalanceWalletIcon} />}
+        subtitle="click to enter"
+        link={`/wallets/${tree.wallet_id}`}
       />,
     );
   } else {
