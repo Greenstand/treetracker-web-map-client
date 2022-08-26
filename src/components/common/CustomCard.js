@@ -11,7 +11,7 @@ const useStyles = makeStyles()((theme) => ({}));
 function CustomCard(props) {
   const { classes } = useStyles(props);
   const theme = useTheme();
-  const { iconURI, title, text, handleClick, disabled, tooltip } = props;
+  const { iconURI, title, text, handleClick, disabled, tooltip, sx } = props;
 
   return (
     <Box
@@ -46,6 +46,7 @@ function CustomCard(props) {
         >
           <SvgIcon
             sx={{
+              ...sx,
               height: [32, 52],
               width: [32, 52],
               fill: 'none',
