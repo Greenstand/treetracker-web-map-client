@@ -1,3 +1,15 @@
+# [2.0.0-beta.64](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.63...v2.0.0-beta.64) (2022-08-26)
+
+
+### Features
+
+* tree page enter wallet ([ddc2fec](https://github.com/Greenstand/treetracker-web-map-client/commit/ddc2fec4bc57963e4cd02fefc76a07863998e69f))
+
+
+### Reverts
+
+* Revert "fix(drawer): not able to scroll to bottom content" ([31934fb](https://github.com/Greenstand/treetracker-web-map-client/commit/31934fb6081316124013ef12939578cf64c54730))
+
 # [2.0.0-beta.63](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.62...v2.0.0-beta.63) (2022-08-26)
 
 
