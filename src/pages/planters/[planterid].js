@@ -290,7 +290,10 @@ export default function Planter(props) {
           <Typography variant="h4">
             Featured trees by {planter.first_name}
           </Typography>
-          <FeaturedTreesSlider trees={featuredTrees.trees} />
+          <FeaturedTreesSlider
+            trees={featuredTrees.trees}
+            link={(item) => `/planters/${planter.id}/trees/${item.id}`}
+          />
         </Box>
 
         <Grid
