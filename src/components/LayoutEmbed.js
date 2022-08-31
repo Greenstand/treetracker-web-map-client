@@ -104,7 +104,6 @@ export default function Layout({
               flexShrink: 0,
               '& .MuiDrawer-paper': {
                 width: 568,
-                boxSizing: 'border-box',
               },
             }}
             variant="persistent"
@@ -122,7 +121,7 @@ export default function Layout({
                   top: '0px',
                   background: 'white',
                   width: 568,
-                  overflow: 'scroll',
+                  overflowY: 'scroll',
                   height: '100vh',
                 }}
               >
