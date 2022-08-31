@@ -94,11 +94,10 @@ function TreeImage(isMobile) {
     <SvgIcon
       component={TreeIcon}
       inheritViewBox
-      sx={`${
-        !isMobile
-          ? 'width: 13.5px; height: 18px;'
-          : 'width: 12px; height: 14px;'
-      }`}
+      sx={{
+        width: !isMobile ? '13.5px' : '12px',
+        height: !isMobile ? '18px' : '14px',
+      }}
       alt="tree icon"
     />
   );
