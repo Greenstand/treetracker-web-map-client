@@ -18,6 +18,7 @@ import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
 import { useEffect } from 'react';
+import UUIDTag from 'components/common/UUIDTag';
 import { getWalletById, getTokenById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import Badges from '../../components/Badges';
@@ -279,7 +280,7 @@ export default function Token(props) {
             }}
           >
             <Typography variant="h2" color={theme.palette.common.white}>
-              Token #{token.id}
+              <UUIDTag uuid={token.id} />
             </Typography>
             <Typography
               sx={{
