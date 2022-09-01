@@ -1,3 +1,11 @@
+# [2.0.0-beta.66](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.65...v2.0.0-beta.66) (2022-09-01)
+
+
+### Bug Fixes
+
+* react sx prop warning ([f562671](https://github.com/Greenstand/treetracker-web-map-client/commit/f562671464f7fe7d951d2b48eead108d91e353a1))
+* second scrollbar embed pages ([4c656ca](https://github.com/Greenstand/treetracker-web-map-client/commit/4c656ca06c78e8defdb7337d8903c1ba1e89e36d))
+
 # [2.0.0-beta.65](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.64...v2.0.0-beta.65) (2022-08-26)
 
 
