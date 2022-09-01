@@ -1,3 +1,17 @@
+# [2.0.0-beta.67](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.66...v2.0.0-beta.67) (2022-09-01)
+
+
+### Bug Fixes
+
+* added integration test for wallet add ([d4d10f8](https://github.com/Greenstand/treetracker-web-map-client/commit/d4d10f8a9b1572a41fb379722c8888855e3cadc7))
+
+
+### Features
+
+* added featured wallet list ([2926cb5](https://github.com/Greenstand/treetracker-web-map-client/commit/2926cb5e52a73f29a5058fcc3c4306bb2772109d))
+* crumbs for pages ([f6b8e1e](https://github.com/Greenstand/treetracker-web-map-client/commit/f6b8e1e6f9f69319d46799de457c86c9ba25f8c1))
+* link for planter's tree ([8ee7b70](https://github.com/Greenstand/treetracker-web-map-client/commit/8ee7b706250d90fbf0a434294c01fbeffd84bd65))
+
 # [2.0.0-beta.66](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.65...v2.0.0-beta.66) (2022-09-01)
 
 
