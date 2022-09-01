@@ -2,6 +2,7 @@
 import AccessTime from '@mui/icons-material/AccessTime';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import HomeIcon from '@mui/icons-material/Home';
 import HubIcon from '@mui/icons-material/Hub';
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
@@ -26,6 +27,7 @@ import Link from '../../components/Link';
 import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
+import Crumbs from '../../components/common/Crumbs';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile, useEmbed } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
@@ -40,6 +42,7 @@ import TokenIcon from '../../images/icons/token.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
+import * as utils from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   imageContainer: {
@@ -406,10 +409,29 @@ export default function Tree({
             alignItems: 'center',
           }}
         >
-          <BackButton
-            onClick={() => {
-              window.history.back();
-            }}
+          <Crumbs
+            items={[
+              {
+                // icon: <HomeIcon />,
+                name: 'Home',
+                url: '/',
+              },
+              ...(userCameFromPlanterPage
+                ? [
+                    {
+                      url: `/planters/${planter.id}`,
+                      icon: planter.image_url,
+                      name: `${utils.getPlanterName(
+                        planter.first_name,
+                        planter.last_name,
+                      )}`,
+                    },
+                  ]
+                : []),
+              {
+                name: `tree #${tree.id}`,
+              },
+            ]}
           />
           <Box>
             {}
@@ -430,24 +452,6 @@ export default function Tree({
             />
           </Box>
         </Box>
-      )}
-      {!isMobile && userCameFromPlanterPage && (
-        <Link href={`/planters/${planter.id}`}>
-          <Box
-            sx={{
-              display: 'flex',
-              width: '100%',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar className={classes.media} src={planter.image_url} />
-            <Box sx={{ marginLeft: 3 }}>
-              <Typography variant="h5">
-                {planter.first_name} {planter.last_name}
-              </Typography>
-            </Box>
-          </Box>
-        </Link>
       )}
       <Box
         sx={[

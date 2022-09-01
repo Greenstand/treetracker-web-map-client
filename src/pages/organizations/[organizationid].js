@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import HomeIcon from '@mui/icons-material/Home';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import {
@@ -30,6 +31,7 @@ import PageWrapper from '../../components/PageWrapper';
 import ProfileAvatar from '../../components/ProfileAvatar';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
+import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
 import Info from '../../components/common/Info';
 import { useMobile } from '../../hooks/globalHooks';
@@ -159,7 +161,18 @@ export default function Organization(props) {
                 alignItems: 'center',
               }}
             >
-              <BackButton />
+              <Crumbs
+                items={[
+                  {
+                    icon: <HomeIcon />,
+                    url: '/',
+                  },
+                  {
+                    icon: logo_url,
+                    name: `organization ${name}`,
+                  },
+                ]}
+              />
 
               <SvgIcon
                 component={SearchIcon}
