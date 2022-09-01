@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import HomeIcon from '@mui/icons-material/Home';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -24,6 +25,7 @@ import InformationCard1 from '../../components/InformationCard1';
 import ProfileAvatar from '../../components/ProfileAvatar';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
+import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
 import DataTag from '../../components/common/DataTag';
 import DrawerTitle from '../../components/common/DrawerTitle';
@@ -162,7 +164,21 @@ export default function Planter(props) {
               alignItems: 'center',
             }}
           >
-            <BackButton />
+            <Crumbs
+              items={[
+                {
+                  icon: <HomeIcon />,
+                  url: '/',
+                },
+                {
+                  icon: planter.image_url,
+                  name: `${utils.getPlanterName(
+                    planter.first_name,
+                    planter.last_name,
+                  )}`,
+                },
+              ]}
+            />
             <Box>
               {}
               <SvgIcon
@@ -290,7 +306,10 @@ export default function Planter(props) {
           <Typography variant="h4">
             Featured trees by {planter.first_name}
           </Typography>
-          <FeaturedTreesSlider trees={featuredTrees.trees} />
+          <FeaturedTreesSlider
+            trees={featuredTrees.trees}
+            link={(item) => `/planters/${planter.id}/trees/${item.id}`}
+          />
         </Box>
 
         <Grid
