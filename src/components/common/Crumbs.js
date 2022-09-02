@@ -1,7 +1,7 @@
 import { Box, Typography, Avatar } from '@mui/material';
 import Link from '../Link';
 
-export default function Crombs(props) {
+export default function Crumbs(props) {
   const { items } = props;
 
   return (
