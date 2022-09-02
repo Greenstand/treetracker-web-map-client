@@ -6,7 +6,11 @@ function UUIDTag({ uuid, sx }) {
     uuid.length,
   )}`;
 
-  return <Box sx={sx}>Token #{formattedId}</Box>;
+  return (
+    <Box component="span" sx={sx}>
+      {formattedId}
+    </Box>
+  );
 }
 
 export default UUIDTag;

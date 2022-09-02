@@ -280,7 +280,7 @@ export default function Token(props) {
             }}
           >
             <Typography variant="h2" color={theme.palette.common.white}>
-              <UUIDTag uuid={token.id} />
+              Token #<UUIDTag uuid={token.id} />
             </Typography>
             <Typography
               sx={{
