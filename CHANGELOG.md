@@ -1,3 +1,15 @@
+# [2.0.0-beta.68](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.67...v2.0.0-beta.68) (2022-09-02)
+
+
+### Bug Fixes
+
+* click tree icon error ([71628c8](https://github.com/Greenstand/treetracker-web-map-client/commit/71628c8102ef682b45350fc5ed0c5fe9f9fd4c0a))
+
+
+### Features
+
+* add crumbs to wallet token page ([1e0753c](https://github.com/Greenstand/treetracker-web-map-client/commit/1e0753c071e02f86a0bd3c247c3d240cae0008b4))
+
 # [2.0.0-beta.67](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.66...v2.0.0-beta.67) (2022-09-01)
 
 
