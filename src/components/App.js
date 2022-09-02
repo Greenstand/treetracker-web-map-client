@@ -80,10 +80,18 @@ function MapComponent() {
       ...(router.query.timeline && { timeline: router.query.timeline }),
     };
 
-    router.push({
-      pathname: `${path[1] || ''}/${path[4] || 'trees'}/${
+    let {pathname} = window.location;
+    if (path) {
+      pathname = `${path[1] || ''}/${path[4] || 'trees'}/${
         path[4] === 'tokens' ? path[5] : tree.id
-      }`,
+      }`;
+    } else {
+      pathname = `/trees/${tree.id}`;
+    }
+    log.warn('pathname to push:', pathname);
+
+    router.push({
+      pathname,
       query: optionalParams,
     });
   }

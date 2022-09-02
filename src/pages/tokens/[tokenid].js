@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { getWalletById, getTokenById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
@@ -28,6 +29,7 @@ import Link from '../../components/Link';
 import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
+import Crumbs from '../../components/common/Crumbs';
 import Info from '../../components/common/Info';
 import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
 import TreeTag from '../../components/common/TreeTag';
@@ -61,6 +63,8 @@ export default function Token(props) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
   const isMobile = useMobile();
+  const router = useRouter();
+  const userCameFromWalletPage = router.asPath.includes('wallets');
 
   log.warn('map:', mapContext);
 
@@ -175,7 +179,27 @@ export default function Token(props) {
             alignItems: 'center',
           }}
         >
-          <BackButton />
+          <Crumbs
+            items={[
+              {
+                // icon: <HomeIcon />,
+                name: 'Home',
+                url: '/',
+              },
+              ...(userCameFromWalletPage
+                ? [
+                    {
+                      url: `/wallets/${wallet.id}`,
+                      icon: wallet.logo_url,
+                      name: wallet.name,
+                    },
+                  ]
+                : []),
+              {
+                name: `token #${token.id}`,
+              },
+            ]}
+          />
           <Box>
             {}
             <SvgIcon
