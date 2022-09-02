@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -18,6 +19,7 @@ import { requestAPI } from 'models/utils';
 import ImpactSection from '../../components/ImpactSection';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
+import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
@@ -110,7 +112,21 @@ export default function Wallet(props) {
             alignItems: 'center',
           }}
         >
-          <BackButton />
+          <Crumbs
+            items={[
+              {
+                // icon: <HomeIcon />,
+                name: 'Home',
+                url: '/',
+              },
+              {
+                icon: wallet.logo_url || (
+                  <SvgIcon component={AccountBalanceWalletIcon} />
+                ),
+                name: `${wallet.name}`,
+              },
+            ]}
+          />
           <Box>
             {}
             <SvgIcon
@@ -249,7 +265,7 @@ export default function Wallet(props) {
                 TreeTagValue={token.id}
                 title="Token ID"
                 icon={<SvgIcon component={TokenIcon} />}
-                link={`/tokens/${token.id}`}
+                link={`/wallets/${wallet.id}/tokens/${token.id}`}
               />
             </Box>
           ))}

@@ -26,6 +26,10 @@ module.exports = {
         destination: '/trees/:treeId(\\d{1,})',
       },
       {
+        source: '/wallets/:walletId(.{36})/tokens/:tokenId(.{36})',
+        destination: '/tokens/:tokenId([a-z0-9-]{36})',
+      },
+      {
         source: '/map/:map_name(\\d{1,})',
         destination: '/?map=:map_name',
       },
