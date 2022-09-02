@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Tooltip, Typography } from '@mui/material';
 
 function UUIDTag({ uuid, sx }) {
   const formattedId = `${uuid.slice(0, 4)}...${uuid.slice(
@@ -6,10 +6,16 @@ function UUIDTag({ uuid, sx }) {
     uuid.length,
   )}`;
 
+  const title = (
+    <Typography sx={{ fontSize: '1.2em', maxWidth: 'none' }}>{uuid}</Typography>
+  );
+
   return (
-    <Box component="span" sx={sx}>
-      {formattedId}
-    </Box>
+    <Tooltip title={title}>
+      <Box component="span" sx={sx}>
+        {formattedId}
+      </Box>
+    </Tooltip>
   );
 }
 
