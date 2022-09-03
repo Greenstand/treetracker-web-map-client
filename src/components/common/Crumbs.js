@@ -32,19 +32,19 @@ export default function Crumbs(props) {
             icon = (
               <Avatar
                 sx={{
-                  width: [16, 24],
-                  height: [16, 24],
-                  mr: 0.5,
+                  width: 24,
+                  height: 24,
+                  mr: 1,
                 }}
                 src={item.icon}
               />
             );
           }
-          
+
           return (
             <Link href={item.url || '#'} key={item.url}>
               <Typography
-                variant="caption"
+                variant="h6"
                 gutterBottom={false}
                 sx={{
                   display: 'flex',

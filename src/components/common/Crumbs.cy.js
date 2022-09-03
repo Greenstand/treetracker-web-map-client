@@ -16,7 +16,8 @@ describe('Crumbs', () => {
           <Crumbs
             items={[
               {
-                icon: <HomeIcon />,
+                // icon: <HomeIcon />,
+                name: 'Home',
                 url: '/',
               },
               {
@@ -35,7 +36,8 @@ describe('Crumbs', () => {
           <Crumbs
             items={[
               {
-                icon: <HomeIcon />,
+                // icon: <HomeIcon />,
+                name: 'Home',
                 url: '/',
               },
               {
@@ -58,7 +60,8 @@ describe('Crumbs', () => {
           <Crumbs
             items={[
               {
-                icon: <HomeIcon />,
+                // icon: <HomeIcon />,
+                name: 'Home',
                 url: '/',
               },
               {

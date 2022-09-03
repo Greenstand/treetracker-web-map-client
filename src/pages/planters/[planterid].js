@@ -167,7 +167,8 @@ export default function Planter(props) {
             <Crumbs
               items={[
                 {
-                  icon: <HomeIcon />,
+                  // icon: <HomeIcon />,
+                  name: 'Home',
                   url: '/',
                 },
                 {

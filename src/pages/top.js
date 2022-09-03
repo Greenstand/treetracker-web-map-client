@@ -99,7 +99,8 @@ function Top({ trees, planters, countries, organizations, wallets }) {
           <Crumbs
             items={[
               {
-                icon: <HomeIcon />,
+                // icon: <HomeIcon />,
+                name: 'Home',
                 url: '/',
               },
               {
