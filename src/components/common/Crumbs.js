@@ -1,7 +1,7 @@
-import { Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar, Breadcrumbs } from '@mui/material';
 import Link from '../Link';
 
-export default function Crombs(props) {
+export default function Crumbs(props) {
   const { items } = props;
 
   return (
@@ -10,58 +10,56 @@ export default function Crombs(props) {
         display: 'flex',
       }}
     >
-      {items.map((item, i) => {
-        let {icon} = item;
-        if (icon && icon.toString().match(/^(https?:\/\/|data:image)/)) {
-          icon = (
-            <Avatar
-              sx={{
-                width: [16, 24],
-                height: [16, 24],
-              }}
-              src={item.icon}
-            />
-          );
-        }
-        const body = (
-          <>
-            {icon}
-            <Typography
-              variant="caption"
-              sx={{
-                textDecoration: 'none',
-              }}
-            >
-              {item.name}
-            </Typography>
-          </>
-        );
-
-        return (
-          <Box
-            key={item.url}
+      <Breadcrumbs
+        aria-label="breadcrumb"
+        separator={
+          <Typography
+            variant="caption"
+            gutterBottom={false}
             sx={{
               display: 'flex',
-              flexDirection: 'row',
-              '& a': {
-                textDecoration: 'none',
-              },
+              alignItems: 'flex-end',
+              minHeight: [16, 24],
             }}
           >
-            {item.url && <Link href={item.url}>{body}</Link>}
-            {!item.url && body}
-            {i < items.length - 1 && (
-              <Box
+            /
+          </Typography>
+        }
+      >
+        {items.map((item) => {
+          let { icon } = item;
+          if (icon && icon.toString().match(/^(https?:\/\/|data:image)/)) {
+            icon = (
+              <Avatar
                 sx={{
-                  mx: 1,
+                  width: [16, 24],
+                  height: [16, 24],
+                  mr: 0.5,
+                }}
+                src={item.icon}
+              />
+            );
+          }
+          
+          return (
+            <Link href={item.url || '#'} key={item.url}>
+              <Typography
+                variant="caption"
+                gutterBottom={false}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  minHeight: [16, 24],
+                  cursor: item.url || 'text',
                 }}
               >
-                <Typography variant="caption">/</Typography>
-              </Box>
-            )}
-          </Box>
-        );
-      })}
+                {icon}
+                {item.name}
+              </Typography>
+            </Link>
+          );
+        })}
+      </Breadcrumbs>
     </Box>
   );
 }
