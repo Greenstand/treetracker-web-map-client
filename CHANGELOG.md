@@ -1,3 +1,12 @@
+# [2.0.0-beta.70](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.69...v2.0.0-beta.70) (2022-09-03)
+
+
+### Features
+
+* add copy function ([611bef5](https://github.com/Greenstand/treetracker-web-map-client/commit/611bef557469bffc437bb909f04ec49c0c2ccb90))
+* add tooltip for uuid ([c8aa468](https://github.com/Greenstand/treetracker-web-map-client/commit/c8aa46898f22621b5d45d41e0efff6fd44756801))
+* add uuid tag ([5fec6e7](https://github.com/Greenstand/treetracker-web-map-client/commit/5fec6e786e3ca6a5fe8fbaf04d5df0b48a92ecfe))
+
 # [2.0.0-beta.69](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.68...v2.0.0-beta.69) (2022-09-03)
 
 
