@@ -19,6 +19,7 @@ import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import UUIDTag from 'components/common/UUIDTag';
 import { getWalletById, getTokenById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import Badges from '../../components/Badges';
@@ -303,7 +304,7 @@ export default function Token(props) {
             }}
           >
             <Typography variant="h2" color={theme.palette.common.white}>
-              Token #{token.id}
+              Token #<UUIDTag uuid={token.id} />
             </Typography>
             <Typography
               sx={{
