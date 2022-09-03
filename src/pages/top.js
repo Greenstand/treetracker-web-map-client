@@ -237,7 +237,7 @@ export async function getStaticProps() {
         return data.organizations;
       })(),
       (async () => {
-        const data = await utils.requestAPI('/wallets');
+        const data = await utils.requestAPI('/wallets/featured');
         log.warn('wallets', data);
         return data.wallets;
       })(),
