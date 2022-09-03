@@ -36,7 +36,7 @@ describe('top', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/wallets',
+      path: '/query/wallets/featured',
       statusCode: 200,
       body: {
         wallets: [wallets],
