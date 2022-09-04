@@ -75,6 +75,7 @@ function MapComponent() {
     const result = pathResolver.getPathWhenClickTree(
       tree,
       window.location.pathname,
+      router.query,
     );
     router.push(result);
   }
