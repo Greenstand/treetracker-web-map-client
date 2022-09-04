@@ -164,7 +164,8 @@ export default function Organization(props) {
               <Crumbs
                 items={[
                   {
-                    icon: <HomeIcon />,
+                    // icon: <HomeIcon />,
+                    name: 'Home',
                     url: '/',
                   },
                   {
