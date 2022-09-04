@@ -77,7 +77,13 @@ function MapComponent() {
       window.location.pathname,
       router.query,
     );
-    router.push(result);
+
+    if (window.location.pathname === result.pathname) {
+      log.warn('do not refesh if the pathname is the same!');
+    } else {
+      log.warn('going to push new path:', result);
+      router.push(result);
+    }
   }
 
   function injectApp() {
