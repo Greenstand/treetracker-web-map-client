@@ -68,6 +68,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'no-unused-vars': 'warn',
     'no-nested-ternary': 'warn',
+    'prefer-destructuring': 'warn',
   },
 
   reportUnusedDisableDirectives: true,
