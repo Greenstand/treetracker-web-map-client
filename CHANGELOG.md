@@ -1,3 +1,18 @@
+# [2.0.0-beta.71](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.70...v2.0.0-beta.71) (2022-09-04)
+
+
+### Bug Fixes
+
+* avoid refersh token page ([7aea3f4](https://github.com/Greenstand/treetracker-web-map-client/commit/7aea3f45637ffc370d8f45b97388cdcc6f138c1c))
+* use path resolver ([1242f11](https://github.com/Greenstand/treetracker-web-map-client/commit/1242f116a7db82c235feca064e5425e648c4d4dc))
+
+
+### Features
+
+* app can handle wallet+token page ([de73b70](https://github.com/Greenstand/treetracker-web-map-client/commit/de73b7059ce20a2400364eb2ae423a671a2ce512))
+* layout for crumbs ([e314231](https://github.com/Greenstand/treetracker-web-map-client/commit/e314231ad0c90c05ca9afd9de9c3b672329b5ca0))
+* path resolver ([bd7c0f8](https://github.com/Greenstand/treetracker-web-map-client/commit/bd7c0f8723e13e6a21ac515ca5f02d10481cb9c8))
+
 # [2.0.0-beta.70](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.69...v2.0.0-beta.70) (2022-09-03)
 
 
