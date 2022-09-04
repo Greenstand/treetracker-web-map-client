@@ -168,6 +168,9 @@ export default function Drawer(props) {
     buttonRef.current.addEventListener('touchend', handleButtonTouchEnd);
     contentRef.current.addEventListener('touchmove', handleContentTouchMove);
 
+    // click handlers
+    buttonRef.current.addEventListener('click', handleOpen);
+
     // contentRef.current.addEventListener("touchstart", e => { e.stopPropagation(); }, { passive: false })
     // contentRef.current.addEventListener("touchmove", e => { e.stopPropagation(); }, { passive: false })
     // contentRef.current.addEventListener("touchend", e => { e.stopPropagation(); }, { passive: false })
@@ -189,6 +192,9 @@ export default function Drawer(props) {
         'touchmove',
         handleContentTouchMove,
       );
+
+      // click handlers
+      buttonRef.current.removeEventListener('click', handleOpen);
       // contentRef.current.removeEventListener("touchstart");
       // contentRef.current.addEventListener("touchmove");
       // contentRef.current.addEventListener("touchend");
@@ -246,7 +252,6 @@ export default function Drawer(props) {
               pl: '10px',
             }}
             id="drawer-title-container-min"
-            onClick={handleOpen}
           />
         </Box>
       </Paper>
