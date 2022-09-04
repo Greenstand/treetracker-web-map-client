@@ -1,12 +1,14 @@
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
+import { useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { debounce } from 'models/utils';
 import fakeCall from './mockApi';
 
 export default function SearchInput({ keyword, setKeyword, setResults }) {
   const [inputState, setInputState] = useState('');
+  const theme = useTheme();
 
   useEffect(() => {
     if (keyword.trim().length === 0) {
@@ -19,7 +21,7 @@ export default function SearchInput({ keyword, setKeyword, setResults }) {
 
   const onChange = debounce((e) => {
     setKeyword(e.target.value);
-  }, 3000);
+  }, 300);
 
   return (
     <TextField
@@ -33,7 +35,7 @@ export default function SearchInput({ keyword, setKeyword, setResults }) {
       InputProps={{
         startAdornment: (
           <InputAdornment position="">
-            <SearchIcon />
+            <SearchIcon sx={{ color: `${theme.palette.primary.main}` }} />
           </InputAdornment>
         ),
       }}
