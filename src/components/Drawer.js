@@ -175,6 +175,7 @@ export default function Drawer(props) {
     return () => {
       if (rootRef.current === null) return;
       if (buttonRef.current === null) return;
+      if (contentRef.current === null) return;
       log.warn('unmount listener...');
       rootRef.current.removeEventListener('touchstart', handleTouchStart);
       rootRef.current.removeEventListener('touchmove', handleTouchMove);
