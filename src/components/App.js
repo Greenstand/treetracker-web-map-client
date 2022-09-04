@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
 import { useMapContext } from '../mapContext';
+import * as pathResolver from '../models/pathResolver';
 // import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
@@ -70,30 +71,12 @@ function MapComponent() {
 
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
-    const path = window.location.pathname.match(
-      /^(\/(planters|organizations|wallets)\/([a-z0-9-]+))?(\/(trees|tokens)\/([a-z0-9-]+))?$/,
+
+    const result = pathResolver.getPathWhenClickTree(
+      tree,
+      window.location.pathname,
     );
-    log.warn('parsed path:', path);
-
-    const optionalParams = {
-      ...(router.query.embed && { embed: router.query.embed }),
-      ...(router.query.timeline && { timeline: router.query.timeline }),
-    };
-
-    let { pathname } = window.location;
-    if (path) {
-      pathname = `${path[1] || ''}/${path[4] || 'trees'}/${
-        path[4] === 'tokens' ? path[5] : tree.id
-      }`;
-    } else {
-      pathname = `/trees/${tree.id}`;
-    }
-    log.warn('pathname to push:', pathname);
-
-    router.push({
-      pathname,
-      query: optionalParams,
-    });
+    router.push(result);
   }
 
   function injectApp() {
