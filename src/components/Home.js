@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 
-const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.png`;
+const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.webp`;
 const useStyles = makeStyles()((theme) => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,
