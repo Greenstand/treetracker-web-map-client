@@ -42,6 +42,7 @@ import TokenIcon from '../../images/icons/token.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
+import * as pathResolver from '../../models/pathResolver';
 import * as utils from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
@@ -82,7 +83,7 @@ export default function Tree({
   const mapContext = useMapContext();
   const theme = useTheme();
   const router = useRouter();
-  const userCameFromPlanterPage = router.asPath.includes('planters');
+  const context = pathResolver.getContext(router.asPath);
   const isMobile = useMobile();
   const isEmbed = useEmbed();
 
@@ -416,7 +417,7 @@ export default function Tree({
                 name: 'Home',
                 url: '/',
               },
-              ...(userCameFromPlanterPage
+              ...(context && context.name === 'planters'
                 ? [
                     {
                       url: `/planters/${planter.id}`,
@@ -425,6 +426,15 @@ export default function Tree({
                         planter.first_name,
                         planter.last_name,
                       )}`,
+                    },
+                  ]
+                : []),
+              ...(context && context.name === 'organizations'
+                ? [
+                    {
+                      url: `/organizations/${organization.id}`,
+                      icon: organization.logo_url,
+                      name: organization.name,
                     },
                   ]
                 : []),
@@ -583,8 +593,7 @@ export default function Tree({
             entityName={organization.name}
             entityType="Planting Organization"
             buttonText="Meet the Organization"
-            // cardImageSrc={organization?.photo_url}
-            cardImageSrc={imagePlaceholder}
+            cardImageSrc={organization?.photo_url && imagePlaceholder}
             link={`/organizations/${
               organization.id
             }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
