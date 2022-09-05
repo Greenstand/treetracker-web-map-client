@@ -163,7 +163,13 @@ function Timeline() {
                   }
                   label="Start"
                 />
-                <Typography>to</Typography>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  to
+                </Typography>
                 <MobileDatePicker
                   value={timeFrame.end}
                   onChange={(newValue) =>
