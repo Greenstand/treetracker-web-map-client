@@ -1,13 +1,14 @@
 import log from 'loglevel';
 
 const MAP_URL_PATTERN =
-  /^(\/(planters|organizations|wallets)\/([a-z0-9-]+))?(\/(trees|tokens)\/([a-z0-9-]+))?$/;
+  /^(\/(planters|organizations|wallets)\/([a-z0-9-]+))?(\/(trees|tokens)\/([a-z0-9-]+))?(\?.*)?$/;
 // 1: (/planters/1234)
 // 2: (planters)
 // 3: (1234)
 // 4: (/tokens/1234)
 // 5: (tokens)
 // 6: (1234)
+// 7: (?embed=true&timeline=true)
 
 function getPathWhenClickTree(tree, pathname, query) {
   const path = pathname.match(MAP_URL_PATTERN);
@@ -49,9 +50,8 @@ function getContext(pathname) {
       id: match[3],
     };
     return context;
-  } 
-    return null;
-  
+  }
+  return null;
 }
 
 export { getPathWhenClickTree, getContext };

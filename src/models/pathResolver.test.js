@@ -35,5 +35,15 @@ describe('Test pathResolver', () => {
         id: '178',
       });
     });
+
+    it('org context with query', () => {
+      const result = pathResolver.getContext(
+        '/organizations/178/trees/735592?bounds=38.97374153137208,-5.511957953599709,38.98919105529786,-5.504397012212283',
+      );
+      expect(result).toMatchObject({
+        name: 'organizations',
+        id: '178',
+      });
+    });
   });
 });
