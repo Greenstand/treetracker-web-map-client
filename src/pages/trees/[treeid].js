@@ -134,6 +134,14 @@ export default function Tree({
     // manipulate the map
     if (mapContext.map && tree?.lat && tree?.lon) {
       mapContext.map.flyTo(tree.lat, tree.lon, 16);
+
+      // select the tree
+      const treeDataForMap = {
+        ...tree,
+        lat: parseFloat(tree.lat.toString()),
+        lon: parseFloat(tree.lon.toString()),
+      };
+      mapContext.map.selectTree(treeDataForMap);
     }
   }, [mapContext.map, tree.lat, tree.lon]);
 
