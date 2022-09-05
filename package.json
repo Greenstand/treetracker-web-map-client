@@ -23,7 +23,7 @@
     "prepare": "is-ci || husky install",
     "prettier": "prettier ./ --write",
     "start": "next start",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "browserslist": {
     "production": [
