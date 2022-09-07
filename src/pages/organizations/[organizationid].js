@@ -315,7 +315,13 @@ export default function Organization(props) {
               <CustomCard
                 handleClick={() => setIsPlanterTab(true)}
                 iconURI={TreeIcon}
-                sx={{ width: 26, height: 34 }}
+                sx={{
+                  width: 26,
+                  height: 34,
+                  '& path': {
+                    fill: ({ palette }) => palette.primary.main,
+                  },
+                }}
                 title="Trees Planted"
                 text={organization?.featuredTrees?.trees.length || '---'}
                 disabled={!isPlanterTab}
@@ -325,7 +331,13 @@ export default function Organization(props) {
               <CustomCard
                 handleClick={() => setIsPlanterTab(false)}
                 iconURI={PeopleIcon}
-                sx={{ height: 36, width: 36 }}
+                sx={{
+                  height: 36,
+                  width: 36,
+                  '& path': {
+                    fill: ({ palette }) => palette.text.primary,
+                  },
+                }}
                 title="Hired Planters"
                 text={
                   organization?.associatedPlanters?.planters.length || '---'

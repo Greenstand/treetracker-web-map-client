@@ -1,3 +1,22 @@
+# [2.0.0-beta.73](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.72...v2.0.0-beta.73) (2022-09-07)
+
+
+### Bug Fixes
+
+* custom card icon theme color ([5db7d49](https://github.com/Greenstand/treetracker-web-map-client/commit/5db7d49283534aed03d6e00f9862dae614f37c70))
+
+# [2.0.0-beta.72](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.71...v2.0.0-beta.72) (2022-09-07)
+
+
+### Bug Fixes
+
+* timeline dark theme color incorrect ([92549f9](https://github.com/Greenstand/treetracker-web-map-client/commit/92549f983eaa3d76e0241da2facf7e6bc98173a5))
+
+
+### Features
+
+* add timeline filter functionality ([9000dce](https://github.com/Greenstand/treetracker-web-map-client/commit/9000dce6f44848e41176013bb763ed166e885bf5))
+
 # [2.0.0-beta.71](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.70...v2.0.0-beta.71) (2022-09-04)
 
 

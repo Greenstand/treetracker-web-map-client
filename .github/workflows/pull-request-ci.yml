@@ -15,12 +15,12 @@ jobs:
     steps:
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # only install dependencies
       # https://github.com/cypress-io/github-action
       - name: Install 📦
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           runTests: false
 
@@ -31,11 +31,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Install cached NPM dependencies, run integration tests
       - name: Cypress Integration Tests 🧪
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # use mock api
           env: nock=true
@@ -45,13 +45,13 @@ jobs:
       - name: Save screenshots
         # step runs even if other steps fail
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: cypress-screenshots
           path: cypress/screenshots
       - name: Save videos
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: cypress-videos
           path: cypress/videos
@@ -63,10 +63,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Run Component tests 🧪
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           command: npx cypress run-ct
 
@@ -79,14 +79,14 @@ jobs:
       - name: Save screenshots
         # step runs even if other steps fail
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: cypress-screenshots-ct
           path: cypress/screenshots
 
       - name: Save videos
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: cypress-videos-ct
           path: cypress/videos
