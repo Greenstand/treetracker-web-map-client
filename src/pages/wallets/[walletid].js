@@ -228,7 +228,13 @@ export default function Wallet(props) {
           <CustomCard
             handleClick={() => setIsTokenTab(false)}
             iconURI={TreeIcon}
-            sx={{ width: 26, height: 34 }}
+            sx={{
+              width: 26,
+              height: 34,
+              '& path': {
+                fill: ({ palette }) => palette.primary.main,
+              },
+            }}
             title="Trees"
             text={tokens.total}
             disabled={isTokenTab}
@@ -238,7 +244,13 @@ export default function Wallet(props) {
           <CustomCard
             handleClick={() => setIsTokenTab(true)}
             iconURI={TokenIcon}
-            sx={{ height: 36, width: 36 }}
+            sx={{
+              height: 36,
+              width: 36,
+              '& path': {
+                fill: ({ palette }) => palette.text.primary,
+              },
+            }}
             title="Tokens"
             text={tokens.total}
             disabled={!isTokenTab}
