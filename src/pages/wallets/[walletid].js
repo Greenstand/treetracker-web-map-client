@@ -246,31 +246,31 @@ export default function Wallet(props) {
         </Grid>
       </Grid>
 
-      {!isTokenTab && tokenRegionName.length > 0 && (
-        <Box sx={{ mt: [0, 22] }}>
+      {tokenRegionName.length > 0 && (
+        <Box sx={{ mt: [0, 22], display: !isTokenTab ? 'block' : 'none' }}>
           <CustomWorldMap totalTrees={tokenRegionCount} con={tokenRegionName} />
         </Box>
       )}
 
-      {isTokenTab && (
-        <Box sx={{ mt: [0, 16], p: [2, 4] }}>
-          {tokens.tokens.map((token) => (
-            <Box
-              key={token.id}
-              sx={{
-                mt: [2, 4],
-              }}
-            >
-              <TreeTag
-                TreeTagValue={token.id}
-                title="Token ID"
-                icon={<SvgIcon component={TokenIcon} />}
-                link={`/wallets/${wallet.id}/tokens/${token.id}`}
-              />
-            </Box>
-          ))}
-        </Box>
-      )}
+      <Box
+        sx={{ mt: [0, 16], p: [2, 4], display: isTokenTab ? 'block' : 'none' }}
+      >
+        {tokens.tokens.map((token) => (
+          <Box
+            key={token.id}
+            sx={{
+              mt: [2, 4],
+            }}
+          >
+            <TreeTag
+              TreeTagValue={token.id}
+              title="Token ID"
+              icon={<SvgIcon component={TokenIcon} />}
+              link={`/wallets/${wallet.id}/tokens/${token.id}`}
+            />
+          </Box>
+        ))}
+      </Box>
 
       {species.length > 0 && (
         <Box
