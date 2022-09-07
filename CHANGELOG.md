@@ -1,3 +1,10 @@
+# [2.0.0-beta.73](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.72...v2.0.0-beta.73) (2022-09-07)
+
+
+### Bug Fixes
+
+* custom card icon theme color ([5db7d49](https://github.com/Greenstand/treetracker-web-map-client/commit/5db7d49283534aed03d6e00f9862dae614f37c70))
+
 # [2.0.0-beta.72](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.71...v2.0.0-beta.72) (2022-09-07)
 
 
