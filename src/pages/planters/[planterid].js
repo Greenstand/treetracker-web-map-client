@@ -123,12 +123,8 @@ export default function Planter(props) {
         map.setFilters({
           userid: planter.id,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
-        }
-        map.rerender();
+        const view = await map.getInitialView();
+        map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         log.warn('no data:', map, planter);
       }
     }
