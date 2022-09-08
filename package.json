@@ -92,7 +92,7 @@
     "@testing-library/user-event": "^13.4.1",
     "axios-mock-adapter": "^1.21.1",
     "concurrently": "^6.3.0",
-    "cypress": "^8.7.0",
+    "cypress": "^10.7.0",
     "cypress-watch-and-reload": "^1.5.4",
     "dotenv": "^16.0.0",
     "eslint": "^8.5.0",
