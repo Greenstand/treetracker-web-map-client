@@ -142,11 +142,15 @@ export default function Tree({
             await map.setFilters({
               userid: context.id,
             });
-            await map.gotoView(
-              parseFloat(tree.lat.toString()),
-              parseFloat(tree.lon.toString()),
-              16,
-            );
+            const currentView = map.getCurrentView();
+            log.warn('current view:', currentView);
+            if (currentView.zoomLevel < 15) {
+              await map.gotoView(
+                parseFloat(tree.lat.toString()),
+                parseFloat(tree.lon.toString()),
+                16,
+              );
+            }
             const treeDataForMap = {
               ...tree,
               lat: parseFloat(tree.lat.toString()),
@@ -158,11 +162,15 @@ export default function Tree({
             await map.setFilters({
               map_name: organization.map_name,
             });
-            await map.gotoView(
-              parseFloat(tree.lat.toString()),
-              parseFloat(tree.lon.toString()),
-              16,
-            );
+            const currentView = map.getCurrentView();
+            log.warn('current view:', currentView);
+            if (currentView.zoomLevel < 15) {
+              await map.gotoView(
+                parseFloat(tree.lat.toString()),
+                parseFloat(tree.lon.toString()),
+                16,
+              );
+            }
             const treeDataForMap = {
               ...tree,
               lat: parseFloat(tree.lat.toString()),
@@ -177,11 +185,15 @@ export default function Tree({
           await map.setFilters({
             treeid: tree.id,
           });
-          await map.gotoView(
-            parseFloat(tree.lat.toString()),
-            parseFloat(tree.lon.toString()),
-            16,
-          );
+          const currentView = map.getCurrentView();
+          log.warn('current view:', currentView);
+          if (currentView.zoomLevel < 15) {
+            await map.gotoView(
+              parseFloat(tree.lat.toString()),
+              parseFloat(tree.lon.toString()),
+              16,
+            );
+          }
         }
 
         // // select the tree
