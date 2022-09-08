@@ -40,6 +40,17 @@ function Top({ trees, planters, countries, organizations, wallets }) {
   const [leaderboardCountries, setLeaderboardCountries] =
     React.useState(countries);
 
+  const mapContext = useMapContext();
+
+  React.useEffect(() => {
+    async function reload() {
+      if (mapContext.map) {
+        await mapContext.map.setFilters({});
+      }
+    }
+    reload();
+  }, [mapContext.map]);
+
   React.useEffect(() => {
     if (process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true')
       return;

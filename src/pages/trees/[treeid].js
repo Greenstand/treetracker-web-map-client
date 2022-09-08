@@ -131,34 +131,52 @@ export default function Tree({
   //   draw();
   // }, [mapContext.map, tree.lat, tree.lon]);
   useEffect(() => {
-    // manipulate the map
-    if (mapContext.map && tree?.lat && tree?.lon) {
-      if (context) {
-        if (context.name === 'planters') {
-          mapContext.map.setFilters({
-            userid: context.id,
+    async function reload() {
+      // manipulate the map
+      log.warn(
+        'map ,tree, context in tree page:',
+        mapContext.map,
+        tree,
+        context,
+      );
+      if (mapContext.map && tree?.lat && tree?.lon) {
+        if (context && context.name) {
+          if (context.name === 'planters') {
+            log.warn('set planter filter', context.id);
+            await mapContext.map.setFilters({
+              userid: context.id,
+            });
+          } else if (context.name === 'organizations') {
+            log.warn('set org filter', organization.map_name);
+            await mapContext.map.setFilters({
+              map_name: organization.map_name,
+            });
+          } else {
+            throw new Error(`unknown context name: ${  context.name}`);
+          }
+        } else {
+          log.warn('set treeid filter', tree.id);
+          await mapContext.map.setFilters({
+            treeid: tree.id,
           });
-        } else if (context.name === 'organizations') {
-          mapContext.map.setFilters({
-            map_name: organization.map_name,
-          });
+          await mapContext.map.gotoView(
+            parseFloat(tree.lat.toString()),
+            parseFloat(tree.lon.toString()),
+            16,
+          );
         }
-      } else {
-        mapContext.map.setFilters({
-          treeid: tree.id,
-        });
-      }
-      mapContext.map.flyTo(tree.lat, tree.lon, 16);
 
-      // select the tree
-      const treeDataForMap = {
-        ...tree,
-        lat: parseFloat(tree.lat.toString()),
-        lon: parseFloat(tree.lon.toString()),
-      };
-      mapContext.map.selectTree(treeDataForMap);
-      log.warn('filter of map:', mapContext.map.getFilters());
+        // // select the tree
+        // const treeDataForMap = {
+        //   ...tree,
+        //   lat: parseFloat(tree.lat.toString()),
+        //   lon: parseFloat(tree.lon.toString()),
+        // };
+        // mapContext.map.selectTree(treeDataForMap);
+        // // log.warn('filter of map:', mapContext.map.getFilters());
+      }
     }
+    reload();
   }, [mapContext.map, tree.lat, tree.lon]);
 
   const tags = [];
