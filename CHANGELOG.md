@@ -1,3 +1,22 @@
+# [2.0.0-beta.75](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.74...v2.0.0-beta.75) (2022-09-08)
+
+
+### Bug Fixes
+
+* can not click tree on org/tree page ([c11a809](https://github.com/Greenstand/treetracker-web-map-client/commit/c11a809e1cf7580ee9a2c544e3c0e758f9316b9a))
+* lock file ([3535ba6](https://github.com/Greenstand/treetracker-web-map-client/commit/3535ba64d00e14057385d0694804ca502c371f7e))
+* pathResolver support query params ([4e6140f](https://github.com/Greenstand/treetracker-web-map-client/commit/4e6140f5a366e38d679f27aabc315d38d68f4265))
+
+
+### Features
+
+* can do on pages with new core version ([1ee05c5](https://github.com/Greenstand/treetracker-web-map-client/commit/1ee05c53530ecb9637bc786b6b8ae930b675149c))
+* timeline to fit new core ([e013aa9](https://github.com/Greenstand/treetracker-web-map-client/commit/e013aa9d73834820efc2b68bed819cd3bd376ddb))
+* tree page can handle org/planter ([38370fe](https://github.com/Greenstand/treetracker-web-map-client/commit/38370fee2f0ae4424a494805efe0908116bc5dc6))
+* upgrade core, select tree on planter+tree page ([2b170bb](https://github.com/Greenstand/treetracker-web-map-client/commit/2b170bb8417659369447c8eea73a2fb897fdfdfa))
+* upgrade to 2.1.0, now every page are resonsible for render map ([b4b3d85](https://github.com/Greenstand/treetracker-web-map-client/commit/b4b3d852d0b8f2d0d68d19c37d5a52066f8698fb))
+* upgrade to 2.2.0 core ([6b1e9a1](https://github.com/Greenstand/treetracker-web-map-client/commit/6b1e9a1755f21b67e2aeb75a0793491d0f533ec9))
+
 # [2.0.0-beta.74](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.73...v2.0.0-beta.74) (2022-09-08)
 
 
