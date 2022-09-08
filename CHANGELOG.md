@@ -1,3 +1,10 @@
+# [2.0.0-beta.74](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.73...v2.0.0-beta.74) (2022-09-08)
+
+
+### Bug Fixes
+
+* token id not working on drawer ui ([40eae89](https://github.com/Greenstand/treetracker-web-map-client/commit/40eae893f310e881d378f20a5a9329774a2fc87b))
+
 # [2.0.0-beta.73](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.72...v2.0.0-beta.73) (2022-09-07)
 
 
