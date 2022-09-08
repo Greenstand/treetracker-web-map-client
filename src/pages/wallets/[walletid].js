@@ -77,16 +77,11 @@ export default function Wallet(props) {
       if (map && wallet) {
         // map.flyTo(tree.lat, tree.lon, 16);
         log.warn('set filter for wallet');
-        map.setFilters({
+        await map.setFilters({
           wallet: wallet.name,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
-        }
-        map.rerender();
-        log.warn('no data:', map, wallet);
+        const view = await map.getInitialView();
+        await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
       }
     }
     reload();

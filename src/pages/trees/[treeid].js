@@ -43,6 +43,7 @@ import TokenIcon from '../../images/icons/token.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
+import * as pathResolver from '../../models/pathResolver';
 import * as utils from '../../models/utils';
 
 export default function Tree({
@@ -54,9 +55,10 @@ export default function Tree({
 }) {
   log.warn('tree: ', tree);
   const mapContext = useMapContext();
+  const { map } = mapContext;
   const theme = useTheme();
   const router = useRouter();
-  const userCameFromPlanterPage = router.asPath.includes('planters');
+  const context = pathResolver.getContext(router.asPath);
   const isMobile = useMobile();
   const isEmbed = useEmbed();
 
@@ -104,11 +106,82 @@ export default function Tree({
   //   draw();
   // }, [mapContext.map, tree.lat, tree.lon]);
   useEffect(() => {
-    // manipulate the map
-    if (mapContext.map && tree?.lat && tree?.lon) {
-      mapContext.map.flyTo(tree.lat, tree.lon, 16);
+    async function reload() {
+      // manipulate the map
+      log.warn('map ,tree, context in tree page:', map, tree, context);
+      if (map && tree?.lat && tree?.lon) {
+        if (context && context.name) {
+          if (context.name === 'planters') {
+            log.warn('set planter filter', context.id);
+            await map.setFilters({
+              userid: context.id,
+            });
+            const currentView = map.getCurrentView();
+            log.warn('current view:', currentView);
+            if (currentView.zoomLevel < 15) {
+              await map.gotoView(
+                parseFloat(tree.lat.toString()),
+                parseFloat(tree.lon.toString()),
+                16,
+              );
+            }
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else if (context.name === 'organizations') {
+            log.warn('set org filter', organization.map_name);
+            await map.setFilters({
+              map_name: organization.map_name,
+            });
+            const currentView = map.getCurrentView();
+            log.warn('current view:', currentView);
+            if (currentView.zoomLevel < 15) {
+              await map.gotoView(
+                parseFloat(tree.lat.toString()),
+                parseFloat(tree.lon.toString()),
+                16,
+              );
+            }
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else {
+            throw new Error(`unknown context name: ${context.name}`);
+          }
+        } else {
+          log.warn('set treeid filter', tree.id);
+          await map.setFilters({
+            treeid: tree.id,
+          });
+          const currentView = map.getCurrentView();
+          log.warn('current view:', currentView);
+          if (currentView.zoomLevel < 15) {
+            await map.gotoView(
+              parseFloat(tree.lat.toString()),
+              parseFloat(tree.lon.toString()),
+              16,
+            );
+          }
+        }
+
+        // // select the tree
+        // const treeDataForMap = {
+        //   ...tree,
+        //   lat: parseFloat(tree.lat.toString()),
+        //   lon: parseFloat(tree.lon.toString()),
+        // };
+        // mapContext.map.selectTree(treeDataForMap);
+        // // log.warn('filter of map:', mapContext.map.getFilters());
+      }
     }
-  }, [mapContext.map, tree.lat, tree.lon]);
+    reload();
+  }, [map, tree.lat, tree.lon]);
 
   return (
     <Box
@@ -186,7 +259,7 @@ export default function Tree({
                 name: 'Home',
                 url: '/',
               },
-              ...(userCameFromPlanterPage
+              ...(context && context.name === 'planters'
                 ? [
                     {
                       url: `/planters/${planter.id}`,
@@ -195,6 +268,15 @@ export default function Tree({
                         planter.first_name,
                         planter.last_name,
                       )}`,
+                    },
+                  ]
+                : []),
+              ...(context && context.name === 'organizations'
+                ? [
+                    {
+                      url: `/organizations/${organization.id}`,
+                      icon: organization.logo_url,
+                      name: organization.name,
                     },
                   ]
                 : []),
@@ -353,8 +435,7 @@ export default function Tree({
             entityName={organization.name}
             entityType="Planting Organization"
             buttonText="Meet the Organization"
-            // cardImageSrc={organization?.photo_url}
-            cardImageSrc={imagePlaceholder}
+            cardImageSrc={organization?.photo_url && imagePlaceholder}
             link={`/organizations/${
               organization.id
             }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}

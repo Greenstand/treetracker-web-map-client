@@ -120,15 +120,11 @@ export default function Planter(props) {
       const { map } = mapContext;
       if (map && planter) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
+        await map.setFilters({
           userid: planter.id,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
-        }
-        map.rerender();
+        const view = await map.getInitialView();
+        map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         log.warn('no data:', map, planter);
       }
     }
