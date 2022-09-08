@@ -146,16 +146,21 @@ export default function Token(props) {
       const { map } = mapContext;
       if (map && token) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
-          treeid: token.tree_id,
-        });
         try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
+          log.warn('xxxxxxxx reload');
+          await map.setFilters({
+            treeid: token.tree_id,
+          });
+          const view = await map.getInitialView();
+          await map.gotoView(
+            parseFloat(view.center.lat),
+            parseFloat(view.center.lon),
+            view.zoomLevel,
+          );
+          log.warn('no data:', map, token);
+        } catch (e) {
+          log.warn('get error when render map:', e);
         }
-        map.rerender();
-        log.warn('no data:', map, token);
       }
     }
     reload();

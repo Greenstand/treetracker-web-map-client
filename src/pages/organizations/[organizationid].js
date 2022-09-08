@@ -114,7 +114,7 @@ export default function Organization(props) {
       const { map } = mapContext;
       if (map && organization) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
+        await map.setFilters({
           map_name: organization.map_name,
         });
         const view = await map.getInitialView();
