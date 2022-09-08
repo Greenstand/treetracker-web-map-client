@@ -7,7 +7,7 @@ import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 import { useMapContext } from '../mapContext';
 
-const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.png`;
+const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.webp`;
 const useStyles = makeStyles()((theme) => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,

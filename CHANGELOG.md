@@ -1,3 +1,44 @@
+# [2.0.0-beta.74](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.73...v2.0.0-beta.74) (2022-09-08)
+
+
+### Bug Fixes
+
+* token id not working on drawer ui ([40eae89](https://github.com/Greenstand/treetracker-web-map-client/commit/40eae893f310e881d378f20a5a9329774a2fc87b))
+
+# [2.0.0-beta.73](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.72...v2.0.0-beta.73) (2022-09-07)
+
+
+### Bug Fixes
+
+* custom card icon theme color ([5db7d49](https://github.com/Greenstand/treetracker-web-map-client/commit/5db7d49283534aed03d6e00f9862dae614f37c70))
+
+# [2.0.0-beta.72](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.71...v2.0.0-beta.72) (2022-09-07)
+
+
+### Bug Fixes
+
+* timeline dark theme color incorrect ([92549f9](https://github.com/Greenstand/treetracker-web-map-client/commit/92549f983eaa3d76e0241da2facf7e6bc98173a5))
+
+
+### Features
+
+* add timeline filter functionality ([9000dce](https://github.com/Greenstand/treetracker-web-map-client/commit/9000dce6f44848e41176013bb763ed166e885bf5))
+
+# [2.0.0-beta.71](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.70...v2.0.0-beta.71) (2022-09-04)
+
+
+### Bug Fixes
+
+* avoid refersh token page ([7aea3f4](https://github.com/Greenstand/treetracker-web-map-client/commit/7aea3f45637ffc370d8f45b97388cdcc6f138c1c))
+* use path resolver ([1242f11](https://github.com/Greenstand/treetracker-web-map-client/commit/1242f116a7db82c235feca064e5425e648c4d4dc))
+
+
+### Features
+
+* app can handle wallet+token page ([de73b70](https://github.com/Greenstand/treetracker-web-map-client/commit/de73b7059ce20a2400364eb2ae423a671a2ce512))
+* layout for crumbs ([e314231](https://github.com/Greenstand/treetracker-web-map-client/commit/e314231ad0c90c05ca9afd9de9c3b672329b5ca0))
+* path resolver ([bd7c0f8](https://github.com/Greenstand/treetracker-web-map-client/commit/bd7c0f8723e13e6a21ac515ca5f02d10481cb9c8))
+
 # [2.0.0-beta.70](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.69...v2.0.0-beta.70) (2022-09-03)
 
 

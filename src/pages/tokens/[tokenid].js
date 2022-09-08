@@ -345,7 +345,9 @@ export default function Token(props) {
               pb: 4,
             }}
           >
-            <Typography variant="h2">Token #{token.id}</Typography>
+            <Typography variant="h2">
+              Token #<UUIDTag uuid={token.id} />
+            </Typography>
             <Typography
               sx={{
                 fontWeight: 400,
@@ -376,20 +378,8 @@ export default function Token(props) {
         >
           <Box sx={{}}>
             <Typography variant="h3" sx={{ fontsize: 20 }}>
-              Token - #{token.id}
+              Token - #<UUIDTag uuid={token.id} />
             </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                mt: 2,
-              }}
-            >
-              <VerifiedBadge
-                color="secondary"
-                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-              />
-            </Box>
           </Box>
         </Portal>
       )}
