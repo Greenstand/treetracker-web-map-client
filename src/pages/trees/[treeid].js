@@ -81,6 +81,7 @@ export default function Tree({
   log.warn('tree: ', tree);
   const { classes } = useStyles();
   const mapContext = useMapContext();
+  const { map } = mapContext;
   const theme = useTheme();
   const router = useRouter();
   const context = pathResolver.getContext(router.asPath);
@@ -133,33 +134,50 @@ export default function Tree({
   useEffect(() => {
     async function reload() {
       // manipulate the map
-      log.warn(
-        'map ,tree, context in tree page:',
-        mapContext.map,
-        tree,
-        context,
-      );
-      if (mapContext.map && tree?.lat && tree?.lon) {
+      log.warn('map ,tree, context in tree page:', map, tree, context);
+      if (map && tree?.lat && tree?.lon) {
         if (context && context.name) {
           if (context.name === 'planters') {
             log.warn('set planter filter', context.id);
-            await mapContext.map.setFilters({
+            await map.setFilters({
               userid: context.id,
             });
+            await map.gotoView(
+              parseFloat(tree.lat.toString()),
+              parseFloat(tree.lon.toString()),
+              16,
+            );
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
           } else if (context.name === 'organizations') {
             log.warn('set org filter', organization.map_name);
-            await mapContext.map.setFilters({
+            await map.setFilters({
               map_name: organization.map_name,
             });
+            await map.gotoView(
+              parseFloat(tree.lat.toString()),
+              parseFloat(tree.lon.toString()),
+              16,
+            );
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
           } else {
-            throw new Error(`unknown context name: ${  context.name}`);
+            throw new Error(`unknown context name: ${context.name}`);
           }
         } else {
           log.warn('set treeid filter', tree.id);
-          await mapContext.map.setFilters({
+          await map.setFilters({
             treeid: tree.id,
           });
-          await mapContext.map.gotoView(
+          await map.gotoView(
             parseFloat(tree.lat.toString()),
             parseFloat(tree.lon.toString()),
             16,
@@ -177,7 +195,7 @@ export default function Tree({
       }
     }
     reload();
-  }, [mapContext.map, tree.lat, tree.lon]);
+  }, [map, tree.lat, tree.lon]);
 
   const tags = [];
   const tagsTail = [];
