@@ -117,13 +117,8 @@ export default function Organization(props) {
         map.setFilters({
           map_name: organization.map_name,
         });
-        // TODO why I must try/catch this?
-        try {
-          await map.loadInitialView();
-          map.rerender();
-        } catch (e) {
-          log.error('rendering map:', e);
-        }
+        const view = await map.getInitialView();
+        await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
       } else {
         log.warn('no data:', map, organization);
       }
