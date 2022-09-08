@@ -346,54 +346,53 @@ export default function Organization(props) {
               />
             </Grid>
           </Grid>
-          {isPlanterTab && (
-            <Box
-              sx={{
-                px: [0, 6],
-              }}
-            >
-              <Box sx={{ mt: [0, 22] }}>
-                <CustomWorldMap
-                  totalTrees={organization?.featuredTrees?.trees.length}
-                  con="af"
-                />
-              </Box>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontSize: [16, 24],
-                  mt: [0, 20],
-                }}
-              >
-                Species of trees planted
-              </Typography>
-              <Box
-                sx={{
-                  mt: [5, 10],
-                }}
-              >
-                {organization?.species?.species?.map((s) => (
-                  <React.Fragment key={s.name}>
-                    <TreeSpeciesCard
-                      name={s.name}
-                      subTitle={s.desc || '---'}
-                      count={s.total}
-                    />
-                    <Box sx={{ mt: [2, 4] }} />
-                  </React.Fragment>
-                ))}
-              </Box>
-            </Box>
-          )}
-        </Box>
-
-        {!isPlanterTab && (
           <Box
             sx={{
-              mt: [11, 22],
+              px: [0, 6],
+              display: isPlanterTab ? 'block' : 'none',
             }}
           >
-            {/* {organization?.associatedPlanters?.planters?.map((planter) => (
+            <Box sx={{ mt: [0, 22] }}>
+              <CustomWorldMap
+                totalTrees={organization?.featuredTrees?.trees.length}
+                con="af"
+              />
+            </Box>
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: [16, 24],
+                mt: [0, 20],
+              }}
+            >
+              Species of trees planted
+            </Typography>
+            <Box
+              sx={{
+                mt: [5, 10],
+              }}
+            >
+              {organization?.species?.species?.map((s) => (
+                <React.Fragment key={s.name}>
+                  <TreeSpeciesCard
+                    name={s.name}
+                    subTitle={s.desc || '---'}
+                    count={s.total}
+                  />
+                  <Box sx={{ mt: [2, 4] }} />
+                </React.Fragment>
+              ))}
+            </Box>
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            mt: [11, 22],
+            display: !isPlanterTab ? 'block' : 'none',
+          }}
+        >
+          {/* {organization?.associatedPlanters?.planters?.map((planter) => (
             <PlanterQuote
               name={planter.first_name}
               key={planter.id}
@@ -403,8 +402,8 @@ export default function Organization(props) {
               location={planter.country}
             />
           ))} */}
-            {/* Placeholder quote card, remove after API gets data */}
-            {/* {[
+          {/* Placeholder quote card, remove after API gets data */}
+          {/* {[
               {
                 name: 'Jirgna O',
                 quote: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
@@ -426,13 +425,12 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-            {organization?.associatedPlanters?.planters?.map((planter, i) => (
-              <Box sx={{ mt: [6, 12] }} key={planter.name}>
-                <PlanterQuote planter reverse={i % 2 !== 0} />
-              </Box>
-            ))}
-          </Box>
-        )}
+          {organization?.associatedPlanters?.planters?.map((planter, i) => (
+            <Box sx={{ mt: [6, 12] }} key={planter.name}>
+              <PlanterQuote planter reverse={i % 2 !== 0} />
+            </Box>
+          ))}
+        </Box>
         <Box
           sx={{
             px: [24 / 8, 24 / 4],
