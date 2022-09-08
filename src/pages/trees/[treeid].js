@@ -133,6 +133,21 @@ export default function Tree({
   useEffect(() => {
     // manipulate the map
     if (mapContext.map && tree?.lat && tree?.lon) {
+      if (context) {
+        if (context.name === 'planters') {
+          mapContext.map.setFilters({
+            userid: context.id,
+          });
+        } else if (context.name === 'organizations') {
+          mapContext.map.setFilters({
+            map_name: organization.map_name,
+          });
+        }
+      } else {
+        mapContext.map.setFilters({
+          treeid: tree.id,
+        });
+      }
       mapContext.map.flyTo(tree.lat, tree.lon, 16);
 
       // select the tree
@@ -142,6 +157,7 @@ export default function Tree({
         lon: parseFloat(tree.lon.toString()),
       };
       mapContext.map.selectTree(treeDataForMap);
+      log.warn('filter of map:', mapContext.map.getFilters());
     }
   }, [mapContext.map, tree.lat, tree.lon]);
 
