@@ -217,14 +217,69 @@ export default function Tree({
             }}
           >
             <Typography variant="h2">Tree #{tree.id}</Typography>
-            <Typography
+            <Box
               sx={{
-                fontWeight: 400,
+                mt: 2,
+                color: theme.palette.common.black,
+                filter: 'opacity(0.8)',
               }}
-              variant="h5"
             >
-              {tree.species_name || 'Unknown species'}
-            </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={OriginIcon} />
+                {tree.species_name || 'Unknown Species'}
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 1,
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={CalendarIcon} />
+                {`Planted on ${moment(tree.time_created).format(
+                  'MMMM Do, YYYY',
+                )}` || 'Unknown Date'}
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 1,
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={LocationIcon} />
+                {`Located in ${tree.country_name}` || 'Unknown location'}
+              </Typography>
+            </Box>
             <Box
               sx={{
                 display: 'flex',
@@ -438,9 +493,9 @@ export default function Tree({
                 }}
               >
                 <SvgIcon component={CalendarIcon} />
-                {`Planted since ${
-                  moment().format('MMMM DD, YYYY') || 'Unknown Planted Date'
-                }`}
+                {`Planted on ${moment(tree.time_created).format(
+                  'MMMM Do, YYYY',
+                )}` || 'Unknown Date'}
               </Typography>
               <Typography
                 sx={{
@@ -457,7 +512,7 @@ export default function Tree({
                 }}
               >
                 <SvgIcon component={LocationIcon} />
-                {`${tree.country_name}` || 'Unknown location'}
+                {`Located in ${tree.country_name}` || 'Unknown location'}
               </Typography>
             </Box>
             <Box
