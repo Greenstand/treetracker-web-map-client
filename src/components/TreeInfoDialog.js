@@ -19,6 +19,7 @@ import {
   SvgIcon,
 } from '@mui/material';
 import { useState } from 'react';
+import Share from './Share';
 import { useFullscreen, useMobile } from '../hooks/globalHooks';
 import HeartIcon from '../images/icons/heart.svg';
 import ShareIcon from '../images/icons/share-icon.svg';
@@ -332,30 +333,37 @@ export default function TreeInfoDialog(props) {
                   >
                     200
                   </Button>
-                  <Button
-                    startIcon={
-                      <SvgIcon
-                        inheritViewBox
-                        component={ShareIcon}
-                        sx={{ height: 22, width: 16 }}
-                      />
+                  <Share
+                    shareUrl={
+                      typeof window !== 'undefined' && window.location.href
                     }
-                    disableElevation
-                    variant="contained"
-                    color="background"
-                    sx={{
-                      color: 'text.text1',
-                      py: 3,
-                      borderRadius: 3,
-                      backgroundColor: '#e1e2e2',
-                      textTransform: 'none',
-                      fontSize: '12px',
-                      fontWeight: 400,
-                      letterSpacing: '0.04em',
-                    }}
-                  >
-                    Share
-                  </Button>
+                    icon={
+                      <Button
+                        startIcon={
+                          <SvgIcon
+                            inheritViewBox
+                            component={ShareIcon}
+                            sx={{ height: 22, width: 16 }}
+                          />
+                        }
+                        disableElevation
+                        variant="contained"
+                        color="background"
+                        sx={{
+                          color: 'text.text1',
+                          py: 3,
+                          borderRadius: 3,
+                          backgroundColor: '#e1e2e2',
+                          textTransform: 'none',
+                          fontSize: '12px',
+                          fontWeight: 400,
+                          letterSpacing: '0.04em',
+                        }}
+                      >
+                        Share
+                      </Button>
+                    }
+                  />
                 </Box>
               </Grid>
             </Grid>

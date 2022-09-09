@@ -142,6 +142,9 @@ function Share(props) {
             p: [6, 8],
           },
         }}
+        sx={{
+          zIndex: 9999,
+        }}
       >
         <DialogTitle
           sx={{
