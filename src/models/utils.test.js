@@ -4,6 +4,8 @@ import {
   parseDomain,
   parseMapName,
   requestAPI,
+  nextPathBaseDecode,
+  nextPathBaseEncode,
 } from './utils';
 
 describe('hideLastName', () => {
@@ -105,4 +107,26 @@ it('format date string', () => {
   const unformattedDate = '2020-10-19T06:46:40.000Z';
   const formattedDate = formatDateString(unformattedDate);
   expect(['18/10/2020', '19/10/2020']).toContain(formattedDate);
+});
+
+describe('nextPathBaseEnocode/Decode', () => {
+  it('/web-map-beta/demo/trees/123 with base: /web-map-beta/demo should decode as /trees/123', () => {
+    expect(
+      nextPathBaseDecode('/web-map-beta/demo/trees/123', '/web-map-beta/demo'),
+    ).toBe('/trees/123');
+  });
+
+  it("/trees/123 with base: '' should decode as /trees/123", () => {
+    expect(nextPathBaseDecode('/trees/123', '')).toBe('/trees/123');
+  });
+
+  it("/trees/123 with base: '' should encode as /trees/123", () => {
+    expect(nextPathBaseEncode('/trees/123', '')).toBe('/trees/123');
+  });
+
+  it('/trees/123 with base: /web-map-beta/demo should encode as /web-map-beta-demo/trees/123', () => {
+    expect(nextPathBaseEncode('/trees/123', '/web-map-beta-demo')).toBe(
+      '/web-map-beta-demo/trees/123',
+    );
+  });
 });

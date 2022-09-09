@@ -211,6 +211,14 @@ const convertFontObjToFontArr = (fontObj) => {
   return fontWeightNames;
 };
 
+function nextPathBaseEncode(path, base) {
+  return `${base}${path}`;
+}
+
+function nextPathBaseDecode(path, base) {
+  return path.replace(base, '');
+}
+
 export {
   hideLastName,
   parseDomain,
@@ -226,4 +234,6 @@ export {
   optimizeThemeFonts,
   getPlanterName,
   convertFontObjToFontArr,
+  nextPathBaseDecode,
+  nextPathBaseEncode,
 };
