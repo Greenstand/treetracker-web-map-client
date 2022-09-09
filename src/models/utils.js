@@ -66,7 +66,7 @@ async function requestAPI(url) {
     return data;
   } catch (ex) {
     log.error('ex:', ex);
-    throw new Error(ex.message);
+    throw ex;
   }
 }
 
