@@ -82,11 +82,11 @@ function MapComponent() {
       router.query,
     );
 
-    // base
-    result.pathname = utils.nextPathBaseEncode(
-      result.pathname,
-      process.env.NEXT_PUBLIC_BASE,
-    );
+    // // base
+    // result.pathname = utils.nextPathBaseEncode(
+    //   result.pathname,
+    //   process.env.NEXT_PUBLIC_BASE,
+    // );
 
     if (window.location.pathname === result.pathname) {
       log.warn('do not refesh if the pathname is the same!');
