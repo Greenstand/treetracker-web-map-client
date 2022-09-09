@@ -20,11 +20,9 @@ describe('Share', () => {
     }
     mount(<Test />);
     cy.get('.MuiBox-root').click().pause();
-    cy.get(
-      '.MuiDialog-container > .MuiPaper-root > .MuiGrid-root > .MuiButtonBase-root:first',
-    )
+    cy.get('.css-1brzdu3 > .MuiButtonBase-root')
       .click()
+      .contains(/copied!/i)
       .pause();
-    cy.get('.MuiButton-root').contains(/copy/i).click();
   });
 });
