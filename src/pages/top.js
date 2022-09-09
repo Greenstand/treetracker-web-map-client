@@ -171,7 +171,7 @@ function Top({ trees, planters, countries, organizations, wallets }) {
           planters={planters}
           isMobile={isFullscreen}
         />
-        <h1>Featured wallets this week</h1>
+        <Typography variant="h4">Featured wallets this week</Typography>
         <FeaturedPlantersSlider
           link={(id) => `/wallets/${id}`}
           color="secondary"
