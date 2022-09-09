@@ -120,15 +120,11 @@ export default function Planter(props) {
       const { map } = mapContext;
       if (map && planter) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
+        await map.setFilters({
           userid: planter.id,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
-        }
-        map.rerender();
+        const view = await map.getInitialView();
+        map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         log.warn('no data:', map, planter);
       }
     }
@@ -326,7 +322,13 @@ export default function Planter(props) {
             <CustomCard
               handleClick={() => setIsPlanterTab(true)}
               iconURI={TreeIcon}
-              sx={{ height: 34, width: 26 }}
+              sx={{
+                height: 34,
+                width: 26,
+                '& path': {
+                  fill: ({ palette }) => palette.primary.main,
+                },
+              }}
               title="Trees Planted"
               text={treeCount}
               disabled={!isPlanterTab}
@@ -340,7 +342,13 @@ export default function Planter(props) {
                   : undefined
               }
               iconURI={PeopleIcon}
-              sx={{ height: 36, width: 36 }}
+              sx={{
+                height: 36,
+                width: 36,
+                '& path': {
+                  fill: ({ palette }) => palette.text.primary,
+                },
+              }}
               title="Ass. Orgs"
               text={
                 planter.associatedOrganizations.organizations.length || (
@@ -358,66 +366,64 @@ export default function Planter(props) {
             />
           </Grid>
         </Grid>
-        {isPlanterTab && (
-          <Box
-            sx={{
-              px: [0, 6],
-            }}
-          >
-            {planter.continent_name && (
-              <Box sx={{ mt: [0, 22] }}>
-                <CustomWorldMap
-                  totalTrees={treeCount}
-                  con={planter.continent_name}
-                />
-              </Box>
-            )}
-
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: [16, 24],
-                mt: [0, 20],
-              }}
-            >
-              Species of trees planted
-            </Typography>
-            <Box
-              sx={{
-                mt: [5, 10],
-              }}
-            >
-              {planter.species.species.map((species) => (
-                <TreeSpeciesCard
-                  key={species.id}
-                  name={species.name}
-                  count={species.total}
-                />
-              ))}
+        <Box
+          sx={{
+            px: [0, 6],
+            display: isPlanterTab ? 'block' : 'none',
+          }}
+        >
+          {planter.continent_name && (
+            <Box sx={{ mt: [0, 22] }}>
+              <CustomWorldMap
+                totalTrees={treeCount}
+                con={planter.continent_name}
+              />
             </Box>
-          </Box>
-        )}
-        {!isPlanterTab && (
-          <Box
+          )}
+
+          <Typography
+            variant="h4"
             sx={{
-              px: [0, 6],
-              mt: [11, 22],
+              fontSize: [16, 24],
+              mt: [0, 20],
             }}
           >
-            {planter.associatedOrganizations.organizations.map((org) => (
-              <>
-                <InformationCard1
-                  entityName={org.name}
-                  entityType="Planting Organization"
-                  buttonText="Meet the Organization"
-                  link={`/organizations/${org.id}`}
-                  cardImageSrc={org?.logo_url}
-                />
-                <Box sx={{ mt: [6, 12] }} />
-              </>
+            Species of trees planted
+          </Typography>
+          <Box
+            sx={{
+              mt: [5, 10],
+            }}
+          >
+            {planter.species.species.map((species) => (
+              <TreeSpeciesCard
+                key={species.id}
+                name={species.name}
+                count={species.total}
+              />
             ))}
           </Box>
-        )}
+        </Box>
+        <Box
+          sx={{
+            px: [0, 6],
+            mt: [11, 22],
+            display: !isPlanterTab ? 'block' : 'none',
+          }}
+        >
+          {planter.associatedOrganizations.organizations.map((org) => (
+            <>
+              <InformationCard1
+                entityName={org.name}
+                entityType="Planting Organization"
+                buttonText="Meet the Organization"
+                link={`/organizations/${org.id}`}
+                cardImageSrc={org?.logo_url}
+              />
+              <Box sx={{ mt: [6, 12] }} />
+            </>
+          ))}
+        </Box>
         <Divider
           varian="fullwidth"
           sx={{

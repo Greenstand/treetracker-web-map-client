@@ -77,16 +77,11 @@ export default function Wallet(props) {
       if (map && wallet) {
         // map.flyTo(tree.lat, tree.lon, 16);
         log.warn('set filter for wallet');
-        map.setFilters({
+        await map.setFilters({
           wallet: wallet.name,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
-        }
-        map.rerender();
-        log.warn('no data:', map, wallet);
+        const view = await map.getInitialView();
+        await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
       }
     }
     reload();
@@ -228,7 +223,13 @@ export default function Wallet(props) {
           <CustomCard
             handleClick={() => setIsTokenTab(false)}
             iconURI={TreeIcon}
-            sx={{ width: 26, height: 34 }}
+            sx={{
+              width: 26,
+              height: 34,
+              '& path': {
+                fill: ({ palette }) => palette.primary.main,
+              },
+            }}
             title="Trees"
             text={tokens.total}
             disabled={isTokenTab}
@@ -238,7 +239,13 @@ export default function Wallet(props) {
           <CustomCard
             handleClick={() => setIsTokenTab(true)}
             iconURI={TokenIcon}
-            sx={{ height: 36, width: 36 }}
+            sx={{
+              height: 36,
+              width: 36,
+              '& path': {
+                fill: ({ palette }) => palette.text.primary,
+              },
+            }}
             title="Tokens"
             text={tokens.total}
             disabled={!isTokenTab}
@@ -246,31 +253,31 @@ export default function Wallet(props) {
         </Grid>
       </Grid>
 
-      {!isTokenTab && tokenRegionName.length > 0 && (
-        <Box sx={{ mt: [0, 22] }}>
+      {tokenRegionName.length > 0 && (
+        <Box sx={{ mt: [0, 22], display: !isTokenTab ? 'block' : 'none' }}>
           <CustomWorldMap totalTrees={tokenRegionCount} con={tokenRegionName} />
         </Box>
       )}
 
-      {isTokenTab && (
-        <Box sx={{ mt: [0, 16], p: [2, 4] }}>
-          {tokens.tokens.map((token) => (
-            <Box
-              key={token.id}
-              sx={{
-                mt: [2, 4],
-              }}
-            >
-              <TreeTag
-                TreeTagValue={token.id}
-                title="Token ID"
-                icon={<SvgIcon component={TokenIcon} />}
-                link={`/wallets/${wallet.id}/tokens/${token.id}`}
-              />
-            </Box>
-          ))}
-        </Box>
-      )}
+      <Box
+        sx={{ mt: [0, 16], p: [2, 4], display: isTokenTab ? 'block' : 'none' }}
+      >
+        {tokens.tokens.map((token) => (
+          <Box
+            key={token.id}
+            sx={{
+              mt: [2, 4],
+            }}
+          >
+            <TreeTag
+              TreeTagValue={token.id}
+              title="Token ID"
+              icon={<SvgIcon component={TokenIcon} />}
+              link={`/wallets/${wallet.id}/tokens/${token.id}`}
+            />
+          </Box>
+        ))}
+      </Box>
 
       {species.length > 0 && (
         <Box

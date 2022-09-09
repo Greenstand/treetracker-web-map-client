@@ -16,6 +16,7 @@ import log from 'loglevel';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import TagList from 'components/common/TagList';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
@@ -42,33 +43,8 @@ import TokenIcon from '../../images/icons/token.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
+import * as pathResolver from '../../models/pathResolver';
 import * as utils from '../../models/utils';
-
-const useStyles = makeStyles()((theme) => ({
-  imageContainer: {
-    position: 'relative',
-    flexGrow: 1,
-    width: '100%',
-    marginTop: 20,
-    borderRadius: 16,
-    overflow: 'hidden',
-  },
-  tabBox: {
-    marginTop: theme.spacing(9),
-    [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(5),
-    },
-    flexWrap: 'wrap',
-    display: 'flex',
-    gap: 16,
-    // '& div': {
-    //   margin: theme.spacing(2),
-    //   [theme.breakpoints.down('md')]: {
-    //     marginTop: theme.spacing(1),
-    //   },
-    // },
-  },
-}));
 
 export default function Tree({
   tree,
@@ -78,11 +54,13 @@ export default function Tree({
   nextExtraKeyword,
 }) {
   log.warn('tree: ', tree);
-  const { classes } = useStyles();
   const mapContext = useMapContext();
+  const { map } = mapContext;
   const theme = useTheme();
   const router = useRouter();
-  const userCameFromPlanterPage = router.asPath.includes('planters');
+  const context = pathResolver.getContext(
+    utils.nextPathBaseDecode(router.asPath, process.env.NEXT_PUBLIC_BASE),
+  );
   const isMobile = useMobile();
   const isEmbed = useEmbed();
 
@@ -130,215 +108,82 @@ export default function Tree({
   //   draw();
   // }, [mapContext.map, tree.lat, tree.lon]);
   useEffect(() => {
-    // manipulate the map
-    if (mapContext.map && tree?.lat && tree?.lon) {
-      mapContext.map.flyTo(tree.lat, tree.lon, 16);
+    async function reload() {
+      // manipulate the map
+      log.warn('map ,tree, context in tree page:', map, tree, context);
+      if (map && tree?.lat && tree?.lon) {
+        if (context && context.name) {
+          if (context.name === 'planters') {
+            log.warn('set planter filter', context.id);
+            await map.setFilters({
+              userid: context.id,
+            });
+            const currentView = map.getCurrentView();
+            log.warn('current view:', currentView);
+            if (currentView.zoomLevel < 15) {
+              await map.gotoView(
+                parseFloat(tree.lat.toString()),
+                parseFloat(tree.lon.toString()),
+                16,
+              );
+            }
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else if (context.name === 'organizations') {
+            log.warn('set org filter', organization.map_name);
+            await map.setFilters({
+              map_name: organization.map_name,
+            });
+            const currentView = map.getCurrentView();
+            log.warn('current view:', currentView);
+            if (currentView.zoomLevel < 15) {
+              await map.gotoView(
+                parseFloat(tree.lat.toString()),
+                parseFloat(tree.lon.toString()),
+                16,
+              );
+            }
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else {
+            throw new Error(`unknown context name: ${context.name}`);
+          }
+        } else {
+          log.warn('set treeid filter', tree.id);
+          await map.setFilters({
+            treeid: tree.id,
+          });
+          const currentView = map.getCurrentView();
+          log.warn('current view:', currentView);
+          if (currentView.zoomLevel < 15) {
+            await map.gotoView(
+              parseFloat(tree.lat.toString()),
+              parseFloat(tree.lon.toString()),
+              16,
+            );
+          }
+        }
+
+        // // select the tree
+        // const treeDataForMap = {
+        //   ...tree,
+        //   lat: parseFloat(tree.lat.toString()),
+        //   lon: parseFloat(tree.lon.toString()),
+        // };
+        // mapContext.map.selectTree(treeDataForMap);
+        // // log.warn('filter of map:', mapContext.map.getFilters());
+      }
     }
-  }, [mapContext.map, tree.lat, tree.lon]);
-
-  const tags = [];
-  const tagsTail = [];
-  tags.push(
-    <TreeTag
-      key="planted-on"
-      TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
-      title="Planted on"
-      icon={<SvgIcon component={CalendarIcon} />}
-    />,
-  );
-
-  if (tree.verified) {
-    tags.push(
-      <TreeTag
-        key="verification"
-        TreeTagValue="verifed"
-        title="Verification"
-        icon={<SvgIcon component={VerifiedIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="located-in"
-        TreeTagValue="not verified"
-        title="Verification"
-        icon={<SvgIcon component={VerifiedIcon} />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.country_name) {
-    tags.push(
-      <TreeTag
-        key="located-in"
-        TreeTagValue={tree.country_name}
-        title="Located in"
-        icon={<SvgIcon component={LocationIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="located-in"
-        TreeTagValue="unknown"
-        title="Located in"
-        icon={<SvgIcon component={LocationIcon} />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.age) {
-    tags.push(
-      <TreeTag
-        key="Age"
-        TreeTagValue={tree.age}
-        title="Age"
-        icon={<SvgIcon component={HistoryIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="Age"
-        TreeTagValue="unknown"
-        title="Age"
-        icon={<SvgIcon component={HistoryIcon} />}
-        disabled
-      />,
-    );
-  }
-  if (tree.species_name) {
-    tags.push(
-      <TreeTag
-        key="species"
-        TreeTagValue={tree.species_name}
-        title="Species"
-        icon={<SvgIcon component={OriginIcon} inheritViewBox alt="origin" />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="species"
-        TreeTagValue="unknown"
-        title="Species"
-        icon={<SvgIcon component={OriginIcon} inheritViewBox alt="origin" />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.gps_accuracy) {
-    tags.push(
-      <TreeTag
-        key="gps-accuracy"
-        TreeTagValue={tree.gps_accuracy}
-        title="GPS Accuracy"
-        icon={<SvgIcon component={AccuracyIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="gps-accuracy"
-        TreeTagValue="unknown"
-        title="GPS Accuracy"
-        icon={<SvgIcon component={AccuracyIcon} />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.morphology) {
-    tags.push(
-      <TreeTag
-        key="morphology"
-        TreeTagValue={tree.morphology}
-        title="Morphology"
-        icon={<SvgIcon component={HubIcon} />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="morphology"
-        TreeTagValue="unknown"
-        title="Morphology"
-        icon={<SvgIcon component={HubIcon} />}
-        disabled
-      />,
-    );
-  }
-
-  if (tree.lat && tree.lon) {
-    tags.push(
-      <TreeTag
-        key="latitude-longitude"
-        TreeTagValue={`${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
-          tree.lon,
-          5,
-        )}`}
-        title="Latitude, Longitude"
-        icon={<SvgIcon component={GlobalIcon} color="pink" />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="latitude-longitude"
-        TreeTagValue="unknown"
-        title="Latitude, Longitude"
-        icon={<SvgIcon component={GlobalIcon} color="pink" />}
-        disabled
-      />,
-    );
-  }
-  if (tree.token_id) {
-    tags.push(
-      <TreeTag
-        key="token-id"
-        TreeTagValue={tree.token_id}
-        title="Token ID"
-        icon={<SvgIcon component={TokenIcon} />}
-        subtitle="click to enter"
-        link={`/tokens/${tree.token_id}`}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="token-id"
-        TreeTagValue="Token not issued"
-        title="Token ID"
-        icon={<SvgIcon component={TokenIcon} />}
-        disabled
-      />,
-    );
-  }
-  if (tree.wallet_name) {
-    tags.push(
-      <TreeTag
-        key="wallet"
-        TreeTagValue={tree.wallet_name}
-        title="Wallet ownner"
-        icon={<SvgIcon component={AccountBalanceWalletIcon} />}
-        subtitle="click to enter"
-        link={`/wallets/${tree.wallet_id}`}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="wallet"
-        TreeTagValue="No wallet owns it"
-        title="Wallet owner"
-        icon={<SvgIcon component={AccountBalanceWalletIcon} />}
-        disabled
-      />,
-    );
-  }
+    reload();
+  }, [map, tree.lat, tree.lon]);
 
   return (
     <Box
@@ -416,7 +261,7 @@ export default function Tree({
                 name: 'Home',
                 url: '/',
               },
-              ...(userCameFromPlanterPage
+              ...(context && context.name === 'planters'
                 ? [
                     {
                       url: `/planters/${planter.id}`,
@@ -425,6 +270,15 @@ export default function Tree({
                         planter.first_name,
                         planter.last_name,
                       )}`,
+                    },
+                  ]
+                : []),
+              ...(context && context.name === 'organizations'
+                ? [
+                    {
+                      url: `/organizations/${organization.id}`,
+                      icon: organization.logo_url,
+                      name: organization.name,
                     },
                   ]
                 : []),
@@ -583,8 +437,7 @@ export default function Tree({
             entityName={organization.name}
             entityType="Planting Organization"
             buttonText="Meet the Organization"
-            // cardImageSrc={organization?.photo_url}
-            cardImageSrc={imagePlaceholder}
+            cardImageSrc={organization?.photo_url && imagePlaceholder}
             link={`/organizations/${
               organization.id
             }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
@@ -621,10 +474,85 @@ export default function Tree({
       >
         Tree Info
       </Typography>
-      <Box className={classes.tabBox}>
-        {tags}
-        {tagsTail}
-      </Box>
+      <TagList>
+        <TreeTag
+          TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
+          title="Planted on"
+          icon={<SvgIcon component={CalendarIcon} />}
+        />
+        <TreeTag
+          TreeTagValue={tree.verified === false ? 'not verified' : 'verifed'}
+          title="Verification"
+          icon={<SvgIcon component={VerifiedIcon} />}
+          disabled={tree.verified === false}
+        />
+        <TreeTag
+          TreeTagValue={
+            tree.country_name === null ? 'unknown' : tree.country_name
+          }
+          title="Located in"
+          icon={<SvgIcon component={LocationIcon} />}
+          disabled={tree.country_name === null}
+        />
+        <TreeTag
+          TreeTagValue={tree.age === null ? 'unknown' : tree.age}
+          title="Age"
+          icon={<SvgIcon component={HistoryIcon} />}
+          disabled={tree.age === null}
+        />
+        <TreeTag
+          TreeTagValue={
+            tree.species_name === null ? 'unknown' : tree.species_name
+          }
+          title="Species"
+          icon={<SvgIcon component={OriginIcon} inheritViewBox alt="origin" />}
+          disabled={tree.species_name === null}
+        />
+        <TreeTag
+          TreeTagValue={
+            tree.gps_accuracy === null ? 'unknown' : tree.gps_accuracy
+          }
+          title="GPS Accuracy"
+          icon={<SvgIcon component={AccuracyIcon} />}
+          disabled={tree.gps_accuracy === null}
+        />
+        <TreeTag
+          TreeTagValue={tree.morphology === null ? 'unknown' : tree.morphology}
+          title="Morphology"
+          icon={<SvgIcon component={HubIcon} />}
+          disabled={tree.morphology === null}
+        />
+        <TreeTag
+          TreeTagValue={
+            tree.lat === null || tree.lon == null
+              ? 'unknown'
+              : `${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(tree.lon, 5)}`
+          }
+          title="Latitude, Longitude"
+          icon={<SvgIcon component={GlobalIcon} color="pink" />}
+          disabled={tree.lat === null || tree.lon === null}
+        />
+        <TreeTag
+          TreeTagValue={
+            tree.token_id === null ? 'Token not issued' : tree.token_id
+          }
+          title="Token ID"
+          icon={<SvgIcon component={TokenIcon} />}
+          subtitle={tree.token_id === null ? null : 'click to enter'}
+          link={tree.token_id === null ? null : `/tokens/${tree.token_id}`}
+          disabled={tree.token_id === null}
+        />
+        <TreeTag
+          TreeTagValue={
+            tree.wallet_name === null ? 'No wallet owns it' : tree.wallet_name
+          }
+          title="Wallet owner"
+          icon={<SvgIcon component={AccountBalanceWalletIcon} />}
+          subtitle={tree.wallet_name === null ? null : 'click to enter'}
+          link={tree.wallet_name === null ? null : `/wallets/${tree.wallet_id}`}
+          disabled={tree.wallet_name === null}
+        />
+      </TagList>
       <Divider
         varian="fullwidth"
         sx={{

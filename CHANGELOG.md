@@ -1,3 +1,81 @@
+# [2.0.0-beta.79](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.78...v2.0.0-beta.79) (2022-09-09)
+
+
+### Bug Fixes
+
+* wrong font size on top page ([9dab5e6](https://github.com/Greenstand/treetracker-web-map-client/commit/9dab5e694286211d60a81be7b601f991d6d8966b))
+
+# [2.0.0-beta.78](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.77...v2.0.0-beta.78) (2022-09-09)
+
+
+### Bug Fixes
+
+* path base problem ([7d840da](https://github.com/Greenstand/treetracker-web-map-client/commit/7d840da84a0dcf6655b6237abe03b7602d8220a9))
+
+# [2.0.0-beta.77](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.76...v2.0.0-beta.77) (2022-09-09)
+
+
+### Bug Fixes
+
+* detailed log ([651cda9](https://github.com/Greenstand/treetracker-web-map-client/commit/651cda9e441bb5761858e99a5a342252684682e5))
+
+# [2.0.0-beta.76](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.75...v2.0.0-beta.76) (2022-09-09)
+
+
+### Bug Fixes
+
+* test ([adb9867](https://github.com/Greenstand/treetracker-web-map-client/commit/adb9867a5f4bce9b1e23917640062f043ad50675))
+
+
+### Features
+
+* add next base handler ([b35ffa7](https://github.com/Greenstand/treetracker-web-map-client/commit/b35ffa7dbfec623f530e644ade70ee612871b496))
+
+# [2.0.0-beta.75](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.74...v2.0.0-beta.75) (2022-09-08)
+
+
+### Bug Fixes
+
+* can not click tree on org/tree page ([c11a809](https://github.com/Greenstand/treetracker-web-map-client/commit/c11a809e1cf7580ee9a2c544e3c0e758f9316b9a))
+* lock file ([3535ba6](https://github.com/Greenstand/treetracker-web-map-client/commit/3535ba64d00e14057385d0694804ca502c371f7e))
+* pathResolver support query params ([4e6140f](https://github.com/Greenstand/treetracker-web-map-client/commit/4e6140f5a366e38d679f27aabc315d38d68f4265))
+
+
+### Features
+
+* can do on pages with new core version ([1ee05c5](https://github.com/Greenstand/treetracker-web-map-client/commit/1ee05c53530ecb9637bc786b6b8ae930b675149c))
+* timeline to fit new core ([e013aa9](https://github.com/Greenstand/treetracker-web-map-client/commit/e013aa9d73834820efc2b68bed819cd3bd376ddb))
+* tree page can handle org/planter ([38370fe](https://github.com/Greenstand/treetracker-web-map-client/commit/38370fee2f0ae4424a494805efe0908116bc5dc6))
+* upgrade core, select tree on planter+tree page ([2b170bb](https://github.com/Greenstand/treetracker-web-map-client/commit/2b170bb8417659369447c8eea73a2fb897fdfdfa))
+* upgrade to 2.1.0, now every page are resonsible for render map ([b4b3d85](https://github.com/Greenstand/treetracker-web-map-client/commit/b4b3d852d0b8f2d0d68d19c37d5a52066f8698fb))
+* upgrade to 2.2.0 core ([6b1e9a1](https://github.com/Greenstand/treetracker-web-map-client/commit/6b1e9a1755f21b67e2aeb75a0793491d0f533ec9))
+
+# [2.0.0-beta.74](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.73...v2.0.0-beta.74) (2022-09-08)
+
+
+### Bug Fixes
+
+* token id not working on drawer ui ([40eae89](https://github.com/Greenstand/treetracker-web-map-client/commit/40eae893f310e881d378f20a5a9329774a2fc87b))
+
+# [2.0.0-beta.73](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.72...v2.0.0-beta.73) (2022-09-07)
+
+
+### Bug Fixes
+
+* custom card icon theme color ([5db7d49](https://github.com/Greenstand/treetracker-web-map-client/commit/5db7d49283534aed03d6e00f9862dae614f37c70))
+
+# [2.0.0-beta.72](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.71...v2.0.0-beta.72) (2022-09-07)
+
+
+### Bug Fixes
+
+* timeline dark theme color incorrect ([92549f9](https://github.com/Greenstand/treetracker-web-map-client/commit/92549f983eaa3d76e0241da2facf7e6bc98173a5))
+
+
+### Features
+
+* add timeline filter functionality ([9000dce](https://github.com/Greenstand/treetracker-web-map-client/commit/9000dce6f44848e41176013bb763ed166e885bf5))
+
 # [2.0.0-beta.71](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.70...v2.0.0-beta.71) (2022-09-04)
 
 

@@ -3,7 +3,9 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker as MUIMobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { useState } from 'react';
+import moment from 'moment';
+import { useState, useEffect } from 'react';
+import { useMapContext } from 'mapContext';
 import { useMobile } from '../hooks/globalHooks';
 import TimeIcon from '../images/icons/time.svg';
 
@@ -63,6 +65,7 @@ function Timeline() {
     start: Date.now(),
     end: Date.now(),
   });
+  const { map } = useMapContext();
 
   const togglePicker = () => {
     setShowPicker((prev) => !prev);
@@ -74,13 +77,19 @@ function Timeline() {
     const end = frameType === 'end' ? newValue : timeFrame.end;
     if (start > end) return;
 
-    // TODO: handle loading data with api
-
     setTimeFrame((prevTimeFrame) => ({
       ...prevTimeFrame,
       [frameType]: newValue,
     }));
   };
+
+  useEffect(() => {
+    if (!map) return;
+    const startFormatted = moment(timeFrame.start).format('YYYY-MM-DD');
+    const endFormatted = moment(timeFrame.end).format('YYYY-MM-DD');
+
+    map.setFilters({ timeline: `${startFormatted}_${endFormatted}` });
+  }, [timeFrame]);
 
   return (
     <Box
@@ -163,7 +172,13 @@ function Timeline() {
                   }
                   label="Start"
                 />
-                <Typography>to</Typography>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  to
+                </Typography>
                 <MobileDatePicker
                   value={timeFrame.end}
                   onChange={(newValue) =>

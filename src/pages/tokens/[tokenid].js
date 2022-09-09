@@ -19,6 +19,7 @@ import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import TagList from 'components/common/TagList';
 import UUIDTag from 'components/common/UUIDTag';
 import { getWalletById, getTokenById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
@@ -69,93 +70,27 @@ export default function Token(props) {
 
   log.warn('map:', mapContext);
 
-  const tags = [];
-  const tagsTail = [];
-  tags.push(
-    <TreeTag
-      key="created-at"
-      TreeTagValue={new Date(token.created_at).toLocaleDateString()}
-      title="Created At"
-      icon={<SvgIcon component={CalendarIcon} />}
-    />,
-  );
-
-  tags.push(
-    <TreeTag
-      key="token-id"
-      TreeTagValue={token.id}
-      title="Token ID"
-      icon={<SvgIcon component={TokenIcon} inheritViewBox />}
-    />,
-  );
-
-  tags.push(
-    <TreeTag
-      key="tree-id"
-      TreeTagValue={token.tree_id}
-      title="Tree ID"
-      icon={
-        <SvgIcon
-          sx={{
-            '& path': {
-              fill: 'rgb(71, 75, 79)',
-            },
-          }}
-          component={TreeIcon}
-          inheritViewBox
-        />
-      }
-      subtitle="click to enter"
-      link={`/trees/${token.tree_id}`}
-    />,
-  );
-
-  tags.push(
-    <TreeTag
-      key="claim"
-      TreeTagValue={token.claim ? 'Claimed' : 'Not claimed yet'}
-      title="Claim Status"
-      icon={<SvgIcon component={DoneOutlineIcon} inheritViewBox />}
-    />,
-  );
-
-  if (!token.claim && !token.transfer_pending) {
-    tags.push(
-      <TreeTag
-        key="transferability"
-        TreeTagValue="Can be transferred"
-        title="Transferability"
-        icon={<SvgIcon component={CurrencyExchangeIcon} inheritViewBox />}
-      />,
-    );
-  } else {
-    tagsTail.push(
-      <TreeTag
-        key="transferability"
-        TreeTagValue="Can not be transferred"
-        title="Transferability"
-        icon={<SvgIcon component={CurrencyExchangeIcon} />}
-        disabled
-      />,
-    );
-  }
-
   useEffect(() => {
     async function reload() {
       // manipulate the map
       const { map } = mapContext;
       if (map && token) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
-          treeid: token.tree_id,
-        });
         try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
+          log.warn('xxxxxxxx reload');
+          await map.setFilters({
+            treeid: token.tree_id,
+          });
+          const view = await map.getInitialView();
+          await map.gotoView(
+            parseFloat(view.center.lat),
+            parseFloat(view.center.lon),
+            view.zoomLevel,
+          );
+          log.warn('no data:', map, token);
+        } catch (e) {
+          log.warn('get error when render map:', e);
         }
-        map.rerender();
-        log.warn('no data:', map, token);
       }
     }
     reload();
@@ -340,7 +275,9 @@ export default function Token(props) {
               pb: 4,
             }}
           >
-            <Typography variant="h2">Token #{token.id}</Typography>
+            <Typography variant="h2">
+              Token #<UUIDTag uuid={token.id} />
+            </Typography>
             <Typography
               sx={{
                 fontWeight: 400,
@@ -371,20 +308,8 @@ export default function Token(props) {
         >
           <Box sx={{}}>
             <Typography variant="h3" sx={{ fontsize: 20 }}>
-              Token - #{token.id}
+              Token - #<UUIDTag uuid={token.id} />
             </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                mt: 2,
-              }}
-            >
-              <VerifiedBadge
-                color="secondary"
-                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-              />
-            </Box>
           </Box>
         </Portal>
       )}
@@ -414,11 +339,59 @@ export default function Token(props) {
       >
         Token Info
       </Typography>
+      <TagList>
+        <TreeTag
+          key="created-at"
+          TreeTagValue={new Date(token.created_at).toLocaleDateString()}
+          title="Created At"
+          icon={<SvgIcon component={CalendarIcon} />}
+        />
 
-      <Box className={classes.tabBox}>
-        {tags}
-        {tagsTail}
-      </Box>
+        <TreeTag
+          key="token-id"
+          TreeTagValue={token.id}
+          title="Token ID"
+          icon={<SvgIcon component={TokenIcon} inheritViewBox />}
+        />
+
+        <TreeTag
+          key="tree-id"
+          TreeTagValue={token.tree_id}
+          title="Tree ID"
+          icon={
+            <SvgIcon
+              sx={{
+                '& path': {
+                  fill: 'rgb(71, 75, 79)',
+                },
+              }}
+              component={TreeIcon}
+              inheritViewBox
+            />
+          }
+          subtitle="click to enter"
+          link={`/trees/${token.tree_id}`}
+        />
+
+        <TreeTag
+          key="claim"
+          TreeTagValue={token.claim ? 'Claimed' : 'Not claimed yet'}
+          title="Claim Status"
+          icon={<SvgIcon component={DoneOutlineIcon} inheritViewBox />}
+        />
+
+        <TreeTag
+          key="transferability"
+          TreeTagValue={
+            !token.claim && !token.transfer_pending
+              ? 'Can be transferred'
+              : 'Can not be transferred'
+          }
+          title="Transferability"
+          icon={<SvgIcon component={CurrencyExchangeIcon} inheritViewBox />}
+          disabled={token.claim === true && token.transfer_pending === true}
+        />
+      </TagList>
 
       <Typography
         variant="h4"
