@@ -58,7 +58,9 @@ export default function Tree({
   const { map } = mapContext;
   const theme = useTheme();
   const router = useRouter();
-  const context = pathResolver.getContext(router.asPath);
+  const context = pathResolver.getContext(
+    utils.nextPathBaseDecode(router.asPath, process.env.NEXT_PUBLIC_BASE),
+  );
   const isMobile = useMobile();
   const isEmbed = useEmbed();
 
