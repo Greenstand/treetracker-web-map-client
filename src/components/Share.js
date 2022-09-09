@@ -15,8 +15,8 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import { green } from '@mui/material/colors';
 import makeStyles from '@mui/styles/makeStyles';
-import log from 'loglevel';
 import React from 'react';
+import { useClipboard } from 'hooks/globalHooks';
 import CustomShareIcon from './common/CustomShareIcon';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,6 +60,7 @@ function Share(props) {
   const [isMessageOpen, setMessageOpen] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [link, setLink] = React.useState('');
+  const { onCopy, hasCopied } = useClipboard(link);
 
   function handleClick() {
     setIsOpen(true);
@@ -102,22 +103,6 @@ function Share(props) {
     );
     setLink(`${shareUrl}`);
   }, [shareUrl]);
-
-  function handleCopy() {
-    log.log('copy...');
-    const copyTextarea = document.getElementById('EmbedCode');
-    copyTextarea.focus();
-    copyTextarea.select();
-
-    try {
-      const successful = document.execCommand('copy');
-      const msg = successful ? 'successful' : 'unsuccessful';
-      log.log(`Copying text command was ${msg}`);
-    } catch (err) {
-      log.log('Oops, unable to copy');
-    }
-    // showMessage('Code has been copied!');
-  }
 
   function handleMessageClose() {
     setMessageOpen(false);
@@ -228,7 +213,7 @@ function Share(props) {
         />
         <DialogActions>
           <Button onClick={handleEmbedClose}>Cancel</Button>
-          <Button onClick={handleCopy}>Copy</Button>
+          <Button onClick={onCopy}>Copy</Button>
         </DialogActions>
       </Dialog>
       <Snackbar
