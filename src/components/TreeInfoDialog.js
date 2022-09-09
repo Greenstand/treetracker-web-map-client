@@ -149,7 +149,7 @@ export default function TreeInfoDialog(props) {
         />
       </Box>
       <Dialog
-        isFullscreen={isFullscreen}
+        fullScreen={isFullscreen}
         maxWidth={false}
         open={open}
         onClose={handleClose}
