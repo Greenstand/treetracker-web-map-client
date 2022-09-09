@@ -26,13 +26,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '4px',
     backgroundColor: theme.palette.secondary.lightGreen,
   },
-  box1: {
-    padding: theme.spacing(4),
-    width: '100%',
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(2),
-    },
-  },
   code: {
     minWidth: 400,
     margin: 10,
@@ -120,6 +113,8 @@ function Share(props) {
       <Dialog
         open={isOpen}
         onClose={handleClose}
+        maxWidth="xs"
+        fullWidth
         PaperProps={{
           sx: {
             borderRadius: [2, 4],
@@ -133,38 +128,34 @@ function Share(props) {
             p: 0,
           }}
         >
-          <Grid
+          <Box
             sx={{
               p: 0,
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              display: 'flex',
             }}
-            container
-            justifyContent="space-between"
-            alignItems="center"
           >
-            <Grid item xs={8}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-                Share this link
-              </Typography>
-            </Grid>
-            <Grid item>
-              <IconButton className={classes.closeIcon} onClick={handleClose}>
-                <Close style={{ color: green[500] }} />
-              </IconButton>
-            </Grid>
-          </Grid>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 700,
+              }}
+            >
+              Share this link
+            </Typography>
+            <IconButton className={classes.closeIcon} onClick={handleClose}>
+              <Close style={{ color: green[500] }} />
+            </IconButton>
+          </Box>
         </DialogTitle>
-        <Grid
+        <Box
           sx={{
-            gap: [4, 4],
+            gap: 4,
+            justifyContent: 'center',
+            display: 'flex',
+            p: [2, 4],
           }}
-          container
-          justifyContent="center"
-          className={classes.box1}
         >
           <CustomShareIcon handleOnClick={handleEmbed}>
             <Code />
@@ -178,16 +169,32 @@ function Share(props) {
           <CustomShareIcon mailString={mailString}>
             <Email />
           </CustomShareIcon>
-
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item xs={8} className={classes.linkText}>
-              <Typography variant="body1">Or copy link</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <input type="text" className={classes.inputField} value={link} />
-            </Grid>
-          </Grid>
-        </Grid>
+        </Box>
+        <Typography
+          sx={{
+            py: [1, 2],
+          }}
+        >
+          or copy the link
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 2,
+          }}
+        >
+          <TextField
+            value={link}
+            sx={{
+              flex: '1',
+            }}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Button onClick={onCopy}>{hasCopied ? 'Copied!' : 'Copy'}</Button>
+        </Box>
       </Dialog>
       <Dialog open={isEmbedOpen} onClose={handleEmbedClose}>
         <DialogTitle>
