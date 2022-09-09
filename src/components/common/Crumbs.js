@@ -14,11 +14,11 @@ export default function Crumbs(props) {
         aria-label="breadcrumb"
         separator={
           <Typography
-            variant="caption"
+            variant="h6"
             gutterBottom={false}
             sx={{
               display: 'flex',
-              alignItems: 'flex-end',
+              alignItems: 'center',
               minHeight: [16, 24],
             }}
           >
@@ -48,7 +48,7 @@ export default function Crumbs(props) {
                 gutterBottom={false}
                 sx={{
                   display: 'flex',
-                  alignItems: 'flex-end',
+                  alignItems: 'center',
                   minHeight: [16, 24],
                   cursor: item.url || 'text',
                 }}
