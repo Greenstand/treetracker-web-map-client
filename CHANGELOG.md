@@ -1,3 +1,10 @@
+# [2.0.0-beta.79](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.78...v2.0.0-beta.79) (2022-09-09)
+
+
+### Bug Fixes
+
+* wrong font size on top page ([9dab5e6](https://github.com/Greenstand/treetracker-web-map-client/commit/9dab5e694286211d60a81be7b601f991d6d8966b))
+
 # [2.0.0-beta.78](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.77...v2.0.0-beta.78) (2022-09-09)
 
 
