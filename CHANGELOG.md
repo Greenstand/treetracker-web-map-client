@@ -1,3 +1,15 @@
+# [2.0.0-beta.76](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.75...v2.0.0-beta.76) (2022-09-09)
+
+
+### Bug Fixes
+
+* test ([adb9867](https://github.com/Greenstand/treetracker-web-map-client/commit/adb9867a5f4bce9b1e23917640062f043ad50675))
+
+
+### Features
+
+* add next base handler ([b35ffa7](https://github.com/Greenstand/treetracker-web-map-client/commit/b35ffa7dbfec623f530e644ade70ee612871b496))
+
 # [2.0.0-beta.75](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.74...v2.0.0-beta.75) (2022-09-08)
 
 
