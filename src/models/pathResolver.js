@@ -12,7 +12,7 @@ const MAP_URL_PATTERN =
 
 function getPathWhenClickTree(tree, pathname, query) {
   const path = pathname.match(MAP_URL_PATTERN);
-  log.warn('parsed path:', path);
+  log.warn('parsed path:', path, ' for pathname:', pathname);
 
   const optionalParams = {
     ...(query.embed && { embed: query.embed }),
