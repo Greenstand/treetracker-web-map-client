@@ -68,7 +68,7 @@ function Timeline() {
     end: Date.now(),
   });
   const { map } = useMapContext();
-  const isGlobalPage = !!router.asPath.match(/\/top/g);
+  const isGlobalPage = !!router.pathname.match(/^(?:\/top|\/)$/g);
 
   const togglePicker = () => {
     setShowPicker((prev) => !prev);
