@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
@@ -29,6 +30,7 @@ import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
+import Info from '../../components/common/Info';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile, useEmbed } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
@@ -215,14 +217,69 @@ export default function Tree({
             }}
           >
             <Typography variant="h2">Tree #{tree.id}</Typography>
-            <Typography
+            <Box
               sx={{
-                fontWeight: 400,
+                mt: 2,
+                color: theme.palette.common.black,
+                filter: 'opacity(0.8)',
               }}
-              variant="h5"
             >
-              {tree.species_name || 'Unkown species'}
-            </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={OriginIcon} />
+                {tree.species_name || 'Unknown Species'}
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 1,
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={CalendarIcon} />
+                {`Planted on ${moment(tree.time_created).format(
+                  'MMMM Do, YYYY',
+                )}` || 'Unknown Date'}
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 1,
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={LocationIcon} />
+                {`Located in ${tree.country_name}` || 'Unknown location'}
+              </Typography>
+            </Box>
             <Box
               sx={{
                 display: 'flex',
@@ -396,15 +453,68 @@ export default function Tree({
             <Typography variant="h2" color={theme.palette.common.white}>
               Tree #{tree.id}
             </Typography>
-            <Typography
+
+            <Box
               sx={{
-                fontWeight: 400,
+                mt: 2,
+                color: theme.palette.common.white,
+                filter: 'opacity(0.8)',
               }}
-              variant="h5"
-              color={theme.palette.common.white}
             >
-              {tree.species_name || 'Unkown species'}
-            </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.white },
+                }}
+              >
+                <SvgIcon component={OriginIcon} />
+                {tree.species_name || 'Unknown Species'}
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.white },
+                }}
+              >
+                <SvgIcon component={CalendarIcon} />
+                {`Planted on ${moment(tree.time_created).format(
+                  'MMMM Do, YYYY',
+                )}` || 'Unknown Date'}
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.white },
+                }}
+              >
+                <SvgIcon component={LocationIcon} />
+                {`Located in ${tree.country_name}` || 'Unknown location'}
+              </Typography>
+            </Box>
             <Box
               sx={{
                 display: 'flex',
