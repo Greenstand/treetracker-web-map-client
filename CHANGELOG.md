@@ -1,3 +1,11 @@
+# [2.0.0-beta.81](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.80...v2.0.0-beta.81) (2022-09-10)
+
+
+### Features
+
+* added icons to mobile view ([3851e23](https://github.com/Greenstand/treetracker-web-map-client/commit/3851e23a03462b435dffaba34dbac519f616ea3e))
+* added more info to info panel ([32b205c](https://github.com/Greenstand/treetracker-web-map-client/commit/32b205c4224a77e42af674786e455fe270af8315))
+
 # [2.0.0-beta.80](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.79...v2.0.0-beta.80) (2022-09-10)
 
 
