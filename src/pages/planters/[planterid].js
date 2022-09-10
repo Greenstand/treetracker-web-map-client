@@ -482,6 +482,7 @@ export async function getServerSideProps({ params }) {
       },
     };
   } catch (e) {
-    return { notFound: true };
+    if (e.response?.status === 404) return { notFound: true };
+    throw e;
   }
 }
