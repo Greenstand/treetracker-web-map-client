@@ -47,7 +47,7 @@ export async function getPlanterById(id) {
     return data;
   } catch (err) {
     log.error(err.message);
-    throw new Error(err.message);
+    throw err;
   }
 }
 
