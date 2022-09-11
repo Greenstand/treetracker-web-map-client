@@ -17,6 +17,10 @@ Fixes # (issue)
 
 [comment]: # 'Please include screenshots of your changes if relevant.'
 
+|       Before        |       After        |
+| :-----------------: | :----------------: |
+| "screenshot before" | "screenshot after" |
+
 # How Has This Been Tested?
 
 - [ ] Cypress integration
