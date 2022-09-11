@@ -130,6 +130,7 @@ export default function Planter(props) {
     }
     reload();
   }, [mapContext, planter]);
+  console.log('plantersss', planter);
 
   return (
     <>
@@ -227,7 +228,9 @@ export default function Planter(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                  info={`Planter since ${moment(planter.created_at).format(
+                    'MMMM DD, YYYY',
+                  )}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
@@ -272,7 +275,9 @@ export default function Planter(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Planter since ${moment(planter.created_at).format(
+                  'MMMM DD, YYYY',
+                )}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
