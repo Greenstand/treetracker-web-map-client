@@ -42,7 +42,7 @@ export default function Crumbs(props) {
           }
 
           return (
-            <Link href={item.url || '#'} key={item.url}>
+            <Link href={item.url || '#'} key={item.url ?? '#'}>
               <Typography
                 variant="h6"
                 gutterBottom={false}
