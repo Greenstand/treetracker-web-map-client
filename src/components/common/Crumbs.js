@@ -18,8 +18,9 @@ export default function Crumbs(props) {
             gutterBottom={false}
             sx={{
               display: 'flex',
-              alignItems: 'flex-end',
+              alignItems: 'center',
               minHeight: [16, 24],
+              mt: 1,
             }}
           >
             /
@@ -35,6 +36,7 @@ export default function Crumbs(props) {
                   width: 24,
                   height: 24,
                   mr: 1,
+                  mt: 1,
                 }}
                 src={item.icon}
               />
@@ -48,7 +50,7 @@ export default function Crumbs(props) {
                 gutterBottom={false}
                 sx={{
                   display: 'flex',
-                  alignItems: 'flex-end',
+                  alignItems: 'center',
                   minHeight: [16, 24],
                   cursor: item.url || 'text',
                 }}
