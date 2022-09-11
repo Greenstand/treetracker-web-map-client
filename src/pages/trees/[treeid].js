@@ -277,7 +277,9 @@ export default function Tree({
                 }}
               >
                 <SvgIcon component={LocationIcon} />
-                {`Located in ${tree.country_name}` || 'Unknown location'}
+                {tree.country_name !== null
+                  ? `Located in ${tree.country_name}`
+                  : 'Unknown location'}
               </Typography>
             </Box>
             <Box
@@ -512,7 +514,9 @@ export default function Tree({
                 }}
               >
                 <SvgIcon component={LocationIcon} />
-                {`Located in ${tree.country_name}` || 'Unknown location'}
+                {tree.country_name !== null
+                  ? `Located in ${tree.country_name}`
+                  : 'Unknown location'}
               </Typography>
             </Box>
             <Box
