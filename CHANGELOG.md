@@ -1,3 +1,10 @@
+# [2.0.0-beta.84](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.83...v2.0.0-beta.84) (2022-09-13)
+
+
+### Bug Fixes
+
+* react unique key warning ([2660cf5](https://github.com/Greenstand/treetracker-web-map-client/commit/2660cf52edf8fb36d469ce98fffd58ac242246d9))
+
 # [2.0.0-beta.83](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.82...v2.0.0-beta.83) (2022-09-13)
 
 
