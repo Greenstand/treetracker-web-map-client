@@ -1,3 +1,17 @@
+# [2.0.0-beta.86](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.85...v2.0.0-beta.86) (2022-09-13)
+
+
+### Bug Fixes
+
+* added args for debounce func ([3c0c387](https://github.com/Greenstand/treetracker-web-map-client/commit/3c0c387f9c6f3ef5965e44a0ea91b344dc093510))
+
+
+### Features
+
+* added unit test ([c8b2a6f](https://github.com/Greenstand/treetracker-web-map-client/commit/c8b2a6ff7fcdb8d31299babf4fa4c17fd220a1f1))
+* component for search box ([1c45e1f](https://github.com/Greenstand/treetracker-web-map-client/commit/1c45e1f32a003cbf1fc4884f2b63523dc9b6fca2))
+* updaed folder structurre and serach icon color ([5ef89fa](https://github.com/Greenstand/treetracker-web-map-client/commit/5ef89fa525868d9317a0a2091da0b59cbe1f4c6e))
+
 # [2.0.0-beta.85](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.84...v2.0.0-beta.85) (2022-09-13)
 
 
