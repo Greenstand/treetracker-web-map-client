@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { useMapContext } from 'mapContext';
 import { useMobile } from '../hooks/globalHooks';
 import TimeIcon from '../images/icons/time.svg';
+import { nextPathBaseDecode } from '../models/utils';
 
 function CustomInput({ label, inputRef, inputProps, InputProps }) {
   return (
@@ -68,7 +69,11 @@ function Timeline() {
     end: Date.now(),
   });
   const { map } = useMapContext();
-  const isGlobalPage = !!router.pathname.match(/^(?:\/top|\/)$/g);
+  const path = nextPathBaseDecode(
+    router.pathname,
+    process.env.NEXT_PUBLIC_BASE,
+  );
+  const isGlobalPage = /^(?:\/top|\/)$/g.test(path);
 
   const togglePicker = () => {
     setShowPicker((prev) => !prev);
