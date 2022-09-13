@@ -1,8 +1,11 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import log from 'loglevel';
+import React from 'react';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
+import { useMapContext } from '../mapContext';
 
 const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.webp`;
 const useStyles = makeStyles()((theme) => ({
@@ -49,6 +52,17 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Home(props) {
   const { classes } = useStyles();
+
+  const mapContext = useMapContext();
+
+  React.useEffect(() => {
+    async function reload() {
+      if (mapContext.map) {
+        await mapContext.map.setFilters({});
+      }
+    }
+    reload();
+  }, [mapContext.map]);
 
   return (
     <Box

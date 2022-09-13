@@ -40,6 +40,17 @@ function Top({ trees, planters, countries, organizations, wallets }) {
   const [leaderboardCountries, setLeaderboardCountries] =
     React.useState(countries);
 
+  const mapContext = useMapContext();
+
+  React.useEffect(() => {
+    async function reload() {
+      if (mapContext.map) {
+        await mapContext.map.setFilters({});
+      }
+    }
+    reload();
+  }, [mapContext.map]);
+
   React.useEffect(() => {
     if (process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true')
       return;
@@ -160,7 +171,7 @@ function Top({ trees, planters, countries, organizations, wallets }) {
           planters={planters}
           isMobile={isFullscreen}
         />
-        <h1>Featured wallets this week</h1>
+        <Typography variant="h4">Featured wallets this week</Typography>
         <FeaturedPlantersSlider
           link={(id) => `/wallets/${id}`}
           color="secondary"

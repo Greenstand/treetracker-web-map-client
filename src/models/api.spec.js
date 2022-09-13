@@ -67,10 +67,15 @@ function assertLinks(data) {
 }
 
 describe('getOrgLinks', () => {
-  it('should get org links', async () => {
-    const data = await getOrgLinks(organization.links);
-    assertLinks(data);
-  });
+  it(
+    'should get org links',
+    async () => {
+      const data = await getOrgLinks(organization.links);
+      assertLinks(data);
+    },
+    1000 * 20,
+  );
+
   it('should get planter links', async () => {
     log.log(mockPlanter.links);
     const data = await getOrgLinks(mockPlanter.links);

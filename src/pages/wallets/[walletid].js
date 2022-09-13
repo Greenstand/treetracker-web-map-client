@@ -77,21 +77,15 @@ export default function Wallet(props) {
       if (map && wallet) {
         // map.flyTo(tree.lat, tree.lon, 16);
         log.warn('set filter for wallet');
-        map.setFilters({
+        await map.setFilters({
           wallet: wallet.name,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
-        }
-        map.rerender();
-        log.warn('no data:', map, wallet);
+        const view = await map.getInitialView();
+        await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
       }
     }
     reload();
   }, [mapContext, wallet]);
-
   return (
     <Box
       sx={[
@@ -185,7 +179,9 @@ export default function Wallet(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`wallet since ${moment().format('MMMM DD, YYYY')}`}
+                info={`wallet since ${moment(wallet.created_at).format(
+                  'MMMM DD, YYYY',
+                )}`}
               />
             </Box>
           </Box>
@@ -364,6 +360,7 @@ export async function getServerSideProps({ params }) {
     };
   } catch (e) {
     log.warn('e:', e);
-    return { notFound: true };
+    if (e.response?.status === 404) return { notFound: true };
+    throw e;
   }
 }

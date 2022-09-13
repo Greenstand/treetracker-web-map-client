@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
 import { useMapContext } from '../mapContext';
 import * as pathResolver from '../models/pathResolver';
+import * as utils from '../models/utils';
 // import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
@@ -74,9 +75,18 @@ function MapComponent() {
 
     const result = pathResolver.getPathWhenClickTree(
       tree,
-      window.location.pathname,
+      utils.nextPathBaseDecode(
+        window.location.pathname,
+        process.env.NEXT_PUBLIC_BASE,
+      ),
       router.query,
     );
+
+    // // base
+    // result.pathname = utils.nextPathBaseEncode(
+    //   result.pathname,
+    //   process.env.NEXT_PUBLIC_BASE,
+    // );
 
     if (window.location.pathname === result.pathname) {
       log.warn('do not refesh if the pathname is the same!');
@@ -125,7 +135,6 @@ function MapComponent() {
       },
       onClickTree: handleClickTree,
       onError: handleError,
-      filters: parameters,
       iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
       zoomControl: true,
       zoomControlPosition: 'bottomright',

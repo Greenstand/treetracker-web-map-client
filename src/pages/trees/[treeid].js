@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
@@ -29,6 +30,7 @@ import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
+import Info from '../../components/common/Info';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile, useEmbed } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
@@ -43,6 +45,7 @@ import TokenIcon from '../../images/icons/token.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
+import * as pathResolver from '../../models/pathResolver';
 import * as utils from '../../models/utils';
 
 export default function Tree({
@@ -54,9 +57,12 @@ export default function Tree({
 }) {
   log.warn('tree: ', tree);
   const mapContext = useMapContext();
+  const { map } = mapContext;
   const theme = useTheme();
   const router = useRouter();
-  const userCameFromPlanterPage = router.asPath.includes('planters');
+  const context = pathResolver.getContext(
+    utils.nextPathBaseDecode(router.asPath, process.env.NEXT_PUBLIC_BASE),
+  );
   const isMobile = useMobile();
   const isEmbed = useEmbed();
 
@@ -104,11 +110,82 @@ export default function Tree({
   //   draw();
   // }, [mapContext.map, tree.lat, tree.lon]);
   useEffect(() => {
-    // manipulate the map
-    if (mapContext.map && tree?.lat && tree?.lon) {
-      mapContext.map.flyTo(tree.lat, tree.lon, 16);
+    async function reload() {
+      // manipulate the map
+      log.warn('map ,tree, context in tree page:', map, tree, context);
+      if (map && tree?.lat && tree?.lon) {
+        if (context && context.name) {
+          if (context.name === 'planters') {
+            log.warn('set planter filter', context.id);
+            await map.setFilters({
+              userid: context.id,
+            });
+            const currentView = map.getCurrentView();
+            log.warn('current view:', currentView);
+            if (currentView.zoomLevel < 15) {
+              await map.gotoView(
+                parseFloat(tree.lat.toString()),
+                parseFloat(tree.lon.toString()),
+                16,
+              );
+            }
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else if (context.name === 'organizations') {
+            log.warn('set org filter', organization.map_name);
+            await map.setFilters({
+              map_name: organization.map_name,
+            });
+            const currentView = map.getCurrentView();
+            log.warn('current view:', currentView);
+            if (currentView.zoomLevel < 15) {
+              await map.gotoView(
+                parseFloat(tree.lat.toString()),
+                parseFloat(tree.lon.toString()),
+                16,
+              );
+            }
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else {
+            throw new Error(`unknown context name: ${context.name}`);
+          }
+        } else {
+          log.warn('set treeid filter', tree.id);
+          await map.setFilters({
+            treeid: tree.id,
+          });
+          const currentView = map.getCurrentView();
+          log.warn('current view:', currentView);
+          if (currentView.zoomLevel < 15) {
+            await map.gotoView(
+              parseFloat(tree.lat.toString()),
+              parseFloat(tree.lon.toString()),
+              16,
+            );
+          }
+        }
+
+        // // select the tree
+        // const treeDataForMap = {
+        //   ...tree,
+        //   lat: parseFloat(tree.lat.toString()),
+        //   lon: parseFloat(tree.lon.toString()),
+        // };
+        // mapContext.map.selectTree(treeDataForMap);
+        // // log.warn('filter of map:', mapContext.map.getFilters());
+      }
     }
-  }, [mapContext.map, tree.lat, tree.lon]);
+    reload();
+  }, [map, tree.lat, tree.lon]);
 
   return (
     <Box
@@ -140,14 +217,71 @@ export default function Tree({
             }}
           >
             <Typography variant="h2">Tree #{tree.id}</Typography>
-            <Typography
+            <Box
               sx={{
-                fontWeight: 400,
+                mt: 2,
+                color: theme.palette.common.black,
+                filter: 'opacity(0.8)',
               }}
-              variant="h5"
             >
-              {tree.species_name || 'Unkown species'}
-            </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={OriginIcon} />
+                {tree.species_name || 'Unknown Species'}
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 1,
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={CalendarIcon} />
+                {`Planted on ${moment(tree.time_created).format(
+                  'MMMM Do, YYYY',
+                )}` || 'Unknown Date'}
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 1,
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <SvgIcon component={LocationIcon} />
+                {tree.country_name !== null
+                  ? `Located in ${tree.country_name}`
+                  : 'Unknown location'}
+              </Typography>
+            </Box>
             <Box
               sx={{
                 display: 'flex',
@@ -186,7 +320,7 @@ export default function Tree({
                 name: 'Home',
                 url: '/',
               },
-              ...(userCameFromPlanterPage
+              ...(context && context.name === 'planters'
                 ? [
                     {
                       url: `/planters/${planter.id}`,
@@ -195,6 +329,15 @@ export default function Tree({
                         planter.first_name,
                         planter.last_name,
                       )}`,
+                    },
+                  ]
+                : []),
+              ...(context && context.name === 'organizations'
+                ? [
+                    {
+                      url: `/organizations/${organization.id}`,
+                      icon: organization.logo_url,
+                      name: organization.name,
                     },
                   ]
                 : []),
@@ -312,15 +455,70 @@ export default function Tree({
             <Typography variant="h2" color={theme.palette.common.white}>
               Tree #{tree.id}
             </Typography>
-            <Typography
+
+            <Box
               sx={{
-                fontWeight: 400,
+                mt: 2,
+                color: theme.palette.common.white,
+                filter: 'opacity(0.8)',
               }}
-              variant="h5"
-              color={theme.palette.common.white}
             >
-              {tree.species_name || 'Unkown species'}
-            </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.white },
+                }}
+              >
+                <SvgIcon component={OriginIcon} />
+                {tree.species_name || 'Unknown Species'}
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.white },
+                }}
+              >
+                <SvgIcon component={CalendarIcon} />
+                {`Planted on ${moment(tree.time_created).format(
+                  'MMMM Do, YYYY',
+                )}` || 'Unknown Date'}
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'text.text',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.white },
+                }}
+              >
+                <SvgIcon component={LocationIcon} />
+                {tree.country_name !== null
+                  ? `Located in ${tree.country_name}`
+                  : 'Unknown location'}
+              </Typography>
+            </Box>
             <Box
               sx={{
                 display: 'flex',
@@ -353,8 +551,7 @@ export default function Tree({
             entityName={organization.name}
             entityType="Planting Organization"
             buttonText="Meet the Organization"
-            // cardImageSrc={organization?.photo_url}
-            cardImageSrc={imagePlaceholder}
+            cardImageSrc={organization?.photo_url && imagePlaceholder}
             link={`/organizations/${
               organization.id
             }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
@@ -505,6 +702,8 @@ export async function getServerSideProps({ params }) {
       },
     };
   } catch (e) {
-    return { notFound: true };
+    log.warn('tree page:', e);
+    if (e.response?.status === 404) return { notFound: true };
+    throw e;
   }
 }

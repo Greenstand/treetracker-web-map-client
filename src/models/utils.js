@@ -66,7 +66,7 @@ async function requestAPI(url) {
     return data;
   } catch (ex) {
     log.error('ex:', ex);
-    throw new Error(ex.message);
+    throw ex;
   }
 }
 
@@ -117,12 +117,16 @@ const getThumbnailImageUrls = (imageUrl, width = 400, height = 400) => {
 const debounce = (func, timeout = 50) => {
   let debouncedFunc = null;
 
-  return () => {
+  return (...args) => {
     if (!debouncedFunc) {
-      debouncedFunc = setTimeout(func, timeout);
+      debouncedFunc = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
     } else {
       clearTimeout(debouncedFunc);
-      debouncedFunc = setTimeout(func, timeout);
+      debouncedFunc = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
     }
   };
 };
@@ -211,6 +215,14 @@ const convertFontObjToFontArr = (fontObj) => {
   return fontWeightNames;
 };
 
+function nextPathBaseEncode(path, base) {
+  return `${base}${path}`;
+}
+
+function nextPathBaseDecode(path, base) {
+  return path.replace(base, '');
+}
+
 export {
   hideLastName,
   parseDomain,
@@ -226,4 +238,6 @@ export {
   optimizeThemeFonts,
   getPlanterName,
   convertFontObjToFontArr,
+  nextPathBaseDecode,
+  nextPathBaseEncode,
 };

@@ -120,20 +120,17 @@ export default function Planter(props) {
       const { map } = mapContext;
       if (map && planter) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
+        await map.setFilters({
           userid: planter.id,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
-        }
-        map.rerender();
+        const view = await map.getInitialView();
+        map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         log.warn('no data:', map, planter);
       }
     }
     reload();
   }, [mapContext, planter]);
+  console.log('plantersss', planter);
 
   return (
     <>
@@ -231,7 +228,9 @@ export default function Planter(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                  info={`Planter since ${moment(planter.created_at).format(
+                    'MMMM DD, YYYY',
+                  )}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
@@ -276,7 +275,9 @@ export default function Planter(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Planter since ${moment(planter.created_at).format(
+                  'MMMM DD, YYYY',
+                )}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -486,6 +487,8 @@ export async function getServerSideProps({ params }) {
       },
     };
   } catch (e) {
-    return { notFound: true };
+    log.warn('planters page:', e);
+    if (e.response?.status === 404) return { notFound: true };
+    throw e;
   }
 }

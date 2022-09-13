@@ -92,7 +92,6 @@ function Timeline() {
     const endFormatted = moment(timeFrame.end).format('YYYY-MM-DD');
 
     map.setFilters({ timeline: `${startFormatted}_${endFormatted}` });
-    map.rerender();
   }, [timeFrame]);
 
   return (
