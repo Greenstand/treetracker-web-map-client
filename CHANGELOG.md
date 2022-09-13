@@ -1,3 +1,10 @@
+# [2.0.0-beta.83](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.82...v2.0.0-beta.83) (2022-09-13)
+
+
+### Features
+
+* finished up adding tree slider ([e6fcf12](https://github.com/Greenstand/treetracker-web-map-client/commit/e6fcf12b7455a745f123a2ecfb4d10c05376e4f3))
+
 # [2.0.0-beta.82](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.81...v2.0.0-beta.82) (2022-09-13)
 
 
