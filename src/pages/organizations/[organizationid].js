@@ -19,6 +19,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
@@ -89,6 +90,7 @@ export default function Organization(props) {
   const [continent, setContinent] = React.useState(null);
   const router = useRouter();
   const isMobile = useMobile();
+  const { featuredTrees } = organization;
 
   const { setTitlesData } = useDrawerContext();
 
@@ -134,74 +136,113 @@ export default function Organization(props) {
 
   return (
     <>
-      <Box>
-        <Box
-          sx={[
-            {
-              padding: (t) => [t.spacing(0, 4), 6],
-              width: 1,
-              boxSizing: 'border-box',
-            },
-            nextExtraIsEmbed && {
-              padding: (t) => [t.spacing(0, 4), 6 * 0.6],
-            },
-          ]}
-        >
-          {!isMobile && (
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '100%',
-                alignItems: 'center',
-              }}
-            >
-              <Crumbs
-                items={[
-                  {
-                    // icon: <HomeIcon />,
-                    name: 'Home',
-                    url: '/',
-                  },
-                  {
-                    icon: logo_url,
-                    name: `organization ${name}`,
-                  },
-                ]}
-              />
-
-              <SvgIcon
-                component={SearchIcon}
-                inheritViewBox
-                sx={{
-                  width: 48,
-                  height: 48,
-                  fill: 'transparent',
-                  '& path': {
-                    fill: 'grey',
-                  },
-                  '& rect': {
-                    stroke: 'grey',
-                  },
-                }}
-              />
-            </Box>
-          )}
+      <Box
+        sx={[
+          {
+            padding: (t) => [t.spacing(0, 4), 6],
+            width: 1,
+            boxSizing: 'border-box',
+          },
+          nextExtraIsEmbed && {
+            padding: (t) => [t.spacing(0, 4), 6 * 0.6],
+          },
+        ]}
+      >
+        {!isMobile && (
           <Box
             sx={{
-              borderRadius: 4,
-              mt: 6,
-              '& img': {
-                width: '100%',
-              },
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
             }}
           >
-            <img src={`${router.basePath}${orgBackground}`} alt="profile" />
-            <ProfileAvatar src={logo_url} />
-          </Box>
+            <Crumbs
+              items={[
+                {
+                  // icon: <HomeIcon />,
+                  name: 'Home',
+                  url: '/',
+                },
+                {
+                  icon: logo_url,
+                  name: `organization ${name}`,
+                },
+              ]}
+            />
 
-          {!isMobile && (
-            <Box sx={{ mt: 6 }}>
+            <SvgIcon
+              component={SearchIcon}
+              inheritViewBox
+              sx={{
+                width: 48,
+                height: 48,
+                fill: 'transparent',
+                '& path': {
+                  fill: 'grey',
+                },
+                '& rect': {
+                  stroke: 'grey',
+                },
+              }}
+            />
+          </Box>
+        )}
+
+        <Box
+          sx={{
+            borderRadius: 4,
+            mt: 6,
+            '& img': {
+              width: '100%',
+              borderRadius: '16px',
+              maxHeight: [212, 328],
+              objectFit: 'cover',
+              // maxWidth: [356, 672],
+            },
+          }}
+        >
+          <img src={`${router.basePath}${orgBackground}`} alt="profile" />
+          <ProfileAvatar src={logo_url} />
+        </Box>
+
+        {!isMobile && (
+          <Box sx={{ mt: 6 }}>
+            <Typography variant="h2">{name}</Typography>
+            <Box sx={{ mt: 2 }}>
+              <Info
+                iconURI={CalendarIcon}
+                info={`Organization since ${moment().format('MMMM DD, YYYY')}`}
+              />
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+            </Box>
+            <Box
+              sx={{
+                mt: 4,
+                gap: 2,
+                display: 'flex',
+              }}
+            >
+              <VerifiedBadge
+                color="primary"
+                verified
+                badgeName="Verified Organization"
+              />
+              <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
+            </Box>
+          </Box>
+        )}
+
+        {isMobile && (
+          <Portal container={document.getElementById('drawer-title-container')}>
+            <Box
+              sx={{
+                px: 4,
+                pb: 4,
+              }}
+            >
               <Typography variant="h2">{name}</Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
@@ -229,74 +270,47 @@ export default function Organization(props) {
                 <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
               </Box>
             </Box>
-          )}
+          </Portal>
+        )}
+        {isMobile && (
+          <Portal
+            container={document.getElementById('drawer-title-container-min')}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                gap: '8px',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}
+            >
+              <Avatar
+                src={logo_url}
+                sx={{
+                  width: 32,
+                  height: 32,
+                }}
+              />
+              <Typography variant="h3">{name}</Typography>
+            </Box>
+          </Portal>
+        )}
 
-          {isMobile && (
-            <Portal
-              container={document.getElementById('drawer-title-container')}
-            >
-              <Box
-                sx={{
-                  px: 4,
-                  pb: 4,
-                }}
-              >
-                <Typography variant="h2">{name}</Typography>
-                <Box sx={{ mt: 2 }}>
-                  <Info
-                    iconURI={CalendarIcon}
-                    info={`Organization since ${moment().format(
-                      'MMMM DD, YYYY',
-                    )}`}
-                  />
-                </Box>
-                <Box sx={{ mt: 2 }}>
-                  <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
-                </Box>
-                <Box
-                  sx={{
-                    mt: 4,
-                    gap: 2,
-                    display: 'flex',
-                  }}
-                >
-                  <VerifiedBadge
-                    color="primary"
-                    verified
-                    badgeName="Verified Organization"
-                  />
-                  <VerifiedBadge
-                    color="greyLight"
-                    badgeName="Seeking Planter"
-                  />
-                </Box>
-              </Box>
-            </Portal>
-          )}
-          {isMobile && (
-            <Portal
-              container={document.getElementById('drawer-title-container-min')}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: '8px',
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}
-              >
-                <Avatar
-                  src={logo_url}
-                  sx={{
-                    width: 32,
-                    height: 32,
-                  }}
-                />
-                <Typography variant="h3">{name}</Typography>
-              </Box>
-            </Portal>
-          )}
+        <Box
+          sx={{
+            mt: [8, 16],
+          }}
+        >
+          <Typography variant="h4">
+            Featured trees by {organization.name}
+          </Typography>
+          <FeaturedTreesSlider
+            trees={featuredTrees.trees}
+            link={(item) =>
+              `/organizations/${organization.id}/trees/${item.id}`
+            }
+          />
           <Grid
             container
             wrap="nowrap"
