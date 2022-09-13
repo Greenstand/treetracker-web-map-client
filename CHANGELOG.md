@@ -1,3 +1,11 @@
+# [2.0.0-beta.85](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.84...v2.0.0-beta.85) (2022-09-13)
+
+
+### Bug Fixes
+
+* centered the image ([cc77254](https://github.com/Greenstand/treetracker-web-map-client/commit/cc77254b32a88ca7b1acbdfaa9c2cbb151dcb4f7))
+* tree located in null ([5b31a18](https://github.com/Greenstand/treetracker-web-map-client/commit/5b31a18aa4e0919a8382e2daadf0012320df1ba1))
+
 # [2.0.0-beta.84](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.83...v2.0.0-beta.84) (2022-09-13)
 
 
