@@ -157,7 +157,7 @@ function PlanterQuote({ planter, reverse = false }) {
               variant="body1"
               sx={{
                 minHeight: [45, 95],
-                minWidth: [200, 410],
+                minWidth: [150, 350],
               }}
             >
               {quote}
