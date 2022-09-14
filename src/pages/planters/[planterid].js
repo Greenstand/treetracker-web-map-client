@@ -409,6 +409,10 @@ export default function Planter(props) {
               />
             ))}
           </Box>
+          {(!planter.species.species ||
+            planter.species.species.length === 0) && (
+            <Typography variant="h5">NO DATA YET</Typography>
+          )}
         </Box>
         <Box
           sx={{

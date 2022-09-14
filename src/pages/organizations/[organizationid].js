@@ -392,6 +392,10 @@ export default function Organization(props) {
                 </React.Fragment>
               ))}
             </Box>
+            {(!organization?.species?.species ||
+              organization?.species?.species.length === 0) && (
+              <Typography variant="h5">NO DATA YET</Typography>
+            )}
           </Box>
         </Box>
 
