@@ -404,6 +404,7 @@ export default function Planter(props) {
               <TreeSpeciesCard
                 key={species.id}
                 name={species.name}
+                subTitle={species.desc || '---'}
                 count={species.total}
               />
             ))}
