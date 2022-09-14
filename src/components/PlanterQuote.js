@@ -8,8 +8,10 @@ import {
   SvgIcon,
 } from '@mui/material';
 import * as d3 from 'd3';
+import log from 'loglevel';
 import moment from 'moment';
 import Image from 'next/image';
+import Link from './Link';
 import ColorButton from './common/ColorButton';
 import DataTag from './common/DataTag';
 import Info from './common/Info';
@@ -23,8 +25,11 @@ import QuoteImg from '../images/quote-symbol.svg';
 
 // TODO: something is wrong with quote-symbol.svg and quote-reverse.svg, they show a blank space. The svg files pull up as blanks. Not sure how to fix them, putting up an issue as this is something totally different than what I'm working on.
 
-function PlanterQuote({ planter, reverse = false }) {
+function PlanterQuote(props) {
+  log.warn('props:', props);
+  const { planter, reverse = false } = props;
   const {
+    id,
     quote: quote2,
     name,
     image_url: photo2,
@@ -199,7 +204,9 @@ function PlanterQuote({ planter, reverse = false }) {
           mt: [8, 16],
         }}
       >
-        <ColorButton>Meet the Planter</ColorButton>
+        <Link href={`/planters/${id}`}>
+          <ColorButton>Meet the Planter</ColorButton>
+        </Link>
       </Box>
     </Box>
   );
