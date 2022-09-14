@@ -1,3 +1,13 @@
+# [2.0.0-beta.88](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.87...v2.0.0-beta.88) (2022-09-14)
+
+
+### Features
+
+* add planter quote info ([f032471](https://github.com/Greenstand/treetracker-web-map-client/commit/f03247184be69f8187a58509da9f5dbed0e19436))
+* focus the tree if needed ([6d891ff](https://github.com/Greenstand/treetracker-web-map-client/commit/6d891ffb241799f8c78abea147e794269ff32775))
+* settings for core ([cf9c372](https://github.com/Greenstand/treetracker-web-map-client/commit/cf9c372e1e820cfb76dde70bcda0808605b3fc42))
+* settings for prod ([1c08c2e](https://github.com/Greenstand/treetracker-web-map-client/commit/1c08c2e67865326f1f6ffaeb59e84c5fda8abbb6))
+
 # [2.0.0-beta.87](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.86...v2.0.0-beta.87) (2022-09-14)
 
 
