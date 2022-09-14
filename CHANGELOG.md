@@ -1,3 +1,10 @@
+# [2.0.0-beta.87](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.86...v2.0.0-beta.87) (2022-09-14)
+
+
+### Bug Fixes
+
+* added organization logo ([f1e40a3](https://github.com/Greenstand/treetracker-web-map-client/commit/f1e40a3625393e3ff79d768f9e2c783a047e9078))
+
 # [2.0.0-beta.86](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.85...v2.0.0-beta.86) (2022-09-13)
 
 
