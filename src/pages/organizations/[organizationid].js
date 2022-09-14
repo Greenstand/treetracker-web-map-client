@@ -496,8 +496,7 @@ export default function Organization(props) {
               height: '120px',
               margin: '10px',
             }}
-            // src={organization.image_url}
-            src={imagePlaceholder}
+            src={organization.logo_url || imagePlaceholder}
             variant="rounded"
           />
         </Portal>
