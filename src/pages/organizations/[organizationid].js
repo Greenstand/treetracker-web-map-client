@@ -436,7 +436,7 @@ export default function Organization(props) {
             ].map((planter, i) => ( */}
           {organization?.associatedPlanters?.planters?.map((planter, i) => (
             <Box sx={{ mt: [6, 12] }} key={planter.name}>
-              <PlanterQuote planter reverse={i % 2 !== 0} />
+              <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
             </Box>
           ))}
         </Box>

@@ -28,7 +28,7 @@ function PlanterQuote({ planter, reverse = false }) {
     quote: quote2,
     name,
     image_url: photo2,
-    initialDate,
+    created_at,
     location,
   } = planter;
 
@@ -116,7 +116,9 @@ function PlanterQuote({ planter, reverse = false }) {
             <Box sx={{ mt: [1.5, 3] }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Planter since ${moment(planter.created_at).format(
+                  'MMMM DD, YYYY',
+                )}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -171,7 +173,9 @@ function PlanterQuote({ planter, reverse = false }) {
             <Box sx={{ mt: [1.5, 3] }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Planter since ${moment(planter.created_at).format(
+                  'MMMM DD, YYYY',
+                )}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
