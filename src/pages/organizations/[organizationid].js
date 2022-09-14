@@ -392,6 +392,10 @@ export default function Organization(props) {
                 </React.Fragment>
               ))}
             </Box>
+            {(!organization?.species?.species ||
+              organization?.species?.species.length === 0) && (
+              <Typography variant="h5">NO DATA YET</Typography>
+            )}
           </Box>
         </Box>
 
@@ -436,7 +440,7 @@ export default function Organization(props) {
             ].map((planter, i) => ( */}
           {organization?.associatedPlanters?.planters?.map((planter, i) => (
             <Box sx={{ mt: [6, 12] }} key={planter.name}>
-              <PlanterQuote planter reverse={i % 2 !== 0} />
+              <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
             </Box>
           ))}
         </Box>

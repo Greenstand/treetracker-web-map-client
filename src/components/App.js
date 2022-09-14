@@ -138,6 +138,10 @@ function MapComponent() {
       iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
       zoomControl: true,
       zoomControlPosition: 'bottomright',
+      tileServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_URL,
+      tileServerSubdomains:
+        process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
+      apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
     });
     map.on('move-end', () => {
       log.warn('update url');
