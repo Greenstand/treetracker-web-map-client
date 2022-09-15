@@ -25,6 +25,8 @@ function getPathWhenClickTree(tree, pathname, query) {
       pathnameResult = path[4];
     } else if (path[1] && path[5] === 'trees') {
       pathnameResult = `${path[1]}/trees/${tree.id}`;
+    } else if (path[1] === undefined && path[5] === 'trees') {
+      pathnameResult = `/trees/${tree.id}`;
     } else {
       pathnameResult = `${path[1] || ''}/${path[4] || 'trees'}/${
         path[5] === 'tokens' ? path[4] : tree.id

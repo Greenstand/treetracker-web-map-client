@@ -25,6 +25,19 @@ describe('Test pathResolver', () => {
         pathname: '/organizations/178/trees/706648',
       });
     });
+
+    it('click on /trees/1017648', () => {
+      const result = pathResolver.getPathWhenClickTree(
+        {
+          id: 1017681,
+        },
+        '/trees/1017648',
+        {},
+      );
+      expect(result).toMatchObject({
+        pathname: '/trees/1017681',
+      });
+    });
   });
 
   describe('getContext', () => {
