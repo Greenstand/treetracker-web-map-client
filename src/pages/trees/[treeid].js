@@ -322,7 +322,7 @@ export default function Tree({
                     },
                   ]
                 : []),
-              ...(context && context.name === 'organizations'
+              ...(context && context.name === 'organizations' && organization
                 ? [
                     {
                       url: `/organizations/${organization.id}`,
