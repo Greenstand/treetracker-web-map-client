@@ -1,3 +1,24 @@
+# [2.0.0-beta.90](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.89...v2.0.0-beta.90) (2022-09-15)
+
+
+### Bug Fixes
+
+* broken test ([bb16c8c](https://github.com/Greenstand/treetracker-web-map-client/commit/bb16c8c3080c735b32c67273c216642d7debc5b7))
+* close country board because it is too slow on prod ([f65aea7](https://github.com/Greenstand/treetracker-web-map-client/commit/f65aea7808ed39e0d6dbaa67b967604636cde085))
+* missing icon for token page ([b855a31](https://github.com/Greenstand/treetracker-web-map-client/commit/b855a312ba547f12a3934ba750c816f9c98221e7))
+* missing speciss name in token page ([5a8ad38](https://github.com/Greenstand/treetracker-web-map-client/commit/5a8ad3882216830f1bc3450ea876f92ab7b77246))
+* no data on emebed home page ([fda09c8](https://github.com/Greenstand/treetracker-web-map-client/commit/fda09c89d5d0b9a5254a30650c7699de958a2b21))
+* single tree with map data ([5efb886](https://github.com/Greenstand/treetracker-web-map-client/commit/5efb886c3937b947780ca63a61744764753e479c))
+* species desc on wallet page ([f8b7c27](https://github.com/Greenstand/treetracker-web-map-client/commit/f8b7c2744fef271c13c7176b326dc1ad74b5126e))
+* tree page can not click tree ([caa199a](https://github.com/Greenstand/treetracker-web-map-client/commit/caa199a3f14b39f6f515e2c2467eaf8b7419a3af))
+
+
+### Features
+
+* add image api setting ([0e76d16](https://github.com/Greenstand/treetracker-web-map-client/commit/0e76d1694b94f803d1a2f019d1de39655a6f4465))
+* add image api setting for deploy ([1685d2c](https://github.com/Greenstand/treetracker-web-map-client/commit/1685d2c9c1011b578d42cad15b8ac21733166e72))
+* settings for leader board ([edbb054](https://github.com/Greenstand/treetracker-web-map-client/commit/edbb0547d7d3f3ed9742d682a93cb654510b080e))
+
 # [2.0.0-beta.89](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.88...v2.0.0-beta.89) (2022-09-14)
 
 
