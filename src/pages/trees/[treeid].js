@@ -158,10 +158,14 @@ export default function Tree({
           }
         } else {
           log.warn('set treeid filter', tree.id);
-          await map.setFilters({
-            treeid: tree.id,
-          });
+          await map.setFilters({});
           await focusTree(map, tree);
+          const treeDataForMap = {
+            ...tree,
+            lat: parseFloat(tree.lat.toString()),
+            lon: parseFloat(tree.lon.toString()),
+          };
+          map.selectTree(treeDataForMap);
         }
 
         // // select the tree
