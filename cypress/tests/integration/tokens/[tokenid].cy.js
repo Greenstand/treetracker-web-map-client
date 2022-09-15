@@ -53,6 +53,15 @@ describe('Token page', () => {
         transactions: [],
       },
     });
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: '/query/trees/951836',
+      statusCode: 200,
+      body: {
+        id: 951836,
+      },
+    });
 
     cy.visit(path, {
       failOnStatusCode: false,
