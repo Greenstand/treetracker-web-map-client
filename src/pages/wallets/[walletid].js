@@ -305,6 +305,7 @@ export default function Wallet(props) {
                 key={specie.id}
                 name={specie.name}
                 count={specie.total}
+                subTitle={specie.desc || '---'}
               />
             ))}
           </Box>

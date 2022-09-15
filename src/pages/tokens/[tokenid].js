@@ -60,7 +60,7 @@ function handleShare() {}
 
 export default function Token(props) {
   log.warn('props:', props);
-  const { token, wallet, transactions, nextExtraIsEmbed } = props;
+  const { token, wallet, transactions, nextExtraIsEmbed, tree } = props;
   const theme = useTheme();
   const { classes } = useStyles();
   const mapContext = useMapContext();
@@ -126,7 +126,9 @@ export default function Token(props) {
                 ? [
                     {
                       url: `/wallets/${wallet.id}`,
-                      icon: wallet.logo_url,
+                      icon: wallet.logo_url || (
+                        <SvgIcon component={AccountBalanceWalletIcon} />
+                      ),
                       name: wallet.name,
                     },
                   ]
@@ -248,7 +250,7 @@ export default function Token(props) {
               variant="h5"
               color={theme.palette.common.white}
             >
-              {token.tree_species_name || 'Unkown species'}
+              {tree.species_name || 'Unkown species'}
             </Typography>
             <Box
               sx={{
@@ -563,12 +565,20 @@ export async function getServerSideProps({ params }) {
     );
     const { data } = res;
     const transactions = data;
+    let tree;
+    {
+      const res2 = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
+      );
+      tree = res2.data;
+    }
 
     return {
       props: {
         token,
         wallet,
         transactions,
+        tree,
       },
     };
   } catch (e) {
