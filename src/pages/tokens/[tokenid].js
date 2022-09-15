@@ -126,7 +126,9 @@ export default function Token(props) {
                 ? [
                     {
                       url: `/wallets/${wallet.id}`,
-                      icon: wallet.logo_url,
+                      icon: wallet.logo_url || (
+                        <SvgIcon component={AccountBalanceWalletIcon} />
+                      ),
                       name: wallet.name,
                     },
                   ]
