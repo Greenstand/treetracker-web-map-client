@@ -586,33 +586,63 @@ export default function Token(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, query }) {
   const { tokenid } = params;
+  log.warn('tokenid:', tokenid);
+  log.warn('query:', query);
+  let result;
   try {
-    const token = await getTokenById(tokenid);
-    const { wallet_id } = token;
-    const wallet = await getWalletById(wallet_id);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
-    );
-    const { data } = res;
-    const transactions = data;
-    let tree;
-    {
-      const res2 = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
+    if (tokenid === 'idfromquery') {
+      log.warn('to load token from treeid');
+      const { tree_id } = query;
+      const treeId = parseInt(tree_id, 10);
+      let res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/trees/${treeId}`,
       );
-      tree = res2.data;
-    }
+      const { data: tree } = res;
+      const token = await getTokenById(tree.token_id);
+      const { wallet_id } = token;
+      const wallet = await getWalletById(wallet_id);
+      res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${token.id}`,
+      );
+      const { data: transactions } = res;
 
-    return {
-      props: {
-        token,
-        wallet,
-        transactions,
-        tree,
-      },
-    };
+      result = {
+        props: {
+          token,
+          wallet,
+          transactions,
+          tree,
+        },
+      };
+    } else {
+      const token = await getTokenById(tokenid);
+      const { wallet_id } = token;
+      const wallet = await getWalletById(wallet_id);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+      );
+      const { data } = res;
+      const transactions = data;
+      let tree;
+      {
+        const res2 = await axios.get(
+          `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
+        );
+        tree = res2.data;
+      }
+
+      result = {
+        props: {
+          token,
+          wallet,
+          transactions,
+          tree,
+        },
+      };
+    }
+    return result;
   } catch (e) {
     log.error('token page:', e);
     if (e.response?.status === 404) return { notFound: true };

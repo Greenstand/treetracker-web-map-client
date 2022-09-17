@@ -12,7 +12,8 @@ const MAP_URL_PATTERN =
 
 function getPathWhenClickTree(tree, pathname, query) {
   const path = pathname.match(MAP_URL_PATTERN);
-  log.warn('parsed path:', path, ' for pathname:', pathname);
+  log.warn('parsed path:', path, ' for pathname:', pathname, ' tree:', tree);
+  console.warn(JSON.stringify(tree, undefined, 2));
 
   const optionalParams = {
     ...(query.embed && { embed: query.embed }),
@@ -27,6 +28,9 @@ function getPathWhenClickTree(tree, pathname, query) {
       pathnameResult = `${path[1]}/trees/${tree.id}`;
     } else if (path[1] === undefined && path[5] === 'trees') {
       pathnameResult = `/trees/${tree.id}`;
+    } else if (path[2] === 'wallets') {
+      pathnameResult = `${path[1]}/tokens`;
+      optionalParams.tree_id = tree.id;
     } else {
       pathnameResult = `${path[1] || ''}/${path[4] || 'trees'}/${
         path[5] === 'tokens' ? path[4] : tree.id
