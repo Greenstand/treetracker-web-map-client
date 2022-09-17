@@ -58,6 +58,46 @@ describe('Test pathResolver', () => {
     });
   });
 
+  describe('updatePathWhenMapMoveEnd', () => {
+    it('update path when ', () => {
+      const result = pathResolver.updatePathWhenMapMoveEnd(
+        {
+          pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7',
+        },
+        {
+          getCurrentBounds: () =>
+            '37.44990348815919,-3.315482794386477,37.46535301208497,-3.307471024919109',
+        },
+        {
+          query: {},
+        },
+      );
+      expect(result).toBe(
+        '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7?bounds=37.44990348815919,-3.315482794386477,37.46535301208497,-3.307471024919109',
+      );
+    });
+
+    it('update path when /wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens?tree_id=14615', () => {
+      const result = pathResolver.updatePathWhenMapMoveEnd(
+        {
+          pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7',
+        },
+        {
+          getCurrentBounds: () =>
+            '37.44990348815919,-3.315482794386477,37.46535301208497,-3.307471024919109',
+        },
+        {
+          query: {
+            tree_id: 14615,
+          },
+        },
+      );
+      expect(result).toBe(
+        '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7?bounds=37.44990348815919,-3.315482794386477,37.46535301208497,-3.307471024919109&tree_id=14615',
+      );
+    });
+  });
+
   describe('getContext', () => {
     it('org context', () => {
       const result = pathResolver.getContext('/organizations/178/trees/735592');

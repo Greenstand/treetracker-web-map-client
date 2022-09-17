@@ -145,13 +145,12 @@ function MapComponent() {
     });
     map.on('move-end', () => {
       log.warn('update url');
-      window.history.pushState(
-        'treetracker',
-        '',
-        `${window.location.pathname}?bounds=${map.getCurrentBounds()}${
-          router.query.timeline ? `&timeline=${router.query.timeline}` : ''
-        }${router.query.embed ? `&embed=true` : ''}`,
+      const path = pathResolver.updatePathWhenMapMoveEnd(
+        window.location,
+        map,
+        router,
       );
+      window.history.pushState('treetracker', '', path);
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;

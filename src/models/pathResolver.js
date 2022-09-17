@@ -47,6 +47,24 @@ function getPathWhenClickTree(tree, pathname, query) {
   };
 }
 
+function updatePathWhenMapMoveEnd(location, map, router) {
+  log.warn(
+    'updatePathWhenMapMoveEnd: location:',
+    location,
+    ' map:',
+    map,
+    ' router:',
+    router,
+  );
+  let result = `${location.pathname}?bounds=${map.getCurrentBounds()}${
+    router.query.timeline ? `&timeline=${router.query.timeline}` : ''
+  }${router.query.embed ? `&embed=true` : ''}`;
+  if (router.query.tree_id) {
+    result += `&tree_id=${router.query.tree_id}`;
+  }
+  return result;
+}
+
 function getContext(pathname) {
   log.warn('to resolve context for:', pathname);
   const match = pathname.match(MAP_URL_PATTERN);
@@ -60,4 +78,4 @@ function getContext(pathname) {
   return null;
 }
 
-export { getPathWhenClickTree, getContext };
+export { getPathWhenClickTree, updatePathWhenMapMoveEnd, getContext };
