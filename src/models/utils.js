@@ -110,7 +110,7 @@ const getThumbnailImageUrls = (imageUrl, width = 400, height = 400) => {
   const domain = imageUrlArr[imageUrlArr.length - 2];
   const imagePath = imageUrlArr[imageUrlArr.length - 1];
   const paramUrl = `w=${width},h=${height}`;
-  const thumbNailImageUrl = `https://dev-k8s.treetracker.org/images/img/${domain}/${paramUrl}/${imagePath}`;
+  const thumbNailImageUrl = `${process.env.NEXT_PUBLIC_IMAGE_API}/img/${domain}/${paramUrl}/${imagePath}`;
   return thumbNailImageUrl;
 };
 

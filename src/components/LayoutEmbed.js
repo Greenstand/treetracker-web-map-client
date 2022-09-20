@@ -150,6 +150,15 @@ export default function Layout({
           </Paper>
         </>
       )}
+      {isFloatingDisabled && (
+        <Box
+          sx={{
+            display: 'none',
+          }}
+        >
+          {children}
+        </Box>
+      )}
 
       {false && !isDrawerOpen && (
         <Box

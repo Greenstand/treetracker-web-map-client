@@ -57,8 +57,11 @@ export default function Home(props) {
 
   React.useEffect(() => {
     async function reload() {
-      if (mapContext.map) {
-        await mapContext.map.setFilters({});
+      const { map } = mapContext;
+      if (map) {
+        await map.clearSelection();
+        await map.setFilters({});
+        await map.gotoView(0, 0, 2);
       }
     }
     reload();

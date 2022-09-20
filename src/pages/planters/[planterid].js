@@ -404,10 +404,15 @@ export default function Planter(props) {
               <TreeSpeciesCard
                 key={species.id}
                 name={species.name}
+                subTitle={species.desc || '---'}
                 count={species.total}
               />
             ))}
           </Box>
+          {(!planter.species.species ||
+            planter.species.species.length === 0) && (
+            <Typography variant="h5">NO DATA YET</Typography>
+          )}
         </Box>
         <Box
           sx={{

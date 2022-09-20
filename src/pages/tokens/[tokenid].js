@@ -38,6 +38,7 @@ import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
+import OriginIcon from '../../images/icons/origin.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
 import TreeIcon from '../../images/icons/tree.svg';
@@ -61,7 +62,7 @@ function handleShare() {}
 
 export default function Token(props) {
   log.warn('props:', props);
-  const { token, wallet, transactions, nextExtraIsEmbed } = props;
+  const { token, wallet, transactions, nextExtraIsEmbed, tree } = props;
   const theme = useTheme();
   const { classes } = useStyles();
   const mapContext = useMapContext();
@@ -96,6 +97,7 @@ export default function Token(props) {
     }
     reload();
   }, [mapContext, token]);
+  console.log('token:', token);
 
   return (
     <Box
@@ -127,7 +129,9 @@ export default function Token(props) {
                 ? [
                     {
                       url: `/wallets/${wallet.id}`,
-                      icon: wallet.logo_url,
+                      icon: wallet.logo_url || (
+                        <SvgIcon component={AccountBalanceWalletIcon} />
+                      ),
                       name: wallet.name,
                     },
                   ]
@@ -242,15 +246,30 @@ export default function Token(props) {
             <Typography variant="h2" color={theme.palette.common.white}>
               Token #<UUIDTag uuid={token.id} />
             </Typography>
+
             <Typography
               sx={{
-                fontWeight: 400,
+                color: theme.palette.common.white,
+                display: 'flex',
+                alignItems: 'center',
+                filter: 'opacity(0.8)',
+                gap: 3,
+                '& svg': {
+                  filter: 'opacity(0.8)',
+                  maxWidth: 16,
+                  maxHeight: 16,
+                },
+                '& path': { fill: theme.palette.common.white },
               }}
-              variant="h5"
-              color={theme.palette.common.white}
             >
-              {token.tree_species_name || 'Unkown species'}
+              <SvgIcon component={CalendarIcon} />
+              {token.created_at !== null
+                ? `Minted on ${moment(tree.time_created).format(
+                    'MMMM Do, YYYY',
+                  )}`
+                : 'Unknown Mint Date'}
             </Typography>
+
             <Box
               sx={{
                 display: 'flex',
@@ -281,11 +300,26 @@ export default function Token(props) {
             </Typography>
             <Typography
               sx={{
-                fontWeight: 400,
+                mt: 1,
+                color: theme.palette.common.black,
+                display: 'flex',
+                alignItems: 'center',
+                filter: 'opacity(0.8)',
+                gap: 3,
+                '& svg': {
+                  filter: 'opacity(0.8)',
+                  maxWidth: 16,
+                  maxHeight: 16,
+                },
+                '& path': { fill: theme.palette.common.black },
               }}
-              variant="h5"
             >
-              {token.tree_species_name || 'Unkown species'}
+              <SvgIcon component={CalendarIcon} />
+              {token.created_at !== null
+                ? `Minted on ${moment(tree.time_created).format(
+                    'MMMM Do, YYYY',
+                  )}`
+                : 'Unknown Mint Date'}
             </Typography>
             <Box
               sx={{
@@ -556,19 +590,26 @@ export default function Token(props) {
 export const getServerSideProps = wrapper(async ({ params }) => {
   const { tokenid } = params;
   const token = await getTokenById(tokenid);
-  const { wallet_id } = token;
-  const wallet = await getWalletById(wallet_id);
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
-  );
-  const { data } = res;
-  const transactions = data;
+    const { wallet_id } = token;
+    const wallet = await getWalletById(wallet_id);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+    );
+    const { data } = res;
+    const transactions = data;
+    let tree;
+    {
+      const res2 = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
+      );
+      tree = res2.data;
+    }
 
-  return {
-    props: {
-      token,
-      wallet,
-      transactions,
-    },
-  };
-});
+    return {
+      props: {
+        token,
+        wallet,
+        transactions,
+        tree,
+      },
+    };

@@ -111,6 +111,20 @@ export default function Tree({
   // }, [mapContext.map, tree.lat, tree.lon]);
   useEffect(() => {
     async function reload() {
+      async function focusTree(map2, tree2) {
+        const currentView = map2.getCurrentView();
+        log.warn('current view:', currentView);
+        if (currentView.zoomLevel < 16) {
+          log.warn('focus the tree:', tree2);
+          await map2.gotoView(
+            parseFloat(tree2.lat.toString()),
+            parseFloat(tree2.lon.toString()),
+            16,
+          );
+        } else {
+          log.warn('stay on the map zoom');
+        }
+      }
       // manipulate the map
       log.warn('map ,tree, context in tree page:', map, tree, context);
       if (map && tree?.lat && tree?.lon) {
@@ -120,15 +134,7 @@ export default function Tree({
             await map.setFilters({
               userid: context.id,
             });
-            const currentView = map.getCurrentView();
-            log.warn('current view:', currentView);
-            if (currentView.zoomLevel < 15) {
-              await map.gotoView(
-                parseFloat(tree.lat.toString()),
-                parseFloat(tree.lon.toString()),
-                16,
-              );
-            }
+            await focusTree(map, tree);
             const treeDataForMap = {
               ...tree,
               lat: parseFloat(tree.lat.toString()),
@@ -140,15 +146,7 @@ export default function Tree({
             await map.setFilters({
               map_name: organization.map_name,
             });
-            const currentView = map.getCurrentView();
-            log.warn('current view:', currentView);
-            if (currentView.zoomLevel < 15) {
-              await map.gotoView(
-                parseFloat(tree.lat.toString()),
-                parseFloat(tree.lon.toString()),
-                16,
-              );
-            }
+            await focusTree(map, tree);
             const treeDataForMap = {
               ...tree,
               lat: parseFloat(tree.lat.toString()),
@@ -160,18 +158,14 @@ export default function Tree({
           }
         } else {
           log.warn('set treeid filter', tree.id);
-          await map.setFilters({
-            treeid: tree.id,
-          });
-          const currentView = map.getCurrentView();
-          log.warn('current view:', currentView);
-          if (currentView.zoomLevel < 15) {
-            await map.gotoView(
-              parseFloat(tree.lat.toString()),
-              parseFloat(tree.lon.toString()),
-              16,
-            );
-          }
+          await map.setFilters({});
+          await focusTree(map, tree);
+          const treeDataForMap = {
+            ...tree,
+            lat: parseFloat(tree.lat.toString()),
+            lon: parseFloat(tree.lon.toString()),
+          };
+          map.selectTree(treeDataForMap);
         }
 
         // // select the tree
@@ -332,7 +326,7 @@ export default function Tree({
                     },
                   ]
                 : []),
-              ...(context && context.name === 'organizations'
+              ...(context && context.name === 'organizations' && organization
                 ? [
                     {
                       url: `/organizations/${organization.id}`,
