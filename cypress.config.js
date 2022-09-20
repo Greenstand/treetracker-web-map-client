@@ -6,10 +6,11 @@ module.exports = defineConfig({
   viewportHeight: 800,
   e2e: {
     baseUrl: 'http://localhost:3000',
-    specPattern: 'cypress/tests/**/*.cy.js',
     setupNodeEvents(on, config) {
       return setupNext(on, config);
     },
+    specPattern: 'cypress/tests/**/*.cy.js',
+    supportFile: 'cypress/support/index.js',
     env: {
       'cypress-watch-and-reload': {
         watch: ['src/**'],
@@ -32,7 +33,6 @@ module.exports = defineConfig({
       },
     },
   },
-  nodeVersion: 'system',
   env: {
     nock: false,
   },
