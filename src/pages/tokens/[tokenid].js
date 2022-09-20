@@ -590,26 +590,27 @@ export default function Token(props) {
 export const getServerSideProps = wrapper(async ({ params }) => {
   const { tokenid } = params;
   const token = await getTokenById(tokenid);
-    const { wallet_id } = token;
-    const wallet = await getWalletById(wallet_id);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+  const { wallet_id } = token;
+  const wallet = await getWalletById(wallet_id);
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+  );
+  const { data } = res;
+  const transactions = data;
+  let tree;
+  {
+    const res2 = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
     );
-    const { data } = res;
-    const transactions = data;
-    let tree;
-    {
-      const res2 = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
-      );
-      tree = res2.data;
-    }
+    tree = res2.data;
+  }
 
-    return {
-      props: {
-        token,
-        wallet,
-        transactions,
-        tree,
-      },
-    };
+  return {
+    props: {
+      token,
+      wallet,
+      transactions,
+      tree,
+    },
+  };
+});
