@@ -12,7 +12,7 @@ describe('Planter page', () => {
     cy.visit(path, {
       failOnStatusCode: false,
     });
-    cy.contains(planter.id);
+
     cy.get('.MuiTypography-h2').contains(/sebastian g/i);
     cy.screenshot();
   });

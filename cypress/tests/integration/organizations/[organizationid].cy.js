@@ -7,7 +7,7 @@ beforeEach(() => {
 
 describe('Organizations', () => {
   const imageFixturePath = `images/organization.png`;
-  return it(`organization test`, () => {
+  it(`organization test`, () => {
     const path = `/organizations/${org.id}`;
     cy.fixture(imageFixturePath).then((image) => {
       const blob = Cypress.Blob.base64StringToBlob(image, 'images/png');
