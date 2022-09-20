@@ -10,7 +10,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:fast": "cypress run --env nock=true --spec=cypress/tests/integration/**/*.cy.js --config video=false",
-    "cyu": "cypress open-ct",
+    "cyu": "cypress open --component",
     "cyux": "rm -rf .next/; npm run cyu",
     "dev": "next dev",
     "dev:mock": "NEXT_PUBLIC_API_MOCKING=enabled npm run dev",
