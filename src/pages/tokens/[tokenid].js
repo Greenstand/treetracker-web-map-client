@@ -37,6 +37,7 @@ import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
+import OriginIcon from '../../images/icons/origin.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
 import TreeIcon from '../../images/icons/tree.svg';
@@ -95,6 +96,7 @@ export default function Token(props) {
     }
     reload();
   }, [mapContext, token]);
+  console.log('token:', token);
 
   return (
     <Box
@@ -243,15 +245,30 @@ export default function Token(props) {
             <Typography variant="h2" color={theme.palette.common.white}>
               Token #<UUIDTag uuid={token.id} />
             </Typography>
+
             <Typography
               sx={{
-                fontWeight: 400,
+                color: theme.palette.common.white,
+                display: 'flex',
+                alignItems: 'center',
+                filter: 'opacity(0.8)',
+                gap: 3,
+                '& svg': {
+                  filter: 'opacity(0.8)',
+                  maxWidth: 16,
+                  maxHeight: 16,
+                },
+                '& path': { fill: theme.palette.common.white },
               }}
-              variant="h5"
-              color={theme.palette.common.white}
             >
-              {tree.species_name || 'Unkown species'}
+              <SvgIcon component={CalendarIcon} />
+              {token.created_at !== null
+                ? `Minted on ${moment(tree.time_created).format(
+                    'MMMM Do, YYYY',
+                  )}`
+                : 'Unknown Mint Date'}
             </Typography>
+
             <Box
               sx={{
                 display: 'flex',
@@ -282,11 +299,26 @@ export default function Token(props) {
             </Typography>
             <Typography
               sx={{
-                fontWeight: 400,
+                mt: 1,
+                color: theme.palette.common.black,
+                display: 'flex',
+                alignItems: 'center',
+                filter: 'opacity(0.8)',
+                gap: 3,
+                '& svg': {
+                  filter: 'opacity(0.8)',
+                  maxWidth: 16,
+                  maxHeight: 16,
+                },
+                '& path': { fill: theme.palette.common.black },
               }}
-              variant="h5"
             >
-              {token.tree_species_name || 'Unkown species'}
+              <SvgIcon component={CalendarIcon} />
+              {token.created_at !== null
+                ? `Minted on ${moment(tree.time_created).format(
+                    'MMMM Do, YYYY',
+                  )}`
+                : 'Unknown Mint Date'}
             </Typography>
             <Box
               sx={{
