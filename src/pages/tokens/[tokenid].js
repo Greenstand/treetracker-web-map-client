@@ -70,9 +70,9 @@ export default function Token(props) {
   const isMobile = useMobile();
   const router = useRouter();
   const userCameFromWalletPage = router.asPath.includes('wallets');
-  const context = pathResolver.getContext(
-    utils.nextPathBaseDecode(router.asPath, process.env.NEXT_PUBLIC_BASE),
-  );
+  const context = pathResolver.getContext(router, {
+    base: process.env.NEXT_PUBLIC_BASE,
+  });
 
   log.warn('map:', mapContext);
 

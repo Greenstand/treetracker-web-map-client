@@ -1,4 +1,5 @@
 import log from 'loglevel';
+import * as utils from './utils';
 
 const MAP_URL_PATTERN =
   /^(\/(planters|organizations|wallets)\/([a-z0-9-]+))?(\/(trees|tokens)\/([a-z0-9-]+))?(\?.*)?$/;
@@ -13,23 +14,27 @@ const MAP_URL_PATTERN =
 // '/wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens?tree_id=95614',
 const MAP_URL_PATTERN_2 = /^\/wallets\/([a-z0-9-]+)\/tokens\?tree_id=\d+$/;
 
-function getPathWhenClickTree(tree, pathname, query) {
-  const path = pathname.match(MAP_URL_PATTERN);
+function getPathWhenClickTree(tree, location, router, map, options = {}) {
+  const pathname = utils.nextPathBaseDecode(
+    location.pathname,
+    options.base || '',
+  );
+  const path = location.pathname.match(MAP_URL_PATTERN);
   log.warn(
     'parsed path:',
     path,
-    ' for pathname:',
-    pathname,
+    ' for location:',
+    location,
     ' tree:',
     tree,
-    'query:',
-    query,
+    'router:',
+    router,
   );
   console.warn(JSON.stringify(tree, undefined, 2));
 
   const optionalParams = {
-    ...(query.embed && { embed: query.embed }),
-    ...(query.timeline && { timeline: query.timeline }),
+    ...(router.query.embed && { embed: router.query.embed }),
+    ...(router.query.timeline && { timeline: router.query.timeline }),
   };
 
   let pathnameResult = pathname;
@@ -77,23 +82,24 @@ function updatePathWhenMapMoveEnd(location, map, router) {
   return result;
 }
 
-function getContext(pathname) {
-  log.warn('to resolve context for:', pathname);
-  const match = pathname.match(MAP_URL_PATTERN);
+function getContext(router, options = {}) {
+  log.warn('to resolve context for:', router);
+  const pathname = utils.nextPathBaseDecode(router.asPath, options.base || '');
+  const match = router.asPath.match(MAP_URL_PATTERN);
   if (match) {
     const context = {
       name: match[2],
       id: match[3],
     };
     return context;
-  } 
-    const match2 = pathname.match(MAP_URL_PATTERN_2);
-    const context = {
-      name: 'wallets',
-      id: match2[1],
-    };
-    return context;
-  
+  }
+  const match2 = router.asPath.match(MAP_URL_PATTERN_2);
+  const context = {
+    name: 'wallets',
+    id: match2[1],
+  };
+  return context;
+
   return null;
 }
 
