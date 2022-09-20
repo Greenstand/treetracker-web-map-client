@@ -23,6 +23,7 @@ import TagList from 'components/common/TagList';
 import UUIDTag from 'components/common/UUIDTag';
 import { getWalletById, getTokenById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import { wrapper } from 'models/utils';
 import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
@@ -552,33 +553,22 @@ export default function Token(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps = wrapper(async ({ params }) => {
   const { tokenid } = params;
-  try {
-    const token = await getTokenById(tokenid);
-    const { wallet_id } = token;
-    const wallet = await getWalletById(wallet_id);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
-    );
-    const { data } = res;
-    const transactions = data;
+  const token = await getTokenById(tokenid);
+  const { wallet_id } = token;
+  const wallet = await getWalletById(wallet_id);
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+  );
+  const { data } = res;
+  const transactions = data;
 
-    return {
-      props: {
-        token,
-        wallet,
-        transactions,
-      },
-    };
-  } catch (e) {
-    log.error('token page:', e);
-    if (e.response?.status === 404) return { notFound: true };
-    return {
-      redirect: {
-        destination: '/500',
-        permanent: false,
-      },
-    };
-  }
-}
+  return {
+    props: {
+      token,
+      wallet,
+      transactions,
+    },
+  };
+});

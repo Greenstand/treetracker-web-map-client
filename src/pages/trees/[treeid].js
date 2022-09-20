@@ -679,36 +679,25 @@ export default function Tree({
   );
 }
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps = utils.wrapper(async ({ params }) => {
   const { treeid } = params;
-  try {
-    const tree = await getTreeById(treeid);
-    const { planter_id, planting_organization_id } = tree;
-    const planter = await getPlanterById(planter_id);
-    let organization = null;
-    if (planting_organization_id) {
-      log.warn('load org from planting_orgniazation_id');
-      organization = await getOrganizationById(planting_organization_id);
-    } else if (planter.organzation_id) {
-      log.warn('load org from planter. organization_id');
-      organization = await getOrganizationById(planter.organization_id);
-    }
-
-    return {
-      props: {
-        tree,
-        planter,
-        organization,
-      },
-    };
-  } catch (e) {
-    log.warn('tree page:', e);
-    if (e.response?.status === 404) return { notFound: true };
-    return {
-      redirect: {
-        destination: '/500',
-        permanent: false,
-      },
-    };
+  const tree = await getTreeById(treeid);
+  const { planter_id, planting_organization_id } = tree;
+  const planter = await getPlanterById(planter_id);
+  let organization = null;
+  if (planting_organization_id) {
+    log.warn('load org from planting_orgniazation_id');
+    organization = await getOrganizationById(planting_organization_id);
+  } else if (planter.organzation_id) {
+    log.warn('load org from planter. organization_id');
+    organization = await getOrganizationById(planter.organization_id);
   }
-}
+
+  return {
+    props: {
+      tree,
+      planter,
+      organization,
+    },
+  };
+});
