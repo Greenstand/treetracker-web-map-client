@@ -223,6 +223,18 @@ function nextPathBaseDecode(path, base) {
   return path.replace(base, '');
 }
 
+const wrapper = (callback) => (params) =>
+  callback(params).catch((e) => {
+    log.warn('error retrieving server props:', e);
+    if (e.response?.status === 404) return { notFound: true };
+    return {
+      redirect: {
+        destination: '/500',
+        permanent: false,
+      },
+    };
+  });
+
 export {
   hideLastName,
   parseDomain,
@@ -240,4 +252,5 @@ export {
   convertFontObjToFontArr,
   nextPathBaseDecode,
   nextPathBaseEncode,
+  wrapper,
 };
