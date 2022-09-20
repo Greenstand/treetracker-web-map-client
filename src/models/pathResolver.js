@@ -10,9 +10,21 @@ const MAP_URL_PATTERN =
 // 6: (1234)
 // 7: (?embed=true&timeline=true)
 
+// '/wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens?tree_id=95614',
+const MAP_URL_PATTERN_2 = /^\/wallets\/([a-z0-9-]+)\/tokens\?tree_id=\d+$/;
+
 function getPathWhenClickTree(tree, pathname, query) {
   const path = pathname.match(MAP_URL_PATTERN);
-  log.warn('parsed path:', path, ' for pathname:', pathname, ' tree:', tree);
+  log.warn(
+    'parsed path:',
+    path,
+    ' for pathname:',
+    pathname,
+    ' tree:',
+    tree,
+    'query:',
+    query,
+  );
   console.warn(JSON.stringify(tree, undefined, 2));
 
   const optionalParams = {
@@ -74,7 +86,14 @@ function getContext(pathname) {
       id: match[3],
     };
     return context;
-  }
+  } 
+    const match2 = pathname.match(MAP_URL_PATTERN_2);
+    const context = {
+      name: 'wallets',
+      id: match2[1],
+    };
+    return context;
+  
   return null;
 }
 

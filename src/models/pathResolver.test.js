@@ -116,5 +116,25 @@ describe('Test pathResolver', () => {
         id: '178',
       });
     });
+
+    it('wallet context', () => {
+      const result = pathResolver.getContext(
+        '/wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens?tree_id=95614',
+      );
+      expect(result).toMatchObject({
+        name: 'wallets',
+        id: '1f2a0862-66d1-4b42-8216-5a5cb9c6eca5',
+      });
+    });
+
+    it('wallet context case2', () => {
+      const result = pathResolver.getContext(
+        '/wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens/3a53e2a6-ac17-43a5-a3aa-31fd04786cba',
+      );
+      expect(result).toMatchObject({
+        name: 'wallets',
+        id: '1f2a0862-66d1-4b42-8216-5a5cb9c6eca5',
+      });
+    });
   });
 });
