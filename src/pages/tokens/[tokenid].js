@@ -44,6 +44,8 @@ import TreeIcon from '../../images/icons/tree.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
+import * as pathResolver from '../../models/pathResolver';
+import * as utils from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   tabBox: {
@@ -68,29 +70,79 @@ export default function Token(props) {
   const isMobile = useMobile();
   const router = useRouter();
   const userCameFromWalletPage = router.asPath.includes('wallets');
+  const context = pathResolver.getContext(router, {
+    base: process.env.NEXT_PUBLIC_BASE,
+  });
 
   log.warn('map:', mapContext);
 
   useEffect(() => {
     async function reload() {
-      // manipulate the map
+      // // manipulate the map
+      // const { map } = mapContext;
+      // if (map && token) {
+      //   // map.flyTo(tree.lat, tree.lon, 16);
+      //   try {
+      //     log.warn('xxxxxxxx reload');
+      //     await map.setFilters({
+      //       treeid: token.tree_id,
+      //     });
+      //     const view = await map.getInitialView();
+      //     await map.gotoView(
+      //       parseFloat(view.center.lat),
+      //       parseFloat(view.center.lon),
+      //       view.zoomLevel,
+      //     );
+      //     log.warn('no data:', map, token);
+      //   } catch (e) {
+      //     log.warn('get error when render map:', e);
+      //   }
+      // }
+
       const { map } = mapContext;
-      if (map && token) {
-        // map.flyTo(tree.lat, tree.lon, 16);
-        try {
-          log.warn('xxxxxxxx reload');
-          await map.setFilters({
-            treeid: token.tree_id,
-          });
-          const view = await map.getInitialView();
-          await map.gotoView(
-            parseFloat(view.center.lat),
-            parseFloat(view.center.lon),
-            view.zoomLevel,
+      async function focusTree(map2, tree2) {
+        const currentView = map2.getCurrentView();
+        log.warn('current view:', currentView);
+        if (currentView.zoomLevel < 16) {
+          log.warn('focus the tree:', tree2);
+          await map2.gotoView(
+            parseFloat(tree2.lat.toString()),
+            parseFloat(tree2.lon.toString()),
+            16,
           );
-          log.warn('no data:', map, token);
-        } catch (e) {
-          log.warn('get error when render map:', e);
+        } else {
+          log.warn('stay on the map zoom');
+        }
+      }
+      // manipulate the map
+      log.warn('map ,tree, context in tree page:', map, tree, context);
+      if (map && tree?.lat && tree?.lon) {
+        if (context && context.name) {
+          if (context.name === 'wallets') {
+            log.warn('set wallet filter', context.id);
+            await map.setFilters({
+              wallet: wallet.name,
+            });
+            await focusTree(map, tree);
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else {
+            throw new Error(`unknown context name: ${context.name}`);
+          }
+        } else {
+          log.warn('set treeid filter', tree.id);
+          await map.setFilters({});
+          await focusTree(map, tree);
+          const treeDataForMap = {
+            ...tree,
+            lat: parseFloat(tree.lat.toString()),
+            lon: parseFloat(tree.lon.toString()),
+          };
+          map.selectTree(treeDataForMap);
         }
       }
     }
@@ -124,7 +176,7 @@ export default function Token(props) {
                 name: 'Home',
                 url: '/',
               },
-              ...(userCameFromWalletPage
+              ...(context && context.name === 'wallets'
                 ? [
                     {
                       url: `/wallets/${wallet.id}`,
@@ -586,33 +638,63 @@ export default function Token(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, query }) {
   const { tokenid } = params;
+  log.warn('tokenid:', tokenid);
+  log.warn('query:', query);
+  let result;
   try {
-    const token = await getTokenById(tokenid);
-    const { wallet_id } = token;
-    const wallet = await getWalletById(wallet_id);
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
-    );
-    const { data } = res;
-    const transactions = data;
-    let tree;
-    {
-      const res2 = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
+    if (tokenid === 'idfromquery') {
+      log.warn('to load token from treeid');
+      const { tree_id } = query;
+      const treeId = parseInt(tree_id, 10);
+      let res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/trees/${treeId}`,
       );
-      tree = res2.data;
-    }
+      const { data: tree } = res;
+      const token = await getTokenById(tree.token_id);
+      const { wallet_id } = token;
+      const wallet = await getWalletById(wallet_id);
+      res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${token.id}`,
+      );
+      const { data: transactions } = res;
 
-    return {
-      props: {
-        token,
-        wallet,
-        transactions,
-        tree,
-      },
-    };
+      result = {
+        props: {
+          token,
+          wallet,
+          transactions,
+          tree,
+        },
+      };
+    } else {
+      const token = await getTokenById(tokenid);
+      const { wallet_id } = token;
+      const wallet = await getWalletById(wallet_id);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+      );
+      const { data } = res;
+      const transactions = data;
+      let tree;
+      {
+        const res2 = await axios.get(
+          `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
+        );
+        tree = res2.data;
+      }
+
+      result = {
+        props: {
+          token,
+          wallet,
+          transactions,
+          tree,
+        },
+      };
+    }
+    return result;
   } catch (e) {
     log.error('token page:', e);
     if (e.response?.status === 404) return { notFound: true };
