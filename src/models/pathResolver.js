@@ -12,7 +12,7 @@ const MAP_URL_PATTERN =
 // 7: (?embed=true&timeline=true)
 
 // '/wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens?tree_id=95614',
-const MAP_URL_PATTERN_2 = /^\/wallets\/([a-z0-9-]+)\/tokens\?tree_id=\d+$/;
+const MAP_URL_PATTERN_2 = /^\/wallets\/([a-z0-9-]+)\/tokens$/;
 
 function getPathWhenClickTree(tree, location, router, map, options = {}) {
   const pathname = utils.nextPathBaseDecode(
@@ -54,7 +54,13 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
       }`;
     }
   } else {
-    pathnameResult = `/trees/${tree.id}`;
+    const match2 = pathname.match(/^\/wallets\/([a-z0-9-]+)\/tokens$/);
+    if (match2) {
+      pathnameResult = `/wallets/${match2[1]}/tokens`;
+      optionalParams.tree_id = tree.id;
+    } else {
+      pathnameResult = `/trees/${tree.id}`;
+    }
   }
   log.warn('pathname to push:', pathnameResult);
 
@@ -85,7 +91,7 @@ function updatePathWhenMapMoveEnd(location, map, router) {
 function getContext(router, options = {}) {
   log.warn('to resolve context for:', router);
   const pathname = utils.nextPathBaseDecode(router.asPath, options.base || '');
-  const match = router.asPath.match(MAP_URL_PATTERN);
+  const match = pathname.match(MAP_URL_PATTERN);
   if (match) {
     const context = {
       name: match[2],
@@ -93,7 +99,7 @@ function getContext(router, options = {}) {
     };
     return context;
   }
-  const match2 = router.asPath.match(MAP_URL_PATTERN_2);
+  const match2 = pathname.match(/^\/wallets\/([a-z0-9-]+)\/tokens\?.*$/);
   const context = {
     name: 'wallets',
     id: match2[1],

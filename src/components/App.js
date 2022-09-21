@@ -87,10 +87,22 @@ function MapComponent() {
     //   process.env.NEXT_PUBLIC_BASE,
     // );
 
-    if (window.location.pathname === result.pathname) {
-      log.warn('do not refesh if the pathname is the same!');
-    } else {
-      log.warn('going to push new path:', result);
+    let isRefreshNeeded = false;
+    if (router.pathname !== result.pathname) {
+      log.warn('pathname is different!');
+      isRefreshNeeded = true;
+    } else if (
+        router.query.tree_id &&
+        result.tree_id &&
+        router.query.tree_id !== result.tree_id
+      ) {
+        log.warn('tree_id query is different!');
+        isRefreshNeeded = true;
+      } else {
+        log.warn('do not refesh if the pathname is the same!');
+      }
+
+    if (isRefreshNeeded) {
       router.push(result);
     }
   }
