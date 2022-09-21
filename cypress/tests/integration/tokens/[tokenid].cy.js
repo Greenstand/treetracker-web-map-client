@@ -60,6 +60,7 @@ describe('Token page', () => {
       statusCode: 200,
       body: {
         id: 951836,
+        planter_id: 940,
       },
     });
 
