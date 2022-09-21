@@ -1,3 +1,14 @@
+# [2.0.0-beta.93](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.92...v2.0.0-beta.93) (2022-09-21)
+
+
+### Features
+
+* can pagination tokens on wallet map ([c0f21f0](https://github.com/Greenstand/treetracker-web-map-client/commit/c0f21f07e7beb751946b19297e80a2ff3c5be0bd))
+* load tree on wallet page ([9c01fbd](https://github.com/Greenstand/treetracker-web-map-client/commit/9c01fbd74d84735ba3be70af79731acd3be264c5))
+* refactor pathResolver ([f266b1d](https://github.com/Greenstand/treetracker-web-map-client/commit/f266b1ddc481c8459e1556b277abfcd7c84e5131))
+* resolve path with resolver ([7fe6099](https://github.com/Greenstand/treetracker-web-map-client/commit/7fe609955e16ae9eaf3521cbc235767e3ea84875))
+* token page support load by treeid ([c502dc5](https://github.com/Greenstand/treetracker-web-map-client/commit/c502dc5c3482aab8d5e501768c7f7d05c5a977ca))
+
 # [2.0.0-beta.92](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.91...v2.0.0-beta.92) (2022-09-20)
 
 
