@@ -136,7 +136,11 @@ export default function Token(props) {
                   ]
                 : []),
               {
-                name: `token #${token.id}`,
+                name: (
+                  <>
+                    token #<UUIDTag uuid={token.id} />
+                  </>
+                ),
               },
             ]}
           />
