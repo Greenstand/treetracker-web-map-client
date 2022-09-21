@@ -1,3 +1,10 @@
+# [2.0.0-beta.95](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.94...v2.0.0-beta.95) (2022-09-21)
+
+
+### Bug Fixes
+
+* wrong setting for k8s ([821a0b0](https://github.com/Greenstand/treetracker-web-map-client/commit/821a0b0ed8d8a6adf89bd12b806dae200f8abfc9))
+
 # [2.0.0-beta.94](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.93...v2.0.0-beta.94) (2022-09-21)
 
 
