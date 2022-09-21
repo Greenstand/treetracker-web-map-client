@@ -1,3 +1,10 @@
+# [2.0.0-beta.94](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.93...v2.0.0-beta.94) (2022-09-21)
+
+
+### Bug Fixes
+
+* deployment error ([9ba8290](https://github.com/Greenstand/treetracker-web-map-client/commit/9ba82907dc9613f90bf7576d4b2f477ad569e70f))
+
 # [2.0.0-beta.93](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.92...v2.0.0-beta.93) (2022-09-21)
 
 
