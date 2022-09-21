@@ -7,7 +7,7 @@ function ProfileAvatar({ src, rotation }) {
       sx={{
         width: [120, 189],
         height: [120, 189],
-        transform: `rotate(${rotation}deg)`,
+        transform: rotation && `rotate(${rotation}deg)`,
         borderWidth: [4, 9],
         borderStyle: 'solid',
         borderColor: (t) => t.palette.background.paper,
