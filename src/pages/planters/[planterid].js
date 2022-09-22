@@ -211,7 +211,10 @@ export default function Planter(props) {
           }}
         >
           <img src={backgroundPic} alt="profile" />
-          <ProfileAvatar src={planter.image_url} />
+          <ProfileAvatar
+            src={planter.image_url}
+            rotation={planter.image_rotation}
+          />
         </Box>
 
         {isMobile && (
