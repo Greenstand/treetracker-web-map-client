@@ -325,7 +325,7 @@ export default function Wallet(props) {
         About the Wallet
       </Typography>
       <Typography sx={{ mt: [2.5, 5] }} variant="body2">
-        {placeholderText}
+        {wallet.about || 'NO DATA YET'}
       </Typography>
       <Divider
         varian="fullwidth"

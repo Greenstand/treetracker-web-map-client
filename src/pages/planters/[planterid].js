@@ -455,8 +455,7 @@ export default function Planter(props) {
           variant="body2"
           className={classes.textColor}
         >
-          {placeholderText}
-          {planter.about}
+          {planter.about || 'NO DATA YET'}
         </Typography>
         <Divider
           varian="fullwidth"
