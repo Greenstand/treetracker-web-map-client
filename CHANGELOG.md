@@ -1,3 +1,13 @@
+# [2.0.0-beta.96](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.95...v2.0.0-beta.96) (2022-09-22)
+
+
+### Bug Fixes
+
+* **planter-quote:** layout not conform design ([cd77800](https://github.com/Greenstand/treetracker-web-map-client/commit/cd77800c0eca5733432bc52ec168b013c42707bd))
+* **planter:** image rotation incorrect ([5de1b3b](https://github.com/Greenstand/treetracker-web-map-client/commit/5de1b3b6b4951a104e75d226695b2b189a2e127f))
+* **planter:** null gives invalid css value ([9ef7b7f](https://github.com/Greenstand/treetracker-web-map-client/commit/9ef7b7fb2ad51ed46f99ee70609806f8196ec46c))
+* **token:** token id too long in breadcrumb ([cf150a4](https://github.com/Greenstand/treetracker-web-map-client/commit/cf150a4d9b7884593d64037d220c3b3f2099495f))
+
 # [2.0.0-beta.95](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.94...v2.0.0-beta.95) (2022-09-21)
 
 
