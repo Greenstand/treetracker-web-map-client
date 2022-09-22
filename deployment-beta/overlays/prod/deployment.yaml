@@ -22,7 +22,5 @@ spec:
               value: tiles1,tiles2,tiles3,tiles4
             - name: NEXT_PUBLIC_TILE_SERVER_WEBMAP_API
               value: https://prod-k8s.treetracker.org/webmap/
-            - name: NEXT_PUBLIC_TILE_SERVER_WEBMAP_API
-              value: https://prod-k8s.treetracker.org/webmap/
             - name: NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED
-              value: true
+              value: 'true'

@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
 import { useMapContext } from '../mapContext';
 import * as pathResolver from '../models/pathResolver';
-import * as utils from '../models/utils';
 // import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
@@ -75,11 +74,11 @@ function MapComponent() {
 
     const result = pathResolver.getPathWhenClickTree(
       tree,
-      utils.nextPathBaseDecode(
-        window.location.pathname,
-        process.env.NEXT_PUBLIC_BASE,
-      ),
-      router.query,
+      window.location,
+      router,
+      {
+        base: process.env.NEXT_PUBLIC_BASE,
+      },
     );
 
     // // base
@@ -88,10 +87,22 @@ function MapComponent() {
     //   process.env.NEXT_PUBLIC_BASE,
     // );
 
-    if (window.location.pathname === result.pathname) {
-      log.warn('do not refesh if the pathname is the same!');
+    let isRefreshNeeded = false;
+    if (router.pathname !== result.pathname) {
+      log.warn('pathname is different!');
+      isRefreshNeeded = true;
+    } else if (
+      router.query.tree_id &&
+      result.tree_id &&
+      router.query.tree_id !== result.tree_id
+    ) {
+      log.warn('tree_id query is different!');
+      isRefreshNeeded = true;
     } else {
-      log.warn('going to push new path:', result);
+      log.warn('do not refesh if the pathname is the same!');
+    }
+
+    if (isRefreshNeeded) {
       router.push(result);
     }
   }
@@ -145,13 +156,12 @@ function MapComponent() {
     });
     map.on('move-end', () => {
       log.warn('update url');
-      window.history.pushState(
-        'treetracker',
-        '',
-        `${window.location.pathname}?bounds=${map.getCurrentBounds()}${
-          router.query.timeline ? `&timeline=${router.query.timeline}` : ''
-        }${router.query.embed ? `&embed=true` : ''}`,
+      const path = pathResolver.updatePathWhenMapMoveEnd(
+        window.location,
+        map,
+        router,
       );
+      window.history.pushState('treetracker', '', path);
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;

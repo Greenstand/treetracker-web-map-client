@@ -70,7 +70,6 @@ function PlanterQuote(props) {
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'flex-start',
             alignItems: 'center',
           }}
         >
@@ -87,6 +86,7 @@ function PlanterQuote(props) {
             sx={{
               ml: [4, 6],
               position: 'relative',
+              flex: 1,
             }}
           >
             <SvgIcon
@@ -137,13 +137,13 @@ function PlanterQuote(props) {
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'flex-start',
             alignItems: 'center',
           }}
         >
           <Box
             sx={{
               position: 'relative',
+              flex: 1,
             }}
           >
             <SvgIcon
