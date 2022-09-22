@@ -33,6 +33,10 @@ module.exports = {
         source: '/map/:map_name(\\d{1,})',
         destination: '/?map=:map_name',
       },
+      {
+        source: '/wallets/:walletId(.{36})/tokens',
+        destination: '/tokens/idfromquery',
+      },
     ];
   },
   async redirects() {
