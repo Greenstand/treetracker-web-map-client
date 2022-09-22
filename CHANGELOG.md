@@ -1,3 +1,10 @@
+# [2.0.0-beta.98](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.97...v2.0.0-beta.98) (2022-09-22)
+
+
+### Bug Fixes
+
+* timeline not correct position ([71903ac](https://github.com/Greenstand/treetracker-web-map-client/commit/71903ac1f994409df40427734606889a39b2a581))
+
 # [2.0.0-beta.97](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.96...v2.0.0-beta.97) (2022-09-22)
 
 
