@@ -198,7 +198,9 @@ export default function Tree({
         <DrawerTitle />
       </IsMobileScreen> */}
       {isMobile && (
-        <Portal container={document.getElementById('drawer-title-container')}>
+        <Portal
+          container={() => document.getElementById('drawer-title-container')}
+        >
           <Box
             sx={{
               width: 1,
@@ -290,7 +292,9 @@ export default function Tree({
       )}
       {isMobile && (
         <Portal
-          container={document.getElementById('drawer-title-container-min')}
+          container={() =>
+            document.getElementById('drawer-title-container-min')
+          }
         >
           <Box sx={{}}>
             <Typography variant="h3">Tree #{tree.id}</Typography>

@@ -1,4 +1,3 @@
- 
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -173,7 +172,9 @@ export default function Wallet(props) {
       </Box>
 
       {isMobile && (
-        <Portal container={document.getElementById('drawer-title-container')}>
+        <Portal
+          container={() => document.getElementById('drawer-title-container')}
+        >
           <Box
             sx={{
               px: 4,
@@ -194,7 +195,9 @@ export default function Wallet(props) {
       )}
       {isMobile && (
         <Portal
-          container={document.getElementById('drawer-title-container-min')}
+          container={() =>
+            document.getElementById('drawer-title-container-min')
+          }
         >
           <Box sx={{}}>
             <Typography variant="h3">{wallet.name} </Typography>

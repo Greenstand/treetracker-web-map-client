@@ -343,7 +343,9 @@ export default function Token(props) {
       </Box>
 
       {isMobile && (
-        <Portal container={document.getElementById('drawer-title-container')}>
+        <Portal
+          container={() => document.getElementById('drawer-title-container')}
+        >
           <Box
             sx={{
               px: 4,
@@ -394,7 +396,9 @@ export default function Token(props) {
       )}
       {isMobile && (
         <Portal
-          container={document.getElementById('drawer-title-container-min')}
+          container={() =>
+            document.getElementById('drawer-title-container-min')
+          }
         >
           <Box sx={{}}>
             <Typography variant="h3" sx={{ fontsize: 20 }}>
