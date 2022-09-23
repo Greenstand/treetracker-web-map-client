@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+ 
 import HomeIcon from '@mui/icons-material/Home';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -30,6 +30,7 @@ import { makeStyles } from 'models/makeStyles';
 import ImpactSection from '../../components/ImpactSection';
 import PageWrapper from '../../components/PageWrapper';
 import ProfileAvatar from '../../components/ProfileAvatar';
+import ProfileCover from '../../components/ProfileCover';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
@@ -191,18 +192,10 @@ export default function Organization(props) {
 
         <Box
           sx={{
-            borderRadius: 4,
             mt: 6,
-            '& img': {
-              width: '100%',
-              borderRadius: '16px',
-              maxHeight: [212, 328],
-              objectFit: 'cover',
-              // maxWidth: [356, 672],
-            },
           }}
         >
-          <img src={`${router.basePath}${orgBackground}`} alt="profile" />
+          <ProfileCover src={organization.cover_url} />
           <ProfileAvatar src={logo_url} />
         </Box>
 
