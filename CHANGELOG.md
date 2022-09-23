@@ -1,3 +1,11 @@
+# [2.0.0-beta.99](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.98...v2.0.0-beta.99) (2022-09-23)
+
+
+### Features
+
+* cover page for org ([283ab09](https://github.com/Greenstand/treetracker-web-map-client/commit/283ab093cb788b994a682d1be31df7726e7c2cf7))
+* cover page for wallet ([e630c1d](https://github.com/Greenstand/treetracker-web-map-client/commit/e630c1de12bcf5bd8e34d354f7d82a0f69af960d))
+
 # [2.0.0-beta.98](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.97...v2.0.0-beta.98) (2022-09-22)
 
 
