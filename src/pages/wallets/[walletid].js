@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+ 
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -17,6 +17,7 @@ import TreeTag from 'components/common/TreeTag';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
 import { requestAPI } from 'models/utils';
 import ImpactSection from '../../components/ImpactSection';
+import ProfileCover from '../../components/ProfileCover';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
@@ -155,7 +156,7 @@ export default function Wallet(props) {
           },
         }}
       >
-        <img src={`${router.basePath}${planterBackground}`} alt="profile" />
+        <ProfileCover src={wallet.cover_url} />
         <Avatar
           src={wallet.logo_url || imagePlaceholder}
           sx={{
