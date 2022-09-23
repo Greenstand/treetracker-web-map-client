@@ -211,7 +211,10 @@ export default function Planter(props) {
           }}
         >
           <img src={backgroundPic} alt="profile" />
-          <ProfileAvatar src={planter.image_url} />
+          <ProfileAvatar
+            src={planter.image_url}
+            rotation={planter.image_rotation}
+          />
         </Box>
 
         {isMobile && (
@@ -404,10 +407,15 @@ export default function Planter(props) {
               <TreeSpeciesCard
                 key={species.id}
                 name={species.name}
+                subTitle={species.desc || '---'}
                 count={species.total}
               />
             ))}
           </Box>
+          {(!planter.species.species ||
+            planter.species.species.length === 0) && (
+            <Typography variant="h5">NO DATA YET</Typography>
+          )}
         </Box>
         <Box
           sx={{
@@ -447,8 +455,7 @@ export default function Planter(props) {
           variant="body2"
           className={classes.textColor}
         >
-          {placeholderText}
-          {planter.about}
+          {planter.about || 'NO DATA YET'}
         </Typography>
         <Divider
           varian="fullwidth"

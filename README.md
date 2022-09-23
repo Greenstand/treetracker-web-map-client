@@ -421,7 +421,11 @@ We have more tech guides and handbook here:
 7.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
 
 More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
-.
-.
-.
+
+# MISC
+
+## How to connect to production data locally
+
+Sometimes we need to connect production data (map, tree) to debug, to do so, copy the settings in `.env.production` and put them into the `.env.local` so next.js will load them as high priority.
+
 .

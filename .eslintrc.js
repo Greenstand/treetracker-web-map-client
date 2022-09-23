@@ -69,6 +69,7 @@ module.exports = {
     'no-unused-vars': 'warn',
     'no-nested-ternary': 'warn',
     'prefer-destructuring': 'warn',
+    'no-unreachable': 'warn',
   },
 
   reportUnusedDisableDirectives: true,

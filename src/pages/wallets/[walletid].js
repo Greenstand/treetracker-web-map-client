@@ -81,6 +81,10 @@ export default function Wallet(props) {
           wallet: wallet.name,
         });
         const view = await map.getInitialView();
+
+        if (view.zoomLevel < 2) {
+          view.zoomLevel = 2;
+        }
         await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
       }
     }
@@ -305,6 +309,7 @@ export default function Wallet(props) {
                 key={specie.id}
                 name={specie.name}
                 count={specie.total}
+                subTitle={specie.desc || '---'}
               />
             ))}
           </Box>
@@ -320,7 +325,7 @@ export default function Wallet(props) {
         About the Wallet
       </Typography>
       <Typography sx={{ mt: [2.5, 5] }} variant="body2">
-        {placeholderText}
+        {wallet.about || 'NO DATA YET'}
       </Typography>
       <Divider
         varian="fullwidth"

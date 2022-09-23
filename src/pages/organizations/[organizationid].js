@@ -392,6 +392,10 @@ export default function Organization(props) {
                 </React.Fragment>
               ))}
             </Box>
+            {(!organization?.species?.species ||
+              organization?.species?.species.length === 0) && (
+              <Typography variant="h5">NO DATA YET</Typography>
+            )}
           </Box>
         </Box>
 
@@ -436,7 +440,7 @@ export default function Organization(props) {
             ].map((planter, i) => ( */}
           {organization?.associatedPlanters?.planters?.map((planter, i) => (
             <Box sx={{ mt: [6, 12] }} key={planter.name}>
-              <PlanterQuote planter reverse={i % 2 !== 0} />
+              <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
             </Box>
           ))}
         </Box>
@@ -456,27 +460,13 @@ export default function Organization(props) {
             About the Organization
           </Typography>
           <Typography variant="body2" mt={7}>
-            {/* Just some placeholder text */}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-            nesciunt quasi praesentium non cupiditate ratione nihil.
-            Perferendis, velit ipsa illo, odit unde atque doloribus tempora
-            distinctio facere dolorem expedita error. Natus, provident. Tempore
-            harum repellendus reprehenderit vitae temporibus, consequuntur
-            blanditiis officia excepturi, natus explicabo laborum delectus
-            repudiandae placeat eligendi.
+            {organization.about || 'NO DATA YET'}
           </Typography>
           <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
             Mission
           </Typography>
           <Typography variant="body2" mt={7}>
-            {/* Just some placeholder text */}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-            nesciunt quasi praesentium non cupiditate ratione nihil.
-            Perferendis, velit ipsa illo, odit unde atque doloribus tempora
-            distinctio facere dolorem expedita error. Natus, provident. Tempore
-            harum repellendus reprehenderit vitae temporibus, consequuntur
-            blanditiis officia excepturi, natus explicabo laborum delectus
-            repudiandae placeat eligendi.
+            {organization.mission || 'NO DATA YET'}
           </Typography>
           <Divider
             varian="fullwidth"
@@ -496,8 +486,7 @@ export default function Organization(props) {
               height: '120px',
               margin: '10px',
             }}
-            // src={organization.image_url}
-            src={imagePlaceholder}
+            src={organization.logo_url || imagePlaceholder}
             variant="rounded"
           />
         </Portal>
