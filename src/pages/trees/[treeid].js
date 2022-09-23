@@ -8,7 +8,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { useTheme, Avatar, Divider } from '@mui/material';
+import { useTheme, Avatar, Divider, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -16,6 +16,7 @@ import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import ChangeThemeButton from 'components/ChangeThemeButton';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import TagList from 'components/common/TagList';
 import { useDrawerContext } from 'context/DrawerContext';
@@ -36,7 +37,6 @@ import TreeTag from '../../components/common/TreeTag';
 import { useMobile, useEmbed } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
 import CalendarIcon from '../../images/icons/calendar.svg';
-import DiameterIcon from '../../images/icons/diameter.svg';
 import GlobalIcon from '../../images/icons/global.svg';
 import HistoryIcon from '../../images/icons/history.svg';
 import LocationIcon from '../../images/icons/location.svg';
@@ -191,6 +191,7 @@ export default function Tree({
           padding: (t) => [t.spacing(0, 4), 6],
           width: 1,
           boxSizing: 'border-box',
+          background: theme.palette.background.paper,
         },
         nextExtraIsEmbed && {
           padding: (t) => [t.spacing(0, 4), 4],
@@ -309,49 +310,56 @@ export default function Tree({
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
             width: '100%',
             alignItems: 'center',
+            color: 'text.secondary',
           }}
         >
-          <Crumbs
-            items={[
-              {
-                // icon: <HomeIcon />,
-                name: 'Home',
-                url: '/',
-              },
-              ...(context && context.name === 'planters'
-                ? [
-                    {
-                      url: `/planters/${planter.id}`,
-                      icon: planter.image_url,
-                      name: `${utils.getPlanterName(
-                        planter.first_name,
-                        planter.last_name,
-                      )}`,
-                    },
-                  ]
-                : []),
-              ...(context && context.name === 'organizations' && organization
-                ? [
-                    {
-                      url: `/organizations/${organization.id}`,
-                      icon: organization.logo_url,
-                      name: organization.name,
-                    },
-                  ]
-                : []),
-              {
-                name: `tree #${tree.id}`,
-              },
-            ]}
-          />
           <Box>
-            <Icon
-              icon={SearchIcon}
-              width={48}
-              height={48}
+            <Crumbs
+              items={[
+                {
+                  name: 'Home',
+                  url: '/',
+                },
+                ...(context && context.name === 'planters'
+                  ? [
+                      {
+                        url: `/planters/${planter.id}`,
+                        icon: planter.image_url,
+                        name: `${utils.getPlanterName(
+                          planter.first_name,
+                          planter.last_name,
+                        )}`,
+                      },
+                    ]
+                  : []),
+                ...(context && context.name === 'organizations' && organization
+                  ? [
+                      {
+                        url: `/organizations/${organization.id}`,
+                        icon: organization.logo_url,
+                        name: organization.name,
+                      },
+                    ]
+                  : []),
+                {
+                  name: `tree #${tree.id}`,
+                },
+              ]}
+            />
+          </Box>
+          <Box
+            sx={{
+              marginLeft: 'auto',
+            }}
+          >
+            <ChangeThemeButton />
+          </Box>
+          <Box>
+            <SvgIcon
+              component={SearchIcon}
+              inheritViewBox
               sx={{
                 fill: 'transparent',
                 '& path': {
