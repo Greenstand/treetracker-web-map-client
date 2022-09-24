@@ -97,17 +97,41 @@ describe('Test pathResolver', () => {
       });
     });
 
-    it('click on /wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens', () => {
+    it('click on /wallets/0cdf4219-869a-41ce-953a-a8421d8353f7', () => {
       const result = pathResolver.getPathWhenClickTree(
         {
           id: 14615,
-          token_id: '3a53e2a6-ac17-43a5-a3aa-31fd04786cba',
         },
         {
           pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7',
         },
         {
           query: {},
+        },
+      );
+
+      expect(result).toMatchObject({
+        pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens',
+        query: {
+          tree_id: 14615,
+        },
+      });
+    });
+
+    it('click on /web-map-beta/demo/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens with base', () => {
+      const result = pathResolver.getPathWhenClickTree(
+        {
+          id: 14615,
+        },
+        {
+          pathname:
+            '/web-map-beta/demo/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens',
+        },
+        {
+          query: {},
+        },
+        {
+          base: '/web-map-beta/demo',
         },
       );
 
