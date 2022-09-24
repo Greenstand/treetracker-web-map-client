@@ -1,3 +1,17 @@
+# [2.0.0-beta.102](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.101...v2.0.0-beta.102) (2022-09-24)
+
+
+### Bug Fixes
+
+* 500 page showing in production env ([07a914f](https://github.com/Greenstand/treetracker-web-map-client/commit/07a914fab5eaeccb20b7bd6d72bdd9acd9dd5d42))
+* merge syntax errors ([2c2454f](https://github.com/Greenstand/treetracker-web-map-client/commit/2c2454f3337ceff989a541789a9ff277e693c042))
+
+
+### Features
+
+* add wrapper for server props ([3293e79](https://github.com/Greenstand/treetracker-web-map-client/commit/3293e79c39536e84651bd2e7053449c65b5eb562))
+* add wrapper on all pages ([0512c2c](https://github.com/Greenstand/treetracker-web-map-client/commit/0512c2cccbe5f0c65f5030df6288354ed437a843))
+
 # [2.0.0-beta.101](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.100...v2.0.0-beta.101) (2022-09-24)
 
 
