@@ -653,60 +653,20 @@ export const getServerSideProps = wrapper(async ({ params, query }) => {
   log.warn('tokenid:', tokenid);
   log.warn('query:', query);
   let result;
-    if (tokenid === 'idfromquery') {
-      log.warn('to load token from treeid');
-      const { tree_id } = query;
-      const treeId = parseInt(tree_id, 10);
-      let res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/trees/${treeId}`,
-      );
-      const { data: tree } = res;
-      const token = await getTokenById(tree.token_id);
-      const { wallet_id } = token;
-      const wallet = await getWalletById(wallet_id);
-      res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${token.id}`,
-      );
-      const { data: transactions } = res;
-      const planter = await getPlanterById(tree.planter_id);
-
-      result = {
-        props: {
-          token,
-          wallet,
-          transactions,
-          tree,
-          planter,
-        },
-      };
-    } else {
-      const token = await getTokenById(tokenid);
-      const { wallet_id } = token;
-      const wallet = await getWalletById(wallet_id);
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
-      );
-      const { data } = res;
-      const transactions = data;
-      let tree;
-      {
-        const res2 = await axios.get(
-          `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
-        );
-        tree = res2.data;
-      }
-      const planter = await getPlanterById(tree.planter_id);
-
-      result = {
-        props: {
-          token,
-          wallet,
-          transactions,
-          tree,
-          planter,
-        },
-      };
-    }
+  if (tokenid === 'idfromquery') {
+    log.warn('to load token from treeid');
+    const { tree_id } = query;
+    const treeId = parseInt(tree_id, 10);
+    let res = await axios.get(`${process.env.NEXT_PUBLIC_API}/trees/${treeId}`);
+    const { data: tree } = res;
+    const token = await getTokenById(tree.token_id);
+    const { wallet_id } = token;
+    const wallet = await getWalletById(wallet_id);
+    res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${token.id}`,
+    );
+    const { data: transactions } = res;
+    const planter = await getPlanterById(tree.planter_id);
 
     result = {
       props: {
@@ -714,8 +674,39 @@ export const getServerSideProps = wrapper(async ({ params, query }) => {
         wallet,
         transactions,
         tree,
+        planter,
+      },
+    };
+  } else {
+    const token = await getTokenById(tokenid);
+    const { wallet_id } = token;
+    const wallet = await getWalletById(wallet_id);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+    );
+    const { data } = res;
+    const transactions = data;
+    let tree;
+    {
+      const res2 = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
+      );
+      tree = res2.data;
+    }
+    const planter = await getPlanterById(tree.planter_id);
+
+    result = {
+      props: {
+        token,
+        wallet,
+        transactions,
+        tree,
+        planter,
       },
     };
   }
+
   return result;
 });
+
+// trigger

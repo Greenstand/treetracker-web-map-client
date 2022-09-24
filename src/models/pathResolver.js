@@ -19,16 +19,16 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
     location.pathname,
     options.base || '',
   );
-  const path = location.pathname.match(MAP_URL_PATTERN);
+  const path = pathname.match(MAP_URL_PATTERN);
   log.warn(
     'parsed path:',
     path,
     ' for location:',
-    location,
+    JSON.stringify(location, undefined, 2),
     ' tree:',
     tree,
     'router:',
-    router,
+    JSON.stringify(router, undefined, 2),
   );
   console.warn(JSON.stringify(tree, undefined, 2));
 
