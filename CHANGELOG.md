@@ -1,3 +1,12 @@
+# [2.0.0-beta.103](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.102...v2.0.0-beta.103) (2022-09-24)
+
+
+### Bug Fixes
+
+* broken file of token page ([2399342](https://github.com/Greenstand/treetracker-web-map-client/commit/2399342e213e55d75e96f1e38e5cf87e63a45650))
+* problem in path resolver ([e274166](https://github.com/Greenstand/treetracker-web-map-client/commit/e274166e192d12b03bc7d9aea2ff50542e23d31c))
+* trigger ([02e3f2d](https://github.com/Greenstand/treetracker-web-map-client/commit/02e3f2d64bd66e8588eae1f10c2eb62f99ee47a8))
+
 # [2.0.0-beta.102](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.101...v2.0.0-beta.102) (2022-09-24)
 
 
