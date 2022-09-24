@@ -363,10 +363,10 @@ export default function Tree({
               sx={{
                 fill: 'transparent',
                 '& path': {
-                  fill: 'grey',
+                  fill: theme.palette.text.primary,
                 },
                 '& rect': {
-                  stroke: 'grey',
+                  stroke: theme.palette.text.primary,
                 },
               }}
             />
