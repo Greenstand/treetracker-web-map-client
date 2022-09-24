@@ -1,3 +1,30 @@
+# [2.0.0-beta.100](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.99...v2.0.0-beta.100) (2022-09-24)
+
+
+### Bug Fixes
+
+* **token:** test mock not providing planter id ([759f184](https://github.com/Greenstand/treetracker-web-map-client/commit/759f1844cfd26eca88e71a9347a24df028b535c2))
+
+
+### Features
+
+* **token:** add real planter data for transaction ([ef84131](https://github.com/Greenstand/treetracker-web-map-client/commit/ef84131a6363e0ca0df1910adda1b5f2b1dc892d))
+
+# [2.0.0-beta.99](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.98...v2.0.0-beta.99) (2022-09-23)
+
+
+### Features
+
+* cover page for org ([283ab09](https://github.com/Greenstand/treetracker-web-map-client/commit/283ab093cb788b994a682d1be31df7726e7c2cf7))
+* cover page for wallet ([e630c1d](https://github.com/Greenstand/treetracker-web-map-client/commit/e630c1de12bcf5bd8e34d354f7d82a0f69af960d))
+
+# [2.0.0-beta.98](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.97...v2.0.0-beta.98) (2022-09-22)
+
+
+### Bug Fixes
+
+* timeline not correct position ([71903ac](https://github.com/Greenstand/treetracker-web-map-client/commit/71903ac1f994409df40427734606889a39b2a581))
+
 # [2.0.0-beta.97](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.96...v2.0.0-beta.97) (2022-09-22)
 
 ### Features

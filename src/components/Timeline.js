@@ -99,7 +99,7 @@ function Timeline() {
         bottom: '0px',
         left: '0px',
         margin: '20px',
-        mb: isMobile && 'calc(2rem + 25px)', // currently based on the zoom buttons
+        mb: isMobile ? 'calc(2rem + 25px)' : null, // currently based on the zoom buttons
         pr: showPicker && '15px',
         height: 52,
         borderRadius: 4,
