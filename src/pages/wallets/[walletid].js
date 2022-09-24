@@ -14,7 +14,7 @@ import CustomWorldMap from 'components/CustomWorldMap';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import TreeTag from 'components/common/TreeTag';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
-import { requestAPI } from 'models/utils';
+import { requestAPI, wrapper } from 'models/utils';
 import ImpactSection from '../../components/ImpactSection';
 import ProfileCover from '../../components/ProfileCover';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -342,34 +342,28 @@ export default function Wallet(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps = wrapper(async ({ params }) => {
   const id = params.walletid;
-  try {
-    const [wallet, species, tokens, tokenRegionCount] = await Promise.all([
-      getWalletById(id),
-      getSpeciesByWalletId(id),
-      (async () => {
-        // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
-        const data = await requestAPI(`/tokens?wallet=${id}`);
-        return data;
-      })(),
-      (async () => {
-        // return total no.trees/tokens per country
-        const data = await requestAPI(`/wallets/${id}/token-region-count`);
-        return data.walletStatistics;
-      })(),
-    ]);
-    return {
-      props: {
-        wallet,
-        species: species.species,
-        tokens,
-        tokenRegionCount,
-      },
-    };
-  } catch (e) {
-    log.warn('e:', e);
-    if (e.response?.status === 404) return { notFound: true };
-    throw e;
-  }
-}
+  const [wallet, species, tokens, tokenRegionCount] = await Promise.all([
+    getWalletById(id),
+    getSpeciesByWalletId(id),
+    (async () => {
+      // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
+      const data = await requestAPI(`/tokens?wallet=${id}`);
+      return data;
+    })(),
+    (async () => {
+      // return total no.trees/tokens per country
+      const data = await requestAPI(`/wallets/${id}/token-region-count`);
+      return data.walletStatistics;
+    })(),
+  ]);
+  return {
+    props: {
+      wallet,
+      species: species.species,
+      tokens,
+      tokenRegionCount,
+    },
+  };
+});

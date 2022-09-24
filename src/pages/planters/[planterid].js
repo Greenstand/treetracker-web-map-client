@@ -489,19 +489,13 @@ export default function Planter(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps = utils.wrapper(async ({ params }) => {
   const id = params.planterid;
-  try {
-    const planter = await getPlanterById(id);
-    const data = await getOrgLinks(planter.links);
-    return {
-      props: {
-        planter: { ...planter, ...data },
-      },
-    };
-  } catch (e) {
-    log.warn('planters page:', e);
-    if (e.response?.status === 404) return { notFound: true };
-    throw e;
-  }
-}
+  const planter = await getPlanterById(id);
+  const data = await getOrgLinks(planter.links);
+  return {
+    props: {
+      planter: { ...planter, ...data },
+    },
+  };
+});

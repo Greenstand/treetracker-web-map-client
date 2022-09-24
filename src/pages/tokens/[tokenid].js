@@ -23,6 +23,7 @@ import TagList from 'components/common/TagList';
 import UUIDTag from 'components/common/UUIDTag';
 import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import { wrapper } from 'models/utils';
 import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
@@ -647,12 +648,11 @@ export default function Token(props) {
   );
 }
 
-export async function getServerSideProps({ params, query }) {
+export const getServerSideProps = wrapper(async ({ params, query }) => {
   const { tokenid } = params;
   log.warn('tokenid:', tokenid);
   log.warn('query:', query);
   let result;
-  try {
     if (tokenid === 'idfromquery') {
       log.warn('to load token from treeid');
       const { tree_id } = query;
@@ -707,10 +707,15 @@ export async function getServerSideProps({ params, query }) {
         },
       };
     }
-    return result;
-  } catch (e) {
-    log.error('token page:', e);
-    if (e.response?.status === 404) return { notFound: true };
-    throw e;
+
+    result = {
+      props: {
+        token,
+        wallet,
+        transactions,
+        tree,
+      },
+    };
   }
-}
+  return result;
+});

@@ -493,22 +493,16 @@ export default function Organization(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps = utils.wrapper(async ({ params }) => {
   const id = params.organizationid;
-  try {
-    const organization = await getOrganizationById(id);
-    const orgLinks = await getOrgLinks(organization.links);
-    return {
-      props: {
-        organization: {
-          ...organization,
-          ...orgLinks,
-        },
+  const organization = await getOrganizationById(id);
+  const orgLinks = await getOrgLinks(organization.links);
+  return {
+    props: {
+      organization: {
+        ...organization,
+        ...orgLinks,
       },
-    };
-  } catch (e) {
-    log.warn('organizations page:', e);
-    if (e.response?.status === 404) return { notFound: true };
-    throw e;
-  }
-}
+    },
+  };
+});
