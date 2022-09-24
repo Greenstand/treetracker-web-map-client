@@ -568,7 +568,7 @@ export default function Tree({
           entityType="Planter"
           buttonText="Meet the Planter"
           cardImageSrc={planter?.image_url}
-          rotation={planter?.image_rotation || 265}
+          rotation={planter?.image_rotation}
           link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
             isEmbed ? '&embed=true' : ''
           }`}
