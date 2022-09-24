@@ -218,7 +218,9 @@ export default function Planter(props) {
         </Box>
 
         {isMobile && (
-          <Portal container={document.getElementById('drawer-title-container')}>
+          <Portal
+            container={() => document.getElementById('drawer-title-container')}
+          >
             <Box
               sx={{
                 px: 4,
@@ -258,7 +260,9 @@ export default function Planter(props) {
         )}
         {isMobile && (
           <Portal
-            container={document.getElementById('drawer-title-container-min')}
+            container={() =>
+              document.getElementById('drawer-title-container-min')
+            }
           >
             <Box sx={{}}>
               <Typography variant="h3">
@@ -467,7 +471,9 @@ export default function Planter(props) {
         <Box sx={{ height: 40 }} />
       </Box>
       {nextExtraIsEmbed && (
-        <Portal container={document.getElementById('embed-logo-container')}>
+        <Portal
+          container={() => document.getElementById('embed-logo-container')}
+        >
           <Avatar
             sx={{
               width: '120px',

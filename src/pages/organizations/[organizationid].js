@@ -1,4 +1,3 @@
- 
 import HomeIcon from '@mui/icons-material/Home';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -229,7 +228,9 @@ export default function Organization(props) {
         )}
 
         {isMobile && (
-          <Portal container={document.getElementById('drawer-title-container')}>
+          <Portal
+            container={() => document.getElementById('drawer-title-container')}
+          >
             <Box
               sx={{
                 px: 4,
@@ -267,7 +268,9 @@ export default function Organization(props) {
         )}
         {isMobile && (
           <Portal
-            container={document.getElementById('drawer-title-container-min')}
+            container={() =>
+              document.getElementById('drawer-title-container-min')
+            }
           >
             <Box
               sx={{
@@ -472,7 +475,9 @@ export default function Organization(props) {
         </Box>
       </Box>
       {nextExtraIsEmbed && (
-        <Portal container={document.getElementById('embed-logo-container')}>
+        <Portal
+          container={() => document.getElementById('embed-logo-container')}
+        >
           <Avatar
             sx={{
               width: '120px',
