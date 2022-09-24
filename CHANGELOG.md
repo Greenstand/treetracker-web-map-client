@@ -1,3 +1,19 @@
+# [2.0.0-beta.101](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.100...v2.0.0-beta.101) (2022-09-24)
+
+
+### Bug Fixes
+
+* document in SSR error ([285e1cd](https://github.com/Greenstand/treetracker-web-map-client/commit/285e1cdfec9c48f1f55c8ab84462e7c73f03ca0f))
+* drawer title not clickable ([3ae8578](https://github.com/Greenstand/treetracker-web-map-client/commit/3ae85781b27069e847abceb3c2454f56e2e7ca9f))
+* root path not working on different envs ([b0dbc38](https://github.com/Greenstand/treetracker-web-map-client/commit/b0dbc381ff10450d156f5425e2bd8beb0421d8e1))
+* timeline not visible on home page ([5691e2c](https://github.com/Greenstand/treetracker-web-map-client/commit/5691e2c83a02ae618b92d2f87049bc9844fb9211))
+* timeline router not working in test ([1f80dfc](https://github.com/Greenstand/treetracker-web-map-client/commit/1f80dfce252a2f743a147105325174603629a1c4))
+
+
+### Features
+
+* show timeline only on global context ([b2f54ad](https://github.com/Greenstand/treetracker-web-map-client/commit/b2f54ad6c9b4fb1cc197141c4690a3aea760dfd6))
+
 # [2.0.0-beta.100](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.99...v2.0.0-beta.100) (2022-09-24)
 
 
