@@ -20,18 +20,16 @@
 
 # [2.0.0-beta.98](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.97...v2.0.0-beta.98) (2022-09-22)
 
-
 ### Bug Fixes
 
-* timeline not correct position ([71903ac](https://github.com/Greenstand/treetracker-web-map-client/commit/71903ac1f994409df40427734606889a39b2a581))
+- timeline not correct position ([71903ac](https://github.com/Greenstand/treetracker-web-map-client/commit/71903ac1f994409df40427734606889a39b2a581))
 
 # [2.0.0-beta.97](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.96...v2.0.0-beta.97) (2022-09-22)
 
-
 ### Features
 
-* about, mession for org ([7720e9b](https://github.com/Greenstand/treetracker-web-map-client/commit/7720e9b41ad53409e5026c67f273debfe13d296f))
-* about, mession for planter, wallet ([cb71659](https://github.com/Greenstand/treetracker-web-map-client/commit/cb71659fde00249081d3dcdd864295325102205d))
+- about, mession for org ([7720e9b](https://github.com/Greenstand/treetracker-web-map-client/commit/7720e9b41ad53409e5026c67f273debfe13d296f))
+- about, mession for planter, wallet ([cb71659](https://github.com/Greenstand/treetracker-web-map-client/commit/cb71659fde00249081d3dcdd864295325102205d))
 
 # [2.0.0-beta.96](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.95...v2.0.0-beta.96) (2022-09-22)
 
