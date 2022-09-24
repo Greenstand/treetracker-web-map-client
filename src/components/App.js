@@ -92,15 +92,15 @@ function MapComponent() {
       log.warn('pathname is different!');
       isRefreshNeeded = true;
     } else if (
-        router.query.tree_id &&
-        result.tree_id &&
-        router.query.tree_id !== result.tree_id
-      ) {
-        log.warn('tree_id query is different!');
-        isRefreshNeeded = true;
-      } else {
-        log.warn('do not refesh if the pathname is the same!');
-      }
+      router.query.tree_id &&
+      result.tree_id &&
+      router.query.tree_id !== result.tree_id
+    ) {
+      log.warn('tree_id query is different!');
+      isRefreshNeeded = true;
+    } else {
+      log.warn('do not refesh if the pathname is the same!');
+    }
 
     if (isRefreshNeeded) {
       router.push(result);

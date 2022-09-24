@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import TagList from 'components/common/TagList';
 import UUIDTag from 'components/common/UUIDTag';
-import { getWalletById, getTokenById } from 'models/api';
+import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
@@ -63,7 +63,8 @@ function handleShare() {}
 
 export default function Token(props) {
   log.warn('props:', props);
-  const { token, wallet, transactions, nextExtraIsEmbed, tree } = props;
+  const { token, wallet, transactions, nextExtraIsEmbed, tree, planter } =
+    props;
   const theme = useTheme();
   const { classes } = useStyles();
   const mapContext = useMapContext();
@@ -78,7 +79,7 @@ export default function Token(props) {
 
   useEffect(() => {
     async function reload() {
-      // // manipulate the map
+      // manipulate the map
       // const { map } = mapContext;
       // if (map && token) {
       //   // map.flyTo(tree.lat, tree.lon, 16);
@@ -517,10 +518,10 @@ export default function Token(props) {
                   p: [2, 4],
                 }}
               >
-                <Link href="/planters/940">
+                <Link href={`/planters/${planter.id}`}>
                   <SimpleAvatarAndName
-                    image={token.image_url}
-                    name="Sebastian G."
+                    image={planter.image_url}
+                    name={`${planter.first_name} ${planter.last_name}`}
                   />
                 </Link>
               </Box>
@@ -663,6 +664,7 @@ export async function getServerSideProps({ params, query }) {
         `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${token.id}`,
       );
       const { data: transactions } = res;
+      const planter = await getPlanterById(tree.planter_id);
 
       result = {
         props: {
@@ -670,6 +672,7 @@ export async function getServerSideProps({ params, query }) {
           wallet,
           transactions,
           tree,
+          planter,
         },
       };
     } else {
@@ -688,6 +691,7 @@ export async function getServerSideProps({ params, query }) {
         );
         tree = res2.data;
       }
+      const planter = await getPlanterById(tree.planter_id);
 
       result = {
         props: {
@@ -695,6 +699,7 @@ export async function getServerSideProps({ params, query }) {
           wallet,
           transactions,
           tree,
+          planter,
         },
       };
     }
