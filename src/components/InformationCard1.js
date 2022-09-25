@@ -34,9 +34,12 @@ function InformationCard1({
   buttonText,
   cardImageSrc,
   link,
+  rotation,
 }) {
   const { classes } = useStyles();
   const theme = useTheme();
+
+  console.log('rotation', rotation);
 
   return (
     <Card
@@ -64,6 +67,7 @@ function InformationCard1({
     >
       <Box display="flex" alignItems="center">
         <Avatar
+          sx={{ transform: rotation && `rotate(${rotation}deg)` }}
           className={classes.media}
           src={cardImageSrc}
           title="Contemplative Reptile"

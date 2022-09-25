@@ -181,6 +181,8 @@ export default function Tree({
     reload();
   }, [map, tree.lat, tree.lon]);
 
+  console.log(planter, 'planter');
+
   return (
     <Box
       sx={[
@@ -566,6 +568,7 @@ export default function Tree({
           entityType="Planter"
           buttonText="Meet the Planter"
           cardImageSrc={planter?.image_url}
+          rotation={planter?.image_rotation}
           link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
             isEmbed ? '&embed=true' : ''
           }`}
