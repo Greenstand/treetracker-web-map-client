@@ -38,6 +38,7 @@ function TreeSpeciesCard(props) {
             sx={{
               fontFamily: 'Lato',
               fontWeight: 600,
+              width: [240, 'auto'],
             }}
           >
             {name}
