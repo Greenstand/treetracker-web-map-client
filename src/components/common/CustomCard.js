@@ -20,6 +20,8 @@ function CustomCard(props) {
         display: 'flex',
         cursor: handleClick ? 'pointer' : 'inherit',
         alignItems: 'center',
+        height: '100%',
+        boxSizing: 'border-box',
       }}
     >
       <Box sx={{}}>
