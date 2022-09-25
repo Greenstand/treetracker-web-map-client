@@ -1,3 +1,10 @@
+# [2.0.0-beta.104](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.103...v2.0.0-beta.104) (2022-09-25)
+
+
+### Bug Fixes
+
+* menubar handle click function on mobile screen ([ed90f71](https://github.com/Greenstand/treetracker-web-map-client/commit/ed90f71b83dda210c28ebf258242cf0bb5a9150b))
+
 # [2.0.0-beta.103](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.102...v2.0.0-beta.103) (2022-09-24)
 
 
