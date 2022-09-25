@@ -1,3 +1,11 @@
+# [2.0.0-beta.105](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.104...v2.0.0-beta.105) (2022-09-25)
+
+
+### Bug Fixes
+
+* **tree:** fixed a typo ([80c012d](https://github.com/Greenstand/treetracker-web-map-client/commit/80c012d46215951acd702d944877b6ea8e4039b9))
+* **tree:** fixed rotation problem ([36f22c6](https://github.com/Greenstand/treetracker-web-map-client/commit/36f22c6f0a362d94209d5d1d97feefdaa3e8443b))
+
 # [2.0.0-beta.104](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.103...v2.0.0-beta.104) (2022-09-25)
 
 
