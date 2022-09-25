@@ -1,3 +1,11 @@
+# [2.0.0-beta.106](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.105...v2.0.0-beta.106) (2022-09-25)
+
+
+### Bug Fixes
+
+* enable global board ([56422da](https://github.com/Greenstand/treetracker-web-map-client/commit/56422daf09ee82cbde77d6289acd7cf2edebe2fd))
+* test ([c631bbb](https://github.com/Greenstand/treetracker-web-map-client/commit/c631bbb473d31ea5e065c919be9e4ed3803ac26d))
+
 # [2.0.0-beta.105](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.104...v2.0.0-beta.105) (2022-09-25)
 
 
