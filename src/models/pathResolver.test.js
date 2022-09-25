@@ -130,6 +130,7 @@ describe('Test pathResolver', () => {
         {
           query: {},
         },
+        undefined,
         {
           base: '/web-map-beta/demo',
         },

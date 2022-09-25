@@ -29,6 +29,8 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
     tree,
     'router:',
     JSON.stringify(router, undefined, 2),
+    'pathname:',
+    pathname,
   );
   console.warn(JSON.stringify(tree, undefined, 2));
 
@@ -39,6 +41,7 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
 
   let pathnameResult = pathname;
   if (path) {
+    log.warn('match pattern 1');
     if (!path[1] && path[5] === 'tokens') {
       pathnameResult = path[4];
     } else if (path[1] && path[5] === 'trees') {
