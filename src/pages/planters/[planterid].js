@@ -334,11 +334,11 @@ export default function Planter(props) {
             <CustomCard
               handleClick={() => setIsPlanterTab(true)}
               iconURI={TreeIcon}
-              sx={{
-                height: 34,
-                width: 26,
-                '& path': {
-                  fill: ({ palette }) => palette.primary.main,
+              iconProps={{
+                sx: {
+                  '& path': {
+                    fill: ({ palette }) => palette.primary.main,
+                  },
                 },
               }}
               title="Trees Planted"
@@ -354,11 +354,11 @@ export default function Planter(props) {
                   : undefined
               }
               iconURI={PeopleIcon}
-              sx={{
-                height: 36,
-                width: 36,
-                '& path': {
-                  fill: ({ palette }) => palette.text.primary,
+              iconProps={{
+                sx: {
+                  '& path': {
+                    fill: ({ palette }) => palette.text.primary,
+                  },
                 },
               }}
               title="Ass. Orgs"

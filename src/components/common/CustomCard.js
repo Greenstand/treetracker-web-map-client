@@ -1,12 +1,19 @@
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { Box, SvgIcon } from '@mui/material';
+import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import Icon from './CustomIcon';
 
-function CustomCard(props) {
-  const { iconURI, title, text, handleClick, disabled, tooltip, sx } = props;
-
+function CustomCard({
+  iconURI,
+  title,
+  text,
+  handleClick,
+  disabled,
+  tooltip,
+  iconProps,
+}) {
   return (
     <Box
       onClick={handleClick}
@@ -38,15 +45,7 @@ function CustomCard(props) {
                 : palette.success.main,
           }}
         >
-          <SvgIcon
-            sx={{
-              ...sx,
-              fill: 'none',
-            }}
-            component={iconURI}
-            inheritViewBox
-            alt="icon"
-          />
+          <Icon icon={iconURI} width={36} height={36} {...iconProps} />
         </Avatar>
       </Box>
       <Box
