@@ -2,7 +2,6 @@
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -27,6 +26,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
+import Icon from '../../components/common/CustomIcon';
 import DataTag from '../../components/common/DataTag';
 import DrawerTitle from '../../components/common/DrawerTitle';
 import Info from '../../components/common/Info';
@@ -178,19 +178,15 @@ export default function Planter(props) {
               ]}
             />
             <Box>
-              {}
-              <SvgIcon
-                component={SearchIcon}
-                inheritViewBox
+              <Icon
+                icon={SearchIcon}
+                width={48}
+                height={48}
+                color="grey"
                 sx={{
-                  width: 48,
-                  height: 48,
                   fill: 'transparent',
                   '& path': {
                     fill: 'grey',
-                  },
-                  '& rect': {
-                    stroke: 'grey',
                   },
                 }}
               />

@@ -1,4 +1,5 @@
-import { Box, Typography, SvgIcon } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import Icon from './CustomIcon';
 
 export default function Info({ info, iconURI }) {
   return (
@@ -15,7 +16,7 @@ export default function Info({ info, iconURI }) {
         },
       }}
     >
-      <SvgIcon component={iconURI} inheritViewBox />
+      <Icon icon={iconURI} />
       <Typography variant="h6">{info}</Typography>
     </Box>
   );

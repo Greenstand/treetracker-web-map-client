@@ -1,4 +1,4 @@
-import { Box, SvgIcon, Typography, InputBase, Divider } from '@mui/material';
+import { Box, Typography, InputBase, Divider } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -7,6 +7,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useMapContext } from 'mapContext';
+import Icon from './common/CustomIcon';
 import { useMobile } from '../hooks/globalHooks';
 import TimeIcon from '../images/icons/time.svg';
 import { nextPathBaseDecode } from '../models/utils';
@@ -153,10 +154,10 @@ function Timeline() {
               cursor: 'pointer',
             }}
           >
-            <SvgIcon
-              component={TimeIcon}
+            <Icon
+              icon={TimeIcon}
+              width={22}
               sx={{
-                width: 22,
                 '& path': {
                   fill: ({ palette }) => palette.primary.main,
                 },

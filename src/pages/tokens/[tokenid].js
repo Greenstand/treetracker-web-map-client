@@ -10,7 +10,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import { Divider, Avatar, SvgIcon, useTheme } from '@mui/material';
+import { Divider, Avatar, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -33,6 +33,7 @@ import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
+import Icon from '../../components/common/CustomIcon';
 import Info from '../../components/common/Info';
 import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
 import TreeTag from '../../components/common/TreeTag';
@@ -183,7 +184,7 @@ export default function Token(props) {
                     {
                       url: `/wallets/${wallet.id}`,
                       icon: wallet.logo_url || (
-                        <SvgIcon component={AccountBalanceWalletIcon} />
+                        <Icon icon={AccountBalanceWalletIcon} />
                       ),
                       name: wallet.name,
                     },
@@ -199,19 +200,15 @@ export default function Token(props) {
             ]}
           />
           <Box>
-            {}
-            <SvgIcon
-              component={SearchIcon}
-              inheritViewBox
+            <Icon
+              icon={SearchIcon}
+              width={48}
+              height={48}
+              color="grey"
               sx={{
-                width: 48,
-                height: 48,
                 fill: 'transparent',
                 '& path': {
                   fill: 'grey',
-                },
-                '& rect': {
-                  stroke: 'grey',
                 },
               }}
             />
@@ -273,11 +270,7 @@ export default function Token(props) {
                     },
                   }}
                 >
-                  <SvgIcon
-                    alt="share the link"
-                    component={ShareIcon}
-                    inheritViewBox
-                  />
+                  <Icon icon={ShareIcon} />
                 </Box>
               }
             />
@@ -319,7 +312,7 @@ export default function Token(props) {
                 '& path': { fill: theme.palette.common.white },
               }}
             >
-              <SvgIcon component={CalendarIcon} />
+              <Icon icon={CalendarIcon} />
               {token.created_at !== null
                 ? `Minted on ${moment(tree.time_created).format(
                     'MMMM Do, YYYY',
@@ -373,7 +366,7 @@ export default function Token(props) {
                 '& path': { fill: theme.palette.common.black },
               }}
             >
-              <SvgIcon component={CalendarIcon} />
+              <Icon icon={CalendarIcon} />
               {token.created_at !== null
                 ? `Minted on ${moment(tree.time_created).format(
                     'MMMM Do, YYYY',
@@ -440,14 +433,14 @@ export default function Token(props) {
           key="created-at"
           TreeTagValue={new Date(token.created_at).toLocaleDateString()}
           title="Created At"
-          icon={<SvgIcon component={CalendarIcon} />}
+          icon={<Icon icon={CalendarIcon} />}
         />
 
         <TreeTag
           key="token-id"
           TreeTagValue={token.id}
           title="Token ID"
-          icon={<SvgIcon component={TokenIcon} inheritViewBox />}
+          icon={<Icon icon={TokenIcon} />}
         />
 
         <TreeTag
@@ -455,14 +448,13 @@ export default function Token(props) {
           TreeTagValue={token.tree_id}
           title="Tree ID"
           icon={
-            <SvgIcon
+            <Icon
               sx={{
                 '& path': {
                   fill: 'rgb(71, 75, 79)',
                 },
               }}
-              component={TreeIcon}
-              inheritViewBox
+              icon={TreeIcon}
             />
           }
           subtitle="click to enter"
@@ -473,7 +465,7 @@ export default function Token(props) {
           key="claim"
           TreeTagValue={token.claim ? 'Claimed' : 'Not claimed yet'}
           title="Claim Status"
-          icon={<SvgIcon component={DoneOutlineIcon} inheritViewBox />}
+          icon={<Icon icon={DoneOutlineIcon} />}
         />
 
         <TreeTag
@@ -484,7 +476,7 @@ export default function Token(props) {
               : 'Can not be transferred'
           }
           title="Transferability"
-          icon={<SvgIcon component={CurrencyExchangeIcon} inheritViewBox />}
+          icon={<Icon icon={CurrencyExchangeIcon} />}
           disabled={token.claim === true && token.transfer_pending === true}
         />
       </TagList>

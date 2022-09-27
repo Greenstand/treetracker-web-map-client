@@ -1,5 +1,4 @@
-import { Typography, Grid, Box, SvgIcon } from '@mui/material';
-import { useState } from 'react';
+import { Typography, Grid, Box } from '@mui/material';
 import CustomCard from './common/CustomCard';
 import Icon from './common/CustomIcon';
 import CarbonIcon from '../images/icons/carbon.svg';

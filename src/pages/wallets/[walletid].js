@@ -1,5 +1,4 @@
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -21,6 +20,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
+import Icon from '../../components/common/CustomIcon';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import { useMobile } from '../../hooks/globalHooks';
@@ -119,26 +119,22 @@ export default function Wallet(props) {
               },
               {
                 icon: wallet.logo_url || (
-                  <SvgIcon component={AccountBalanceWalletIcon} />
+                  <Icon icon={AccountBalanceWalletIcon} />
                 ),
                 name: `${wallet.name}`,
               },
             ]}
           />
           <Box>
-            {}
-            <SvgIcon
-              component={SearchIcon}
-              inheritViewBox
+            <Icon
+              icon={SearchIcon}
+              width={48}
+              height={48}
+              color="grey"
               sx={{
-                width: 48,
-                height: 48,
                 fill: 'transparent',
                 '& path': {
                   fill: 'grey',
-                },
-                '& rect': {
-                  stroke: 'grey',
                 },
               }}
             />
@@ -281,7 +277,7 @@ export default function Wallet(props) {
             <TreeTag
               TreeTagValue={token.id}
               title="Token ID"
-              icon={<SvgIcon component={TokenIcon} />}
+              icon={<Icon icon={TokenIcon} />}
               link={`/wallets/${wallet.id}/tokens/${token.id}`}
             />
           </Box>
