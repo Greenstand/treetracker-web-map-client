@@ -22,7 +22,7 @@ const NextComposed = React.forwardRef((props, ref) => {
   return (
     <NextLink href={href} as={as}>
       <a
-        style={{ display: 'block' }}
+        style={{ display: 'flex' }}
         ref={ref}
         {...other}
         className={classes.link}
