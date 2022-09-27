@@ -1,3 +1,10 @@
+# [2.0.0-beta.107](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.106...v2.0.0-beta.107) (2022-09-27)
+
+
+### Bug Fixes
+
+* **custom-card:** height not same if text too long ([48d8d9a](https://github.com/Greenstand/treetracker-web-map-client/commit/48d8d9a9f87c19f41ef2b4ed16d3a1259d430f69))
+
 # [2.0.0-beta.106](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.105...v2.0.0-beta.106) (2022-09-25)
 
 
