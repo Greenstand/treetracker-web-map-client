@@ -32,7 +32,14 @@ function TreeSpeciesCard(props) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Grid item ml={6}>
+        <Grid
+          item
+          ml={6}
+          sx={{
+            wordWrap: 'break-word',
+            width: '65%',
+          }}
+        >
           <Typography
             variant="h5"
             sx={{
