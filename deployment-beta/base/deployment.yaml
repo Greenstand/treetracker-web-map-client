@@ -37,4 +37,4 @@ spec:
             - name: NEXT_PUBLIC_TILE_SERVER_WEBMAP_API
               value: https://dev-k8s.treetracker.org/webmap/
             - name: NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED
-              value: 'true'
+              value: 'false'
