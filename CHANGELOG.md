@@ -1,3 +1,12 @@
+# [2.0.0-beta.108](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.107...v2.0.0-beta.108) (2022-09-28)
+
+
+### Bug Fixes
+
+* inconsistent height of cards ([7d4b207](https://github.com/Greenstand/treetracker-web-map-client/commit/7d4b20764e4ade74c77af828acf881b98d104cda))
+* replace flex with inline-flex ([9129c68](https://github.com/Greenstand/treetracker-web-map-client/commit/9129c68601d744aea4a033a8e1bbc0d97402dafa))
+* **timeline:** double box component ([7961fc5](https://github.com/Greenstand/treetracker-web-map-client/commit/7961fc544c76892a2bd199317feda266f17c4e9b))
+
 # [2.0.0-beta.107](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.106...v2.0.0-beta.107) (2022-09-27)
 
 
