@@ -135,13 +135,14 @@ function Timeline() {
             cursor: 'pointer',
           }}
         >
-            <Icon
-              icon={TimeIcon}
-              width={22}
-              sx={{
-                '& path': {
-                  fill: ({ palette }) => palette.primary.main,
-                },
+          <Icon
+            icon={TimeIcon}
+            width={22}
+            sx={{
+              '& path': {
+                fill: ({ palette }) => palette.primary.main,
+              },
+            }}
           />
         </Box>
         {showPicker && (
