@@ -328,7 +328,7 @@ export default function Organization(props) {
                   },
                 }}
                 title="Trees Planted"
-                text={organization?.featuredTrees?.trees.length || '---'}
+                text={organization?.featuredTrees?.total || '---'}
                 disabled={!isPlanterTab}
               />
             </Grid>
@@ -344,9 +344,7 @@ export default function Organization(props) {
                   },
                 }}
                 title="Hired Planters"
-                text={
-                  organization?.associatedPlanters?.planters.length || '---'
-                }
+                text={organization?.associatedPlanters?.total || '---'}
                 disabled={isPlanterTab}
               />
             </Grid>
