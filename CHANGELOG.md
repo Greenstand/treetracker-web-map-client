@@ -1,3 +1,10 @@
+# [2.0.0-beta.109](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.108...v2.0.0-beta.109) (2022-09-28)
+
+
+### Bug Fixes
+
+* open leader board for dev ([72da9c8](https://github.com/Greenstand/treetracker-web-map-client/commit/72da9c85b276747c00e5f5ae7b54932f6c8a6994))
+
 # [2.0.0-beta.108](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.107...v2.0.0-beta.108) (2022-09-28)
 
 
