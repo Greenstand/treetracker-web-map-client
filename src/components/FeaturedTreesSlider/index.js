@@ -94,6 +94,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                 // boxShadow: '0px 2px 16px rgba(34, 38, 41, 0.15)',
                 // width: [152, 208],
                 overflow: 'initial',
+                flex: 1,
               }}
             >
               <CardMedia
