@@ -31,6 +31,7 @@ import TreeIcon from '../../images/icons/tree.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
+import * as pathResolver from '../../models/pathResolver';
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
@@ -80,12 +81,18 @@ export default function Wallet(props) {
         await map.setFilters({
           wallet: wallet.name,
         });
-        const view = await map.getInitialView();
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          const view = await map.getInitialView();
 
-        if (view.zoomLevel < 2) {
-          view.zoomLevel = 2;
+          if (view.zoomLevel < 2) {
+            view.zoomLevel = 2;
+          }
+          await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         }
-        await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
       }
     }
     reload();

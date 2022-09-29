@@ -45,6 +45,7 @@ import orgBackground from '../../images/org-background.png';
 import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
+import * as pathResolver from '../../models/pathResolver';
 import * as utils from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
@@ -119,8 +120,14 @@ export default function Organization(props) {
         await map.setFilters({
           map_name: organization.map_name,
         });
-        const view = await map.getInitialView();
-        await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          const view = await map.getInitialView();
+          await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        }
       } else {
         log.warn('no data:', map, organization);
       }
