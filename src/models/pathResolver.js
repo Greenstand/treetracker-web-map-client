@@ -112,4 +112,12 @@ function getContext(router, options = {}) {
   return null;
 }
 
-export { getPathWhenClickTree, updatePathWhenMapMoveEnd, getContext };
+function getBounds(router) {
+  return router.query.bounds;
+}
+export {
+  getPathWhenClickTree,
+  updatePathWhenMapMoveEnd,
+  getContext,
+  getBounds,
+};

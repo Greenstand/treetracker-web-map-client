@@ -41,6 +41,7 @@ import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
+import * as pathResolver from '../../models/pathResolver';
 import * as utils from '../../models/utils';
 
 // make styles for component with material-ui
@@ -123,9 +124,14 @@ export default function Planter(props) {
         await map.setFilters({
           userid: planter.id,
         });
-        const view = await map.getInitialView();
-        map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
-        log.warn('no data:', map, planter);
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          const view = await map.getInitialView();
+          map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        }
       }
     }
     reload();
