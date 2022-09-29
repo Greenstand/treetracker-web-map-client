@@ -76,6 +76,7 @@ function MapComponent() {
       tree,
       window.location,
       router,
+      undefined,
       {
         base: process.env.NEXT_PUBLIC_BASE,
       },
