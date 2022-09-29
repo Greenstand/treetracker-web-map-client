@@ -31,6 +31,8 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
     JSON.stringify(router, undefined, 2),
     'pathname:',
     pathname,
+    'with options:',
+    options,
   );
   console.warn(JSON.stringify(tree, undefined, 2));
 
