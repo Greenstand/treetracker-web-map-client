@@ -1,3 +1,10 @@
+# [2.0.0-beta.113](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.112...v2.0.0-beta.113) (2022-09-29)
+
+
+### Bug Fixes
+
+* wrongly call pathResolver ([9c75f46](https://github.com/Greenstand/treetracker-web-map-client/commit/9c75f46c2157207edf5353c29a39bee646f26233))
+
 # [2.0.0-beta.112](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.111...v2.0.0-beta.112) (2022-09-29)
 
 
