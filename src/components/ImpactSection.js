@@ -27,7 +27,7 @@ function ImpactSection() {
           mt: [6, 9],
         }}
       >
-        <Grid item sx={{ width: '49%' }}>
+        <Grid item sx={{ width: '49%', display: 'flex' }}>
           <CustomCard
             handleClick={() => {}}
             iconURI={DollarIcon}
@@ -38,6 +38,7 @@ function ImpactSection() {
                 stroke: ({ palette }) => palette.text.disabled,
                 fill: ({ palette }) => palette.text.disabled,
               },
+              flex: '1',
             }}
             title="Current Value"
             text="---"
