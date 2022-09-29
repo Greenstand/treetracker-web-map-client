@@ -154,7 +154,7 @@ function MapComponent() {
         process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
       apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
     });
-    map.on('move-end', () => {
+    map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
       log.warn('update url');
       const path = pathResolver.updatePathWhenMapMoveEnd(
         window.location,
