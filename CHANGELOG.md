@@ -1,3 +1,15 @@
+# [2.0.0-beta.110](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.109...v2.0.0-beta.110) (2022-09-29)
+
+
+### Bug Fixes
+
+* react prop warning ([6758bcd](https://github.com/Greenstand/treetracker-web-map-client/commit/6758bcd903babb670f3e261f3024366040b5c073))
+
+
+### Features
+
+* add share functionality to button ([e6c35cf](https://github.com/Greenstand/treetracker-web-map-client/commit/e6c35cf4b4d2f961685805f20ed2a69efed64f3d))
+
 # [2.0.0-beta.109](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.108...v2.0.0-beta.109) (2022-09-28)
 
 
