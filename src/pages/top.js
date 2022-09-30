@@ -21,7 +21,9 @@ import Search from '../images/search.svg';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
-function Top({ trees, planters, countries, organizations, wallets }) {
+function Top(props) {
+  log.warn('props top:', props);
+  const { trees, planters, countries, organizations, wallets } = props;
   // use map context to get the map
   const { map } = useMapContext();
   const isFullscreen = useFullscreen();
@@ -69,10 +71,8 @@ function Top({ trees, planters, countries, organizations, wallets }) {
     const country = await utils.requestAPI(`/countries/${countryId}`);
     // print country
     log.debug('country', country);
-
     const [lon, lat] = JSON.parse(country.centroid).coordinates;
-
-    map.flyTo(lat, lon, 6);
+    map.gotoView(lat, lon, 6);
   }
 
   function handleFilter(filter) {
