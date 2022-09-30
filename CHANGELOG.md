@@ -1,3 +1,17 @@
+# [2.0.0-beta.114](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.113...v2.0.0-beta.114) (2022-09-30)
+
+
+### Bug Fixes
+
+* jump to country ([30814ed](https://github.com/Greenstand/treetracker-web-map-client/commit/30814edb7c8c0349b0c983469b39cd22c689b650))
+* lock update ([0f87a87](https://github.com/Greenstand/treetracker-web-map-client/commit/0f87a8750f53df76571b95a0a10b6a10e8410ee4))
+* no org error case ([d5698d2](https://github.com/Greenstand/treetracker-web-map-client/commit/d5698d29507342332fffba8edbb17333cd525bba))
+
+
+### Features
+
+* upgrade core ([4ecad65](https://github.com/Greenstand/treetracker-web-map-client/commit/4ecad6573b0772403e3df7ca9e760b7be36bcdca))
+
 # [2.0.0-beta.113](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.112...v2.0.0-beta.113) (2022-09-29)
 
 
