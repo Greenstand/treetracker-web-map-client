@@ -686,9 +686,11 @@ export const getServerSideProps = utils.wrapper(async ({ params }) => {
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');
     organization = await getOrganizationById(planting_organization_id);
-  } else if (planter.organzation_id) {
+  } else if (planter.organization_id) {
     log.warn('load org from planter. organization_id');
     organization = await getOrganizationById(planter.organization_id);
+  } else {
+    log.warn('can not load org for tree:', tree, planter);
   }
 
   return {
