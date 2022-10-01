@@ -1,3 +1,10 @@
+# [2.0.0-beta.117](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.116...v2.0.0-beta.117) (2022-10-01)
+
+
+### Bug Fixes
+
+* no planter logo on embed ([7361d55](https://github.com/Greenstand/treetracker-web-map-client/commit/7361d55c4d6f5735fd7059c21ac6194db035fe2d))
+
 # [2.0.0-beta.116](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.115...v2.0.0-beta.116) (2022-10-01)
 
 
