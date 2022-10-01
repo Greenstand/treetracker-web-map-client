@@ -101,7 +101,7 @@ function InformationCard1({
       </Box>
       <Box sx={{ mt: [4, 6] }} />
       <Link href={link}>
-        <ColorButton>{buttonText}</ColorButton>
+        <ColorButton>{buttonText} </ColorButton>
       </Link>
     </Card>
   );
