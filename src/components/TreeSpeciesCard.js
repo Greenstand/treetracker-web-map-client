@@ -32,7 +32,14 @@ function TreeSpeciesCard(props) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Grid item ml={6}>
+        <Grid
+          item
+          ml={6}
+          sx={{
+            wordWrap: 'break-word',
+            width: '65%',
+          }}
+        >
           <Typography
             variant="h5"
             sx={{
@@ -70,7 +77,7 @@ function TreeSpeciesCard(props) {
           sx={{
             background: (t) => t.palette.background.paperDark,
             color: (t) => t.palette.text.primaryReverse,
-            padding: (t) => [t.spacing(3, 5), t.spacing(6, 8)],
+            padding: (t) => [t.spacing(4.5, 6.5), t.spacing(6, 8)],
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

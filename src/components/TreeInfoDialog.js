@@ -16,10 +16,10 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  SvgIcon,
 } from '@mui/material';
 import { useState } from 'react';
 import Share from './Share';
+import Icon from './common/CustomIcon';
 import { useFullscreen, useMobile } from '../hooks/globalHooks';
 import HeartIcon from '../images/icons/heart.svg';
 import ShareIcon from '../images/icons/share-icon.svg';
@@ -143,11 +143,7 @@ export default function TreeInfoDialog(props) {
           },
         }}
       >
-        <SvgIcon
-          inheritViewBox
-          component={MaxIcon}
-          sx={{ width: 52, height: 52 }}
-        />
+        <Icon icon={MaxIcon} width={52} height={52} />
       </Box>
       <Dialog
         fullScreen={isFullscreen}
@@ -313,11 +309,7 @@ export default function TreeInfoDialog(props) {
                 >
                   <Button
                     startIcon={
-                      <SvgIcon
-                        inheritViewBox
-                        sx={{ height: 22, width: 24 }}
-                        component={HeartIcon}
-                      />
+                      <Icon icon={HeartIcon} sx={{ height: 22, width: 24 }} />
                     }
                     disableElevation
                     variant="contained"
@@ -339,13 +331,7 @@ export default function TreeInfoDialog(props) {
                     }
                     icon={
                       <Button
-                        startIcon={
-                          <SvgIcon
-                            inheritViewBox
-                            component={ShareIcon}
-                            sx={{ height: 22, width: 16 }}
-                          />
-                        }
+                        startIcon={<Icon icon={ShareIcon} />}
                         disableElevation
                         variant="contained"
                         color="background"

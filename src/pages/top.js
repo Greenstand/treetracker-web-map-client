@@ -1,5 +1,4 @@
 import HomeIcon from '@mui/icons-material/Home';
-import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
@@ -15,6 +14,7 @@ import Link from '../components/Link';
 // import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Crumbs from '../components/common/Crumbs';
+import Icon from '../components/common/CustomIcon';
 import Filter from '../components/common/Filter';
 import { useFullscreen } from '../hooks/globalHooks';
 import Search from '../images/search.svg';
@@ -119,18 +119,15 @@ function Top(props) {
               },
             ]}
           />
-          <SvgIcon
-            component={Search}
-            inheritViewBox
+          <Icon
+            icon={Search}
+            width={48}
+            height={48}
+            color="grey"
             sx={{
-              width: 48,
-              height: 48,
               fill: 'transparent',
               '& path': {
                 fill: 'grey',
-              },
-              '& rect': {
-                stroke: 'grey',
               },
             }}
           />

@@ -1,6 +1,6 @@
-import { Typography, Grid, Box, SvgIcon } from '@mui/material';
-import { useState } from 'react';
+import { Typography, Grid, Box } from '@mui/material';
 import CustomCard from './common/CustomCard';
+import Icon from './common/CustomIcon';
 import CarbonIcon from '../images/icons/carbon.svg';
 import DollarIcon from '../images/icons/dollar.svg';
 import StaticGraph from '../images/static-graph.svg';
@@ -31,12 +31,12 @@ function ImpactSection() {
           <CustomCard
             handleClick={() => {}}
             iconURI={DollarIcon}
-            sx={{
-              width: [24, 32],
-              height: [24, 32],
-              '& path': {
-                stroke: ({ palette }) => palette.text.disabled,
-                fill: ({ palette }) => palette.text.disabled,
+            iconProps={{
+              sx: {
+                '& path': {
+                  stroke: ({ palette }) => palette.text.disabled,
+                  fill: ({ palette }) => palette.text.disabled,
+                },
               },
             }}
             title="Current Value"
@@ -48,11 +48,12 @@ function ImpactSection() {
           <CustomCard
             handleClick={() => {}}
             iconURI={CarbonIcon}
-            sx={{
-              width: [24, 32],
-              height: [24, 32],
-              '& path': {
-                stroke: ({ palette }) => palette.text.disabled,
+            iconProps={{
+              sx: {
+                '& path': {
+                  stroke: ({ palette }) => palette.text.disabled,
+                  fill: 'none',
+                },
               },
             }}
             title="Carbon Capture"
@@ -68,15 +69,7 @@ function ImpactSection() {
           mb: 6,
         }}
       >
-        <SvgIcon
-          component={StaticGraph}
-          inheritViewBox
-          height="100%"
-          sx={{
-            height: ['100%', 487],
-            width: '100%',
-          }}
-        />
+        <Icon icon={StaticGraph} height={['100%', 487]} width="100%" />
         <Typography
           sx={{
             position: 'absolute',

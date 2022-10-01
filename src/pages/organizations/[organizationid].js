@@ -9,7 +9,6 @@ import {
   useMediaQuery,
   Typography,
   Avatar,
-  SvgIcon,
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
@@ -34,6 +33,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
+import Icon from '../../components/common/CustomIcon';
 import Info from '../../components/common/Info';
 import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
@@ -178,18 +178,15 @@ export default function Organization(props) {
               ]}
             />
 
-            <SvgIcon
-              component={SearchIcon}
-              inheritViewBox
+            <Icon
+              icon={SearchIcon}
+              width={48}
+              height={48}
+              color="grey"
               sx={{
-                width: 48,
-                height: 48,
                 fill: 'transparent',
                 '& path': {
                   fill: 'grey',
-                },
-                '& rect': {
-                  stroke: 'grey',
                 },
               }}
             />
@@ -327,11 +324,11 @@ export default function Organization(props) {
               <CustomCard
                 handleClick={() => setIsPlanterTab(true)}
                 iconURI={TreeIcon}
-                sx={{
-                  width: 26,
-                  height: 34,
-                  '& path': {
-                    fill: ({ palette }) => palette.primary.main,
+                iconProps={{
+                  sx: {
+                    '& path': {
+                      fill: ({ palette }) => palette.primary.main,
+                    },
                   },
                 }}
                 title="Trees Planted"
@@ -343,11 +340,11 @@ export default function Organization(props) {
               <CustomCard
                 handleClick={() => setIsPlanterTab(false)}
                 iconURI={PeopleIcon}
-                sx={{
-                  height: 36,
-                  width: 36,
-                  '& path': {
-                    fill: ({ palette }) => palette.text.primary,
+                iconProps={{
+                  sx: {
+                    '& path': {
+                      fill: ({ palette }) => palette.text.primary,
+                    },
                   },
                 }}
                 title="Hired Planters"
