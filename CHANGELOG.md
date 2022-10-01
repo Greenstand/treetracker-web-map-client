@@ -1,3 +1,10 @@
+# [2.0.0-beta.116](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.115...v2.0.0-beta.116) (2022-10-01)
+
+
+### Bug Fixes
+
+* firefox svg not visible ([aac904e](https://github.com/Greenstand/treetracker-web-map-client/commit/aac904e9718e4f159ae29082cd596bca5fae5639))
+
 # [2.0.0-beta.115](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.114...v2.0.0-beta.115) (2022-10-01)
 
 
