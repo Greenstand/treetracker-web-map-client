@@ -189,7 +189,7 @@ export default function TreeInfoDialog(props) {
           {!isMobile && (
             <Grid
               container
-              columns={{ sm: 1, md: 4 }}
+              columns={{ sm: 1, md: 4.5 }}
               sx={{
                 height: 1,
                 pb: 4,
@@ -230,7 +230,7 @@ export default function TreeInfoDialog(props) {
               </Grid>
               <Grid
                 item
-                md={2}
+                md={2.75}
                 sx={{
                   maxHeight: 1,
                   px: 4,
@@ -241,7 +241,7 @@ export default function TreeInfoDialog(props) {
                     maxWidth: 1,
                     overflow: 'scroll',
                     borderRadius: 4,
-                    maxHeight: 1,
+                    maxHeight: 'calc(100vh - 150px)',
                   }}
                 >
                   <img
@@ -250,13 +250,14 @@ export default function TreeInfoDialog(props) {
                     className={classes.imageLarge}
                     style={{
                       maxHeight: '100%',
+                      width: '100%',
                     }}
                   />
                 </Box>
               </Grid>
               <Grid
                 item
-                md={1}
+                md={0.65}
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
