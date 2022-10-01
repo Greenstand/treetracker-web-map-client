@@ -38,6 +38,7 @@ function TreeSpeciesCard(props) {
           sx={{
             wordWrap: 'break-word',
             width: '65%',
+            padding: (t) => [t.spacing(4, 0)],
           }}
         >
           <Typography
@@ -77,10 +78,12 @@ function TreeSpeciesCard(props) {
           sx={{
             background: (t) => t.palette.background.paperDark,
             color: (t) => t.palette.text.primaryReverse,
-            padding: (t) => [t.spacing(4.5, 6.5), t.spacing(6, 8)],
+            padding: (t) => [t.spacing(3, 5), t.spacing(6, 8)],
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            alignSelf: 'stretch',
+            justifyContent: 'center',
           }}
         >
           <Typography variant="body1">Count:</Typography>
