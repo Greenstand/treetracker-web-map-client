@@ -1,3 +1,20 @@
+# [2.0.0-beta.115](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.114...v2.0.0-beta.115) (2022-10-01)
+
+
+### Bug Fixes
+
+* broken layout for longer names ([39bb1a8](https://github.com/Greenstand/treetracker-web-map-client/commit/39bb1a810372e5d0ad23e015cddf156a7872790a))
+* merge syntax error ([b926f63](https://github.com/Greenstand/treetracker-web-map-client/commit/b926f63f014600b679afe3274b433d64e4e217c7))
+
+
+### Features
+
+* add custom icon component ([0953304](https://github.com/Greenstand/treetracker-web-map-client/commit/09533044db8d3993f76ad82e1d74fed4ea55c77e))
+* change padding ([3442e2c](https://github.com/Greenstand/treetracker-web-map-client/commit/3442e2cff1e9bc16d0ba0ea2c5c728a739aeac4a))
+* change padding ([da8f8b3](https://github.com/Greenstand/treetracker-web-map-client/commit/da8f8b3e8544c39a67ac64ff6f874eeb8cee90f6))
+* **custom-card:** add new icon component ([be6980c](https://github.com/Greenstand/treetracker-web-map-client/commit/be6980c58932e2e6dc9445833261e7179a64904f))
+* increase padding of card content ([40ad679](https://github.com/Greenstand/treetracker-web-map-client/commit/40ad67982f47f231c19108d3588abd8c6f2560d0))
+
 # [2.0.0-beta.114](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.113...v2.0.0-beta.114) (2022-09-30)
 
 
