@@ -44,7 +44,6 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 
 export default function Wallet(props) {
   log.info('props for wallet page:', props);
-  console.log(props, 'props');
   const [isTokenTab, setIsTokenTab] = React.useState(false);
   const { wallet, species, tokens, trees } = props;
   const isMobile = useMobile();
@@ -98,7 +97,6 @@ export default function Wallet(props) {
     }
     reload();
   }, [mapContext, wallet]);
-  console.log('trees', trees);
   return (
     <Box
       sx={[
