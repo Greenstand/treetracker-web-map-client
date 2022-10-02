@@ -1,3 +1,10 @@
+# [2.0.0-beta.119](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.118...v2.0.0-beta.119) (2022-10-02)
+
+
+### Bug Fixes
+
+* made some css adjustments ([abcaf9e](https://github.com/Greenstand/treetracker-web-map-client/commit/abcaf9effb60e8044835e529835a467a464e5914))
+
 # [2.0.0-beta.118](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.117...v2.0.0-beta.118) (2022-10-01)
 
 
