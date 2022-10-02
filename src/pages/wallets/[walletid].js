@@ -188,7 +188,7 @@ export default function Wallet(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`wallet since ${moment(wallet.created_at).format(
+                info={`Wallet created on ${moment(wallet.created_at).format(
                   'MMMM DD, YYYY',
                 )}`}
               />
