@@ -81,6 +81,9 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
           <Link
             href={link ? link(tree) : `/trees/${tree.id}`}
             key={`featured-tree-${tree.id}`}
+            style={{
+              display: 'flex',
+            }}
           >
             <Card
               elevation={8}
@@ -94,6 +97,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                 // boxShadow: '0px 2px 16px rgba(34, 38, 41, 0.15)',
                 // width: [152, 208],
                 overflow: 'initial',
+                flex: 1,
               }}
             >
               <CardMedia
