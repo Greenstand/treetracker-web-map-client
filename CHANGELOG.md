@@ -1,3 +1,10 @@
+# [2.0.0-beta.121](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.120...v2.0.0-beta.121) (2022-10-04)
+
+
+### Features
+
+* loading spinner ([461df6b](https://github.com/Greenstand/treetracker-web-map-client/commit/461df6b8da87b65eae2ac605dff3a08dd979e090))
+
 # [2.0.0-beta.120](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.119...v2.0.0-beta.120) (2022-10-04)
 
 
