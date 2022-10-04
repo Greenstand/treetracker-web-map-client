@@ -1,3 +1,17 @@
+# [2.0.0-beta.120](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.119...v2.0.0-beta.120) (2022-10-04)
+
+
+### Bug Fixes
+
+* added tree slider ([82738ed](https://github.com/Greenstand/treetracker-web-map-client/commit/82738ed582f80a8df34273f53450fff48848ce67))
+* delete console.logs ([58a8cc6](https://github.com/Greenstand/treetracker-web-map-client/commit/58a8cc69e223e3e276d14cf977ef675985aa3481))
+* fixed some verbage "wallet created on" mobile ([6ca133d](https://github.com/Greenstand/treetracker-web-map-client/commit/6ca133daf64bc3c97954b454eb9116252ab1c097))
+
+
+### Features
+
+* update count element styling ([5d92dc9](https://github.com/Greenstand/treetracker-web-map-client/commit/5d92dc9bc4683f5dcff7c52783ab43083a332256))
+
 # [2.0.0-beta.119](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.118...v2.0.0-beta.119) (2022-10-02)
 
 
