@@ -127,7 +127,10 @@ function PlanterQuote(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              <Info
+                iconURI={LocationIcon}
+                info={`${planter.country_name}, ${planter.continent_name}`}
+              />
             </Box>
           </Box>
         </Box>
