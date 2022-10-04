@@ -7,7 +7,7 @@ import {
   Popover,
 } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
-import { HexColorPicker } from 'react-colorful';
+import ColorPicker from 'react-best-gradient-color-picker';
 import { usePlaygroundUtils } from '../../hooks/contextHooks';
 import useDisclosure from '../../hooks/useDisclosure';
 import { propRules } from '../../models/themePlaygroundOptions';
@@ -21,7 +21,7 @@ function ColorInput(props) {
   const isGradient = /gradient/i.test(label);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pickerRef = useRef(null);
-  let timer = null;
+  const timer = useRef(null);
 
   useEffect(() => {
     setValue(initialValue);
@@ -38,11 +38,12 @@ function ColorInput(props) {
   };
 
   const handleColorChange = (color) => {
-    if (timer) clearTimeout(timer);
-    // if the user drags too fast the state can't keep up
-    timer = setTimeout(() => {
+    setValue(color);
+    // if the user drags too fast the (global) state can't keep up
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
       setPropByPath(path, color);
-    }, 300);
+    }, 200);
   };
 
   return (
@@ -79,14 +80,28 @@ function ColorInput(props) {
         anchorEl={pickerRef.current}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
+          horizontal: 'right',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'center',
+          horizontal: 'right',
+        }}
+        sx={{
+          '& .MuiPopover-paper': {
+            p: 1,
+          },
         }}
       >
-        <HexColorPicker color={value} onChange={handleColorChange} />
+        <ColorPicker
+          value={value}
+          onChange={handleColorChange}
+          hideControls={!isGradient}
+          hidePresets
+          hideEyeDrop
+          hideColorGuide
+          hideAdvancedSliders
+          hideInputType
+        />
       </Popover>
     </Box>
   );
