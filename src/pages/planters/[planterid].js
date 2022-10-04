@@ -97,6 +97,8 @@ export default function Planter(props) {
 
   const { classes } = useStyles();
 
+  console.log('planter', planter);
+
   // try to find first tree image or default image return
   const backgroundPic =
     planter?.featuredTrees?.trees?.[0]?.image_url ||
@@ -136,7 +138,6 @@ export default function Planter(props) {
     }
     reload();
   }, [mapContext, planter]);
-  console.log('plantersss', planter);
 
   return (
     <>

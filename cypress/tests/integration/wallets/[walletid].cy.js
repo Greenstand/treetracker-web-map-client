@@ -144,6 +144,13 @@ describe('Planter page', () => {
       statusCode: 200,
       body: { total: null, offset: 0, limit: 20, species: [] },
     });
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: '/query/trees?wallet_id=ba95a148-7ff8-42bb-8028-99b747b86ae1',
+      statusCode: 200,
+      body: { total: 10, offset: 0, limit: 20, trees: [] },
+    });
     cy.visit(path, {
       failOnStatusCode: false,
     });

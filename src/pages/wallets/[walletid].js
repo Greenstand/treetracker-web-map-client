@@ -10,6 +10,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import TreeTag from 'components/common/TreeTag';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
@@ -43,9 +44,8 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 
 export default function Wallet(props) {
   log.info('props for wallet page:', props);
-
   const [isTokenTab, setIsTokenTab] = React.useState(false);
-  const { wallet, species, tokens } = props;
+  const { wallet, species, tokens, trees } = props;
   const isMobile = useMobile();
   // eslint-disable-next-line react/destructuring-assignment
   const tokenRegionStatistics = props.tokenRegionCount.filter(
@@ -188,7 +188,7 @@ export default function Wallet(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`wallet since ${moment(wallet.created_at).format(
+                info={`Wallet created on ${moment(wallet.created_at).format(
                   'MMMM DD, YYYY',
                 )}`}
               />
@@ -214,13 +214,21 @@ export default function Wallet(props) {
           <Box sx={{ mt: 2 }}>
             <Info
               iconURI={CalendarIcon}
-              info={`wallet since ${moment(wallet.created_at).format(
+              info={`Wallet created on ${moment(wallet.created_at).format(
                 'MMMM DD, YYYY',
               )}`}
             />
           </Box>
         </Box>
       )}
+      <Box
+        sx={{
+          mt: [8, 16],
+        }}
+      >
+        <Typography variant="h4">Featured trees by {wallet.name}</Typography>
+        <FeaturedTreesSlider trees={trees} />
+      </Box>
 
       <Grid
         container
@@ -347,7 +355,7 @@ export default function Wallet(props) {
 
 export const getServerSideProps = wrapper(async ({ params }) => {
   const id = params.walletid;
-  const [wallet, species, tokens, tokenRegionCount] = await Promise.all([
+  const [wallet, species, tokens, tokenRegionCount, trees] = await Promise.all([
     getWalletById(id),
     getSpeciesByWalletId(id),
     (async () => {
@@ -360,13 +368,19 @@ export const getServerSideProps = wrapper(async ({ params }) => {
       const data = await requestAPI(`/wallets/${id}/token-region-count`);
       return data.walletStatistics;
     })(),
+    (async () => {
+      const data = await requestAPI(`/trees?wallet_id=${id}`);
+      return data;
+    })(),
   ]);
+
   return {
     props: {
       wallet,
       species: species.species,
       tokens,
       tokenRegionCount,
+      trees: trees.trees,
     },
   };
 });
