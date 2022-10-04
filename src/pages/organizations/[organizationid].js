@@ -212,7 +212,10 @@ export default function Organization(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              <Info
+                iconURI={LocationIcon}
+                info={`${organization.country_name}, ${organization.continent_name}`}
+              />
             </Box>
             <Box
               sx={{
@@ -251,7 +254,10 @@ export default function Organization(props) {
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+                <Info
+                  iconURI={LocationIcon}
+                  info={`${organization.country_name}, ${organization.continent_name}`}
+                />
               </Box>
               <Box
                 sx={{
