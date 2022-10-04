@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
 import SearchFilter from './SearchFilter';
-import SpinnerOverlay from './SpinnerOverlay';
 import { useEmbed } from '../hooks/globalHooks';
 import LogoIcon from '../images/greenstand_logo_full.png';
 import MinIcon from '../images/min.svg';
@@ -56,7 +55,6 @@ export default function Layout({
   nextExtraIsEmbed,
   nextExtraIsEmbedCallback,
   isFloatingDisabled,
-  loading,
 }) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
@@ -85,12 +83,6 @@ export default function Layout({
       return 0;
     });
   }, [isDrawerOpen]);
-
-  const dimensions = {
-    width: 568,
-    height: '100vh',
-    top: '0px',
-  };
 
   return (
     <>
@@ -124,16 +116,15 @@ export default function Layout({
             <Box>
               <Box
                 sx={{
-                  ...dimensions,
                   position: 'absolute',
-                  zIndex: '9999',
+                  zIndex: '99999',
+                  top: '0px',
                   background: 'white',
+                  width: 568,
                   overflowY: 'scroll',
+                  height: '100vh',
                 }}
               >
-                {loading && (
-                  <SpinnerOverlay sx={{ ...dimensions, zIndex: 99999 }} />
-                )}
                 {children}
               </Box>
             </Box>

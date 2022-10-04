@@ -1,10 +1,8 @@
 import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
-import SpinnerOverlay from './SpinnerOverlay';
 import Timeline from './Timeline';
 import Max from '../images/max.svg';
 import ZoomIn from '../images/zoom-in.svg';
@@ -55,7 +53,6 @@ export default function Layout({
   children,
   nextExtraIsEmbed,
   nextExtraIsEmbedCallback,
-  loading,
 }) {
   const mapContext = useMapContext();
   const { classes } = useStyles();
@@ -71,14 +68,11 @@ export default function Layout({
     mapContext.map.map.zoomOut();
   }
 
-  console.log('classes.left: ', classes.left);
-
   return (
     <Box className={classes.root}>
       <Navbar />
       <Box className={classes.main}>
         <Paper elevation={11} className={classes.left}>
-          {loading && <SpinnerOverlay className={classes.left} />}
           {children}
         </Paper>
         <Box className={classes.right}>
