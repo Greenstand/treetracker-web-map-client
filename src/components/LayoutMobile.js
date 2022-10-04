@@ -48,7 +48,7 @@ const useStyles = makeStyles()((theme) => ({
   above: {},
 }));
 
-export default function Layout({ children, loading }) {
+export default function Layout({ children }) {
   const { classes } = useStyles();
   const mapContext = useMapContext();
 
@@ -69,7 +69,7 @@ export default function Layout({ children, loading }) {
         >
           <App />
         </Box>
-        <Drawer loading={loading}>{children}</Drawer>
+        <Drawer>{children}</Drawer>
         <Box className={classes.right}>
           <Timeline />
           <Box
