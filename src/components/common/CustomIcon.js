@@ -1,12 +1,6 @@
 import SvgIcon from '@mui/material/SvgIcon';
 
-function CustomIcon({
-  icon,
-  height = '1em',
-  width = '1em',
-  sx = {},
-  color,
-}) {
+function CustomIcon({ icon, height = '1em', width = '1em', sx = {}, color }) {
   return (
     <SvgIcon
       component={icon}

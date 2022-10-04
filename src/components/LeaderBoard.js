@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
 import { fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
-import Icon from "./common/CustomIcon";
+import Icon from './common/CustomIcon';
 import { useMobile } from '../hooks/globalHooks';
 import TreeIcon from '../images/icons/tree.svg';
 
