@@ -2,6 +2,7 @@ import { prepareNocks, clearNocks } from './nockRoutes';
 import leaders from '../../../doc/examples/countries/leader.json';
 import organization1 from '../../../doc/examples/organizations/1.json';
 import planter940 from '../../../doc/examples/planters/940.json';
+import wallets from '../../../doc/examples/wallets/180Earth.json';
 import tree186734 from '../../fixtures/tree186734.json';
 
 describe('top', () => {
@@ -29,6 +30,16 @@ describe('top', () => {
       statusCode: 200,
       body: {
         planters: [planter940],
+      },
+    });
+
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: '/query/wallets/featured',
+      statusCode: 200,
+      body: {
+        wallets: [wallets],
       },
     });
 

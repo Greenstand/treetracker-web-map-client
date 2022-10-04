@@ -1,5 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
-import { SvgIcon } from '@mui/material';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -11,14 +10,18 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import TreeTag from 'components/common/TreeTag';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
-import { requestAPI } from 'models/utils';
+import { requestAPI, wrapper } from 'models/utils';
 import ImpactSection from '../../components/ImpactSection';
+import ProfileCover from '../../components/ProfileCover';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
+import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
+import Icon from '../../components/common/CustomIcon';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import { useMobile } from '../../hooks/globalHooks';
@@ -29,6 +32,7 @@ import TreeIcon from '../../images/icons/tree.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
+import * as pathResolver from '../../models/pathResolver';
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
@@ -40,9 +44,8 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 
 export default function Wallet(props) {
   log.info('props for wallet page:', props);
-
   const [isTokenTab, setIsTokenTab] = React.useState(false);
-  const { wallet, species, tokens } = props;
+  const { wallet, species, tokens, trees } = props;
   const isMobile = useMobile();
   // eslint-disable-next-line react/destructuring-assignment
   const tokenRegionStatistics = props.tokenRegionCount.filter(
@@ -75,21 +78,25 @@ export default function Wallet(props) {
       if (map && wallet) {
         // map.flyTo(tree.lat, tree.lon, 16);
         log.warn('set filter for wallet');
-        map.setFilters({
+        await map.setFilters({
           wallet: wallet.name,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          const view = await map.getInitialView();
+
+          if (view.zoomLevel < 2) {
+            view.zoomLevel = 2;
+          }
+          await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         }
-        map.rerender();
-        log.warn('no data:', map, wallet);
       }
     }
     reload();
   }, [mapContext, wallet]);
-
   return (
     <Box
       sx={[
@@ -110,21 +117,31 @@ export default function Wallet(props) {
             alignItems: 'center',
           }}
         >
-          <BackButton />
+          <Crumbs
+            items={[
+              {
+                // icon: <HomeIcon />,
+                name: 'Home',
+                url: '/',
+              },
+              {
+                icon: wallet.logo_url || (
+                  <Icon icon={AccountBalanceWalletIcon} />
+                ),
+                name: `${wallet.name}`,
+              },
+            ]}
+          />
           <Box>
-            {}
-            <SvgIcon
-              component={SearchIcon}
-              inheritViewBox
+            <Icon
+              icon={SearchIcon}
+              width={48}
+              height={48}
+              color="grey"
               sx={{
-                width: 48,
-                height: 48,
                 fill: 'transparent',
                 '& path': {
                   fill: 'grey',
-                },
-                '& rect': {
-                  stroke: 'grey',
                 },
               }}
             />
@@ -141,7 +158,7 @@ export default function Wallet(props) {
           },
         }}
       >
-        <img src={`${router.basePath}${planterBackground}`} alt="profile" />
+        <ProfileCover src={wallet.cover_url} />
         <Avatar
           src={wallet.logo_url || imagePlaceholder}
           sx={{
@@ -158,7 +175,9 @@ export default function Wallet(props) {
       </Box>
 
       {isMobile && (
-        <Portal container={document.getElementById('drawer-title-container')}>
+        <Portal
+          container={() => document.getElementById('drawer-title-container')}
+        >
           <Box
             sx={{
               px: 4,
@@ -169,7 +188,9 @@ export default function Wallet(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`wallet since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Wallet created on ${moment(wallet.created_at).format(
+                  'MMMM DD, YYYY',
+                )}`}
               />
             </Box>
           </Box>
@@ -177,7 +198,9 @@ export default function Wallet(props) {
       )}
       {isMobile && (
         <Portal
-          container={document.getElementById('drawer-title-container-min')}
+          container={() =>
+            document.getElementById('drawer-title-container-min')
+          }
         >
           <Box sx={{}}>
             <Typography variant="h3">{wallet.name} </Typography>
@@ -191,13 +214,21 @@ export default function Wallet(props) {
           <Box sx={{ mt: 2 }}>
             <Info
               iconURI={CalendarIcon}
-              info={`wallet since ${moment(wallet.created_at).format(
+              info={`Wallet created on ${moment(wallet.created_at).format(
                 'MMMM DD, YYYY',
               )}`}
             />
           </Box>
         </Box>
       )}
+      <Box
+        sx={{
+          mt: [8, 16],
+        }}
+      >
+        <Typography variant="h4">Featured trees by {wallet.name}</Typography>
+        <FeaturedTreesSlider trees={trees} />
+      </Box>
 
       <Grid
         container
@@ -212,7 +243,13 @@ export default function Wallet(props) {
           <CustomCard
             handleClick={() => setIsTokenTab(false)}
             iconURI={TreeIcon}
-            sx={{ width: 26, height: 34 }}
+            iconProps={{
+              sx: {
+                '& path': {
+                  fill: ({ palette }) => palette.primary.main,
+                },
+              },
+            }}
             title="Trees"
             text={tokens.total}
             disabled={isTokenTab}
@@ -222,7 +259,13 @@ export default function Wallet(props) {
           <CustomCard
             handleClick={() => setIsTokenTab(true)}
             iconURI={TokenIcon}
-            sx={{ height: 36, width: 36 }}
+            iconProps={{
+              sx: {
+                '& path': {
+                  fill: ({ palette }) => palette.text.primary,
+                },
+              },
+            }}
             title="Tokens"
             text={tokens.total}
             disabled={!isTokenTab}
@@ -230,31 +273,31 @@ export default function Wallet(props) {
         </Grid>
       </Grid>
 
-      {!isTokenTab && tokenRegionName.length > 0 && (
-        <Box sx={{ mt: [0, 22] }}>
+      {tokenRegionName.length > 0 && (
+        <Box sx={{ mt: [0, 22], display: !isTokenTab ? 'block' : 'none' }}>
           <CustomWorldMap totalTrees={tokenRegionCount} con={tokenRegionName} />
         </Box>
       )}
 
-      {isTokenTab && (
-        <Box sx={{ mt: [0, 16], p: [2, 4] }}>
-          {tokens.tokens.map((token) => (
-            <Box
-              key={token.id}
-              sx={{
-                mt: [2, 4],
-              }}
-            >
-              <TreeTag
-                TreeTagValue={token.id}
-                title="Token ID"
-                icon={<SvgIcon component={TokenIcon} />}
-                link={`/tokens/${token.id}`}
-              />
-            </Box>
-          ))}
-        </Box>
-      )}
+      <Box
+        sx={{ mt: [0, 16], p: [2, 4], display: isTokenTab ? 'block' : 'none' }}
+      >
+        {tokens.tokens.map((token) => (
+          <Box
+            key={token.id}
+            sx={{
+              mt: [2, 4],
+            }}
+          >
+            <TreeTag
+              TreeTagValue={token.id}
+              title="Token ID"
+              icon={<Icon icon={TokenIcon} />}
+              link={`/wallets/${wallet.id}/tokens/${token.id}`}
+            />
+          </Box>
+        ))}
+      </Box>
 
       {species.length > 0 && (
         <Box
@@ -281,6 +324,7 @@ export default function Wallet(props) {
                 key={specie.id}
                 name={specie.name}
                 count={specie.total}
+                subTitle={specie.desc || '---'}
               />
             ))}
           </Box>
@@ -296,7 +340,7 @@ export default function Wallet(props) {
         About the Wallet
       </Typography>
       <Typography sx={{ mt: [2.5, 5] }} variant="body2">
-        {placeholderText}
+        {wallet.about || 'NO DATA YET'}
       </Typography>
       <Divider
         varian="fullwidth"
@@ -309,33 +353,34 @@ export default function Wallet(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps = wrapper(async ({ params }) => {
   const id = params.walletid;
-  try {
-    const [wallet, species, tokens, tokenRegionCount] = await Promise.all([
-      getWalletById(id),
-      getSpeciesByWalletId(id),
-      (async () => {
-        // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
-        const data = await requestAPI(`/tokens?wallet=${id}`);
-        return data;
-      })(),
-      (async () => {
-        // return total no.trees/tokens per country
-        const data = await requestAPI(`/wallets/${id}/token-region-count`);
-        return data.walletStatistics;
-      })(),
-    ]);
-    return {
-      props: {
-        wallet,
-        species: species.species,
-        tokens,
-        tokenRegionCount,
-      },
-    };
-  } catch (e) {
-    log.warn('e:', e);
-    return { notFound: true };
-  }
-}
+  const [wallet, species, tokens, tokenRegionCount, trees] = await Promise.all([
+    getWalletById(id),
+    getSpeciesByWalletId(id),
+    (async () => {
+      // Todo write a filter api that only returns totalNo.of tokens under a certain wallet
+      const data = await requestAPI(`/tokens?wallet=${id}`);
+      return data;
+    })(),
+    (async () => {
+      // return total no.trees/tokens per country
+      const data = await requestAPI(`/wallets/${id}/token-region-count`);
+      return data.walletStatistics;
+    })(),
+    (async () => {
+      const data = await requestAPI(`/trees?wallet_id=${id}`);
+      return data;
+    })(),
+  ]);
+
+  return {
+    props: {
+      wallet,
+      species: species.species,
+      tokens,
+      tokenRegionCount,
+      trees: trees.trees,
+    },
+  };
+});

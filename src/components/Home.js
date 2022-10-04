@@ -1,10 +1,15 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import log from 'loglevel';
+import { useRouter } from 'next/router';
+import React from 'react';
 import { makeStyles } from 'models/makeStyles';
+import * as pathResolver from 'models/pathResolver';
 import Link from './Link';
+import { useMapContext } from '../mapContext';
 
-const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.png`;
+const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.webp`;
 const useStyles = makeStyles()((theme) => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,
@@ -49,6 +54,30 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Home(props) {
   const { classes } = useStyles();
+
+  const mapContext = useMapContext();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    async function reload() {
+      const { map } = mapContext;
+      if (map) {
+        await map.clearSelection();
+        await map.setFilters({});
+        log.warn('location:', window.location);
+        log.warn('router:', router);
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          log.warn('goto global view');
+          await map.gotoView(0, 0, 2);
+        }
+      }
+    }
+    reload();
+  }, [mapContext.map]);
 
   return (
     <Box

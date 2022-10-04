@@ -11,7 +11,7 @@ export async function getFeaturedTrees() {
     return data.trees;
   } catch (err) {
     log.error(err.message);
-    throw new Error(err.message);
+    throw err.message;
   }
 }
 
@@ -23,7 +23,7 @@ export async function getCountryLeaderboard() {
     return data.countries;
   } catch (err) {
     log.error(err.message);
-    throw new Error(err.message);
+    throw err;
   }
 }
 
@@ -35,7 +35,7 @@ export async function getOrganizationById(id) {
     return data;
   } catch (err) {
     log.error(err);
-    throw new Error(err.message);
+    throw err;
   }
 }
 
@@ -47,7 +47,7 @@ export async function getPlanterById(id) {
     return data;
   } catch (err) {
     log.error(err.message);
-    throw new Error(err.message);
+    throw err;
   }
 }
 
@@ -59,7 +59,7 @@ export async function getTreeById(id) {
     return data;
   } catch (err) {
     log.error(err.message);
-    throw new Error(err.message);
+    throw err;
   }
 }
 
@@ -92,7 +92,7 @@ export async function getWalletById(id) {
     return data;
   } catch (err) {
     log.error(err);
-    throw new Error(err.message);
+    throw err;
   }
 }
 
@@ -105,7 +105,7 @@ export async function getSpeciesByWalletId(id) {
     return data;
   } catch (err) {
     log.error(err);
-    throw new Error(err.message);
+    throw err;
   }
 }
 
@@ -118,6 +118,6 @@ export async function getTokenById(id) {
     return data;
   } catch (err) {
     log.error(err);
-    throw new Error(err.message);
+    throw err;
   }
 }

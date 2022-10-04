@@ -2,9 +2,9 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Box, Paper } from '@mui/material';
 import log from 'loglevel';
 import React from 'react';
+import SpinnerOverlay from './SpinnerOverlay';
 
-export default function Drawer(props) {
-  const { children } = props;
+export default function Drawer({ children, loading }) {
   const rootRef = React.useRef(null);
   const buttonRef = React.useRef(null);
   const contentRef = React.useRef(null);
@@ -158,6 +158,13 @@ export default function Drawer(props) {
     }
   }, []);
 
+  const dimensions = {
+    width: '100%',
+    height: '100vh',
+    top: 0,
+    left: 0,
+  };
+
   React.useEffect(() => {
     log.warn('mount listener...');
     rootRef.current.addEventListener('touchstart', handleTouchStart);
@@ -167,6 +174,9 @@ export default function Drawer(props) {
     buttonRef.current.addEventListener('touchmove', handleButtonTouchMove);
     buttonRef.current.addEventListener('touchend', handleButtonTouchEnd);
     contentRef.current.addEventListener('touchmove', handleContentTouchMove);
+
+    // click handlers
+    buttonRef.current.addEventListener('click', handleOpen);
 
     // contentRef.current.addEventListener("touchstart", e => { e.stopPropagation(); }, { passive: false })
     // contentRef.current.addEventListener("touchmove", e => { e.stopPropagation(); }, { passive: false })
@@ -189,6 +199,9 @@ export default function Drawer(props) {
         'touchmove',
         handleContentTouchMove,
       );
+
+      // click handlers
+      buttonRef.current.removeEventListener('click', handleOpen);
       // contentRef.current.removeEventListener("touchstart");
       // contentRef.current.addEventListener("touchmove");
       // contentRef.current.addEventListener("touchend");
@@ -246,7 +259,6 @@ export default function Drawer(props) {
               pl: '10px',
             }}
             id="drawer-title-container-min"
-            onClick={handleOpen}
           />
         </Box>
       </Paper>
@@ -255,17 +267,15 @@ export default function Drawer(props) {
         elevation={10}
         className="drawer-root"
         sx={{
+          ...dimensions,
           position: 'absolute',
           borderRadius: '16px 16px 0 0 ',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100vh',
           transition: 'transform 125ms cubic-bezier(0, 0, 0.2, 1) 0ms',
           // transform: 'translateY(500px)',
           zIndex: '999',
         }}
       >
+        {loading && <SpinnerOverlay sx={{ ...dimensions, zIndex: 9999 }} />}
         <Box
           id="drawer-header"
           sx={{

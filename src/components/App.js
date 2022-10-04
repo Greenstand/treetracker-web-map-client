@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
 import { useMapContext } from '../mapContext';
+import * as pathResolver from '../models/pathResolver';
 // import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
@@ -70,22 +71,41 @@ function MapComponent() {
 
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
-    const path = window.location.pathname.match(
-      /^(\/(planters|organizations)\/\d+)?(\/(trees|tokens)\/([a-z0-9-]+))?$/,
+
+    const result = pathResolver.getPathWhenClickTree(
+      tree,
+      window.location,
+      router,
+      undefined,
+      {
+        base: process.env.NEXT_PUBLIC_BASE,
+      },
     );
-    log.warn('parsed path:', path);
 
-    const optionalParams = {
-      ...(router.query.embed && { embed: router.query.embed }),
-      ...(router.query.timeline && { timeline: router.query.timeline }),
-    };
+    // // base
+    // result.pathname = utils.nextPathBaseEncode(
+    //   result.pathname,
+    //   process.env.NEXT_PUBLIC_BASE,
+    // );
 
-    router.push({
-      pathname: `${path[1] || ''}/${path[4] || 'trees'}/${
-        path[4] === 'tokens' ? path[5] : tree.id
-      }`,
-      query: optionalParams,
-    });
+    let isRefreshNeeded = false;
+    if (router.pathname !== result.pathname) {
+      log.warn('pathname is different!');
+      isRefreshNeeded = true;
+    } else if (
+      router.query.tree_id &&
+      result.tree_id &&
+      router.query.tree_id !== result.tree_id
+    ) {
+      log.warn('tree_id query is different!');
+      isRefreshNeeded = true;
+    } else {
+      log.warn('do not refesh if the pathname is the same!');
+    }
+
+    if (isRefreshNeeded) {
+      router.push(result);
+    }
   }
 
   function injectApp() {
@@ -127,20 +147,22 @@ function MapComponent() {
       },
       onClickTree: handleClickTree,
       onError: handleError,
-      filters: parameters,
       iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
       zoomControl: true,
       zoomControlPosition: 'bottomright',
+      tileServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_URL,
+      tileServerSubdomains:
+        process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
+      apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
     });
-    map.on('move-end', () => {
+    map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
       log.warn('update url');
-      window.history.pushState(
-        'treetracker',
-        '',
-        `${window.location.pathname}?bounds=${map.getCurrentBounds()}${
-          router.query.timeline ? `&timeline=${router.query.timeline}` : ''
-        }${router.query.embed ? `&embed=true` : ''}`,
+      const path = pathResolver.updatePathWhenMapMoveEnd(
+        window.location,
+        map,
+        router,
       );
+      window.history.pushState('treetracker', '', path);
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;

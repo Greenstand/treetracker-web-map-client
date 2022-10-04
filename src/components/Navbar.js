@@ -64,8 +64,8 @@ function Navbar() {
   const isMobile = useMobile();
 
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -169,7 +169,7 @@ function Navbar() {
         aria-controls="basic-menu"
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+        onClick={handleMenuClick}
       >
         {' '}
         <MenuBar />
@@ -178,7 +178,6 @@ function Navbar() {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}

@@ -15,8 +15,8 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import { green } from '@mui/material/colors';
 import makeStyles from '@mui/styles/makeStyles';
-import log from 'loglevel';
 import React from 'react';
+import { useClipboard } from 'hooks/globalHooks';
 import CustomShareIcon from './common/CustomShareIcon';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,13 +25,6 @@ const useStyles = makeStyles((theme) => ({
     height: '32px',
     borderRadius: '4px',
     backgroundColor: theme.palette.secondary.lightGreen,
-  },
-  box1: {
-    padding: theme.spacing(4),
-    width: '100%',
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(2),
-    },
   },
   code: {
     minWidth: 400,
@@ -60,6 +53,7 @@ function Share(props) {
   const [isMessageOpen, setMessageOpen] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [link, setLink] = React.useState('');
+  const { onCopy, hasCopied } = useClipboard(link);
 
   function handleClick() {
     setIsOpen(true);
@@ -103,22 +97,6 @@ function Share(props) {
     setLink(`${shareUrl}`);
   }, [shareUrl]);
 
-  function handleCopy() {
-    log.log('copy...');
-    const copyTextarea = document.getElementById('EmbedCode');
-    copyTextarea.focus();
-    copyTextarea.select();
-
-    try {
-      const successful = document.execCommand('copy');
-      const msg = successful ? 'successful' : 'unsuccessful';
-      log.log(`Copying text command was ${msg}`);
-    } catch (err) {
-      log.log('Oops, unable to copy');
-    }
-    // showMessage('Code has been copied!');
-  }
-
   function handleMessageClose() {
     setMessageOpen(false);
     setMessage('');
@@ -135,6 +113,8 @@ function Share(props) {
       <Dialog
         open={isOpen}
         onClose={handleClose}
+        maxWidth="xs"
+        fullWidth
         PaperProps={{
           sx: {
             borderRadius: [2, 4],
@@ -142,44 +122,43 @@ function Share(props) {
             p: [6, 8],
           },
         }}
+        sx={{
+          zIndex: 9999,
+        }}
       >
         <DialogTitle
           sx={{
             p: 0,
           }}
         >
-          <Grid
+          <Box
             sx={{
               p: 0,
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              display: 'flex',
             }}
-            container
-            justifyContent="space-between"
-            alignItems="center"
           >
-            <Grid item xs={8}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
-                Share this link
-              </Typography>
-            </Grid>
-            <Grid item>
-              <IconButton className={classes.closeIcon} onClick={handleClose}>
-                <Close style={{ color: green[500] }} />
-              </IconButton>
-            </Grid>
-          </Grid>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 700,
+              }}
+            >
+              Share this link
+            </Typography>
+            <IconButton className={classes.closeIcon} onClick={handleClose}>
+              <Close style={{ color: green[500] }} />
+            </IconButton>
+          </Box>
         </DialogTitle>
-        <Grid
+        <Box
           sx={{
-            gap: [4, 4],
+            gap: 4,
+            justifyContent: 'center',
+            display: 'flex',
+            p: [2, 4],
           }}
-          container
-          justifyContent="center"
-          className={classes.box1}
         >
           <CustomShareIcon handleOnClick={handleEmbed}>
             <Code />
@@ -193,16 +172,32 @@ function Share(props) {
           <CustomShareIcon mailString={mailString}>
             <Email />
           </CustomShareIcon>
-
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item xs={8} className={classes.linkText}>
-              <Typography variant="body1">Or copy link</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <input type="text" className={classes.inputField} value={link} />
-            </Grid>
-          </Grid>
-        </Grid>
+        </Box>
+        <Typography
+          sx={{
+            py: [1, 2],
+          }}
+        >
+          or copy the link
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 2,
+          }}
+        >
+          <TextField
+            value={link}
+            sx={{
+              flex: '1',
+            }}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Button onClick={onCopy}>{hasCopied ? 'Copied!' : 'Copy'}</Button>
+        </Box>
       </Dialog>
       <Dialog open={isEmbedOpen} onClose={handleEmbedClose}>
         <DialogTitle>
@@ -228,7 +223,7 @@ function Share(props) {
         />
         <DialogActions>
           <Button onClick={handleEmbedClose}>Cancel</Button>
-          <Button onClick={handleCopy}>Copy</Button>
+          <Button onClick={onCopy}>Copy</Button>
         </DialogActions>
       </Dialog>
       <Snackbar

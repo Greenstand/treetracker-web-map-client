@@ -1,12 +1,13 @@
 import { Avatar } from '@mui/material';
 
-function ProfileAvatar({ src }) {
+function ProfileAvatar({ src, rotation }) {
   return (
     <Avatar
       src={src}
       sx={{
         width: [120, 189],
         height: [120, 189],
+        transform: rotation && `rotate(${rotation}deg)`,
         borderWidth: [4, 9],
         borderStyle: 'solid',
         borderColor: (t) => t.palette.background.paper,

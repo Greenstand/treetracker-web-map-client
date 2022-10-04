@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import HomeIcon from '@mui/icons-material/Home';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -24,7 +24,9 @@ import InformationCard1 from '../../components/InformationCard1';
 import ProfileAvatar from '../../components/ProfileAvatar';
 import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
+import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
+import Icon from '../../components/common/CustomIcon';
 import DataTag from '../../components/common/DataTag';
 import DrawerTitle from '../../components/common/DrawerTitle';
 import Info from '../../components/common/Info';
@@ -39,6 +41,7 @@ import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
+import * as pathResolver from '../../models/pathResolver';
 import * as utils from '../../models/utils';
 
 // make styles for component with material-ui
@@ -94,6 +97,8 @@ export default function Planter(props) {
 
   const { classes } = useStyles();
 
+  console.log('planter', planter);
+
   // try to find first tree image or default image return
   const backgroundPic =
     planter?.featuredTrees?.trees?.[0]?.image_url ||
@@ -118,16 +123,17 @@ export default function Planter(props) {
       const { map } = mapContext;
       if (map && planter) {
         // map.flyTo(tree.lat, tree.lon, 16);
-        map.setFilters({
+        await map.setFilters({
           userid: planter.id,
         });
-        try {
-          await map.loadInitialView();
-        } catch (err) {
-          log.warn('error:', err);
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          const view = await map.getInitialView();
+          map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         }
-        map.rerender();
-        log.warn('no data:', map, planter);
       }
     }
     reload();
@@ -162,21 +168,32 @@ export default function Planter(props) {
               alignItems: 'center',
             }}
           >
-            <BackButton />
+            <Crumbs
+              items={[
+                {
+                  // icon: <HomeIcon />,
+                  name: 'Home',
+                  url: '/',
+                },
+                {
+                  icon: planter.image_url,
+                  name: `${utils.getPlanterName(
+                    planter.first_name,
+                    planter.last_name,
+                  )}`,
+                },
+              ]}
+            />
             <Box>
-              {}
-              <SvgIcon
-                component={SearchIcon}
-                inheritViewBox
+              <Icon
+                icon={SearchIcon}
+                width={48}
+                height={48}
+                color="grey"
                 sx={{
-                  width: 48,
-                  height: 48,
                   fill: 'transparent',
                   '& path': {
                     fill: 'grey',
-                  },
-                  '& rect': {
-                    stroke: 'grey',
                   },
                 }}
               />
@@ -197,11 +214,16 @@ export default function Planter(props) {
           }}
         >
           <img src={backgroundPic} alt="profile" />
-          <ProfileAvatar src={planter.image_url} />
+          <ProfileAvatar
+            src={planter.image_url}
+            rotation={planter.image_rotation}
+          />
         </Box>
 
         {isMobile && (
-          <Portal container={document.getElementById('drawer-title-container')}>
+          <Portal
+            container={() => document.getElementById('drawer-title-container')}
+          >
             <Box
               sx={{
                 px: 4,
@@ -214,7 +236,9 @@ export default function Planter(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                  info={`Planter since ${moment(planter.created_at).format(
+                    'MMMM DD, YYYY',
+                  )}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
@@ -239,7 +263,9 @@ export default function Planter(props) {
         )}
         {isMobile && (
           <Portal
-            container={document.getElementById('drawer-title-container-min')}
+            container={() =>
+              document.getElementById('drawer-title-container-min')
+            }
           >
             <Box sx={{}}>
               <Typography variant="h3">
@@ -259,7 +285,9 @@ export default function Planter(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Planter since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Planter since ${moment(planter.created_at).format(
+                  'MMMM DD, YYYY',
+                )}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -290,7 +318,10 @@ export default function Planter(props) {
           <Typography variant="h4">
             Featured trees by {planter.first_name}
           </Typography>
-          <FeaturedTreesSlider trees={featuredTrees.trees} />
+          <FeaturedTreesSlider
+            trees={featuredTrees.trees}
+            link={(item) => `/planters/${planter.id}/trees/${item.id}`}
+          />
         </Box>
 
         <Grid
@@ -306,7 +337,13 @@ export default function Planter(props) {
             <CustomCard
               handleClick={() => setIsPlanterTab(true)}
               iconURI={TreeIcon}
-              sx={{ height: 34, width: 26 }}
+              iconProps={{
+                sx: {
+                  '& path': {
+                    fill: ({ palette }) => palette.primary.main,
+                  },
+                },
+              }}
               title="Trees Planted"
               text={treeCount}
               disabled={!isPlanterTab}
@@ -320,7 +357,13 @@ export default function Planter(props) {
                   : undefined
               }
               iconURI={PeopleIcon}
-              sx={{ height: 36, width: 36 }}
+              iconProps={{
+                sx: {
+                  '& path': {
+                    fill: ({ palette }) => palette.text.primary,
+                  },
+                },
+              }}
               title="Ass. Orgs"
               text={
                 planter.associatedOrganizations.organizations.length || (
@@ -338,66 +381,69 @@ export default function Planter(props) {
             />
           </Grid>
         </Grid>
-        {isPlanterTab && (
-          <Box
-            sx={{
-              px: [0, 6],
-            }}
-          >
-            {planter.continent_name && (
-              <Box sx={{ mt: [0, 22] }}>
-                <CustomWorldMap
-                  totalTrees={treeCount}
-                  con={planter.continent_name}
-                />
-              </Box>
-            )}
-
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: [16, 24],
-                mt: [0, 20],
-              }}
-            >
-              Species of trees planted
-            </Typography>
-            <Box
-              sx={{
-                mt: [5, 10],
-              }}
-            >
-              {planter.species.species.map((species) => (
-                <TreeSpeciesCard
-                  key={species.id}
-                  name={species.name}
-                  count={species.total}
-                />
-              ))}
+        <Box
+          sx={{
+            px: [0, 6],
+            display: isPlanterTab ? 'block' : 'none',
+          }}
+        >
+          {planter.continent_name && (
+            <Box sx={{ mt: [0, 22] }}>
+              <CustomWorldMap
+                totalTrees={treeCount}
+                con={planter.continent_name}
+              />
             </Box>
-          </Box>
-        )}
-        {!isPlanterTab && (
-          <Box
+          )}
+
+          <Typography
+            variant="h4"
             sx={{
-              px: [0, 6],
-              mt: [11, 22],
+              fontSize: [16, 24],
+              mt: [0, 20],
             }}
           >
-            {planter.associatedOrganizations.organizations.map((org) => (
-              <>
-                <InformationCard1
-                  entityName={org.name}
-                  entityType="Planting Organization"
-                  buttonText="Meet the Organization"
-                  link={`/organizations/${org.id}`}
-                  cardImageSrc={org?.logo_url}
-                />
-                <Box sx={{ mt: [6, 12] }} />
-              </>
+            Species of trees planted
+          </Typography>
+          <Box
+            sx={{
+              mt: [5, 10],
+            }}
+          >
+            {planter.species.species.map((species) => (
+              <TreeSpeciesCard
+                key={species.id}
+                name={species.name}
+                subTitle={species.desc || '---'}
+                count={species.total}
+              />
             ))}
           </Box>
-        )}
+          {(!planter.species.species ||
+            planter.species.species.length === 0) && (
+            <Typography variant="h5">NO DATA YET</Typography>
+          )}
+        </Box>
+        <Box
+          sx={{
+            px: [0, 6],
+            mt: [11, 22],
+            display: !isPlanterTab ? 'block' : 'none',
+          }}
+        >
+          {planter.associatedOrganizations.organizations.map((org) => (
+            <>
+              <InformationCard1
+                entityName={org.name}
+                entityType="Planting Organization"
+                buttonText="Meet the Organization"
+                link={`/organizations/${org.id}`}
+                cardImageSrc={org?.logo_url}
+              />
+              <Box sx={{ mt: [6, 12] }} />
+            </>
+          ))}
+        </Box>
         <Divider
           varian="fullwidth"
           sx={{
@@ -416,8 +462,7 @@ export default function Planter(props) {
           variant="body2"
           className={classes.textColor}
         >
-          {placeholderText}
-          {planter.about}
+          {planter.about || 'NO DATA YET'}
         </Typography>
         <Divider
           varian="fullwidth"
@@ -429,7 +474,9 @@ export default function Planter(props) {
         <Box sx={{ height: 40 }} />
       </Box>
       {nextExtraIsEmbed && (
-        <Portal container={document.getElementById('embed-logo-container')}>
+        <Portal
+          container={() => document.getElementById('embed-logo-container')}
+        >
           <Avatar
             sx={{
               width: '120px',
@@ -445,17 +492,13 @@ export default function Planter(props) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps = utils.wrapper(async ({ params }) => {
   const id = params.planterid;
-  try {
-    const planter = await getPlanterById(id);
-    const data = await getOrgLinks(planter.links);
-    return {
-      props: {
-        planter: { ...planter, ...data },
-      },
-    };
-  } catch (e) {
-    return { notFound: true };
-  }
-}
+  const planter = await getPlanterById(id);
+  const data = await getOrgLinks(planter.links);
+  return {
+    props: {
+      planter: { ...planter, ...data },
+    },
+  };
+});

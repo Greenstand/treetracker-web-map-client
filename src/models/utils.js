@@ -66,7 +66,7 @@ async function requestAPI(url) {
     return data;
   } catch (ex) {
     log.error('ex:', ex);
-    throw new Error(ex.message);
+    throw ex;
   }
 }
 
@@ -110,19 +110,23 @@ const getThumbnailImageUrls = (imageUrl, width = 400, height = 400) => {
   const domain = imageUrlArr[imageUrlArr.length - 2];
   const imagePath = imageUrlArr[imageUrlArr.length - 1];
   const paramUrl = `w=${width},h=${height}`;
-  const thumbNailImageUrl = `https://dev-k8s.treetracker.org/images/img/${domain}/${paramUrl}/${imagePath}`;
+  const thumbNailImageUrl = `${process.env.NEXT_PUBLIC_IMAGE_API}/img/${domain}/${paramUrl}/${imagePath}`;
   return thumbNailImageUrl;
 };
 
 const debounce = (func, timeout = 50) => {
   let debouncedFunc = null;
 
-  return () => {
+  return (...args) => {
     if (!debouncedFunc) {
-      debouncedFunc = setTimeout(func, timeout);
+      debouncedFunc = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
     } else {
       clearTimeout(debouncedFunc);
-      debouncedFunc = setTimeout(func, timeout);
+      debouncedFunc = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
     }
   };
 };
@@ -211,6 +215,26 @@ const convertFontObjToFontArr = (fontObj) => {
   return fontWeightNames;
 };
 
+function nextPathBaseEncode(path, base) {
+  return `${base}${path}`;
+}
+
+function nextPathBaseDecode(path, base) {
+  return path.replace(base, '');
+}
+
+const wrapper = (callback) => (params) =>
+  callback(params).catch((e) => {
+    log.warn('error retrieving server props:', e);
+    if (e.response?.status === 404) return { notFound: true };
+    return {
+      redirect: {
+        destination: '/500',
+        permanent: false,
+      },
+    };
+  });
+
 export {
   hideLastName,
   parseDomain,
@@ -226,4 +250,7 @@ export {
   optimizeThemeFonts,
   getPlanterName,
   convertFontObjToFontArr,
+  nextPathBaseDecode,
+  nextPathBaseEncode,
+  wrapper,
 };

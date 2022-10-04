@@ -15,7 +15,7 @@ import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;
 
-function FeaturedTreesSlider({ trees, size = null, isMobile }) {
+function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
@@ -78,7 +78,10 @@ function FeaturedTreesSlider({ trees, size = null, isMobile }) {
         onScroll={debounce(onScroll, 70)}
       >
         {trees.map((tree) => (
-          <Link href={`/trees/${tree.id}`} key={`featured-tree-${tree.id}`}>
+          <Link
+            href={link ? link(tree) : `/trees/${tree.id}`}
+            key={`featured-tree-${tree.id}`}
+          >
             <Card
               elevation={8}
               sx={{

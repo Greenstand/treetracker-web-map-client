@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.0.0-beta.65",
+  "version": "2.0.0-beta.121",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -23,7 +23,7 @@
     "prepare": "is-ci || husky install",
     "prettier": "prettier ./ --write",
     "start": "next start",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "browserslist": {
     "production": [
@@ -53,6 +53,7 @@
     "axios": "^0.25.0",
     "clsx": "^1.1.1",
     "cookie": "^0.4.2",
+    "copy-to-clipboard": "^3.3.2",
     "country-flag-icons": "^1.4.19",
     "d3": "^7.3.0",
     "expect-runtime": "^0.4.0",
@@ -72,7 +73,7 @@
     "react-dom": "^17.0.2",
     "react-world-map": "^2.4.0",
     "source-map-explorer": "^2.5.2",
-    "treetracker-web-map-core": "^1.12.3",
+    "treetracker-web-map-core": "^2.5.0",
     "tss-react": "^2.0.3",
     "url-join-ts": "^1.0.5",
     "webfontloader": "^1.6.28"

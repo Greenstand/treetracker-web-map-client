@@ -34,3 +34,7 @@ spec:
               value: https://{s}.treetracker.org/tiles/
             - name: NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS
               value: dev-k8s
+            - name: NEXT_PUBLIC_TILE_SERVER_WEBMAP_API
+              value: https://dev-k8s.treetracker.org/webmap/
+            - name: NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED
+              value: 'false'

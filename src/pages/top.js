@@ -1,4 +1,4 @@
-import { SvgIcon } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
@@ -13,13 +13,17 @@ import LeaderBoard from '../components/LeaderBoard';
 import Link from '../components/Link';
 // import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
+import Crumbs from '../components/common/Crumbs';
+import Icon from '../components/common/CustomIcon';
 import Filter from '../components/common/Filter';
 import { useFullscreen } from '../hooks/globalHooks';
 import Search from '../images/search.svg';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 
-function Top({ trees, planters, countries, organizations }) {
+function Top(props) {
+  log.warn('props top:', props);
+  const { trees, planters, countries, organizations, wallets } = props;
   // use map context to get the map
   const { map } = useMapContext();
   const isFullscreen = useFullscreen();
@@ -37,6 +41,17 @@ function Top({ trees, planters, countries, organizations }) {
   const [continentTag, setContinentTag] = React.useState('Global');
   const [leaderboardCountries, setLeaderboardCountries] =
     React.useState(countries);
+
+  const mapContext = useMapContext();
+
+  React.useEffect(() => {
+    async function reload() {
+      if (mapContext.map) {
+        await mapContext.map.setFilters({});
+      }
+    }
+    reload();
+  }, [mapContext.map]);
 
   React.useEffect(() => {
     if (process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true')
@@ -56,10 +71,8 @@ function Top({ trees, planters, countries, organizations }) {
     const country = await utils.requestAPI(`/countries/${countryId}`);
     // print country
     log.debug('country', country);
-
     const [lon, lat] = JSON.parse(country.centroid).coordinates;
-
-    map.flyTo(lat, lon, 6);
+    map.gotoView(lat, lon, 6);
   }
 
   function handleFilter(filter) {
@@ -94,22 +107,37 @@ function Top({ trees, planters, countries, organizations }) {
             alignItems: 'center',
           }}
         >
-          <Typography variant="h4">Featured trees this week</Typography>
-          <SvgIcon
-            component={Search}
-            inheritViewBox
+          <Crumbs
+            items={[
+              {
+                // icon: <HomeIcon />,
+                name: 'Home',
+                url: '/',
+              },
+              {
+                name: 'tree spotlight',
+              },
+            ]}
+          />
+          <Icon
+            icon={Search}
+            width={48}
+            height={48}
+            color="grey"
             sx={{
-              width: 48,
-              height: 48,
               fill: 'transparent',
               '& path': {
                 fill: 'grey',
               },
-              '& rect': {
-                stroke: 'grey',
-              },
             }}
           />
+        </Box>
+        <Box
+          sx={{
+            mt: 8,
+          }}
+        >
+          <Typography variant="h4">Featured trees this week</Typography>
         </Box>
         {false && ( // going to be replaced by search filter component
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -140,10 +168,13 @@ function Top({ trees, planters, countries, organizations }) {
           planters={planters}
           isMobile={isFullscreen}
         />
-        <h1>The featured wallets (for testing)</h1>
-        <Link href="/wallets/eecdf253-05b6-419a-8425-416a3e5fc9a0">
-          <h2>wallet: Malinda51</h2>
-        </Link>
+        <Typography variant="h4">Featured wallets this week</Typography>
+        <FeaturedPlantersSlider
+          link={(id) => `/wallets/${id}`}
+          color="secondary"
+          planters={wallets}
+          isMobile={isFullscreen}
+        />
         <Typography
           variant="h4"
           sx={{
@@ -198,28 +229,35 @@ function Top({ trees, planters, countries, organizations }) {
 }
 
 export async function getStaticProps() {
-  const [trees, countries, planters, organizations] = await Promise.all([
-    getFeaturedTrees(), //
-    process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true'
-      ? []
-      : getCountryLeaderboard(),
-    (async () => {
-      const data = await utils.requestAPI('/planters/featured');
-      log.warn('planters', data);
-      return data.planters;
-    })(),
-    (async () => {
-      const data = await utils.requestAPI('/organizations/featured');
-      log.warn('organizations', data);
-      return data.organizations;
-    })(),
-  ]);
+  const [trees, countries, planters, organizations, wallets] =
+    await Promise.all([
+      getFeaturedTrees(), //
+      process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true'
+        ? []
+        : getCountryLeaderboard(),
+      (async () => {
+        const data = await utils.requestAPI('/planters/featured');
+        log.warn('planters', data);
+        return data.planters;
+      })(),
+      (async () => {
+        const data = await utils.requestAPI('/organizations/featured');
+        log.warn('organizations', data);
+        return data.organizations;
+      })(),
+      (async () => {
+        const data = await utils.requestAPI('/wallets/featured');
+        log.warn('wallets', data);
+        return data.wallets;
+      })(),
+    ]);
   return {
     props: {
       trees,
       countries,
       planters,
       organizations,
+      wallets,
     },
     revalidate: 60,
   };

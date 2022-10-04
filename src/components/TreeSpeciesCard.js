@@ -32,7 +32,15 @@ function TreeSpeciesCard(props) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Grid item ml={6}>
+        <Grid
+          item
+          ml={6}
+          sx={{
+            wordWrap: 'break-word',
+            width: '65%',
+            padding: (t) => [t.spacing(4, 0)],
+          }}
+        >
           <Typography
             variant="h5"
             sx={{
@@ -74,6 +82,8 @@ function TreeSpeciesCard(props) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            alignSelf: 'stretch',
+            justifyContent: 'center',
           }}
         >
           <Typography variant="body1">Count:</Typography>
