@@ -1,3 +1,11 @@
+# [2.0.0-beta.122](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.121...v2.0.0-beta.122) (2022-10-04)
+
+
+### Features
+
+* **playground:** add color picker ([1f49e44](https://github.com/Greenstand/treetracker-web-map-client/commit/1f49e44a33450bb306fb2c0f4e5887f92b31132a))
+* **playground:** add gradient color picker ([47206d7](https://github.com/Greenstand/treetracker-web-map-client/commit/47206d7f473dcb574ef07145ce87db9c55eee158))
+
 # [2.0.0-beta.121](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.120...v2.0.0-beta.121) (2022-10-04)
 
 ### Features
