@@ -129,7 +129,9 @@ function PlanterQuote(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={LocationIcon}
-                info={`${planter.country_name}, ${planter.continent_name}`}
+                info={`${planter.country_name ?? 'Unkown'}, ${
+                  planter.continent_name ?? 'Unkown'
+                }`}
               />
             </Box>
           </Box>
@@ -187,7 +189,10 @@ function PlanterQuote(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              info=
+              {`${planter.country_name ?? 'Unkown'}, ${
+                planter.continent_name ?? 'Unkown'
+              }`}
             </Box>
           </Box>
           <Avatar
