@@ -32,6 +32,7 @@ export const createMuiCache = () =>
   }));
 
 function TreetrackerApp({ Component, pageProps }) {
+  log.warn('!!!! render the _app');
   const router = useRouter();
   const embedLocalStorage = useLocalStorage('embed', false);
   const nextExtraIsDesktop = !useMobile();
@@ -46,23 +47,35 @@ function TreetrackerApp({ Component, pageProps }) {
   log.warn('router:', router);
 
   React.useEffect(() => {
-    const handleRouteChange = (url) =>
-      setTimeout(() => {
-        if (url !== router.asPath) {
-          setNextExtraLoading(true);
-        }
-      }, '500');
+    const handleRouteChange = (url) => {
+      log.warn('handleRouteChange:', url);
+      // setTimeout(() => {
+      //   if (url !== router.asPath) {
+      setNextExtraLoading(true);
+      //   }
+      // }, '500');
+    };
 
     router.events.on('routeChangeStart', handleRouteChange);
-    router.events.on('routeChangeComplete', () => setNextExtraLoading(false));
-    router.events.on('routeChangeError', () => setNextExtraLoading(false));
+    router.events.on('routeChangeComplete', () => {
+      log.warn('handleRouteChangeComplete::');
+      setNextExtraLoading(false);
+    });
+    router.events.on('routeChangeError', (...arg) => {
+      log.warn('handleChangeError:', ...arg);
+      setNextExtraLoading(false);
+    });
 
     return () => {
       router.events.off('routeChangeStart', handleRouteChange);
-      router.events.off('routeChangeComplete', () =>
-        setNextExtraLoading(false),
-      );
-      router.events.off('routeChangeError', () => setNextExtraLoading(false));
+      router.events.off('routeChangeComplete', () => {
+        log.warn('off routeChangeComplete:');
+        setNextExtraLoading(false);
+      });
+      router.events.off('routeChangeError', (...arg) => {
+        log.warn('off routerChangeError', ...arg);
+        setNextExtraLoading(false);
+      });
     };
   });
 
