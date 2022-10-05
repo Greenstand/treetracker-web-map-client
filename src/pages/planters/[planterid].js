@@ -140,7 +140,9 @@ export default function Planter(props) {
   }, [mapContext, planter]);
 
   useEffect(() => {
-    document.querySelector('.drawer-content').scrollTop = 0;
+    if (isMobile) {
+      document.querySelector('.drawer-content').scrollTop = 0;
+    }
   }, []);
 
   return (
