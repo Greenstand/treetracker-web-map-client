@@ -139,6 +139,10 @@ export default function Planter(props) {
     reload();
   }, [mapContext, planter]);
 
+  useEffect(() => {
+    document.querySelector('.drawer-content').scrollTop = 0;
+  }, []);
+
   return (
     <>
       <Box
@@ -223,6 +227,7 @@ export default function Planter(props) {
         {isMobile && (
           <Portal
             container={() => document.getElementById('drawer-title-container')}
+            className="containerDiv"
           >
             <Box
               sx={{
