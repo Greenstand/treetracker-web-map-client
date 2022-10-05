@@ -244,7 +244,9 @@ export default function Planter(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={LocationIcon}
-                  info={`${planter.country_name}, ${planter.continent_name}`}
+                  info={`${planter.country_name ?? 'Unknown'}, ${
+                    planter.continent_name ?? 'Unknown'
+                  }`}
                 />
               </Box>
               <Box
@@ -296,7 +298,9 @@ export default function Planter(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={LocationIcon}
-                info={`${planter.country_name}, ${planter.continent_name}`}
+                info={`${planter.country_name ?? 'Unknown'}, ${
+                  planter.continent_name ?? 'Unknown'
+                }`}
               />
             </Box>
             <Box
