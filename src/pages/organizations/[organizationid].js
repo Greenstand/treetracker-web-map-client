@@ -138,6 +138,12 @@ export default function Organization(props) {
     // eslint-disable-next-line
   }, [mapContext, organization]);
 
+  useEffect(() => {
+    if (isMobile) {
+      document.querySelector('.drawer-content').scrollTop = 0;
+    }
+  }, [isMobile]);
+
   const logo_url = organization.logo_url || imagePlaceholder;
   const name = organization.name || '---';
 

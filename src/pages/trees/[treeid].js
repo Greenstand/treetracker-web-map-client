@@ -92,6 +92,12 @@ export default function Tree({
     console.log('the tree data' + '' + JSON.stringify(tree));
   }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
 
+  useEffect(() => {
+    if (isMobile) {
+      document.querySelector('.drawer-content').scrollTop = 0;
+    }
+  }, [isMobile]);
+
   // useEffect(() => {
   //   async function draw() {
   //     // manipulate the map

@@ -143,7 +143,7 @@ export default function Planter(props) {
     if (isMobile) {
       document.querySelector('.drawer-content').scrollTop = 0;
     }
-  }, []);
+  }, [isMobile]);
 
   return (
     <>
