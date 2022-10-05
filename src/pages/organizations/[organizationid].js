@@ -214,7 +214,9 @@ export default function Organization(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={LocationIcon}
-                info={`${organization.country_name}, ${organization.continent_name}`}
+                info={`${organization.country_name ?? 'Unkown'}, ${
+                  organization.continent_name ?? 'Unknown'
+                }`}
               />
             </Box>
             <Box
@@ -256,7 +258,9 @@ export default function Organization(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={LocationIcon}
-                  info={`${organization.country_name}, ${organization.continent_name}`}
+                  info={`${organization.country_name ?? 'Unkown'}, ${
+                    organization.continent_name ?? 'Unknown'
+                  }`}
                 />
               </Box>
               <Box
