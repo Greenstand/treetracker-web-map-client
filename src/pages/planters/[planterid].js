@@ -227,7 +227,6 @@ export default function Planter(props) {
         {isMobile && (
           <Portal
             container={() => document.getElementById('drawer-title-container')}
-            className="containerDiv"
           >
             <Box
               sx={{
