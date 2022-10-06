@@ -1,3 +1,12 @@
+# [2.0.0-beta.127](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.126...v2.0.0-beta.127) (2022-10-06)
+
+
+### Bug Fixes
+
+* path resolver unit tests ([2d5be26](https://github.com/Greenstand/treetracker-web-map-client/commit/2d5be263fc4f10b5a0dc6ef86978208ba650da8f))
+* **ui:** theme dark background timeline button ([fe04e5c](https://github.com/Greenstand/treetracker-web-map-client/commit/fe04e5ccee3910fb0f1f766e514bbfa56112463a))
+* unit test path resolver ([e5941c5](https://github.com/Greenstand/treetracker-web-map-client/commit/e5941c5cac1895411ac8cb63e92677ed656ed93e))
+
 # [2.0.0-beta.126](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.125...v2.0.0-beta.126) (2022-10-06)
 
 
