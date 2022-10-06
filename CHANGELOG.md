@@ -1,3 +1,10 @@
+# [2.0.0-beta.125](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.124...v2.0.0-beta.125) (2022-10-06)
+
+
+### Bug Fixes
+
+* **featured-card:** update spacings conform design ([b1757df](https://github.com/Greenstand/treetracker-web-map-client/commit/b1757dff692c9ff95aef80d31e90e56388a5976c))
+
 # [2.0.0-beta.124](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.123...v2.0.0-beta.124) (2022-10-05)
 
 
