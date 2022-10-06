@@ -146,13 +146,8 @@ export default function TreeInfoDialog(props) {
         <Icon icon={MaxIcon} width={52} height={52} />
       </Box>
       <Dialog
-<<<<<<< HEAD
-        fullScreen={isFullscreen}
-        maxWidth={false}
-=======
         isFullscreen={isFullscreen}
         maxWidth={isMobile}
->>>>>>> 332dbb4 (fix(ui): make the tree info dialog full screen on mobile)
         open={open}
         onClose={handleClose}
         scroll={isFullscreen ? 'paper' : 'body'}
