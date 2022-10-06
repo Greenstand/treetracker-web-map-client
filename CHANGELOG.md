@@ -1,3 +1,10 @@
+# [2.0.0-beta.128](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.127...v2.0.0-beta.128) (2022-10-06)
+
+
+### Features
+
+* **utils:** add location string formatter ([657d907](https://github.com/Greenstand/treetracker-web-map-client/commit/657d907e9d8e02a9779e039884c8fe1fb4b9f256))
+
 # [2.0.0-beta.127](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.126...v2.0.0-beta.127) (2022-10-06)
 
 
