@@ -617,6 +617,8 @@ export default function Tree({
           title="Species"
           icon={<Icon icon={OriginIcon} />}
           disabled={tree.species_name === null}
+          subtitle={tree.species_desc === null ? null : 'click to learn more'}
+          link={tree.species_desc === null ? null : tree.species_desc}
         />
         <TreeTag
           TreeTagValue={

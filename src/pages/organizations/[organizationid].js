@@ -82,7 +82,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Organization(props) {
-  log.warn('props:', props);
+  log.warn('props for org page:', props);
   const { organization, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
   const { classes } = useStyles();

@@ -108,12 +108,19 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                   minWidth: [144, 208],
                 }}
               />
-              <CardContent>
+              <CardContent
+                sx={{
+                  p: 0,
+                  ':last-child': {
+                    p: 0,
+                  },
+                  mt: 5,
+                }}
+              >
                 <Typography
                   variant="h6"
                   sx={{
                     fontSize: '20px',
-                    marginTop: 4,
                   }}
                 >
                   Tree - {tree.id}
@@ -121,7 +128,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                 <Typography
                   variant="body1"
                   sx={{
-                    marginTop: 1.5,
+                    marginTop: 1,
                   }}
                 >
                   {tree.species_name || tree.country_name || '---'}
