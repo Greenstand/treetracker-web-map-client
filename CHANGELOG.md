@@ -1,3 +1,11 @@
+# [2.0.0-beta.129](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.128...v2.0.0-beta.129) (2022-10-08)
+
+
+### Bug Fixes
+
+* resolve merge conflicts ([50c35c5](https://github.com/Greenstand/treetracker-web-map-client/commit/50c35c54dcd4341e187ece47eb14b396a86a55bd))
+* **ui:** make the tree info dialog full screen on mobile ([b377530](https://github.com/Greenstand/treetracker-web-map-client/commit/b3775308e5d7577bf4cd2b2cfc2cd47f5420afd3))
+
 # [2.0.0-beta.128](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.127...v2.0.0-beta.128) (2022-10-06)
 
 
