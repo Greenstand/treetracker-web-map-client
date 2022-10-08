@@ -146,8 +146,8 @@ export default function TreeInfoDialog(props) {
         <Icon icon={MaxIcon} width={52} height={52} />
       </Box>
       <Dialog
-        fullScreen={isFullscreen}
-        maxWidth={false}
+        isFullscreen={isFullscreen}
+        maxWidth={isMobile}
         open={open}
         onClose={handleClose}
         scroll={isFullscreen ? 'paper' : 'body'}
