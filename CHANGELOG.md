@@ -1,55 +1,63 @@
 # [2.0.0-beta.129](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.128...v2.0.0-beta.129) (2022-10-08)
 
+
 ### Bug Fixes
 
-- resolve merge conflicts ([50c35c5](https://github.com/Greenstand/treetracker-web-map-client/commit/50c35c54dcd4341e187ece47eb14b396a86a55bd))
-- **ui:** make the tree info dialog full screen on mobile ([b377530](https://github.com/Greenstand/treetracker-web-map-client/commit/b3775308e5d7577bf4cd2b2cfc2cd47f5420afd3))
+* resolve merge conflicts ([50c35c5](https://github.com/Greenstand/treetracker-web-map-client/commit/50c35c54dcd4341e187ece47eb14b396a86a55bd))
+* **ui:** make the tree info dialog full screen on mobile ([b377530](https://github.com/Greenstand/treetracker-web-map-client/commit/b3775308e5d7577bf4cd2b2cfc2cd47f5420afd3))
 
 # [2.0.0-beta.128](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.127...v2.0.0-beta.128) (2022-10-06)
 
+
 ### Features
 
-- **utils:** add location string formatter ([657d907](https://github.com/Greenstand/treetracker-web-map-client/commit/657d907e9d8e02a9779e039884c8fe1fb4b9f256))
+* **utils:** add location string formatter ([657d907](https://github.com/Greenstand/treetracker-web-map-client/commit/657d907e9d8e02a9779e039884c8fe1fb4b9f256))
 
 # [2.0.0-beta.127](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.126...v2.0.0-beta.127) (2022-10-06)
 
+
 ### Bug Fixes
 
-- path resolver unit tests ([2d5be26](https://github.com/Greenstand/treetracker-web-map-client/commit/2d5be263fc4f10b5a0dc6ef86978208ba650da8f))
-- **ui:** theme dark background timeline button ([fe04e5c](https://github.com/Greenstand/treetracker-web-map-client/commit/fe04e5ccee3910fb0f1f766e514bbfa56112463a))
-- unit test path resolver ([e5941c5](https://github.com/Greenstand/treetracker-web-map-client/commit/e5941c5cac1895411ac8cb63e92677ed656ed93e))
+* path resolver unit tests ([2d5be26](https://github.com/Greenstand/treetracker-web-map-client/commit/2d5be263fc4f10b5a0dc6ef86978208ba650da8f))
+* **ui:** theme dark background timeline button ([fe04e5c](https://github.com/Greenstand/treetracker-web-map-client/commit/fe04e5ccee3910fb0f1f766e514bbfa56112463a))
+* unit test path resolver ([e5941c5](https://github.com/Greenstand/treetracker-web-map-client/commit/e5941c5cac1895411ac8cb63e92677ed656ed93e))
 
 # [2.0.0-beta.126](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.125...v2.0.0-beta.126) (2022-10-06)
 
+
 ### Features
 
-- add click to learn more ([66e34da](https://github.com/Greenstand/treetracker-web-map-client/commit/66e34da3081d944e60473c1119f7e5860ad9dc24))
+* add click to learn more ([66e34da](https://github.com/Greenstand/treetracker-web-map-client/commit/66e34da3081d944e60473c1119f7e5860ad9dc24))
 
 # [2.0.0-beta.125](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.124...v2.0.0-beta.125) (2022-10-06)
 
+
 ### Bug Fixes
 
-- **featured-card:** update spacings conform design ([b1757df](https://github.com/Greenstand/treetracker-web-map-client/commit/b1757dff692c9ff95aef80d31e90e56388a5976c))
+* **featured-card:** update spacings conform design ([b1757df](https://github.com/Greenstand/treetracker-web-map-client/commit/b1757dff692c9ff95aef80d31e90e56388a5976c))
 
 # [2.0.0-beta.124](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.123...v2.0.0-beta.124) (2022-10-05)
 
+
 ### Bug Fixes
 
-- bug in progress bar ([e380184](https://github.com/Greenstand/treetracker-web-map-client/commit/e3801842e5a3fee4832fb51a221f9a5156563a67))
+* bug in progress bar ([e380184](https://github.com/Greenstand/treetracker-web-map-client/commit/e3801842e5a3fee4832fb51a221f9a5156563a67))
 
 # [2.0.0-beta.123](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.122...v2.0.0-beta.123) (2022-10-05)
 
+
 ### Features
 
-- loading page ([5b3c1d8](https://github.com/Greenstand/treetracker-web-map-client/commit/5b3c1d8332570fe4f9dd7451944d22b4fd66264b))
-- tree as wallet background ([9b5c3c9](https://github.com/Greenstand/treetracker-web-map-client/commit/9b5c3c9c019ba368b0b478e69cdc01e59e522f90))
+* loading page ([5b3c1d8](https://github.com/Greenstand/treetracker-web-map-client/commit/5b3c1d8332570fe4f9dd7451944d22b4fd66264b))
+* tree as wallet background ([9b5c3c9](https://github.com/Greenstand/treetracker-web-map-client/commit/9b5c3c9c019ba368b0b478e69cdc01e59e522f90))
 
 # [2.0.0-beta.122](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.121...v2.0.0-beta.122) (2022-10-04)
 
+
 ### Features
 
-- **playground:** add color picker ([1f49e44](https://github.com/Greenstand/treetracker-web-map-client/commit/1f49e44a33450bb306fb2c0f4e5887f92b31132a))
-- **playground:** add gradient color picker ([47206d7](https://github.com/Greenstand/treetracker-web-map-client/commit/47206d7f473dcb574ef07145ce87db9c55eee158))
+* **playground:** add color picker ([1f49e44](https://github.com/Greenstand/treetracker-web-map-client/commit/1f49e44a33450bb306fb2c0f4e5887f92b31132a))
+* **playground:** add gradient color picker ([47206d7](https://github.com/Greenstand/treetracker-web-map-client/commit/47206d7f473dcb574ef07145ce87db9c55eee158))
 
 # [2.0.0-beta.121](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.120...v2.0.0-beta.121) (2022-10-04)
 
