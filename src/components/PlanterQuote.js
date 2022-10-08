@@ -11,6 +11,7 @@ import * as d3 from 'd3';
 import log from 'loglevel';
 import moment from 'moment';
 import Image from 'next/image';
+import { getLocationString } from 'models/utils';
 import Link from './Link';
 import ColorButton from './common/ColorButton';
 import DataTag from './common/DataTag';
@@ -22,7 +23,6 @@ import PeopleIcon from '../images/icons/people.svg';
 import imagePlaceholder from '../images/image-placeholder.png';
 import QuoteImgReverse from '../images/quote-reverse.svg';
 import QuoteImg from '../images/quote-symbol.svg';
-
 // TODO: something is wrong with quote-symbol.svg and quote-reverse.svg, they show a blank space. The svg files pull up as blanks. Not sure how to fix them, putting up an issue as this is something totally different than what I'm working on.
 
 function PlanterQuote(props) {
@@ -129,9 +129,10 @@ function PlanterQuote(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={LocationIcon}
-                info={`${planter.country_name ?? 'Unkown'}, ${
-                  planter.continent_name ?? 'Unkown'
-                }`}
+                info={getLocationString(
+                  planter.country_name,
+                  planter.continent_name,
+                )}
               />
             </Box>
           </Box>
@@ -190,9 +191,7 @@ function PlanterQuote(props) {
             </Box>
             <Box sx={{ mt: 2 }}>
               info=
-              {`${planter.country_name ?? 'Unkown'}, ${
-                planter.continent_name ?? 'Unkown'
-              }`}
+              {getLocationString(planter.country_name, planter.continent_name)}
             </Box>
           </Box>
           <Avatar
