@@ -158,7 +158,7 @@ export default function Wallet(props) {
           },
         }}
       >
-        <ProfileCover src={wallet.cover_url} />
+        <ProfileCover src={wallet?.cover_url || trees?.[0]?.image_url} />
         <Avatar
           src={wallet.logo_url || imagePlaceholder}
           sx={{
