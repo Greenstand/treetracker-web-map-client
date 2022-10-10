@@ -24,6 +24,10 @@ function ToggleThemeMode() {
     <ListItem
       sx={{
         justifyContent: 'space-between',
+        position: 'sticky',
+        top: '0',
+        zIndex: '100',
+        backgroundColor: 'white',
       }}
     >
       <ListItemText
