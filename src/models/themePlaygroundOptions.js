@@ -136,5 +136,5 @@ export const propRules = {
   lineHeight:
     /^-?(?:\d+(\.\d+)?(px|rem|em|ex)?|\d+%|normal|inherit|initial|revert|revert-layer|unset)$/i,
   letterSpacing:
-    /^-?(?:\d+(\.\d+)?(px|rem|em|ex)|normal|inherit|initial|revert|revert-layer|unset)$/i,
+    /^-?(?:\d+(\.\d+)?(px|rem|em|ex)|normal|0|inherit|initial|revert|revert-layer|unset)$/i,
 };
