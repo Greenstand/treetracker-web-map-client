@@ -1,3 +1,22 @@
+# [2.0.0-beta.130](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.129...v2.0.0-beta.130) (2022-10-10)
+
+
+### Features
+
+* add fallback value ([0822ca5](https://github.com/Greenstand/treetracker-web-map-client/commit/0822ca56773d98b11df6325a0e9c61d279854917))
+* add fallback value ([931a31c](https://github.com/Greenstand/treetracker-web-map-client/commit/931a31c48917ef9be71c5a2f2009118567ea758a))
+* add fallback value ([5eb6a2f](https://github.com/Greenstand/treetracker-web-map-client/commit/5eb6a2fcabc08621e64fe8d43eec991608c3813d))
+* add real location for org pages ([6f7019e](https://github.com/Greenstand/treetracker-web-map-client/commit/6f7019ecd1f526168375f5271e87d8b2c0387e37))
+* add real location for planter pages ([5da18d3](https://github.com/Greenstand/treetracker-web-map-client/commit/5da18d3349c695732ac533844221004afcc49f45))
+* location for planter info ([3207a8e](https://github.com/Greenstand/treetracker-web-map-client/commit/3207a8eee37659d15ab9a9fbe0818b734e7f12de))
+* merge beta ([0acd2ac](https://github.com/Greenstand/treetracker-web-map-client/commit/0acd2ac872f9b6355aab439022f1f012b58bafc7))
+* merge beta ([a5856bc](https://github.com/Greenstand/treetracker-web-map-client/commit/a5856bc082477b86dde74ab654177c4cc1a0edfe))
+* merge beta ([1e794ba](https://github.com/Greenstand/treetracker-web-map-client/commit/1e794ba0fa09a54b60acd3ec39f13a231dfbbc79))
+* revert changelog ([95c1adf](https://github.com/Greenstand/treetracker-web-map-client/commit/95c1adfb8252d686233bb47d5f2ef593d90743c6))
+* use getLocationString ([800a828](https://github.com/Greenstand/treetracker-web-map-client/commit/800a82878395c208c4795e544262554a3446ddf3))
+* use getLocationString ([8536e7b](https://github.com/Greenstand/treetracker-web-map-client/commit/8536e7b04a988a0d93fc320afbb887f346b547ea))
+* use getLocationString ([e3b5565](https://github.com/Greenstand/treetracker-web-map-client/commit/e3b5565d4a739cec61afedd59b2355563cc84df8))
+
 # [2.0.0-beta.129](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.128...v2.0.0-beta.129) (2022-10-08)
 
 ### Bug Fixes
