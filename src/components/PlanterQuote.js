@@ -190,8 +190,13 @@ function PlanterQuote(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              info=
-              {getLocationString(planter.country_name, planter.continent_name)}
+              <Info
+                iconURI={LocationIcon}
+                info={getLocationString(
+                  planter.country_name,
+                  planter.continent_name,
+                )}
+              />
             </Box>
           </Box>
           <Avatar
