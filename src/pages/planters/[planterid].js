@@ -42,7 +42,7 @@ import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as pathResolver from '../../models/pathResolver';
-import * as utils from '../../models/utils';
+import { getLocationString, getPlanterName, wrapper } from '../../models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -96,8 +96,6 @@ export default function Planter(props) {
   const { setTitlesData } = useDrawerContext();
 
   const { classes } = useStyles();
-
-  console.log('planter', planter);
 
   // try to find first tree image or default image return
   const backgroundPic =
@@ -177,7 +175,7 @@ export default function Planter(props) {
                 },
                 {
                   icon: planter.image_url,
-                  name: `${utils.getPlanterName(
+                  name: `${getPlanterName(
                     planter.first_name,
                     planter.last_name,
                   )}`,
@@ -231,7 +229,7 @@ export default function Planter(props) {
               }}
             >
               <Typography variant="h2">
-                {utils.getPlanterName(planter.first_name, planter.last_name)}
+                {getPlanterName(planter.first_name, planter.last_name)}
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
@@ -242,7 +240,13 @@ export default function Planter(props) {
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+                <Info
+                  iconURI={LocationIcon}
+                  info={getLocationString(
+                    planter.country_name,
+                    planter.continent_name,
+                  )}
+                />
               </Box>
               <Box
                 sx={{
@@ -291,7 +295,13 @@ export default function Planter(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              <Info
+                iconURI={LocationIcon}
+                info={getLocationString(
+                  planter.country_name,
+                  planter.continent_name,
+                )}
+              />
             </Box>
             <Box
               sx={{
@@ -492,7 +502,7 @@ export default function Planter(props) {
   );
 }
 
-export const getServerSideProps = utils.wrapper(async ({ params }) => {
+export const getServerSideProps = wrapper(async ({ params }) => {
   const id = params.planterid;
   const planter = await getPlanterById(id);
   const data = await getOrgLinks(planter.links);
