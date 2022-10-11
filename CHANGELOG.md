@@ -1,3 +1,10 @@
+# [2.0.0-beta.132](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.131...v2.0.0-beta.132) (2022-10-11)
+
+
+### Bug Fixes
+
+* embed logo incorrect url ([2085397](https://github.com/Greenstand/treetracker-web-map-client/commit/2085397d1444516f1b0c0ef666b929c870117013))
+
 # [2.0.0-beta.131](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.130...v2.0.0-beta.131) (2022-10-10)
 
 
