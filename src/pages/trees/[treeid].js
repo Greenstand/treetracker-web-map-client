@@ -66,6 +66,8 @@ export default function Tree({
   });
   const isMobile = useMobile();
   const isEmbed = useEmbed();
+  const isPlanterContext = context && context.name === 'planters';
+  const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
 
@@ -130,7 +132,7 @@ export default function Tree({
       log.warn('map ,tree, context in tree page:', map, tree, context);
       if (map && tree?.lat && tree?.lon) {
         if (context && context.name) {
-          if (context.name === 'planters') {
+          if (isPlanterContext) {
             log.warn('set planter filter', context.id);
             await map.setFilters({
               userid: context.id,
@@ -142,7 +144,7 @@ export default function Tree({
               lon: parseFloat(tree.lon.toString()),
             };
             map.selectTree(treeDataForMap);
-          } else if (context.name === 'organizations') {
+          } else if (isOrganizationContext) {
             log.warn('set org filter', organization.map_name);
             await map.setFilters({
               map_name: organization.map_name,
@@ -321,7 +323,7 @@ export default function Tree({
                 name: 'Home',
                 url: '/',
               },
-              ...(context && context.name === 'planters'
+              ...(isPlanterContext
                 ? [
                     {
                       url: `/planters/${planter.id}`,
@@ -333,7 +335,7 @@ export default function Tree({
                     },
                   ]
                 : []),
-              ...(context && context.name === 'organizations' && organization
+              ...(isOrganizationContext && organization
                 ? [
                     {
                       url: `/organizations/${organization.id}`,
@@ -693,7 +695,7 @@ export default function Tree({
               height: '120px',
               margin: '10px',
             }}
-            src={planter.image_url}
+            src={isPlanterContext ? planter.image_url : organization.logo_url}
             variant="rounded"
           />
         </Portal>
