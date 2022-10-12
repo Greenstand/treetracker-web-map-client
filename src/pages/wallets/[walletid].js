@@ -293,7 +293,10 @@ export default function Wallet(props) {
             }}
           >
             <TreeTag
-              TreeTagValue={token.id}
+              TreeTagValue={`${token.id.slice(0, 4)}...${token.id.slice(
+                token.id.length - 4,
+                token.id.length,
+              )}`}
               title="Token ID"
               icon={<Icon icon={TokenIcon} />}
               link={`/wallets/${wallet.id}/tokens/${token.id}`}
