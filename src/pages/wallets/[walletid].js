@@ -286,8 +286,7 @@ export default function Wallet(props) {
         sx={{
           mt: [0, 16],
           p: [2, 4],
-          display: isTokenTab ? 'flex' : 'none',
-          flexWrap: 'wrap',
+          display: isTokenTab ? 'block' : 'none',
         }}
       >
         {tokens.tokens.map((token) => (
@@ -295,7 +294,6 @@ export default function Wallet(props) {
             key={token.id}
             sx={{
               mt: [2, 4],
-              flex: '33.33% 0',
             }}
           >
             <TreeTag
