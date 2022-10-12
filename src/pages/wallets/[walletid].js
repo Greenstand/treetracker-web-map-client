@@ -227,7 +227,10 @@ export default function Wallet(props) {
         }}
       >
         <Typography variant="h4">Featured trees by {wallet.name}</Typography>
-        <FeaturedTreesSlider trees={trees} />
+        <FeaturedTreesSlider
+          trees={trees}
+          link={(item) => `/wallets/${wallet.id}/tokens/${item.token_id}`}
+        />
       </Box>
 
       <Grid
