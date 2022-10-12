@@ -1,3 +1,10 @@
+# [2.0.0-beta.133](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.132...v2.0.0-beta.133) (2022-10-12)
+
+
+### Bug Fixes
+
+* pass link prop for wallets ([05056d9](https://github.com/Greenstand/treetracker-web-map-client/commit/05056d9605e3b8873e0a527e0d3801da83d2c5bc))
+
 # [2.0.0-beta.132](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.131...v2.0.0-beta.132) (2022-10-11)
 
 
