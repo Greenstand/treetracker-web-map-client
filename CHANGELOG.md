@@ -1,3 +1,10 @@
+# [2.0.0-beta.136](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.135...v2.0.0-beta.136) (2022-10-13)
+
+
+### Features
+
+* add wallet logo ([8070141](https://github.com/Greenstand/treetracker-web-map-client/commit/8070141dbcf0277766cc2964da8e757d7dc24c65))
+
 # [2.0.0-beta.135](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.134...v2.0.0-beta.135) (2022-10-13)
 
 
