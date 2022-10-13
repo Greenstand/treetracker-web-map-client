@@ -1,3 +1,17 @@
+# [2.0.0-beta.134](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.133...v2.0.0-beta.134) (2022-10-13)
+
+
+### Bug Fixes
+
+* revert flex changes ([3abc97d](https://github.com/Greenstand/treetracker-web-map-client/commit/3abc97d014ef1bf863bc3d0db46309d519300cbe))
+* revert prev commit ([3d26a90](https://github.com/Greenstand/treetracker-web-map-client/commit/3d26a90d22cad0202ffd9f214e7e4b1b2dfd840d))
+
+
+### Features
+
+* flex wrap the token cards ([ce50954](https://github.com/Greenstand/treetracker-web-map-client/commit/ce50954bbf8534f94e41c645041cdb05fd066594))
+* shorten token id ([060474a](https://github.com/Greenstand/treetracker-web-map-client/commit/060474a581da1a81573e22fb8e0a7e1a370f4f89))
+
 # [2.0.0-beta.133](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.132...v2.0.0-beta.133) (2022-10-12)
 
 
