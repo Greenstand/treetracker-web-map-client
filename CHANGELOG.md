@@ -1,3 +1,10 @@
+# [2.0.0-beta.135](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.134...v2.0.0-beta.135) (2022-10-13)
+
+
+### Bug Fixes
+
+* **tree:** make global icon consistent with others ([a97f93f](https://github.com/Greenstand/treetracker-web-map-client/commit/a97f93f4dd1e70a5e59858ec656e528caf7e9656))
+
 # [2.0.0-beta.134](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.133...v2.0.0-beta.134) (2022-10-13)
 
 
