@@ -283,17 +283,26 @@ export default function Wallet(props) {
       )}
 
       <Box
-        sx={{ mt: [0, 16], p: [2, 4], display: isTokenTab ? 'block' : 'none' }}
+        sx={{
+          mt: [0, 16],
+          p: [2, 4],
+          display: isTokenTab ? 'flex' : 'none',
+          flexWrap: 'wrap',
+        }}
       >
         {tokens.tokens.map((token) => (
           <Box
             key={token.id}
             sx={{
               mt: [2, 4],
+              flex: '33.33% 0',
             }}
           >
             <TreeTag
-              TreeTagValue={token.id}
+              TreeTagValue={`${token.id.slice(0, 4)}...${token.id.slice(
+                token.id.length - 4,
+                token.id.length,
+              )}`}
               title="Token ID"
               icon={<Icon icon={TokenIcon} />}
               link={`/wallets/${wallet.id}/tokens/${token.id}`}
