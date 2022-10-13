@@ -636,6 +636,21 @@ export default function Token(props) {
       />
       <ImpactSection />
       <Box height={20} />
+      {nextExtraIsEmbed && (
+        <Portal
+          container={() => document.getElementById('embed-logo-container')}
+        >
+          <Avatar
+            sx={{
+              width: '120px',
+              height: '120px',
+              margin: '10px',
+            }}
+            src={wallet.logo_url ?? imagePlaceholder}
+            variant="rounded"
+          />
+        </Portal>
+      )}
     </Box>
   );
 }
