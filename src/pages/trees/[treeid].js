@@ -649,7 +649,6 @@ export default function Tree({
               sx={{
                 '& path': {
                   stroke: 'none',
-                  fill: 'pink',
                 },
               }}
             />

@@ -290,6 +290,44 @@ export default function Wallet(props) {
           sx={{
             mt: [0, 16],
             p: [2, 4],
+            display: isTokenTab ? 'flex' : 'none',
+            flexWrap: 'wrap',
+          }}
+        >
+          {tokens.tokens.map((token) => (
+            <Box
+              key={token.id}
+              sx={{
+                mt: [2, 4],
+                flex: '33.33% 0',
+              }}
+            >
+              <TreeTag
+                TreeTagValue={`${token.id.slice(0, 4)}...${token.id.slice(
+                  token.id.length - 4,
+                  token.id.length,
+                )}`}
+                title="Token ID"
+                icon={<Icon icon={TokenIcon} />}
+                link={`/wallets/${wallet.id}/tokens/${token.id}`}
+              />
+            </Box>
+          ))}
+        </Box>
+
+        {tokenRegionName.length > 0 && (
+          <Box sx={{ mt: [0, 22], display: !isTokenTab ? 'block' : 'none' }}>
+            <CustomWorldMap
+              totalTrees={tokenRegionCount}
+              con={tokenRegionName}
+            />
+          </Box>
+        )}
+
+        <Box
+          sx={{
+            mt: [0, 16],
+            p: [2, 4],
             display: isTokenTab ? 'block' : 'none',
           }}
         >
