@@ -45,7 +45,7 @@
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@mui/icons-material": "^5.0.5",
     "@mui/lab": "^5.0.0-alpha.54",
-    "@mui/material": "^5.0.6",
+    "@mui/material": "^5.10.9",
     "@mui/styles": "^5.0.2",
     "@mui/x-date-pickers": "^5.0.0-beta.6",
     "@react-keycloak/ssr": "^3.3.0",
