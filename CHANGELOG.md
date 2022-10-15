@@ -1,3 +1,15 @@
+# [2.0.0-beta.137](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.136...v2.0.0-beta.137) (2022-10-15)
+
+
+### Bug Fixes
+
+* lockfile ([3fbaa43](https://github.com/Greenstand/treetracker-web-map-client/commit/3fbaa4334d94ad8b0a46752d8e36c869f0853f7b))
+
+
+### Features
+
+* about support markdown ([c73518d](https://github.com/Greenstand/treetracker-web-map-client/commit/c73518da79f41c549781f7771cf13e2785619d59))
+
 # [2.0.0-beta.136](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.135...v2.0.0-beta.136) (2022-10-13)
 
 
