@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
+import { marked } from 'marked';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -470,13 +471,22 @@ export default function Organization(props) {
             About the Organization
           </Typography>
           <Typography variant="body2" mt={7}>
-            {organization.about || 'NO DATA YET'}
+            {/* {organization.about} */}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(organization.about || 'NO DATA YET'),
+              }}
+            />
           </Typography>
           <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
             Mission
           </Typography>
           <Typography variant="body2" mt={7}>
-            {organization.mission || 'NO DATA YET'}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(organization.mission || 'NO DATA YET'),
+              }}
+            />
           </Typography>
           <Divider
             varian="fullwidth"

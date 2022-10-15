@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -352,7 +353,11 @@ export default function Wallet(props) {
         About the Wallet
       </Typography>
       <Typography sx={{ mt: [2.5, 5] }} variant="body2">
-        {wallet.about || 'NO DATA YET'}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: marked.parse(wallet.about || 'NO DATA YET'),
+          }}
+        />
       </Typography>
       <Divider
         varian="fullwidth"
