@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import * as d3 from 'd3';
 import log from 'loglevel';
+import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -472,7 +473,11 @@ export default function Planter(props) {
           variant="body2"
           className={classes.textColor}
         >
-          {planter.about || 'NO DATA YET'}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: marked.parse(planter.about || 'NO DATA YET'),
+            }}
+          />
         </Typography>
         <Divider
           varian="fullwidth"
