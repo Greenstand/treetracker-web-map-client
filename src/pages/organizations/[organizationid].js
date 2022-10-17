@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
+import { marked } from 'marked';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -46,7 +47,7 @@ import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as pathResolver from '../../models/pathResolver';
-import * as utils from '../../models/utils';
+import { getLocationString, getContinent, wrapper } from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   imgContainer: {
@@ -99,7 +100,7 @@ export default function Organization(props) {
     const tree = organization?.featuredTrees?.trees[0];
     if (tree) {
       const { lat, lon } = tree;
-      const newContinent = await utils.getContinent(lat, lon);
+      const newContinent = await getContinent(lat, lon);
       setContinent(newContinent.name);
     }
   }
@@ -137,12 +138,6 @@ export default function Organization(props) {
     updateContinent();
     // eslint-disable-next-line
   }, [mapContext, organization]);
-
-  useEffect(() => {
-    if (isMobile) {
-      document.querySelector('.drawer-content').scrollTop = 0;
-    }
-  }, [isMobile]);
 
   const logo_url = organization.logo_url || imagePlaceholder;
   const name = organization.name || '---';
@@ -218,7 +213,13 @@ export default function Organization(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              <Info
+                iconURI={LocationIcon}
+                info={getLocationString(
+                  organization.country_name,
+                  organization.continent_name,
+                )}
+              />
             </Box>
             <Box
               sx={{
@@ -257,7 +258,13 @@ export default function Organization(props) {
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+                <Info
+                  iconURI={LocationIcon}
+                  info={getLocationString(
+                    organization.country_name,
+                    organization.continent_name,
+                  )}
+                />
               </Box>
               <Box
                 sx={{
@@ -442,11 +449,13 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-          {organization?.associatedPlanters?.planters?.map((planter, i) => (
-            <Box sx={{ mt: [6, 12] }} key={planter.name}>
-              <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
-            </Box>
-          ))}
+          {organization?.associatedPlanters?.planters
+            ?.sort((e1, e2) => (e1.about ? -1 : 1))
+            .map((planter, i) => (
+              <Box sx={{ mt: [6, 12] }} key={planter.name}>
+                <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
+              </Box>
+            ))}
         </Box>
         <Box
           sx={{
@@ -464,13 +473,22 @@ export default function Organization(props) {
             About the Organization
           </Typography>
           <Typography variant="body2" mt={7}>
-            {organization.about || 'NO DATA YET'}
+            {/* {organization.about} */}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(organization.about || 'NO DATA YET'),
+              }}
+            />
           </Typography>
           <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
             Mission
           </Typography>
           <Typography variant="body2" mt={7}>
-            {organization.mission || 'NO DATA YET'}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(organization.mission || 'NO DATA YET'),
+              }}
+            />
           </Typography>
           <Divider
             varian="fullwidth"
@@ -501,7 +519,7 @@ export default function Organization(props) {
   );
 }
 
-export const getServerSideProps = utils.wrapper(async ({ params }) => {
+export const getServerSideProps = wrapper(async ({ params }) => {
   const id = params.organizationid;
   const organization = await getOrganizationById(id);
   const orgLinks = await getOrgLinks(organization.links);

@@ -2,6 +2,7 @@ import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
+import useEffect from 'react';
 import { makeStyles } from 'models/makeStyles';
 import Timeline from './Timeline';
 import Max from '../images/max.svg';
@@ -67,6 +68,10 @@ export default function Layout({
   function handleZoomOut() {
     mapContext.map.map.zoomOut();
   }
+
+  useEffect(() => {
+    document.querySelector('.drawer-content').scrollTop = 0;
+  }, []);
 
   return (
     <Box className={classes.root}>

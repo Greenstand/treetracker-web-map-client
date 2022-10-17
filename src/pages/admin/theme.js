@@ -55,11 +55,10 @@ function ThemeConfig() {
   function handleChange(event) {
     const userValue = event.target.value;
     const parsedTheme = JSON.parse(userValue);
-    const newTheme = {
+    setTheme({
       ...theme,
-      parsedTheme,
-    };
-    setTheme(newTheme);
+      ...parsedTheme,
+    });
   }
 
   const handlePreview = useCallback(() => {

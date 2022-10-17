@@ -237,6 +237,13 @@ const wrapper = (callback) => (params) =>
     };
   });
 
+const getLocationString = (country, continent) => {
+  if (!country && !continent) return 'Unknown';
+  if (!country) return continent;
+  if (!continent) return country;
+  return `${country}, ${continent}`;
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -255,4 +262,5 @@ export {
   nextPathBaseDecode,
   nextPathBaseEncode,
   wrapper,
+  getLocationString,
 };

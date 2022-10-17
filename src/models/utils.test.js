@@ -6,6 +6,7 @@ import {
   requestAPI,
   nextPathBaseDecode,
   nextPathBaseEncode,
+  getLocationString,
 } from './utils';
 
 describe('hideLastName', () => {
@@ -128,5 +129,28 @@ describe('nextPathBaseEnocode/Decode', () => {
     expect(nextPathBaseEncode('/trees/123', '/web-map-beta-demo')).toBe(
       '/web-map-beta-demo/trees/123',
     );
+  });
+});
+
+describe('getLocationString', () => {
+  describe('given the country and continent exists', () => {
+    it('should return both country and continent', () => {
+      const result = getLocationString('Country', 'Continent');
+      expect(result).toBe('Country, Continent');
+    });
+  });
+
+  describe('given the continent exists and country does not exists', () => {
+    it('should return only the continent', () => {
+      const result = getLocationString(null, 'Continent');
+      expect(result).toBe('Continent');
+    });
+  });
+
+  describe('given the country and continent do not exists', () => {
+    it('should return Unknown', () => {
+      const result = getLocationString(null, null);
+      expect(result).toBe('Unknown');
+    });
   });
 });

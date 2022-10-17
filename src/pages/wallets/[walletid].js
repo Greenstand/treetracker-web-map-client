@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -227,7 +228,10 @@ export default function Wallet(props) {
         }}
       >
         <Typography variant="h4">Featured trees by {wallet.name}</Typography>
-        <FeaturedTreesSlider trees={trees} />
+        <FeaturedTreesSlider
+          trees={trees}
+          link={(item) => `/wallets/${wallet.id}/tokens/${item.token_id}`}
+        />
       </Box>
 
       <Grid
@@ -340,7 +344,11 @@ export default function Wallet(props) {
         About the Wallet
       </Typography>
       <Typography sx={{ mt: [2.5, 5] }} variant="body2">
-        {wallet.about || 'NO DATA YET'}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: marked.parse(wallet.about || 'NO DATA YET'),
+          }}
+        />
       </Typography>
       <Divider
         varian="fullwidth"
@@ -354,9 +362,9 @@ export default function Wallet(props) {
 }
 
 export const getServerSideProps = wrapper(async ({ params }) => {
-  const id = params.walletid;
-  const [wallet, species, tokens, tokenRegionCount, trees] = await Promise.all([
-    getWalletById(id),
+  const wallet = await getWalletById(params.walletid);
+  const { id } = wallet;
+  const [species, tokens, tokenRegionCount, trees] = await Promise.all([
     getSpeciesByWalletId(id),
     (async () => {
       // Todo write a filter api that only returns totalNo.of tokens under a certain wallet

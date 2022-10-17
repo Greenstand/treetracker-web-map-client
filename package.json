@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.0.0-beta.124",
+  "version": "2.0.0-beta.138",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -64,6 +64,7 @@
     "leaflet-utfgrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
     "leaflet.gridlayer.googlemutant": "^0.12.1",
     "loglevel": "^1.7.0",
+    "marked": "^4.1.1",
     "moment": "^2.29.1",
     "next": "^12.1.0",
     "next-images": "^1.8.1",

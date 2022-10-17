@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 import { makeStyles } from 'models/makeStyles';
 
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
@@ -42,6 +43,11 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Layout({ children }) {
   const { classes } = useStyles();
+
+  useEffect(() => {
+    document.querySelector('.drawer-content').scrollTop = 0; // to scroll to top of the page
+  }, []);
+
   return (
     <Box className={classes.root}>
       <Navbar />
