@@ -30,14 +30,17 @@ function PlanterQuote(props) {
   const { planter, reverse = false } = props;
   const {
     id,
-    quote: quote2,
+    about: quote2,
     name,
     image_url: photo2,
     created_at,
     location,
   } = planter;
 
-  const quote = quote2 || "the planter hasn't left any quote yet";
+  let quote = quote2 || "the planter hasn't left any quote yet";
+  if (quote.length > 500) {
+    quote = `${quote.substring(0, 500)  }...`;
+  }
   const photo = photo2 || imagePlaceholder;
 
   const theme = useTheme();
