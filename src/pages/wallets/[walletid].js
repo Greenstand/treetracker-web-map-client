@@ -371,9 +371,9 @@ export default function Wallet(props) {
 }
 
 export const getServerSideProps = wrapper(async ({ params }) => {
-  const id = params.walletid;
-  const [wallet, species, tokens, tokenRegionCount, trees] = await Promise.all([
-    getWalletById(id),
+  const wallet = await getWalletById(params.walletid);
+  const {id} = wallet;
+  const [species, tokens, tokenRegionCount, trees] = await Promise.all([
     getSpeciesByWalletId(id),
     (async () => {
       // Todo write a filter api that only returns totalNo.of tokens under a certain wallet

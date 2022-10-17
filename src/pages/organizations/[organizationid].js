@@ -449,11 +449,13 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-          {organization?.associatedPlanters?.planters?.map((planter, i) => (
-            <Box sx={{ mt: [6, 12] }} key={planter.name}>
-              <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
-            </Box>
-          ))}
+          {organization?.associatedPlanters?.planters
+            ?.sort((e1, e2) => (e1.about ? -1 : 1))
+            .map((planter, i) => (
+              <Box sx={{ mt: [6, 12] }} key={planter.name}>
+                <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
+              </Box>
+            ))}
         </Box>
         <Box
           sx={{
