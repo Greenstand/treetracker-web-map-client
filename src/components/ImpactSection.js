@@ -25,9 +25,10 @@ function ImpactSection() {
         sx={{
           width: 1,
           mt: [6, 9],
+          gap: [2, 4],
         }}
       >
-        <Grid item sx={{ width: '49%' }}>
+        <Grid item sx={{ flex: '1' }}>
           <CustomCard
             handleClick={() => {}}
             iconURI={DollarIcon}
@@ -44,7 +45,7 @@ function ImpactSection() {
             disabled
           />
         </Grid>
-        <Grid item sx={{ width: '49%' }}>
+        <Grid item sx={{ flex: '1' }}>
           <CustomCard
             handleClick={() => {}}
             iconURI={CarbonIcon}
