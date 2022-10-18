@@ -1,3 +1,10 @@
+# [2.0.0-beta.141](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.140...v2.0.0-beta.141) (2022-10-18)
+
+
+### Features
+
+* make toggletheme component sticky ([affe315](https://github.com/Greenstand/treetracker-web-map-client/commit/affe315faaa5d7a00c009565e90743745e722f21))
+
 # [2.0.0-beta.140](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.139...v2.0.0-beta.140) (2022-10-18)
 
 
