@@ -7,8 +7,7 @@ export function Tab({ children, value, index, onClick }) {
       sx={{
         cursor: 'pointer',
         boxSizing: 'border-box',
-        borderLeft:
-          value === index ? `2px solid #61892F` : `2px solid #f5f5ff3`,
+        borderLeft: value === index ? `2px solid #61892F` : `2px solid #f5f5f3`,
       }}
     >
       {children}

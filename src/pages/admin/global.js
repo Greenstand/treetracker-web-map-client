@@ -46,7 +46,7 @@ function Global() {
             <Typography>Theme Settings</Typography>
           </Tab>
           <Tab value={currentTab} index={1} onClick={handleSidebarClick}>
-            <Typography>Theme Settings</Typography>
+            <Typography>Map Settings</Typography>
           </Tab>
         </List>
       </Box>
