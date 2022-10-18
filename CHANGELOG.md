@@ -1,3 +1,15 @@
+# [2.0.0-beta.140](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.139...v2.0.0-beta.140) (2022-10-18)
+
+
+### Bug Fixes
+
+* **dashboard:** typos ([e341d17](https://github.com/Greenstand/treetracker-web-map-client/commit/e341d1779d2b564a1b4be07ff4e263e384fd2acb))
+
+
+### Features
+
+* **dashboard:** add basic setup ([6b6e64a](https://github.com/Greenstand/treetracker-web-map-client/commit/6b6e64a8b1ce12a33813bbc678f2adfdb5007aa4))
+
 # [2.0.0-beta.139](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.138...v2.0.0-beta.139) (2022-10-18)
 
 
