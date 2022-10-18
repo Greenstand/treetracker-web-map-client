@@ -1,3 +1,10 @@
+# [2.0.0-beta.139](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.138...v2.0.0-beta.139) (2022-10-18)
+
+
+### Bug Fixes
+
+* **impact:** cards not vertically aligned ([69be32a](https://github.com/Greenstand/treetracker-web-map-client/commit/69be32a0a0a41f098ebd3fbfe30c2345458b8824))
+
 # [2.0.0-beta.138](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.137...v2.0.0-beta.138) (2022-10-17)
 
 
