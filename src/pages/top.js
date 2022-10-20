@@ -132,49 +132,67 @@ function Top(props) {
             }}
           />
         </Box>
-        <Box
-          sx={{
-            mt: 8,
-          }}
-        >
-          <Typography variant="h4">Featured trees this week</Typography>
-        </Box>
-        {false && ( // going to be replaced by search filter component
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Filter onFilter={handleFilter} />
-          </Box>
+        {trees?.length > 0 && (
+          <>
+            <Box
+              sx={{
+                mt: 8,
+              }}
+            >
+              <Typography variant="h4">Featured trees this week</Typography>
+            </Box>
+            {false && ( // going to be replaced by search filter component
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Filter onFilter={handleFilter} />
+              </Box>
+            )}
+            <Box>
+              <FeaturedTreesSlider trees={trees} isMobile={isFullscreen} />
+            </Box>
+          </>
         )}
-        <Box>
-          <FeaturedTreesSlider trees={trees} isMobile={isFullscreen} />
-        </Box>
-        <Box sx={{ mt: [4, 8] }} />
-        <Typography variant="h4">Featured organizations this week</Typography>
-        <FeaturedPlantersSlider
-          link={(id) => `/organizations/${id}`}
-          color="primary"
-          planters={organizations}
-          isMobile={isFullscreen}
-        />
-        <Box
-          sx={{
-            mt: 8,
-          }}
-        >
-          <Typography variant="h4">Featured planters this week</Typography>
-        </Box>
-        <FeaturedPlantersSlider
-          link={(id) => `/planters/${id}`}
-          color="secondary"
-          planters={planters}
-          isMobile={isFullscreen}
-        />
-        <Typography variant="h4">Featured wallets this week</Typography>
-        <FeaturedPlantersSlider
-          link={(id) => `/wallets/${id}`}
-          color="secondary"
-          planters={wallets}
-          isMobile={isFullscreen}
-        />
+        {organizations.length > 0 && (
+          <>
+            <Box sx={{ mt: [4, 8] }} />
+            <Typography variant="h4">
+              Featured organizations this week
+            </Typography>
+            <FeaturedPlantersSlider
+              link={(id) => `/organizations/${id}`}
+              color="primary"
+              planters={organizations}
+              isMobile={isFullscreen}
+            />
+          </>
+        )}
+        {planters.length > 0 && (
+          <>
+            <Box
+              sx={{
+                mt: 8,
+              }}
+            >
+              <Typography variant="h4">Featured planters this week</Typography>
+            </Box>
+            <FeaturedPlantersSlider
+              link={(id) => `/planters/${id}`}
+              color="secondary"
+              planters={planters}
+              isMobile={isFullscreen}
+            />
+          </>
+        )}
+        {wallets.length > 0 && (
+          <>
+            <Typography variant="h4">Featured wallets this week</Typography>
+            <FeaturedPlantersSlider
+              link={(id) => `/wallets/${id}`}
+              color="secondary"
+              planters={wallets}
+              isMobile={isFullscreen}
+            />
+          </>
+        )}
         <Typography
           variant="h4"
           sx={{
