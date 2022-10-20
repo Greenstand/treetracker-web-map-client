@@ -1,3 +1,10 @@
+# [2.0.0-beta.144](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.143...v2.0.0-beta.144) (2022-10-20)
+
+
+### Features
+
+* **dashboard:** add navbar tab ([68dbdec](https://github.com/Greenstand/treetracker-web-map-client/commit/68dbdec7d2b65dfff684414bc8d3b56b4a979649))
+
 # [2.0.0-beta.143](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.142...v2.0.0-beta.143) (2022-10-20)
 
 
