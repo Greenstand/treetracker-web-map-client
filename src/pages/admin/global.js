@@ -43,9 +43,12 @@ function Global() {
           }}
         >
           <Tab value={currentTab} index={0} onClick={handleSidebarClick}>
-            <Typography>Theme Settings</Typography>
+            <Typography>Navbar Settings</Typography>
           </Tab>
           <Tab value={currentTab} index={1} onClick={handleSidebarClick}>
+            <Typography>Theme Settings</Typography>
+          </Tab>
+          <Tab value={currentTab} index={2} onClick={handleSidebarClick}>
             <Typography>Map Settings</Typography>
           </Tab>
         </List>
@@ -57,9 +60,12 @@ function Global() {
         }}
       >
         <TabPanel value={currentTab} index={0}>
-          <Typography variant="h5">Theme View</Typography>
+          <Typography variant="h5">Navbar View</Typography>
         </TabPanel>
         <TabPanel value={currentTab} index={1}>
+          <Typography variant="h5">Theme View</Typography>
+        </TabPanel>
+        <TabPanel value={currentTab} index={2}>
           <Typography variant="h5">Map View</Typography>
         </TabPanel>
       </Box>
