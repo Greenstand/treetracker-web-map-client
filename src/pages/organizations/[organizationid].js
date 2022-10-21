@@ -473,8 +473,7 @@ export default function Organization(props) {
             About the Organization
           </Typography>
           <Typography variant="body2" mt={7}>
-            {/* {organization.about} */}
-            <div
+            <Box
               dangerouslySetInnerHTML={{
                 __html: marked.parse(organization.about || 'NO DATA YET'),
               }}
@@ -484,7 +483,14 @@ export default function Organization(props) {
             Mission
           </Typography>
           <Typography variant="body2" mt={7}>
-            <div
+            <Box
+              sx={{
+                fontFamily: 'Lato',
+                fontWeight: 400,
+                fontSize: '20px',
+                lineHeight: '28px',
+                letterSpacing: '0.04em',
+              }}
               dangerouslySetInnerHTML={{
                 __html: marked.parse(organization.mission || 'NO DATA YET'),
               }}

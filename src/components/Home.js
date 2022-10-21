@@ -126,7 +126,18 @@ export default function Home(props) {
           }}
         >
           <Button variant="outlined" color="inherit" className={classes.button}>
-            Learn more
+            <Link
+              target="_blank"
+              href="https://greenstand.org/treetracker/web-map"
+            >
+              <Box
+                sx={{
+                  color: 'white',
+                }}
+              >
+                Learn more
+              </Box>
+            </Link>
           </Button>
           <Link href="/top">
             <Button
