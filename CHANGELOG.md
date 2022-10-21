@@ -1,3 +1,10 @@
+# [2.0.0-beta.145](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.144...v2.0.0-beta.145) (2022-10-21)
+
+
+### Features
+
+* **playground:** update textarea styling ([143ee02](https://github.com/Greenstand/treetracker-web-map-client/commit/143ee02862b90b2a68e0065efc8cf5bdcdaaa117))
+
 # [2.0.0-beta.144](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.143...v2.0.0-beta.144) (2022-10-20)
 
 
