@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.0.0-beta.106",
+  "version": "2.0.0-beta.144",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -64,15 +64,17 @@
     "leaflet-utfgrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
     "leaflet.gridlayer.googlemutant": "^0.12.1",
     "loglevel": "^1.7.0",
+    "marked": "^4.1.1",
     "moment": "^2.29.1",
     "next": "^12.1.0",
     "next-images": "^1.8.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
+    "react-best-gradient-color-picker": "^2.0.21",
     "react-dom": "^17.0.2",
     "react-world-map": "^2.4.0",
     "source-map-explorer": "^2.5.2",
-    "treetracker-web-map-core": "^2.2.0",
+    "treetracker-web-map-core": "^2.5.0",
     "tss-react": "^2.0.3",
     "url-join-ts": "^1.0.5",
     "webfontloader": "^1.6.28"

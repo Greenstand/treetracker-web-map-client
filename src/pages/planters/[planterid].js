@@ -2,7 +2,6 @@
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import { SvgIcon } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -12,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import * as d3 from 'd3';
 import log from 'loglevel';
+import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -27,6 +27,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
+import Icon from '../../components/common/CustomIcon';
 import DataTag from '../../components/common/DataTag';
 import DrawerTitle from '../../components/common/DrawerTitle';
 import Info from '../../components/common/Info';
@@ -41,7 +42,8 @@ import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
-import * as utils from '../../models/utils';
+import * as pathResolver from '../../models/pathResolver';
+import { getLocationString, getPlanterName, wrapper } from '../../models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -123,14 +125,18 @@ export default function Planter(props) {
         await map.setFilters({
           userid: planter.id,
         });
-        const view = await map.getInitialView();
-        map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
-        log.warn('no data:', map, planter);
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          const view = await map.getInitialView();
+          map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        }
       }
     }
     reload();
   }, [mapContext, planter]);
-  console.log('plantersss', planter);
 
   return (
     <>
@@ -170,7 +176,7 @@ export default function Planter(props) {
                 },
                 {
                   icon: planter.image_url,
-                  name: `${utils.getPlanterName(
+                  name: `${getPlanterName(
                     planter.first_name,
                     planter.last_name,
                   )}`,
@@ -178,19 +184,15 @@ export default function Planter(props) {
               ]}
             />
             <Box>
-              {}
-              <SvgIcon
-                component={SearchIcon}
-                inheritViewBox
+              <Icon
+                icon={SearchIcon}
+                width={48}
+                height={48}
+                color="grey"
                 sx={{
-                  width: 48,
-                  height: 48,
                   fill: 'transparent',
                   '& path': {
                     fill: 'grey',
-                  },
-                  '& rect': {
-                    stroke: 'grey',
                   },
                 }}
               />
@@ -228,7 +230,7 @@ export default function Planter(props) {
               }}
             >
               <Typography variant="h2">
-                {utils.getPlanterName(planter.first_name, planter.last_name)}
+                {getPlanterName(planter.first_name, planter.last_name)}
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info
@@ -239,7 +241,13 @@ export default function Planter(props) {
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+                <Info
+                  iconURI={LocationIcon}
+                  info={getLocationString(
+                    planter.country_name,
+                    planter.continent_name,
+                  )}
+                />
               </Box>
               <Box
                 sx={{
@@ -288,7 +296,13 @@ export default function Planter(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              <Info
+                iconURI={LocationIcon}
+                info={getLocationString(
+                  planter.country_name,
+                  planter.continent_name,
+                )}
+              />
             </Box>
             <Box
               sx={{
@@ -334,11 +348,11 @@ export default function Planter(props) {
             <CustomCard
               handleClick={() => setIsPlanterTab(true)}
               iconURI={TreeIcon}
-              sx={{
-                height: 34,
-                width: 26,
-                '& path': {
-                  fill: ({ palette }) => palette.primary.main,
+              iconProps={{
+                sx: {
+                  '& path': {
+                    fill: ({ palette }) => palette.primary.main,
+                  },
                 },
               }}
               title="Trees Planted"
@@ -354,11 +368,11 @@ export default function Planter(props) {
                   : undefined
               }
               iconURI={PeopleIcon}
-              sx={{
-                height: 36,
-                width: 36,
-                '& path': {
-                  fill: ({ palette }) => palette.text.primary,
+              iconProps={{
+                sx: {
+                  '& path': {
+                    fill: ({ palette }) => palette.text.primary,
+                  },
                 },
               }}
               title="Ass. Orgs"
@@ -459,7 +473,11 @@ export default function Planter(props) {
           variant="body2"
           className={classes.textColor}
         >
-          {planter.about || 'NO DATA YET'}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: marked.parse(planter.about || 'NO DATA YET'),
+            }}
+          />
         </Typography>
         <Divider
           varian="fullwidth"
@@ -489,7 +507,7 @@ export default function Planter(props) {
   );
 }
 
-export const getServerSideProps = utils.wrapper(async ({ params }) => {
+export const getServerSideProps = wrapper(async ({ params }) => {
   const id = params.planterid;
   const planter = await getPlanterById(id);
   const data = await getOrgLinks(planter.links);

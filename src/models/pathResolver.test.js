@@ -67,9 +67,7 @@ describe('Test pathResolver', () => {
 
       expect(result).toMatchObject({
         pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens',
-        query: {
-          tree_id: 14615,
-        },
+        query: {},
       });
     });
 
@@ -138,9 +136,7 @@ describe('Test pathResolver', () => {
 
       expect(result).toMatchObject({
         pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens',
-        query: {
-          tree_id: 14615,
-        },
+        query: {},
       });
     });
   });
@@ -227,6 +223,20 @@ describe('Test pathResolver', () => {
         name: 'wallets',
         id: '1f2a0862-66d1-4b42-8216-5a5cb9c6eca5',
       });
+    });
+  });
+
+  describe('getBounds', () => {
+    it('?bounds=-126.56250000000001,-56.365250136856076,126.56250000000001,56.17002298293205', () => {
+      const bounds = pathResolver.getBounds({
+        query: {
+          bounds:
+            '-126.56250000000001,-56.365250136856076,126.56250000000001,56.17002298293205',
+        },
+      });
+      expect(bounds).toBe(
+        '-126.56250000000001,-56.365250136856076,126.56250000000001,56.17002298293205',
+      );
     });
   });
 });

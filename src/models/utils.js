@@ -61,8 +61,10 @@ async function requestAPI(url) {
     log.warn('requestAPI:', urlFull);
     // urlFull = urlFull.replace(/\?/, '/query/');
 
+    const begin = Date.now();
     const res = await axios.get(urlFull);
     const { data } = res;
+    log.warn('url:', urlFull, 'took:', Date.now() - begin);
     return data;
   } catch (ex) {
     log.error('ex:', ex);
@@ -235,6 +237,13 @@ const wrapper = (callback) => (params) =>
     };
   });
 
+const getLocationString = (country, continent) => {
+  if (!country && !continent) return 'Unknown';
+  if (!country) return continent;
+  if (!continent) return country;
+  return `${country}, ${continent}`;
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -253,4 +262,5 @@ export {
   nextPathBaseDecode,
   nextPathBaseEncode,
   wrapper,
+  getLocationString,
 };

@@ -1,9 +1,10 @@
-import { Paper, Box, Grid, Typography, SvgIcon } from '@mui/material';
+import { Paper, Box, Grid, Typography } from '@mui/material';
 import countries from 'i18n-iso-countries';
 import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
 import { fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
+import Icon from './common/CustomIcon';
 import { useMobile } from '../hooks/globalHooks';
 import TreeIcon from '../images/icons/tree.svg';
 
@@ -91,14 +92,12 @@ function RibbonWrapper({ fill, index }) {
 
 function TreeImage(isMobile) {
   return (
-    <SvgIcon
-      component={TreeIcon}
-      inheritViewBox
+    <Icon
+      icon={TreeIcon}
       sx={{
         width: !isMobile ? '13.5px' : '12px',
         height: !isMobile ? '18px' : '14px',
       }}
-      alt="tree icon"
     />
   );
 }
@@ -180,8 +179,8 @@ function LeaderBoard(props) {
       {fixedCountries &&
         fixedCountries.map((country, index) => (
           <Paper
-            key={country.id}
-            onClick={() => handleCountryClick(country.id)}
+            key={country.region_id}
+            onClick={() => handleCountryClick(country.region_id)}
             elevation={isMobile ? 2 : 5}
             sx={{
               borderRadius: '100px',

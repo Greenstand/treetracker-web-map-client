@@ -31,6 +31,8 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
     JSON.stringify(router, undefined, 2),
     'pathname:',
     pathname,
+    'with options:',
+    options,
   );
   console.warn(JSON.stringify(tree, undefined, 2));
 
@@ -112,4 +114,12 @@ function getContext(router, options = {}) {
   return null;
 }
 
-export { getPathWhenClickTree, updatePathWhenMapMoveEnd, getContext };
+function getBounds(router) {
+  return router.query.bounds;
+}
+export {
+  getPathWhenClickTree,
+  updatePathWhenMapMoveEnd,
+  getContext,
+  getBounds,
+};

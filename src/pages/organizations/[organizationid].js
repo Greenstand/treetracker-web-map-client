@@ -9,10 +9,10 @@ import {
   useMediaQuery,
   Typography,
   Avatar,
-  SvgIcon,
 } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
+import { marked } from 'marked';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -34,6 +34,7 @@ import VerifiedBadge from '../../components/VerifiedBadge';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
+import Icon from '../../components/common/CustomIcon';
 import Info from '../../components/common/Info';
 import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
@@ -45,7 +46,8 @@ import orgBackground from '../../images/org-background.png';
 import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
-import * as utils from '../../models/utils';
+import * as pathResolver from '../../models/pathResolver';
+import { getLocationString, getContinent, wrapper } from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   imgContainer: {
@@ -81,7 +83,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Organization(props) {
-  log.warn('props:', props);
+  log.warn('props for org page:', props);
   const { organization, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
   const { classes } = useStyles();
@@ -98,7 +100,7 @@ export default function Organization(props) {
     const tree = organization?.featuredTrees?.trees[0];
     if (tree) {
       const { lat, lon } = tree;
-      const newContinent = await utils.getContinent(lat, lon);
+      const newContinent = await getContinent(lat, lon);
       setContinent(newContinent.name);
     }
   }
@@ -119,8 +121,14 @@ export default function Organization(props) {
         await map.setFilters({
           map_name: organization.map_name,
         });
-        const view = await map.getInitialView();
-        await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          const view = await map.getInitialView();
+          await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        }
       } else {
         log.warn('no data:', map, organization);
       }
@@ -171,18 +179,15 @@ export default function Organization(props) {
               ]}
             />
 
-            <SvgIcon
-              component={SearchIcon}
-              inheritViewBox
+            <Icon
+              icon={SearchIcon}
+              width={48}
+              height={48}
+              color="grey"
               sx={{
-                width: 48,
-                height: 48,
                 fill: 'transparent',
                 '& path': {
                   fill: 'grey',
-                },
-                '& rect': {
-                  stroke: 'grey',
                 },
               }}
             />
@@ -208,7 +213,13 @@ export default function Organization(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              <Info
+                iconURI={LocationIcon}
+                info={getLocationString(
+                  organization.country_name,
+                  organization.continent_name,
+                )}
+              />
             </Box>
             <Box
               sx={{
@@ -247,7 +258,13 @@ export default function Organization(props) {
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+                <Info
+                  iconURI={LocationIcon}
+                  info={getLocationString(
+                    organization.country_name,
+                    organization.continent_name,
+                  )}
+                />
               </Box>
               <Box
                 sx={{
@@ -320,15 +337,15 @@ export default function Organization(props) {
               <CustomCard
                 handleClick={() => setIsPlanterTab(true)}
                 iconURI={TreeIcon}
-                sx={{
-                  width: 26,
-                  height: 34,
-                  '& path': {
-                    fill: ({ palette }) => palette.primary.main,
+                iconProps={{
+                  sx: {
+                    '& path': {
+                      fill: ({ palette }) => palette.primary.main,
+                    },
                   },
                 }}
                 title="Trees Planted"
-                text={organization?.featuredTrees?.trees.length || '---'}
+                text={organization?.featuredTrees?.total || '---'}
                 disabled={!isPlanterTab}
               />
             </Grid>
@@ -336,17 +353,15 @@ export default function Organization(props) {
               <CustomCard
                 handleClick={() => setIsPlanterTab(false)}
                 iconURI={PeopleIcon}
-                sx={{
-                  height: 36,
-                  width: 36,
-                  '& path': {
-                    fill: ({ palette }) => palette.text.primary,
+                iconProps={{
+                  sx: {
+                    '& path': {
+                      fill: ({ palette }) => palette.text.primary,
+                    },
                   },
                 }}
                 title="Hired Planters"
-                text={
-                  organization?.associatedPlanters?.planters.length || '---'
-                }
+                text={organization?.associatedPlanters?.total || '---'}
                 disabled={isPlanterTab}
               />
             </Grid>
@@ -434,11 +449,13 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-          {organization?.associatedPlanters?.planters?.map((planter, i) => (
-            <Box sx={{ mt: [6, 12] }} key={planter.name}>
-              <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
-            </Box>
-          ))}
+          {organization?.associatedPlanters?.planters
+            ?.sort((e1, e2) => (e1.about ? -1 : 1))
+            .map((planter, i) => (
+              <Box sx={{ mt: [6, 12] }} key={planter.name}>
+                <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
+              </Box>
+            ))}
         </Box>
         <Box
           sx={{
@@ -456,13 +473,22 @@ export default function Organization(props) {
             About the Organization
           </Typography>
           <Typography variant="body2" mt={7}>
-            {organization.about || 'NO DATA YET'}
+            {/* {organization.about} */}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(organization.about || 'NO DATA YET'),
+              }}
+            />
           </Typography>
           <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
             Mission
           </Typography>
           <Typography variant="body2" mt={7}>
-            {organization.mission || 'NO DATA YET'}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(organization.mission || 'NO DATA YET'),
+              }}
+            />
           </Typography>
           <Divider
             varian="fullwidth"
@@ -493,7 +519,7 @@ export default function Organization(props) {
   );
 }
 
-export const getServerSideProps = utils.wrapper(async ({ params }) => {
+export const getServerSideProps = wrapper(async ({ params }) => {
   const id = params.organizationid;
   const organization = await getOrganizationById(id);
   const orgLinks = await getOrgLinks(organization.links);

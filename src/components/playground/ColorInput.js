@@ -1,6 +1,15 @@
-import { Box, TextField } from '@mui/material';
-import { useState, useEffect } from 'react';
+import ColorizeIcon from '@mui/icons-material/Colorize';
+import {
+  Box,
+  TextField,
+  IconButton,
+  InputAdornment,
+  Popover,
+} from '@mui/material';
+import { useState, useEffect, useRef } from 'react';
+import ColorPicker from 'react-best-gradient-color-picker';
 import { usePlaygroundUtils } from '../../hooks/contextHooks';
+import useDisclosure from '../../hooks/useDisclosure';
 import { propRules } from '../../models/themePlaygroundOptions';
 
 function ColorInput(props) {
@@ -10,6 +19,9 @@ function ColorInput(props) {
   const [value, setValue] = useState(initialValue);
   const [isValid, setValid] = useState(true);
   const isGradient = /gradient/i.test(label);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const pickerRef = useRef(null);
+  const timer = useRef(null);
 
   useEffect(() => {
     setValue(initialValue);
@@ -23,6 +35,15 @@ function ColorInput(props) {
     if (!isGradient) if (!propRules.color.test(userValue)) return;
     setValid(true);
     setPropByPath(path, userValue);
+  };
+
+  const handleColorChange = (color) => {
+    setValue(color);
+    // if the user drags too fast the (global) state can't keep up
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      setPropByPath(path, color);
+    }, 200);
   };
 
   return (
@@ -43,7 +64,45 @@ function ColorInput(props) {
           width: 1,
         }}
         helperText={!isValid && 'Invalid syntax'}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={onOpen} ref={pickerRef}>
+                <ColorizeIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
+      <Popover
+        open={isOpen}
+        onClose={onClose}
+        anchorEl={pickerRef.current}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        sx={{
+          '& .MuiPopover-paper': {
+            p: 1,
+          },
+        }}
+      >
+        <ColorPicker
+          value={value}
+          onChange={handleColorChange}
+          hideControls={!isGradient}
+          hidePresets
+          hideEyeDrop
+          hideColorGuide
+          hideAdvancedSliders
+          hideInputType
+        />
+      </Popover>
     </Box>
   );
 }

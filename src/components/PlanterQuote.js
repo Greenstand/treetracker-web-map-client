@@ -11,6 +11,7 @@ import * as d3 from 'd3';
 import log from 'loglevel';
 import moment from 'moment';
 import Image from 'next/image';
+import { getLocationString } from 'models/utils';
 import Link from './Link';
 import ColorButton from './common/ColorButton';
 import DataTag from './common/DataTag';
@@ -22,7 +23,6 @@ import PeopleIcon from '../images/icons/people.svg';
 import imagePlaceholder from '../images/image-placeholder.png';
 import QuoteImgReverse from '../images/quote-reverse.svg';
 import QuoteImg from '../images/quote-symbol.svg';
-
 // TODO: something is wrong with quote-symbol.svg and quote-reverse.svg, they show a blank space. The svg files pull up as blanks. Not sure how to fix them, putting up an issue as this is something totally different than what I'm working on.
 
 function PlanterQuote(props) {
@@ -30,14 +30,17 @@ function PlanterQuote(props) {
   const { planter, reverse = false } = props;
   const {
     id,
-    quote: quote2,
+    about: quote2,
     name,
     image_url: photo2,
     created_at,
     location,
   } = planter;
 
-  const quote = quote2 || "the planter hasn't left any quote yet";
+  let quote = quote2 || "the planter hasn't left any quote yet";
+  if (quote.length > 500) {
+    quote = `${quote.substring(0, 500)}...`;
+  }
   const photo = photo2 || imagePlaceholder;
 
   const theme = useTheme();
@@ -127,7 +130,13 @@ function PlanterQuote(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              <Info
+                iconURI={LocationIcon}
+                info={getLocationString(
+                  planter.country_name,
+                  planter.continent_name,
+                )}
+              />
             </Box>
           </Box>
         </Box>
@@ -184,7 +193,8 @@ function PlanterQuote(props) {
               />
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Info iconURI={LocationIcon} info="Shirimatunda, Tanzania" />
+              info=
+              {getLocationString(planter.country_name, planter.continent_name)}
             </Box>
           </Box>
           <Avatar

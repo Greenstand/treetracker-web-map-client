@@ -8,7 +8,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { useTheme, SvgIcon, Avatar, Divider } from '@mui/material';
+import { useTheme, Avatar, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -30,6 +30,7 @@ import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
 import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
+import Icon from '../../components/common/CustomIcon';
 import Info from '../../components/common/Info';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile, useEmbed } from '../../hooks/globalHooks';
@@ -65,6 +66,8 @@ export default function Tree({
   });
   const isMobile = useMobile();
   const isEmbed = useEmbed();
+  const isPlanterContext = context && context.name === 'planters';
+  const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
 
@@ -129,7 +132,7 @@ export default function Tree({
       log.warn('map ,tree, context in tree page:', map, tree, context);
       if (map && tree?.lat && tree?.lon) {
         if (context && context.name) {
-          if (context.name === 'planters') {
+          if (isPlanterContext) {
             log.warn('set planter filter', context.id);
             await map.setFilters({
               userid: context.id,
@@ -141,7 +144,7 @@ export default function Tree({
               lon: parseFloat(tree.lon.toString()),
             };
             map.selectTree(treeDataForMap);
-          } else if (context.name === 'organizations') {
+          } else if (isOrganizationContext) {
             log.warn('set org filter', organization.map_name);
             await map.setFilters({
               map_name: organization.map_name,
@@ -236,7 +239,7 @@ export default function Tree({
                   '& path': { fill: theme.palette.common.black },
                 }}
               >
-                <SvgIcon component={OriginIcon} />
+                <Icon icon={OriginIcon} />
                 {tree.species_name || 'Unknown Species'}
               </Typography>
               <Typography
@@ -254,7 +257,7 @@ export default function Tree({
                   '& path': { fill: theme.palette.common.black },
                 }}
               >
-                <SvgIcon component={CalendarIcon} />
+                <Icon icon={CalendarIcon} />
                 {`Planted on ${moment(tree.time_created).format(
                   'MMMM Do, YYYY',
                 )}` || 'Unknown Date'}
@@ -274,7 +277,7 @@ export default function Tree({
                   '& path': { fill: theme.palette.common.black },
                 }}
               >
-                <SvgIcon component={LocationIcon} />
+                <Icon icon={LocationIcon} />
                 {tree.country_name !== null
                   ? `Located in ${tree.country_name}`
                   : 'Unknown location'}
@@ -320,7 +323,7 @@ export default function Tree({
                 name: 'Home',
                 url: '/',
               },
-              ...(context && context.name === 'planters'
+              ...(isPlanterContext
                 ? [
                     {
                       url: `/planters/${planter.id}`,
@@ -332,7 +335,7 @@ export default function Tree({
                     },
                   ]
                 : []),
-              ...(context && context.name === 'organizations' && organization
+              ...(isOrganizationContext && organization
                 ? [
                     {
                       url: `/organizations/${organization.id}`,
@@ -347,13 +350,11 @@ export default function Tree({
             ]}
           />
           <Box>
-            {}
-            <SvgIcon
-              component={SearchIcon}
-              inheritViewBox
+            <Icon
+              icon={SearchIcon}
+              width={48}
+              height={48}
               sx={{
-                width: 48,
-                height: 48,
                 fill: 'transparent',
                 '& path': {
                   fill: 'grey',
@@ -420,11 +421,7 @@ export default function Tree({
                     },
                   }}
                 >
-                  <SvgIcon
-                    alt="share the link"
-                    component={ShareIcon}
-                    inheritViewBox
-                  />
+                  <Icon icon={ShareIcon} />
                 </Box>
               }
             />
@@ -477,7 +474,7 @@ export default function Tree({
                   '& path': { fill: theme.palette.common.white },
                 }}
               >
-                <SvgIcon component={OriginIcon} />
+                <Icon icon={OriginIcon} />
                 {tree.species_name || 'Unknown Species'}
               </Typography>
               <Typography
@@ -494,7 +491,7 @@ export default function Tree({
                   '& path': { fill: theme.palette.common.white },
                 }}
               >
-                <SvgIcon component={CalendarIcon} />
+                <Icon icon={CalendarIcon} />
                 {`Planted on ${moment(tree.time_created).format(
                   'MMMM Do, YYYY',
                 )}` || 'Unknown Date'}
@@ -513,7 +510,7 @@ export default function Tree({
                   '& path': { fill: theme.palette.common.white },
                 }}
               >
-                <SvgIcon component={LocationIcon} />
+                <Icon icon={LocationIcon} />
                 {tree.country_name !== null
                   ? `Located in ${tree.country_name}`
                   : 'Unknown location'}
@@ -593,12 +590,12 @@ export default function Tree({
         <TreeTag
           TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
           title="Planted on"
-          icon={<SvgIcon component={CalendarIcon} />}
+          icon={<Icon icon={CalendarIcon} />}
         />
         <TreeTag
           TreeTagValue={tree.verified === false ? 'not verified' : 'verifed'}
           title="Verification"
-          icon={<SvgIcon component={VerifiedIcon} />}
+          icon={<Icon icon={VerifiedIcon} />}
           disabled={tree.verified === false}
         />
         <TreeTag
@@ -606,13 +603,13 @@ export default function Tree({
             tree.country_name === null ? 'unknown' : tree.country_name
           }
           title="Located in"
-          icon={<SvgIcon component={LocationIcon} />}
+          icon={<Icon icon={LocationIcon} />}
           disabled={tree.country_name === null}
         />
         <TreeTag
           TreeTagValue={tree.age === null ? 'unknown' : tree.age}
           title="Age"
-          icon={<SvgIcon component={HistoryIcon} />}
+          icon={<Icon icon={HistoryIcon} />}
           disabled={tree.age === null}
         />
         <TreeTag
@@ -620,21 +617,23 @@ export default function Tree({
             tree.species_name === null ? 'unknown' : tree.species_name
           }
           title="Species"
-          icon={<SvgIcon component={OriginIcon} inheritViewBox alt="origin" />}
+          icon={<Icon icon={OriginIcon} />}
           disabled={tree.species_name === null}
+          subtitle={tree.species_desc === null ? null : 'click to learn more'}
+          link={tree.species_desc === null ? null : tree.species_desc}
         />
         <TreeTag
           TreeTagValue={
             tree.gps_accuracy === null ? 'unknown' : tree.gps_accuracy
           }
           title="GPS Accuracy"
-          icon={<SvgIcon component={AccuracyIcon} />}
+          icon={<Icon icon={AccuracyIcon} />}
           disabled={tree.gps_accuracy === null}
         />
         <TreeTag
           TreeTagValue={tree.morphology === null ? 'unknown' : tree.morphology}
           title="Morphology"
-          icon={<SvgIcon component={HubIcon} />}
+          icon={<Icon icon={HubIcon} />}
           disabled={tree.morphology === null}
         />
         <TreeTag
@@ -644,7 +643,16 @@ export default function Tree({
               : `${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(tree.lon, 5)}`
           }
           title="Latitude, Longitude"
-          icon={<SvgIcon component={GlobalIcon} color="pink" />}
+          icon={
+            <Icon
+              icon={GlobalIcon}
+              sx={{
+                '& path': {
+                  stroke: 'none',
+                },
+              }}
+            />
+          }
           disabled={tree.lat === null || tree.lon === null}
         />
         <TreeTag
@@ -652,7 +660,7 @@ export default function Tree({
             tree.token_id === null ? 'Token not issued' : tree.token_id
           }
           title="Token ID"
-          icon={<SvgIcon component={TokenIcon} />}
+          icon={<Icon icon={TokenIcon} />}
           subtitle={tree.token_id === null ? null : 'click to enter'}
           link={tree.token_id === null ? null : `/tokens/${tree.token_id}`}
           disabled={tree.token_id === null}
@@ -662,7 +670,7 @@ export default function Tree({
             tree.wallet_name === null ? 'No wallet owns it' : tree.wallet_name
           }
           title="Wallet owner"
-          icon={<SvgIcon component={AccountBalanceWalletIcon} />}
+          icon={<Icon icon={AccountBalanceWalletIcon} />}
           subtitle={tree.wallet_name === null ? null : 'click to enter'}
           link={tree.wallet_name === null ? null : `/wallets/${tree.wallet_id}`}
           disabled={tree.wallet_name === null}
@@ -676,6 +684,21 @@ export default function Tree({
       />
       <ImpactSection />
       <Box height={20} />
+      {nextExtraIsEmbed && (
+        <Portal
+          container={() => document.getElementById('embed-logo-container')}
+        >
+          <Avatar
+            sx={{
+              width: '120px',
+              height: '120px',
+              margin: '10px',
+            }}
+            src={isPlanterContext ? planter.image_url : organization.logo_url}
+            variant="rounded"
+          />
+        </Portal>
+      )}
     </Box>
   );
 }
@@ -689,9 +712,11 @@ export const getServerSideProps = utils.wrapper(async ({ params }) => {
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');
     organization = await getOrganizationById(planting_organization_id);
-  } else if (planter.organzation_id) {
+  } else if (planter.organization_id) {
     log.warn('load org from planter. organization_id');
     organization = await getOrganizationById(planter.organization_id);
+  } else {
+    log.warn('can not load org for tree:', tree, planter);
   }
 
   return {
