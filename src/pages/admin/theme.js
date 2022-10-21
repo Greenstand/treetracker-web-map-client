@@ -20,6 +20,7 @@ import {
   ToggleThemeMode,
   getTabProps,
   FontCustomization,
+  JSONTextarea,
 } from '../../components/playground';
 import { PlaygroundProvider } from '../../context/playgroundContext';
 import {
@@ -504,17 +505,7 @@ function ThemeConfig() {
             <FontCustomization />
           </CategoryTabPanel>
         </Box>
-        <textarea
-          onChange={handleChange}
-          style={{
-            width: '100%',
-            height: '100%',
-            maxHeight: '350px',
-            minHeight: '200px',
-            flex: '1',
-          }}
-          value={JSON.stringify(theme, null, 2)}
-        />
+        <JSONTextarea value={theme} onChange={handleChange} />
       </Grid>
     </Grid>
   );

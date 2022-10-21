@@ -5,6 +5,7 @@ import FontAddInput from './FontAddInput';
 import FontCustomization from './FontCustomization';
 import FontSelector from './FontSelector';
 import FontsList from './FontsList';
+import JSONTextarea from './JSONTextarea';
 import SelectColorProp from './SelectColorProp';
 import SelectTypographyProp from './SelectTypographyProp';
 import SquareIconButton from './SquareIconButton';
@@ -29,4 +30,5 @@ export {
   FontAddInput,
   FontSelector,
   FontsList,
+  JSONTextarea,
 };
