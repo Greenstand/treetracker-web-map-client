@@ -16,6 +16,7 @@ function getStorageValue(key, defaultValue) {
 const useLocalStorage = (key, defaultValue) => {
   const [value, setValue] = useState(undefined);
 
+  // Retrieve value from local storage on client side
   useEffect(() => {
     setValue(getStorageValue(key, defaultValue));
   }, []);
