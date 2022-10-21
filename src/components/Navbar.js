@@ -125,39 +125,34 @@ function Navbar() {
         )}
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
-        <Link href="/">
+        <Link href="https://greenstand.org/" target="_blank">
           <Button variant="text">
-            <Typography className={classes.buttonStyle}>Greenstand</Typography>
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
             <Typography className={classes.buttonStyle}>
-              Partnerships
+              About Greenstand
             </Typography>
           </Button>
         </Link>
-        <Link href="/">
+        <Link
+          target="_blank"
+          href="https://greenstand.org/treetracker/start-tracking"
+        >
           <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Treetracker</Typography>
+            <Typography className={classes.buttonStyle}>
+              About Treetracker
+            </Typography>
           </Button>
         </Link>
-        <Link href="/">
+        <Link target="_blank" href="https://greenstand.org/contribute/donate">
           <Button className={classes.buttonStyle} variant="text">
             <Typography className={classes.buttonStyle}>Contribute</Typography>
           </Button>
         </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Sevices</Typography>
-          </Button>
-        </Link>
-        <Link href="/">
+        <Link target="_blank" href="https://greenstand.org/blog">
           <Button className={classes.buttonStyle} variant="text">
             <Typography className={classes.buttonStyle}>Blog</Typography>
           </Button>
         </Link>
-        <Link href="/">
+        <Link target="_blank" href="https://greenstand.org/contact">
           <Button className={classes.buttonStyle} variant="text">
             <Typography className={classes.buttonStyle}>Contact Us</Typography>
           </Button>
@@ -187,13 +182,25 @@ function Navbar() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Greenstand</MenuItem>
-        <MenuItem onClick={handleClose}>Partnerships</MenuItem>
-        <MenuItem onClick={handleClose}>Treetracker</MenuItem>
-        <MenuItem onClick={handleClose}>Contribute</MenuItem>
-        <MenuItem onClick={handleClose}>Services</MenuItem>
-        <MenuItem onClick={handleClose}>Blog</MenuItem>
-        <MenuItem onClick={handleClose}>Contact Us</MenuItem>
+        <MenuItem>
+          <Link href="https://greenstand.org/">About Greenstand</Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="https://greenstand.org/treetracker/start-tracking">
+            About Treetracker
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="https://greenstand.org/contribute/donate">
+            Contribute
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="https://greenstand.org/blog">Blog</Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="https://greenstand.org/contact">Contact Us</Link>
+        </MenuItem>
         <MenuItem onClick={handleClose} sx={{ paddingLeft: '10px' }}>
           <ChangeThemeButton />
         </MenuItem>
