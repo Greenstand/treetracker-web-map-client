@@ -1,4 +1,5 @@
 import ColorizeIcon from '@mui/icons-material/Colorize';
+import RestartAlt from '@mui/icons-material/RestartAlt';
 import {
   Box,
   TextField,
@@ -8,6 +9,7 @@ import {
 } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
 import ColorPicker from 'react-best-gradient-color-picker';
+import SquareIconButton from './SquareIconButton';
 import { usePlaygroundUtils } from '../../hooks/contextHooks';
 import useDisclosure from '../../hooks/useDisclosure';
 import { propRules } from '../../models/themePlaygroundOptions';
@@ -22,10 +24,17 @@ function ColorInput(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pickerRef = useRef(null);
   const timer = useRef(null);
+  const [defaultColor, setDefaultColor] = useState(initialValue);
 
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
+
+  // change single colors back to default
+  const handleReset = () => {
+    setValue(defaultColor);
+    setPropByPath(path, defaultColor);
+  };
 
   const handleChange = (e) => {
     const userValue = e.target.value;
@@ -70,6 +79,12 @@ function ColorInput(props) {
               <IconButton onClick={onOpen} ref={pickerRef}>
                 <ColorizeIcon />
               </IconButton>
+              <SquareIconButton
+                icon={<RestartAlt />}
+                color="error"
+                tooltip="Reset to default"
+                onClick={handleReset}
+              />
             </InputAdornment>
           ),
         }}
