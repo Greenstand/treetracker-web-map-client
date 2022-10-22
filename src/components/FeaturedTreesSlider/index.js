@@ -52,6 +52,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             // borderRadius: '40px 0 0 40px',
             position: 'absolute',
             borderRadius: ' 0 40px 40px 0',
+            border: '2px solid black',
             zIndex: 3,
             bottom: '47%',
             minWidth: '35px',
@@ -61,7 +62,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             '& svg': {
               marginRight: -4,
             },
-            opacity: 0.4,
+            opacity: 0.9,
           }}
           variant="contained"
         >
@@ -145,6 +146,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             right: 0,
             position: 'absolute',
             borderRadius: '40px 0 0 40px',
+            border: '2px solid black',
             zIndex: 3,
             bottom: '47%',
             minWidth: '35px',
@@ -154,7 +156,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             '& svg': {
               marginLeft: -4,
             },
-            opacity: 0.4,
+            opacity: 0.9,
           }}
           variant="contained"
         >
