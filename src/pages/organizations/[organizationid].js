@@ -344,7 +344,7 @@ export default function Organization(props) {
                     },
                   },
                 }}
-                title="Trees Planted"
+                title="Tree Captures Collected"
                 text={organization?.featuredTrees?.total || '---'}
                 disabled={!isPlanterTab}
               />
