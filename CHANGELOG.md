@@ -1,3 +1,16 @@
+# [2.0.0-beta.147](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.146...v2.0.0-beta.147) (2022-10-22)
+
+
+### Bug Fixes
+
+* useLocation hook to select correct theme ([c45b3cd](https://github.com/Greenstand/treetracker-web-map-client/commit/c45b3cd91953e950ddd7d04010443f54e1090777))
+
+
+### Features
+
+* add comment ([d3ff8a1](https://github.com/Greenstand/treetracker-web-map-client/commit/d3ff8a19fbf6788c0b1f4712fed31f5e050e02cc))
+* tree captures collected ([20ac47e](https://github.com/Greenstand/treetracker-web-map-client/commit/20ac47e16ea70cae88d17bc706628e02a80a55d1))
+
 # [2.0.0-beta.146](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.145...v2.0.0-beta.146) (2022-10-21)
 
 
