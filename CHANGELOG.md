@@ -1,3 +1,10 @@
+# [2.0.0-beta.148](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.147...v2.0.0-beta.148) (2022-10-22)
+
+
+### Features
+
+* added ability to reset single colors ([b350cd1](https://github.com/Greenstand/treetracker-web-map-client/commit/b350cd17ff29c96fd1cc4f796dd5a4aef25eb303))
+
 # [2.0.0-beta.147](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.146...v2.0.0-beta.147) (2022-10-22)
 
 
