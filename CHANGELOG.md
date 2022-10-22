@@ -1,3 +1,10 @@
+# [2.0.0-beta.149](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.148...v2.0.0-beta.149) (2022-10-22)
+
+
+### Bug Fixes
+
+* **hooks:** localstorage initial state is undefined ([78ad0fb](https://github.com/Greenstand/treetracker-web-map-client/commit/78ad0fb47a878192c3e5a0a667e315b632b84121))
+
 # [2.0.0-beta.148](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.147...v2.0.0-beta.148) (2022-10-22)
 
 
