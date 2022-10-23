@@ -1,3 +1,10 @@
+# [2.0.0-beta.150](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.149...v2.0.0-beta.150) (2022-10-23)
+
+
+### Features
+
+* add custom logo selector ([bda430f](https://github.com/Greenstand/treetracker-web-map-client/commit/bda430f37fdd7efb6515d900e04aaedc7e41e967))
+
 # [2.0.0-beta.149](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.148...v2.0.0-beta.149) (2022-10-22)
 
 
