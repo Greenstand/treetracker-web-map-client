@@ -69,6 +69,7 @@ function FeaturedPlantersSlider({
             // borderRadius: '40px 0 0 40px',
             position: 'absolute',
             borderRadius: ' 0 40px 40px 0',
+            border: '2px solid black',
             zIndex: 3,
             bottom: '0',
             top: '0',
@@ -80,7 +81,7 @@ function FeaturedPlantersSlider({
             '& svg': {
               marginRight: -4,
             },
-            opacity: 0.7,
+            opacity: 0.9,
           }}
           variant="contained"
         >
@@ -179,6 +180,7 @@ function FeaturedPlantersSlider({
             right: 0,
             position: 'absolute',
             borderRadius: '40px 0 0 40px',
+            border: '2px solid black',
             zIndex: 3,
             bottom: '0',
             top: '0',
@@ -190,7 +192,7 @@ function FeaturedPlantersSlider({
             '& svg': {
               marginLeft: -4,
             },
-            opacity: 0.7,
+            opacity: 0.9,
           }}
           variant="contained"
         >
