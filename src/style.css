@@ -10,6 +10,9 @@ body {
   margin: 0px;
   background: #ffffff;
   overscroll-behavior: contain;
+  /* Match font weight to figma */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .side {
