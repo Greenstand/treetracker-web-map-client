@@ -1,3 +1,11 @@
+# [2.0.0-beta.152](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.151...v2.0.0-beta.152) (2022-10-24)
+
+
+### Bug Fixes
+
+* add style to match figma font ([2352cee](https://github.com/Greenstand/treetracker-web-map-client/commit/2352ceefc42be069fee140f155c333e3c21250b8))
+* planter quote location issue ([2e9dc3b](https://github.com/Greenstand/treetracker-web-map-client/commit/2e9dc3b5685436f96f4ca46f0e161168c3b369ae))
+
 # [2.0.0-beta.151](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.150...v2.0.0-beta.151) (2022-10-24)
 
 
