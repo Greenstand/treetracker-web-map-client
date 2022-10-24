@@ -168,7 +168,7 @@ function LeaderBoard(props) {
               }}
               className={classes.title}
             >
-              TREES PLANTED
+              TREES CAPTURED
             </Typography>
             <TreeImage isMobile={isMobile} />
           </Grid>
