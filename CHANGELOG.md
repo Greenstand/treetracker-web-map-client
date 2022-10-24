@@ -1,3 +1,10 @@
+# [2.0.0-beta.151](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.150...v2.0.0-beta.151) (2022-10-24)
+
+
+### Bug Fixes
+
+* make slider button visible ([3bbffa8](https://github.com/Greenstand/treetracker-web-map-client/commit/3bbffa8d0b7e8231605493d47302a789bbb5a866))
+
 # [2.0.0-beta.150](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.149...v2.0.0-beta.150) (2022-10-23)
 
 
