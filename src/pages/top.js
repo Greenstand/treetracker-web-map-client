@@ -31,11 +31,11 @@ function Top(props) {
   const continentTags = [
     'Global',
     'Africa',
-    'Americas',
+    'Europe',
+    'North America',
     'Asia',
-    // 'Caribbean',
-    // 'Europe',
-    'Oceania',
+    'South America',
+    'Australia',
   ];
 
   const [continentTag, setContinentTag] = React.useState('Global');
@@ -58,7 +58,7 @@ function Top(props) {
       return;
     const fetchCountries = async () => {
       const data = await utils.requestAPI(
-        `/countries/leaderboard?continent=${continentTag}`,
+        `/countries/leaderboard/${continentTag}`,
       );
       setLeaderboardCountries(data.countries);
     };
@@ -246,7 +246,8 @@ function Top(props) {
   );
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+export async function getServerSideProps() {
   const [trees, countries, planters, organizations, wallets] =
     await Promise.all([
       getFeaturedTrees(), //
@@ -277,7 +278,7 @@ export async function getStaticProps() {
       organizations,
       wallets,
     },
-    revalidate: 60,
+    // revalidate: 60,
   };
 }
 
