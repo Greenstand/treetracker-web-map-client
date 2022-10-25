@@ -1,3 +1,10 @@
+# [2.0.0-beta.154](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.153...v2.0.0-beta.154) (2022-10-25)
+
+
+### Features
+
+* final country board ([6eb4511](https://github.com/Greenstand/treetracker-web-map-client/commit/6eb45111583efd07bfe083d2fe749a2a811d3cdc))
+
 # [2.0.0-beta.153](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.152...v2.0.0-beta.153) (2022-10-24)
 
 
