@@ -1,3 +1,10 @@
+# [2.0.0-beta.156](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.155...v2.0.0-beta.156) (2022-10-26)
+
+
+### Bug Fixes
+
+* broken country jump ([afa4832](https://github.com/Greenstand/treetracker-web-map-client/commit/afa4832a4043c1c85657fdbf05ae3811ad938aa3))
+
 # [2.0.0-beta.155](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.154...v2.0.0-beta.155) (2022-10-26)
 
 
