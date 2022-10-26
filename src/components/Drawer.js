@@ -8,6 +8,7 @@ export default function Drawer(props) {
   const rootRef = React.useRef(null);
   const buttonRef = React.useRef(null);
   const contentRef = React.useRef(null);
+  const contentStartX = React.useRef(0);
 
   function handleOpen() {
     log.warn('on click!');
@@ -150,10 +151,19 @@ export default function Drawer(props) {
     buttonRef.current.style.transform = `translateY(0px)`;
   }, []);
 
+  const handleContentTouchStart = React.useCallback((event) => {
+    log.warn('content touch start: ', event);
+    contentStartX.current = event.touches[0].pageX;
+  }, []);
+
   const handleContentTouchMove = React.useCallback((event) => {
     log.warn('content touch move: ', event);
     log.warn('content rect:', contentRef.current.scrollTop);
+    const fastRightSwipe = contentStartX.current > event.touches[0].pageX;
     if (contentRef.current.scrollTop > 0) {
+      event.stopPropagation();
+    } else if (fastRightSwipe) {
+      // Prevent drawer from closing when user fast swips right on the slider
       event.stopPropagation();
     }
   }, []);
@@ -166,6 +176,7 @@ export default function Drawer(props) {
     buttonRef.current.addEventListener('touchstart', handleButtonTouchStart);
     buttonRef.current.addEventListener('touchmove', handleButtonTouchMove);
     buttonRef.current.addEventListener('touchend', handleButtonTouchEnd);
+    contentRef.current.addEventListener('touchstart', handleContentTouchStart);
     contentRef.current.addEventListener('touchmove', handleContentTouchMove);
 
     // click handlers
@@ -188,6 +199,10 @@ export default function Drawer(props) {
       );
       buttonRef.current.removeEventListener('touchmove', handleButtonTouchMove);
       buttonRef.current.removeEventListener('touchend', handleButtonTouchEnd);
+      contentRef.current.removeEventListener(
+        'touchstart',
+        handleContentTouchStart,
+      );
       contentRef.current.removeEventListener(
         'touchmove',
         handleContentTouchMove,
