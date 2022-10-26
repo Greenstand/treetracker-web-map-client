@@ -179,8 +179,8 @@ function LeaderBoard(props) {
       {fixedCountries &&
         fixedCountries.map((country, index) => (
           <Paper
-            key={country.region_id}
-            onClick={() => handleCountryClick(country.region_id)}
+            key={country.id}
+            onClick={() => handleCountryClick(country.id)}
             elevation={isMobile ? 2 : 5}
             sx={{
               borderRadius: '100px',
