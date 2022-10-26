@@ -2,7 +2,7 @@ import React, { useEffect, createContext, useState, useCallback } from 'react';
 import { buildTheme } from './themeContext';
 import { useLocalStorage } from '../hooks/globalHooks';
 import { predefinedFonts } from '../models/themePlaygroundOptions';
-import { loadFonts, convertFontObjToFontArr } from '../models/utils';
+import * as utils from '../models/utils';
 
 const getInitialTheme = () => {
   // init default theme
@@ -43,8 +43,8 @@ export function PlaygroundProvider({ children }) {
     }));
 
     if (!themeObject.fonts) return;
-    const fontArr = convertFontObjToFontArr(themeObject.fonts);
-    loadFonts(fontArr).then((fontsLoaded) => {
+    const fontArr = utils.convertFontObjToFontArr(themeObject.fonts);
+    utils.loadFonts(fontArr).then((fontsLoaded) => {
       if (!fontsLoaded) return;
       setFonts((prevFonts) => ({
         ...prevFonts,
@@ -77,20 +77,12 @@ export function PlaygroundProvider({ children }) {
    * @returns the new theme
    */
   const setPropByPath = (propPath, value) => {
-    if (!value || !propPath) return null;
-    const temp = { ...theme };
-    propPath.split('.').reduce((acc, curr, i, src) => {
-      if (i === src.length - 1) {
-        acc[src[src.length - 1]] = value;
-        return acc[src[src.length - 1]];
-      }
-      return acc[curr];
-    }, temp);
-    setTheme({
-      ...theme,
-      ...temp,
-    });
-    return temp;
+    const updatedTheme = utils.setPropByPath(propPath, value, theme);
+    setTheme((prevTheme) => ({
+        ...prevTheme,
+        ...updatedTheme,
+      }));
+    return updatedTheme;
   };
 
   /**
@@ -107,12 +99,7 @@ export function PlaygroundProvider({ children }) {
    * getPropByPath('palette.primary')
    */
   const getPropByPath = useCallback(
-    (propPath) => {
-      if (!propPath) return null;
-      return propPath
-        .split('.')
-        .reduce((acc, curr, i, src) => acc[curr], theme);
-    },
+    (propPath) => utils.getPropByPath(propPath, theme),
     [theme],
   );
 

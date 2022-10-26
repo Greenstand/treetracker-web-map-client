@@ -244,6 +244,55 @@ const getLocationString = (country, continent) => {
   return `${country}, ${continent}`;
 };
 
+/**
+ * set mui theme prop by path
+ *
+ * @param {string} propPath - path to the prop
+ * @param {string|number} value - new value of the prop
+ * @param {Object} obj - the object to set the prop on
+ *
+ * @example
+ * Using our playground theme
+ * setPropByPath('palette.primary.main', '#FFFF33', theme)
+ *
+ * @returns the new theme
+ */
+const setPropByPath = (propPath, value, obj) => {
+  if (!value || !propPath) return null;
+  const temp = { ...obj };
+  propPath.split('.').reduce((acc, curr, i, src) => {
+    if (i === src.length - 1) {
+      acc[src[src.length - 1]] = value;
+      return acc[src[src.length - 1]];
+    }
+    return acc[curr];
+  }, temp);
+  return temp;
+};
+
+/**
+ * get obj prop by path
+ *
+ * @param {string} propPath - path to the prop
+ * @param {Object} obj - the object to get the prop from
+ *
+ * @example
+ * Using our playground theme
+ * // returns #FFFF33
+ * getPropByPath('palette.primary.main', theme)
+ *
+ * @example
+ * Using our playground theme
+ * // returns { main: xxx, light: xxx, dark: xxx }
+ * getPropByPath('palette.primary', theme)
+ *
+ * @returns the prop value
+ */
+const getPropByPath = (propPath, obj) => {
+  if (!propPath) return null;
+  return propPath.split('.').reduce((acc, curr) => acc[curr], obj);
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -263,4 +312,6 @@ export {
   nextPathBaseEncode,
   wrapper,
   getLocationString,
+  setPropByPath,
+  getPropByPath,
 };
