@@ -473,7 +473,7 @@ export default function Planter(props) {
           variant="body2"
           className={classes.textColor}
         >
-          <div
+          <span
             dangerouslySetInnerHTML={{
               __html: marked.parse(planter.about || 'NO DATA YET'),
             }}

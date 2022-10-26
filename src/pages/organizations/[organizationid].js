@@ -474,6 +474,7 @@ export default function Organization(props) {
           </Typography>
           <Typography variant="body2" mt={7}>
             <Box
+              component="span"
               dangerouslySetInnerHTML={{
                 __html: marked.parse(organization.about || 'NO DATA YET'),
               }}
@@ -484,6 +485,7 @@ export default function Organization(props) {
           </Typography>
           <Typography variant="body2" mt={7}>
             <Box
+              component="span"
               sx={{
                 fontFamily: 'Lato',
                 fontWeight: 400,
