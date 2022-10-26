@@ -163,7 +163,7 @@ export default function Drawer(props) {
     if (contentRef.current.scrollTop > 0) {
       event.stopPropagation();
     } else if (fastRightSwipe) {
-      // Prevent drawer from closing when user fast swips right on the slider
+      // Prevent drawer from closing when user makes a quick right swipe
       event.stopPropagation();
     }
   }, []);
