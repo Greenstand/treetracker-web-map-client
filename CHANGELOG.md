@@ -1,3 +1,10 @@
+# [2.0.0-beta.155](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.154...v2.0.0-beta.155) (2022-10-26)
+
+
+### Bug Fixes
+
+* align cards on the same line ([e82b88c](https://github.com/Greenstand/treetracker-web-map-client/commit/e82b88c1747d95e898c711b42c45d84c0bc090b9))
+
 # [2.0.0-beta.154](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.153...v2.0.0-beta.154) (2022-10-25)
 
 
