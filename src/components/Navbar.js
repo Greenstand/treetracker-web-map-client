@@ -84,7 +84,7 @@ function Navbar() {
             sx={{
               display: 'flex',
               justifyContent: 'flex-start',
-              alignItems: 'baseline',
+              alignItems: 'center',
               m: 4,
             }}
           >
@@ -94,6 +94,16 @@ function Navbar() {
               height={30}
               alt="Greenstand Logo"
             />
+            <Typography
+              variant="h4"
+              ml={2.5}
+              color="text.secondary"
+              sx={{
+                fontWeight: 900,
+              }}
+            >
+              Greenstand
+            </Typography>
           </Box>
         )}
         {!isMobile && (
