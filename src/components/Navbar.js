@@ -102,7 +102,7 @@ function Navbar() {
                 fontWeight: 900,
               }}
             >
-              Greenstand
+              Home
             </Typography>
           </Box>
         )}
