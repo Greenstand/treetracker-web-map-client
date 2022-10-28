@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
+import Navbar from './Navbar';
 import Timeline from './Timeline';
 import Max from '../images/max.svg';
 import ZoomIn from '../images/zoom-in.svg';
@@ -10,7 +11,6 @@ import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
-const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 
 const useStyles = makeStyles()((theme) => ({
   root: {
