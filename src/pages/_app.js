@@ -1,7 +1,7 @@
 import '../style.css';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { LinearProgress, Box } from '@mui/material';
+import { LinearProgress, Box, useTheme, useMediaQuery } from '@mui/material';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -13,7 +13,7 @@ import LayoutMobileB from '../components/LayoutMobileB';
 import LayoutMobileC from '../components/LayoutMobileC';
 import { DrawerProvider } from '../context/DrawerContext';
 import { CustomThemeProvider } from '../context/themeContext';
-import { useLocalStorage, useMobile, useEmbed } from '../hooks/globalHooks';
+import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -34,8 +34,10 @@ export const createMuiCache = () =>
 function TreetrackerApp({ Component, pageProps }) {
   log.warn('!!!! render the _app');
   const router = useRouter();
+  const theme = useTheme();
+
   const embedLocalStorage = useLocalStorage('embed', false);
-  const nextExtraIsDesktop = !useMobile();
+  const nextExtraIsDesktop = useMediaQuery(theme.breakpoints.up('sm'));
   const nextExtraIsEmbed = useEmbed() === true ? true : embedLocalStorage[0];
   const nextExtraKeyword = router.query.keyword;
   const [nextExtraLoading, setNextExtraLoading] = React.useState(false);
