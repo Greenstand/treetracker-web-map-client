@@ -1,3 +1,20 @@
+# [2.0.0-beta.157](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.156...v2.0.0-beta.157) (2022-10-29)
+
+
+### Bug Fixes
+
+* initial theme mode from localstorage not working ([09b8688](https://github.com/Greenstand/treetracker-web-map-client/commit/09b8688ef46eea984a7422662deb596d06e37e20))
+
+
+### Features
+
+* remove dynamic navbar import ([a01005b](https://github.com/Greenstand/treetracker-web-map-client/commit/a01005b6e4796a6169b655cb64e18d8d53b3d870))
+
+
+### Reverts
+
+* c45b3cd91953e950ddd7d04010443f54e1090777 ([ee629a4](https://github.com/Greenstand/treetracker-web-map-client/commit/ee629a4b743d8c38c53c5bfe54173cfdb12cccaf))
+
 # [2.0.0-beta.156](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.155...v2.0.0-beta.156) (2022-10-26)
 
 
