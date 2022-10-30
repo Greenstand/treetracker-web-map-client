@@ -9,14 +9,15 @@ export default function Info({ info, iconURI }) {
         display: 'flex',
         alignItems: 'center',
         gap: 3,
-        '& svg': {
-          filter: 'opacity(0.5)',
-          maxWidth: 16,
-          maxHeight: 16,
-        },
       }}
     >
-      <Icon icon={iconURI} />
+      <Icon
+        icon={iconURI}
+        size={[16, 16]}
+        sx={{
+          filter: 'opacity(0.5)',
+        }}
+      />
       <Typography variant="h6">{info}</Typography>
     </Box>
   );

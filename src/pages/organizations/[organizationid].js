@@ -181,8 +181,7 @@ export default function Organization(props) {
 
             <Icon
               icon={SearchIcon}
-              width={48}
-              height={48}
+              size={48}
               color="grey"
               sx={{
                 fill: 'transparent',

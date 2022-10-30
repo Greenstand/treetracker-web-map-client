@@ -137,7 +137,7 @@ function Timeline() {
         >
           <Icon
             icon={TimeIcon}
-            width={22}
+            size={[24, 28]}
             sx={{
               '& path': {
                 fill: ({ palette }) => palette.primary.main,
