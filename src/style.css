@@ -128,20 +128,6 @@ a {
   font-size: 4rem;
 }
 
-.not-found-link {
-  font-weight: bold;
-  color: #fff;
-  background-color: #86c232;
-  padding: 8px 7px;
-  border-radius: 5px;
-  border-top: 10px;
-}
-
-.not-found a:hover {
-  text-decoration: none;
-  color: #fff;
-}
-
 .not-found-background {
   background-image: url(./images/notfound.svg);
   width: auto;

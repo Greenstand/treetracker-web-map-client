@@ -1,4 +1,4 @@
-import { Link } from '@mui/material';
+import { Link, Button } from '@mui/material';
 
 const pageNotfound = () => (
   <div className="not-found">
@@ -6,9 +6,9 @@ const pageNotfound = () => (
     <div className="not-found-background" />
     <h3>Looks like you&apos;re lost</h3>
     <p>Page you are looking for is missing.</p>
-    <Link href="/">
-      <a className="not-found-link">Go home</a>
-    </Link>
+    <Button component={Link} variant="contained" href="/" color="primary">
+      Go home
+    </Button>
   </div>
 );
 
