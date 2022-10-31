@@ -1,3 +1,11 @@
+# [2.0.0-beta.158](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.157...v2.0.0-beta.158) (2022-10-31)
+
+
+### Bug Fixes
+
+* tagchips color not compatible custom theme ([f23c2af](https://github.com/Greenstand/treetracker-web-map-client/commit/f23c2af1e8e25d873f8448ed71b12ffd175c8003))
+* **timeline:** background color is not equal to navbar ([c4850d1](https://github.com/Greenstand/treetracker-web-map-client/commit/c4850d1f529fe8b82026c690ccfb116947ab64f2))
+
 # [2.0.0-beta.157](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.156...v2.0.0-beta.157) (2022-10-29)
 
 
