@@ -1,4 +1,4 @@
-import { Box, Typography, InputBase, Divider } from '@mui/material';
+import { Box, Typography, InputBase, Divider, Paper } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -102,7 +102,8 @@ function Timeline() {
 
   return (
     isGlobalPage && (
-      <Box
+      <Paper
+        elevation={7}
         sx={{
           position: 'absolute',
           zIndex: ['996', '9999'], // 996 is same as used for zoom buttons
@@ -113,7 +114,6 @@ function Timeline() {
           pr: showPicker && '15px',
           height: 52,
           borderRadius: 4,
-          backgroundColor: 'background.paper',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -128,7 +128,7 @@ function Timeline() {
             width: 52,
             borderRadius: 4,
             background: 'none',
-            '-webkit-tap-highlight-color': 'transparent',
+            WebkitTapHighlightColor: 'transparent',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -200,7 +200,7 @@ function Timeline() {
             </Box>
           </LocalizationProvider>
         )}
-      </Box>
+      </Paper>
     )
   );
 }
