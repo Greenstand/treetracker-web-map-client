@@ -28,7 +28,8 @@ function TagChips({ tagItems, onSelectTag }) {
             '& .MuiChip-label': {
               padding: (t) => [t.spacing(2.75, 3.5), t.spacing(3.125, 4.5)],
               typography: 'body1',
-              color: i === activeTagIdx ? 'common.white' : 'text.secondary',
+              color:
+                i === activeTagIdx ? 'primary.contrastText' : 'text.secondary',
             },
           }}
           label={tagItem}
