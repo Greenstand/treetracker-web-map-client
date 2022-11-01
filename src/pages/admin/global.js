@@ -1,10 +1,20 @@
-import { Box, Typography, Divider, List } from '@mui/material';
+import { Box, Typography, Divider, List, Button } from '@mui/material';
 import log from 'loglevel';
 import { useState } from 'react';
+import {
+  ACTIONS,
+  ConfigProvider,
+  useConfigContext,
+} from 'context/configContext';
 import { Tab, TabPanel } from '../../components/dashboard/Tabs';
 
 function Global() {
   const [currentTab, setCurrentTab] = useState(0);
+  const { state, dispatch } = useConfigContext();
+
+  const handleClick = () => {
+    dispatch(ACTIONS.updateLogoUrl('testing'));
+  };
 
   const handleSidebarClick = (index) => {
     setCurrentTab(index);
@@ -61,6 +71,8 @@ function Global() {
       >
         <TabPanel value={currentTab} index={0}>
           <Typography variant="h5">Navbar View</Typography>
+          <Typography variant="body1">{state.navbar.logoUrl}</Typography>
+          <Button onClick={handleClick}>Update url</Button>
         </TabPanel>
         <TabPanel value={currentTab} index={1}>
           <Typography variant="h5">Theme View</Typography>
@@ -73,7 +85,15 @@ function Global() {
   );
 }
 
-export default Global;
+function GlobalWithContext(props) {
+  return (
+    <ConfigProvider>
+      <Global {...props} />
+    </ConfigProvider>
+  );
+}
+
+export default GlobalWithContext;
 
 export async function getServerSideProps({ params }) {
   // eslint-disable-next-line no-promise-executor-return
