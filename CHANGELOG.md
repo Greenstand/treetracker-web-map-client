@@ -1,3 +1,10 @@
+# [2.0.0-beta.159](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.158...v2.0.0-beta.159) (2022-11-01)
+
+
+### Features
+
+* update home button to be dynamic for custom theme ([3b66e27](https://github.com/Greenstand/treetracker-web-map-client/commit/3b66e2727e6270df8817c9b9e2981278fbd5a4a8))
+
 # [2.0.0-beta.158](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.157...v2.0.0-beta.158) (2022-10-31)
 
 
