@@ -1,22 +1,52 @@
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import React from 'react';
+import { ACTIONS, useConfigContext } from 'context/configContext';
 
 function CustomLogo() {
+  const { state, dispatch } = useConfigContext();
+
+  const handleOnChange = (e) => {
+    const newUrl = e.target.value;
+    dispatch(ACTIONS.updateLogoUrl(newUrl));
+  };
+
+  // New input for file uploading instead of URL
+  // return (
+  //   <Box>
+  //     <Button
+  //       variant="contained"
+  //       component="label"
+  //       sx={{
+  //         py: 1,
+  //         px: 2,
+  //       }}
+  //     >
+  //       Upload Logo
+  //       <input
+  //         type="file"
+  //         filename={state.navbar.logoUrl}
+  //         onChange={handleOnChange}
+  //         hidden
+  //       />
+  //     </Button>
+  //   </Box>
+  // );
+
   return (
-    <Stack spacing={6} direction="row">
+    <Stack spacing={2} direction="row">
       <TextField
         variant="outlined"
         placeholder="Enter Logo Link"
+        value={state.navbar.logoUrl}
+        onChange={handleOnChange}
         sx={{
           flex: 1,
           maxWidth: '500px',
         }}
       />
-      <Button variant="contained" size="large">
-        Save
-      </Button>
+      <Button variant="contained">Save</Button>
     </Stack>
   );
 }

@@ -12,25 +12,25 @@ const ACTION_TYPES = {
 
 export const ACTIONS = {
   updateLogoUrl: (newUrl) => ({
-      type: ACTION_TYPES.UPDATE_LOGO_URL,
-      payload: newUrl,
-    }),
+    type: ACTION_TYPES.UPDATE_LOGO_URL,
+    payload: newUrl,
+  }),
   addNavItem: (newNavItem) => ({
-      type: ACTION_TYPES.ADD_NAV_ITEM,
-      payload: newNavItem,
-    }),
+    type: ACTION_TYPES.ADD_NAV_ITEM,
+    payload: newNavItem,
+  }),
   removeNavItem: (navItem) => ({
-      type: ACTION_TYPES.REMOVE_NAV_ITEM,
-      payload: navItem,
-    }),
+    type: ACTION_TYPES.REMOVE_NAV_ITEM,
+    payload: navItem,
+  }),
   updateNavItem: (updatedNavItem) => ({
-      type: ACTION_TYPES.UPDATE_NAV_ITEM,
-      payload: updatedNavItem,
-    }),
+    type: ACTION_TYPES.UPDATE_NAV_ITEM,
+    payload: updatedNavItem,
+  }),
   updateMapLocation: (updatedMapLocation) => ({
-      type: ACTION_TYPES.UPDATE_MAP_LOCATION,
-      payload: updatedMapLocation,
-    }),
+    type: ACTION_TYPES.UPDATE_MAP_LOCATION,
+    payload: updatedMapLocation,
+  }),
 };
 
 const configReducer = (state, action) => {
@@ -117,10 +117,13 @@ const initialState = {
 export function ConfigProvider({ children }) {
   const [state, dispatch] = useReducer(configReducer, initialState);
 
-  const value = useMemo(() => ({
+  const value = useMemo(
+    () => ({
       state,
       dispatch,
-    }), [state]);
+    }),
+    [state],
+  );
 
   return (
     <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
