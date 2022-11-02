@@ -1,20 +1,22 @@
-import { Box, Typography, Divider, List, Button } from '@mui/material';
-import log from 'loglevel';
-import { useState } from 'react';
+import { Box, Typography, Divider, List } from '@mui/material';
+import { useEffect, useState } from 'react';
+import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
+import { Tab, TabPanel } from 'components/dashboard/Tabs';
 import {
   ACTIONS,
   ConfigProvider,
   useConfigContext,
 } from 'context/configContext';
-import { Tab, TabPanel } from '../../components/dashboard/Tabs';
+import { getOrganizationById } from 'models/api';
+import { wrapper } from 'models/utils';
 
-function Global() {
+function Global({ organization }) {
   const [currentTab, setCurrentTab] = useState(0);
-  const { state, dispatch } = useConfigContext();
+  const { dispatch } = useConfigContext();
 
-  const handleClick = () => {
-    dispatch(ACTIONS.updateLogoUrl('testing'));
-  };
+  useEffect(() => {
+    dispatch(ACTIONS.updateLogoUrl(organization.logo_url));
+  }, []);
 
   const handleSidebarClick = (index) => {
     setCurrentTab(index);
@@ -71,8 +73,7 @@ function Global() {
       >
         <TabPanel value={currentTab} index={0}>
           <Typography variant="h5">Navbar View</Typography>
-          <Typography variant="body1">{state.navbar.logoUrl}</Typography>
-          <Button onClick={handleClick}>Update url</Button>
+          <ChangeLogoSection />
         </TabPanel>
         <TabPanel value={currentTab} index={1}>
           <Typography variant="h5">Theme View</Typography>
@@ -95,11 +96,14 @@ function GlobalWithContext(props) {
 
 export default GlobalWithContext;
 
-export async function getServerSideProps({ params }) {
-  // eslint-disable-next-line no-promise-executor-return
-  await new Promise((resolve) => setTimeout(resolve(), 10));
-  log.warn('on the server, global page, params: ', params);
+export const getServerSideProps = wrapper(async () => {
+  const id = 178; // hardcoded FCC organization
+  const organization = await getOrganizationById(id);
   return {
-    props: {},
+    props: {
+      organization: {
+        ...organization,
+      },
+    },
   };
-}
+});
