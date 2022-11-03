@@ -1,3 +1,10 @@
+# [2.0.0-beta.161](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.160...v2.0.0-beta.161) (2022-11-03)
+
+
+### Bug Fixes
+
+* **playground:** iframe not working on live dev/prod env ([6960021](https://github.com/Greenstand/treetracker-web-map-client/commit/6960021de299a8221a760f6abbf71df033b14c2d))
+
 # [2.0.0-beta.160](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.159...v2.0.0-beta.160) (2022-11-03)
 
 

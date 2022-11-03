@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.0.0-beta.160",
+  "version": "2.0.0-beta.161",
   "private": true,
   "scripts": {
     "build": "next build",
