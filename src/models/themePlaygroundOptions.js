@@ -119,6 +119,10 @@ export const predefinedFonts = {
   Lato: [],
   Montserrat: [],
   Roboto: [],
+  Arial: [],
+  Helvetica: [],
+  'Times New Roman': [],
+  'Sans-Serif': [],
 };
 
 export const propRules = {

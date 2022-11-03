@@ -15,6 +15,5 @@ describe('Typography Input', () => {
     );
     cy.get('.MuiFormControl-root').contains(name);
     cy.get('input').should('have.value', value);
-    cy.get('[data-testid=AddIcon]');
   });
 });

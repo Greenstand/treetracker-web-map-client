@@ -32,8 +32,8 @@ function FontsList(props) {
       if (!hasFont) return false;
 
       setFonts((prevFonts) => ({
-        ...prevFonts,
         ...{ [formattedName]: [] },
+        ...prevFonts,
       }));
       return true;
     });

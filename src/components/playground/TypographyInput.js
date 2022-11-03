@@ -3,6 +3,9 @@ import {
   TextField,
   InputAdornment,
   CircularProgress,
+  Select,
+  MenuItem,
+  InputLabel,
 } from '@mui/material';
 import { useState, useEffect, useCallback } from 'react';
 import { loadFonts } from 'models/utils';
@@ -146,6 +149,8 @@ function FontFamily(props) {
   return (
     <>
       <TextField
+        select
+        id="fontFamily"
         variant="standard"
         label={label}
         value={value}
@@ -157,20 +162,13 @@ function FontFamily(props) {
           width: 1,
           marginBottom: '5px',
         }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <FontSelector
-                handleChange={(val) => {
-                  setValue(val);
-                  setPropByPath(path, val);
-                  setError('');
-                }}
-              />
-            </InputAdornment>
-          ),
-        }}
-      />
+      >
+        {Object.keys(fonts).map((font) => (
+          <MenuItem value={font} key={`font-selector-menuitem-${font}`}>
+            {font}
+          </MenuItem>
+        ))}
+      </TextField>
       <FontFamilyWeightElm
         label="fontWeight"
         path={fontWeightPath}
