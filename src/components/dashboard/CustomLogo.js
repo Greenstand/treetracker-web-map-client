@@ -2,14 +2,15 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { ACTIONS, useConfigContext } from 'context/configContext';
+import { useConfigContext } from 'context/configContext';
+import { updateLogoUrl } from 'models/config.reducer';
 
 function CustomLogo() {
   const { state, dispatch } = useConfigContext();
 
   const handleOnChange = (e) => {
     const newUrl = e.target.value;
-    dispatch(ACTIONS.updateLogoUrl(newUrl));
+    dispatch(updateLogoUrl(newUrl));
   };
 
   // New input for file uploading instead of URL

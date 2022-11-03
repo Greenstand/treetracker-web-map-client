@@ -2,12 +2,9 @@ import { Box, Typography, Divider, List } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
 import { Tab, TabPanel } from 'components/dashboard/Tabs';
-import {
-  ACTIONS,
-  ConfigProvider,
-  useConfigContext,
-} from 'context/configContext';
+import { ConfigProvider, useConfigContext } from 'context/configContext';
 import { getOrganizationById } from 'models/api';
+import { updateLogoUrl } from 'models/config.reducer';
 import { wrapper } from 'models/utils';
 
 function Global({ organization }) {
@@ -15,7 +12,7 @@ function Global({ organization }) {
   const { dispatch } = useConfigContext();
 
   useEffect(() => {
-    dispatch(ACTIONS.updateLogoUrl(organization.logo_url));
+    dispatch(updateLogoUrl(organization.logo_url));
   }, []);
 
   const handleSidebarClick = (index) => {
