@@ -5,6 +5,7 @@ import { LinearProgress, Box, useTheme, useMediaQuery } from '@mui/material';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
 import React from 'react';
+import packageJson from '../../package.json';
 import Layout from '../components/Layout';
 import LayoutDashboard from '../components/LayoutDashboard';
 import LayoutEmbed from '../components/LayoutEmbed';
@@ -15,6 +16,8 @@ import { DrawerProvider } from '../context/DrawerContext';
 import { CustomThemeProvider } from '../context/themeContext';
 import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
+
+log.warn(`Web Map Client version ${packageJson.version}`);
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   log.warn('Mocking API calls with msw');
