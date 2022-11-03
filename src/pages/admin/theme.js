@@ -402,7 +402,7 @@ function ThemeConfig() {
           ref={iframeRef}
           key={viewMobile}
           title="sandbox"
-          src="http://localhost:3000/top"
+          src={`${process.env.NEXT_PUBLIC_BASE}/top`}
           style={{
             height: viewMobile ? '740px' : '100%',
             width: viewMobile ? '360px' : '100%',
