@@ -43,7 +43,12 @@ import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
 import * as pathResolver from '../../models/pathResolver';
-import { getLocationString, getPlanterName, wrapper } from '../../models/utils';
+import {
+  getLocationString,
+  getPlanterName,
+  scrollToTop,
+  wrapper,
+} from '../../models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -138,6 +143,10 @@ export default function Planter(props) {
     reload();
   }, [mapContext, planter]);
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   return (
     <>
       <Box
@@ -166,6 +175,7 @@ export default function Planter(props) {
               width: '100%',
               alignItems: 'center',
             }}
+            className="topContainer"
           >
             <Crumbs
               items={[

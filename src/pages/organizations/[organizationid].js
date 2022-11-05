@@ -47,7 +47,12 @@ import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as pathResolver from '../../models/pathResolver';
-import { getLocationString, getContinent, wrapper } from '../../models/utils';
+import {
+  getLocationString,
+  getContinent,
+  wrapper,
+  scrollToTop,
+} from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   imgContainer: {
@@ -139,6 +144,10 @@ export default function Organization(props) {
     // eslint-disable-next-line
   }, [mapContext, organization]);
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   const logo_url = organization.logo_url || imagePlaceholder;
   const name = organization.name || '---';
 
@@ -164,6 +173,7 @@ export default function Organization(props) {
               width: '100%',
               alignItems: 'center',
             }}
+            className="topContainer"
           >
             <Crumbs
               items={[

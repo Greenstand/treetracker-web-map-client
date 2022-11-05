@@ -184,6 +184,10 @@ export default function Tree({
     reload();
   }, [map, tree.lat, tree.lon]);
 
+  useEffect(() => {
+    utils.scrollToTop();
+  }, []);
+
   console.log(planter, 'planter');
 
   return (
@@ -315,6 +319,7 @@ export default function Tree({
             width: '100%',
             alignItems: 'center',
           }}
+          className="topContainer"
         >
           <Crumbs
             items={[

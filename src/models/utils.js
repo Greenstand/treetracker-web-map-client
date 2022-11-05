@@ -293,6 +293,17 @@ const getPropByPath = (propPath, obj) => {
   return propPath.split('.').reduce((acc, curr) => acc[curr], obj);
 };
 
+const scrollToTop = () => {
+  const drawerEl = document.querySelector('.drawer-content');
+  const topContainer = document.querySelector('.topContainer');
+  if (drawerEl) {
+    drawerEl.scrollTop = 0;
+  }
+  if (topContainer) {
+    topContainer.scrollIntoView();
+  }
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -314,4 +325,5 @@ export {
   getLocationString,
   setPropByPath,
   getPropByPath,
+  scrollToTop,
 };

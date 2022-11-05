@@ -15,7 +15,7 @@ import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import TreeTag from 'components/common/TreeTag';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
-import { requestAPI, wrapper } from 'models/utils';
+import { requestAPI, scrollToTop, wrapper } from 'models/utils';
 import ImpactSection from '../../components/ImpactSection';
 import ProfileCover from '../../components/ProfileCover';
 import VerifiedBadge from '../../components/VerifiedBadge';
@@ -98,6 +98,11 @@ export default function Wallet(props) {
     }
     reload();
   }, [mapContext, wallet]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   return (
     <Box
       sx={[
@@ -117,6 +122,7 @@ export default function Wallet(props) {
             width: '100%',
             alignItems: 'center',
           }}
+          className="topContainer"
         >
           <Crumbs
             items={[
@@ -363,7 +369,7 @@ export default function Wallet(props) {
 
 export const getServerSideProps = wrapper(async ({ params }) => {
   const wallet = await getWalletById(params.walletid);
-  const {id} = wallet;
+  const { id } = wallet;
   const [species, tokens, tokenRegionCount, trees] = await Promise.all([
     getSpeciesByWalletId(id),
     (async () => {

@@ -153,6 +153,10 @@ export default function Token(props) {
   }, [mapContext, token]);
   console.log('token:', token);
 
+  useEffect(() => {
+    utils.scrollToTop();
+  }, []);
+
   return (
     <Box
       sx={[
@@ -171,6 +175,7 @@ export default function Token(props) {
             width: '100%',
             alignItems: 'center',
           }}
+          className="topContainer"
         >
           <Crumbs
             items={[
