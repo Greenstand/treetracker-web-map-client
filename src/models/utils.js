@@ -294,8 +294,8 @@ const getPropByPath = (propPath, obj) => {
 };
 
 const scrollToTop = () => {
-  const drawerEl = document.querySelector('.drawer-content');
-  const topContainer = document.querySelector('.topContainer');
+  const drawerEl = document.querySelector('.drawer-content'); // to scroll to top if its mobile
+  const topContainer = document.querySelector('.topContainer'); // to access the top element of layout and scroll into if its desktop
   if (drawerEl) {
     drawerEl.scrollTop = 0;
   }
