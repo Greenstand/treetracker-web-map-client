@@ -1,10 +1,19 @@
 import { Box, Typography, Divider, List } from '@mui/material';
-import log from 'loglevel';
-import { useState } from 'react';
-import { Tab, TabPanel } from '../../components/dashboard/Tabs';
+import { useEffect, useState } from 'react';
+import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
+import { Tab, TabPanel } from 'components/dashboard/Tabs';
+import { ConfigProvider, useConfigContext } from 'context/configContext';
+import { getOrganizationById } from 'models/api';
+import { updateLogoUrl } from 'models/config.reducer';
+import { wrapper } from 'models/utils';
 
-function Global() {
+function Global({ organization }) {
   const [currentTab, setCurrentTab] = useState(0);
+  const { dispatch } = useConfigContext();
+
+  useEffect(() => {
+    dispatch(updateLogoUrl(organization.logo_url));
+  }, []);
 
   const handleSidebarClick = (index) => {
     setCurrentTab(index);
@@ -61,6 +70,7 @@ function Global() {
       >
         <TabPanel value={currentTab} index={0}>
           <Typography variant="h5">Navbar View</Typography>
+          <ChangeLogoSection />
         </TabPanel>
         <TabPanel value={currentTab} index={1}>
           <Typography variant="h5">Theme View</Typography>
@@ -73,13 +83,24 @@ function Global() {
   );
 }
 
-export default Global;
-
-export async function getServerSideProps({ params }) {
-  // eslint-disable-next-line no-promise-executor-return
-  await new Promise((resolve) => setTimeout(resolve(), 10));
-  log.warn('on the server, global page, params: ', params);
-  return {
-    props: {},
-  };
+function GlobalWithContext(props) {
+  return (
+    <ConfigProvider>
+      <Global {...props} />
+    </ConfigProvider>
+  );
 }
+
+export default GlobalWithContext;
+
+export const getServerSideProps = wrapper(async () => {
+  const id = 178; // hardcoded FCC organization
+  const organization = await getOrganizationById(id);
+  return {
+    props: {
+      organization: {
+        ...organization,
+      },
+    },
+  };
+});
