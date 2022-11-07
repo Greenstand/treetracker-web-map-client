@@ -1,3 +1,10 @@
+# [2.0.0-beta.162](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.161...v2.0.0-beta.162) (2022-11-07)
+
+
+### Bug Fixes
+
+* remove unnecessary links ([04d428a](https://github.com/Greenstand/treetracker-web-map-client/commit/04d428a0e1dbc2d58e604b6a8cf5f367dc6ff963))
+
 # [2.0.0-beta.161](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.160...v2.0.0-beta.161) (2022-11-03)
 
 
