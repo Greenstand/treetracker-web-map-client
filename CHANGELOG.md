@@ -1,3 +1,17 @@
+# [2.0.0-beta.163](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.162...v2.0.0-beta.163) (2022-11-07)
+
+
+### Bug Fixes
+
+* **dashboard:** test not using required ConfigProvider ([1f5b2a2](https://github.com/Greenstand/treetracker-web-map-client/commit/1f5b2a2493c35dc4fdfd7b4a760a0781496b19f8))
+
+
+### Features
+
+* **dashboard:** add mock for logged in organization ([fe40667](https://github.com/Greenstand/treetracker-web-map-client/commit/fe40667d7adc5386d465e3beb39198003dcfe25b))
+* **dashboard:** can preview logo and change the url ([0003fa8](https://github.com/Greenstand/treetracker-web-map-client/commit/0003fa89595e413fcb929f310e93dfe1e6b5482d))
+* **dashboard:** setup basic state ([8d51ee1](https://github.com/Greenstand/treetracker-web-map-client/commit/8d51ee10d566d934e13978a3a66d5f563f9915c3))
+
 # [2.0.0-beta.162](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.161...v2.0.0-beta.162) (2022-11-07)
 
 
