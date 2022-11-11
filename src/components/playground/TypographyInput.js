@@ -1,23 +1,19 @@
 import { RestartAlt } from '@mui/icons-material';
 import {
   Box,
-  TextField,
   InputAdornment,
   CircularProgress,
   Select,
   MenuItem,
   InputLabel,
   Tooltip,
-  Container,
   FormControl,
   Input,
   FormHelperText,
-  FilledInput,
 } from '@mui/material';
-import { useState, useEffect, useCallback, Fragment } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { loadFonts } from 'models/utils';
 import FontSelector from './FontSelector';
-import SquareIconButton from './SquareIconButton';
 import {
   usePlaygroundUtils,
   usePlaygroundFonts,
@@ -285,30 +281,6 @@ function TypographyInput(props) {
           <Input value={value} onChange={handleChange} />
           <FormHelperText>{!isValid && 'Invalid syntax'}</FormHelperText>
         </FormControl>
-        // <TextField
-        //   variant="standard"
-        //   error={!isValid}
-        //   label={
-        //     <>
-        //       {label}
-        //       <SquareIconButton
-        //         icon={<RestartAlt />}
-        //         color="error"
-        //         tooltip="Reset to default"
-        //         onClick={resetTypography}
-        //         sx={{ ml: 43.8, mb: 0.5 }}
-        //       />
-        //     </>
-        //   }
-        //   value={value}
-        //   onChange={handleChange}
-        //   sx={{
-        //     textTransform: 'capitalize',
-        //     width: 1,
-        //     pt: 1,
-        //   }}
-        //   helperText={!isValid && 'Invalid syntax'}
-        // />
       )}
     </Box>
   );
