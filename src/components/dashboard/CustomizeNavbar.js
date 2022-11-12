@@ -2,10 +2,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
 
 function CustomizeNavbar({ formFields, setFormFields }) {
   const handleChangeInput = (e, index) => {
@@ -26,7 +24,7 @@ function CustomizeNavbar({ formFields, setFormFields }) {
           }}
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Navbar Item {index + 1}</Typography>
+            <Typography>{formField.title}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <TextField
@@ -34,14 +32,14 @@ function CustomizeNavbar({ formFields, setFormFields }) {
               label="Title"
               variant="standard"
               onChange={(e) => handleChangeInput(e, index)}
-              value={formFields[index].title}
+              value={formField.title}
             />
             <TextField
               name="url"
               label="Link"
               variant="standard"
               onChange={(e) => handleChangeInput(e, index)}
-              value={formFields[index].url}
+              value={formField.url}
             />
           </AccordionDetails>
         </Accordion>
