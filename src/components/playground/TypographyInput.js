@@ -1,11 +1,15 @@
+import { RestartAlt } from '@mui/icons-material';
 import {
   Box,
-  TextField,
   InputAdornment,
   CircularProgress,
   Select,
   MenuItem,
   InputLabel,
+  Tooltip,
+  FormControl,
+  Input,
+  FormHelperText,
 } from '@mui/material';
 import { useState, useEffect, useCallback } from 'react';
 import { loadFonts } from 'models/utils';
@@ -34,6 +38,7 @@ function FontFamilyWeightElm(props) {
   const [fonts, setFonts] = usePlaygroundFonts();
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState('');
+  const [defaultValue, setDefaultValue] = useState(initialValue.toString());
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -83,6 +88,11 @@ function FontFamilyWeightElm(props) {
     [fontValue, fonts, path, setFonts, setPropByPath],
   );
 
+  const resetTypography = () => {
+    setValue(defaultValue);
+    setPropByPath(path, defaultValue);
+  };
+
   const handleChange = (e) => {
     const userInput = e.target.value;
     setValue(userInput);
@@ -97,24 +107,32 @@ function FontFamilyWeightElm(props) {
   };
 
   return (
-    <TextField
-      variant="standard"
-      error={error.length > 0}
-      label="Font Weight"
-      value={value}
-      onChange={handleChange}
-      sx={{
-        width: 1,
-      }}
-      helperText={error || 'Load Font weight.'}
-      InputProps={{
-        endAdornment: (
+    <FormControl error={error.length > 0} sx={{ width: 1 }} variant="standard">
+      <InputLabel sx={{ width: '133%' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <span>Font Weight</span>
+          <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
+            <RestartAlt onClick={resetTypography} color="error" />
+          </Tooltip>
+        </Box>
+      </InputLabel>
+      <Input
+        value={value}
+        onChange={handleChange}
+        endAdornment={
           <InputAdornment position="end">
             {loading ? <CircularProgress size="1.5rem" /> : null}
           </InputAdornment>
-        ),
-      }}
-    />
+        }
+      />
+      <FormHelperText>{error || 'Load Font weight.'}</FormHelperText>
+    </FormControl>
   );
 }
 
@@ -123,12 +141,18 @@ function FontFamily(props) {
   const { getPropByPath, setPropByPath } = usePlaygroundUtils();
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState(initialValue);
+  const [defaultValue, setDefaultValue] = useState(initialValue);
   const [fonts] = usePlaygroundFonts();
   const [error, setError] = useState('');
   const fontWeightPath = `${path
     .split('.')
     .splice(0, path.split('.').length - 1)
     .join('.')}.fontWeight`;
+
+  const resetTypography = () => {
+    setValue(defaultValue);
+    setPropByPath(path, defaultValue);
+  };
 
   const handleChange = (e) => {
     const userInput =
@@ -148,27 +172,43 @@ function FontFamily(props) {
 
   return (
     <>
-      <TextField
-        select
-        id="fontFamily"
-        variant="standard"
-        label={label}
-        value={value}
+      <FormControl
+        id="font-family"
         error={error.length > 0}
-        onChange={handleChange}
-        helperText={error || 'Add Fontfamily from loaded families.'}
         sx={{
           textTransform: 'capitalize',
           width: 1,
           marginBottom: '5px',
+          pt: 1,
         }}
+        variant="standard"
       >
-        {Object.keys(fonts).map((font) => (
-          <MenuItem value={font} key={`font-selector-menuitem-${font}`}>
-            {font}
-          </MenuItem>
-        ))}
-      </TextField>
+        <InputLabel sx={{ width: '133%' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            {label}
+            <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
+              <RestartAlt onClick={resetTypography} color="error" />
+            </Tooltip>
+          </Box>
+        </InputLabel>
+        <Select value={value} onChange={handleChange}>
+          {Object.keys(fonts).map((font) => (
+            <MenuItem value={font} key={`font-selector-menuitem-${font}`}>
+              {font}
+            </MenuItem>
+          ))}
+        </Select>
+        <FormHelperText>
+          {error || 'Add Fontfamily from loaded families.'}
+        </FormHelperText>
+      </FormControl>
+
       <FontFamilyWeightElm
         label="fontWeight"
         path={fontWeightPath}
@@ -184,10 +224,17 @@ function TypographyInput(props) {
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState(initialValue);
   const [isValid, setValid] = useState(true);
+  const [defaultValue, setDefaultValue] = useState(initialValue);
 
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
+
+  const resetTypography = () => {
+    setPropByPath(path, defaultValue);
+    setValue(defaultValue);
+    setValid(true);
+  };
 
   const handleChange = (e) => {
     const userValue = e.target.value;
@@ -208,18 +255,32 @@ function TypographyInput(props) {
       {label === 'fontFamily' ? (
         <FontFamily label={label} path={path} />
       ) : (
-        <TextField
-          variant="standard"
+        <FormControl
           error={!isValid}
-          label={label}
-          value={value}
-          onChange={handleChange}
           sx={{
             textTransform: 'capitalize',
             width: 1,
+            pt: 1,
           }}
-          helperText={!isValid && 'Invalid syntax'}
-        />
+          variant="standard"
+        >
+          <InputLabel sx={{ width: '133%' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              {label}
+              <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
+                <RestartAlt onClick={resetTypography} color="error" />
+              </Tooltip>
+            </Box>
+          </InputLabel>
+          <Input value={value} onChange={handleChange} />
+          <FormHelperText>{!isValid && 'Invalid syntax'}</FormHelperText>
+        </FormControl>
       )}
     </Box>
   );
