@@ -2,14 +2,17 @@ import ColorizeIcon from '@mui/icons-material/Colorize';
 import RestartAlt from '@mui/icons-material/RestartAlt';
 import {
   Box,
-  TextField,
   IconButton,
   InputAdornment,
   Popover,
+  FormControl,
+  InputLabel,
+  Tooltip,
+  Input,
+  FormHelperText,
 } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
 import ColorPicker from 'react-best-gradient-color-picker';
-import SquareIconButton from './SquareIconButton';
 import { usePlaygroundUtils } from '../../hooks/contextHooks';
 import useDisclosure from '../../hooks/useDisclosure';
 import { propRules } from '../../models/themePlaygroundOptions';
@@ -34,6 +37,7 @@ function ColorInput(props) {
   const handleReset = () => {
     setValue(defaultColor);
     setPropByPath(path, defaultColor);
+    setValid(true);
   };
 
   const handleChange = (e) => {
@@ -61,34 +65,47 @@ function ColorInput(props) {
         flex: '1',
       }}
     >
-      <TextField
-        variant="standard"
+      <FormControl
         error={!isValid}
-        multiline={isGradient}
-        label={label}
-        value={value}
-        onChange={handleChange}
         sx={{
           textTransform: 'capitalize',
           width: 1,
         }}
-        helperText={!isValid && 'Invalid syntax'}
-        InputProps={{
-          endAdornment: (
+        variant="standard"
+      >
+        <InputLabel
+          sx={{
+            width: '130%',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <span>{label}</span>
+            <Tooltip title="Reset to Default">
+              <RestartAlt onClick={handleReset} color="error" />
+            </Tooltip>
+          </Box>
+        </InputLabel>
+        <Input
+          multiline={isGradient}
+          value={value}
+          onChange={handleChange}
+          endAdornment={
             <InputAdornment position="end">
               <IconButton onClick={onOpen} ref={pickerRef}>
                 <ColorizeIcon />
               </IconButton>
-              <SquareIconButton
-                icon={<RestartAlt />}
-                color="error"
-                tooltip="Reset to default"
-                onClick={handleReset}
-              />
             </InputAdornment>
-          ),
-        }}
-      />
+          }
+        />
+        <FormHelperText>{!isValid && 'Invalid syntax'}</FormHelperText>
+      </FormControl>
+
       <Popover
         open={isOpen}
         onClose={onClose}
