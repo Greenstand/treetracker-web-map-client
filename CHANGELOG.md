@@ -1,3 +1,17 @@
+# [2.0.0-beta.164](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.163...v2.0.0-beta.164) (2022-11-12)
+
+
+### Bug Fixes
+
+* added cursor pointers to each reset ([cf929a0](https://github.com/Greenstand/treetracker-web-map-client/commit/cf929a03cbb7d94b97a6cd30d2574297ebdc82ee))
+* brought the reset button up to the label line ([0137051](https://github.com/Greenstand/treetracker-web-map-client/commit/013705101a13a50bfd0161dd704a0d69bfcc550f))
+* cleaned up unnecessary things ([04b3716](https://github.com/Greenstand/treetracker-web-map-client/commit/04b37163b8cb99658ede8dc65c14ed105ac2a25b))
+
+
+### Features
+
+* added single input resets ([6ccc0e9](https://github.com/Greenstand/treetracker-web-map-client/commit/6ccc0e9111b6220920192b94491633adb90c540f))
+
 # [2.0.0-beta.163](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.162...v2.0.0-beta.163) (2022-11-07)
 
 
