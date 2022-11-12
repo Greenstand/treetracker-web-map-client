@@ -1,15 +1,18 @@
 import { Box, Typography, Divider, List } from '@mui/material';
 import { useEffect, useState } from 'react';
+import MapLayout from 'components/GlobalMapLayout';
 import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
 import { Tab, TabPanel } from 'components/dashboard/Tabs';
 import { ConfigProvider, useConfigContext } from 'context/configContext';
 import { getOrganizationById } from 'models/api';
 import { updateLogoUrl } from 'models/config.reducer';
 import { wrapper } from 'models/utils';
+import { MapContextProvider, useMapContext } from '../../mapContext';
 
 function Global({ organization }) {
   const [currentTab, setCurrentTab] = useState(0);
-  const { dispatch } = useConfigContext();
+  const { state, dispatch } = useConfigContext();
+  const mapContext = useMapContext();
 
   useEffect(() => {
     dispatch(updateLogoUrl(organization.logo_url));
@@ -18,6 +21,24 @@ function Global({ organization }) {
   const handleSidebarClick = (index) => {
     setCurrentTab(index);
   };
+
+  useEffect(() => {
+    async function setUpMap() {
+      const { map } = mapContext;
+      if (map && organization) {
+        const { lat, lon, zoom } = state.map.initialLocation;
+        await map.setFilters({
+          map_name: organization.map_name,
+        });
+
+        if (lat && lon && zoom) {
+          map.gotoView(+lat, +lon, +zoom);
+        }
+      }
+    }
+
+    setUpMap();
+  }, [mapContext, organization, state.map.initialLocation]);
 
   return (
     <Box
@@ -77,6 +98,7 @@ function Global({ organization }) {
         </TabPanel>
         <TabPanel value={currentTab} index={2}>
           <Typography variant="h5">Map View</Typography>
+          <MapLayout />
         </TabPanel>
       </Box>
     </Box>
@@ -86,7 +108,9 @@ function Global({ organization }) {
 function GlobalWithContext(props) {
   return (
     <ConfigProvider>
-      <Global {...props} />
+      <MapContextProvider>
+        <Global {...props} />
+      </MapContextProvider>
     </ConfigProvider>
   );
 }
