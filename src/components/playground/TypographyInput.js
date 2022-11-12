@@ -117,7 +117,7 @@ function FontFamilyWeightElm(props) {
           }}
         >
           <span>Font Weight</span>
-          <Tooltip title="Reset to Default">
+          <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
             <RestartAlt onClick={resetTypography} color="error" />
           </Tooltip>
         </Box>
@@ -192,7 +192,7 @@ function FontFamily(props) {
             }}
           >
             {label}
-            <Tooltip title="Reset to Default">
+            <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
               <RestartAlt onClick={resetTypography} color="error" />
             </Tooltip>
           </Box>
@@ -273,7 +273,7 @@ function TypographyInput(props) {
               }}
             >
               {label}
-              <Tooltip title="Reset to Default">
+              <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
                 <RestartAlt onClick={resetTypography} color="error" />
               </Tooltip>
             </Box>

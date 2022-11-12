@@ -87,7 +87,11 @@ function ColorInput(props) {
           >
             <span>{label}</span>
             <Tooltip title="Reset to Default">
-              <RestartAlt onClick={handleReset} color="error" />
+              <RestartAlt
+                sx={{ cursor: 'pointer' }}
+                onClick={handleReset}
+                color="error"
+              />
             </Tooltip>
           </Box>
         </InputLabel>
