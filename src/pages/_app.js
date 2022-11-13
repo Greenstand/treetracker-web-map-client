@@ -38,6 +38,8 @@ function TreetrackerApp({ Component, pageProps }) {
   log.warn('!!!! render the _app');
   const router = useRouter();
   const theme = useTheme();
+  const desktopLayoutRef = React.useRef();
+  const mobileLayoutRef = React.useRef();
 
   const embedLocalStorage = useLocalStorage('embed', false);
   const nextExtraIsDesktop = useMediaQuery(theme.breakpoints.up('sm'));
@@ -65,6 +67,12 @@ function TreetrackerApp({ Component, pageProps }) {
     router.events.on('routeChangeComplete', () => {
       log.warn('handleRouteChangeComplete::');
       setNextExtraLoading(false);
+      if (desktopLayoutRef.current) {
+        desktopLayoutRef.current.scrollTop = 0;
+      }
+      if (mobileLayoutRef.current) {
+        mobileLayoutRef.current.scrollIntoView();
+      }
     });
     router.events.on('routeChangeError', (...arg) => {
       log.warn('handleChangeError:', ...arg);
@@ -108,7 +116,7 @@ function TreetrackerApp({ Component, pageProps }) {
           <DrawerProvider>
             <MapContextProvider>
               {nextExtraIsDesktop && !nextExtraIsEmbed && (
-                <Layout {...extraProps}>
+                <Layout {...extraProps} ref={desktopLayoutRef}>
                   <Component {...pageProps} {...extraProps} />
                 </Layout>
               )}
@@ -133,7 +141,7 @@ function TreetrackerApp({ Component, pageProps }) {
               {!nextExtraIsDesktop &&
                 !Component.isBLayout &&
                 !Component.isCLayout && (
-                  <LayoutMobile>
+                  <LayoutMobile ref={mobileLayoutRef}>
                     <Component {...pageProps} {...extraProps} />
                   </LayoutMobile>
                 )}
