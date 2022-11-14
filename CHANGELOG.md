@@ -1,3 +1,15 @@
+# [2.0.0-beta.166](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.165...v2.0.0-beta.166) (2022-11-14)
+
+
+### Bug Fixes
+
+* update navbar tile and use value from array ([f5d19be](https://github.com/Greenstand/treetracker-web-map-client/commit/f5d19be90f65a5820464162ce6d0a737175dc43e))
+
+
+### Features
+
+* add component to modify navbar ([20afd60](https://github.com/Greenstand/treetracker-web-map-client/commit/20afd607b49ef88b0dc293091ab92156192e72db))
+
 # [2.0.0-beta.165](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.164...v2.0.0-beta.165) (2022-11-14)
 
 
