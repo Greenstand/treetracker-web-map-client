@@ -1,11 +1,14 @@
 import AddIcon from '@mui/icons-material/Add';
+import FontDownloadIcon from '@mui/icons-material/FontDownload';
 import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
+import { predefinedFonts } from 'models/themePlaygroundOptions';
 import { usePlaygroundFonts } from '../../hooks/contextHooks';
 
 function FontSelector(props) {
   const { handleChange } = props;
   const [fonts, setFonts] = usePlaygroundFonts();
+  const defaultFonts = predefinedFonts;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -46,7 +49,7 @@ function FontSelector(props) {
             key={`font-selector-menutitem-${font}`}
             onClick={() => handleClose(font)}
           >
-            {font}
+            {font} {!(font in defaultFonts) && <FontDownloadIcon />}
           </MenuItem>
         ))}
       </Menu>
