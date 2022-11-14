@@ -1,7 +1,8 @@
 import { TextField, Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Map } from 'treetracker-web-map-core';
 import { useConfigContext } from 'context/configContext';
 import { updateMapLocation } from 'models/config.reducer';
 import { makeStyles } from 'models/makeStyles';
@@ -11,7 +12,7 @@ const App = dynamic(() => import('./App'), { ssr: false });
 
 const useStyles = makeStyles()(() => ({
   root: {
-    height: '60vh',
+    height: '50vh',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -37,6 +38,16 @@ export default function MapLayout() {
   const [lonError, setLonError] = useState('');
   const [zoom, setZoom] = useState(initialLocation.zoom);
   const [zoomError, setZoomError] = useState('');
+  const [mapDetails, setMapDetails] = useState(null);
+
+  useEffect(() => {
+    const { map } = mapContext;
+    if (!map) return;
+    setMapDetails(map.getCurrentView());
+    map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
+      setMapDetails(map.getCurrentView());
+    });
+  }, [mapContext]);
 
   function disableSubmitButton() {
     return !latError && !lonError && !zoomError && lat && lon && zoom;
@@ -126,8 +137,40 @@ export default function MapLayout() {
   }
 
   return (
-    <Box className={classes.root}>
-      <App />
+    <Box>
+      <Box className={classes.root}>
+        <App />
+      </Box>
+      <Box>
+        <Box
+          sx={{
+            margin: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+          }}
+        >
+          <TextField
+            variant="standard"
+            label="Current Latitude of Map"
+            // bcz sometimes 0 can get coerced to falsy
+            // that's why i used toString at the end
+            value={`${mapDetails?.center.lat.toString() || ''}`}
+          />
+          <TextField
+            variant="standard"
+            label="Current Longitude of Map"
+            // bcz sometimes 0 can get coerced to falsy
+            // that's why i used toString at the end
+            value={`${mapDetails?.center.lng.toString() || ''}`}
+          />
+          <TextField
+            variant="standard"
+            label="Current Zoom level of Map"
+            value={`${mapDetails?.zoomLevel || ''}`}
+          />
+        </Box>
+      </Box>
       <Box>
         <Box
           sx={{
