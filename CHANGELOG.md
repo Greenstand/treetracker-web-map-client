@@ -1,3 +1,10 @@
+# [2.0.0-beta.165](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.164...v2.0.0-beta.165) (2022-11-14)
+
+
+### Features
+
+* integrate google analytics ([fdea030](https://github.com/Greenstand/treetracker-web-map-client/commit/fdea0305938741767c6339ef2f8ad49b154db6cd))
+
 # [2.0.0-beta.164](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.163...v2.0.0-beta.164) (2022-11-12)
 
 
