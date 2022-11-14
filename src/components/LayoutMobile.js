@@ -70,9 +70,7 @@ const Layout = forwardRef(({ children }, ref) => {
         >
           <App />
         </Box>
-        <Drawer>
-          <Box ref={ref}>{children}</Box>
-        </Drawer>
+        <Drawer outerRef={ref}>{children}</Drawer>
         <Box className={classes.right}>
           <Timeline />
           <Box
