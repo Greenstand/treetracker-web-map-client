@@ -99,76 +99,76 @@ function FeaturedPlantersSlider({
       >
         {planters.map((planter) => (
           <Link href={link(planter.id)} key={`featured-planter-${planter.id}`}>
-            <Tooltip
+            <Card
               key={planter.id}
-              title={showAppropiateToolTipName(planter)}
-              classes={{
-                tooltip: classes.toolTip,
+              elevation={8}
+              sx={{
+                maxWidth: '176px',
+                transition: 'all .5s',
+                scrollSnapAlign: 'center',
+                scrollBehavior: 'smooth',
+                // position: 'relative',
+                padding: (theme) => theme.spacing(5),
+                borderRadius: (theme) => theme.spacing(4),
+                overflow: 'initial',
+                cursor: 'pointer',
+                bgcolor: (t) =>
+                  t.palette.mode === 'light'
+                    ? d3
+                        .color(t.palette[color].main)
+                        .copy({ opacity: 0.2 })
+                        .formatRgb()
+                    : d3
+                        .color(t.palette[color].main)
+                        .copy({ opacity: 0.4 })
+                        .formatRgb(),
               }}
             >
-              <Card
-                key={planter.id}
-                elevation={8}
+              <CardMedia
+                component="img"
+                image={
+                  planter.logo_url || planter.image_url || imagePlaceholder
+                }
+                alt="tree"
                 sx={{
-                  transition: 'all .5s',
-                  scrollSnapAlign: 'center',
-                  scrollBehavior: 'smooth',
-                  // position: 'relative',
-                  padding: (theme) => theme.spacing(5),
-                  borderRadius: (theme) => theme.spacing(4),
-                  overflow: 'initial',
-                  cursor: 'pointer',
-                  bgcolor: (t) =>
-                    t.palette.mode === 'light'
-                      ? d3
-                          .color(t.palette[color].main)
-                          .copy({ opacity: 0.2 })
-                          .formatRgb()
-                      : d3
-                          .color(t.palette[color].main)
-                          .copy({ opacity: 0.4 })
-                          .formatRgb(),
+                  width: 136,
+                  height: 136,
+                  borderWidth: 4,
+                  borderStyle: 'solid',
+                  borderColor: (t) => t.palette.background.paper,
+                  boxSizing: 'border-box',
+                  borderRadius: '50%',
+                  transition: 'transform .5s',
+                }}
+              />
+              <CardContent
+                sx={{
+                  textAlign: 'center',
                 }}
               >
-                <CardMedia
-                  component="img"
-                  image={
-                    planter.logo_url || planter.image_url || imagePlaceholder
-                  }
-                  alt="tree"
-                  sx={{
-                    width: 136,
-                    height: 136,
-                    borderWidth: 4,
-                    borderStyle: 'solid',
-                    borderColor: (t) => t.palette.background.paper,
-                    boxSizing: 'border-box',
-                    borderRadius: '50%',
-                    transition: 'transform .5s',
-                  }}
-                />
-                {false && (
-                  <CardContent>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        fontSize: '20px',
-                        marginTop: 4,
-                        wordBreak: 'break-all',
-                      }}
-                      align="center"
-                    >
-                      <Link href={link(planter.id)}>
-                        {planter.first_name}
-                        &nbsp;
-                        {(planter.last_name && planter.last_name.slice(0, 1)) ||
-                          ''}
-                      </Link>
-                    </Typography>
-                  </CardContent>
-                )}
-              </Card>
-            </Tooltip>
+                {showAppropiateToolTipName(planter)}
+              </CardContent>
+              {false && (
+                <CardContent>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontSize: '20px',
+                      marginTop: 4,
+                      wordBreak: 'break-all',
+                    }}
+                    align="center"
+                  >
+                    <Link href={link(planter.id)}>
+                      {planter.first_name}
+                      &nbsp;
+                      {(planter.last_name && planter.last_name.slice(0, 1)) ||
+                        ''}
+                    </Link>
+                  </Typography>
+                </CardContent>
+              )}
+            </Card>
           </Link>
         ))}
       </Grid>
