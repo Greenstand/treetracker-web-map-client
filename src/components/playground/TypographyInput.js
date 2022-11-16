@@ -1,4 +1,5 @@
 import { RestartAlt } from '@mui/icons-material';
+import FontDownloadIcon from '@mui/icons-material/FontDownload';
 import {
   Box,
   InputAdornment,
@@ -18,7 +19,10 @@ import {
   usePlaygroundUtils,
   usePlaygroundFonts,
 } from '../../hooks/contextHooks';
-import { propRules } from '../../models/themePlaygroundOptions';
+import {
+  predefinedFonts as defaultFonts,
+  propRules,
+} from '../../models/themePlaygroundOptions';
 
 const allowedFontWeights = new Set([
   'normal',
@@ -200,7 +204,10 @@ function FontFamily(props) {
         <Select value={value} onChange={handleChange}>
           {Object.keys(fonts).map((font) => (
             <MenuItem value={font} key={`font-selector-menuitem-${font}`}>
-              {font}
+              {font}{' '}
+              <span style={{ marginLeft: 'auto' }}>
+                {!(font in defaultFonts) && <FontDownloadIcon />}
+              </span>
             </MenuItem>
           ))}
         </Select>
