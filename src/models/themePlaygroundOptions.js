@@ -125,6 +125,12 @@ export const predefinedFonts = {
   'Sans-Serif': [],
 };
 
+// accordiong to MDN font-weight docs
+export const fontWeightNameToValue = {
+  normal: 400,
+  bold: 700,
+};
+
 export const propRules = {
   color:
     /^#([a-f0-9]{6}|[a-f0-9]{3})$|^rgba?\(((25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*,\s*?){2}(25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*,?\s*([01]\.?\d*?)?\)$/i,
