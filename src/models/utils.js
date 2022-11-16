@@ -181,7 +181,7 @@ const optimizeThemeFonts = (theme) => {
     const font = typography[key].fontFamily;
     if (!font || /,/.test(font)) return;
 
-    const weight = typography[key].fontWeight;
+    const weight = Number(typography[key].fontWeight);
 
     // finally add font and corresponding weight
     if (!usedFonts[font]) {
