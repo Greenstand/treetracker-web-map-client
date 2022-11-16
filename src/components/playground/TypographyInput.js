@@ -20,7 +20,7 @@ import {
   usePlaygroundFonts,
 } from '../../hooks/contextHooks';
 import {
-  predefinedFonts,
+  predefinedFonts as defaultFonts,
   propRules,
 } from '../../models/themePlaygroundOptions';
 
@@ -152,7 +152,6 @@ function FontFamily(props) {
     .split('.')
     .splice(0, path.split('.').length - 1)
     .join('.')}.fontWeight`;
-  const defaultFonts = predefinedFonts;
 
   const resetTypography = () => {
     setValue(defaultValue);
