@@ -1,3 +1,16 @@
+# [2.0.0-beta.167](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.166...v2.0.0-beta.167) (2022-11-16)
+
+
+### Bug Fixes
+
+* remove icon from deprecated component ([6b479ee](https://github.com/Greenstand/treetracker-web-map-client/commit/6b479ee98e4166acad2223853de40e140e0d68de))
+
+
+### Features
+
+* add icon alongside custom font ([f69338f](https://github.com/Greenstand/treetracker-web-map-client/commit/f69338f86b02615463bf282946b77f2f12368dc9))
+* **theme:** add icon alonside custom font ([6a3aef5](https://github.com/Greenstand/treetracker-web-map-client/commit/6a3aef5187b92052e5b8b5d61d5eb6aa2bc2cc12))
+
 # [2.0.0-beta.166](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.165...v2.0.0-beta.166) (2022-11-14)
 
 
