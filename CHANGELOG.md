@@ -1,3 +1,17 @@
+# [2.0.0-beta.168](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.167...v2.0.0-beta.168) (2022-11-16)
+
+
+### Bug Fixes
+
+* 000 is valid font weight option ([630e49d](https://github.com/Greenstand/treetracker-web-map-client/commit/630e49d9efbacf9e2fb2cd3b0a8e53626f502c42))
+* **playground:** custom fonts not first if loaded from storage ([43660b7](https://github.com/Greenstand/treetracker-web-map-client/commit/43660b7dca0c7da30b70e4bfb57e281007ce353c))
+* **playground:** font weights are stored as number and string causing for duplication ([337e49b](https://github.com/Greenstand/treetracker-web-map-client/commit/337e49b1fab0b71f1364d494d212eead1f3a80cf))
+
+
+### Features
+
+* **playground:** update indication custom font style ([1470c2c](https://github.com/Greenstand/treetracker-web-map-client/commit/1470c2c4feeb1de220df9ca03e78b575586c0253))
+
 # [2.0.0-beta.167](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.166...v2.0.0-beta.167) (2022-11-16)
 
 
