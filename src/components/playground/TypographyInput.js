@@ -193,10 +193,17 @@ function FontFamily(props) {
         <Select value={value} onChange={handleChange}>
           {Object.keys(fonts).map((font) => (
             <MenuItem value={font} key={`font-selector-menuitem-${font}`}>
-              {font}{' '}
-              <span style={{ marginLeft: 'auto' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  flex: 1,
+                }}
+              >
+                <span>{font}</span>
                 {!(font in defaultFonts) && <FontDownloadIcon />}
-              </span>
+              </Box>
             </MenuItem>
           ))}
         </Select>
