@@ -134,7 +134,7 @@ export const propRules = {
   fontSize:
     /^-?(?:\d+(\.\d+)?(px|rem|em|ex)|\d{1,2}%|smaller|larger|medium|(x{1,2}-)?small|(x{1,3}-)?large|inherit|initial|revert|revert-layer|unset)$/i,
   fontWeight:
-    /^(normal|bold|lighter|bolder|inherit|initial|revert|revert-layer|unset)$|^[0-9]00$/i,
+    /^(normal|bold|lighter|bolder|inherit|initial|revert|revert-layer|unset)$|^[1-9]00$/i,
   fontStyle:
     /^(normal|italic|oblique( [123]?\d{1,2}deg)?|inherit|initial|revert|revert-layer|unset)$/i,
   lineHeight:
