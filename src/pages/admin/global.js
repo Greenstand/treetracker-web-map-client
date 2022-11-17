@@ -1,6 +1,7 @@
 import { Box, Typography, Divider, List } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
+import ChangeNavSection from 'components/dashboard/ChangeNavSection';
 import { Tab, TabPanel } from 'components/dashboard/Tabs';
 import { ConfigProvider, useConfigContext } from 'context/configContext';
 import { getOrganizationById } from 'models/api';
@@ -70,7 +71,16 @@ function Global({ organization }) {
       >
         <TabPanel value={currentTab} index={0}>
           <Typography variant="h5">Navbar View</Typography>
-          <ChangeLogoSection />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <ChangeLogoSection />
+            <ChangeNavSection />
+          </Box>
         </TabPanel>
         <TabPanel value={currentTab} index={1}>
           <Typography variant="h5">Theme View</Typography>

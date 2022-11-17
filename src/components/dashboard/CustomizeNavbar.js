@@ -14,19 +14,26 @@ function CustomizeNavbar({ formFields, setFormFields }) {
   };
 
   return (
-    <div>
+    <>
       {formFields.map((formField, index) => (
         <Accordion
           // eslint-disable-next-line react/no-array-index-key
           key={index}
           sx={{
             backgroundColor: 'whitesmoke',
+            minWidth: '400px',
           }}
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{formField.title}</Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1,
+            }}
+          >
             <TextField
               name="title"
               label="Title"
@@ -44,7 +51,7 @@ function CustomizeNavbar({ formFields, setFormFields }) {
           </AccordionDetails>
         </Accordion>
       ))}
-    </div>
+    </>
   );
 }
 
