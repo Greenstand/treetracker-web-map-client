@@ -1,6 +1,6 @@
 import { Box, Typography, Divider, List } from '@mui/material';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import MapLayout from 'components/GlobalMapLayout';
 import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
 import { Tab, TabPanel } from 'components/dashboard/Tabs';
 import { ConfigProvider, useConfigContext } from 'context/configContext';
@@ -8,6 +8,10 @@ import { getOrganizationById } from 'models/api';
 import { updateLogoUrl } from 'models/config.reducer';
 import { wrapper } from 'models/utils';
 import { MapContextProvider, useMapContext } from '../../mapContext';
+
+const MapLayout = dynamic(() => import('components/GlobalMapLayout'), {
+  ssr: false,
+});
 
 function Global({ organization }) {
   const [currentTab, setCurrentTab] = useState(0);
