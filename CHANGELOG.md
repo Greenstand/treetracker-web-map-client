@@ -1,3 +1,16 @@
+# [2.0.0-beta.170](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.169...v2.0.0-beta.170) (2022-11-18)
+
+
+### Bug Fixes
+
+* undefined self ([c64b463](https://github.com/Greenstand/treetracker-web-map-client/commit/c64b46392a4bb178754913244d316194dc524d41))
+
+
+### Features
+
+* admin can now set initial map view ([97bf46b](https://github.com/Greenstand/treetracker-web-map-client/commit/97bf46bcf017f204a8f9caa635c0d555f2ccce2c))
+* show maps current lat,lng, zoomLevel ([4b6cdda](https://github.com/Greenstand/treetracker-web-map-client/commit/4b6cdda2e6750f5227487970400f01a7d876535f))
+
 # [2.0.0-beta.169](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.168...v2.0.0-beta.169) (2022-11-18)
 
 
