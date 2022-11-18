@@ -133,6 +133,9 @@ export default function Home(props) {
               <Box
                 sx={{
                   color: 'white',
+                  '.MuiBox-root&:hover': {
+                    color: '#adadad',
+                  },
                 }}
               >
                 Learn more
