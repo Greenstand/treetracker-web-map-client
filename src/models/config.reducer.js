@@ -43,7 +43,7 @@ const configReducer = (state, action) => {
     }
     case ACTION_TYPES.UPDATE_NAV_ITEM: {
       const newNavItems = state.navbar.items.map((item) => {
-        if (item !== action.payload) return item;
+        if (item.id !== action.payload.id) return item;
         return action.payload;
       });
 
