@@ -1,3 +1,10 @@
+# [2.0.0-beta.169](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.168...v2.0.0-beta.169) (2022-11-18)
+
+
+### Bug Fixes
+
+* change button text color on hover ([212e4bc](https://github.com/Greenstand/treetracker-web-map-client/commit/212e4bc2ba45587d97a01588ef98be8693085947))
+
 # [2.0.0-beta.168](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.167...v2.0.0-beta.168) (2022-11-16)
 
 
