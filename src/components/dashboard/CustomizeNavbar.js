@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useCallback, useState } from 'react';
 import { useConfigContext } from 'context/configContext';
-import { updateNavItem } from 'models/config.reducer';
+import { addNavItem, updateNavItem } from 'models/config.reducer';
 
 function CustomInputs({ item, setItem, defaultItem }) {
   const [error, setError] = useState({
@@ -49,7 +49,7 @@ function CustomInputs({ item, setItem, defaultItem }) {
         [name]: value,
       }));
     },
-    [item, error],
+    [item, error, config.navbar.items],
   );
 
   return (
@@ -84,7 +84,6 @@ function CustomAccordion({ item: defaultItem }) {
   const handleClick = useCallback(
     (e) => {
       e.stopPropagation();
-      // handleUpdateClick(item);
       dispatch(updateNavItem(item));
     },
     [item],
@@ -126,14 +125,18 @@ function CustomAccordion({ item: defaultItem }) {
 }
 
 function CustomizeNavbar() {
-  const { state: config } = useConfigContext();
-  console.log('config nav items updated', config.navbar.items);
+  const { state: config, dispatch } = useConfigContext();
+
+  const onAddNewItem = () => {
+    dispatch(addNavItem());
+  };
 
   return (
     <>
       {config.navbar.items.map((item) => (
         <CustomAccordion key={item.id} item={item} />
       ))}
+      <Button onClick={onAddNewItem}>New Item</Button>
     </>
   );
 }

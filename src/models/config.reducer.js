@@ -18,7 +18,36 @@ const configReducer = (state, action) => {
       };
     }
     case ACTION_TYPES.ADD_NAV_ITEM: {
-      const newNavItems = [...state.navbar.items, action.payload];
+      // get the next id of the nav items, if curr ids [1,3,4] returns 2
+      const nextId = () => {
+        let next = 1;
+        // eslint-disable-next-line no-loop-func
+        while (state.navbar.items.find((item) => item.id === next)) {
+          next += 1;
+        }
+        return next;
+      };
+      const newId = nextId();
+      const newItem = {
+        id: newId,
+        title: 'New Url',
+        url: '/new-url',
+      };
+
+      // check if title or url already exist
+      const isAlreadyNewItem = state.navbar.items
+        .map((item) => {
+          if (item.title === newItem.title || item.url === newItem.url) {
+            return true;
+          }
+          return false;
+        })
+        .some((x) => x === true);
+
+      // if item is already in the state; return state
+      if (isAlreadyNewItem) return state;
+
+      const newNavItems = [...state.navbar.items, newItem];
 
       return {
         ...state,
