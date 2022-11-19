@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -7,6 +8,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useCallback, useMemo, useState } from 'react';
+import { SquareIconButton } from 'components/playground';
 import { useConfigContext } from 'context/configContext';
 import {
   addNavItem,
@@ -126,7 +128,12 @@ function CustomAccordion({ item: defaultItem }) {
         <Typography>{item.title}</Typography>
         <Box>
           {hasItemChanged && <Button onClick={handleUpdate}>Update</Button>}
-          <Button onClick={handleDelete}>Delete</Button>
+          <SquareIconButton
+            icon={<DeleteIcon />}
+            onClick={handleDelete}
+            tooltip="Remove this navigation item"
+            color="error"
+          />
         </Box>
       </AccordionSummary>
       <AccordionDetails
