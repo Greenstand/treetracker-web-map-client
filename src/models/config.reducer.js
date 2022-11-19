@@ -59,7 +59,7 @@ const configReducer = (state, action) => {
     }
     case ACTION_TYPES.REMOVE_NAV_ITEM: {
       const newNavItems = state.navbar.items.filter(
-        (item) => item !== action.payload,
+        (item) => item.id !== action.payload,
       );
 
       return {

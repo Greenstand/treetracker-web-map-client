@@ -2,12 +2,17 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useCallback, useState } from 'react';
 import { useConfigContext } from 'context/configContext';
-import { addNavItem, updateNavItem } from 'models/config.reducer';
+import {
+  addNavItem,
+  removeNavItem,
+  updateNavItem,
+} from 'models/config.reducer';
 
 function CustomInputs({ item, setItem, defaultItem }) {
   const [error, setError] = useState({
@@ -81,7 +86,11 @@ function CustomAccordion({ item: defaultItem }) {
   const [item, setItem] = useState(defaultItem);
   const [expanded, setExpanded] = useState(false);
 
-  const handleClick = useCallback(
+  const handleDelete = useCallback(() => {
+    dispatch(removeNavItem(defaultItem.id));
+  }, [defaultItem]);
+
+  const handleUpdate = useCallback(
     (e) => {
       e.stopPropagation();
       dispatch(updateNavItem(item));
@@ -109,7 +118,10 @@ function CustomAccordion({ item: defaultItem }) {
         expandIcon={<ExpandMoreIcon />}
       >
         <Typography>{item.title}</Typography>
-        <Button onClick={handleClick}>Update</Button>
+        <Box>
+          <Button onClick={handleUpdate}>Update</Button>
+          <Button onClick={handleDelete}>Delete</Button>
+        </Box>
       </AccordionSummary>
       <AccordionDetails
         sx={{
