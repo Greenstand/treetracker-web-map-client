@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useConfigContext } from 'context/configContext';
 import {
   addNavItem,
@@ -86,6 +86,12 @@ function CustomAccordion({ item: defaultItem }) {
   const [item, setItem] = useState(defaultItem);
   const [expanded, setExpanded] = useState(false);
 
+  const hasItemChanged = useMemo(() => {
+    if (item.title !== defaultItem.title || item.url !== defaultItem.url)
+      return true;
+    return false;
+  }, [item.title, item.url]);
+
   const handleDelete = useCallback(() => {
     dispatch(removeNavItem(defaultItem.id));
   }, [defaultItem]);
@@ -119,7 +125,7 @@ function CustomAccordion({ item: defaultItem }) {
       >
         <Typography>{item.title}</Typography>
         <Box>
-          <Button onClick={handleUpdate}>Update</Button>
+          {hasItemChanged && <Button onClick={handleUpdate}>Update</Button>}
           <Button onClick={handleDelete}>Delete</Button>
         </Box>
       </AccordionSummary>
