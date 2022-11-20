@@ -1,5 +1,6 @@
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -123,7 +124,6 @@ function CustomAccordion({ item: defaultItem, index }) {
           component="li"
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
           <AccordionSummary
             sx={{
@@ -134,6 +134,9 @@ function CustomAccordion({ item: defaultItem, index }) {
             }}
             expandIcon={<ExpandMoreIcon />}
           >
+            <div {...provided.dragHandleProps}>
+              <DragIndicatorIcon />
+            </div>
             <Typography>{item.title}</Typography>
             <Box>
               {hasItemChanged && <Button onClick={handleUpdate}>Update</Button>}
