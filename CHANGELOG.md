@@ -1,3 +1,10 @@
+# [2.0.0-beta.171](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.170...v2.0.0-beta.171) (2022-11-20)
+
+
+### Bug Fixes
+
+* added a simple mount test for theme in cypress ([4babe1f](https://github.com/Greenstand/treetracker-web-map-client/commit/4babe1f93fd1fc0dc3cc7dcd50cba65f331a5080))
+
 # [2.0.0-beta.170](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.169...v2.0.0-beta.170) (2022-11-18)
 
 
