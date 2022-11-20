@@ -3,6 +3,7 @@ const ACTION_TYPES = {
   ADD_NAV_ITEM: 'ADD_NAV_ITEM',
   REMOVE_NAV_ITEM: 'REMOVE_NAV_ITEM',
   UPDATE_NAV_ITEM: 'UPDATE_NAV_ITEM',
+  REORDER_NAV_ITEMS: 'REORDER_NAV_ITEMS',
   UPDATE_MAP_LOCATION: 'UPDATE_MAP_LOCATION',
 };
 
@@ -84,6 +85,27 @@ const configReducer = (state, action) => {
         },
       };
     }
+    case ACTION_TYPES.REORDER_NAV_ITEMS: {
+      const reorder = (startIndex, endIndex) => {
+        const result = [...state.navbar.items];
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+        return result;
+      };
+
+      const newNavItems = reorder(
+        action.payload.startIndex,
+        action.payload.endIndex,
+      );
+
+      return {
+        ...state,
+        navbar: {
+          ...state.navbar,
+          items: newNavItems,
+        },
+      };
+    }
     case ACTION_TYPES.UPDATE_MAP_LOCATION: {
       return {
         ...state,
@@ -123,6 +145,11 @@ export const removeNavItem = (navItem) => ({
 export const updateNavItem = (updatedNavItem) => ({
   type: ACTION_TYPES.UPDATE_NAV_ITEM,
   payload: updatedNavItem,
+});
+
+export const reorderNavItems = (startIndex, endIndex) => ({
+  type: ACTION_TYPES.REORDER_NAV_ITEMS,
+  payload: { startIndex, endIndex },
 });
 
 export const updateMapLocation = (updatedMapLocation) => ({
