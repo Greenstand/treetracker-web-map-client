@@ -96,7 +96,7 @@ function CustomAccordion({ item: defaultItem, index }) {
     if (item.title !== defaultItem.title || item.url !== defaultItem.url)
       return true;
     return false;
-  }, [item.title, item.url]);
+  }, [item.title, item.url, defaultItem.title, defaultItem.url]);
 
   const handleDelete = useCallback(() => {
     dispatch(removeNavItem(defaultItem.id));
