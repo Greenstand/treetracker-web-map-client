@@ -173,9 +173,9 @@ function CustomizeNavbar() {
 
   const onDragEnd = (result) => {
     // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
+    if (!result.destination) return;
+    // dropped in same place
+    if (result.destination.index === result.source.index) return;
 
     dispatch(reorderNavItems(result.source.index, result.destination.index));
   };
