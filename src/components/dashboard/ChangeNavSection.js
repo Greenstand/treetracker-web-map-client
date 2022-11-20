@@ -1,5 +1,9 @@
 import { Grid, Typography } from '@mui/material';
-import CustomizeNavbar from './CustomizeNavbar';
+import dynamic from 'next/dynamic';
+
+const CustomizeNavbar = dynamic(() => import('./CustomizeNavbar'), {
+  ssr: false,
+});
 
 function ChangeNavSection() {
   return (
