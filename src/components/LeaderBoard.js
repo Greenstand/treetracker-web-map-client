@@ -238,7 +238,7 @@ function LeaderBoard(props) {
                 <Typography
                   variant="h5"
                   color="text.secondary"
-                  sx={{ fontFamily: 'Lato' }}
+                  sx={{ fontFamily: 'Lato', marginRight: '0.5em' }}
                 >
                   {country.name}
                 </Typography>
@@ -262,7 +262,9 @@ function LeaderBoard(props) {
                       marginRight: '8px',
                     }}
                   >
-                    {`${country.planted.toLocaleString()} `}
+                    {`${new Intl.NumberFormat('en', {
+                      notation: 'compact',
+                    }).format(country.planted)}`.toLocaleString()}
                   </Typography>
                   <TreeImage />
                 </Box>
