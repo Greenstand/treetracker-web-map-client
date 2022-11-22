@@ -363,7 +363,7 @@ export default function Wallet(props) {
 
 export const getServerSideProps = wrapper(async ({ params }) => {
   const wallet = await getWalletById(params.walletid);
-  const {id} = wallet;
+  const { id } = wallet;
   const [species, tokens, tokenRegionCount, trees] = await Promise.all([
     getSpeciesByWalletId(id),
     (async () => {
