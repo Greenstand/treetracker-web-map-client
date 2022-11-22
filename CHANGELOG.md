@@ -1,3 +1,10 @@
+# [2.0.0-beta.172](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.171...v2.0.0-beta.172) (2022-11-22)
+
+
+### Bug Fixes
+
+* overlap on leaderboard ([7d56185](https://github.com/Greenstand/treetracker-web-map-client/commit/7d56185315f86345f1b9422827dced20041dad04))
+
 # [2.0.0-beta.171](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.170...v2.0.0-beta.171) (2022-11-20)
 
 
