@@ -1,3 +1,23 @@
+# [2.0.0-beta.173](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.172...v2.0.0-beta.173) (2022-11-22)
+
+
+### Bug Fixes
+
+* **dashboard:** drag drop error with server side rendering ([59e0d6a](https://github.com/Greenstand/treetracker-web-map-client/commit/59e0d6afd718afdd473e6cf9fc41ccd4c91bf0ad))
+* **dashboard:** test not working with updated component ([ca6234a](https://github.com/Greenstand/treetracker-web-map-client/commit/ca6234a86294f762ea8dfda4a7a4757cbf2d44ab))
+* **dashboard:** update button showing after clicked ([29807d9](https://github.com/Greenstand/treetracker-web-map-client/commit/29807d961a8c6268097a72526d34a86d1073e133))
+
+
+### Features
+
+* **dashboard:** can add new nav item ([59170d9](https://github.com/Greenstand/treetracker-web-map-client/commit/59170d94884f6926a2251563363ef21c7e21b7c5))
+* **dashboard:** can remove nav item ([4e461e3](https://github.com/Greenstand/treetracker-web-map-client/commit/4e461e33b621e9a9a67ef214595785612e0f52ab))
+* **dashboard:** can reorder nav items with drag drop ([565cea3](https://github.com/Greenstand/treetracker-web-map-client/commit/565cea367fb174c6dfae19ef0bc79f8d58f56164))
+* **dashboard:** change drag area to drag icon ([b2a9e9d](https://github.com/Greenstand/treetracker-web-map-client/commit/b2a9e9db39b4df3c795b1609f9be4b486363e0d2))
+* **dashboard:** change nav item delete button to icon ([f5cdfa8](https://github.com/Greenstand/treetracker-web-map-client/commit/f5cdfa8c509a970eaa857d3afd8e11367e020763))
+* **dashboard:** only show update button if nav item changed ([5b49111](https://github.com/Greenstand/treetracker-web-map-client/commit/5b491113b3745c71dd4fac679b648dd30fd30479))
+* **dashboard:** update styling ([bd4db49](https://github.com/Greenstand/treetracker-web-map-client/commit/bd4db49987af7285ee9a6eef06167d326fb6aec3))
+
 # [2.0.0-beta.172](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.171...v2.0.0-beta.172) (2022-11-22)
 
 
