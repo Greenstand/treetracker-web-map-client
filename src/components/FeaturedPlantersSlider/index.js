@@ -98,12 +98,17 @@ function FeaturedPlantersSlider({
         onScroll={debounce(onScroll, 70)}
       >
         {planters.map((planter) => (
-          <Link href={link(planter.id)} key={`featured-planter-${planter.id}`}>
+          <Link
+            href={link(planter.id)}
+            key={`featured-planter-${planter.id}`}
+            style={{
+              display: 'flex',
+            }}
+          >
             <Card
               key={planter.id}
               elevation={8}
               sx={{
-                maxWidth: '176px',
                 transition: 'all .5s',
                 scrollSnapAlign: 'center',
                 scrollBehavior: 'smooth',
@@ -112,6 +117,7 @@ function FeaturedPlantersSlider({
                 borderRadius: (theme) => theme.spacing(4),
                 overflow: 'initial',
                 cursor: 'pointer',
+                flex: '1',
                 bgcolor: (t) =>
                   t.palette.mode === 'light'
                     ? d3
@@ -144,9 +150,15 @@ function FeaturedPlantersSlider({
               <CardContent
                 sx={{
                   textAlign: 'center',
+                  wordBreak: 'break-word',
+                  display: '-webkit-box',
+                  '-webkit-line-clamp': '2',
+                  '-webkit-box-orient': 'vertical',
+                  overflow: 'hidden',
+                  paddingBottom: '0 !important', // necessary to ensure extra lines remain hidden
                 }}
               >
-                {showAppropiateToolTipName(planter)}
+                <Typography>{showAppropiateToolTipName(planter)} </Typography>
               </CardContent>
               {false && (
                 <CardContent>
