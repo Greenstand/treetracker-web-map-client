@@ -223,7 +223,6 @@ export default function Planter(props) {
           <ProfileAvatar
             src={planter.image_url}
             rotation={planter.image_rotation}
-            isLogo
           />
         </Box>
 
