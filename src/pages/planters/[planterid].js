@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
+import HeadTag from 'components/HeadTag';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { getPlanterById, getOrgLinks } from 'models/api';
@@ -140,6 +141,12 @@ export default function Planter(props) {
 
   return (
     <>
+      <HeadTag
+        title={`${getPlanterName(
+          planter.first_name,
+          planter.last_name,
+        )} - Planter | Treetracker by Greenstand`}
+      />
       <Box
         sx={[
           {
@@ -216,6 +223,7 @@ export default function Planter(props) {
           <ProfileAvatar
             src={planter.image_url}
             rotation={planter.image_rotation}
+            isLogo
           />
         </Box>
 

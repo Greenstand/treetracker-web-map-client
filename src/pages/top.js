@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import React from 'react';
+import HeadTag from 'components/HeadTag';
 import SearchButton from 'components/SearchButton';
 import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import FeaturedPlantersSlider from '../components/FeaturedPlantersSlider';
@@ -86,6 +87,7 @@ function Top(props) {
 
   return (
     <>
+      <HeadTag title="Tree Spotlight | Treetracker by Greenstand" />
       <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
         {!isFullscreen && false && (
           <Stack direction="row" justifyContent="flex-end" mb={6.125}>

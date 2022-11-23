@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
+import HeadTag from 'components/HeadTag';
 import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import CustomImageWrapper from 'components/common/CustomImageWrapper';
@@ -144,6 +145,7 @@ export default function Organization(props) {
 
   return (
     <>
+      <HeadTag title={`${name} - Organization | Treetracker by Greenstand`} />
       <Box
         sx={[
           {
