@@ -1,3 +1,11 @@
+# [2.0.0-beta.175](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.174...v2.0.0-beta.175) (2022-11-23)
+
+
+### Bug Fixes
+
+* copy embed code from clipboard ([60f1f0b](https://github.com/Greenstand/treetracker-web-map-client/commit/60f1f0ba72e6b6fa56fa2977b3a1a3b2b4e6eb0a))
+* return truncated token id from UUIDTag component ([85968b0](https://github.com/Greenstand/treetracker-web-map-client/commit/85968b0ef6c615a1600573708a6956b38a35c1fc))
+
 # [2.0.0-beta.174](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.173...v2.0.0-beta.174) (2022-11-23)
 
 
