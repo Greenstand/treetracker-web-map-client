@@ -1,3 +1,10 @@
+# [2.0.0-beta.174](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.173...v2.0.0-beta.174) (2022-11-23)
+
+
+### Features
+
+* add filter to card ([be6ac62](https://github.com/Greenstand/treetracker-web-map-client/commit/be6ac62b658b636e7a4655988083756c8cbe0e4d))
+
 # [2.0.0-beta.173](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.172...v2.0.0-beta.173) (2022-11-22)
 
 
