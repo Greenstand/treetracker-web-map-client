@@ -67,7 +67,10 @@ function InformationCard1({
     >
       <Box display="flex" alignItems="center">
         <Avatar
-          sx={{ transform: rotation && `rotate(${rotation}deg)` }}
+          sx={{
+            filter: 'drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.25))',
+            transform: rotation && `rotate(${rotation}deg)`,
+          }}
           className={classes.media}
           src={cardImageSrc}
           title="Contemplative Reptile"
