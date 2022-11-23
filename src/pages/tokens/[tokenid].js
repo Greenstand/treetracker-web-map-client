@@ -435,10 +435,9 @@ export default function Token(props) {
           title="Created At"
           icon={<Icon icon={CalendarIcon} />}
         />
-
         <TreeTag
           key="token-id"
-          TreeTagValue={token.id}
+          TreeTagValue=<UUIDTag uuid={token.id} />
           title="Token ID"
           icon={<Icon icon={TokenIcon} />}
         />
