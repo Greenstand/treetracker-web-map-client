@@ -1,3 +1,10 @@
+# [2.0.0-beta.176](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.175...v2.0.0-beta.176) (2022-11-24)
+
+
+### Bug Fixes
+
+* remove border from card ([932832f](https://github.com/Greenstand/treetracker-web-map-client/commit/932832f734520bc041c6ea5b5f156d446e30e85b))
+
 # [2.0.0-beta.175](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.174...v2.0.0-beta.175) (2022-11-23)
 
 
