@@ -1,3 +1,10 @@
+# [2.0.0-beta.177](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.176...v2.0.0-beta.177) (2022-11-24)
+
+
+### Features
+
+* give error feedback on incorrect date ([45507bb](https://github.com/Greenstand/treetracker-web-map-client/commit/45507bbdd3decf44ce1dd1600e3dce61f90cd8c7))
+
 # [2.0.0-beta.176](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.175...v2.0.0-beta.176) (2022-11-24)
 
 
