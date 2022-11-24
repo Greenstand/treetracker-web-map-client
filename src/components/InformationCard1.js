@@ -19,11 +19,7 @@ const useStyles = makeStyles()((theme) => ({
       height: 80,
       width: 80,
     },
-    borderRadius: '50%',
     float: 'left',
-    borderWidth: theme.spacing(1),
-    borderColor: theme.palette.background.paper,
-    borderStyle: 'solid',
     boxSizing: 'border-box',
   },
 }));
