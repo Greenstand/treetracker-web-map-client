@@ -1,3 +1,11 @@
+# [2.0.0-beta.178](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.177...v2.0.0-beta.178) (2022-11-25)
+
+
+### Bug Fixes
+
+* ensure card heights remain same ([ef5c619](https://github.com/Greenstand/treetracker-web-map-client/commit/ef5c61920d2d6657b401a5822b2e970e380c5a5d))
+* remove tooltip and add name ([92dae04](https://github.com/Greenstand/treetracker-web-map-client/commit/92dae040e3ba029beaeaf0d65253d26373f7286f))
+
 # [2.0.0-beta.177](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.176...v2.0.0-beta.177) (2022-11-24)
 
 
