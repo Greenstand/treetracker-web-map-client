@@ -37,7 +37,7 @@ function getParameters() {
   return parameters;
 }
 
-function MapComponent() {
+function MapComponent({ updateZoomChanged }) {
   log.warn('Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
   // const [tree, setTree] = React.useState(undefined);
   const mapRef = useRef(null);
@@ -163,6 +163,7 @@ function MapComponent() {
         router,
       );
       window.history.pushState('treetracker', '', path);
+      if (updateZoomChanged) updateZoomChanged(map.map.getZoom());
     });
     map.mount(mapRef.current);
     mapRef.current.map = map;

@@ -2,13 +2,12 @@ import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 import { makeStyles } from 'models/makeStyles';
 import Navbar from './Navbar';
 import Timeline from './Timeline';
+import ZoomInOutButton from './ZoomInOutButton';
 import Max from '../images/max.svg';
-import ZoomIn from '../images/zoom-in.svg';
-import ZoomOut from '../images/zoom-out.svg';
-import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
@@ -54,19 +53,16 @@ export default function Layout({
   nextExtraIsEmbed,
   nextExtraIsEmbedCallback,
 }) {
-  const mapContext = useMapContext();
   const { classes } = useStyles();
+  const [zoomChanged, setZoomChanged] = useState(0);
+
   function handleFullScreen() {
     nextExtraIsEmbedCallback(!nextExtraIsEmbed);
   }
 
-  function handleZoomIn() {
-    mapContext.map.map.zoomIn();
-  }
-
-  function handleZoomOut() {
-    mapContext.map.map.zoomOut();
-  }
+  const updateZoomChanged = (zoom) => {
+    setZoomChanged(zoom);
+  };
 
   return (
     <Box className={classes.root}>
@@ -107,20 +103,9 @@ export default function Layout({
               flexDirection: 'column',
             }}
           >
-            <SvgIcon
-              onClick={handleZoomIn}
-              component={ZoomIn}
-              inheritViewBox
-              sx={{ mb: '10px', height: 52, width: 52 }}
-            />
-            <SvgIcon
-              onClick={handleZoomOut}
-              component={ZoomOut}
-              inheritViewBox
-              sx={{ height: 52, width: 52 }}
-            />
+            <ZoomInOutButton moveEnd={zoomChanged} />
           </Box>
-          <App />
+          <App updateZoomChanged={updateZoomChanged} />
         </Box>
       </Box>
     </Box>

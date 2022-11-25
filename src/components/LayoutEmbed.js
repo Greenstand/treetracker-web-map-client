@@ -6,12 +6,10 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
 import SearchFilter from './SearchFilter';
+import ZoomInOutButton from './ZoomInOutButton';
 import { useEmbed } from '../hooks/globalHooks';
 import LogoIcon from '../images/greenstand_logo_full.png';
 import MinIcon from '../images/min.svg';
-import ZoomIn from '../images/zoom-in.svg';
-import ZoomOut from '../images/zoom-out.svg';
-import { useMapContext } from '../mapContext';
 // import { makeStyles } from 'models/makeStyles';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -58,9 +56,10 @@ export default function Layout({
 }) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
+  const [zoomChanged, setZoomChanged] = React.useState(0);
   const isEmbed = useEmbed();
+
   // const { _classes } = useStyles();
-  const mapContext = useMapContext();
   function handleFullScreen() {
     nextExtraIsEmbedCallback(!nextExtraIsEmbed);
   }
@@ -69,20 +68,16 @@ export default function Layout({
     setIsDrawerOpen(!isDrawerOpen);
   }
 
-  function handleZoomIn() {
-    mapContext.map.map.zoomIn();
-  }
-
-  function handleZoomOut() {
-    mapContext.map.map.zoomOut();
-  }
-
   React.useEffect(() => {
     setToggleButtonPosition((prevPosition) => {
       if (prevPosition === 0) return 568; // width of the drawer
       return 0;
     });
   }, [isDrawerOpen]);
+
+  const updateZoomChanged = (zoom) => {
+    setZoomChanged(zoom);
+  };
 
   return (
     <>
@@ -94,7 +89,7 @@ export default function Layout({
           height: '100vh',
         }}
       >
-        <App />
+        <App updateZoomChanged={updateZoomChanged} />
       </Box>
       {!isFloatingDisabled && (
         <>
@@ -275,29 +270,7 @@ export default function Layout({
             flexDirection: 'column',
           }}
         >
-          <Box onClick={handleZoomIn}>
-            {}
-            <SvgIcon
-              alt="zoom-in"
-              component={ZoomIn}
-              inheritViewBox
-              sx={{ width: 52, height: 52 }}
-            />
-          </Box>
-          <Box
-            onClick={handleZoomOut}
-            sx={{
-              '& svg': { display: 'block' },
-            }}
-          >
-            {}
-            <SvgIcon
-              alt="zoom-out"
-              component={ZoomOut}
-              inheritViewBox
-              sx={{ width: 52, height: 52 }}
-            />
-          </Box>
+          <ZoomInOutButton moveEnd={zoomChanged} />
         </Box>
       </Box>
       {/* <Box className={classes.root}>
