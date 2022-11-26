@@ -1,15 +1,15 @@
 import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import ZoomIn from '../images/zoom-in.svg';
 import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
-export default function ZoomInOutButton(moveEnd) {
+export default function ZoomInOutButton() {
   const mapContext = useMapContext();
   const [isEnabledZoomIn, setIsEnabledZoomIn] = useState(false);
   const [isEnabledZoomOut, setIsEnabledZoomOut] = useState(false);
+  const MOVE_END_EVENT = 'move-end';
 
   function checkZoomEnable() {
     if (mapContext.map) {
@@ -20,8 +20,12 @@ export default function ZoomInOutButton(moveEnd) {
   }
 
   useEffect(() => {
-    checkZoomEnable();
-  }, [moveEnd]);
+    if (mapContext.map) {
+      mapContext.map.on(MOVE_END_EVENT, () => {
+        checkZoomEnable();
+      });
+    }
+  });
 
   function handleZoomIn() {
     const currMap = mapContext.map.map;

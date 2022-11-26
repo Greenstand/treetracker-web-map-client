@@ -56,7 +56,6 @@ export default function Layout({
 }) {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
-  const [zoomChanged, setZoomChanged] = React.useState(0);
   const isEmbed = useEmbed();
 
   // const { _classes } = useStyles();
@@ -75,10 +74,6 @@ export default function Layout({
     });
   }, [isDrawerOpen]);
 
-  const updateZoomChanged = (zoom) => {
-    setZoomChanged(zoom);
-  };
-
   return (
     <>
       <Box
@@ -89,7 +84,7 @@ export default function Layout({
           height: '100vh',
         }}
       >
-        <App updateZoomChanged={updateZoomChanged} />
+        <App />
       </Box>
       {!isFloatingDisabled && (
         <>
@@ -270,7 +265,7 @@ export default function Layout({
             flexDirection: 'column',
           }}
         >
-          <ZoomInOutButton moveEnd={zoomChanged} />
+          <ZoomInOutButton />
         </Box>
       </Box>
       {/* <Box className={classes.root}>

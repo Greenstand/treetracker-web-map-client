@@ -2,7 +2,6 @@ import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 import { makeStyles } from 'models/makeStyles';
 import Navbar from './Navbar';
 import Timeline from './Timeline';
@@ -54,15 +53,10 @@ export default function Layout({
   nextExtraIsEmbedCallback,
 }) {
   const { classes } = useStyles();
-  const [zoomChanged, setZoomChanged] = useState(0);
 
   function handleFullScreen() {
     nextExtraIsEmbedCallback(!nextExtraIsEmbed);
   }
-
-  const updateZoomChanged = (zoom) => {
-    setZoomChanged(zoom);
-  };
 
   return (
     <Box className={classes.root}>
@@ -103,9 +97,9 @@ export default function Layout({
               flexDirection: 'column',
             }}
           >
-            <ZoomInOutButton moveEnd={zoomChanged} />
+            <ZoomInOutButton />
           </Box>
-          <App updateZoomChanged={updateZoomChanged} />
+          <App />
         </Box>
       </Box>
     </Box>
