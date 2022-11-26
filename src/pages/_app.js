@@ -35,6 +35,18 @@ export const createMuiCache = () =>
     prepend: true,
   }));
 
+export function reportWebVitals({ name, delta, value, id, label }) {
+  const deployed = process.env.NODE_ENV === 'production';
+  if (label === 'web-vital' && deployed) {
+    window.gtag('event', name, {
+      value: delta,
+      metric_id: id,
+      metric_value: value,
+      metric_delta: delta,
+    });
+  }
+}
+
 function GoogleAnalytics() {
   return (
     <>
