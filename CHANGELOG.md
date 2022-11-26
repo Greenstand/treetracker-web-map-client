@@ -1,3 +1,10 @@
+# [2.0.0-beta.179](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.178...v2.0.0-beta.179) (2022-11-26)
+
+
+### Features
+
+* send performance metrics to google analytics ([f5a2748](https://github.com/Greenstand/treetracker-web-map-client/commit/f5a2748ea8bb071733cb86b7f1030990319988b3))
+
 # [2.0.0-beta.178](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.177...v2.0.0-beta.178) (2022-11-25)
 
 
