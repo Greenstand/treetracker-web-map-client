@@ -150,6 +150,9 @@ export default function Home(props) {
               sx={{
                 color: '#474B4F',
                 ml: [4, 6],
+                '.MuiButton-root&:hover': {
+                  color: 'white',
+                },
               }}
             >
               Let&apos;s Find a Tree
