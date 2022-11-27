@@ -19,11 +19,7 @@ const useStyles = makeStyles()((theme) => ({
       height: 80,
       width: 80,
     },
-    borderRadius: '50%',
     float: 'left',
-    borderWidth: theme.spacing(1),
-    borderColor: theme.palette.background.paper,
-    borderStyle: 'solid',
     boxSizing: 'border-box',
   },
 }));
@@ -67,7 +63,10 @@ function InformationCard1({
     >
       <Box display="flex" alignItems="center">
         <Avatar
-          sx={{ transform: rotation && `rotate(${rotation}deg)` }}
+          sx={{
+            filter: 'drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.25))',
+            transform: rotation && `rotate(${rotation}deg)`,
+          }}
           className={classes.media}
           src={cardImageSrc}
           title="Contemplative Reptile"

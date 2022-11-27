@@ -1,3 +1,47 @@
+# [2.0.0-beta.179](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.178...v2.0.0-beta.179) (2022-11-26)
+
+
+### Features
+
+* send performance metrics to google analytics ([f5a2748](https://github.com/Greenstand/treetracker-web-map-client/commit/f5a2748ea8bb071733cb86b7f1030990319988b3))
+
+# [2.0.0-beta.178](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.177...v2.0.0-beta.178) (2022-11-25)
+
+
+### Bug Fixes
+
+* ensure card heights remain same ([ef5c619](https://github.com/Greenstand/treetracker-web-map-client/commit/ef5c61920d2d6657b401a5822b2e970e380c5a5d))
+* remove tooltip and add name ([92dae04](https://github.com/Greenstand/treetracker-web-map-client/commit/92dae040e3ba029beaeaf0d65253d26373f7286f))
+
+# [2.0.0-beta.177](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.176...v2.0.0-beta.177) (2022-11-24)
+
+
+### Features
+
+* give error feedback on incorrect date ([45507bb](https://github.com/Greenstand/treetracker-web-map-client/commit/45507bbdd3decf44ce1dd1600e3dce61f90cd8c7))
+
+# [2.0.0-beta.176](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.175...v2.0.0-beta.176) (2022-11-24)
+
+
+### Bug Fixes
+
+* remove border from card ([932832f](https://github.com/Greenstand/treetracker-web-map-client/commit/932832f734520bc041c6ea5b5f156d446e30e85b))
+
+# [2.0.0-beta.175](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.174...v2.0.0-beta.175) (2022-11-23)
+
+
+### Bug Fixes
+
+* copy embed code from clipboard ([60f1f0b](https://github.com/Greenstand/treetracker-web-map-client/commit/60f1f0ba72e6b6fa56fa2977b3a1a3b2b4e6eb0a))
+* return truncated token id from UUIDTag component ([85968b0](https://github.com/Greenstand/treetracker-web-map-client/commit/85968b0ef6c615a1600573708a6956b38a35c1fc))
+
+# [2.0.0-beta.174](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.173...v2.0.0-beta.174) (2022-11-23)
+
+
+### Features
+
+* add filter to card ([be6ac62](https://github.com/Greenstand/treetracker-web-map-client/commit/be6ac62b658b636e7a4655988083756c8cbe0e4d))
+
 # [2.0.0-beta.173](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.172...v2.0.0-beta.173) (2022-11-22)
 
 
