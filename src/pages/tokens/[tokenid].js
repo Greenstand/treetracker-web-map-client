@@ -159,9 +159,7 @@ export default function Token(props) {
 
   return (
     <>
-      <HeadTag
-        title={`Token #${tokenIdStart}...${tokenIdEnd} | Treetracker by Greenstand`}
-      />
+      <HeadTag title={`Token #${tokenIdStart}...${tokenIdEnd}`} />
       <Box
         sx={[
           {

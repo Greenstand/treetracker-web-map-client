@@ -385,7 +385,7 @@ function ThemeConfig() {
 
   return (
     <>
-      <HeadTag title="Theme - Admin | Treetracker by Greenstand" />
+      <HeadTag title="Theme - Admin" />
       <Grid
         container
         sx={{

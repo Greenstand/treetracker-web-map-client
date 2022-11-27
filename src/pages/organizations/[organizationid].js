@@ -145,7 +145,7 @@ export default function Organization(props) {
 
   return (
     <>
-      <HeadTag title={`${name} - Organization | Treetracker by Greenstand`} />
+      <HeadTag title={`${name} - Organization`} />
       <Box
         sx={[
           {

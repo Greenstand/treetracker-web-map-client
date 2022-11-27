@@ -189,7 +189,7 @@ export default function Tree({
 
   return (
     <>
-      <HeadTag title={`Tree #${tree.id}  | Treetracker by Greenstand`} />
+      <HeadTag title={`Tree #${tree.id}`} />
       <Box
         sx={[
           {

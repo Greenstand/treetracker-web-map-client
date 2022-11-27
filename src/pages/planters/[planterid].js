@@ -145,7 +145,7 @@ export default function Planter(props) {
         title={`${getPlanterName(
           planter.first_name,
           planter.last_name,
-        )} - Planter | Treetracker by Greenstand`}
+        )} - Planter`}
       />
       <Box
         sx={[

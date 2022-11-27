@@ -230,7 +230,7 @@ export default function Index() {
   log.warn('rpt', RPT);
   return (
     <>
-      <HeadTag title="Admin | Treetracker by Greenstand" />
+      <HeadTag title="Admin" />
       <Box
         sx={{
           display: 'flex',

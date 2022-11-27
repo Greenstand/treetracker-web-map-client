@@ -87,7 +87,7 @@ function Top(props) {
 
   return (
     <>
-      <HeadTag title="Tree Spotlight | Treetracker by Greenstand" />
+      <HeadTag title="Tree Spotlight" />
       <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
         {!isFullscreen && false && (
           <Stack direction="row" justifyContent="flex-end" mb={6.125}>

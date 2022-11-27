@@ -101,7 +101,7 @@ export default function Wallet(props) {
   }, [mapContext, wallet]);
   return (
     <>
-      <HeadTag title={`${wallet.name} - Wallet | Treetracker by Greenstand`} />
+      <HeadTag title={`${wallet.name} - Wallet`} />
       <Box
         sx={[
           {
