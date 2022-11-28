@@ -84,7 +84,6 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             key={`featured-tree-${tree.id}`}
           >
             <Card
-              elevation={8}
               sx={{
                 transition: 'all .5s',
                 scrollSnapAlign: 'center',
@@ -92,9 +91,9 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                 // position: 'relative',
                 padding: (theme) => theme.spacing(5),
                 borderRadius: (theme) => theme.spacing(4),
-                // boxShadow: '0px 2px 16px rgba(34, 38, 41, 0.15)',
                 // width: [152, 208],
                 overflow: 'initial',
+                boxShadow: '0px 2px 16px rgba(34, 38, 41, 0.15)',
               }}
             >
               <CardMedia
@@ -122,6 +121,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                   variant="h6"
                   sx={{
                     fontSize: '20px',
+                    color: 'nearBlackText.main',
                   }}
                 >
                   Tree - {tree.id}
@@ -130,6 +130,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                   variant="body1"
                   sx={{
                     marginTop: 1,
+                    color: 'nearBlackText.main',
                   }}
                 >
                   {tree.species_name || tree.country_name || '---'}

@@ -199,6 +199,15 @@ export function buildTheme(theMode) {
               contrastText: '#474B4F',
             }),
       },
+      nearBlackText: {
+        ...(themeMode === 'light'
+          ? {
+              main: '#222629',
+            }
+          : {
+              main: '#FFFFFF',
+            }),
+      },
       // Changes text color based on theme
       text: {
         ...(themeMode === 'light'
