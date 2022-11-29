@@ -1,3 +1,10 @@
+# [2.0.0-beta.180](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.179...v2.0.0-beta.180) (2022-11-29)
+
+
+### Bug Fixes
+
+* typo in issue template ([4523465](https://github.com/Greenstand/treetracker-web-map-client/commit/452346516a0a6172e49acbc447d004c1464f6b99))
+
 # [2.0.0-beta.179](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.178...v2.0.0-beta.179) (2022-11-26)
 
 
