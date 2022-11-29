@@ -1,6 +1,6 @@
 ---
 name: Component building
-about: This issue is about building component.s
+about: This issue is about building components.
 title: ''
 labels: MaterialUI, react
 assignees: ''
