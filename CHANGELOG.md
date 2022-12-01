@@ -1,3 +1,10 @@
+# [2.0.0-beta.181](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.180...v2.0.0-beta.181) (2022-12-01)
+
+
+### Bug Fixes
+
+* featuredPlanterSlider ([394bbb8](https://github.com/Greenstand/treetracker-web-map-client/commit/394bbb81c54ddd8d42062a4c852a188aa963e086))
+
 # [2.0.0-beta.180](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.179...v2.0.0-beta.180) (2022-11-29)
 
 
