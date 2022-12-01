@@ -1,3 +1,15 @@
+# [2.0.0-beta.182](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.181...v2.0.0-beta.182) (2022-12-01)
+
+
+### Bug Fixes
+
+* hover on button ([d4253f9](https://github.com/Greenstand/treetracker-web-map-client/commit/d4253f991f639cd1c0b89a580735cc2029b08514))
+
+
+### Features
+
+* implement search history ([11a1a18](https://github.com/Greenstand/treetracker-web-map-client/commit/11a1a189f0bd23fb89921b4192c878e32b8a01f7))
+
 # [2.0.0-beta.181](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.180...v2.0.0-beta.181) (2022-12-01)
 
 
