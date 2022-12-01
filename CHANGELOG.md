@@ -1,3 +1,29 @@
+# [2.0.0-beta.183](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.182...v2.0.0-beta.183) (2022-12-01)
+
+
+### Features
+
+* add title to pages ([9484781](https://github.com/Greenstand/treetracker-web-map-client/commit/948478191cfb4982288f28fc62956d2f235d9e12))
+
+# [2.0.0-beta.182](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.181...v2.0.0-beta.182) (2022-12-01)
+
+
+### Bug Fixes
+
+* hover on button ([d4253f9](https://github.com/Greenstand/treetracker-web-map-client/commit/d4253f991f639cd1c0b89a580735cc2029b08514))
+
+
+### Features
+
+* implement search history ([11a1a18](https://github.com/Greenstand/treetracker-web-map-client/commit/11a1a189f0bd23fb89921b4192c878e32b8a01f7))
+
+# [2.0.0-beta.181](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.180...v2.0.0-beta.181) (2022-12-01)
+
+
+### Bug Fixes
+
+* featuredPlanterSlider ([394bbb8](https://github.com/Greenstand/treetracker-web-map-client/commit/394bbb81c54ddd8d42062a4c852a188aa963e086))
+
 # [2.0.0-beta.180](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.179...v2.0.0-beta.180) (2022-11-29)
 
 

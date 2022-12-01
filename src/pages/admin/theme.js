@@ -11,6 +11,7 @@ import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
 import { useState, useEffect, useCallback, useRef } from 'react';
+import HeadTag from 'components/HeadTag';
 import { useLocalStorage } from 'hooks/globalHooks';
 import {
   SelectColorProp,
@@ -383,131 +384,138 @@ function ThemeConfig() {
   }, [theme]);
 
   return (
-    <Grid
-      container
-      sx={{
-        height: '100vh',
-      }}
-    >
+    <>
+      <HeadTag title="Theme - Admin" />
       <Grid
-        item
-        xs={9}
+        container
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <iframe
-          ref={iframeRef}
-          key={viewMobile}
-          title="sandbox"
-          src={`${process.env.NEXT_PUBLIC_BASE}/top`}
-          style={{
-            height: viewMobile ? '740px' : '100%',
-            width: viewMobile ? '360px' : '100%',
-            border: 'none',
-          }}
-        />
-      </Grid>
-      <Grid
-        item
-        xs={3}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
           height: '100vh',
         }}
       >
-        <Stack
-          direction="row"
+        <Grid
+          item
+          xs={9}
           sx={{
-            justifyContent: 'space-between',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <SquareIconButton
-            icon={<PreviewIcon />}
-            tooltip="Reload Preview"
-            onClick={handlePreview}
+          <iframe
+            ref={iframeRef}
+            key={viewMobile}
+            title="sandbox"
+            src={`${process.env.NEXT_PUBLIC_BASE}/top`}
+            style={{
+              height: viewMobile ? '740px' : '100%',
+              width: viewMobile ? '360px' : '100%',
+              border: 'none',
+            }}
           />
-          <SquareIconButton
-            icon={viewMobile ? <ComputerIcon /> : <MobileFriendlyIcon />}
-            tooltip={`Toggle ${viewMobile ? 'Desktop' : 'Mobile'}`}
-            onClick={() => setViewMobile((prev) => !prev)}
-          />
-          <Button onClick={handleSave}>save</Button>
-          <Button onClick={handleLoad}>load</Button>
-          <SquareIconButton
-            icon={<RestartAltIcon />}
-            color="error"
-            tooltip="Reset to default"
-            onClick={resetFullTheme}
-          />
-          <SquareIconButton
-            icon={<AutoRenewIcon />}
-            color={autoReload ? 'success' : 'warning'}
-            tooltip={`Auto Reload: ${autoReload ? 'on' : 'off'}`}
-            onClick={() => setAutoReload((prev) => !prev)}
-          />
-        </Stack>
-        <Tabs
-          value={tabIndex}
-          onChange={handleTabChange}
-          aria-label="customization category tabs"
-        >
-          <Tab icon={<PaletteIcon />} label="Palette" {...getTabProps(0)} />
-          <Tab
-            icon={<TextFieldsIcon />}
-            label="Typography"
-            {...getTabProps(1)}
-          />
-          <Tab icon={<FontDownloadIcon />} label="Fonts" {...getTabProps(2)} />
-        </Tabs>
-        <Box
+        </Grid>
+        <Grid
+          item
+          xs={3}
           sx={{
-            p: 0,
-            flex: '1',
-            overflowY: 'scroll',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100vh',
           }}
         >
-          <CategoryTabPanel value={tabIndex} index={0}>
-            <ToggleThemeMode />
-            {Object.entries(customizeOptions.palette.options).map(
-              ([propName, options]) => (
-                <SelectColorProp
-                  key={`select-color-${propName}`}
-                  prop={{ propName, options }}
-                  path={`palette${
-                    customizeOptions.palette.themeModeDependend
-                      ? `.${themeType}`
-                      : ''
-                  }.${propName}`}
-                />
-              ),
-            )}
-          </CategoryTabPanel>
-          <CategoryTabPanel value={tabIndex} index={1}>
-            {Object.entries(customizeOptions.typography.options).map(
-              ([propName, options]) => (
-                <SelectTypographyProp
-                  key={`select-typography-${propName}`}
-                  prop={{ propName, options }}
-                  path={`typography${
-                    customizeOptions.typography.themeModeDependend
-                      ? `.${themeType}`
-                      : ''
-                  }.${propName}`}
-                />
-              ),
-            )}
-          </CategoryTabPanel>
-          <CategoryTabPanel value={tabIndex} index={2}>
-            <FontCustomization />
-          </CategoryTabPanel>
-        </Box>
-        <JSONTextarea value={theme} onChange={handleChange} />
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: 'space-between',
+            }}
+          >
+            <SquareIconButton
+              icon={<PreviewIcon />}
+              tooltip="Reload Preview"
+              onClick={handlePreview}
+            />
+            <SquareIconButton
+              icon={viewMobile ? <ComputerIcon /> : <MobileFriendlyIcon />}
+              tooltip={`Toggle ${viewMobile ? 'Desktop' : 'Mobile'}`}
+              onClick={() => setViewMobile((prev) => !prev)}
+            />
+            <Button onClick={handleSave}>save</Button>
+            <Button onClick={handleLoad}>load</Button>
+            <SquareIconButton
+              icon={<RestartAltIcon />}
+              color="error"
+              tooltip="Reset to default"
+              onClick={resetFullTheme}
+            />
+            <SquareIconButton
+              icon={<AutoRenewIcon />}
+              color={autoReload ? 'success' : 'warning'}
+              tooltip={`Auto Reload: ${autoReload ? 'on' : 'off'}`}
+              onClick={() => setAutoReload((prev) => !prev)}
+            />
+          </Stack>
+          <Tabs
+            value={tabIndex}
+            onChange={handleTabChange}
+            aria-label="customization category tabs"
+          >
+            <Tab icon={<PaletteIcon />} label="Palette" {...getTabProps(0)} />
+            <Tab
+              icon={<TextFieldsIcon />}
+              label="Typography"
+              {...getTabProps(1)}
+            />
+            <Tab
+              icon={<FontDownloadIcon />}
+              label="Fonts"
+              {...getTabProps(2)}
+            />
+          </Tabs>
+          <Box
+            sx={{
+              p: 0,
+              flex: '1',
+              overflowY: 'scroll',
+            }}
+          >
+            <CategoryTabPanel value={tabIndex} index={0}>
+              <ToggleThemeMode />
+              {Object.entries(customizeOptions.palette.options).map(
+                ([propName, options]) => (
+                  <SelectColorProp
+                    key={`select-color-${propName}`}
+                    prop={{ propName, options }}
+                    path={`palette${
+                      customizeOptions.palette.themeModeDependend
+                        ? `.${themeType}`
+                        : ''
+                    }.${propName}`}
+                  />
+                ),
+              )}
+            </CategoryTabPanel>
+            <CategoryTabPanel value={tabIndex} index={1}>
+              {Object.entries(customizeOptions.typography.options).map(
+                ([propName, options]) => (
+                  <SelectTypographyProp
+                    key={`select-typography-${propName}`}
+                    prop={{ propName, options }}
+                    path={`typography${
+                      customizeOptions.typography.themeModeDependend
+                        ? `.${themeType}`
+                        : ''
+                    }.${propName}`}
+                  />
+                ),
+              )}
+            </CategoryTabPanel>
+            <CategoryTabPanel value={tabIndex} index={2}>
+              <FontCustomization />
+            </CategoryTabPanel>
+          </Box>
+          <JSONTextarea value={theme} onChange={handleChange} />
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }
 
