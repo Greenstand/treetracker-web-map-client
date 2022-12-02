@@ -1,4 +1,3 @@
-import HomeIcon from '@mui/icons-material/Home';
 import { Box, Typography } from '@mui/material';
 import Crumbs from './Crumbs';
 import { mountWithTheme as mount } from '../../models/test-utils';
