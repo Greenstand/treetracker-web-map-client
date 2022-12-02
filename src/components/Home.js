@@ -138,7 +138,7 @@ export default function Home(props) {
                   },
                 }}
               >
-                Learn more
+                Read about Treetracker
               </Box>
             </Link>
           </Button>
