@@ -1,3 +1,15 @@
+# [2.0.0-beta.185](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.184...v2.0.0-beta.185) (2022-12-02)
+
+
+### Bug Fixes
+
+* next.js setting ([c5b4459](https://github.com/Greenstand/treetracker-web-map-client/commit/c5b4459cb5752a4e76dce038f635b3ded7723ea0))
+
+
+### Features
+
+* change domain ([95c19c3](https://github.com/Greenstand/treetracker-web-map-client/commit/95c19c33ff990eab72ecc6d5c0c20d205dfc60c3))
+
 # [2.0.0-beta.184](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.183...v2.0.0-beta.184) (2022-12-02)
 
 
