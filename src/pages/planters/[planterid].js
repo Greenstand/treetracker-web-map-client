@@ -382,7 +382,7 @@ export default function Planter(props) {
                   },
                 },
               }}
-              title="Ass. Orgs"
+              title="Associated Orgs"
               text={
                 planter.associatedOrganizations.organizations.length || (
                   <Typography
