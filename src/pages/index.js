@@ -1,8 +1,9 @@
+import log from 'loglevel';
 import Head from 'next/head';
 import Home from '../components/Home';
 
 export default function Homepage({ nextExtraIsEmbed }) {
-  console.log(nextExtraIsEmbed);
+  log.warn(nextExtraIsEmbed);
   return (
     <>
       <Head>

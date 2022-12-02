@@ -91,8 +91,8 @@ export default function Tree({
       verifiedToken: tree.token_id,
       verifiedTree: tree.verified,
     });
-    // eslint-disable-next-line no-console, prefer-template, no-useless-concat
-    console.log('the tree data' + '' + JSON.stringify(tree));
+    // eslint-disable-next-line prefer-template, no-useless-concat
+    log.warn('the tree data' + '' + JSON.stringify(tree));
   }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
 
   // useEffect(() => {
@@ -185,7 +185,7 @@ export default function Tree({
     reload();
   }, [map, tree.lat, tree.lon]);
 
-  console.log(planter, 'planter');
+  log.warn(planter, 'planter');
 
   return (
     <>
