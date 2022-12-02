@@ -125,11 +125,11 @@ function Top(props) {
             icon={Search}
             width={48}
             height={48}
-            color="grey"
+            color="primaryLight"
             sx={{
               fill: 'transparent',
               '& path': {
-                fill: 'grey',
+                fill: 'primary',
               },
             }}
           />
