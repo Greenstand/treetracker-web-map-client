@@ -76,6 +76,9 @@ jobs:
       - name: ESLint
         run: npm run lint
 
+      - name: Prettier
+        run: npm run prettier:check
+
       - name: Save screenshots
         # step runs even if other steps fail
         if: always()
