@@ -1,3 +1,10 @@
+# [2.0.0-beta.186](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.185...v2.0.0-beta.186) (2022-12-03)
+
+
+### Features
+
+* change images to img ([96c42c6](https://github.com/Greenstand/treetracker-web-map-client/commit/96c42c64bd88607725e07b669937f07271cbe41b))
+
 # [2.0.0-beta.185](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.184...v2.0.0-beta.185) (2022-12-02)
 
 
