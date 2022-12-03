@@ -17,12 +17,12 @@ import ColorButton from './common/ColorButton';
 import DataTag from './common/DataTag';
 import Info from './common/Info';
 import { useMobile } from '../hooks/globalHooks';
-import CalendarIcon from '../images/icons/calendar.svg';
-import LocationIcon from '../images/icons/location.svg';
-import PeopleIcon from '../images/icons/people.svg';
-import imagePlaceholder from '../images/image-placeholder.png';
-import QuoteImgReverse from '../images/quote-reverse.svg';
-import QuoteImg from '../images/quote-symbol.svg';
+import CalendarIcon from '../img/icons/calendar.svg';
+import LocationIcon from '../img/icons/location.svg';
+import PeopleIcon from '../img/icons/people.svg';
+import imagePlaceholder from '../img/image-placeholder.png';
+import QuoteImgReverse from '../img/quote-reverse.svg';
+import QuoteImg from '../img/quote-symbol.svg';
 // TODO: something is wrong with quote-symbol.svg and quote-reverse.svg, they show a blank space. The svg files pull up as blanks. Not sure how to fix them, putting up an issue as this is something totally different than what I'm working on.
 
 function PlanterQuote(props) {
@@ -39,7 +39,7 @@ function PlanterQuote(props) {
 
   let quote = quote2 || "the planter hasn't left any quote yet";
   if (quote.length > 500) {
-    quote = `${quote.substring(0, 500)  }...`;
+    quote = `${quote.substring(0, 500)}...`;
   }
   const photo = photo2 || imagePlaceholder;
 

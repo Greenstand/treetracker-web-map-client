@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from '@mui/material';
-import imagePlaceholder from '../../images/image-placeholder.png';
+import imagePlaceholder from '../../img/image-placeholder.png';
 
 export default function SimpleAvatarAndName({ image, name }) {
   return (

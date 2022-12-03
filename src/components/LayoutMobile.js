@@ -4,8 +4,8 @@ import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
-import ZoomIn from '../images/zoom-in.svg';
-import ZoomOut from '../images/zoom-out.svg';
+import ZoomIn from '../img/zoom-in.svg';
+import ZoomOut from '../img/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });

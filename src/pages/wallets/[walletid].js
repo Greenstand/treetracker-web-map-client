@@ -27,12 +27,12 @@ import Icon from '../../components/common/CustomIcon';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import { useMobile } from '../../hooks/globalHooks';
-import planterBackground from '../../images/background.png';
-import CalendarIcon from '../../images/icons/calendar.svg';
-import TokenIcon from '../../images/icons/token.svg';
-import TreeIcon from '../../images/icons/tree.svg';
-import imagePlaceholder from '../../images/image-placeholder.png';
-import SearchIcon from '../../images/search.svg';
+import planterBackground from '../../img/background.png';
+import CalendarIcon from '../../img/icons/calendar.svg';
+import TokenIcon from '../../img/icons/token.svg';
+import TreeIcon from '../../img/icons/tree.svg';
+import imagePlaceholder from '../../img/image-placeholder.png';
+import SearchIcon from '../../img/search.svg';
 import { useMapContext } from '../../mapContext';
 import * as pathResolver from '../../models/pathResolver';
 

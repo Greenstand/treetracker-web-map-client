@@ -1,5 +1,5 @@
 import Share from './Share';
-import shareIcon from '../images/icons/share.svg';
+import shareIcon from '../img/icons/share.svg';
 import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('Share', () => {

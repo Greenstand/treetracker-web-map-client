@@ -9,13 +9,13 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
-import MenuBar from 'images/MenuBar';
+import MenuBar from 'img/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
 import { useMobile } from '../hooks/globalHooks';
 
-const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
+const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/img/greenstand_logo.svg`;
 
 const useStyles = makeStyles()((theme) => ({
   navContainer: {

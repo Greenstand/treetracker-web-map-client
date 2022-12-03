@@ -16,7 +16,7 @@ import { useState, useEffect } from 'react';
 import { useMapContext } from 'mapContext';
 import Icon from './common/CustomIcon';
 import { useMobile } from '../hooks/globalHooks';
-import TimeIcon from '../images/icons/time.svg';
+import TimeIcon from '../img/icons/time.svg';
 import { nextPathBaseDecode } from '../models/utils';
 
 function CustomInput({ label, inputRef, inputProps, InputProps }) {
