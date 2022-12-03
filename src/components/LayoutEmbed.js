@@ -7,10 +7,10 @@ import Link from 'next/link';
 import React from 'react';
 import SearchFilter from './SearchFilter';
 import { useEmbed } from '../hooks/globalHooks';
-import LogoIcon from '../img/greenstand_logo_full.png';
-import MinIcon from '../img/min.svg';
-import ZoomIn from '../img/zoom-in.svg';
-import ZoomOut from '../img/zoom-out.svg';
+import LogoIcon from '../images/greenstand_logo_full.png';
+import MinIcon from '../images/min.svg';
+import ZoomIn from '../images/zoom-in.svg';
+import ZoomOut from '../images/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 // import { makeStyles } from 'models/makeStyles';
 

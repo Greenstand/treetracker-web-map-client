@@ -6,7 +6,7 @@ import { fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
 import Icon from './common/CustomIcon';
 import { useMobile } from '../hooks/globalHooks';
-import TreeIcon from '../img/icons/tree.svg';
+import TreeIcon from '../images/icons/tree.svg';
 
 const useStyles = makeStyles()((theme) => ({
   flagContainer: {

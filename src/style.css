@@ -129,7 +129,7 @@ a {
 }
 
 .not-found-background {
-  background-image: url(./img/notfound.svg);
+  background-image: url(./images/notfound.svg);
   width: auto;
   height: 500px;
   background-position: center;
