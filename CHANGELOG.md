@@ -1,3 +1,10 @@
+# [2.0.0-beta.187](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.186...v2.0.0-beta.187) (2022-12-03)
+
+
+### Reverts
+
+* Revert "feat: change images to img" ([ed243f7](https://github.com/Greenstand/treetracker-web-map-client/commit/ed243f7dd9ece75c18983f765b9fff466c7e155c))
+
 # [2.0.0-beta.186](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.185...v2.0.0-beta.186) (2022-12-03)
 
 
