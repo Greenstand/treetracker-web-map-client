@@ -24,3 +24,5 @@ spec:
               value: https://prod-k8s.treetracker.org/webmap/
             - name: NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED
               value: 'false'
+            - name: NEXT_PUBLIC_GA_ID
+              value: G-6QS615H24Z
