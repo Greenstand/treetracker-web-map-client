@@ -1,3 +1,10 @@
+# [2.0.0-beta.188](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.187...v2.0.0-beta.188) (2022-12-03)
+
+
+### Bug Fixes
+
+* yaml ([0575ecf](https://github.com/Greenstand/treetracker-web-map-client/commit/0575ecf59b0e8b809114a8740aaead8646138dec))
+
 # [2.0.0-beta.187](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.186...v2.0.0-beta.187) (2022-12-03)
 
 
