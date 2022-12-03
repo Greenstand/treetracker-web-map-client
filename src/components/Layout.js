@@ -5,9 +5,9 @@ import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 import Navbar from './Navbar';
 import Timeline from './Timeline';
-import Max from '../images/max.svg';
-import ZoomIn from '../images/zoom-in.svg';
-import ZoomOut from '../images/zoom-out.svg';
+import Max from '../img/max.svg';
+import ZoomIn from '../img/zoom-in.svg';
+import ZoomOut from '../img/zoom-out.svg';
 import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });

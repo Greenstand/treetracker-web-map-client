@@ -21,10 +21,10 @@ import { useState } from 'react';
 import Share from './Share';
 import Icon from './common/CustomIcon';
 import { useFullscreen, useMobile } from '../hooks/globalHooks';
-import HeartIcon from '../images/icons/heart.svg';
-import ShareIcon from '../images/icons/share-icon.svg';
-import imagePlaceholder from '../images/image-placeholder.png';
-import MaxIcon from '../images/max.svg';
+import HeartIcon from '../img/icons/heart.svg';
+import ShareIcon from '../img/icons/share-icon.svg';
+import imagePlaceholder from '../img/image-placeholder.png';
+import MaxIcon from '../img/max.svg';
 import { makeStyles } from '../models/makeStyles';
 import * as utils from '../models/utils';
 

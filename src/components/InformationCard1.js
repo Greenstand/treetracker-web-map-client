@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 import ColorButton from './common/ColorButton';
-import Logo from '../images/greenstand_logo.svg';
+import Logo from '../img/greenstand_logo.svg';
 
 const useStyles = makeStyles()((theme) => ({
   contentWrapper: {

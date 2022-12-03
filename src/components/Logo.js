@@ -1,6 +1,6 @@
 import { makeStyles } from 'models/makeStyles';
 
-const logo = '/images/greenstand_logo_full.png';
+const logo = '/img/greenstand_logo_full.png';
 
 const useStyles = makeStyles()(() => ({
   logo: {
