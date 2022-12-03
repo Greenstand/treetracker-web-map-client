@@ -9,7 +9,7 @@ import * as pathResolver from 'models/pathResolver';
 import Link from './Link';
 import { useMapContext } from '../mapContext';
 
-const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/img/bg.webp`;
+const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.webp`;
 const useStyles = makeStyles()((theme) => ({
   pageContainer: {
     background: `center / cover no-repeat url(${backgroundImage})`,

@@ -5,7 +5,7 @@ import React from 'react';
 import WorldMap from 'react-world-map';
 import { makeStyles } from 'models/makeStyles';
 import { useMobile } from '../hooks/globalHooks';
-import TreeTooltip from '../img/tree_tooltip.svg';
+import TreeTooltip from '../images/tree_tooltip.svg';
 
 const useStyles = makeStyles()((theme) => ({
   root: {

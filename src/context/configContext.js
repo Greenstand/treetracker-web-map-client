@@ -5,7 +5,7 @@ const ConfigContext = createContext(null);
 
 const initialState = {
   navbar: {
-    logoUrl: 'http://localhost:3000/img/greenstand_logo.svg',
+    logoUrl: 'http://localhost:3000/images/greenstand_logo.svg',
     items: [
       {
         id: 1,

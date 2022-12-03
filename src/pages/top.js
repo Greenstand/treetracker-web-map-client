@@ -18,7 +18,7 @@ import Crumbs from '../components/common/Crumbs';
 import Icon from '../components/common/CustomIcon';
 import Filter from '../components/common/Filter';
 import { useFullscreen } from '../hooks/globalHooks';
-import Search from '../img/search.svg';
+import Search from '../images/search.svg';
 import { useMapContext } from '../mapContext';
 import * as utils from '../models/utils';
 

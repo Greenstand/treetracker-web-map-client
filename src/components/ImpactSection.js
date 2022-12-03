@@ -1,9 +1,9 @@
 import { Typography, Grid, Box } from '@mui/material';
 import CustomCard from './common/CustomCard';
 import Icon from './common/CustomIcon';
-import CarbonIcon from '../img/icons/carbon.svg';
-import DollarIcon from '../img/icons/dollar.svg';
-import StaticGraph from '../img/static-graph.svg';
+import CarbonIcon from '../images/icons/carbon.svg';
+import DollarIcon from '../images/icons/dollar.svg';
+import StaticGraph from '../images/static-graph.svg';
 
 function ImpactSection() {
   return (

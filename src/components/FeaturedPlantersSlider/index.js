@@ -12,7 +12,7 @@ import * as d3 from 'd3';
 import { useEffect, useRef, useState } from 'react';
 import { debounce } from 'models/utils';
 import { useStyles } from './style'; // the style file
-import imagePlaceholder from '../../img/image-placeholder.png';
+import imagePlaceholder from '../../images/image-placeholder.png';
 import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;
