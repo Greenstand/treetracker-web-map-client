@@ -84,6 +84,10 @@ export default function Layout({
     });
   }, [isDrawerOpen]);
 
+  React.useEffect(() => {
+    document.querySelector('.drawer-content').scrollTop = 0; // to scroll to top of the page
+  }, []);
+
   return (
     <>
       <Box
