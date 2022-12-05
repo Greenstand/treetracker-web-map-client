@@ -39,7 +39,7 @@ function PlanterQuote(props) {
 
   let quote = quote2 || "the planter hasn't left any quote yet";
   if (quote.length > 500) {
-    quote = `${quote.substring(0, 500)  }...`;
+    quote = `${quote.substring(0, 500)}...`;
   }
   const photo = photo2 || imagePlaceholder;
 

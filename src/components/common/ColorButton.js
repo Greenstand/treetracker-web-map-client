@@ -1,4 +1,4 @@
-import { Box, Button, Avatar, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 export default function ColorButton({ children }) {
   return (

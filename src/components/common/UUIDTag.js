@@ -1,5 +1,4 @@
 import { Box, Tooltip, Typography } from '@mui/material';
-import { tooltipClasses } from '@mui/material/Tooltip';
 import { useClipboard } from '../../hooks/globalHooks';
 
 function UUIDTag({ uuid, sx }) {
