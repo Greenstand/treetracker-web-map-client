@@ -8,24 +8,25 @@ import { useMapContext } from '../mapContext';
 export default function ZoomInOutButton() {
   const mapContext = useMapContext();
   const [isEnabledZoomIn, setIsEnabledZoomIn] = useState(false);
-  const [isEnabledZoomOut, setIsEnabledZoomOut] = useState(false);
-  const MOVE_END_EVENT = 'move-end';
-
-  function checkZoomEnable() {
-    if (mapContext.map) {
-      const currMap = mapContext.map.map;
-      setIsEnabledZoomIn(currMap.getZoom() === currMap.getMaxZoom());
-      setIsEnabledZoomOut(currMap.getZoom() === currMap.getMinZoom());
-    }
-  }
+  const [isEnabledZoomOut, setIsEnabledZoomOut] = useState(true);
 
   useEffect(() => {
+    const checkZoomEnable = () => {
+      if (mapContext.map) {
+        const currMap = mapContext.map.map;
+        setIsEnabledZoomIn(currMap.getZoom() === currMap.getMaxZoom());
+        setIsEnabledZoomOut(currMap.getZoom() === currMap.getMinZoom());
+      }
+    };
     if (mapContext.map) {
-      mapContext.map.on(MOVE_END_EVENT, () => {
-        checkZoomEnable();
-      });
+      (async () => {
+        const { Map } = await import('treetracker-web-map-core');
+        mapContext.map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
+          checkZoomEnable();
+        });
+      })();
     }
-  });
+  }, [mapContext, mapContext.map]);
 
   function handleZoomIn() {
     const currMap = mapContext.map.map;
