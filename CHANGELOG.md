@@ -1,3 +1,10 @@
+# [2.0.0-beta.189](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.188...v2.0.0-beta.189) (2022-12-05)
+
+
+### Bug Fixes
+
+* update background color of profile avatar ([4a026d9](https://github.com/Greenstand/treetracker-web-map-client/commit/4a026d97b1305581a11b48b88870b4d5e454a6f6))
+
 # [2.0.0-beta.188](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.187...v2.0.0-beta.188) (2022-12-03)
 
 
