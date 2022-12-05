@@ -152,7 +152,7 @@ export default function Token(props) {
     }
     reload();
   }, [mapContext, token]);
-  console.log('token:', token);
+  log.warn('token:', token);
 
   const tokenIdStart = token.id.slice(0, 4);
   const tokenIdEnd = token.id.slice(token.id.length - 4, token.id.length);

@@ -49,7 +49,7 @@ function MapComponent() {
   const mapContext = useMapContext();
   const router = useRouter();
 
-  console.log(mapRef, mapContext);
+  log.warn(mapRef, mapContext);
 
   function handleMessageClose() {
     setMessage({

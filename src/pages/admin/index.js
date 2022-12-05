@@ -316,7 +316,7 @@ export default function Index() {
               <Button
                 onClick={() => {
                   if (keycloak) {
-                    console.warn(
+                    log.warn(
                       'has keycloak, go to keycloak login:',
                       keycloak.createLoginUrl(),
                     );
