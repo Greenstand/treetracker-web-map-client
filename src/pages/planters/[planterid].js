@@ -1,15 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
-import HomeIcon from '@mui/icons-material/Home';
-import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import * as d3 from 'd3';
 import log from 'loglevel';
 import { marked } from 'marked';
 import moment from 'moment';
@@ -17,19 +12,16 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
+import HeadTag from 'components/HeadTag';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
-import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import ProfileAvatar from '../../components/ProfileAvatar';
 import VerifiedBadge from '../../components/VerifiedBadge';
-import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
 import Icon from '../../components/common/CustomIcon';
-import DataTag from '../../components/common/DataTag';
-import DrawerTitle from '../../components/common/DrawerTitle';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import { useMobile } from '../../hooks/globalHooks';
@@ -38,7 +30,6 @@ import CalendarIcon from '../../images/icons/calendar.svg';
 import LocationIcon from '../../images/icons/location.svg';
 import PeopleIcon from '../../images/icons/people.svg';
 import TreeIcon from '../../images/icons/tree.svg';
-import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import { makeStyles } from '../../models/makeStyles';
@@ -140,6 +131,12 @@ export default function Planter(props) {
 
   return (
     <>
+      <HeadTag
+        title={`${getPlanterName(
+          planter.first_name,
+          planter.last_name,
+        )} - Planter`}
+      />
       <Box
         sx={[
           {
@@ -375,7 +372,7 @@ export default function Planter(props) {
                   },
                 },
               }}
-              title="Ass. Orgs"
+              title="Associated Orgs"
               text={
                 planter.associatedOrganizations.organizations.length || (
                   <Typography

@@ -1,37 +1,22 @@
-import HomeIcon from '@mui/icons-material/Home';
-import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import {
-  Box,
-  Divider,
-  Grid,
-  useTheme,
-  useMediaQuery,
-  Typography,
-  Avatar,
-} from '@mui/material';
+import { Box, Divider, Grid, Typography, Avatar } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
 import { marked } from 'marked';
 import moment from 'moment';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
+import HeadTag from 'components/HeadTag';
 import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
-import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import DrawerTitle from 'components/common/DrawerTitle';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import ImpactSection from '../../components/ImpactSection';
-import PageWrapper from '../../components/PageWrapper';
 import ProfileAvatar from '../../components/ProfileAvatar';
 import ProfileCover from '../../components/ProfileCover';
 import VerifiedBadge from '../../components/VerifiedBadge';
-import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
 import Icon from '../../components/common/CustomIcon';
@@ -42,7 +27,6 @@ import LocationIcon from '../../images/icons/location.svg';
 import PeopleIcon from '../../images/icons/people.svg';
 import TreeIcon from '../../images/icons/tree.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
-import orgBackground from '../../images/org-background.png';
 import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
@@ -144,6 +128,7 @@ export default function Organization(props) {
 
   return (
     <>
+      <HeadTag title={`${name} - Organization`} />
       <Box
         sx={[
           {

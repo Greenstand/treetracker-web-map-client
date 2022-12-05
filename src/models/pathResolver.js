@@ -34,7 +34,7 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
     'with options:',
     options,
   );
-  console.warn(JSON.stringify(tree, undefined, 2));
+  log.warn(JSON.stringify(tree, undefined, 2));
 
   const optionalParams = {
     ...(router.query.embed && { embed: router.query.embed }),

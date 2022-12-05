@@ -11,6 +11,7 @@ import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
+import HeadTag from 'components/HeadTag';
 
 export default function Index() {
   const { keycloak } = useKeycloak();
@@ -229,6 +230,7 @@ export default function Index() {
   log.warn('rpt', RPT);
   return (
     <>
+      <HeadTag title="Admin" />
       <Box
         sx={{
           display: 'flex',
@@ -314,7 +316,7 @@ export default function Index() {
               <Button
                 onClick={() => {
                   if (keycloak) {
-                    console.warn(
+                    log.warn(
                       'has keycloak, go to keycloak login:',
                       keycloak.createLoginUrl(),
                     );

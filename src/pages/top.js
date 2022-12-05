@@ -1,16 +1,15 @@
-import HomeIcon from '@mui/icons-material/Home';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import React from 'react';
+import HeadTag from 'components/HeadTag';
 import SearchButton from 'components/SearchButton';
 import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import FeaturedPlantersSlider from '../components/FeaturedPlantersSlider';
 import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
 import LeaderBoard from '../components/LeaderBoard';
-import Link from '../components/Link';
 // import SearchFilter from '../components/SearchFilter';
 import TagChips from '../components/TagChips';
 import Crumbs from '../components/common/Crumbs';
@@ -86,6 +85,7 @@ function Top(props) {
 
   return (
     <>
+      <HeadTag title="Tree Spotlight" />
       <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
         {!isFullscreen && false && (
           <Stack direction="row" justifyContent="flex-end" mb={6.125}>

@@ -1,6 +1,7 @@
 import { Card, Box, Button, Avatar, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import * as d3 from 'd3';
+import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 import ColorButton from './common/ColorButton';
@@ -35,7 +36,7 @@ function InformationCard1({
   const { classes } = useStyles();
   const theme = useTheme();
 
-  console.log('rotation', rotation);
+  log.warn('rotation', rotation);
 
   return (
     <Card

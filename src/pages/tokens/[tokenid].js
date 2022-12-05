@@ -19,27 +19,24 @@ import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import HeadTag from 'components/HeadTag';
 import TagList from 'components/common/TagList';
 import UUIDTag from 'components/common/UUIDTag';
 import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import { wrapper } from 'models/utils';
-import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
 import Link from '../../components/Link';
 import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
-import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import Icon from '../../components/common/CustomIcon';
-import Info from '../../components/common/Info';
 import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
-import OriginIcon from '../../images/icons/origin.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
 import TreeIcon from '../../images/icons/tree.svg';
@@ -47,7 +44,6 @@ import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import * as pathResolver from '../../models/pathResolver';
-import * as utils from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   tabBox: {
@@ -151,506 +147,517 @@ export default function Token(props) {
     }
     reload();
   }, [mapContext, token]);
-  console.log('token:', token);
+  log.warn('token:', token);
+
+  const tokenIdStart = token.id.slice(0, 4);
+  const tokenIdEnd = token.id.slice(token.id.length - 4, token.id.length);
 
   return (
-    <Box
-      sx={[
-        {
-          padding: (t) => [t.spacing(0, 4), 6],
-          width: 1,
-          boxSizing: 'border-box',
-        },
-      ]}
-    >
-      {!isMobile && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            alignItems: 'center',
-          }}
-        >
-          <Crumbs
-            items={[
-              {
-                // icon: <HomeIcon />,
-                name: 'Home',
-                url: '/',
-              },
-              ...(context && context.name === 'wallets'
-                ? [
-                    {
-                      url: `/wallets/${wallet.id}`,
-                      icon: wallet.logo_url || (
-                        <Icon icon={AccountBalanceWalletIcon} />
-                      ),
-                      name: wallet.name,
-                    },
-                  ]
-                : []),
-              {
-                name: (
-                  <>
-                    token #<UUIDTag uuid={token.id} />
-                  </>
-                ),
-              },
-            ]}
-          />
-          <Box>
-            <Icon
-              icon={SearchIcon}
-              width={48}
-              height={48}
-              color="grey"
-              sx={{
-                fill: 'transparent',
-                '& path': {
-                  fill: 'grey',
-                },
-              }}
-            />
-          </Box>
-        </Box>
-      )}
-
+    <>
+      <HeadTag title={`Token #${tokenIdStart}...${tokenIdEnd}`} />
       <Box
         sx={[
           {
-            borderRadius: 4,
-            maxHeight: [332, 764],
-            mt: 6,
-            position: 'relative',
-            overflow: 'hidden',
-            '& img': {
-              width: '100%',
-            },
-          },
-          nextExtraIsEmbed && {
-            '& img': {
-              maxHeight: 600,
-              objectFit: 'cover',
-            },
+            padding: (t) => [t.spacing(0, 4), 6],
+            width: 1,
+            boxSizing: 'border-box',
           },
         ]}
       >
-        <Box
-          sx={{
-            position: 'absolute',
-            // top: [4, 6],
-            // left: [4, 6],
-            pt: [4, 6],
-            px: [4, 6],
-            width: 1,
-            boxSizing: 'border-box',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <LikeButton url={`https://map.treetracker.org/tokens/${token.id}`} />
-          <Box
-            sx={{
-              display: 'flex',
-              gap: [4, 6],
-              flexDirection: 'row',
-            }}
-          >
-            <Share
-              shareUrl={typeof window !== 'undefined' && window.location.href}
-              icon={
-                <Box
-                  onClick={handleShare}
-                  sx={{
-                    cursor: 'pointer',
-                    '& svg': {
-                      width: [40, 52],
-                      height: [40, 52],
-                    },
-                  }}
-                >
-                  <Icon icon={ShareIcon} />
-                </Box>
-              }
-            />
-          </Box>
-        </Box>
-        <img src={token.tree_image_url} alt="tree" />
         {!isMobile && (
           <Box
             sx={{
-              position: 'absolute',
-              bottom: 0,
-              background:
-                'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
-              p: 6,
-              width: 1,
-              height: 260,
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
             }}
           >
-            <Typography variant="h2" color={theme.palette.common.white}>
-              Token #<UUIDTag uuid={token.id} />
-            </Typography>
-
-            <Typography
-              sx={{
-                color: theme.palette.common.white,
-                display: 'flex',
-                alignItems: 'center',
-                filter: 'opacity(0.8)',
-                gap: 3,
-                '& svg': {
-                  filter: 'opacity(0.8)',
-                  maxWidth: 16,
-                  maxHeight: 16,
+            <Crumbs
+              items={[
+                {
+                  // icon: <HomeIcon />,
+                  name: 'Home',
+                  url: '/',
                 },
-                '& path': { fill: theme.palette.common.white },
-              }}
-            >
-              <Icon icon={CalendarIcon} />
-              {token.created_at !== null
-                ? `Minted on ${moment(tree.time_created).format(
-                    'MMMM Do, YYYY',
-                  )}`
-                : 'Unknown Mint Date'}
-            </Typography>
-
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                mt: 2,
-              }}
-            >
-              <VerifiedBadge
-                color="secondary"
-                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-                verified={false}
+                ...(context && context.name === 'wallets'
+                  ? [
+                      {
+                        url: `/wallets/${wallet.id}`,
+                        icon: wallet.logo_url || (
+                          <Icon icon={AccountBalanceWalletIcon} />
+                        ),
+                        name: wallet.name,
+                      },
+                    ]
+                  : []),
+                {
+                  name: (
+                    <>
+                      token #<UUIDTag uuid={token.id} />
+                    </>
+                  ),
+                },
+              ]}
+            />
+            <Box>
+              <Icon
+                icon={SearchIcon}
+                width={48}
+                height={48}
+                color="grey"
+                sx={{
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+                }}
               />
             </Box>
           </Box>
         )}
-      </Box>
 
-      {isMobile && (
-        <Portal
-          container={() => document.getElementById('drawer-title-container')}
+        <Box
+          sx={[
+            {
+              borderRadius: 4,
+              maxHeight: [332, 764],
+              mt: 6,
+              position: 'relative',
+              overflow: 'hidden',
+              '& img': {
+                width: '100%',
+              },
+            },
+            nextExtraIsEmbed && {
+              '& img': {
+                maxHeight: 600,
+                objectFit: 'cover',
+              },
+            },
+          ]}
         >
           <Box
             sx={{
-              px: 4,
-              pb: 4,
+              position: 'absolute',
+              // top: [4, 6],
+              // left: [4, 6],
+              pt: [4, 6],
+              px: [4, 6],
+              width: 1,
+              boxSizing: 'border-box',
+              display: 'flex',
+              justifyContent: 'space-between',
             }}
           >
-            <Typography variant="h2">
-              Token #<UUIDTag uuid={token.id} />
-            </Typography>
-            <Typography
-              sx={{
-                mt: 1,
-                color: theme.palette.common.black,
-                display: 'flex',
-                alignItems: 'center',
-                filter: 'opacity(0.8)',
-                gap: 3,
-                '& svg': {
-                  filter: 'opacity(0.8)',
-                  maxWidth: 16,
-                  maxHeight: 16,
-                },
-                '& path': { fill: theme.palette.common.black },
-              }}
-            >
-              <Icon icon={CalendarIcon} />
-              {token.created_at !== null
-                ? `Minted on ${moment(tree.time_created).format(
-                    'MMMM Do, YYYY',
-                  )}`
-                : 'Unknown Mint Date'}
-            </Typography>
+            <LikeButton
+              url={`https://map.treetracker.org/tokens/${token.id}`}
+            />
             <Box
               sx={{
                 display: 'flex',
-                gap: 2,
-                mt: 2,
+                gap: [4, 6],
+                flexDirection: 'row',
               }}
             >
-              <VerifiedBadge
-                color="secondary"
-                badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-                verified={false}
+              <Share
+                shareUrl={typeof window !== 'undefined' && window.location.href}
+                icon={
+                  <Box
+                    onClick={handleShare}
+                    sx={{
+                      cursor: 'pointer',
+                      '& svg': {
+                        width: [40, 52],
+                        height: [40, 52],
+                      },
+                    }}
+                  >
+                    <Icon icon={ShareIcon} />
+                  </Box>
+                }
               />
             </Box>
           </Box>
-        </Portal>
-      )}
-      {isMobile && (
-        <Portal
-          container={() =>
-            document.getElementById('drawer-title-container-min')
-          }
-        >
-          <Box sx={{}}>
-            <Typography variant="h3" sx={{ fontsize: 20 }}>
-              Token - #<UUIDTag uuid={token.id} />
-            </Typography>
-          </Box>
-        </Portal>
-      )}
-
-      <Box
-        sx={{
-          mt: [4, 10],
-        }}
-      >
-        <InformationCard1
-          entityName={`${wallet.name} `}
-          entityType="Wallet"
-          buttonText="View the Wallet"
-          cardImageSrc={wallet.logo_url || imagePlaceholder}
-          link={`/wallets/${wallet.id}`}
-        />
-      </Box>
-      <Typography
-        variant="h4"
-        sx={[
-          {
-            fontSize: [24, 28],
-            lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
-            mt: (t) => [t.spacing(14), t.spacing(18)],
-          },
-        ]}
-      >
-        Token Info
-      </Typography>
-      <TagList>
-        <TreeTag
-          key="created-at"
-          TreeTagValue={new Date(token.created_at).toLocaleDateString()}
-          title="Created At"
-          icon={<Icon icon={CalendarIcon} />}
-        />
-        <TreeTag
-          key="token-id"
-          TreeTagValue=<UUIDTag uuid={token.id} />
-          title="Token ID"
-          icon={<Icon icon={TokenIcon} />}
-        />
-
-        <TreeTag
-          key="tree-id"
-          TreeTagValue={token.tree_id}
-          title="Tree ID"
-          icon={
-            <Icon
+          <img src={token.tree_image_url} alt="tree" />
+          {!isMobile && (
+            <Box
               sx={{
-                '& path': {
-                  fill: 'rgb(71, 75, 79)',
-                },
-              }}
-              icon={TreeIcon}
-            />
-          }
-          subtitle="click to enter"
-          link={`/trees/${token.tree_id}`}
-        />
-
-        <TreeTag
-          key="claim"
-          TreeTagValue={token.claim ? 'Claimed' : 'Not claimed yet'}
-          title="Claim Status"
-          icon={<Icon icon={DoneOutlineIcon} />}
-        />
-
-        <TreeTag
-          key="transferability"
-          TreeTagValue={
-            !token.claim && !token.transfer_pending
-              ? 'Can be transferred'
-              : 'Can not be transferred'
-          }
-          title="Transferability"
-          icon={<Icon icon={CurrencyExchangeIcon} />}
-          disabled={token.claim === true && token.transfer_pending === true}
-        />
-      </TagList>
-
-      <Typography
-        variant="h4"
-        sx={[
-          {
-            fontSize: [24, 28],
-            lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
-            mt: (t) => [t.spacing(14), t.spacing(18)],
-          },
-        ]}
-      >
-        Transaction History
-      </Typography>
-      <Box>
-        <Timeline>
-          <TimelineItem>
-            <TimelineOppositeContent
-              color="text.secondary"
-              sx={{
-                flex: [0.4, 0.2],
+                position: 'absolute',
+                bottom: 0,
+                background:
+                  'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
+                p: 6,
+                width: 1,
+                height: 260,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-start',
               }}
             >
-              {new Date(token.created_at).toLocaleDateString()}
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color="primary" />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Typography variant="h6">Token created by:</Typography>
-              <Box
+              <Typography variant="h2" color={theme.palette.common.white}>
+                Token #<UUIDTag uuid={token.id} />
+              </Typography>
+
+              <Typography
                 sx={{
-                  p: [2, 4],
+                  color: theme.palette.common.white,
+                  display: 'flex',
+                  alignItems: 'center',
+                  filter: 'opacity(0.8)',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.white },
                 }}
               >
-                <Link href={`/planters/${planter.id}`}>
-                  <SimpleAvatarAndName
-                    image={planter.image_url}
-                    name={`${planter.first_name} ${planter.last_name}`}
-                  />
-                </Link>
+                <Icon icon={CalendarIcon} />
+                {token.created_at !== null
+                  ? `Minted on ${moment(tree.time_created).format(
+                      'MMMM Do, YYYY',
+                    )}`
+                  : 'Unknown Mint Date'}
+              </Typography>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  mt: 2,
+                }}
+              >
+                <VerifiedBadge
+                  color="secondary"
+                  badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
+                  verified={false}
+                />
               </Box>
-            </TimelineContent>
-          </TimelineItem>
-          {transactions.transactions.map((transaction, index) => (
-            <TimelineItem key={transaction.id}>
+            </Box>
+          )}
+        </Box>
+
+        {isMobile && (
+          <Portal
+            container={() => document.getElementById('drawer-title-container')}
+          >
+            <Box
+              sx={{
+                px: 4,
+                pb: 4,
+              }}
+            >
+              <Typography variant="h2">
+                Token #<UUIDTag uuid={token.id} />
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 1,
+                  color: theme.palette.common.black,
+                  display: 'flex',
+                  alignItems: 'center',
+                  filter: 'opacity(0.8)',
+                  gap: 3,
+                  '& svg': {
+                    filter: 'opacity(0.8)',
+                    maxWidth: 16,
+                    maxHeight: 16,
+                  },
+                  '& path': { fill: theme.palette.common.black },
+                }}
+              >
+                <Icon icon={CalendarIcon} />
+                {token.created_at !== null
+                  ? `Minted on ${moment(tree.time_created).format(
+                      'MMMM Do, YYYY',
+                    )}`
+                  : 'Unknown Mint Date'}
+              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  mt: 2,
+                }}
+              >
+                <VerifiedBadge
+                  color="secondary"
+                  badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
+                  verified={false}
+                />
+              </Box>
+            </Box>
+          </Portal>
+        )}
+        {isMobile && (
+          <Portal
+            container={() =>
+              document.getElementById('drawer-title-container-min')
+            }
+          >
+            <Box sx={{}}>
+              <Typography variant="h3" sx={{ fontsize: 20 }}>
+                Token - #<UUIDTag uuid={token.id} />
+              </Typography>
+            </Box>
+          </Portal>
+        )}
+
+        <Box
+          sx={{
+            mt: [4, 10],
+          }}
+        >
+          <InformationCard1
+            entityName={`${wallet.name} `}
+            entityType="Wallet"
+            buttonText="View the Wallet"
+            cardImageSrc={wallet.logo_url || imagePlaceholder}
+            link={`/wallets/${wallet.id}`}
+          />
+        </Box>
+        <Typography
+          variant="h4"
+          sx={[
+            {
+              fontSize: [24, 28],
+              lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
+              mt: (t) => [t.spacing(14), t.spacing(18)],
+            },
+          ]}
+        >
+          Token Info
+        </Typography>
+        <TagList>
+          <TreeTag
+            key="created-at"
+            TreeTagValue={new Date(token.created_at).toLocaleDateString()}
+            title="Created At"
+            icon={<Icon icon={CalendarIcon} />}
+          />
+
+          <TreeTag
+            key="token-id"
+            TreeTagValue={token.id}
+            title="Token ID"
+            icon={<Icon icon={TokenIcon} />}
+          />
+
+          <TreeTag
+            key="tree-id"
+            TreeTagValue={token.tree_id}
+            title="Tree ID"
+            icon={
+              <Icon
+                sx={{
+                  '& path': {
+                    fill: 'rgb(71, 75, 79)',
+                  },
+                }}
+                icon={TreeIcon}
+              />
+            }
+            subtitle="click to enter"
+            link={`/trees/${token.tree_id}`}
+          />
+
+          <TreeTag
+            key="claim"
+            TreeTagValue={token.claim ? 'Claimed' : 'Not claimed yet'}
+            title="Claim Status"
+            icon={<Icon icon={DoneOutlineIcon} />}
+          />
+
+          <TreeTag
+            key="transferability"
+            TreeTagValue={
+              !token.claim && !token.transfer_pending
+                ? 'Can be transferred'
+                : 'Can not be transferred'
+            }
+            title="Transferability"
+            icon={<Icon icon={CurrencyExchangeIcon} />}
+            disabled={token.claim === true && token.transfer_pending === true}
+          />
+        </TagList>
+
+        <Typography
+          variant="h4"
+          sx={[
+            {
+              fontSize: [24, 28],
+              lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
+              mt: (t) => [t.spacing(14), t.spacing(18)],
+            },
+          ]}
+        >
+          Transaction History
+        </Typography>
+        <Box>
+          <Timeline>
+            <TimelineItem>
               <TimelineOppositeContent
+                color="text.secondary"
                 sx={{
                   flex: [0.4, 0.2],
                 }}
-                color="text.secondary"
               >
-                {new Date(transaction.processed_at).toLocaleDateString()}
+                {new Date(token.created_at).toLocaleDateString()}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineDot color="primary" />
                 <TimelineConnector />
               </TimelineSeparator>
               <TimelineContent>
-                <Typography variant="h6">Transfer token between:</Typography>
+                <Typography variant="h6">Token created by:</Typography>
                 <Box
                   sx={{
                     p: [2, 4],
                   }}
                 >
-                  <Link href={`/wallets/${transaction.source_wallet_id}`}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        width: '100%',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {transaction.source_wallet_logo_url ? (
-                        <Avatar
-                          className={classes.media}
-                          src={transaction.source_wallet_logo_url}
-                        />
-                      ) : (
-                        <Avatar className={classes.media}>
-                          <AccountBalanceWalletIcon />
-                        </Avatar>
-                      )}
-                      <Box sx={{ marginLeft: 3 }}>
-                        <Typography variant="h5">
-                          {transaction.source_wallet_name}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Link>
-                  <Box
-                    sx={{
-                      width: 40,
-                      height: 40,
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      my: [1, 2],
-                    }}
-                  >
-                    <ArrowDownwardIcon />
-                  </Box>
-                  <Link href={`/wallets/${transaction.destination_wallet_id}`}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        width: '100%',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {transaction.destination_wallet_logo_url ? (
-                        <Avatar
-                          className={classes.media}
-                          src={transaction.destination_wallet_logo_url}
-                        />
-                      ) : (
-                        <Avatar className={classes.media}>
-                          <AccountBalanceWalletIcon />
-                        </Avatar>
-                      )}
-                      <Box sx={{ marginLeft: 3 }}>
-                        <Typography variant="h5">
-                          {transaction.destination_wallet_name}
-                        </Typography>
-                      </Box>
-                    </Box>
+                  <Link href={`/planters/${planter.id}`}>
+                    <SimpleAvatarAndName
+                      image={planter.image_url}
+                      name={`${planter.first_name} ${planter.last_name}`}
+                    />
                   </Link>
                 </Box>
               </TimelineContent>
             </TimelineItem>
-          ))}
-          <TimelineItem>
-            <TimelineOppositeContent
-              sx={{
-                flex: [0.4, 0.2],
-              }}
-              color="text.secondary"
-            >
-              pending
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot />
-            </TimelineSeparator>
-            <TimelineContent>Claim Token</TimelineContent>
-          </TimelineItem>
-        </Timeline>
-      </Box>
+            {transactions.transactions.map((transaction, index) => (
+              <TimelineItem key={transaction.id}>
+                <TimelineOppositeContent
+                  sx={{
+                    flex: [0.4, 0.2],
+                  }}
+                  color="text.secondary"
+                >
+                  {new Date(transaction.processed_at).toLocaleDateString()}
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot color="primary" />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Typography variant="h6">Transfer token between:</Typography>
+                  <Box
+                    sx={{
+                      p: [2, 4],
+                    }}
+                  >
+                    <Link href={`/wallets/${transaction.source_wallet_id}`}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          width: '100%',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {transaction.source_wallet_logo_url ? (
+                          <Avatar
+                            className={classes.media}
+                            src={transaction.source_wallet_logo_url}
+                          />
+                        ) : (
+                          <Avatar className={classes.media}>
+                            <AccountBalanceWalletIcon />
+                          </Avatar>
+                        )}
+                        <Box sx={{ marginLeft: 3 }}>
+                          <Typography variant="h5">
+                            {transaction.source_wallet_name}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Link>
+                    <Box
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        my: [1, 2],
+                      }}
+                    >
+                      <ArrowDownwardIcon />
+                    </Box>
+                    <Link
+                      href={`/wallets/${transaction.destination_wallet_id}`}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          width: '100%',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {transaction.destination_wallet_logo_url ? (
+                          <Avatar
+                            className={classes.media}
+                            src={transaction.destination_wallet_logo_url}
+                          />
+                        ) : (
+                          <Avatar className={classes.media}>
+                            <AccountBalanceWalletIcon />
+                          </Avatar>
+                        )}
+                        <Box sx={{ marginLeft: 3 }}>
+                          <Typography variant="h5">
+                            {transaction.destination_wallet_name}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Link>
+                  </Box>
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+            <TimelineItem>
+              <TimelineOppositeContent
+                sx={{
+                  flex: [0.4, 0.2],
+                }}
+                color="text.secondary"
+              >
+                pending
+              </TimelineOppositeContent>
+              <TimelineSeparator>
+                <TimelineDot />
+              </TimelineSeparator>
+              <TimelineContent>Claim Token</TimelineContent>
+            </TimelineItem>
+          </Timeline>
+        </Box>
 
-      <Divider
-        varian="fullwidth"
-        sx={{
-          mt: [10, 20],
-        }}
-      />
-      <ImpactSection />
-      <Box height={20} />
-      {nextExtraIsEmbed && (
-        <Portal
-          container={() => document.getElementById('embed-logo-container')}
-        >
-          <Avatar
-            sx={{
-              width: '120px',
-              height: '120px',
-              margin: '10px',
-            }}
-            src={wallet.logo_url ?? imagePlaceholder}
-            variant="rounded"
-          />
-        </Portal>
-      )}
-    </Box>
+        <Divider
+          varian="fullwidth"
+          sx={{
+            mt: [10, 20],
+          }}
+        />
+        <ImpactSection />
+        <Box height={20} />
+        {nextExtraIsEmbed && (
+          <Portal
+            container={() => document.getElementById('embed-logo-container')}
+          >
+            <Avatar
+              sx={{
+                width: '120px',
+                height: '120px',
+                margin: '10px',
+              }}
+              src={wallet.logo_url ?? imagePlaceholder}
+              variant="rounded"
+            />
+          </Portal>
+        )}
+      </Box>
+    </>
   );
 }
 
