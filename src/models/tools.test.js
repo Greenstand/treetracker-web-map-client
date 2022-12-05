@@ -1,4 +1,3 @@
- 
 import log from 'loglevel';
 import * as tools from './tools';
 
