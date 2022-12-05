@@ -1,3 +1,10 @@
+# [2.0.0-beta.191](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.190...v2.0.0-beta.191) (2022-12-05)
+
+
+### Features
+
+* add tests for search history ([2fed247](https://github.com/Greenstand/treetracker-web-map-client/commit/2fed247a13e7e7403a8162db73d17f33ac7f366e))
+
 # [2.0.0-beta.190](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.189...v2.0.0-beta.190) (2022-12-05)
 
 
