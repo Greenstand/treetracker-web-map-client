@@ -305,6 +305,7 @@ export default function Wallet(props) {
                 title="Token ID"
                 icon={<Icon icon={TokenIcon} />}
                 link={`/wallets/${wallet.id}/tokens/${token.id}`}
+                fullWidth
               />
             </Box>
           ))}
