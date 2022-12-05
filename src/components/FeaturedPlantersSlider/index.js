@@ -107,7 +107,6 @@ function FeaturedPlantersSlider({
           >
             <Card
               key={planter.id}
-              elevation={8}
               sx={{
                 transition: 'all .5s',
                 scrollSnapAlign: 'center',
@@ -117,6 +116,7 @@ function FeaturedPlantersSlider({
                 borderRadius: (theme) => theme.spacing(4),
                 overflow: 'initial',
                 cursor: 'pointer',
+                boxShadow: '0px 2px 16px rgba(255, 122, 0, 0.15)',
                 flex: '1',
                 bgcolor: (t) =>
                   t.palette.mode === 'light'
