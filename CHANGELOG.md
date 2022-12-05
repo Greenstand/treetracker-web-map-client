@@ -1,3 +1,10 @@
+# [2.0.0-beta.190](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.189...v2.0.0-beta.190) (2022-12-05)
+
+
+### Bug Fixes
+
+* timeline appears on when expand button is clicked ([5781456](https://github.com/Greenstand/treetracker-web-map-client/commit/57814563a69802fd7481089023ede569918b25cd))
+
 # [2.0.0-beta.189](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.188...v2.0.0-beta.189) (2022-12-05)
 
 
