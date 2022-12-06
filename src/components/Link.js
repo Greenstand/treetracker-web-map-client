@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 const NextComposed = React.forwardRef((props, ref) => {
   const { as, href, ...other } = props;
   const classes = useStyles();
-  console.log(props.children);
   return (
     <NextLink href={href} as={as} passHref>
       <a
