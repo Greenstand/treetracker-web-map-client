@@ -104,14 +104,28 @@ function Navbar() {
               alignItems: 'baseline',
             }}
           >
-            <Image
+            {/* <Image
               src={iconLogo}
               width={24}
               height={30}
               alt="Greenstand Logo"
-            />
+            /> */}
             <Typography
-              variant="h4"
+              variant="h1"
+              ml={2.5}
+              color="primary"
+              sx={{
+                // color: '#61892F',
+                fontSize: 30,
+                fontWeight: 900,
+                lineHeight: '37px',
+                letterSpacing: '0.2px',
+              }}
+            >
+              Treetracker
+            </Typography>
+            <Typography
+              variant="h6"
               ml={2.5}
               color="text.secondary"
               sx={{
@@ -119,7 +133,7 @@ function Navbar() {
                 lineHeight: '22px',
               }}
             >
-              Greenstand
+              by Greenstand
             </Typography>
           </Box>
         )}
