@@ -369,7 +369,7 @@ export default function Wallet(props) {
   );
 }
 
-export const getServerSideProps = wrapper(async ({ params }) => {
+async function serverSideData(params) {
   const wallet = await getWalletById(params.walletid);
   const { id } = wallet;
   const [species, tokens, tokenRegionCount, trees] = await Promise.all([
@@ -391,12 +391,28 @@ export const getServerSideProps = wrapper(async ({ params }) => {
   ]);
 
   return {
-    props: {
-      wallet,
-      species: species.species,
-      tokens,
-      tokenRegionCount,
-      trees: trees.trees,
-    },
+    wallet,
+    species: species.species,
+    tokens,
+    tokenRegionCount,
+    trees: trees.trees,
+  };
+}
+
+const getStaticProps = wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 });
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };

@@ -512,16 +512,33 @@ export default function Organization(props) {
   );
 }
 
-export const getServerSideProps = wrapper(async ({ params }) => {
+async function serverSideData(params) {
   const id = params.organizationid;
   const organization = await getOrganizationById(id);
   const orgLinks = await getOrgLinks(organization.links);
-  return {
-    props: {
-      organization: {
-        ...organization,
-        ...orgLinks,
-      },
+  const props = {
+    organization: {
+      ...organization,
+      ...orgLinks,
     },
   };
+  return props;
+}
+
+const getStaticProps = wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+  };
 });
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };

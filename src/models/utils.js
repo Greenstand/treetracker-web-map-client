@@ -234,6 +234,7 @@ const wrapper = (callback) => (params) =>
         destination: '/500',
         permanent: false,
       },
+      revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
     };
   });
 
