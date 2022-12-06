@@ -4,7 +4,9 @@ import { CacheProvider } from '@emotion/react';
 import { LinearProgress, Box, useTheme, useMediaQuery } from '@mui/material';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 import React from 'react';
+import packageJson from '../../package.json';
 import Layout from '../components/Layout';
 import LayoutDashboard from '../components/LayoutDashboard';
 import LayoutEmbed from '../components/LayoutEmbed';
@@ -15,6 +17,8 @@ import { DrawerProvider } from '../context/DrawerContext';
 import { CustomThemeProvider } from '../context/themeContext';
 import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
+
+log.warn(`Web Map Client version ${packageJson.version}`);
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   log.warn('Mocking API calls with msw');
@@ -30,6 +34,38 @@ export const createMuiCache = () =>
     key: 'mui',
     prepend: true,
   }));
+
+export function reportWebVitals({ name, delta, value, id, label }) {
+  const deployed = process.env.NODE_ENV === 'production';
+  if (label === 'web-vital' && deployed) {
+    window.gtag('event', name, {
+      value: delta,
+      metric_id: id,
+      metric_value: value,
+      metric_delta: delta,
+    });
+  }
+}
+
+function GoogleAnalytics() {
+  return (
+    <>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+    `}
+      </Script>
+    </>
+  );
+}
 
 function TreetrackerApp({ Component, pageProps }) {
   log.warn('!!!! render the _app');
@@ -92,14 +128,18 @@ function TreetrackerApp({ Component, pageProps }) {
   const isAdmin = !!router.asPath.match(/admin/);
   if (isAdmin) {
     return (
-      <LayoutDashboard>
-        <Component {...pageProps} />
-      </LayoutDashboard>
+      <>
+        <GoogleAnalytics />
+        <LayoutDashboard>
+          <Component {...pageProps} />
+        </LayoutDashboard>
+      </>
     );
   }
 
   return (
     <>
+      <GoogleAnalytics />
       <CacheProvider value={muiCache ?? createMuiCache()}>
         <CustomThemeProvider>
           <DrawerProvider>

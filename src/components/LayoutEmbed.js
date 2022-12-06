@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
 import SearchFilter from './SearchFilter';
+import Timeline from './Timeline';
 import { useEmbed } from '../hooks/globalHooks';
 import LogoIcon from '../images/greenstand_logo_full.png';
 import MinIcon from '../images/min.svg';
@@ -207,6 +208,7 @@ export default function Layout({
           />
         </Box>
       )}
+      <Timeline />
       <Box
         sx={{
           position: 'absolute',

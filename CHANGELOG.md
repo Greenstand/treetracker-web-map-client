@@ -1,253 +1,483 @@
-# [2.0.0-beta.157](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.156...v2.0.0-beta.157) (2022-10-29)
-
-
-### Bug Fixes
-
-* initial theme mode from localstorage not working ([09b8688](https://github.com/Greenstand/treetracker-web-map-client/commit/09b8688ef46eea984a7422662deb596d06e37e20))
-
+# [2.0.0-beta.192](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.191...v2.0.0-beta.192) (2022-12-06)
 
 ### Features
 
-* remove dynamic navbar import ([a01005b](https://github.com/Greenstand/treetracker-web-map-client/commit/a01005b6e4796a6169b655cb64e18d8d53b3d870))
+- cache ([60eeaa4](https://github.com/Greenstand/treetracker-web-map-client/commit/60eeaa49f0fd5d09790e0f3aedbfc27408b8f3ec))
 
+# [2.0.0-beta.191](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.190...v2.0.0-beta.191) (2022-12-05)
+
+### Features
+
+- add tests for search history ([2fed247](https://github.com/Greenstand/treetracker-web-map-client/commit/2fed247a13e7e7403a8162db73d17f33ac7f366e))
+
+# [2.0.0-beta.190](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.189...v2.0.0-beta.190) (2022-12-05)
+
+### Bug Fixes
+
+- timeline appears on when expand button is clicked ([5781456](https://github.com/Greenstand/treetracker-web-map-client/commit/57814563a69802fd7481089023ede569918b25cd))
+
+# [2.0.0-beta.189](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.188...v2.0.0-beta.189) (2022-12-05)
+
+### Bug Fixes
+
+- update background color of profile avatar ([4a026d9](https://github.com/Greenstand/treetracker-web-map-client/commit/4a026d97b1305581a11b48b88870b4d5e454a6f6))
+
+# [2.0.0-beta.188](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.187...v2.0.0-beta.188) (2022-12-03)
+
+### Bug Fixes
+
+- yaml ([0575ecf](https://github.com/Greenstand/treetracker-web-map-client/commit/0575ecf59b0e8b809114a8740aaead8646138dec))
+
+# [2.0.0-beta.187](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.186...v2.0.0-beta.187) (2022-12-03)
 
 ### Reverts
 
-* c45b3cd91953e950ddd7d04010443f54e1090777 ([ee629a4](https://github.com/Greenstand/treetracker-web-map-client/commit/ee629a4b743d8c38c53c5bfe54173cfdb12cccaf))
+- Revert "feat: change images to img" ([ed243f7](https://github.com/Greenstand/treetracker-web-map-client/commit/ed243f7dd9ece75c18983f765b9fff466c7e155c))
+
+# [2.0.0-beta.186](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.185...v2.0.0-beta.186) (2022-12-03)
+
+### Features
+
+- change images to img ([96c42c6](https://github.com/Greenstand/treetracker-web-map-client/commit/96c42c64bd88607725e07b669937f07271cbe41b))
+
+# [2.0.0-beta.185](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.184...v2.0.0-beta.185) (2022-12-02)
+
+### Bug Fixes
+
+- next.js setting ([c5b4459](https://github.com/Greenstand/treetracker-web-map-client/commit/c5b4459cb5752a4e76dce038f635b3ded7723ea0))
+
+### Features
+
+- change domain ([95c19c3](https://github.com/Greenstand/treetracker-web-map-client/commit/95c19c33ff990eab72ecc6d5c0c20d205dfc60c3))
+
+# [2.0.0-beta.184](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.183...v2.0.0-beta.184) (2022-12-02)
+
+### Features
+
+- add page title to error pages ([ba7d901](https://github.com/Greenstand/treetracker-web-map-client/commit/ba7d901832b84f9549e4439931fc4bcc57f964f7))
+
+# [2.0.0-beta.183](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.182...v2.0.0-beta.183) (2022-12-01)
+
+### Features
+
+- add title to pages ([9484781](https://github.com/Greenstand/treetracker-web-map-client/commit/948478191cfb4982288f28fc62956d2f235d9e12))
+
+# [2.0.0-beta.182](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.181...v2.0.0-beta.182) (2022-12-01)
+
+### Bug Fixes
+
+- hover on button ([d4253f9](https://github.com/Greenstand/treetracker-web-map-client/commit/d4253f991f639cd1c0b89a580735cc2029b08514))
+
+### Features
+
+- implement search history ([11a1a18](https://github.com/Greenstand/treetracker-web-map-client/commit/11a1a189f0bd23fb89921b4192c878e32b8a01f7))
+
+# [2.0.0-beta.181](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.180...v2.0.0-beta.181) (2022-12-01)
+
+### Bug Fixes
+
+- featuredPlanterSlider ([394bbb8](https://github.com/Greenstand/treetracker-web-map-client/commit/394bbb81c54ddd8d42062a4c852a188aa963e086))
+
+# [2.0.0-beta.180](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.179...v2.0.0-beta.180) (2022-11-29)
+
+### Bug Fixes
+
+- typo in issue template ([4523465](https://github.com/Greenstand/treetracker-web-map-client/commit/452346516a0a6172e49acbc447d004c1464f6b99))
+
+# [2.0.0-beta.179](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.178...v2.0.0-beta.179) (2022-11-26)
+
+### Features
+
+- send performance metrics to google analytics ([f5a2748](https://github.com/Greenstand/treetracker-web-map-client/commit/f5a2748ea8bb071733cb86b7f1030990319988b3))
+
+# [2.0.0-beta.178](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.177...v2.0.0-beta.178) (2022-11-25)
+
+### Bug Fixes
+
+- ensure card heights remain same ([ef5c619](https://github.com/Greenstand/treetracker-web-map-client/commit/ef5c61920d2d6657b401a5822b2e970e380c5a5d))
+- remove tooltip and add name ([92dae04](https://github.com/Greenstand/treetracker-web-map-client/commit/92dae040e3ba029beaeaf0d65253d26373f7286f))
+
+# [2.0.0-beta.177](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.176...v2.0.0-beta.177) (2022-11-24)
+
+### Features
+
+- give error feedback on incorrect date ([45507bb](https://github.com/Greenstand/treetracker-web-map-client/commit/45507bbdd3decf44ce1dd1600e3dce61f90cd8c7))
+
+# [2.0.0-beta.176](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.175...v2.0.0-beta.176) (2022-11-24)
+
+### Bug Fixes
+
+- remove border from card ([932832f](https://github.com/Greenstand/treetracker-web-map-client/commit/932832f734520bc041c6ea5b5f156d446e30e85b))
+
+# [2.0.0-beta.175](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.174...v2.0.0-beta.175) (2022-11-23)
+
+### Bug Fixes
+
+- copy embed code from clipboard ([60f1f0b](https://github.com/Greenstand/treetracker-web-map-client/commit/60f1f0ba72e6b6fa56fa2977b3a1a3b2b4e6eb0a))
+- return truncated token id from UUIDTag component ([85968b0](https://github.com/Greenstand/treetracker-web-map-client/commit/85968b0ef6c615a1600573708a6956b38a35c1fc))
+
+# [2.0.0-beta.174](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.173...v2.0.0-beta.174) (2022-11-23)
+
+### Features
+
+- add filter to card ([be6ac62](https://github.com/Greenstand/treetracker-web-map-client/commit/be6ac62b658b636e7a4655988083756c8cbe0e4d))
+
+# [2.0.0-beta.173](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.172...v2.0.0-beta.173) (2022-11-22)
+
+### Bug Fixes
+
+- **dashboard:** drag drop error with server side rendering ([59e0d6a](https://github.com/Greenstand/treetracker-web-map-client/commit/59e0d6afd718afdd473e6cf9fc41ccd4c91bf0ad))
+- **dashboard:** test not working with updated component ([ca6234a](https://github.com/Greenstand/treetracker-web-map-client/commit/ca6234a86294f762ea8dfda4a7a4757cbf2d44ab))
+- **dashboard:** update button showing after clicked ([29807d9](https://github.com/Greenstand/treetracker-web-map-client/commit/29807d961a8c6268097a72526d34a86d1073e133))
+
+### Features
+
+- **dashboard:** can add new nav item ([59170d9](https://github.com/Greenstand/treetracker-web-map-client/commit/59170d94884f6926a2251563363ef21c7e21b7c5))
+- **dashboard:** can remove nav item ([4e461e3](https://github.com/Greenstand/treetracker-web-map-client/commit/4e461e33b621e9a9a67ef214595785612e0f52ab))
+- **dashboard:** can reorder nav items with drag drop ([565cea3](https://github.com/Greenstand/treetracker-web-map-client/commit/565cea367fb174c6dfae19ef0bc79f8d58f56164))
+- **dashboard:** change drag area to drag icon ([b2a9e9d](https://github.com/Greenstand/treetracker-web-map-client/commit/b2a9e9db39b4df3c795b1609f9be4b486363e0d2))
+- **dashboard:** change nav item delete button to icon ([f5cdfa8](https://github.com/Greenstand/treetracker-web-map-client/commit/f5cdfa8c509a970eaa857d3afd8e11367e020763))
+- **dashboard:** only show update button if nav item changed ([5b49111](https://github.com/Greenstand/treetracker-web-map-client/commit/5b491113b3745c71dd4fac679b648dd30fd30479))
+- **dashboard:** update styling ([bd4db49](https://github.com/Greenstand/treetracker-web-map-client/commit/bd4db49987af7285ee9a6eef06167d326fb6aec3))
+
+# [2.0.0-beta.172](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.171...v2.0.0-beta.172) (2022-11-22)
+
+### Bug Fixes
+
+- overlap on leaderboard ([7d56185](https://github.com/Greenstand/treetracker-web-map-client/commit/7d56185315f86345f1b9422827dced20041dad04))
+
+# [2.0.0-beta.171](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.170...v2.0.0-beta.171) (2022-11-20)
+
+### Bug Fixes
+
+- added a simple mount test for theme in cypress ([4babe1f](https://github.com/Greenstand/treetracker-web-map-client/commit/4babe1f93fd1fc0dc3cc7dcd50cba65f331a5080))
+
+# [2.0.0-beta.170](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.169...v2.0.0-beta.170) (2022-11-18)
+
+### Bug Fixes
+
+- undefined self ([c64b463](https://github.com/Greenstand/treetracker-web-map-client/commit/c64b46392a4bb178754913244d316194dc524d41))
+
+### Features
+
+- admin can now set initial map view ([97bf46b](https://github.com/Greenstand/treetracker-web-map-client/commit/97bf46bcf017f204a8f9caa635c0d555f2ccce2c))
+- show maps current lat,lng, zoomLevel ([4b6cdda](https://github.com/Greenstand/treetracker-web-map-client/commit/4b6cdda2e6750f5227487970400f01a7d876535f))
+
+# [2.0.0-beta.169](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.168...v2.0.0-beta.169) (2022-11-18)
+
+### Bug Fixes
+
+- change button text color on hover ([212e4bc](https://github.com/Greenstand/treetracker-web-map-client/commit/212e4bc2ba45587d97a01588ef98be8693085947))
+
+# [2.0.0-beta.168](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.167...v2.0.0-beta.168) (2022-11-16)
+
+### Bug Fixes
+
+- 000 is valid font weight option ([630e49d](https://github.com/Greenstand/treetracker-web-map-client/commit/630e49d9efbacf9e2fb2cd3b0a8e53626f502c42))
+- **playground:** custom fonts not first if loaded from storage ([43660b7](https://github.com/Greenstand/treetracker-web-map-client/commit/43660b7dca0c7da30b70e4bfb57e281007ce353c))
+- **playground:** font weights are stored as number and string causing for duplication ([337e49b](https://github.com/Greenstand/treetracker-web-map-client/commit/337e49b1fab0b71f1364d494d212eead1f3a80cf))
+
+### Features
+
+- **playground:** update indication custom font style ([1470c2c](https://github.com/Greenstand/treetracker-web-map-client/commit/1470c2c4feeb1de220df9ca03e78b575586c0253))
+
+# [2.0.0-beta.167](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.166...v2.0.0-beta.167) (2022-11-16)
+
+### Bug Fixes
+
+- remove icon from deprecated component ([6b479ee](https://github.com/Greenstand/treetracker-web-map-client/commit/6b479ee98e4166acad2223853de40e140e0d68de))
+
+### Features
+
+- add icon alongside custom font ([f69338f](https://github.com/Greenstand/treetracker-web-map-client/commit/f69338f86b02615463bf282946b77f2f12368dc9))
+- **theme:** add icon alonside custom font ([6a3aef5](https://github.com/Greenstand/treetracker-web-map-client/commit/6a3aef5187b92052e5b8b5d61d5eb6aa2bc2cc12))
+
+# [2.0.0-beta.166](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.165...v2.0.0-beta.166) (2022-11-14)
+
+### Bug Fixes
+
+- update navbar tile and use value from array ([f5d19be](https://github.com/Greenstand/treetracker-web-map-client/commit/f5d19be90f65a5820464162ce6d0a737175dc43e))
+
+### Features
+
+- add component to modify navbar ([20afd60](https://github.com/Greenstand/treetracker-web-map-client/commit/20afd607b49ef88b0dc293091ab92156192e72db))
+
+# [2.0.0-beta.165](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.164...v2.0.0-beta.165) (2022-11-14)
+
+### Features
+
+- integrate google analytics ([fdea030](https://github.com/Greenstand/treetracker-web-map-client/commit/fdea0305938741767c6339ef2f8ad49b154db6cd))
+
+# [2.0.0-beta.164](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.163...v2.0.0-beta.164) (2022-11-12)
+
+### Bug Fixes
+
+- added cursor pointers to each reset ([cf929a0](https://github.com/Greenstand/treetracker-web-map-client/commit/cf929a03cbb7d94b97a6cd30d2574297ebdc82ee))
+- brought the reset button up to the label line ([0137051](https://github.com/Greenstand/treetracker-web-map-client/commit/013705101a13a50bfd0161dd704a0d69bfcc550f))
+- cleaned up unnecessary things ([04b3716](https://github.com/Greenstand/treetracker-web-map-client/commit/04b37163b8cb99658ede8dc65c14ed105ac2a25b))
+
+### Features
+
+- added single input resets ([6ccc0e9](https://github.com/Greenstand/treetracker-web-map-client/commit/6ccc0e9111b6220920192b94491633adb90c540f))
+
+# [2.0.0-beta.163](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.162...v2.0.0-beta.163) (2022-11-07)
+
+### Bug Fixes
+
+- **dashboard:** test not using required ConfigProvider ([1f5b2a2](https://github.com/Greenstand/treetracker-web-map-client/commit/1f5b2a2493c35dc4fdfd7b4a760a0781496b19f8))
+
+### Features
+
+- **dashboard:** add mock for logged in organization ([fe40667](https://github.com/Greenstand/treetracker-web-map-client/commit/fe40667d7adc5386d465e3beb39198003dcfe25b))
+- **dashboard:** can preview logo and change the url ([0003fa8](https://github.com/Greenstand/treetracker-web-map-client/commit/0003fa89595e413fcb929f310e93dfe1e6b5482d))
+- **dashboard:** setup basic state ([8d51ee1](https://github.com/Greenstand/treetracker-web-map-client/commit/8d51ee10d566d934e13978a3a66d5f563f9915c3))
+
+# [2.0.0-beta.162](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.161...v2.0.0-beta.162) (2022-11-07)
+
+### Bug Fixes
+
+- remove unnecessary links ([04d428a](https://github.com/Greenstand/treetracker-web-map-client/commit/04d428a0e1dbc2d58e604b6a8cf5f367dc6ff963))
+
+# [2.0.0-beta.161](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.160...v2.0.0-beta.161) (2022-11-03)
+
+### Bug Fixes
+
+- **playground:** iframe not working on live dev/prod env ([6960021](https://github.com/Greenstand/treetracker-web-map-client/commit/6960021de299a8221a760f6abbf71df033b14c2d))
+
+# [2.0.0-beta.160](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.159...v2.0.0-beta.160) (2022-11-03)
+
+### Features
+
+- add version number ([0f9a154](https://github.com/Greenstand/treetracker-web-map-client/commit/0f9a154b243dc83658035cc5f9de58b920ad5e13))
+
+# [2.0.0-beta.159](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.158...v2.0.0-beta.159) (2022-11-01)
+
+### Features
+
+- update home button to be dynamic for custom theme ([3b66e27](https://github.com/Greenstand/treetracker-web-map-client/commit/3b66e2727e6270df8817c9b9e2981278fbd5a4a8))
+
+# [2.0.0-beta.158](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.157...v2.0.0-beta.158) (2022-10-31)
+
+### Bug Fixes
+
+- tagchips color not compatible custom theme ([f23c2af](https://github.com/Greenstand/treetracker-web-map-client/commit/f23c2af1e8e25d873f8448ed71b12ffd175c8003))
+- **timeline:** background color is not equal to navbar ([c4850d1](https://github.com/Greenstand/treetracker-web-map-client/commit/c4850d1f529fe8b82026c690ccfb116947ab64f2))
+
+# [2.0.0-beta.157](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.156...v2.0.0-beta.157) (2022-10-29)
+
+### Bug Fixes
+
+- initial theme mode from localstorage not working ([09b8688](https://github.com/Greenstand/treetracker-web-map-client/commit/09b8688ef46eea984a7422662deb596d06e37e20))
+
+### Features
+
+- remove dynamic navbar import ([a01005b](https://github.com/Greenstand/treetracker-web-map-client/commit/a01005b6e4796a6169b655cb64e18d8d53b3d870))
+
+### Reverts
+
+- c45b3cd91953e950ddd7d04010443f54e1090777 ([ee629a4](https://github.com/Greenstand/treetracker-web-map-client/commit/ee629a4b743d8c38c53c5bfe54173cfdb12cccaf))
 
 # [2.0.0-beta.156](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.155...v2.0.0-beta.156) (2022-10-26)
 
-
 ### Bug Fixes
 
-* broken country jump ([afa4832](https://github.com/Greenstand/treetracker-web-map-client/commit/afa4832a4043c1c85657fdbf05ae3811ad938aa3))
+- broken country jump ([afa4832](https://github.com/Greenstand/treetracker-web-map-client/commit/afa4832a4043c1c85657fdbf05ae3811ad938aa3))
 
 # [2.0.0-beta.155](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.154...v2.0.0-beta.155) (2022-10-26)
 
-
 ### Bug Fixes
 
-* align cards on the same line ([e82b88c](https://github.com/Greenstand/treetracker-web-map-client/commit/e82b88c1747d95e898c711b42c45d84c0bc090b9))
+- align cards on the same line ([e82b88c](https://github.com/Greenstand/treetracker-web-map-client/commit/e82b88c1747d95e898c711b42c45d84c0bc090b9))
 
 # [2.0.0-beta.154](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.153...v2.0.0-beta.154) (2022-10-25)
 
-
 ### Features
 
-* final country board ([6eb4511](https://github.com/Greenstand/treetracker-web-map-client/commit/6eb45111583efd07bfe083d2fe749a2a811d3cdc))
+- final country board ([6eb4511](https://github.com/Greenstand/treetracker-web-map-client/commit/6eb45111583efd07bfe083d2fe749a2a811d3cdc))
 
 # [2.0.0-beta.153](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.152...v2.0.0-beta.153) (2022-10-24)
 
-
 ### Features
 
-* update text on country leader board ([35ddead](https://github.com/Greenstand/treetracker-web-map-client/commit/35ddead52ef6933db0a3b3ebd62b2ff296788507))
+- update text on country leader board ([35ddead](https://github.com/Greenstand/treetracker-web-map-client/commit/35ddead52ef6933db0a3b3ebd62b2ff296788507))
 
 # [2.0.0-beta.152](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.151...v2.0.0-beta.152) (2022-10-24)
 
-
 ### Bug Fixes
 
-* add style to match figma font ([2352cee](https://github.com/Greenstand/treetracker-web-map-client/commit/2352ceefc42be069fee140f155c333e3c21250b8))
-* planter quote location issue ([2e9dc3b](https://github.com/Greenstand/treetracker-web-map-client/commit/2e9dc3b5685436f96f4ca46f0e161168c3b369ae))
+- add style to match figma font ([2352cee](https://github.com/Greenstand/treetracker-web-map-client/commit/2352ceefc42be069fee140f155c333e3c21250b8))
+- planter quote location issue ([2e9dc3b](https://github.com/Greenstand/treetracker-web-map-client/commit/2e9dc3b5685436f96f4ca46f0e161168c3b369ae))
 
 # [2.0.0-beta.151](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.150...v2.0.0-beta.151) (2022-10-24)
 
-
 ### Bug Fixes
 
-* make slider button visible ([3bbffa8](https://github.com/Greenstand/treetracker-web-map-client/commit/3bbffa8d0b7e8231605493d47302a789bbb5a866))
+- make slider button visible ([3bbffa8](https://github.com/Greenstand/treetracker-web-map-client/commit/3bbffa8d0b7e8231605493d47302a789bbb5a866))
 
 # [2.0.0-beta.150](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.149...v2.0.0-beta.150) (2022-10-23)
 
-
 ### Features
 
-* add custom logo selector ([bda430f](https://github.com/Greenstand/treetracker-web-map-client/commit/bda430f37fdd7efb6515d900e04aaedc7e41e967))
+- add custom logo selector ([bda430f](https://github.com/Greenstand/treetracker-web-map-client/commit/bda430f37fdd7efb6515d900e04aaedc7e41e967))
 
 # [2.0.0-beta.149](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.148...v2.0.0-beta.149) (2022-10-22)
 
-
 ### Bug Fixes
 
-* **hooks:** localstorage initial state is undefined ([78ad0fb](https://github.com/Greenstand/treetracker-web-map-client/commit/78ad0fb47a878192c3e5a0a667e315b632b84121))
+- **hooks:** localstorage initial state is undefined ([78ad0fb](https://github.com/Greenstand/treetracker-web-map-client/commit/78ad0fb47a878192c3e5a0a667e315b632b84121))
 
 # [2.0.0-beta.148](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.147...v2.0.0-beta.148) (2022-10-22)
 
-
 ### Features
 
-* added ability to reset single colors ([b350cd1](https://github.com/Greenstand/treetracker-web-map-client/commit/b350cd17ff29c96fd1cc4f796dd5a4aef25eb303))
+- added ability to reset single colors ([b350cd1](https://github.com/Greenstand/treetracker-web-map-client/commit/b350cd17ff29c96fd1cc4f796dd5a4aef25eb303))
 
 # [2.0.0-beta.147](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.146...v2.0.0-beta.147) (2022-10-22)
 
-
 ### Bug Fixes
 
-* useLocation hook to select correct theme ([c45b3cd](https://github.com/Greenstand/treetracker-web-map-client/commit/c45b3cd91953e950ddd7d04010443f54e1090777))
-
+- useLocation hook to select correct theme ([c45b3cd](https://github.com/Greenstand/treetracker-web-map-client/commit/c45b3cd91953e950ddd7d04010443f54e1090777))
 
 ### Features
 
-* add comment ([d3ff8a1](https://github.com/Greenstand/treetracker-web-map-client/commit/d3ff8a19fbf6788c0b1f4712fed31f5e050e02cc))
-* tree captures collected ([20ac47e](https://github.com/Greenstand/treetracker-web-map-client/commit/20ac47e16ea70cae88d17bc706628e02a80a55d1))
+- add comment ([d3ff8a1](https://github.com/Greenstand/treetracker-web-map-client/commit/d3ff8a19fbf6788c0b1f4712fed31f5e050e02cc))
+- tree captures collected ([20ac47e](https://github.com/Greenstand/treetracker-web-map-client/commit/20ac47e16ea70cae88d17bc706628e02a80a55d1))
 
 # [2.0.0-beta.146](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.145...v2.0.0-beta.146) (2022-10-21)
 
-
 ### Bug Fixes
 
-* broken test ([5e33d8d](https://github.com/Greenstand/treetracker-web-map-client/commit/5e33d8d13d9aa922620230dee8359d311e683455))
-* menu ([705b8b0](https://github.com/Greenstand/treetracker-web-map-client/commit/705b8b0ac292a4d543b8e13a59b45f720f903b8e))
-* mission style ([b3c9898](https://github.com/Greenstand/treetracker-web-map-client/commit/b3c9898b2e0ab579ce5f07acaa2e0ea156df8e08))
+- broken test ([5e33d8d](https://github.com/Greenstand/treetracker-web-map-client/commit/5e33d8d13d9aa922620230dee8359d311e683455))
+- menu ([705b8b0](https://github.com/Greenstand/treetracker-web-map-client/commit/705b8b0ac292a4d543b8e13a59b45f720f903b8e))
+- mission style ([b3c9898](https://github.com/Greenstand/treetracker-web-map-client/commit/b3c9898b2e0ab579ce5f07acaa2e0ea156df8e08))
 
 # [2.0.0-beta.145](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.144...v2.0.0-beta.145) (2022-10-21)
 
-
 ### Features
 
-* **playground:** update textarea styling ([143ee02](https://github.com/Greenstand/treetracker-web-map-client/commit/143ee02862b90b2a68e0065efc8cf5bdcdaaa117))
+- **playground:** update textarea styling ([143ee02](https://github.com/Greenstand/treetracker-web-map-client/commit/143ee02862b90b2a68e0065efc8cf5bdcdaaa117))
 
 # [2.0.0-beta.144](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.143...v2.0.0-beta.144) (2022-10-20)
 
-
 ### Features
 
-* **dashboard:** add navbar tab ([68dbdec](https://github.com/Greenstand/treetracker-web-map-client/commit/68dbdec7d2b65dfff684414bc8d3b56b4a979649))
+- **dashboard:** add navbar tab ([68dbdec](https://github.com/Greenstand/treetracker-web-map-client/commit/68dbdec7d2b65dfff684414bc8d3b56b4a979649))
 
 # [2.0.0-beta.143](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.142...v2.0.0-beta.143) (2022-10-20)
 
-
 ### Features
 
-* render feature section only if data exists ([fc90ae0](https://github.com/Greenstand/treetracker-web-map-client/commit/fc90ae049fe29668f0da9719771aaf3e4b81ce01))
+- render feature section only if data exists ([fc90ae0](https://github.com/Greenstand/treetracker-web-map-client/commit/fc90ae049fe29668f0da9719771aaf3e4b81ce01))
 
 # [2.0.0-beta.142](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.141...v2.0.0-beta.142) (2022-10-19)
 
-
 ### Features
 
-* add 0 as valid input for letter spacing ([ff19f96](https://github.com/Greenstand/treetracker-web-map-client/commit/ff19f967813ec0956befb03db4aae5bc17693e90))
+- add 0 as valid input for letter spacing ([ff19f96](https://github.com/Greenstand/treetracker-web-map-client/commit/ff19f967813ec0956befb03db4aae5bc17693e90))
 
 # [2.0.0-beta.141](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.140...v2.0.0-beta.141) (2022-10-18)
 
-
 ### Features
 
-* make toggletheme component sticky ([affe315](https://github.com/Greenstand/treetracker-web-map-client/commit/affe315faaa5d7a00c009565e90743745e722f21))
+- make toggletheme component sticky ([affe315](https://github.com/Greenstand/treetracker-web-map-client/commit/affe315faaa5d7a00c009565e90743745e722f21))
 
 # [2.0.0-beta.140](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.139...v2.0.0-beta.140) (2022-10-18)
 
-
 ### Bug Fixes
 
-* **dashboard:** typos ([e341d17](https://github.com/Greenstand/treetracker-web-map-client/commit/e341d1779d2b564a1b4be07ff4e263e384fd2acb))
-
+- **dashboard:** typos ([e341d17](https://github.com/Greenstand/treetracker-web-map-client/commit/e341d1779d2b564a1b4be07ff4e263e384fd2acb))
 
 ### Features
 
-* **dashboard:** add basic setup ([6b6e64a](https://github.com/Greenstand/treetracker-web-map-client/commit/6b6e64a8b1ce12a33813bbc678f2adfdb5007aa4))
+- **dashboard:** add basic setup ([6b6e64a](https://github.com/Greenstand/treetracker-web-map-client/commit/6b6e64a8b1ce12a33813bbc678f2adfdb5007aa4))
 
 # [2.0.0-beta.139](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.138...v2.0.0-beta.139) (2022-10-18)
 
-
 ### Bug Fixes
 
-* **impact:** cards not vertically aligned ([69be32a](https://github.com/Greenstand/treetracker-web-map-client/commit/69be32a0a0a41f098ebd3fbfe30c2345458b8824))
+- **impact:** cards not vertically aligned ([69be32a](https://github.com/Greenstand/treetracker-web-map-client/commit/69be32a0a0a41f098ebd3fbfe30c2345458b8824))
 
 # [2.0.0-beta.138](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.137...v2.0.0-beta.138) (2022-10-17)
 
-
 ### Bug Fixes
 
-* about in org ([66d8235](https://github.com/Greenstand/treetracker-web-map-client/commit/66d82359d162641549deb7b79c8dd13ad552f9fb))
-* about order ([665d07a](https://github.com/Greenstand/treetracker-web-map-client/commit/665d07a51399ab8a869c5ae6825db6e645565eeb))
-
+- about in org ([66d8235](https://github.com/Greenstand/treetracker-web-map-client/commit/66d82359d162641549deb7b79c8dd13ad552f9fb))
+- about order ([665d07a](https://github.com/Greenstand/treetracker-web-map-client/commit/665d07a51399ab8a869c5ae6825db6e645565eeb))
 
 ### Features
 
-* org, wallet, tree, token by name ([2694c4d](https://github.com/Greenstand/treetracker-web-map-client/commit/2694c4d7d59911612e31421c9156ea00e624043e))
-* wallet by name ([dab5ce9](https://github.com/Greenstand/treetracker-web-map-client/commit/dab5ce9546523510d3c1cf422396ad6ca00cdb2e))
+- org, wallet, tree, token by name ([2694c4d](https://github.com/Greenstand/treetracker-web-map-client/commit/2694c4d7d59911612e31421c9156ea00e624043e))
+- wallet by name ([dab5ce9](https://github.com/Greenstand/treetracker-web-map-client/commit/dab5ce9546523510d3c1cf422396ad6ca00cdb2e))
 
 # [2.0.0-beta.137](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.136...v2.0.0-beta.137) (2022-10-15)
 
-
 ### Bug Fixes
 
-* lockfile ([3fbaa43](https://github.com/Greenstand/treetracker-web-map-client/commit/3fbaa4334d94ad8b0a46752d8e36c869f0853f7b))
-
+- lockfile ([3fbaa43](https://github.com/Greenstand/treetracker-web-map-client/commit/3fbaa4334d94ad8b0a46752d8e36c869f0853f7b))
 
 ### Features
 
-* about support markdown ([c73518d](https://github.com/Greenstand/treetracker-web-map-client/commit/c73518da79f41c549781f7771cf13e2785619d59))
+- about support markdown ([c73518d](https://github.com/Greenstand/treetracker-web-map-client/commit/c73518da79f41c549781f7771cf13e2785619d59))
 
 # [2.0.0-beta.136](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.135...v2.0.0-beta.136) (2022-10-13)
 
-
 ### Features
 
-* add wallet logo ([8070141](https://github.com/Greenstand/treetracker-web-map-client/commit/8070141dbcf0277766cc2964da8e757d7dc24c65))
+- add wallet logo ([8070141](https://github.com/Greenstand/treetracker-web-map-client/commit/8070141dbcf0277766cc2964da8e757d7dc24c65))
 
 # [2.0.0-beta.135](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.134...v2.0.0-beta.135) (2022-10-13)
 
-
 ### Bug Fixes
 
-* **tree:** make global icon consistent with others ([a97f93f](https://github.com/Greenstand/treetracker-web-map-client/commit/a97f93f4dd1e70a5e59858ec656e528caf7e9656))
+- **tree:** make global icon consistent with others ([a97f93f](https://github.com/Greenstand/treetracker-web-map-client/commit/a97f93f4dd1e70a5e59858ec656e528caf7e9656))
 
 # [2.0.0-beta.134](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.133...v2.0.0-beta.134) (2022-10-13)
 
-
 ### Bug Fixes
 
-* revert flex changes ([3abc97d](https://github.com/Greenstand/treetracker-web-map-client/commit/3abc97d014ef1bf863bc3d0db46309d519300cbe))
-* revert prev commit ([3d26a90](https://github.com/Greenstand/treetracker-web-map-client/commit/3d26a90d22cad0202ffd9f214e7e4b1b2dfd840d))
-
+- revert flex changes ([3abc97d](https://github.com/Greenstand/treetracker-web-map-client/commit/3abc97d014ef1bf863bc3d0db46309d519300cbe))
+- revert prev commit ([3d26a90](https://github.com/Greenstand/treetracker-web-map-client/commit/3d26a90d22cad0202ffd9f214e7e4b1b2dfd840d))
 
 ### Features
 
-* flex wrap the token cards ([ce50954](https://github.com/Greenstand/treetracker-web-map-client/commit/ce50954bbf8534f94e41c645041cdb05fd066594))
-* shorten token id ([060474a](https://github.com/Greenstand/treetracker-web-map-client/commit/060474a581da1a81573e22fb8e0a7e1a370f4f89))
+- flex wrap the token cards ([ce50954](https://github.com/Greenstand/treetracker-web-map-client/commit/ce50954bbf8534f94e41c645041cdb05fd066594))
+- shorten token id ([060474a](https://github.com/Greenstand/treetracker-web-map-client/commit/060474a581da1a81573e22fb8e0a7e1a370f4f89))
 
 # [2.0.0-beta.133](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.132...v2.0.0-beta.133) (2022-10-12)
 
-
 ### Bug Fixes
 
-* pass link prop for wallets ([05056d9](https://github.com/Greenstand/treetracker-web-map-client/commit/05056d9605e3b8873e0a527e0d3801da83d2c5bc))
+- pass link prop for wallets ([05056d9](https://github.com/Greenstand/treetracker-web-map-client/commit/05056d9605e3b8873e0a527e0d3801da83d2c5bc))
 
 # [2.0.0-beta.132](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.131...v2.0.0-beta.132) (2022-10-11)
 
-
 ### Bug Fixes
 
-* embed logo incorrect url ([2085397](https://github.com/Greenstand/treetracker-web-map-client/commit/2085397d1444516f1b0c0ef666b929c870117013))
+- embed logo incorrect url ([2085397](https://github.com/Greenstand/treetracker-web-map-client/commit/2085397d1444516f1b0c0ef666b929c870117013))
 
 # [2.0.0-beta.131](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.130...v2.0.0-beta.131) (2022-10-10)
 
-
 ### Bug Fixes
 
-* **playground:** textarea not updating theme values ([52a7cc5](https://github.com/Greenstand/treetracker-web-map-client/commit/52a7cc5b0012075186af871b7a7c27e84a1bed81))
+- **playground:** textarea not updating theme values ([52a7cc5](https://github.com/Greenstand/treetracker-web-map-client/commit/52a7cc5b0012075186af871b7a7c27e84a1bed81))
 
 # [2.0.0-beta.130](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.129...v2.0.0-beta.130) (2022-10-10)
 
-
 ### Features
 
-* add fallback value ([0822ca5](https://github.com/Greenstand/treetracker-web-map-client/commit/0822ca56773d98b11df6325a0e9c61d279854917))
-* add fallback value ([931a31c](https://github.com/Greenstand/treetracker-web-map-client/commit/931a31c48917ef9be71c5a2f2009118567ea758a))
-* add fallback value ([5eb6a2f](https://github.com/Greenstand/treetracker-web-map-client/commit/5eb6a2fcabc08621e64fe8d43eec991608c3813d))
-* add real location for org pages ([6f7019e](https://github.com/Greenstand/treetracker-web-map-client/commit/6f7019ecd1f526168375f5271e87d8b2c0387e37))
-* add real location for planter pages ([5da18d3](https://github.com/Greenstand/treetracker-web-map-client/commit/5da18d3349c695732ac533844221004afcc49f45))
-* location for planter info ([3207a8e](https://github.com/Greenstand/treetracker-web-map-client/commit/3207a8eee37659d15ab9a9fbe0818b734e7f12de))
-* merge beta ([0acd2ac](https://github.com/Greenstand/treetracker-web-map-client/commit/0acd2ac872f9b6355aab439022f1f012b58bafc7))
-* merge beta ([a5856bc](https://github.com/Greenstand/treetracker-web-map-client/commit/a5856bc082477b86dde74ab654177c4cc1a0edfe))
-* merge beta ([1e794ba](https://github.com/Greenstand/treetracker-web-map-client/commit/1e794ba0fa09a54b60acd3ec39f13a231dfbbc79))
-* revert changelog ([95c1adf](https://github.com/Greenstand/treetracker-web-map-client/commit/95c1adfb8252d686233bb47d5f2ef593d90743c6))
-* use getLocationString ([800a828](https://github.com/Greenstand/treetracker-web-map-client/commit/800a82878395c208c4795e544262554a3446ddf3))
-* use getLocationString ([8536e7b](https://github.com/Greenstand/treetracker-web-map-client/commit/8536e7b04a988a0d93fc320afbb887f346b547ea))
-* use getLocationString ([e3b5565](https://github.com/Greenstand/treetracker-web-map-client/commit/e3b5565d4a739cec61afedd59b2355563cc84df8))
+- add fallback value ([0822ca5](https://github.com/Greenstand/treetracker-web-map-client/commit/0822ca56773d98b11df6325a0e9c61d279854917))
+- add fallback value ([931a31c](https://github.com/Greenstand/treetracker-web-map-client/commit/931a31c48917ef9be71c5a2f2009118567ea758a))
+- add fallback value ([5eb6a2f](https://github.com/Greenstand/treetracker-web-map-client/commit/5eb6a2fcabc08621e64fe8d43eec991608c3813d))
+- add real location for org pages ([6f7019e](https://github.com/Greenstand/treetracker-web-map-client/commit/6f7019ecd1f526168375f5271e87d8b2c0387e37))
+- add real location for planter pages ([5da18d3](https://github.com/Greenstand/treetracker-web-map-client/commit/5da18d3349c695732ac533844221004afcc49f45))
+- location for planter info ([3207a8e](https://github.com/Greenstand/treetracker-web-map-client/commit/3207a8eee37659d15ab9a9fbe0818b734e7f12de))
+- merge beta ([0acd2ac](https://github.com/Greenstand/treetracker-web-map-client/commit/0acd2ac872f9b6355aab439022f1f012b58bafc7))
+- merge beta ([a5856bc](https://github.com/Greenstand/treetracker-web-map-client/commit/a5856bc082477b86dde74ab654177c4cc1a0edfe))
+- merge beta ([1e794ba](https://github.com/Greenstand/treetracker-web-map-client/commit/1e794ba0fa09a54b60acd3ec39f13a231dfbbc79))
+- revert changelog ([95c1adf](https://github.com/Greenstand/treetracker-web-map-client/commit/95c1adfb8252d686233bb47d5f2ef593d90743c6))
+- use getLocationString ([800a828](https://github.com/Greenstand/treetracker-web-map-client/commit/800a82878395c208c4795e544262554a3446ddf3))
+- use getLocationString ([8536e7b](https://github.com/Greenstand/treetracker-web-map-client/commit/8536e7b04a988a0d93fc320afbb887f346b547ea))
+- use getLocationString ([e3b5565](https://github.com/Greenstand/treetracker-web-map-client/commit/e3b5565d4a739cec61afedd59b2355563cc84df8))
 
 # [2.0.0-beta.129](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.128...v2.0.0-beta.129) (2022-10-08)
 

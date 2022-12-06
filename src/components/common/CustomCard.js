@@ -14,6 +14,13 @@ function CustomCard({
   tooltip,
   iconProps,
 }) {
+  let count;
+  if (typeof text === 'number') {
+    count = new Intl.NumberFormat('en', {
+      notation: 'compact',
+    }).format(text);
+  }
+
   return (
     <Box
       onClick={handleClick}
@@ -82,7 +89,7 @@ function CustomCard({
             mt: [0.5, 1],
           }}
         >
-          {text}
+          {count || text}
         </Typography>
       </Box>
     </Box>

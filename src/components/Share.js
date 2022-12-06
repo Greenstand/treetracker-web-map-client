@@ -54,6 +54,7 @@ function Share(props) {
   const [message, setMessage] = React.useState('');
   const [link, setLink] = React.useState('');
   const { onCopy, hasCopied } = useClipboard(link);
+  const embedCodeClipboard = useClipboard(embedCode);
 
   function handleClick() {
     setIsOpen(true);
@@ -223,7 +224,13 @@ function Share(props) {
         />
         <DialogActions>
           <Button onClick={handleEmbedClose}>Cancel</Button>
-          <Button onClick={onCopy}>Copy</Button>
+          <Button
+            onClick={() => {
+              embedCodeClipboard.onCopy();
+            }}
+          >
+            Copy
+          </Button>
         </DialogActions>
       </Dialog>
       <Snackbar

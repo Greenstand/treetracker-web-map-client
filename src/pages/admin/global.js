@@ -1,14 +1,49 @@
 import { Box, Typography, Divider, List } from '@mui/material';
-import log from 'loglevel';
-import { useState } from 'react';
-import { Tab, TabPanel } from '../../components/dashboard/Tabs';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
+import ChangeNavSection from 'components/dashboard/ChangeNavSection';
+import { Tab, TabPanel } from 'components/dashboard/Tabs';
+import { ConfigProvider, useConfigContext } from 'context/configContext';
+import { getOrganizationById } from 'models/api';
+import { updateLogoUrl } from 'models/config.reducer';
+import { wrapper } from 'models/utils';
+import { MapContextProvider, useMapContext } from '../../mapContext';
 
-function Global() {
+const MapLayout = dynamic(() => import('components/GlobalMapLayout'), {
+  ssr: false,
+});
+
+function Global({ organization }) {
   const [currentTab, setCurrentTab] = useState(0);
+  const { state, dispatch } = useConfigContext();
+  const mapContext = useMapContext();
+
+  useEffect(() => {
+    dispatch(updateLogoUrl(organization.logo_url));
+  }, []);
 
   const handleSidebarClick = (index) => {
     setCurrentTab(index);
   };
+
+  useEffect(() => {
+    async function setUpMap() {
+      const { map } = mapContext;
+      if (map && organization) {
+        const { lat, lon, zoom } = state.map.initialLocation;
+        await map.setFilters({
+          map_name: organization.map_name,
+        });
+
+        if (lat && lon && zoom) {
+          map.gotoView(+lat, +lon, +zoom);
+        }
+      }
+    }
+
+    setUpMap();
+  }, [mapContext, organization, state.map.initialLocation]);
 
   return (
     <Box
@@ -61,25 +96,49 @@ function Global() {
       >
         <TabPanel value={currentTab} index={0}>
           <Typography variant="h5">Navbar View</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <ChangeLogoSection />
+            <ChangeNavSection />
+          </Box>
         </TabPanel>
         <TabPanel value={currentTab} index={1}>
           <Typography variant="h5">Theme View</Typography>
         </TabPanel>
         <TabPanel value={currentTab} index={2}>
           <Typography variant="h5">Map View</Typography>
+          <MapLayout />
         </TabPanel>
       </Box>
     </Box>
   );
 }
 
-export default Global;
-
-export async function getServerSideProps({ params }) {
-  // eslint-disable-next-line no-promise-executor-return
-  await new Promise((resolve) => setTimeout(resolve(), 10));
-  log.warn('on the server, global page, params: ', params);
-  return {
-    props: {},
-  };
+function GlobalWithContext(props) {
+  return (
+    <ConfigProvider>
+      <MapContextProvider>
+        <Global {...props} />
+      </MapContextProvider>
+    </ConfigProvider>
+  );
 }
+
+export default GlobalWithContext;
+
+export const getServerSideProps = wrapper(async () => {
+  const id = 178; // hardcoded FCC organization
+  const organization = await getOrganizationById(id);
+  return {
+    props: {
+      organization: {
+        ...organization,
+      },
+    },
+  };
+});

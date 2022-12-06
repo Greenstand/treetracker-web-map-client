@@ -1,29 +1,28 @@
+import { RestartAlt } from '@mui/icons-material';
+import FontDownloadIcon from '@mui/icons-material/FontDownload';
 import {
   Box,
-  TextField,
   InputAdornment,
   CircularProgress,
+  Select,
+  MenuItem,
+  InputLabel,
+  Tooltip,
+  FormControl,
+  Input,
+  FormHelperText,
 } from '@mui/material';
 import { useState, useEffect, useCallback } from 'react';
 import { loadFonts } from 'models/utils';
-import FontSelector from './FontSelector';
 import {
   usePlaygroundUtils,
   usePlaygroundFonts,
 } from '../../hooks/contextHooks';
-import { propRules } from '../../models/themePlaygroundOptions';
-
-const allowedFontWeights = new Set([
-  'normal',
-  'bold',
-  'lighter',
-  'bolder',
-  'inherit',
-  'initial',
-  'revert',
-  'revert-layer',
-  'unset',
-]);
+import {
+  predefinedFonts as defaultFonts,
+  propRules,
+  fontWeightNameToValue,
+} from '../../models/themePlaygroundOptions';
 
 function FontFamilyWeightElm(props) {
   const { label, path, fontValue } = props;
@@ -31,6 +30,7 @@ function FontFamilyWeightElm(props) {
   const [fonts, setFonts] = usePlaygroundFonts();
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState('');
+  const [defaultValue] = useState(initialValue.toString());
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -40,45 +40,51 @@ function FontFamilyWeightElm(props) {
   }, [fontValue, initialValue]);
 
   const loadWeight = useCallback(
-    (weightValue) => {
-      if (!fonts[fontValue]) return false;
-      if (weightValue.trim() === '') return false;
-      if (fontValue === '')
-        return setError('please add aleast one font family.');
+    (userInput) => {
+      if (!(fontValue in fonts)) return false;
+      if (fontValue === '') {
+        return setError('Please add a font first');
+      }
 
-      if (allowedFontWeights.has(weightValue)) {
-        setPropByPath(path, weightValue);
+      // handle case of not a convertable string weight
+      // 'bolder', 'lighter', 'inherit' ....
+      if (!(userInput in fontWeightNameToValue)) {
+        setPropByPath(path, userInput);
         return true;
       }
 
-      const userInput = parseInt(weightValue.trim(), 10);
-      const fontFamilytoLoad = [];
+      const isWeightValueNumber = Number.isNaN(Number(userInput)) === false;
 
-      if (fonts[fontValue]) {
-        if (fonts[fontValue].includes(userInput)) {
-          setPropByPath(path, userInput);
-          return true;
-        }
-
-        fontFamilytoLoad.push(`${fontValue}:${userInput}`);
+      // convert the string weight to an number
+      // 'bold' & 'normal'
+      let weightToLoad = userInput;
+      if (isWeightValueNumber === false) {
+        weightToLoad = fontWeightNameToValue[userInput];
       }
 
       setLoading(true);
-      loadFonts(fontFamilytoLoad).then((fontLoaded) => {
+      loadFonts([`${fontValue}:${weightToLoad}`]).then((fontLoaded) => {
         setLoading(false);
-        if (!fontLoaded)
-          return setError('Something went wrong. please try again');
+        if (!fontLoaded) {
+          return setError('Something went wrong. Please try again');
+        }
         setFonts((prevFonts) => ({
           ...prevFonts,
-          ...{ [fontValue]: [...fonts[fontValue], userInput] },
+          [fontValue]: [...prevFonts[fontValue], weightToLoad],
         }));
-        return setPropByPath(path, userInput);
+        setPropByPath(path, userInput);
+        return true;
       });
 
       return true;
     },
     [fontValue, fonts, path, setFonts, setPropByPath],
   );
+
+  const resetTypography = () => {
+    setValue(defaultValue);
+    setPropByPath(path, defaultValue);
+  };
 
   const handleChange = (e) => {
     const userInput = e.target.value;
@@ -94,24 +100,32 @@ function FontFamilyWeightElm(props) {
   };
 
   return (
-    <TextField
-      variant="standard"
-      error={error.length > 0}
-      label="Font Weight"
-      value={value}
-      onChange={handleChange}
-      sx={{
-        width: 1,
-      }}
-      helperText={error || 'Load Font weight.'}
-      InputProps={{
-        endAdornment: (
+    <FormControl error={error.length > 0} sx={{ width: 1 }} variant="standard">
+      <InputLabel sx={{ width: '133%' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <span>Font Weight</span>
+          <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
+            <RestartAlt onClick={resetTypography} color="error" />
+          </Tooltip>
+        </Box>
+      </InputLabel>
+      <Input
+        value={value}
+        onChange={handleChange}
+        endAdornment={
           <InputAdornment position="end">
             {loading ? <CircularProgress size="1.5rem" /> : null}
           </InputAdornment>
-        ),
-      }}
-    />
+        }
+      />
+      <FormHelperText>{error || 'Load Font weight.'}</FormHelperText>
+    </FormControl>
   );
 }
 
@@ -120,12 +134,18 @@ function FontFamily(props) {
   const { getPropByPath, setPropByPath } = usePlaygroundUtils();
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState(initialValue);
+  const [defaultValue] = useState(initialValue);
   const [fonts] = usePlaygroundFonts();
   const [error, setError] = useState('');
   const fontWeightPath = `${path
     .split('.')
     .splice(0, path.split('.').length - 1)
     .join('.')}.fontWeight`;
+
+  const resetTypography = () => {
+    setValue(defaultValue);
+    setPropByPath(path, defaultValue);
+  };
 
   const handleChange = (e) => {
     const userInput =
@@ -145,32 +165,52 @@ function FontFamily(props) {
 
   return (
     <>
-      <TextField
-        variant="standard"
-        label={label}
-        value={value}
+      <FormControl
+        id="font-family"
         error={error.length > 0}
-        onChange={handleChange}
-        helperText={error || 'Add Fontfamily from loaded families.'}
         sx={{
           textTransform: 'capitalize',
           width: 1,
           marginBottom: '5px',
+          pt: 1,
         }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <FontSelector
-                handleChange={(val) => {
-                  setValue(val);
-                  setPropByPath(path, val);
-                  setError('');
+        variant="standard"
+      >
+        <InputLabel sx={{ width: '133%' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            {label}
+            <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
+              <RestartAlt onClick={resetTypography} color="error" />
+            </Tooltip>
+          </Box>
+        </InputLabel>
+        <Select value={value} onChange={handleChange}>
+          {Object.keys(fonts).map((font) => (
+            <MenuItem value={font} key={`font-selector-menuitem-${font}`}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  flex: 1,
                 }}
-              />
-            </InputAdornment>
-          ),
-        }}
-      />
+              >
+                <span>{font}</span>
+                {!(font in defaultFonts) && <FontDownloadIcon />}
+              </Box>
+            </MenuItem>
+          ))}
+        </Select>
+        <FormHelperText>
+          {error || 'Add Fontfamily from loaded families.'}
+        </FormHelperText>
+      </FormControl>
       <FontFamilyWeightElm
         label="fontWeight"
         path={fontWeightPath}
@@ -186,10 +226,17 @@ function TypographyInput(props) {
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState(initialValue);
   const [isValid, setValid] = useState(true);
+  const [defaultValue] = useState(initialValue);
 
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
+
+  const resetTypography = () => {
+    setPropByPath(path, defaultValue);
+    setValue(defaultValue);
+    setValid(true);
+  };
 
   const handleChange = (e) => {
     const userValue = e.target.value;
@@ -210,18 +257,32 @@ function TypographyInput(props) {
       {label === 'fontFamily' ? (
         <FontFamily label={label} path={path} />
       ) : (
-        <TextField
-          variant="standard"
+        <FormControl
           error={!isValid}
-          label={label}
-          value={value}
-          onChange={handleChange}
           sx={{
             textTransform: 'capitalize',
             width: 1,
+            pt: 1,
           }}
-          helperText={!isValid && 'Invalid syntax'}
-        />
+          variant="standard"
+        >
+          <InputLabel sx={{ width: '133%' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              {label}
+              <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
+                <RestartAlt onClick={resetTypography} color="error" />
+              </Tooltip>
+            </Box>
+          </InputLabel>
+          <Input value={value} onChange={handleChange} />
+          <FormHelperText>{!isValid && 'Invalid syntax'}</FormHelperText>
+        </FormControl>
       )}
     </Box>
   );

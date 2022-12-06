@@ -1,4 +1,11 @@
-import { Box, Typography, InputBase, Divider } from '@mui/material';
+import {
+  Box,
+  Typography,
+  InputBase,
+  Divider,
+  Paper,
+  Alert,
+} from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -65,6 +72,7 @@ function Timeline() {
   const router = useRouter();
   const isMobile = useMobile();
   const [showPicker, setShowPicker] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [timeFrame, setTimeFrame] = useState({
     start: Date.now(),
     end: Date.now(),
@@ -84,7 +92,15 @@ function Timeline() {
     // check if the start date is before the end date
     const start = frameType === 'start' ? newValue : timeFrame.start;
     const end = frameType === 'end' ? newValue : timeFrame.end;
-    if (start > end) return;
+
+    if (start > end) {
+      setIsError(true);
+      return;
+    }
+
+    if (isError) {
+      setIsError(false);
+    }
 
     setTimeFrame((prevTimeFrame) => ({
       ...prevTimeFrame,
@@ -102,105 +118,110 @@ function Timeline() {
 
   return (
     isGlobalPage && (
-      <Box
-        sx={{
-          position: 'absolute',
-          zIndex: ['996', '9999'], // 996 is same as used for zoom buttons
-          bottom: '0px',
-          left: '0px',
-          margin: '20px',
-          mb: isMobile ? 'calc(2rem + 25px)' : null, // currently based on the zoom buttons
-          pr: showPicker && '15px',
-          height: 52,
-          borderRadius: 4,
-          backgroundColor: 'background.paper',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 1,
-          boxSizing: 'border-box',
-        }}
-      >
-        <Box
-          onClick={togglePicker}
+      <>
+        {isError && (
+          <Alert severity="error">Start date must be before end date</Alert>
+        )}
+        <Paper
+          elevation={7}
           sx={{
+            position: 'absolute',
+            zIndex: ['996', '9999'], // 996 is same as used for zoom buttons
+            bottom: '0px',
+            left: '0px',
+            margin: '20px',
+            mb: isMobile ? 'calc(2rem + 25px)' : null, // currently based on the zoom buttons
+            pr: showPicker && '15px',
             height: 52,
-            width: 52,
             borderRadius: 4,
-            background: 'none',
-            '-webkit-tap-highlight-color': 'transparent',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            cursor: 'pointer',
+            gap: 1,
+            boxSizing: 'border-box',
           }}
         >
-          <Icon
-            icon={TimeIcon}
-            size={[24, 28]}
+          <Box
+            onClick={togglePicker}
             sx={{
-              '& path': {
-                fill: ({ palette }) => palette.primary.main,
-              },
+              height: 52,
+              width: 52,
+              borderRadius: 4,
+              background: 'none',
+              WebkitTapHighlightColor: 'transparent',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              cursor: 'pointer',
             }}
-          />
-        </Box>
-        {showPicker && (
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Box
+          >
+            <Icon
+              icon={TimeIcon}
+              size={[24, 28]}
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 4,
+                '& path': {
+                  fill: ({ palette }) => palette.primary.main,
+                },
               }}
-            >
-              {!isMobile ? (
-                <>
-                  <DesktopDatePicker
-                    value={timeFrame.start}
-                    onChange={(newValue) =>
-                      handleDatePickerChange(newValue, 'start')
-                    }
-                    label="Start"
-                  />
-                  <Divider sx={{ height: 36 }} orientation="vertical" />
-                  <DesktopDatePicker
-                    value={timeFrame.end}
-                    onChange={(newValue) =>
-                      handleDatePickerChange(newValue, 'end')
-                    }
-                    label="End"
-                  />
-                </>
-              ) : (
-                <>
-                  <MobileDatePicker
-                    value={timeFrame.start}
-                    onChange={(newValue) =>
-                      handleDatePickerChange(newValue, 'start')
-                    }
-                    label="Start"
-                  />
-                  <Typography
-                    sx={{
-                      color: 'text.primary',
-                    }}
-                  >
-                    to
-                  </Typography>
-                  <MobileDatePicker
-                    value={timeFrame.end}
-                    onChange={(newValue) =>
-                      handleDatePickerChange(newValue, 'end')
-                    }
-                    label="End"
-                  />
-                </>
-              )}
-            </Box>
-          </LocalizationProvider>
-        )}
-      </Box>
+            />
+          </Box>
+          {showPicker && (
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+              >
+                {!isMobile ? (
+                  <>
+                    <DesktopDatePicker
+                      value={timeFrame.start}
+                      onChange={(newValue) =>
+                        handleDatePickerChange(newValue, 'start')
+                      }
+                      label="Start"
+                    />
+                    <Divider sx={{ height: 36 }} orientation="vertical" />
+                    <DesktopDatePicker
+                      value={timeFrame.end}
+                      onChange={(newValue) =>
+                        handleDatePickerChange(newValue, 'end')
+                      }
+                      label="End"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <MobileDatePicker
+                      value={timeFrame.start}
+                      onChange={(newValue) =>
+                        handleDatePickerChange(newValue, 'start')
+                      }
+                      label="Start"
+                    />
+                    <Typography
+                      sx={{
+                        color: 'text.primary',
+                      }}
+                    >
+                      to
+                    </Typography>
+                    <MobileDatePicker
+                      value={timeFrame.end}
+                      onChange={(newValue) =>
+                        handleDatePickerChange(newValue, 'end')
+                      }
+                      label="End"
+                    />
+                  </>
+                )}
+              </Box>
+            </LocalizationProvider>
+          )}
+        </Paper>
+      </>
     )
   );
 }

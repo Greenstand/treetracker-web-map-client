@@ -6,7 +6,14 @@ import { useEffect, useState } from 'react';
 import { debounce } from 'models/utils';
 import fakeCall from './mockApi';
 
-export default function SearchInput({ keyword, setKeyword, setResults }) {
+export default function SearchInput({
+  keyword,
+  setKeyword,
+  setResults,
+  setFocus,
+  setIsEmpty,
+  onEnter,
+}) {
   const [inputState, setInputState] = useState('');
   const theme = useTheme();
 
@@ -23,13 +30,24 @@ export default function SearchInput({ keyword, setKeyword, setResults }) {
     setKeyword(e.target.value);
   }, 300);
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      onEnter({ content: inputState });
+    }
+  };
+
   return (
     <TextField
       id="input-with-icon-textfield"
       placeholder="search"
       value={inputState}
+      onFocus={() => setFocus(true)}
+      onBlur={() => setFocus(false)}
+      onKeyDown={handleKeyDown}
       onChange={(e) => {
         setInputState(e.target.value);
+        if (e.target.value.length === 0) setIsEmpty(true);
+        else setIsEmpty(false);
         onChange(e);
       }}
       InputProps={{

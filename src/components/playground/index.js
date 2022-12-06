@@ -3,7 +3,6 @@ import ColorInput from './ColorInput';
 import ColorThumbnail from './ColorThumbnail';
 import FontAddInput from './FontAddInput';
 import FontCustomization from './FontCustomization';
-import FontSelector from './FontSelector';
 import FontsList from './FontsList';
 import JSONTextarea from './JSONTextarea';
 import SelectColorProp from './SelectColorProp';
@@ -28,7 +27,6 @@ export {
   getTabProps,
   FontCustomization,
   FontAddInput,
-  FontSelector,
   FontsList,
   JSONTextarea,
 };
