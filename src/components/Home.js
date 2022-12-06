@@ -1,3 +1,4 @@
+import { Brightness1 } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -130,13 +131,18 @@ export default function Home(props) {
               target="_blank"
               href="https://greenstand.org/treetracker/web-map"
             >
+              {/* Box Component sx attribute overrides the 
+                style within Link Component so be careful */}
+
               <Box
-                sx={{
-                  color: 'white',
-                  '.MuiBox-root&:hover': {
-                    color: '#adadad',
-                  },
-                }}
+                sx={
+                  {
+                    // color: 'white',
+                    // '.MuiBox-root&:hover': {
+                    //   color: '#adadad',
+                    // },
+                  }
+                }
               >
                 Learn more
               </Box>

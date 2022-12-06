@@ -9,8 +9,10 @@ import React from 'react';
 // generate material-ui style hook
 const useStyles = makeStyles((theme) => ({
   link: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.primaryReverse,
     '& :hover': {
+      // You can feel the team's established theme styles in themeContext.js
+      // Lines 12 - 327
       color: theme.palette.text.primary,
     },
   },
@@ -19,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
 const NextComposed = React.forwardRef((props, ref) => {
   const { as, href, ...other } = props;
   const classes = useStyles();
+  console.log(props.children);
   return (
-    <NextLink href={href} as={as}>
+    <NextLink href={href} as={as} passHref>
       <a
         style={{ display: 'block' }}
         ref={ref}
