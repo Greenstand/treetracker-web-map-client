@@ -90,16 +90,8 @@ function RibbonWrapper({ fill, index }) {
   );
 }
 
-function TreeImage(isMobile) {
-  return (
-    <Icon
-      icon={TreeIcon}
-      sx={{
-        width: !isMobile ? '13.5px' : '12px',
-        height: !isMobile ? '18px' : '14px',
-      }}
-    />
-  );
+function TreeImage() {
+  return <Icon icon={TreeIcon} size={28} />;
 }
 
 function LeaderBoard(props) {
@@ -170,7 +162,7 @@ function LeaderBoard(props) {
             >
               TREES CAPTURED
             </Typography>
-            <TreeImage isMobile={isMobile} />
+            <TreeImage />
           </Grid>
           <Grid item xs={1} />
         </Grid>

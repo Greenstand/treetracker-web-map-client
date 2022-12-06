@@ -1,6 +1,16 @@
 import SvgIcon from '@mui/material/SvgIcon';
 
-function CustomIcon({ icon, height = '1em', width = '1em', sx = {}, color }) {
+function CustomIcon({ icon, size = '1em', sx = {}, color }) {
+  let formattedSize;
+
+  if (typeof size === 'string') {
+    formattedSize = [`calc(0.75 * ${size})`, size];
+  } else if (typeof size === 'number') {
+    formattedSize = [`calc(0.75 * ${size}px)`, `${size}px`];
+  } else if (size instanceof Array) {
+    formattedSize = size;
+  }
+
   return (
     <SvgIcon
       component={icon}
@@ -12,8 +22,8 @@ function CustomIcon({ icon, height = '1em', width = '1em', sx = {}, color }) {
         '& rect': {
           stroke: color,
         },
-        height: [28, height],
-        width: [28, width],
+        height: formattedSize,
+        width: formattedSize,
         ...sx,
       }}
     />

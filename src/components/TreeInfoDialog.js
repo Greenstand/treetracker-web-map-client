@@ -143,7 +143,7 @@ export default function TreeInfoDialog(props) {
           },
         }}
       >
-        <Icon icon={MaxIcon} width={52} height={52} />
+        <Icon icon={MaxIcon} size={52} />
       </Box>
       <Dialog
         isFullscreen={isFullscreen}
@@ -309,9 +309,7 @@ export default function TreeInfoDialog(props) {
                   }}
                 >
                   <Button
-                    startIcon={
-                      <Icon icon={HeartIcon} sx={{ height: 22, width: 24 }} />
-                    }
+                    startIcon={<Icon icon={HeartIcon} size={24} />}
                     disableElevation
                     variant="contained"
                     color="primary"

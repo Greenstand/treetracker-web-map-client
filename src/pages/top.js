@@ -121,8 +121,7 @@ function Top(props) {
           />
           <Icon
             icon={Search}
-            width={48}
-            height={48}
+            size={48}
             color="grey"
             sx={{
               fill: 'transparent',

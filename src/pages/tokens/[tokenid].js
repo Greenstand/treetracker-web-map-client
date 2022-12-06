@@ -203,8 +203,7 @@ export default function Token(props) {
             <Box>
               <Icon
                 icon={SearchIcon}
-                width={48}
-                height={48}
+                size={48}
                 color="grey"
                 sx={{
                   fill: 'transparent',

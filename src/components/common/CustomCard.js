@@ -52,7 +52,7 @@ function CustomCard({
                 : palette.success.main,
           }}
         >
-          <Icon icon={iconURI} width={36} height={36} {...iconProps} />
+          <Icon icon={iconURI} size={[24, 36]} {...iconProps} />
         </Avatar>
       </Box>
       <Box

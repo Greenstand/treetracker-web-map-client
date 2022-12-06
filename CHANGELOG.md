@@ -1,9 +1,8 @@
 # [2.0.0-beta.192](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.191...v2.0.0-beta.192) (2022-12-06)
 
-
 ### Features
 
-* cache ([60eeaa4](https://github.com/Greenstand/treetracker-web-map-client/commit/60eeaa49f0fd5d09790e0f3aedbfc27408b8f3ec))
+- cache ([60eeaa4](https://github.com/Greenstand/treetracker-web-map-client/commit/60eeaa49f0fd5d09790e0f3aedbfc27408b8f3ec))
 
 # [2.0.0-beta.191](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.190...v2.0.0-beta.191) (2022-12-05)
 

@@ -70,7 +70,10 @@ function ImpactSection() {
           mb: 6,
         }}
       >
-        <Icon icon={StaticGraph} height={['100%', 487]} width="100%" />
+        <Icon
+          icon={StaticGraph}
+          sx={{ height: ['100%', 487], width: '100%' }}
+        />
         <Typography
           sx={{
             position: 'absolute',
