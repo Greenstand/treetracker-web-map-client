@@ -33,6 +33,7 @@ describe('Toggle Theme Mode', () => {
     );
     cy.get('.MuiAccordionSummary-content').click();
     cy.get('.MuiFormControl-root').as('formControl');
+    // using a timeout prevents cypress-no-arbitrary-wait error
     cy.get('@formControl')
       .eq(0)
       .type('void void vpid{enter}', { timeout: 4000 })
