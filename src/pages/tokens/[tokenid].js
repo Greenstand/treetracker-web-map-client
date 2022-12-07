@@ -25,22 +25,18 @@ import UUIDTag from 'components/common/UUIDTag';
 import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import { wrapper } from 'models/utils';
-import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
 import Link from '../../components/Link';
 import Share from '../../components/Share';
 import VerifiedBadge from '../../components/VerifiedBadge';
-import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import Icon from '../../components/common/CustomIcon';
-import Info from '../../components/common/Info';
 import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile } from '../../hooks/globalHooks';
 import CalendarIcon from '../../images/icons/calendar.svg';
-import OriginIcon from '../../images/icons/origin.svg';
 import ShareIcon from '../../images/icons/share.svg';
 import TokenIcon from '../../images/icons/token.svg';
 import TreeIcon from '../../images/icons/tree.svg';
@@ -48,7 +44,6 @@ import imagePlaceholder from '../../images/image-placeholder.png';
 import SearchIcon from '../../images/search.svg';
 import { useMapContext } from '../../mapContext';
 import * as pathResolver from '../../models/pathResolver';
-import * as utils from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   tabBox: {
@@ -152,7 +147,7 @@ export default function Token(props) {
     }
     reload();
   }, [mapContext, token]);
-  console.log('token:', token);
+  log.warn('token:', token);
 
   const tokenIdStart = token.id.slice(0, 4);
   const tokenIdEnd = token.id.slice(token.id.length - 4, token.id.length);
@@ -666,7 +661,7 @@ export default function Token(props) {
   );
 }
 
-export const getServerSideProps = wrapper(async ({ params, query }) => {
+async function serverSideData(params, query) {
   const { tokenid } = params;
   log.warn('tokenid:', tokenid);
   log.warn('query:', query);
@@ -687,13 +682,11 @@ export const getServerSideProps = wrapper(async ({ params, query }) => {
     const planter = await getPlanterById(tree.planter_id);
 
     result = {
-      props: {
-        token,
-        wallet,
-        transactions,
-        tree,
-        planter,
-      },
+      token,
+      wallet,
+      transactions,
+      tree,
+      planter,
     };
   } else {
     const token = await getTokenById(tokenid);
@@ -714,17 +707,31 @@ export const getServerSideProps = wrapper(async ({ params, query }) => {
     const planter = await getPlanterById(tree.planter_id);
 
     result = {
-      props: {
-        token,
-        wallet,
-        transactions,
-        tree,
-        planter,
-      },
+      token,
+      wallet,
+      transactions,
+      tree,
+      planter,
     };
   }
 
   return result;
+}
+
+const getStaticProps = wrapper(async ({ params, query }) => {
+  const props = await serverSideData(params, query);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+  };
 });
 
-// trigger
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };

@@ -96,12 +96,14 @@ export function buildTheme(theMode) {
           ? {
               //  paper: '#fff',
               paperDark: '#6B6E70',
+              avatar: '#FFFFFF',
             }
           : {
               default: '#333',
               // paper: '#333',
               paper: '#4a4747',
               paperDark: '#6B6E70',
+              avatar: '#4A4747',
             }),
         greenGradient:
           'linear-gradient(291.29deg, rgba(134, 194, 50, 0.65) 14.04%, rgba(134, 194, 50, 0.4) 86%, rgba(134, 194, 50, 0.45) 86%)',
