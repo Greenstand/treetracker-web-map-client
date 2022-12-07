@@ -77,7 +77,7 @@ export default function Planter(props) {
   log.warn('props for planter page:', props);
   const { planter, nextExtraIsEmbed } = props;
   const { featuredTrees } = planter;
-  const treeCount = featuredTrees.trees.length;
+  const treeCount = featuredTrees?.total;
   const mapContext = useMapContext();
   const isMobile = useMobile();
 
