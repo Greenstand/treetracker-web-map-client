@@ -100,7 +100,7 @@
     "dotenv": "^16.0.0",
     "eslint": "^8.5.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-next": "^12.0.3",
+    "eslint-config-next": "^13.0.6",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.25.3",
