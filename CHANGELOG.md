@@ -1,3 +1,10 @@
+# [2.0.0-beta.196](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.195...v2.0.0-beta.196) (2022-12-07)
+
+
+### Bug Fixes
+
+* corrected failing test for FontAddInput.cy.js ([dd6df14](https://github.com/Greenstand/treetracker-web-map-client/commit/dd6df1467f42c0856fce66f3c479612a61850e3c))
+
 # [2.0.0-beta.195](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.194...v2.0.0-beta.195) (2022-12-07)
 
 
