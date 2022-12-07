@@ -359,7 +359,13 @@ export default function Organization(props) {
           >
             <Box sx={{ mt: [0, 22] }}>
               <CustomWorldMap
-                totalTrees={organization?.featuredTrees?.trees.length}
+                totalTrees={
+                  (organization?.featuredTrees?.total &&
+                    new Intl.NumberFormat('en', { notation: 'compact' }).format(
+                      organization?.featuredTrees?.total,
+                    )) ||
+                  undefined
+                }
                 con="af"
               />
             </Box>
