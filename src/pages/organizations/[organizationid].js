@@ -194,7 +194,9 @@ export default function Organization(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Organization since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Organization since ${moment(
+                  organization?.created_at,
+                ).format('MMMM DD, YYYY')}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
