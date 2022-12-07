@@ -32,12 +32,7 @@ describe('Toggle Theme Mode', () => {
       </PlaygroundProvider>,
     );
     cy.get('.MuiAccordionSummary-content').click();
-    cy.get('.MuiFormControl-root').as('formControl');
-    // using a timeout prevents cypress-no-arbitrary-wait error
-    cy.get('@formControl')
-      .eq(0)
-      .type('void void vpid{enter}', { timeout: 4000 })
-      .as('invalidFont');
-    cy.get('@invalidFont').eq(0).contains('Font could not be loaded');
+    cy.get('.MuiFormControl-root').eq(0).type('void void vpid{enter}');
+    cy.get('.MuiFormControl-root').eq(0).contains('Font could not be loaded');
   });
 });

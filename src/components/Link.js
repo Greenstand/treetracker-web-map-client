@@ -9,7 +9,7 @@ import React from 'react';
 // generate material-ui style hook
 const useStyles = makeStyles((theme) => ({
   link: {
-    color: theme.palette.text.primaryReverse,
+    color: theme.palette.text.primary,
     '& :hover': {
       // You can feel the team's established theme styles in themeContext.js
       // Lines 12 - 327

@@ -135,14 +135,12 @@ export default function Home(props) {
                 style within Link Component so be careful */}
 
               <Box
-                sx={
-                  {
-                    // color: 'white',
-                    // '.MuiBox-root&:hover': {
-                    //   color: '#adadad',
-                    // },
-                  }
-                }
+                sx={{
+                  color: 'white',
+                  '.MuiBox-root&:hover': {
+                    color: '#adadad',
+                  },
+                }}
               >
                 Learn more
               </Box>
