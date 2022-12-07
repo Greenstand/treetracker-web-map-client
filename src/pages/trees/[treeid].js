@@ -702,7 +702,7 @@ export default function Tree({
   );
 }
 
-export const getServerSideProps = utils.wrapper(async ({ params }) => {
+async function serverSideData(params) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
@@ -719,10 +719,26 @@ export const getServerSideProps = utils.wrapper(async ({ params }) => {
   }
 
   return {
-    props: {
-      tree,
-      planter,
-      organization,
-    },
+    tree,
+    planter,
+    organization,
+  };
+}
+
+const getStaticProps = utils.wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 });
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };

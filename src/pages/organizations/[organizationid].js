@@ -194,7 +194,9 @@ export default function Organization(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Organization since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Organization since ${moment(
+                  organization?.created_at,
+                ).format('MMMM DD, YYYY')}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -359,7 +361,13 @@ export default function Organization(props) {
           >
             <Box sx={{ mt: [0, 22] }}>
               <CustomWorldMap
-                totalTrees={organization?.featuredTrees?.trees.length}
+                totalTrees={
+                  (organization?.featuredTrees?.total &&
+                    new Intl.NumberFormat('en', { notation: 'compact' }).format(
+                      organization?.featuredTrees?.total,
+                    )) ||
+                  undefined
+                }
                 con="af"
               />
             </Box>
@@ -512,16 +520,33 @@ export default function Organization(props) {
   );
 }
 
-export const getServerSideProps = wrapper(async ({ params }) => {
+async function serverSideData(params) {
   const id = params.organizationid;
   const organization = await getOrganizationById(id);
   const orgLinks = await getOrgLinks(organization.links);
-  return {
-    props: {
-      organization: {
-        ...organization,
-        ...orgLinks,
-      },
+  const props = {
+    organization: {
+      ...organization,
+      ...orgLinks,
     },
   };
+  return props;
+}
+
+const getStaticProps = wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+  };
 });
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };

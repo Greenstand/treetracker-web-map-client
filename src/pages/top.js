@@ -246,8 +246,7 @@ function Top(props) {
   );
 }
 
-// export async function getStaticProps() {
-export async function getServerSideProps() {
+async function serverSideData(params) {
   const [trees, countries, planters, organizations, wallets] =
     await Promise.all([
       getFeaturedTrees(), //
@@ -271,16 +270,31 @@ export async function getServerSideProps() {
       })(),
     ]);
   return {
-    props: {
-      trees,
-      countries,
-      planters,
-      organizations,
-      wallets,
-    },
-    // revalidate: 60,
+    trees,
+    countries,
+    planters,
+    organizations,
+    wallets,
   };
 }
+
+const getStaticProps = utils.wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+  };
+});
+
+// // eslint-disable-next-line
+// const getStaticPaths = async () => {
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   };
+// }
+
+export { getStaticProps /* getStaticPaths */ };
 
 Top.isFloatingDisabled = true;
 export default Top;
