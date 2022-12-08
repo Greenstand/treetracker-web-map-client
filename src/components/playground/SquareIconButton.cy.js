@@ -1,9 +1,10 @@
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import log from 'loglevel';
 import SquareIconButton from './SquareIconButton';
 import { mountWithTheme as mount } from '../../models/test-utils';
 
 const handleClick = () => {
-  console.log('clicked button');
+  log.warn('clicked button');
 };
 
 describe('Square Icon Button', () => {

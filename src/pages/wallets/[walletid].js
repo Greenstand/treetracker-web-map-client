@@ -19,15 +19,12 @@ import { getWalletById, getSpeciesByWalletId } from 'models/api';
 import { requestAPI, wrapper } from 'models/utils';
 import ImpactSection from '../../components/ImpactSection';
 import ProfileCover from '../../components/ProfileCover';
-import VerifiedBadge from '../../components/VerifiedBadge';
-import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
 import Icon from '../../components/common/CustomIcon';
 import Info from '../../components/common/Info';
 import { useDrawerContext } from '../../context/DrawerContext';
 import { useMobile } from '../../hooks/globalHooks';
-import planterBackground from '../../images/background.png';
 import CalendarIcon from '../../images/icons/calendar.svg';
 import TokenIcon from '../../images/icons/token.svg';
 import TreeIcon from '../../images/icons/tree.svg';
@@ -372,7 +369,7 @@ export default function Wallet(props) {
   );
 }
 
-export const getServerSideProps = wrapper(async ({ params }) => {
+async function serverSideData(params) {
   const wallet = await getWalletById(params.walletid);
   const { id } = wallet;
   const [species, tokens, tokenRegionCount, trees] = await Promise.all([
@@ -394,12 +391,28 @@ export const getServerSideProps = wrapper(async ({ params }) => {
   ]);
 
   return {
-    props: {
-      wallet,
-      species: species.species,
-      tokens,
-      tokenRegionCount,
-      trees: trees.trees,
-    },
+    wallet,
+    species: species.species,
+    tokens,
+    tokenRegionCount,
+    trees: trees.trees,
+  };
+}
+
+const getStaticProps = wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 });
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };
