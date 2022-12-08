@@ -19,8 +19,10 @@ function getStorageValue(key, defaultValue) {
 const useLocalStorage = (key, defaultValue) => {
   const [value, setValue] = useState(() => getStorageValue(key, defaultValue));
 
+  const KEY_PREFIX = 'greenstand-';
+
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(KEY_PREFIX + key, JSON.stringify(value));
   }, [key, value]);
 
   return [value, setValue];
