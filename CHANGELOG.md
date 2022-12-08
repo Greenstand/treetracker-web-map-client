@@ -1,3 +1,13 @@
+# [2.0.0-beta.197](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.196...v2.0.0-beta.197) (2022-12-08)
+
+
+### Bug Fixes
+
+* the zoom button disabled in some cases [#619](https://github.com/Greenstand/treetracker-web-map-client/issues/619) ([7cf746b](https://github.com/Greenstand/treetracker-web-map-client/commit/7cf746bc97337fcd6e138fbc05788833edc04691))
+* the zoom button disabled in some cases [#619](https://github.com/Greenstand/treetracker-web-map-client/issues/619) ([61acd63](https://github.com/Greenstand/treetracker-web-map-client/commit/61acd63abe5451ba6b8a8d430a60e355408468f3))
+* the zoom button disabled in some cases [#619](https://github.com/Greenstand/treetracker-web-map-client/issues/619) ([20b24a3](https://github.com/Greenstand/treetracker-web-map-client/commit/20b24a3c28b3b2d5d09afc6719a157fe0d322aeb))
+* the zoom button disabled in some cases [#619](https://github.com/Greenstand/treetracker-web-map-client/issues/619) ([2730465](https://github.com/Greenstand/treetracker-web-map-client/commit/2730465d028a1d8f11e704ac93d27f9a3fdf20df))
+
 # [2.0.0-beta.196](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.195...v2.0.0-beta.196) (2022-12-07)
 
 
