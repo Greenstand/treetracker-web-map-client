@@ -5,10 +5,8 @@ import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
 import Navbar from './Navbar';
 import Timeline from './Timeline';
+import ZoomInOutButton from './ZoomInOutButton';
 import Max from '../images/max.svg';
-import ZoomIn from '../images/zoom-in.svg';
-import ZoomOut from '../images/zoom-out.svg';
-import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
@@ -54,18 +52,10 @@ export default function Layout({
   nextExtraIsEmbed,
   nextExtraIsEmbedCallback,
 }) {
-  const mapContext = useMapContext();
   const { classes } = useStyles();
+
   function handleFullScreen() {
     nextExtraIsEmbedCallback(!nextExtraIsEmbed);
-  }
-
-  function handleZoomIn() {
-    mapContext.map.map.zoomIn();
-  }
-
-  function handleZoomOut() {
-    mapContext.map.map.zoomOut();
   }
 
   return (
@@ -107,18 +97,7 @@ export default function Layout({
               flexDirection: 'column',
             }}
           >
-            <SvgIcon
-              onClick={handleZoomIn}
-              component={ZoomIn}
-              inheritViewBox
-              sx={{ mb: '10px', height: 52, width: 52 }}
-            />
-            <SvgIcon
-              onClick={handleZoomOut}
-              component={ZoomOut}
-              inheritViewBox
-              sx={{ height: 52, width: 52 }}
-            />
+            <ZoomInOutButton />
           </Box>
           <App />
         </Box>
