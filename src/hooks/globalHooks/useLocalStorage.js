@@ -5,7 +5,7 @@ const KEY_PREFIX = 'greenstand-web-map-client-';
 // Get value from localStorage if possible, otherwise return provided default
 function getStorageValue(key, defaultValue) {
   if (typeof window !== 'undefined') {
-    const value = localStorage.getItem(key + KEY_PREFIX);
+    const value = localStorage.getItem(KEY_PREFIX + key);
     let saved;
     // log.warn('value:', value);
     if (value && value !== 'undefined') {
