@@ -19,7 +19,9 @@ function getStorageValue(key, defaultValue) {
 // Usage: Similar to useState. Accepts a key, value pair. For example:
 // const [mode, setMode] = useLocalStorage('theme', 'light');
 const useLocalStorage = (key, defaultValue) => {
-  const [value, setValue] = useState(() => getStorageValue(key, defaultValue));
+  const [value, setValue] = useState(() =>
+    getStorageValue(KEY_PREFIX + key, defaultValue),
+  );
 
   useEffect(() => {
     localStorage.setItem(KEY_PREFIX + key, JSON.stringify(value));
