@@ -46,6 +46,7 @@ export default function Tree({
   nextExtraKeyword,
 }) {
   log.warn('tree: ', tree);
+  log.warn('org: ', organization);
   const mapContext = useMapContext();
   const { map } = mapContext;
   const theme = useTheme();
@@ -539,7 +540,7 @@ export default function Tree({
               entityName={organization.name}
               entityType="Planting Organization"
               buttonText="Meet the Organization"
-              cardImageSrc={organization?.photo_url && imagePlaceholder}
+              cardImageSrc={organization?.logo_url || imagePlaceholder}
               link={`/organizations/${
                 organization.id
               }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
@@ -555,7 +556,7 @@ export default function Tree({
             entityName={`${planter.first_name} ${planter.last_name}`}
             entityType="Planter"
             buttonText="Meet the Planter"
-            cardImageSrc={planter?.image_url}
+            cardImageSrc={planter?.image_url || imagePlaceholder}
             rotation={planter?.image_rotation}
             link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
               isEmbed ? '&embed=true' : ''
