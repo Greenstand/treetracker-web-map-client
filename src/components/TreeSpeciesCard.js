@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
 import { makeStyles } from 'models/makeStyles';
+import { abbreviateNumber } from 'models/utils';
 import Link from './Link';
 
 const useStyles = makeStyles()((theme) => ({}));
@@ -11,9 +12,7 @@ function TreeSpeciesCard(props) {
   const { classes } = useStyles();
 
   const { name, count, subTitle } = props;
-  const formattedCount = new Intl.NumberFormat('en', {
-    notation: 'compact',
-  }).format(count);
+  const formattedCount = abbreviateNumber(count);
 
   return (
     <Paper
