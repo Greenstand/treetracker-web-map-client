@@ -54,6 +54,7 @@ const useStyles = makeStyles()((theme) => ({
 
 export default function Home(props) {
   const { classes } = useStyles();
+  console.log(<Link />);
 
   const mapContext = useMapContext();
   const router = useRouter();

@@ -49,6 +49,8 @@ function LinkComponent(props) {
     [activeClassName]: pathname && activeClassName,
   });
 
+  console.log(className, 'line 53 - Link Component - Link.js');
+
   if (naked) {
     return (
       <NextComposed
