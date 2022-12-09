@@ -1,3 +1,18 @@
+# [2.0.0-beta.200](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.199...v2.0.0-beta.200) (2022-12-09)
+
+
+### Bug Fixes
+
+* add key in getStorageValue ([3ad00b0](https://github.com/Greenstand/treetracker-web-map-client/commit/3ad00b0a3f951c45e47c67505b7cd273e4a435ea))
+* key string in getStorage ([1945d65](https://github.com/Greenstand/treetracker-web-map-client/commit/1945d65cb673c4c7d669f73dd80c5481a3ba01e2))
+* remove extra addition of prefix ([069db75](https://github.com/Greenstand/treetracker-web-map-client/commit/069db7502672a8f2ab9ab04e29f2d29bd2eca076))
+
+
+### Features
+
+* add prefix ([3adb5a3](https://github.com/Greenstand/treetracker-web-map-client/commit/3adb5a3351f8b2a1e591ca47db7e4788567ea43a))
+* update key name ([6703f1e](https://github.com/Greenstand/treetracker-web-map-client/commit/6703f1eaf5d0e44549d8fa0719edda9e7ce4b423))
+
 # [2.0.0-beta.199](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.198...v2.0.0-beta.199) (2022-12-08)
 
 
