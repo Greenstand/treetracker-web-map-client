@@ -31,7 +31,12 @@ import SearchIcon from '../../images/search.svg';
 // import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as pathResolver from '../../models/pathResolver';
-import { getLocationString, getContinent, wrapper } from '../../models/utils';
+import {
+  getLocationString,
+  getContinent,
+  wrapper,
+  abbreviateNumber,
+} from '../../models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   imgContainer: {
@@ -363,9 +368,7 @@ export default function Organization(props) {
               <CustomWorldMap
                 totalTrees={
                   (organization?.featuredTrees?.total &&
-                    new Intl.NumberFormat('en', { notation: 'compact' }).format(
-                      organization?.featuredTrees?.total,
-                    )) ||
+                    abbreviateNumber(organization?.featuredTrees?.total)) ||
                   undefined
                 }
                 con="af"
