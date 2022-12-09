@@ -1,3 +1,10 @@
+# [2.0.0-beta.201](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.200...v2.0.0-beta.201) (2022-12-09)
+
+
+### Bug Fixes
+
+* replace hardcoded continent value for CustomWorldMap ([8f5b3df](https://github.com/Greenstand/treetracker-web-map-client/commit/8f5b3dfee19ccc1ce56fe98bc415d9dc773973b7))
+
 # [2.0.0-beta.200](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.199...v2.0.0-beta.200) (2022-12-09)
 
 
