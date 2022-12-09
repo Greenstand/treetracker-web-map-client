@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable react/display-name */
+import { Block } from '@mui/icons-material';
 import MuiLink from '@mui/material/Link';
 import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
@@ -7,11 +8,14 @@ import NextLink from 'next/link';
 import React from 'react';
 
 // generate material-ui style hook
+// dev: makeStyles-root-link-1
+// prod: jss1
 const useStyles = makeStyles((theme) => ({
   link: {
+    display: 'block',
     color: theme.palette.text.primary,
     '& :hover': {
-      // You can feel the team's established theme styles in themeContext.js
+      // You can see the team's established theme styles in themeContext.js
       // Lines 12 - 327
       color: theme.palette.text.primary,
     },
@@ -23,12 +27,7 @@ const NextComposed = React.forwardRef((props, ref) => {
   const classes = useStyles();
   return (
     <NextLink href={href} as={as} passHref>
-      <a
-        style={{ display: 'block' }}
-        ref={ref}
-        {...other}
-        className={classes.link}
-      />
+      <a ref={ref} {...other} className={classes.link} />
     </NextLink>
   );
 });
