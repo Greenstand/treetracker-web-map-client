@@ -368,7 +368,7 @@ export default function Organization(props) {
                     )) ||
                   undefined
                 }
-                con="af"
+                con={organization?.continent_name || 'af'}
               />
             </Box>
             <Typography
