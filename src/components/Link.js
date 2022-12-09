@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable react/display-name */
-import { Block } from '@mui/icons-material';
 import MuiLink from '@mui/material/Link';
 import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
