@@ -371,7 +371,7 @@ export default function Organization(props) {
                     abbreviateNumber(organization?.featuredTrees?.total)) ||
                   undefined
                 }
-                con="af"
+                con={organization?.continent_name || 'af'}
               />
             </Box>
             <Typography
