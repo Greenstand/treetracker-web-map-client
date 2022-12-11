@@ -11,7 +11,7 @@ function ProfileAvatar({ src, rotation }) {
         borderWidth: [4, 9],
         borderStyle: 'solid',
         borderColor: (t) => t.palette.background.paper,
-        backgroundColor: '#e0e0e08f',
+        backgroundColor: (t) => t.palette.background.avatar,
         boxSizing: 'border-box',
         ml: [4, 8],
         mt: [-98 / 4, -146 / 4],

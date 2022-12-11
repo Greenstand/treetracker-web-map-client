@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
+const KEY_PREFIX = 'greenstand-web-map-client-';
+
 // Get value from localStorage if possible, otherwise return provided default
 function getStorageValue(key, defaultValue) {
   if (typeof window !== 'undefined') {
-    const value = localStorage.getItem(key);
+    const value = localStorage.getItem(KEY_PREFIX + key);
     let saved;
     // log.warn('value:', value);
     if (value && value !== 'undefined') {
@@ -20,7 +22,7 @@ const useLocalStorage = (key, defaultValue) => {
   const [value, setValue] = useState(() => getStorageValue(key, defaultValue));
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(KEY_PREFIX + key, JSON.stringify(value));
   }, [key, value]);
 
   return [value, setValue];

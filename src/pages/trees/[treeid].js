@@ -1,12 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import AccessTime from '@mui/icons-material/AccessTime';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import HomeIcon from '@mui/icons-material/Home';
 import HubIcon from '@mui/icons-material/Hub';
-import LanguageIcon from '@mui/icons-material/Language';
-import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { useTheme, Avatar, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -17,27 +11,21 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import HeadTag from 'components/HeadTag';
-import CustomImageWrapper from 'components/common/CustomImageWrapper';
 import TagList from 'components/common/TagList';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
-import { makeStyles } from 'models/makeStyles';
 import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
-import Link from '../../components/Link';
 import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
-import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import Icon from '../../components/common/CustomIcon';
-import Info from '../../components/common/Info';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile, useEmbed } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
 import CalendarIcon from '../../images/icons/calendar.svg';
-import DiameterIcon from '../../images/icons/diameter.svg';
 import GlobalIcon from '../../images/icons/global.svg';
 import HistoryIcon from '../../images/icons/history.svg';
 import LocationIcon from '../../images/icons/location.svg';
@@ -58,6 +46,7 @@ export default function Tree({
   nextExtraKeyword,
 }) {
   log.warn('tree: ', tree);
+  log.warn('org: ', organization);
   const mapContext = useMapContext();
   const { map } = mapContext;
   const theme = useTheme();
@@ -91,8 +80,8 @@ export default function Tree({
       verifiedToken: tree.token_id,
       verifiedTree: tree.verified,
     });
-    // eslint-disable-next-line no-console, prefer-template, no-useless-concat
-    console.log('the tree data' + '' + JSON.stringify(tree));
+    // eslint-disable-next-line prefer-template, no-useless-concat
+    log.warn('the tree data' + '' + JSON.stringify(tree));
   }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
 
   // useEffect(() => {
@@ -185,7 +174,7 @@ export default function Tree({
     reload();
   }, [map, tree.lat, tree.lon]);
 
-  console.log(planter, 'planter');
+  log.warn(planter, 'planter');
 
   return (
     <>
@@ -551,7 +540,7 @@ export default function Tree({
               entityName={organization.name}
               entityType="Planting Organization"
               buttonText="Meet the Organization"
-              cardImageSrc={organization?.photo_url && imagePlaceholder}
+              cardImageSrc={organization?.logo_url || imagePlaceholder}
               link={`/organizations/${
                 organization.id
               }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
@@ -567,7 +556,7 @@ export default function Tree({
             entityName={`${planter.first_name} ${planter.last_name}`}
             entityType="Planter"
             buttonText="Meet the Planter"
-            cardImageSrc={planter?.image_url}
+            cardImageSrc={planter?.image_url || imagePlaceholder}
             rotation={planter?.image_rotation}
             link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
               isEmbed ? '&embed=true' : ''
@@ -714,7 +703,7 @@ export default function Tree({
   );
 }
 
-export const getServerSideProps = utils.wrapper(async ({ params }) => {
+async function serverSideData(params) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
@@ -731,10 +720,26 @@ export const getServerSideProps = utils.wrapper(async ({ params }) => {
   }
 
   return {
-    props: {
-      tree,
-      planter,
-      organization,
-    },
+    tree,
+    planter,
+    organization,
+  };
+}
+
+const getStaticProps = utils.wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 });
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };
