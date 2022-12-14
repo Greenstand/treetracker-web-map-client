@@ -1,3 +1,10 @@
+# [2.0.0-beta.202](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.201...v2.0.0-beta.202) (2022-12-14)
+
+
+### Bug Fixes
+
+* page flash ([e3493d4](https://github.com/Greenstand/treetracker-web-map-client/commit/e3493d42489c8ccf3c1f29d037dad55006c90418))
+
 # [2.0.0-beta.201](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.200...v2.0.0-beta.201) (2022-12-09)
 
 
