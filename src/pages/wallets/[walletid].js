@@ -16,7 +16,7 @@ import HeadTag from 'components/HeadTag';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import TreeTag from 'components/common/TreeTag';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
-import { requestAPI, wrapper } from 'models/utils';
+import { abbreviateNumber, requestAPI, wrapper } from 'models/utils';
 import ImpactSection from '../../components/ImpactSection';
 import ProfileCover from '../../components/ProfileCover';
 import Crumbs from '../../components/common/Crumbs';
@@ -280,7 +280,9 @@ export default function Wallet(props) {
         {tokenRegionName.length > 0 && (
           <Box sx={{ mt: [0, 22], display: !isTokenTab ? 'block' : 'none' }}>
             <CustomWorldMap
-              totalTrees={tokenRegionCount}
+              totalTrees={tokenRegionCount.map((count) =>
+                abbreviateNumber(count),
+              )}
               con={tokenRegionName}
             />
           </Box>
