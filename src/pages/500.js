@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import { Link } from '@mui/material';
 import HeadTag from 'components/HeadTag';
 
@@ -9,10 +10,17 @@ export default function somethingWentWrong() {
         <h1>500</h1>
         <div className="not-found-background" />
         <h3>Something went wrong</h3>
-        <Link href="/">
-          <a className="not-found-link">Go home</a>
-        </Link>
+        <CustomLink />
       </div>
     </>
+  );
+}
+
+function CustomLink() {
+  const theme = useTheme();
+  return (
+    <Link href="/">
+      <a style={{ color: theme.palette.text.primary }}>Go home</a>
+    </Link>
   );
 }
