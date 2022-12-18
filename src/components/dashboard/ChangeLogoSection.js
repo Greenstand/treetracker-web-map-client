@@ -8,7 +8,7 @@ function ChangeLogoSection() {
   return (
     <Grid item xs={6}>
       <Typography>Change the Logo</Typography>
-      <img src={state.navbar.logoUrl} height="300" />
+      <img src={state.navbar.logoUrl} height="300" alt="Logo" />
       <CustomLogo />
     </Grid>
   );
