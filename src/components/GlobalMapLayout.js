@@ -176,7 +176,6 @@ export default function MapLayout() {
           sx={{
             margin: '20px',
             display: 'flex',
-            alignItems: 'center',
             justifyContent: 'space-around',
           }}
         >
@@ -203,6 +202,11 @@ export default function MapLayout() {
             value={zoom}
             error={zoomError.length > 0}
             helperText={zoomError && zoomError}
+            sx={{
+              '& .MuiFormHelperText-root': {
+                maxWidth: '167px',
+              },
+            }}
           />
         </Box>
         <Box
