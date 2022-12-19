@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
+import DOMPurify from 'isomorphic-dompurify';
 import log from 'loglevel';
 import { marked } from 'marked';
 import moment from 'moment';
@@ -352,8 +353,11 @@ export default function Wallet(props) {
         </Typography>
         <Typography sx={{ mt: [2.5, 5] }} variant="body2">
           <div
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-              __html: marked.parse(wallet.about || 'NO DATA YET'),
+              __html: DOMPurify.sanitize(
+                marked.parse(wallet.about || 'NO DATA YET'),
+              ),
             }}
           />
         </Typography>

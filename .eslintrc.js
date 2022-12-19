@@ -6,13 +6,12 @@ module.exports = {
     'plugin:cypress/recommended',
     'prettier',
   ],
-
+  plugins: ['react', 'risxss'],
   rules: {
     // project specific
     camelcase: 'off',
     'no-unused-expressions': ['error', { allowShortCircuit: true }],
     'react/jsx-filename-extension': ['error', { extensions: ['.js'] }],
-
     // async functions must use 'await'
     'require-await': 'error',
 
