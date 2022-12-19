@@ -1,3 +1,15 @@
+# [2.0.0-beta.203](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.202...v2.0.0-beta.203) (2022-12-19)
+
+
+### Bug Fixes
+
+* alignment issue with textfield ([37103b0](https://github.com/Greenstand/treetracker-web-map-client/commit/37103b07a9cfbf67d82e9f20a0608572756d3f3c))
+
+
+### Features
+
+* add alt attribute for image ([ae52938](https://github.com/Greenstand/treetracker-web-map-client/commit/ae52938aeac24e37b931cb6802334ecf63a98449))
+
 # [2.0.0-beta.202](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.201...v2.0.0-beta.202) (2022-12-14)
 
 
