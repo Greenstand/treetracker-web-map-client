@@ -1,3 +1,12 @@
+# [2.0.0-beta.205](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.204...v2.0.0-beta.205) (2022-12-20)
+
+
+### Bug Fixes
+
+* embeded background was white in dark mode ([cae4d35](https://github.com/Greenstand/treetracker-web-map-client/commit/cae4d350091de7040d6113a0c726ccfe07d504b9))
+* left slider button not moving cards to inital position ([5b82346](https://github.com/Greenstand/treetracker-web-map-client/commit/5b823463509f7499a4e549e7b1db442e700e53ed))
+* update css for planter quote to be responsive when embed ([a6ffb8a](https://github.com/Greenstand/treetracker-web-map-client/commit/a6ffb8ad493936afe2448816728213185a83ef7d))
+
 # [2.0.0-beta.204](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.203...v2.0.0-beta.204) (2022-12-20)
 
 
