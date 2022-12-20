@@ -1,3 +1,10 @@
+# [2.0.0-beta.206](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.205...v2.0.0-beta.206) (2022-12-20)
+
+
+### Bug Fixes
+
+* update treeSpecies to prevent it from breaking on smaller screens ([e4324ca](https://github.com/Greenstand/treetracker-web-map-client/commit/e4324ca36f2bb89b35e97102e9f78f80b954a618))
+
 # [2.0.0-beta.205](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.204...v2.0.0-beta.205) (2022-12-20)
 
 
