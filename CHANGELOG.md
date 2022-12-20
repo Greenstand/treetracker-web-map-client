@@ -1,3 +1,16 @@
+# [2.0.0-beta.207](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.206...v2.0.0-beta.207) (2022-12-20)
+
+
+### Bug Fixes
+
+* kebab case warning ([05350d3](https://github.com/Greenstand/treetracker-web-map-client/commit/05350d35ab68d2442590123ba1aceb1db6bec78b))
+* remove div nested in p ([6beccd0](https://github.com/Greenstand/treetracker-web-map-client/commit/6beccd03ab8d51b20edcd054f8757d56bec3047e))
+
+
+### Features
+
+* add support for Open Graph tags ([e14d9d6](https://github.com/Greenstand/treetracker-web-map-client/commit/e14d9d606cea7e1a7b044c10d1b2a3dfef6aca5c))
+
 # [2.0.0-beta.206](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.205...v2.0.0-beta.206) (2022-12-20)
 
 
