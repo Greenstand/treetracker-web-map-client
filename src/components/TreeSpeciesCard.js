@@ -30,6 +30,7 @@ function TreeSpeciesCard(props) {
         columns={[4, 6]}
         justifyContent="space-between"
         alignItems="center"
+        flexWrap="nowrap"
       >
         <Grid
           item
