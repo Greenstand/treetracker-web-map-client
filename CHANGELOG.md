@@ -1,3 +1,10 @@
+# [2.0.0-beta.204](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.203...v2.0.0-beta.204) (2022-12-20)
+
+
+### Bug Fixes
+
+* align cards on the wallets page ([74323ed](https://github.com/Greenstand/treetracker-web-map-client/commit/74323ed7faba8a0d0e4a9c6e129d80f59d1e9197))
+
 # [2.0.0-beta.203](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.202...v2.0.0-beta.203) (2022-12-19)
 
 
