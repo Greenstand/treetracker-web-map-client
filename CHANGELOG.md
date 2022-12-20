@@ -1,3 +1,51 @@
+# [2.0.0-beta.207](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.206...v2.0.0-beta.207) (2022-12-20)
+
+
+### Bug Fixes
+
+* kebab case warning ([05350d3](https://github.com/Greenstand/treetracker-web-map-client/commit/05350d35ab68d2442590123ba1aceb1db6bec78b))
+* remove div nested in p ([6beccd0](https://github.com/Greenstand/treetracker-web-map-client/commit/6beccd03ab8d51b20edcd054f8757d56bec3047e))
+
+
+### Features
+
+* add support for Open Graph tags ([e14d9d6](https://github.com/Greenstand/treetracker-web-map-client/commit/e14d9d606cea7e1a7b044c10d1b2a3dfef6aca5c))
+
+# [2.0.0-beta.206](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.205...v2.0.0-beta.206) (2022-12-20)
+
+
+### Bug Fixes
+
+* update treeSpecies to prevent it from breaking on smaller screens ([e4324ca](https://github.com/Greenstand/treetracker-web-map-client/commit/e4324ca36f2bb89b35e97102e9f78f80b954a618))
+
+# [2.0.0-beta.205](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.204...v2.0.0-beta.205) (2022-12-20)
+
+
+### Bug Fixes
+
+* embeded background was white in dark mode ([cae4d35](https://github.com/Greenstand/treetracker-web-map-client/commit/cae4d350091de7040d6113a0c726ccfe07d504b9))
+* left slider button not moving cards to inital position ([5b82346](https://github.com/Greenstand/treetracker-web-map-client/commit/5b823463509f7499a4e549e7b1db442e700e53ed))
+* update css for planter quote to be responsive when embed ([a6ffb8a](https://github.com/Greenstand/treetracker-web-map-client/commit/a6ffb8ad493936afe2448816728213185a83ef7d))
+
+# [2.0.0-beta.204](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.203...v2.0.0-beta.204) (2022-12-20)
+
+
+### Bug Fixes
+
+* align cards on the wallets page ([74323ed](https://github.com/Greenstand/treetracker-web-map-client/commit/74323ed7faba8a0d0e4a9c6e129d80f59d1e9197))
+
+# [2.0.0-beta.203](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.202...v2.0.0-beta.203) (2022-12-19)
+
+
+### Bug Fixes
+
+* alignment issue with textfield ([37103b0](https://github.com/Greenstand/treetracker-web-map-client/commit/37103b07a9cfbf67d82e9f20a0608572756d3f3c))
+
+
+### Features
+
+* add alt attribute for image ([ae52938](https://github.com/Greenstand/treetracker-web-map-client/commit/ae52938aeac24e37b931cb6802334ecf63a98449))
+
 # [2.0.0-beta.202](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.201...v2.0.0-beta.202) (2022-12-14)
 
 
