@@ -1,3 +1,10 @@
+# [2.0.0-beta.208](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.207...v2.0.0-beta.208) (2022-12-20)
+
+
+### Bug Fixes
+
+* **home:** replace hard-coded vals with palette vals ([635941f](https://github.com/Greenstand/treetracker-web-map-client/commit/635941f87b3556fd21945667a046f75d590c0785))
+
 # [2.0.0-beta.207](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.206...v2.0.0-beta.207) (2022-12-20)
 
 
