@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import Head from 'next/head';
 
-export default function HeadTag({ title, openGraph }) {
+export default function HeadTag({ title, openGraph, twitter }) {
   const openGraphTags = (
     <>
       {openGraph?.title && (
@@ -30,6 +30,19 @@ export default function HeadTag({ title, openGraph }) {
           : 'Treetracker by Greenstand'}
       </title>
       {openGraphTags}
+      {twitter?.title && <meta name="twitter:title" content={twitter.title} />}
+      {twitter?.description && (
+        <meta name="twitter:description" content={twitter.description} />
+      )}
+      {twitter?.cardType && (
+        <meta name="twitter:card" content={twitter.cardType} />
+      )}
+      {twitter?.site && <meta name="twitter:site" content={twitter.site} />}
+      {twitter?.creator && (
+        <meta name="twitter:creator" content={twitter.creator} />
+      )}
+      {twitter?.image && <meta name="twitter:image" content={twitter.image} />}
+      {twitter?.alt && <meta name="twitter:image:alt" content={twitter.alt} />}
     </Head>
   );
 }
