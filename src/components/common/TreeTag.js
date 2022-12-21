@@ -11,6 +11,7 @@ function TreeTagComponent({
   icon,
   disabled = false,
   link,
+  fullWidth = false,
 }) {
   const chip = (
     <Chip
@@ -54,6 +55,11 @@ function TreeTagComponent({
         p: (t) => [t.spacing(2, 2), t.spacing(4.75, 6)],
         height: 'auto',
         maxHeight: [58.6, 87.2],
+        ...(fullWidth && {
+          justifyContent: 'flex-start',
+          width: '100%',
+          maxWidth: '540px',
+        }),
       }}
       color="secondary"
       icon={
