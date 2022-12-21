@@ -69,6 +69,7 @@ module.exports = {
     'no-nested-ternary': 'warn',
     'prefer-destructuring': 'warn',
     'no-unreachable': 'warn',
+    'risxss/catch-potential-xss-react': 'warn',
   },
 
   reportUnusedDisableDirectives: true,
