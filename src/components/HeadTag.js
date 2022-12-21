@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-key */
 import Head from 'next/head';
 
-export default function HeadTag({ title, openGraph, twitter }) {
+
+export default function HeadTag({ title, openGraph, robotParameters, twitter }) {
   const openGraphTags = (
     <>
       {openGraph?.title && (
@@ -21,9 +22,11 @@ export default function HeadTag({ title, openGraph, twitter }) {
       )}
     </>
   );
+       
   return (
     <Head>
       <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+      {robotParameters && <meta name="robots" content={robotParameters} />}
       <title>
         {title
           ? `${title} | Treetracker by Greenstand`

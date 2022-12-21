@@ -1,3 +1,10 @@
+# [2.0.0-beta.209](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.208...v2.0.0-beta.209) (2022-12-21)
+
+
+### Features
+
+* add robot meta tag ([01ebb04](https://github.com/Greenstand/treetracker-web-map-client/commit/01ebb04b0033f2f5b282e2265971a9227d493226))
+
 # [2.0.0-beta.208](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.207...v2.0.0-beta.208) (2022-12-20)
 
 
