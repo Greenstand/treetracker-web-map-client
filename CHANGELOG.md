@@ -1,3 +1,10 @@
+# [2.0.0-beta.213](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.212...v2.0.0-beta.213) (2022-12-22)
+
+
+### Performance Improvements
+
+* remove unnecessary javascript from planter quote ([9c2fff0](https://github.com/Greenstand/treetracker-web-map-client/commit/9c2fff02b99a914c98c8f4e59229a18a2115b1da))
+
 # [2.0.0-beta.212](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.211...v2.0.0-beta.212) (2022-12-22)
 
 
