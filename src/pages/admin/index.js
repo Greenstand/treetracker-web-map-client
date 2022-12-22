@@ -230,7 +230,7 @@ export default function Index() {
   log.warn('rpt', RPT);
   return (
     <>
-      <HeadTag title="Admin" />
+      <HeadTag title="Admin" robotParameters="none" />
       <Box
         sx={{
           display: 'flex',

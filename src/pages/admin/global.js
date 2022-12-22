@@ -48,7 +48,7 @@ function Global({ organization }) {
 
   return (
     <>
-      <HeadTag title="Admin Dashboard" />
+      <HeadTag title="Admin Dashboard" robotParameters="none" />
       <Box
         sx={{
           display: 'flex',

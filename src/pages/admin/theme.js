@@ -385,7 +385,7 @@ function ThemeConfig() {
 
   return (
     <>
-      <HeadTag title="Theme - Admin" />
+      <HeadTag title="Theme - Admin" robotParameters="none" />
       <Grid
         container
         sx={{
