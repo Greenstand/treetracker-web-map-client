@@ -30,11 +30,11 @@ import LocationIcon from 'images/icons/location.svg';
 import PeopleIcon from 'images/icons/people.svg';
 import TreeIcon from 'images/icons/tree.svg';
 import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
 import { getLocationString, getPlanterName, wrapper } from 'models/utils';
-import { useMapContext } from '../../mapContext';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
