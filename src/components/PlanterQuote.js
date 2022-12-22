@@ -1,25 +1,15 @@
-import {
-  Avatar,
-  Button,
-  Box,
-  Grid,
-  Typography,
-  useTheme,
-  SvgIcon,
-} from '@mui/material';
+import { Box, Typography, useTheme, SvgIcon } from '@mui/material';
 import * as d3 from 'd3';
 import log from 'loglevel';
 import moment from 'moment';
-import Image from 'next/image';
 import { getLocationString } from 'models/utils';
 import Link from './Link';
+import ProfileAvatar from './ProfileAvatar';
 import ColorButton from './common/ColorButton';
-import DataTag from './common/DataTag';
 import Info from './common/Info';
 import { useMobile } from '../hooks/globalHooks';
 import CalendarIcon from '../images/icons/calendar.svg';
 import LocationIcon from '../images/icons/location.svg';
-import PeopleIcon from '../images/icons/people.svg';
 import imagePlaceholder from '../images/image-placeholder.png';
 import QuoteImgReverse from '../images/quote-reverse.svg';
 import QuoteImg from '../images/quote-symbol.svg';
@@ -75,8 +65,9 @@ function PlanterQuote(props) {
           alignItems: 'center',
         }}
       >
-        <Avatar
+        <ProfileAvatar
           src={photo}
+          rotation={planter.image_rotation}
           sx={{
             zIndex: '1',
             width: [90, 180],
@@ -84,6 +75,7 @@ function PlanterQuote(props) {
             filter: 'drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.25))',
             order: reverse ? 1 : 0,
             ml: reverse ? [26 / 8, 26 / 4] : 0,
+            mt: 'none',
           }}
         />
         <Box

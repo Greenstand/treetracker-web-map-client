@@ -1,6 +1,6 @@
 import { Avatar } from '@mui/material';
 
-function ProfileAvatar({ src, rotation }) {
+function ProfileAvatar({ src, rotation, sx }) {
   return (
     <Avatar
       src={src}
@@ -15,6 +15,7 @@ function ProfileAvatar({ src, rotation }) {
         boxSizing: 'border-box',
         ml: [4, 8],
         mt: [-98 / 4, -146 / 4],
+        ...sx,
       }}
     />
   );
