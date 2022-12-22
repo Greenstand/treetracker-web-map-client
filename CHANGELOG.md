@@ -1,3 +1,52 @@
+# [2.0.0-beta.215](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.214...v2.0.0-beta.215) (2022-12-22)
+
+
+### Features
+
+* implement navbar config ([7511bbe](https://github.com/Greenstand/treetracker-web-map-client/commit/7511bbe6a0d54d21f4d9e56f9ea624f5d4eebfa1))
+
+# [2.0.0-beta.214](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.213...v2.0.0-beta.214) (2022-12-22)
+
+
+### Features
+
+* add page title to global ([ff6b6ba](https://github.com/Greenstand/treetracker-web-map-client/commit/ff6b6ba467191be80a37c97abbec2486d12f85b3))
+
+# [2.0.0-beta.213](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.212...v2.0.0-beta.213) (2022-12-22)
+
+
+### Performance Improvements
+
+* remove unnecessary javascript from planter quote ([9c2fff0](https://github.com/Greenstand/treetracker-web-map-client/commit/9c2fff02b99a914c98c8f4e59229a18a2115b1da))
+
+# [2.0.0-beta.212](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.211...v2.0.0-beta.212) (2022-12-22)
+
+
+### Bug Fixes
+
+* update icon color for better conntrast on dark mode ([2200355](https://github.com/Greenstand/treetracker-web-map-client/commit/22003553cc6fd81d6bbb8f8cf81f83138a1620b4))
+
+# [2.0.0-beta.211](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.210...v2.0.0-beta.211) (2022-12-22)
+
+
+### Features
+
+* add support for twitter ([4c971b8](https://github.com/Greenstand/treetracker-web-map-client/commit/4c971b8eaf596425f46122d05f2145d4f2f276ae))
+
+# [2.0.0-beta.210](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.209...v2.0.0-beta.210) (2022-12-22)
+
+
+### Performance Improvements
+
+* add height to tree image ([72580ab](https://github.com/Greenstand/treetracker-web-map-client/commit/72580abecd7cf942907d8eb2078a0875e03cbd39))
+
+# [2.0.0-beta.209](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.208...v2.0.0-beta.209) (2022-12-21)
+
+
+### Features
+
+* add robot meta tag ([01ebb04](https://github.com/Greenstand/treetracker-web-map-client/commit/01ebb04b0033f2f5b282e2265971a9227d493226))
+
 # [2.0.0-beta.208](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.207...v2.0.0-beta.208) (2022-12-20)
 
 
