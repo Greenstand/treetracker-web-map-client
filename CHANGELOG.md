@@ -1,3 +1,10 @@
+# [2.0.0-beta.214](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.213...v2.0.0-beta.214) (2022-12-22)
+
+
+### Features
+
+* add page title to global ([ff6b6ba](https://github.com/Greenstand/treetracker-web-map-client/commit/ff6b6ba467191be80a37c97abbec2486d12f85b3))
+
 # [2.0.0-beta.213](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.212...v2.0.0-beta.213) (2022-12-22)
 
 
