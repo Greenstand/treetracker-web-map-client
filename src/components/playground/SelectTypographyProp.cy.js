@@ -1,6 +1,6 @@
+import { PlaygroundProvider } from 'context/playgroundContext';
+import { mountWithTheme as mount } from 'models/test-utils';
 import SelectTypographyProp from './SelectTypographyProp';
-import { PlaygroundProvider } from '../../context/playgroundContext';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Select Typography Prop', () => {
   const path = 'typography.h1';
