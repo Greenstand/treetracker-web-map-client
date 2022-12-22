@@ -368,7 +368,11 @@ export default function Tree({
               position: 'relative',
               overflow: 'hidden',
               '& img': {
+                objectFit: 'cover',
                 width: '100%',
+                [theme.breakpoints.down('sm')]: {
+                  maxHeight: '450px',
+                },
               },
             },
             nextExtraIsEmbed && {
@@ -424,7 +428,7 @@ export default function Tree({
               />
             </Box>
           </Box>
-          <img src={tree.image_url} alt="tree" />
+          <img src={tree.image_url} alt="tree" height="764" />
           {!isMobile && (
             <Box
               sx={{
