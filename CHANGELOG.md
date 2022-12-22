@@ -1,3 +1,10 @@
+# [2.0.0-beta.210](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.209...v2.0.0-beta.210) (2022-12-22)
+
+
+### Performance Improvements
+
+* add height to tree image ([72580ab](https://github.com/Greenstand/treetracker-web-map-client/commit/72580abecd7cf942907d8eb2078a0875e03cbd39))
+
 # [2.0.0-beta.209](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.208...v2.0.0-beta.209) (2022-12-21)
 
 
