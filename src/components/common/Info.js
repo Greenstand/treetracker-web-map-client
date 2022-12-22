@@ -10,13 +10,19 @@ export default function Info({ info, iconURI }) {
         alignItems: 'center',
         gap: 3,
         '& svg': {
-          filter: 'opacity(0.5)',
           maxWidth: 16,
           maxHeight: 16,
         },
       }}
     >
-      <Icon icon={iconURI} />
+      <Icon
+        icon={iconURI}
+        sx={{
+          '& path': {
+            fill: ({ palette }) => palette.text.text2,
+          },
+        }}
+      />
       <Typography variant="h6">{info}</Typography>
     </Box>
   );
