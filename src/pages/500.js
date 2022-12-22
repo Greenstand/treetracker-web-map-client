@@ -1,5 +1,5 @@
-import { useTheme } from '@emotion/react';
 import { Link } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import HeadTag from 'components/HeadTag';
 
 export default function somethingWentWrong() {
