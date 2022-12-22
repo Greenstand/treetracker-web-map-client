@@ -26,12 +26,16 @@ import PeopleIcon from 'images/icons/people.svg';
 import TreeIcon from 'images/icons/tree.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
-// import placeholder from '../../images/organizationsPlaceholder.png';
 import * as pathResolver from 'models/pathResolver';
-import { getLocationString, getContinent, wrapper } from 'models/utils';
-import { useMapContext } from '../../mapContext';
+import {
+  getLocationString,
+  getContinent,
+  wrapper,
+  abbreviateNumber,
+} from 'models/utils';
 
 const useStyles = makeStyles()((theme) => ({
   imgContainer: {
@@ -363,12 +367,10 @@ export default function Organization(props) {
               <CustomWorldMap
                 totalTrees={
                   (organization?.featuredTrees?.total &&
-                    new Intl.NumberFormat('en', { notation: 'compact' }).format(
-                      organization?.featuredTrees?.total,
-                    )) ||
+                    abbreviateNumber(organization?.featuredTrees?.total)) ||
                   undefined
                 }
-                con="af"
+                con={organization?.continent_name || 'af'}
               />
             </Box>
             <Typography

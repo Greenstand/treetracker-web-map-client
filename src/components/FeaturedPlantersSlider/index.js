@@ -152,8 +152,8 @@ function FeaturedPlantersSlider({
                   textAlign: 'center',
                   wordBreak: 'break-word',
                   display: '-webkit-box',
-                  '-webkit-line-clamp': '2',
-                  '-webkit-box-orient': 'vertical',
+                  WebkitLineClamp: '2',
+                  WebkitBoxOrient: 'vertical',
                   overflow: 'hidden',
                   paddingBottom: '0 !important', // necessary to ensure extra lines remain hidden
                 }}

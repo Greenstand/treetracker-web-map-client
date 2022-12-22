@@ -305,6 +305,7 @@ export default function Wallet(props) {
                 title="Token ID"
                 icon={<Icon icon={TokenIcon} />}
                 link={`/wallets/${wallet.id}/tokens/${token.id}`}
+                fullWidth
               />
             </Box>
           ))}
@@ -350,13 +351,13 @@ export default function Wallet(props) {
         <Typography sx={{ mt: [2.5, 5] }} variant="h4">
           About the Wallet
         </Typography>
-        <Typography sx={{ mt: [2.5, 5] }} variant="body2">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: marked.parse(wallet.about || 'NO DATA YET'),
-            }}
-          />
-        </Typography>
+        <Typography
+          sx={{ mt: [2.5, 5] }}
+          variant="body2"
+          dangerouslySetInnerHTML={{
+            __html: marked.parse(wallet.about || 'NO DATA YET'),
+          }}
+        />
         <Divider
           varian="fullwidth"
           sx={{

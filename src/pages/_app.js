@@ -3,8 +3,10 @@ import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { LinearProgress, Box, useTheme, useMediaQuery } from '@mui/material';
 import log from 'loglevel';
+import App from 'next/app';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
+import { userAgentFromString } from 'next/server';
 import React from 'react';
 import packageJson from '../../package.json';
 import Layout from '../components/Layout';
@@ -67,13 +69,16 @@ function GoogleAnalytics() {
   );
 }
 
-function TreetrackerApp({ Component, pageProps }) {
+function TreetrackerApp({ Component, pageProps, device }) {
   log.warn('!!!! render the _app');
   const router = useRouter();
   const theme = useTheme();
 
   const embedLocalStorage = useLocalStorage('embed', false);
-  const nextExtraIsDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+  const clientSideQuery = useMediaQuery(theme.breakpoints.up('sm'));
+  const onServer = typeof window === 'undefined';
+
+  const nextExtraIsDesktop = onServer ? device === 'desktop' : clientSideQuery;
   const nextExtraIsEmbed = useEmbed() === true ? true : embedLocalStorage[0];
   const nextExtraKeyword = router.query.keyword;
   const [nextExtraLoading, setNextExtraLoading] = React.useState(false);
@@ -193,5 +198,17 @@ function TreetrackerApp({ Component, pageProps }) {
     </>
   );
 }
+
+// Detect device from user agent header
+TreetrackerApp.getInitialProps = async (context) => {
+  const props = await App.getInitialProps(context);
+  const userAgent = context?.ctx.req
+    ? context.ctx.req.headers['user-agent']
+    : window.navigator.userAgent;
+
+  const device = userAgentFromString(userAgent)?.device.type || 'desktop';
+
+  return { props, device };
+};
 
 export default TreetrackerApp;

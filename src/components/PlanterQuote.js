@@ -68,152 +68,84 @@ function PlanterQuote(props) {
                 .formatRgb(),
       }}
     >
-      {!reverse && (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar
+          src={photo}
+          sx={{
+            zIndex: '1',
+            width: [90, 180],
+            height: [90, 180],
+            filter: 'drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.25))',
+            order: reverse ? 1 : 0,
+            ml: reverse ? [26 / 8, 26 / 4] : 0,
+          }}
+        />
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
+            ml: reverse ? 0 : [4, 6],
+            position: 'relative',
+            flex: 1,
           }}
         >
-          <Avatar
-            src={photo}
+          <SvgIcon
+            component={reverse ? QuoteImgReverse : QuoteImg}
+            inheritViewBox
+            alt="quote"
+            fontSize="large"
             sx={{
-              zIndex: '1',
-              width: [90, 180],
-              height: [90, 180],
-              filter: 'drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.25))',
+              position: 'absolute',
+              top: reverse ? [-7, -7] : [1, -19],
+              ...(reverse
+                ? {
+                    right: [-11, -11],
+                  }
+                : {
+                    left: [-22, -23],
+                  }),
+              transform: ['scale(2.5)', 'scale(3.5)'],
             }}
           />
-          <Box
+          <Typography
+            variant="body1"
             sx={{
-              ml: [4, 6],
-              position: 'relative',
-              flex: 1,
+              minHeight: [45, 95],
             }}
           >
-            <SvgIcon
-              component={QuoteImg}
-              inheritViewBox
-              alt="quote"
-              fontSize="large"
-              sx={{
-                position: 'absolute',
-                top: [1, -19],
-                left: [-22, -23],
-                transform: ['scale(2.5)', 'scale(3.5)'],
-              }}
-            />
-            <Typography
-              variant="body1"
-              sx={{
-                minHeight: [45, 95],
-                minWidth: [200, 410],
-              }}
-            >
-              {quote}
-            </Typography>
-            <Typography
-              sx={{
-                mt: [4, 8],
-              }}
-              variant="h5"
-            >
-              {name}
-            </Typography>
-            <Box sx={{ mt: [1.5, 3] }}>
-              <Info
-                iconURI={CalendarIcon}
-                info={`Planter since ${moment(planter.created_at).format(
-                  'MMMM DD, YYYY',
-                )}`}
-              />
-            </Box>
-            <Box sx={{ mt: 2 }}>
-              <Info
-                iconURI={LocationIcon}
-                info={getLocationString(
-                  planter.country_name,
-                  planter.continent_name,
-                )}
-              />
-            </Box>
-          </Box>
-        </Box>
-      )}
-      {reverse && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <Box
+            {quote}
+          </Typography>
+          <Typography
             sx={{
-              position: 'relative',
-              flex: 1,
+              mt: [4, 8],
             }}
+            variant="h5"
           >
-            <SvgIcon
-              component={QuoteImgReverse}
-              inheritViewBox
-              fontSize="large"
-              alt="quote"
-              sx={{
-                position: 'absolute',
-                top: [-7, -7],
-                right: [-11, -11],
-                transform: ['scale(2.5)', 'scale(3.5)'],
-              }}
+            {name}
+          </Typography>
+          <Box sx={{ mt: [1.5, 3] }}>
+            <Info
+              iconURI={CalendarIcon}
+              info={`Planter since ${moment(planter.created_at).format(
+                'MMMM DD, YYYY',
+              )}`}
             />
-            <Typography
-              variant="body1"
-              sx={{
-                minHeight: [45, 95],
-                minWidth: [150, 350],
-              }}
-            >
-              {quote}
-            </Typography>
-            <Typography
-              sx={{
-                mt: [4, 8],
-              }}
-              variant="h5"
-            >
-              {name}
-            </Typography>
-            <Box sx={{ mt: [1.5, 3] }}>
-              <Info
-                iconURI={CalendarIcon}
-                info={`Planter since ${moment(planter.created_at).format(
-                  'MMMM DD, YYYY',
-                )}`}
-              />
-            </Box>
-            <Box sx={{ mt: 2 }}>
-              <Info
-                iconURI={LocationIcon}
-                info={getLocationString(
-                  planter.country_name,
-                  planter.continent_name,
-                )}
-              />
-            </Box>
           </Box>
-          <Avatar
-            src={photo}
-            sx={{
-              ml: [26 / 8, 26 / 4],
-              zIndex: '1',
-              width: [90, 180],
-              height: [90, 180],
-              filter: 'drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.25))',
-            }}
-          />
+          <Box sx={{ mt: 2 }}>
+            <Info
+              iconURI={LocationIcon}
+              info={getLocationString(
+                planter.country_name,
+                planter.continent_name,
+              )}
+            />
+          </Box>
         </Box>
-      )}
+      </Box>
       <Box
         sx={{
           mt: [8, 16],
