@@ -1,3 +1,10 @@
+# [2.0.0-beta.215](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.214...v2.0.0-beta.215) (2022-12-22)
+
+
+### Features
+
+* implement navbar config ([7511bbe](https://github.com/Greenstand/treetracker-web-map-client/commit/7511bbe6a0d54d21f4d9e56f9ea624f5d4eebfa1))
+
 # [2.0.0-beta.214](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.213...v2.0.0-beta.214) (2022-12-22)
 
 
