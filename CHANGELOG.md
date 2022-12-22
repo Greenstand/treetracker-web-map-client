@@ -1,3 +1,10 @@
+# [2.0.0-beta.211](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.210...v2.0.0-beta.211) (2022-12-22)
+
+
+### Features
+
+* add support for twitter ([4c971b8](https://github.com/Greenstand/treetracker-web-map-client/commit/4c971b8eaf596425f46122d05f2145d4f2f276ae))
+
 # [2.0.0-beta.210](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.209...v2.0.0-beta.210) (2022-12-22)
 
 
