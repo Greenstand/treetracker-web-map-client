@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme, SvgIcon } from '@mui/material';
+import { Box, Typography, SvgIcon } from '@mui/material';
 import * as d3 from 'd3';
 import log from 'loglevel';
 import moment from 'moment';
@@ -7,7 +7,6 @@ import Link from './Link';
 import ProfileAvatar from './ProfileAvatar';
 import ColorButton from './common/ColorButton';
 import Info from './common/Info';
-import { useMobile } from '../hooks/globalHooks';
 import CalendarIcon from '../images/icons/calendar.svg';
 import LocationIcon from '../images/icons/location.svg';
 import imagePlaceholder from '../images/image-placeholder.png';
@@ -18,14 +17,7 @@ import QuoteImg from '../images/quote-symbol.svg';
 function PlanterQuote(props) {
   log.warn('props:', props);
   const { planter, reverse = false } = props;
-  const {
-    id,
-    about: quote2,
-    name,
-    image_url: photo2,
-    created_at,
-    location,
-  } = planter;
+  const { id, about: quote2, name, image_url: photo2 } = planter;
 
   let quote = quote2 || "the planter hasn't left any quote yet";
   if (quote.length > 500) {
@@ -33,8 +25,6 @@ function PlanterQuote(props) {
   }
   const photo = photo2 || imagePlaceholder;
 
-  const theme = useTheme();
-  const isMobile = useMobile();
   return (
     <Box
       sx={{
@@ -75,7 +65,7 @@ function PlanterQuote(props) {
             filter: 'drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.25))',
             order: reverse ? 1 : 0,
             ml: reverse ? [26 / 8, 26 / 4] : 0,
-            mt: 'none',
+            mt: 0,
           }}
         />
         <Box
