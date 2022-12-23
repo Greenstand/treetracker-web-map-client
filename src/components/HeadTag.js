@@ -1,4 +1,3 @@
- 
 import Head from 'next/head';
 
 export default function HeadTag({
@@ -25,10 +24,14 @@ export default function HeadTag({
       {openGraph?.images &&
         openGraph.images.map((image) => (
           <>
-            <meta property="og:image" content={image.url} />
-            <meta property="og:image:width" content={image.width} />
-            <meta property="og:image:height" content={image.height} />
-            <meta property="og:image:alt" content={image.alt} />
+            {image?.url && <meta property="og:image" content={image.url} />}
+            {image?.width && (
+              <meta property="og:image:width" content={image.width} />
+            )}
+            {image?.height && (
+              <meta property="og:image:height" content={image.height} />
+            )}
+            {image?.alt && <meta property="og:image:alt" content={image.alt} />}
           </>
         ))}
       {openGraph?.url && <meta property="og:url" content={openGraph.url} />}
