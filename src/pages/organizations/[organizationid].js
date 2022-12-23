@@ -28,7 +28,6 @@ import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
-import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
 import {
   getLocationString,
@@ -37,44 +36,10 @@ import {
   abbreviateNumber,
 } from 'models/utils';
 
-const useStyles = makeStyles()((theme) => ({
-  imgContainer: {
-    borderRadius: '16px',
-    position: 'relative',
-    img: {
-      borderRadius: '16px',
-    },
-    marginBottom: theme.spacing(4),
-    '&> img': {
-      width: '100%',
-      height: '100%',
-    },
-  },
-  logoContainer: {
-    backgroundColor: theme.palette.common.white,
-    position: 'absolute',
-    left: theme.spacing(4),
-    bottom: theme.spacing(4),
-    boxSizing: 'border-box',
-    padding: theme.spacing(5),
-    width: 108,
-    height: 108,
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    '&> img': {
-      width: '100%',
-    },
-  },
-}));
-
 export default function Organization(props) {
   log.warn('props for org page:', props);
   const { organization, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
-  const { classes } = useStyles();
   const [isPlanterTab, setIsPlanterTab] = React.useState(true);
   // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
@@ -445,7 +410,7 @@ export default function Organization(props) {
               },
             ].map((planter, i) => ( */}
           {organization?.associatedPlanters?.planters
-            ?.sort((e1, e2) => (e1.about ? -1 : 1))
+            ?.sort((e1) => (e1.about ? -1 : 1))
             .map((planter, i) => (
               <Box sx={{ mt: [6, 12] }} key={planter.name}>
                 <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
