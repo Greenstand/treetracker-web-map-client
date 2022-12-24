@@ -1,3 +1,21 @@
+# [2.0.0-beta.216](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.215...v2.0.0-beta.216) (2022-12-24)
+
+
+### Bug Fixes
+
+* abbreviate numbers for CustomWorldMap on wallet page ([8f31850](https://github.com/Greenstand/treetracker-web-map-client/commit/8f31850bf0f27477f804ed98c294a3d5109cfb1b))
+* remove abbreviate number from organization page ([03ce1c9](https://github.com/Greenstand/treetracker-web-map-client/commit/03ce1c9b27b5deccbb89297c2f172b5ee031391f))
+
+
+### Features
+
+* abbreviate tree count in CustomWorldMap component ([2c4f0e6](https://github.com/Greenstand/treetracker-web-map-client/commit/2c4f0e6ed5af1099175f594ff17cdd25ad51e448))
+
+
+### Reverts
+
+* remove abbreviate number from wallet page ([93b4b9a](https://github.com/Greenstand/treetracker-web-map-client/commit/93b4b9ac627a9b2b53130c897f336c2329872d40))
+
 # [2.0.0-beta.215](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.214...v2.0.0-beta.215) (2022-12-22)
 
 
