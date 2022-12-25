@@ -76,7 +76,6 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 export default function Planter(props) {
   log.warn('props for planter page:', props);
   const { planter, nextExtraIsEmbed } = props;
-  console.log('🚀 ~ file: [planterid].js:79 ~ Planter ~ planter', planter);
 
   const { featuredTrees } = planter;
   const treeCount = featuredTrees?.total;
