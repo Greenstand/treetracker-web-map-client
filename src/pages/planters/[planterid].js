@@ -495,7 +495,9 @@ export default function Planter(props) {
               width: '120px',
               height: '120px',
               margin: '10px',
-              transform: `rotate(${planter.image_rotation}deg)`,
+              transform:
+                planter.image_rotation &&
+                `rotate(${planter.image_rotation}deg)`,
             }}
             src={planter.image_url}
             variant="rounded"
