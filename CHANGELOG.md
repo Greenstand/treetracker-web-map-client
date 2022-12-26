@@ -1,3 +1,10 @@
+# [2.0.0-beta.217](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.216...v2.0.0-beta.217) (2022-12-26)
+
+
+### Bug Fixes
+
+* can not jump to token page ([5e94df8](https://github.com/Greenstand/treetracker-web-map-client/commit/5e94df8dd16ac2d064a15051eaa58408bde233e8))
+
 # [2.0.0-beta.216](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.215...v2.0.0-beta.216) (2022-12-24)
 
 
