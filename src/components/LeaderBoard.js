@@ -2,7 +2,7 @@ import { Paper, Box, Grid, Typography } from '@mui/material';
 import countries from 'i18n-iso-countries';
 import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
-import { fixCountryNames } from 'models/utils';
+import { abbreviateNumber, fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
 import Icon from './common/CustomIcon';
 import { useMobile } from '../hooks/globalHooks';
@@ -238,7 +238,7 @@ function LeaderBoard(props) {
                 <Typography
                   variant="h5"
                   color="text.secondary"
-                  sx={{ fontFamily: 'Lato' }}
+                  sx={{ fontFamily: 'Lato', marginRight: '0.5em' }}
                 >
                   {country.name}
                 </Typography>
@@ -262,7 +262,7 @@ function LeaderBoard(props) {
                       marginRight: '8px',
                     }}
                   >
-                    {`${country.planted.toLocaleString()} `}
+                    {`${abbreviateNumber(country.planted)}`.toLocaleString()}
                   </Typography>
                   <TreeImage />
                 </Box>

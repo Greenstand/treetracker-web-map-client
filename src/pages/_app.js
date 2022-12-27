@@ -3,7 +3,10 @@ import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { LinearProgress, Box, useTheme, useMediaQuery } from '@mui/material';
 import log from 'loglevel';
+import App from 'next/app';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
+import { userAgentFromString } from 'next/server';
 import React from 'react';
 import packageJson from '../../package.json';
 import Layout from '../components/Layout';
@@ -34,14 +37,49 @@ export const createMuiCache = () =>
     prepend: true,
   }));
 
-function TreetrackerApp({ Component, pageProps }) {
+export function reportWebVitals({ name, delta, value, id, label }) {
+  const deployed = process.env.NODE_ENV === 'production';
+  if (label === 'web-vital' && deployed) {
+    window.gtag('event', name, {
+      value: delta,
+      metric_id: id,
+      metric_value: value,
+      metric_delta: delta,
+    });
+  }
+}
+
+function GoogleAnalytics() {
+  return (
+    <>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+    `}
+      </Script>
+    </>
+  );
+}
+
+function TreetrackerApp({ Component, pageProps, device }) {
   log.warn('!!!! render the _app');
   const router = useRouter();
   const theme = useTheme();
   const layoutRef = React.useRef();
 
   const embedLocalStorage = useLocalStorage('embed', false);
-  const nextExtraIsDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+  const clientSideQuery = useMediaQuery(theme.breakpoints.up('sm'));
+  const onServer = typeof window === 'undefined';
+
+  const nextExtraIsDesktop = onServer ? device === 'desktop' : clientSideQuery;
   const nextExtraIsEmbed = useEmbed() === true ? true : embedLocalStorage[0];
   const nextExtraKeyword = router.query.keyword;
   const [nextExtraLoading, setNextExtraLoading] = React.useState(false);
@@ -99,14 +137,18 @@ function TreetrackerApp({ Component, pageProps }) {
   const isAdmin = !!router.asPath.match(/admin/);
   if (isAdmin) {
     return (
-      <LayoutDashboard>
-        <Component {...pageProps} />
-      </LayoutDashboard>
+      <>
+        <GoogleAnalytics />
+        <LayoutDashboard>
+          <Component {...pageProps} />
+        </LayoutDashboard>
+      </>
     );
   }
 
   return (
     <>
+      <GoogleAnalytics />
       <CacheProvider value={muiCache ?? createMuiCache()}>
         <CustomThemeProvider>
           <DrawerProvider>
@@ -160,5 +202,17 @@ function TreetrackerApp({ Component, pageProps }) {
     </>
   );
 }
+
+// Detect device from user agent header
+TreetrackerApp.getInitialProps = async (context) => {
+  const props = await App.getInitialProps(context);
+  const userAgent = context?.ctx.req
+    ? context.ctx.req.headers['user-agent']
+    : window.navigator.userAgent;
+
+  const device = userAgentFromString(userAgent)?.device.type || 'desktop';
+
+  return { props, device };
+};
 
 export default TreetrackerApp;

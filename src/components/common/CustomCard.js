@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { abbreviateNumber } from 'models/utils';
 import Icon from './CustomIcon';
 
 function CustomCard({
@@ -14,6 +15,11 @@ function CustomCard({
   tooltip,
   iconProps,
 }) {
+  let count;
+  if (typeof text === 'number') {
+    count = abbreviateNumber(text);
+  }
+
   return (
     <Box
       onClick={handleClick}
@@ -82,7 +88,7 @@ function CustomCard({
             mt: [0.5, 1],
           }}
         >
-          {text}
+          {count || text}
         </Typography>
       </Box>
     </Box>

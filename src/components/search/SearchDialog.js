@@ -22,7 +22,7 @@ function SearchResultItem({ title, content }) {
   );
 }
 
-export default function SearchDialog({ results }) {
+export default function SearchDialog({ results, onClick }) {
   const showCard = results.length > 0;
   return (
     showCard && (
@@ -46,7 +46,7 @@ export default function SearchDialog({ results }) {
         <List sx={{ pt: 0 }}>
           {results.map((result, index) => (
             // eslint-disable-next-line react/no-array-index-key
-            <ListItem key={index}>
+            <ListItem key={index} onClick={() => onClick(result)}>
               <SearchResultItem title={result.type} content={result.content} />
             </ListItem>
           ))}

@@ -133,20 +133,27 @@ export default function Home(props) {
               <Box
                 sx={{
                   color: 'white',
+                  '.MuiBox-root&:hover': {
+                    color: 'brightGrey.main',
+                  },
                 }}
               >
                 Learn more
               </Box>
             </Link>
           </Button>
+
           <Link href="/top">
             <Button
               variant="contained"
               color="primaryLight"
               className={classes.button}
               sx={{
-                color: '#474B4F',
+                color: 'darkGrey.main',
                 ml: [4, 6],
+                '.MuiButton-root&:hover': {
+                  color: 'white',
+                },
               }}
             >
               Let&apos;s Find a Tree

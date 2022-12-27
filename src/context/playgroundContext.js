@@ -47,8 +47,8 @@ export function PlaygroundProvider({ children }) {
     utils.loadFonts(fontArr).then((fontsLoaded) => {
       if (!fontsLoaded) return;
       setFonts((prevFonts) => ({
-        ...prevFonts,
         ...themeObject.fonts,
+        ...prevFonts,
       }));
     });
   }, []);
@@ -79,9 +79,9 @@ export function PlaygroundProvider({ children }) {
   const setPropByPath = (propPath, value) => {
     const updatedTheme = utils.setPropByPath(propPath, value, theme);
     setTheme((prevTheme) => ({
-        ...prevTheme,
-        ...updatedTheme,
-      }));
+      ...prevTheme,
+      ...updatedTheme,
+    }));
     return updatedTheme;
   };
 

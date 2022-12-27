@@ -1,37 +1,21 @@
-import HomeIcon from '@mui/icons-material/Home';
-import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import {
-  Box,
-  Divider,
-  Grid,
-  useTheme,
-  useMediaQuery,
-  Typography,
-  Avatar,
-} from '@mui/material';
+import { Box, Divider, Grid, Typography, Avatar } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
 import { marked } from 'marked';
 import moment from 'moment';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
+import HeadTag from 'components/HeadTag';
 import PlanterQuote from 'components/PlanterQuote';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
-import CustomImageWrapper from 'components/common/CustomImageWrapper';
-import DrawerTitle from 'components/common/DrawerTitle';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
-import { makeStyles } from 'models/makeStyles';
 import ImpactSection from '../../components/ImpactSection';
-import PageWrapper from '../../components/PageWrapper';
 import ProfileAvatar from '../../components/ProfileAvatar';
 import ProfileCover from '../../components/ProfileCover';
 import VerifiedBadge from '../../components/VerifiedBadge';
-import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
 import CustomCard from '../../components/common/CustomCard';
 import Icon from '../../components/common/CustomIcon';
@@ -42,51 +26,15 @@ import LocationIcon from '../../images/icons/location.svg';
 import PeopleIcon from '../../images/icons/people.svg';
 import TreeIcon from '../../images/icons/tree.svg';
 import imagePlaceholder from '../../images/image-placeholder.png';
-import orgBackground from '../../images/org-background.png';
 import SearchIcon from '../../images/search.svg';
-// import placeholder from '../../images/organizationsPlaceholder.png';
 import { useMapContext } from '../../mapContext';
 import * as pathResolver from '../../models/pathResolver';
 import { getLocationString, getContinent, wrapper } from '../../models/utils';
-
-const useStyles = makeStyles()((theme) => ({
-  imgContainer: {
-    borderRadius: '16px',
-    position: 'relative',
-    img: {
-      borderRadius: '16px',
-    },
-    marginBottom: theme.spacing(4),
-    '&> img': {
-      width: '100%',
-      height: '100%',
-    },
-  },
-  logoContainer: {
-    backgroundColor: theme.palette.common.white,
-    position: 'absolute',
-    left: theme.spacing(4),
-    bottom: theme.spacing(4),
-    boxSizing: 'border-box',
-    padding: theme.spacing(5),
-    width: 108,
-    height: 108,
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    '&> img': {
-      width: '100%',
-    },
-  },
-}));
 
 export default function Organization(props) {
   log.warn('props for org page:', props);
   const { organization, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
-  const { classes } = useStyles();
   const [isPlanterTab, setIsPlanterTab] = React.useState(true);
   // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
@@ -144,6 +92,7 @@ export default function Organization(props) {
 
   return (
     <>
+      <HeadTag title={`${name} - Organization`} />
       <Box
         sx={[
           {
@@ -209,7 +158,9 @@ export default function Organization(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Organization since ${moment().format('MMMM DD, YYYY')}`}
+                info={`Organization since ${moment(
+                  organization?.created_at,
+                ).format('MMMM DD, YYYY')}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -374,8 +325,12 @@ export default function Organization(props) {
           >
             <Box sx={{ mt: [0, 22] }}>
               <CustomWorldMap
-                totalTrees={organization?.featuredTrees?.trees.length}
-                con="af"
+                totalTrees={
+                  (organization?.featuredTrees?.total &&
+                    organization?.featuredTrees?.total) ||
+                  undefined
+                }
+                con={organization?.continent_name || 'af'}
               />
             </Box>
             <Typography
@@ -450,7 +405,7 @@ export default function Organization(props) {
               },
             ].map((planter, i) => ( */}
           {organization?.associatedPlanters?.planters
-            ?.sort((e1, e2) => (e1.about ? -1 : 1))
+            ?.sort((e1) => (e1.about ? -1 : 1))
             .map((planter, i) => (
               <Box sx={{ mt: [6, 12] }} key={planter.name}>
                 <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
@@ -527,16 +482,33 @@ export default function Organization(props) {
   );
 }
 
-export const getServerSideProps = wrapper(async ({ params }) => {
+async function serverSideData(params) {
   const id = params.organizationid;
   const organization = await getOrganizationById(id);
   const orgLinks = await getOrgLinks(organization.links);
-  return {
-    props: {
-      organization: {
-        ...organization,
-        ...orgLinks,
-      },
+  const props = {
+    organization: {
+      ...organization,
+      ...orgLinks,
     },
   };
+  return props;
+}
+
+const getStaticProps = wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+  };
 });
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };
