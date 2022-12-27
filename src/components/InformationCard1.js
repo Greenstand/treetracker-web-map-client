@@ -1,11 +1,11 @@
-import { Card, Box, Button, Avatar, Typography } from '@mui/material';
+import { Card, Box, Avatar, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import * as d3 from 'd3';
 import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 import ColorButton from './common/ColorButton';
-import Logo from '../images/greenstand_logo.svg';
+import imagePlaceholder from '../images/image-placeholder.png';
 
 const useStyles = makeStyles()((theme) => ({
   contentWrapper: {
@@ -71,7 +71,9 @@ function InformationCard1({
           className={classes.media}
           src={cardImageSrc}
           title="Contemplative Reptile"
-        />
+        >
+          <img className={classes.media} src={imagePlaceholder} alt="" />
+        </Avatar>
         <Box
           className={classes.contentWrapper}
           display="flex"
