@@ -73,6 +73,7 @@ function TreetrackerApp({ Component, pageProps, device }) {
   log.warn('!!!! render the _app');
   const router = useRouter();
   const theme = useTheme();
+  const layoutRef = React.useRef();
 
   const embedLocalStorage = useLocalStorage('embed', false);
   const clientSideQuery = useMediaQuery(theme.breakpoints.up('sm'));
@@ -103,6 +104,9 @@ function TreetrackerApp({ Component, pageProps, device }) {
     router.events.on('routeChangeComplete', () => {
       log.warn('handleRouteChangeComplete::');
       setNextExtraLoading(false);
+      if (layoutRef.current) {
+        layoutRef.current.scrollTop = 0;
+      }
     });
     router.events.on('routeChangeError', (...arg) => {
       log.warn('handleChangeError:', ...arg);
@@ -150,7 +154,7 @@ function TreetrackerApp({ Component, pageProps, device }) {
           <DrawerProvider>
             <MapContextProvider>
               {nextExtraIsDesktop && !nextExtraIsEmbed && (
-                <Layout {...extraProps}>
+                <Layout {...extraProps} ref={layoutRef}>
                   <Component {...pageProps} {...extraProps} />
                 </Layout>
               )}
@@ -175,7 +179,7 @@ function TreetrackerApp({ Component, pageProps, device }) {
               {!nextExtraIsDesktop &&
                 !Component.isBLayout &&
                 !Component.isCLayout && (
-                  <LayoutMobile>
+                  <LayoutMobile ref={layoutRef}>
                     <Component {...pageProps} {...extraProps} />
                   </LayoutMobile>
                 )}

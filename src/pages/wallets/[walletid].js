@@ -357,7 +357,7 @@ export default function Wallet(props) {
           dangerouslySetInnerHTML={{
             __html: marked.parse(wallet.about || 'NO DATA YET'),
           }}
-         />
+        />
         <Divider
           varian="fullwidth"
           sx={{

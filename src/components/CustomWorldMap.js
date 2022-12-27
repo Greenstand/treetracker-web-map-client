@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import WorldMap from 'react-world-map';
 import { makeStyles } from 'models/makeStyles';
+import { abbreviateNumber } from 'models/utils';
 import { useMobile } from '../hooks/globalHooks';
 import TreeTooltip from '../images/tree_tooltip.svg';
 
@@ -107,14 +108,13 @@ function CustomWorldMap({ totalTrees, con }) {
     totalTreesArr = [totalTrees];
   }
   const continentAbr = contArr.map((c) => mapContinentName(c));
-
   return (
     <Box className={classes.root}>
       <WorldMap selected={continentAbr} onSelect={() => null} />
       {continentAbr.map((cont, ind) => (
         <ToolTip
           key={cont}
-          totalTrees={totalTreesArr[ind]}
+          totalTrees={abbreviateNumber(totalTreesArr[ind])}
           pos={toolTipPos}
           con={cont}
         />
