@@ -1,3 +1,15 @@
+# [2.0.0-beta.218](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.217...v2.0.0-beta.218) (2022-12-27)
+
+
+### Bug Fixes
+
+* navigate to top of the page on route change ([19516e4](https://github.com/Greenstand/treetracker-web-map-client/commit/19516e495f3115e72cec4b5d6ee841a07a101332))
+
+
+### Features
+
+* add ref direct on drawer ([3bf3571](https://github.com/Greenstand/treetracker-web-map-client/commit/3bf3571909347132f7aa35fee4fecb2594b9d796))
+
 # [2.0.0-beta.217](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.216...v2.0.0-beta.217) (2022-12-26)
 
 ### Bug Fixes
