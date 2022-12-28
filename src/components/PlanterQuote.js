@@ -58,6 +58,7 @@ function PlanterQuote(props) {
         <ProfileAvatar
           src={photo}
           rotation={planter.image_rotation}
+          noBackground
           sx={{
             zIndex: '1',
             width: [90, 180],
