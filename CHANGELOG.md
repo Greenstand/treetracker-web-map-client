@@ -1,3 +1,10 @@
+# [2.0.0-beta.219](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.218...v2.0.0-beta.219) (2022-12-29)
+
+
+### Features
+
+* increase expire time ([fd5305f](https://github.com/Greenstand/treetracker-web-map-client/commit/fd5305fa44b7b3ead07742366e8afc346bb690ba))
+
 # [2.0.0-beta.218](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.217...v2.0.0-beta.218) (2022-12-27)
 
 
