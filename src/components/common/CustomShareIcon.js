@@ -1,7 +1,4 @@
-import { Avatar, IconButton } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { green } from '@mui/material/colors';
-import { makeStyles } from 'models/makeStyles';
+import { IconButton } from '@mui/material';
 
 function CustomShareIcon({ handleOnClick, children, mailString }) {
   const button = (

@@ -1,14 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import AccessTime from '@mui/icons-material/AccessTime';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import HomeIcon from '@mui/icons-material/Home';
 import HubIcon from '@mui/icons-material/Hub';
-import LanguageIcon from '@mui/icons-material/Language';
-import NavigationOutlinedIcon from '@mui/icons-material/NavigationOutlined';
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { useTheme, SvgIcon, Avatar, Divider } from '@mui/material';
+import { useTheme, Avatar, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
@@ -16,26 +10,22 @@ import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import CustomImageWrapper from 'components/common/CustomImageWrapper';
+import HeadTag from 'components/HeadTag';
 import TagList from 'components/common/TagList';
 import { useDrawerContext } from 'context/DrawerContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
-import { makeStyles } from 'models/makeStyles';
 import Badges from '../../components/Badges';
 import ImpactSection from '../../components/ImpactSection';
 import InformationCard1 from '../../components/InformationCard1';
 import LikeButton from '../../components/LikeButton';
-import Link from '../../components/Link';
 import Share from '../../components/Share';
 import TreeInfoDialog from '../../components/TreeInfoDialog';
-import BackButton from '../../components/common/BackButton';
 import Crumbs from '../../components/common/Crumbs';
-import Info from '../../components/common/Info';
+import Icon from '../../components/common/CustomIcon';
 import TreeTag from '../../components/common/TreeTag';
 import { useMobile, useEmbed } from '../../hooks/globalHooks';
 import AccuracyIcon from '../../images/icons/accuracy.svg';
 import CalendarIcon from '../../images/icons/calendar.svg';
-import DiameterIcon from '../../images/icons/diameter.svg';
 import GlobalIcon from '../../images/icons/global.svg';
 import HistoryIcon from '../../images/icons/history.svg';
 import LocationIcon from '../../images/icons/location.svg';
@@ -56,6 +46,7 @@ export default function Tree({
   nextExtraKeyword,
 }) {
   log.warn('tree: ', tree);
+  log.warn('org: ', organization);
   const mapContext = useMapContext();
   const { map } = mapContext;
   const theme = useTheme();
@@ -65,6 +56,8 @@ export default function Tree({
   });
   const isMobile = useMobile();
   const isEmbed = useEmbed();
+  const isPlanterContext = context && context.name === 'planters';
+  const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
 
@@ -87,8 +80,8 @@ export default function Tree({
       verifiedToken: tree.token_id,
       verifiedTree: tree.verified,
     });
-    // eslint-disable-next-line no-console, prefer-template, no-useless-concat
-    console.log('the tree data' + '' + JSON.stringify(tree));
+    // eslint-disable-next-line prefer-template, no-useless-concat
+    log.warn('the tree data' + '' + JSON.stringify(tree));
   }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
 
   // useEffect(() => {
@@ -129,7 +122,7 @@ export default function Tree({
       log.warn('map ,tree, context in tree page:', map, tree, context);
       if (map && tree?.lat && tree?.lon) {
         if (context && context.name) {
-          if (context.name === 'planters') {
+          if (isPlanterContext) {
             log.warn('set planter filter', context.id);
             await map.setFilters({
               userid: context.id,
@@ -141,7 +134,7 @@ export default function Tree({
               lon: parseFloat(tree.lon.toString()),
             };
             map.selectTree(treeDataForMap);
-          } else if (context.name === 'organizations') {
+          } else if (isOrganizationContext) {
             log.warn('set org filter', organization.map_name);
             await map.setFilters({
               map_name: organization.map_name,
@@ -181,506 +174,540 @@ export default function Tree({
     reload();
   }, [map, tree.lat, tree.lon]);
 
-  console.log(planter, 'planter');
+  log.warn(planter, 'planter');
 
   return (
-    <Box
-      sx={[
-        {
-          padding: (t) => [t.spacing(0, 4), 6],
-          width: 1,
-          boxSizing: 'border-box',
-        },
-        nextExtraIsEmbed && {
-          padding: (t) => [t.spacing(0, 4), 4],
-        },
-      ]}
-    >
-      {/* <IsMobileScreen>
-        <DrawerTitle />
-      </IsMobileScreen> */}
-      {isMobile && (
-        <Portal
-          container={() => document.getElementById('drawer-title-container')}
-        >
-          <Box
-            sx={{
-              width: 1,
-              px: 4,
-              pb: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-start',
-            }}
-          >
-            <Typography variant="h2">Tree #{tree.id}</Typography>
-            <Box
-              sx={{
-                mt: 2,
-                color: theme.palette.common.black,
-                filter: 'opacity(0.8)',
-              }}
-            >
-              <Typography
-                sx={{
-                  color: 'text.text',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 3,
-                  '& svg': {
-                    filter: 'opacity(0.8)',
-                    maxWidth: 16,
-                    maxHeight: 16,
-                  },
-                  '& path': { fill: theme.palette.common.black },
-                }}
-              >
-                <SvgIcon component={OriginIcon} />
-                {tree.species_name || 'Unknown Species'}
-              </Typography>
-              <Typography
-                sx={{
-                  mt: 1,
-                  color: 'text.text',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 3,
-                  '& svg': {
-                    filter: 'opacity(0.8)',
-                    maxWidth: 16,
-                    maxHeight: 16,
-                  },
-                  '& path': { fill: theme.palette.common.black },
-                }}
-              >
-                <SvgIcon component={CalendarIcon} />
-                {`Planted on ${moment(tree.time_created).format(
-                  'MMMM Do, YYYY',
-                )}` || 'Unknown Date'}
-              </Typography>
-              <Typography
-                sx={{
-                  mt: 1,
-                  color: 'text.text',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 3,
-                  '& svg': {
-                    filter: 'opacity(0.8)',
-                    maxWidth: 16,
-                    maxHeight: 16,
-                  },
-                  '& path': { fill: theme.palette.common.black },
-                }}
-              >
-                <SvgIcon component={LocationIcon} />
-                {tree.country_name !== null
-                  ? `Located in ${tree.country_name}`
-                  : 'Unknown location'}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                mt: 2,
-              }}
-            >
-              <Badges tokenId={tree.token_id} verified={tree.verified} />
-            </Box>
-          </Box>
-        </Portal>
-      )}
-      {isMobile && (
-        <Portal
-          container={() =>
-            document.getElementById('drawer-title-container-min')
-          }
-        >
-          <Box sx={{}}>
-            <Typography variant="h3">Tree #{tree.id}</Typography>
-          </Box>
-        </Portal>
-      )}
-
-      {!isMobile && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            alignItems: 'center',
-          }}
-        >
-          <Crumbs
-            items={[
-              {
-                // icon: <HomeIcon />,
-                name: 'Home',
-                url: '/',
-              },
-              ...(context && context.name === 'planters'
-                ? [
-                    {
-                      url: `/planters/${planter.id}`,
-                      icon: planter.image_url,
-                      name: `${utils.getPlanterName(
-                        planter.first_name,
-                        planter.last_name,
-                      )}`,
-                    },
-                  ]
-                : []),
-              ...(context && context.name === 'organizations' && organization
-                ? [
-                    {
-                      url: `/organizations/${organization.id}`,
-                      icon: organization.logo_url,
-                      name: organization.name,
-                    },
-                  ]
-                : []),
-              {
-                name: `tree #${tree.id}`,
-              },
-            ]}
-          />
-          <Box>
-            {}
-            <SvgIcon
-              component={SearchIcon}
-              inheritViewBox
-              sx={{
-                width: 48,
-                height: 48,
-                fill: 'transparent',
-                '& path': {
-                  fill: 'grey',
-                },
-                '& rect': {
-                  stroke: 'grey',
-                },
-              }}
-            />
-          </Box>
-        </Box>
-      )}
+    <>
+      <HeadTag title={`Tree #${tree.id}`} />
       <Box
         sx={[
           {
-            borderRadius: 4,
-            maxHeight: [332, 764],
-            mt: 6,
-            position: 'relative',
-            overflow: 'hidden',
-            '& img': {
-              width: '100%',
-            },
+            padding: (t) => [t.spacing(0, 4), 6],
+            width: 1,
+            boxSizing: 'border-box',
           },
           nextExtraIsEmbed && {
-            '& img': {
-              maxHeight: 600,
-              objectFit: 'cover',
-            },
+            padding: (t) => [t.spacing(0, 4), 4],
           },
         ]}
       >
-        <Box
-          sx={{
-            position: 'absolute',
-            // top: [4, 6],
-            // left: [4, 6],
-            pt: [4, 6],
-            px: [4, 6],
-            width: 1,
-            boxSizing: 'border-box',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <LikeButton url={`https://map.treetracker.org/trees/${tree.id}`} />
-          <Box
-            sx={{
-              display: 'flex',
-              gap: [4, 6],
-              flexDirection: 'row',
-            }}
+        {/* <IsMobileScreen>
+        <DrawerTitle />
+      </IsMobileScreen> */}
+        {isMobile && (
+          <Portal
+            container={() => document.getElementById('drawer-title-container')}
           >
-            <Share
-              shareUrl={typeof window !== 'undefined' && window.location.href}
-              icon={
-                <Box
-                  onClick={handleShare}
+            <Box
+              sx={{
+                width: 1,
+                px: 4,
+                pb: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-start',
+              }}
+            >
+              <Typography variant="h2">Tree #{tree.id}</Typography>
+              <Box
+                sx={{
+                  mt: 2,
+                  color: theme.palette.common.black,
+                  filter: 'opacity(0.8)',
+                }}
+              >
+                <Typography
                   sx={{
-                    cursor: 'pointer',
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
                     '& svg': {
-                      width: [40, 52],
-                      height: [40, 52],
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
                     },
+                    '& path': { fill: theme.palette.common.black },
                   }}
                 >
-                  <SvgIcon
-                    alt="share the link"
-                    component={ShareIcon}
-                    inheritViewBox
-                  />
-                </Box>
-              }
-            />
-            <TreeInfoDialog
-              tree={tree}
-              planter={planter}
-              organization={organization}
-            />
-          </Box>
-        </Box>
-        <img src={tree.image_url} alt="tree" />
+                  <Icon icon={OriginIcon} />
+                  {tree.species_name || 'Unknown Species'}
+                </Typography>
+                <Typography
+                  sx={{
+                    mt: 1,
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <Icon icon={CalendarIcon} />
+                  {`Planted on ${moment(tree.time_created).format(
+                    'MMMM Do, YYYY',
+                  )}` || 'Unknown Date'}
+                </Typography>
+                <Typography
+                  sx={{
+                    mt: 1,
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <Icon icon={LocationIcon} />
+                  {tree.country_name !== null
+                    ? `Located in ${tree.country_name}`
+                    : 'Unknown location'}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  mt: 2,
+                }}
+              >
+                <Badges tokenId={tree.token_id} verified={tree.verified} />
+              </Box>
+            </Box>
+          </Portal>
+        )}
+        {isMobile && (
+          <Portal
+            container={() =>
+              document.getElementById('drawer-title-container-min')
+            }
+          >
+            <Box sx={{}}>
+              <Typography variant="h3">Tree #{tree.id}</Typography>
+            </Box>
+          </Portal>
+        )}
+
         {!isMobile && (
           <Box
             sx={{
-              position: 'absolute',
-              bottom: 0,
-              background:
-                'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
-              p: 6,
-              width: 1,
-              height: 260,
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
             }}
           >
-            <Typography variant="h2" color={theme.palette.common.white}>
-              Tree #{tree.id}
-            </Typography>
-
-            <Box
-              sx={{
-                mt: 2,
-                color: theme.palette.common.white,
-                filter: 'opacity(0.8)',
-              }}
-            >
-              <Typography
+            <Crumbs
+              items={[
+                {
+                  // icon: <HomeIcon />,
+                  name: 'Home',
+                  url: '/',
+                },
+                ...(isPlanterContext
+                  ? [
+                      {
+                        url: `/planters/${planter.id}`,
+                        icon: planter.image_url,
+                        name: `${utils.getPlanterName(
+                          planter.first_name,
+                          planter.last_name,
+                        )}`,
+                      },
+                    ]
+                  : []),
+                ...(isOrganizationContext && organization
+                  ? [
+                      {
+                        url: `/organizations/${organization.id}`,
+                        icon: organization.logo_url,
+                        name: organization.name,
+                      },
+                    ]
+                  : []),
+                {
+                  name: `tree #${tree.id}`,
+                },
+              ]}
+            />
+            <Box>
+              <Icon
+                icon={SearchIcon}
+                width={48}
+                height={48}
                 sx={{
-                  color: 'text.text',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 3,
-                  '& svg': {
-                    filter: 'opacity(0.8)',
-                    maxWidth: 16,
-                    maxHeight: 16,
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
                   },
-                  '& path': { fill: theme.palette.common.white },
-                }}
-              >
-                <SvgIcon component={OriginIcon} />
-                {tree.species_name || 'Unknown Species'}
-              </Typography>
-              <Typography
-                sx={{
-                  color: 'text.text',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 3,
-                  '& svg': {
-                    filter: 'opacity(0.8)',
-                    maxWidth: 16,
-                    maxHeight: 16,
+                  '& rect': {
+                    stroke: 'grey',
                   },
-                  '& path': { fill: theme.palette.common.white },
                 }}
-              >
-                <SvgIcon component={CalendarIcon} />
-                {`Planted on ${moment(tree.time_created).format(
-                  'MMMM Do, YYYY',
-                )}` || 'Unknown Date'}
-              </Typography>
-              <Typography
-                sx={{
-                  color: 'text.text',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 3,
-                  '& svg': {
-                    filter: 'opacity(0.8)',
-                    maxWidth: 16,
-                    maxHeight: 16,
-                  },
-                  '& path': { fill: theme.palette.common.white },
-                }}
-              >
-                <SvgIcon component={LocationIcon} />
-                {tree.country_name !== null
-                  ? `Located in ${tree.country_name}`
-                  : 'Unknown location'}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 2,
-                mt: 2,
-              }}
-            >
-              <Badges tokenId={tree.token_id} verified={tree.verified} />
+              />
             </Box>
           </Box>
         )}
-      </Box>
-      {/* <CustomImageWrapper
+        <Box
+          sx={[
+            {
+              borderRadius: 4,
+              maxHeight: [332, 764],
+              mt: 6,
+              position: 'relative',
+              overflow: 'hidden',
+              '& img': {
+                objectFit: 'cover',
+                width: '100%',
+                [theme.breakpoints.down('sm')]: {
+                  maxHeight: '450px',
+                },
+              },
+            },
+            nextExtraIsEmbed && {
+              '& img': {
+                maxHeight: 600,
+                objectFit: 'cover',
+              },
+            },
+          ]}
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              // top: [4, 6],
+              // left: [4, 6],
+              pt: [4, 6],
+              px: [4, 6],
+              width: 1,
+              boxSizing: 'border-box',
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <LikeButton url={`https://map.treetracker.org/trees/${tree.id}`} />
+            <Box
+              sx={{
+                display: 'flex',
+                gap: [4, 6],
+                flexDirection: 'row',
+              }}
+            >
+              <Share
+                shareUrl={typeof window !== 'undefined' && window.location.href}
+                icon={
+                  <Box
+                    onClick={handleShare}
+                    sx={{
+                      cursor: 'pointer',
+                      '& svg': {
+                        width: [40, 52],
+                        height: [40, 52],
+                      },
+                    }}
+                  >
+                    <Icon icon={ShareIcon} />
+                  </Box>
+                }
+              />
+              <TreeInfoDialog
+                tree={tree}
+                planter={planter}
+                organization={organization}
+              />
+            </Box>
+          </Box>
+          <img src={tree.image_url} alt="tree" height="764" />
+          {!isMobile && (
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                background:
+                  'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
+                p: 6,
+                width: 1,
+                height: 260,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-start',
+              }}
+            >
+              <Typography variant="h2" color={theme.palette.common.white}>
+                Tree #{tree.id}
+              </Typography>
+
+              <Box
+                sx={{
+                  mt: 2,
+                  color: theme.palette.common.white,
+                  filter: 'opacity(0.8)',
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
+                    },
+                    '& path': { fill: theme.palette.common.white },
+                  }}
+                >
+                  <Icon icon={OriginIcon} />
+                  {tree.species_name || 'Unknown Species'}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
+                    },
+                    '& path': { fill: theme.palette.common.white },
+                  }}
+                >
+                  <Icon icon={CalendarIcon} />
+                  {`Planted on ${moment(tree.time_created).format(
+                    'MMMM Do, YYYY',
+                  )}` || 'Unknown Date'}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
+                    },
+                    '& path': { fill: theme.palette.common.white },
+                  }}
+                >
+                  <Icon icon={LocationIcon} />
+                  {tree.country_name !== null
+                    ? `Located in ${tree.country_name}`
+                    : 'Unknown location'}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  mt: 2,
+                }}
+              >
+                <Badges tokenId={tree.token_id} verified={tree.verified} />
+              </Box>
+            </Box>
+          )}
+        </Box>
+        {/* <CustomImageWrapper
         imageUrl={tree.image_url}
         timeCreated={tree.time_created}
         treeId={tree.id}
       /> */}
-      {organization && (
+        {organization && (
+          <Box
+            sx={[
+              {
+                mt: [6, 14],
+              },
+              nextExtraIsEmbed && {
+                mt: [6, 10],
+              },
+            ]}
+          >
+            <InformationCard1
+              entityName={organization.name}
+              entityType="Planting Organization"
+              buttonText="Meet the Organization"
+              cardImageSrc={organization?.logo_url || imagePlaceholder}
+              link={`/organizations/${
+                organization.id
+              }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
+            />
+          </Box>
+        )}
         <Box
+          sx={{
+            mt: [4, 10],
+          }}
+        >
+          <InformationCard1
+            entityName={`${planter.first_name} ${planter.last_name}`}
+            entityType="Planter"
+            buttonText="Meet the Planter"
+            cardImageSrc={planter?.image_url || imagePlaceholder}
+            rotation={planter?.image_rotation}
+            link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
+              isEmbed ? '&embed=true' : ''
+            }`}
+          />
+        </Box>
+        <Typography
+          variant="h4"
           sx={[
             {
-              mt: [6, 14],
+              fontSize: [24, 28],
+              lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
+              mt: (t) => [t.spacing(14), t.spacing(26)],
             },
             nextExtraIsEmbed && {
-              mt: [6, 10],
+              mt: (t) => [t.spacing(14), t.spacing(26 * 0.6)],
             },
           ]}
         >
-          <InformationCard1
-            entityName={organization.name}
-            entityType="Planting Organization"
-            buttonText="Meet the Organization"
-            cardImageSrc={organization?.photo_url && imagePlaceholder}
-            link={`/organizations/${
-              organization.id
-            }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
+          Tree Info
+        </Typography>
+        <TagList>
+          <TreeTag
+            TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
+            title="Planted on"
+            icon={<Icon icon={CalendarIcon} />}
           />
-        </Box>
-      )}
-      <Box
-        sx={{
-          mt: [4, 10],
-        }}
-      >
-        <InformationCard1
-          entityName={`${planter.first_name} ${planter.last_name}`}
-          entityType="Planter"
-          buttonText="Meet the Planter"
-          cardImageSrc={planter?.image_url}
-          rotation={planter?.image_rotation}
-          link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
-            isEmbed ? '&embed=true' : ''
-          }`}
+          <TreeTag
+            TreeTagValue={tree.verified === false ? 'not verified' : 'verifed'}
+            title="Verification"
+            icon={<Icon icon={VerifiedIcon} />}
+            disabled={tree.verified === false}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.country_name === null ? 'unknown' : tree.country_name
+            }
+            title="Located in"
+            icon={<Icon icon={LocationIcon} />}
+            disabled={tree.country_name === null}
+          />
+          <TreeTag
+            TreeTagValue={tree.age === null ? 'unknown' : tree.age}
+            title="Age"
+            icon={<Icon icon={HistoryIcon} />}
+            disabled={tree.age === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.species_name === null ? 'unknown' : tree.species_name
+            }
+            title="Species"
+            icon={<Icon icon={OriginIcon} />}
+            disabled={tree.species_name === null}
+            subtitle={tree.species_desc === null ? null : 'click to learn more'}
+            link={tree.species_desc === null ? null : tree.species_desc}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.gps_accuracy === null ? 'unknown' : tree.gps_accuracy
+            }
+            title="GPS Accuracy"
+            icon={<Icon icon={AccuracyIcon} />}
+            disabled={tree.gps_accuracy === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.morphology === null ? 'unknown' : tree.morphology
+            }
+            title="Morphology"
+            icon={<Icon icon={HubIcon} />}
+            disabled={tree.morphology === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.lat === null || tree.lon == null
+                ? 'unknown'
+                : `${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
+                    tree.lon,
+                    5,
+                  )}`
+            }
+            title="Latitude, Longitude"
+            icon={
+              <Icon
+                icon={GlobalIcon}
+                sx={{
+                  '& path': {
+                    stroke: 'none',
+                  },
+                }}
+              />
+            }
+            disabled={tree.lat === null || tree.lon === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.token_id === null ? 'Token not issued' : tree.token_id
+            }
+            title="Token ID"
+            icon={<Icon icon={TokenIcon} />}
+            subtitle={tree.token_id === null ? null : 'click to enter'}
+            link={tree.token_id === null ? null : `/tokens/${tree.token_id}`}
+            disabled={tree.token_id === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.wallet_name === null ? 'No wallet owns it' : tree.wallet_name
+            }
+            title="Wallet owner"
+            icon={<Icon icon={AccountBalanceWalletIcon} />}
+            subtitle={tree.wallet_name === null ? null : 'click to enter'}
+            link={
+              tree.wallet_name === null ? null : `/wallets/${tree.wallet_id}`
+            }
+            disabled={tree.wallet_name === null}
+          />
+        </TagList>
+        <Divider
+          varian="fullwidth"
+          sx={{
+            mt: [10, 20],
+          }}
         />
+        <ImpactSection />
+        <Box height={20} />
+        {nextExtraIsEmbed && (
+          <Portal
+            container={() => document.getElementById('embed-logo-container')}
+          >
+            <Avatar
+              sx={{
+                width: '120px',
+                height: '120px',
+                margin: '10px',
+              }}
+              src={isPlanterContext ? planter.image_url : organization.logo_url}
+              variant="rounded"
+            />
+          </Portal>
+        )}
       </Box>
-      <Typography
-        variant="h4"
-        sx={[
-          {
-            fontSize: [24, 28],
-            lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
-            mt: (t) => [t.spacing(14), t.spacing(26)],
-          },
-          nextExtraIsEmbed && {
-            mt: (t) => [t.spacing(14), t.spacing(26 * 0.6)],
-          },
-        ]}
-      >
-        Tree Info
-      </Typography>
-      <TagList>
-        <TreeTag
-          TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
-          title="Planted on"
-          icon={<SvgIcon component={CalendarIcon} />}
-        />
-        <TreeTag
-          TreeTagValue={tree.verified === false ? 'not verified' : 'verifed'}
-          title="Verification"
-          icon={<SvgIcon component={VerifiedIcon} />}
-          disabled={tree.verified === false}
-        />
-        <TreeTag
-          TreeTagValue={
-            tree.country_name === null ? 'unknown' : tree.country_name
-          }
-          title="Located in"
-          icon={<SvgIcon component={LocationIcon} />}
-          disabled={tree.country_name === null}
-        />
-        <TreeTag
-          TreeTagValue={tree.age === null ? 'unknown' : tree.age}
-          title="Age"
-          icon={<SvgIcon component={HistoryIcon} />}
-          disabled={tree.age === null}
-        />
-        <TreeTag
-          TreeTagValue={
-            tree.species_name === null ? 'unknown' : tree.species_name
-          }
-          title="Species"
-          icon={<SvgIcon component={OriginIcon} inheritViewBox alt="origin" />}
-          disabled={tree.species_name === null}
-        />
-        <TreeTag
-          TreeTagValue={
-            tree.gps_accuracy === null ? 'unknown' : tree.gps_accuracy
-          }
-          title="GPS Accuracy"
-          icon={<SvgIcon component={AccuracyIcon} />}
-          disabled={tree.gps_accuracy === null}
-        />
-        <TreeTag
-          TreeTagValue={tree.morphology === null ? 'unknown' : tree.morphology}
-          title="Morphology"
-          icon={<SvgIcon component={HubIcon} />}
-          disabled={tree.morphology === null}
-        />
-        <TreeTag
-          TreeTagValue={
-            tree.lat === null || tree.lon == null
-              ? 'unknown'
-              : `${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(tree.lon, 5)}`
-          }
-          title="Latitude, Longitude"
-          icon={<SvgIcon component={GlobalIcon} color="pink" />}
-          disabled={tree.lat === null || tree.lon === null}
-        />
-        <TreeTag
-          TreeTagValue={
-            tree.token_id === null ? 'Token not issued' : tree.token_id
-          }
-          title="Token ID"
-          icon={<SvgIcon component={TokenIcon} />}
-          subtitle={tree.token_id === null ? null : 'click to enter'}
-          link={tree.token_id === null ? null : `/tokens/${tree.token_id}`}
-          disabled={tree.token_id === null}
-        />
-        <TreeTag
-          TreeTagValue={
-            tree.wallet_name === null ? 'No wallet owns it' : tree.wallet_name
-          }
-          title="Wallet owner"
-          icon={<SvgIcon component={AccountBalanceWalletIcon} />}
-          subtitle={tree.wallet_name === null ? null : 'click to enter'}
-          link={tree.wallet_name === null ? null : `/wallets/${tree.wallet_id}`}
-          disabled={tree.wallet_name === null}
-        />
-      </TagList>
-      <Divider
-        varian="fullwidth"
-        sx={{
-          mt: [10, 20],
-        }}
-      />
-      <ImpactSection />
-      <Box height={20} />
-    </Box>
+    </>
   );
 }
 
-export const getServerSideProps = utils.wrapper(async ({ params }) => {
+async function serverSideData(params) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
@@ -689,16 +716,34 @@ export const getServerSideProps = utils.wrapper(async ({ params }) => {
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');
     organization = await getOrganizationById(planting_organization_id);
-  } else if (planter.organzation_id) {
+  } else if (planter.organization_id) {
     log.warn('load org from planter. organization_id');
     organization = await getOrganizationById(planter.organization_id);
+  } else {
+    log.warn('can not load org for tree:', tree, planter);
   }
 
   return {
-    props: {
-      tree,
-      planter,
-      organization,
-    },
+    tree,
+    planter,
+    organization,
+  };
+}
+
+const getStaticProps = utils.wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 });
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };

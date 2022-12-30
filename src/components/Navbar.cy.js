@@ -20,7 +20,6 @@ describe('Navbar tests', () => {
   it('navbar', () => {
     mount(<Navbar />);
     cy.viewport(1100, 900);
-    cy.get('Button').contains('Partnerships');
-    cy.get('Button').contains('Contribute');
+    cy.get('Button').contains('Blog');
   });
 });

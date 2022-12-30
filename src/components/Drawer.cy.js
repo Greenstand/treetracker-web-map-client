@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import Portal from '@mui/material/Portal';
+import log from 'loglevel';
 import React from 'react';
 import Drawer from './Drawer';
 import { mountWithTheme as mount } from '../models/test-utils';
@@ -11,7 +12,7 @@ describe('CustomWorldMap', () => {
       const [open, setOpen] = React.useState(false);
       function load() {
         setTimeout(() => {
-          console.log('test');
+          log.warn('test');
           setOpen(true);
         }, 100);
       }

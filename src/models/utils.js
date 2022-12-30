@@ -61,8 +61,10 @@ async function requestAPI(url) {
     log.warn('requestAPI:', urlFull);
     // urlFull = urlFull.replace(/\?/, '/query/');
 
+    const begin = Date.now();
     const res = await axios.get(urlFull);
     const { data } = res;
+    log.warn('url:', urlFull, 'took:', Date.now() - begin);
     return data;
   } catch (ex) {
     log.error('ex:', ex);
@@ -179,7 +181,7 @@ const optimizeThemeFonts = (theme) => {
     const font = typography[key].fontFamily;
     if (!font || /,/.test(font)) return;
 
-    const weight = typography[key].fontWeight;
+    const weight = Number(typography[key].fontWeight);
 
     // finally add font and corresponding weight
     if (!usedFonts[font]) {
@@ -232,8 +234,79 @@ const wrapper = (callback) => (params) =>
         destination: '/500',
         permanent: false,
       },
+      revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
     };
   });
+
+const getLocationString = (country, continent) => {
+  if (!country && !continent) return 'Unknown';
+  if (!country) return continent;
+  if (!continent) return country;
+  return `${country}, ${continent}`;
+};
+
+/**
+ * set mui theme prop by path
+ *
+ * @param {string} propPath - path to the prop
+ * @param {string|number} value - new value of the prop
+ * @param {Object} obj - the object to set the prop on
+ *
+ * @example
+ * Using our playground theme
+ * setPropByPath('palette.primary.main', '#FFFF33', theme)
+ *
+ * @returns the new theme
+ */
+const setPropByPath = (propPath, value, obj) => {
+  if (!value || !propPath) return null;
+  const temp = { ...obj };
+  propPath.split('.').reduce((acc, curr, i, src) => {
+    if (i === src.length - 1) {
+      acc[src[src.length - 1]] = value;
+      return acc[src[src.length - 1]];
+    }
+    return acc[curr];
+  }, temp);
+  return temp;
+};
+
+/**
+ * get obj prop by path
+ *
+ * @param {string} propPath - path to the prop
+ * @param {Object} obj - the object to get the prop from
+ *
+ * @example
+ * Using our playground theme
+ * // returns #FFFF33
+ * getPropByPath('palette.primary.main', theme)
+ *
+ * @example
+ * Using our playground theme
+ * // returns { main: xxx, light: xxx, dark: xxx }
+ * getPropByPath('palette.primary', theme)
+ *
+ * @returns the prop value
+ */
+const getPropByPath = (propPath, obj) => {
+  if (!propPath) return null;
+  return propPath.split('.').reduce((acc, curr) => acc[curr], obj);
+};
+
+/**
+ * @param {int} number - the number to abbrevate
+ *  *
+ * @example
+ * 1000
+ * // returns 1K
+ *
+ * @returns the abbreviated number
+ */
+const abbreviateNumber = (number) =>
+  new Intl.NumberFormat('en', {
+    notation: 'compact',
+  }).format(number);
 
 export {
   hideLastName,
@@ -253,4 +326,8 @@ export {
   nextPathBaseDecode,
   nextPathBaseEncode,
   wrapper,
+  getLocationString,
+  setPropByPath,
+  getPropByPath,
+  abbreviateNumber,
 };

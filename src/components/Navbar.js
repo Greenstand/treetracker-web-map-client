@@ -9,11 +9,12 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
+import { initialState } from 'context/configContext';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
-import { useMobile } from '../hooks/globalHooks';
+import { useLocalStorage, useMobile } from '../hooks/globalHooks';
 
 const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
 
@@ -62,6 +63,8 @@ const useStyles = makeStyles()((theme) => ({
 function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
+  const [webMapConfig] = useLocalStorage('config', initialState);
+  const { items: navItems } = webMapConfig.navbar;
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -104,14 +107,28 @@ function Navbar() {
               alignItems: 'baseline',
             }}
           >
-            <Image
+            {/* <Image
               src={iconLogo}
               width={24}
               height={30}
               alt="Greenstand Logo"
-            />
+            /> */}
             <Typography
-              variant="h4"
+              variant="h1"
+              ml={2.5}
+              color="primary"
+              sx={{
+                // color: '#61892F',
+                fontSize: 30,
+                fontWeight: 900,
+                lineHeight: '37px',
+                letterSpacing: '0.2px',
+              }}
+            >
+              Treetracker
+            </Typography>
+            <Typography
+              variant="h6"
               ml={2.5}
               color="text.secondary"
               sx={{
@@ -119,49 +136,21 @@ function Navbar() {
                 lineHeight: '22px',
               }}
             >
-              Greenstand
+              by Greenstand
             </Typography>
           </Box>
         )}
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
-        <Link href="/">
-          <Button variant="text">
-            <Typography className={classes.buttonStyle}>Greenstand</Typography>
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>
-              Partnerships
-            </Typography>
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Treetracker</Typography>
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Contribute</Typography>
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Sevices</Typography>
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Blog</Typography>
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Contact Us</Typography>
-          </Button>
-        </Link>
+        {navItems.map((item) => (
+          <Link key={`nav-${item.title}`} target="_blank" href={item.url}>
+            <Button className={classes.buttonStyle} variant="text">
+              <Typography className={classes.buttonStyle}>
+                {item.title}
+              </Typography>
+            </Button>
+          </Link>
+        ))}
         <ChangeThemeButton />
       </Toolbar>
       <Button
@@ -187,13 +176,11 @@ function Navbar() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Greenstand</MenuItem>
-        <MenuItem onClick={handleClose}>Partnerships</MenuItem>
-        <MenuItem onClick={handleClose}>Treetracker</MenuItem>
-        <MenuItem onClick={handleClose}>Contribute</MenuItem>
-        <MenuItem onClick={handleClose}>Services</MenuItem>
-        <MenuItem onClick={handleClose}>Blog</MenuItem>
-        <MenuItem onClick={handleClose}>Contact Us</MenuItem>
+        {navItems.map((item) => (
+          <MenuItem key={`nav-${item.title}`}>
+            <Link href={item.url}>{item.title}</Link>
+          </MenuItem>
+        ))}
         <MenuItem onClick={handleClose} sx={{ paddingLeft: '10px' }}>
           <ChangeThemeButton />
         </MenuItem>

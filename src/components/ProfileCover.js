@@ -19,21 +19,20 @@ function ProfileCover({ src }) {
         <img src={src} alt="profile" />
       </Box>
     );
-  } 
-    return (
-      <Box
-        sx={{
-          width: '100%',
-          borderRadius: '16px',
-          height: [212, 328],
-          backgroundImage: `url(${imagePlaceholder})`,
-          backgroundSize: '23% auto',
-          backgroundColor: (t) => t.palette.primary.main,
-          backgroundRepeat: 'space',
-        }}
-      />
-    );
-  
+  }
+  return (
+    <Box
+      sx={{
+        width: '100%',
+        borderRadius: '16px',
+        height: [212, 328],
+        backgroundImage: `url(${imagePlaceholder})`,
+        backgroundSize: '23% auto',
+        backgroundColor: (t) => t.palette.primary.main,
+        backgroundRepeat: 'space',
+      }}
+    />
+  );
 }
 
 export default ProfileCover;

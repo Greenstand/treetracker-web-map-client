@@ -10,6 +10,9 @@ body {
   margin: 0px;
   background: #ffffff;
   overscroll-behavior: contain;
+  /* Match font weight to figma */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .side {
@@ -123,20 +126,6 @@ a {
 
 .not-found h1 {
   font-size: 4rem;
-}
-
-.not-found-link {
-  font-weight: bold;
-  color: #fff;
-  background-color: #86c232;
-  padding: 8px 7px;
-  border-radius: 5px;
-  border-top: 10px;
-}
-
-.not-found a:hover {
-  text-decoration: none;
-  color: #fff;
 }
 
 .not-found-background {

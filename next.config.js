@@ -22,11 +22,11 @@ module.exports = {
       },
       {
         source:
-          '/organizations/:organizationId(\\d{1,})/trees/:treeId(\\d{1,})',
+          '/organizations/:organizationId([0-9a-zA-Z-]{1,})/trees/:treeId(\\d{1,})',
         destination: '/trees/:treeId(\\d{1,})',
       },
       {
-        source: '/wallets/:walletId(.{36})/tokens/:tokenId(.{36})',
+        source: '/wallets/:walletId([0-9a-zA-Z-]{1,})/tokens/:tokenId(.{36})',
         destination: '/tokens/:tokenId([a-z0-9-]{36})',
       },
       {
@@ -34,7 +34,7 @@ module.exports = {
         destination: '/?map=:map_name',
       },
       {
-        source: '/wallets/:walletId(.{36})/tokens',
+        source: '/wallets/:walletId([0-9a-zA-Z-]{1,})/tokens',
         destination: '/tokens/idfromquery',
       },
     ];

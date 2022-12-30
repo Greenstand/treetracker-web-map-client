@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
 import { makeStyles } from 'models/makeStyles';
+import { abbreviateNumber } from 'models/utils';
 import Link from './Link';
 
 const useStyles = makeStyles()((theme) => ({}));
@@ -11,9 +12,7 @@ function TreeSpeciesCard(props) {
   const { classes } = useStyles();
 
   const { name, count, subTitle } = props;
-  const formattedCount = new Intl.NumberFormat('en', {
-    notation: 'compact',
-  }).format(count);
+  const formattedCount = abbreviateNumber(count);
 
   return (
     <Paper
@@ -31,8 +30,17 @@ function TreeSpeciesCard(props) {
         columns={[4, 6]}
         justifyContent="space-between"
         alignItems="center"
+        flexWrap="nowrap"
       >
-        <Grid item ml={6}>
+        <Grid
+          item
+          ml={6}
+          sx={{
+            wordWrap: 'break-word',
+            width: '65%',
+            padding: (t) => [t.spacing(4, 0)],
+          }}
+        >
           <Typography
             variant="h5"
             sx={{
@@ -74,6 +82,8 @@ function TreeSpeciesCard(props) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            alignSelf: 'stretch',
+            justifyContent: 'center',
           }}
         >
           <Typography variant="body1">Count:</Typography>

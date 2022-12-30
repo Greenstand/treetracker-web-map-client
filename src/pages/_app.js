@@ -1,9 +1,14 @@
 import '../style.css';
-
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
+import { LinearProgress, Box, useTheme, useMediaQuery } from '@mui/material';
 import log from 'loglevel';
+import App from 'next/app';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
+import { userAgentFromString } from 'next/server';
+import React from 'react';
+import packageJson from '../../package.json';
 import Layout from '../components/Layout';
 import LayoutDashboard from '../components/LayoutDashboard';
 import LayoutEmbed from '../components/LayoutEmbed';
@@ -12,8 +17,10 @@ import LayoutMobileB from '../components/LayoutMobileB';
 import LayoutMobileC from '../components/LayoutMobileC';
 import { DrawerProvider } from '../context/DrawerContext';
 import { CustomThemeProvider } from '../context/themeContext';
-import { useLocalStorage, useMobile, useEmbed } from '../hooks/globalHooks';
+import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
+
+log.warn(`Web Map Client version ${packageJson.version}`);
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   log.warn('Mocking API calls with msw');
@@ -30,12 +37,52 @@ export const createMuiCache = () =>
     prepend: true,
   }));
 
-function TreetrackerApp({ Component, pageProps }) {
+export function reportWebVitals({ name, delta, value, id, label }) {
+  const deployed = process.env.NODE_ENV === 'production';
+  if (label === 'web-vital' && deployed) {
+    window.gtag('event', name, {
+      value: delta,
+      metric_id: id,
+      metric_value: value,
+      metric_delta: delta,
+    });
+  }
+}
+
+function GoogleAnalytics() {
+  return (
+    <>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+    `}
+      </Script>
+    </>
+  );
+}
+
+function TreetrackerApp({ Component, pageProps, device }) {
+  log.warn('!!!! render the _app');
   const router = useRouter();
+  const theme = useTheme();
+  const layoutRef = React.useRef();
+
   const embedLocalStorage = useLocalStorage('embed', false);
-  const nextExtraIsDesktop = !useMobile();
+  const clientSideQuery = useMediaQuery(theme.breakpoints.up('sm'));
+  const onServer = typeof window === 'undefined';
+
+  const nextExtraIsDesktop = onServer ? device === 'desktop' : clientSideQuery;
   const nextExtraIsEmbed = useEmbed() === true ? true : embedLocalStorage[0];
   const nextExtraKeyword = router.query.keyword;
+  const [nextExtraLoading, setNextExtraLoading] = React.useState(false);
 
   log.warn('app: isDesktop: ', nextExtraIsDesktop);
   log.warn('app: component: ', Component);
@@ -43,62 +90,129 @@ function TreetrackerApp({ Component, pageProps }) {
   log.warn('app: component: isBLayout', Component.isBLayout);
   log.warn('router:', router);
 
+  React.useEffect(() => {
+    const handleRouteChange = (url) => {
+      log.warn('handleRouteChange:', url);
+      // setTimeout(() => {
+      //   if (url !== router.asPath) {
+      setNextExtraLoading(true);
+      //   }
+      // }, '500');
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+    router.events.on('routeChangeComplete', () => {
+      log.warn('handleRouteChangeComplete::');
+      setNextExtraLoading(false);
+      if (layoutRef.current) {
+        layoutRef.current.scrollTop = 0;
+      }
+    });
+    router.events.on('routeChangeError', (...arg) => {
+      log.warn('handleChangeError:', ...arg);
+      setNextExtraLoading(false);
+    });
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+      router.events.off('routeChangeComplete', () => {
+        log.warn('off routeChangeComplete:');
+        setNextExtraLoading(false);
+      });
+      router.events.off('routeChangeError', (...arg) => {
+        log.warn('off routerChangeError', ...arg);
+        setNextExtraLoading(false);
+      });
+    };
+  });
+
   const extraProps = {
     nextExtraIsEmbed,
     nextExtraIsEmbedCallback: embedLocalStorage[1],
     nextExtraIsDesktop,
     nextExtraKeyword,
+    nextExtraLoading,
   };
 
   const isAdmin = !!router.asPath.match(/admin/);
   if (isAdmin) {
     return (
-      <LayoutDashboard>
-        <Component {...pageProps} />
-      </LayoutDashboard>
+      <>
+        <GoogleAnalytics />
+        <LayoutDashboard>
+          <Component {...pageProps} />
+        </LayoutDashboard>
+      </>
     );
   }
 
   return (
-    <CacheProvider value={muiCache ?? createMuiCache()}>
-      <CustomThemeProvider>
-        <DrawerProvider>
-          <MapContextProvider>
-            {nextExtraIsDesktop && !nextExtraIsEmbed && (
-              <Layout {...extraProps}>
-                <Component {...pageProps} {...extraProps} />
-              </Layout>
-            )}
-            {nextExtraIsDesktop && nextExtraIsEmbed && (
-              <LayoutEmbed
-                {...extraProps}
-                isFloatingDisabled={Component.isFloatingDisabled}
-              >
-                <Component {...pageProps} {...extraProps} />
-              </LayoutEmbed>
-            )}
-            {!nextExtraIsDesktop && Component.isBLayout && (
-              <LayoutMobileB>
-                <Component {...pageProps} {...extraProps} />
-              </LayoutMobileB>
-            )}
-            {!nextExtraIsDesktop && Component.isCLayout && (
-              <LayoutMobileC>
-                <Component {...pageProps} {...extraProps} />
-              </LayoutMobileC>
-            )}
-            {!nextExtraIsDesktop &&
-              !Component.isBLayout &&
-              !Component.isCLayout && (
-                <LayoutMobile>
+    <>
+      <GoogleAnalytics />
+      <CacheProvider value={muiCache ?? createMuiCache()}>
+        <CustomThemeProvider>
+          <DrawerProvider>
+            <MapContextProvider>
+              {nextExtraIsDesktop && !nextExtraIsEmbed && (
+                <Layout {...extraProps} ref={layoutRef}>
                   <Component {...pageProps} {...extraProps} />
-                </LayoutMobile>
+                </Layout>
               )}
-          </MapContextProvider>
-        </DrawerProvider>
-      </CustomThemeProvider>
-    </CacheProvider>
+              {nextExtraIsDesktop && nextExtraIsEmbed && (
+                <LayoutEmbed
+                  {...extraProps}
+                  isFloatingDisabled={Component.isFloatingDisabled}
+                >
+                  <Component {...pageProps} {...extraProps} />
+                </LayoutEmbed>
+              )}
+              {!nextExtraIsDesktop && Component.isBLayout && (
+                <LayoutMobileB>
+                  <Component {...pageProps} {...extraProps} />
+                </LayoutMobileB>
+              )}
+              {!nextExtraIsDesktop && Component.isCLayout && (
+                <LayoutMobileC>
+                  <Component {...pageProps} {...extraProps} />
+                </LayoutMobileC>
+              )}
+              {!nextExtraIsDesktop &&
+                !Component.isBLayout &&
+                !Component.isCLayout && (
+                  <LayoutMobile ref={layoutRef}>
+                    <Component {...pageProps} {...extraProps} />
+                  </LayoutMobile>
+                )}
+            </MapContextProvider>
+          </DrawerProvider>
+        </CustomThemeProvider>
+      </CacheProvider>
+      {nextExtraLoading && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            zIndex: 9999,
+            width: '100%',
+          }}
+        >
+          <LinearProgress />
+        </Box>
+      )}
+    </>
   );
 }
+
+// Detect device from user agent header
+TreetrackerApp.getInitialProps = async (context) => {
+  const props = await App.getInitialProps(context);
+  const userAgent = context?.ctx.req
+    ? context.ctx.req.headers['user-agent']
+    : window.navigator.userAgent;
+
+  const device = userAgentFromString(userAgent)?.device.type || 'desktop';
+
+  return { props, device };
+};
 
 export default TreetrackerApp;

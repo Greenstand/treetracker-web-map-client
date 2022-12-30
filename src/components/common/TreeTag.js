@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import * as d3 from 'd3';
 import Link from '../Link';
@@ -12,6 +11,7 @@ function TreeTagComponent({
   icon,
   disabled = false,
   link,
+  fullWidth = false,
 }) {
   const chip = (
     <Chip
@@ -55,6 +55,11 @@ function TreeTagComponent({
         p: (t) => [t.spacing(2, 2), t.spacing(4.75, 6)],
         height: 'auto',
         maxHeight: [58.6, 87.2],
+        ...(fullWidth && {
+          justifyContent: 'flex-start',
+          width: '100%',
+          maxWidth: '540px',
+        }),
       }}
       color="secondary"
       icon={

@@ -1,6 +1,7 @@
 import { Card, Box, Button, Avatar, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import * as d3 from 'd3';
+import log from 'loglevel';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 import ColorButton from './common/ColorButton';
@@ -19,11 +20,7 @@ const useStyles = makeStyles()((theme) => ({
       height: 80,
       width: 80,
     },
-    borderRadius: '50%',
     float: 'left',
-    borderWidth: theme.spacing(1),
-    borderColor: theme.palette.background.paper,
-    borderStyle: 'solid',
     boxSizing: 'border-box',
   },
 }));
@@ -39,7 +36,7 @@ function InformationCard1({
   const { classes } = useStyles();
   const theme = useTheme();
 
-  console.log('rotation', rotation);
+  log.warn('rotation', rotation);
 
   return (
     <Card
@@ -67,7 +64,10 @@ function InformationCard1({
     >
       <Box display="flex" alignItems="center">
         <Avatar
-          sx={{ transform: rotation && `rotate(${rotation}deg)` }}
+          sx={{
+            filter: 'drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.25))',
+            transform: rotation && `rotate(${rotation}deg)`,
+          }}
           className={classes.media}
           src={cardImageSrc}
           title="Contemplative Reptile"

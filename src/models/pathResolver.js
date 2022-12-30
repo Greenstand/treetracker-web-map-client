@@ -31,8 +31,10 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
     JSON.stringify(router, undefined, 2),
     'pathname:',
     pathname,
+    'with options:',
+    options,
   );
-  console.warn(JSON.stringify(tree, undefined, 2));
+  log.warn(JSON.stringify(tree, undefined, 2));
 
   const optionalParams = {
     ...(router.query.embed && { embed: router.query.embed }),
@@ -65,7 +67,7 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
       pathnameResult = `/trees/${tree.id}`;
     }
   }
-  log.warn('pathname to push:', pathnameResult);
+  log.warn('pathname to push:', pathnameResult, optionalParams);
 
   return {
     pathname: pathnameResult,
@@ -112,4 +114,12 @@ function getContext(router, options = {}) {
   return null;
 }
 
-export { getPathWhenClickTree, updatePathWhenMapMoveEnd, getContext };
+function getBounds(router) {
+  return router.query.bounds;
+}
+export {
+  getPathWhenClickTree,
+  updatePathWhenMapMoveEnd,
+  getContext,
+  getBounds,
+};

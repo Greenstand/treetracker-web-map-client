@@ -1,8 +1,9 @@
+import log from 'loglevel';
 import Head from 'next/head';
 import Home from '../components/Home';
 
 export default function Homepage({ nextExtraIsEmbed }) {
-  console.log(nextExtraIsEmbed);
+  log.warn(nextExtraIsEmbed);
   return (
     <>
       <Head>
@@ -15,7 +16,6 @@ export default function Homepage({ nextExtraIsEmbed }) {
           content="trees, treetracker, greenstand, tree token, tree planting based economy, "
         />
         <meta name="author" content="metatags generator" />
-        <meta name="robots" content="index, follow" />
         <meta name="revisit-after" content="3 month" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         <title>Treetracker by Greenstand</title>

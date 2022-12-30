@@ -1,4 +1,11 @@
-import { Box, SvgIcon, Typography, InputBase, Divider } from '@mui/material';
+import {
+  Box,
+  Typography,
+  InputBase,
+  Divider,
+  Paper,
+  Alert,
+} from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -7,6 +14,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useMapContext } from 'mapContext';
+import Icon from './common/CustomIcon';
 import { useMobile } from '../hooks/globalHooks';
 import TimeIcon from '../images/icons/time.svg';
 import { nextPathBaseDecode } from '../models/utils';
@@ -64,6 +72,7 @@ function Timeline() {
   const router = useRouter();
   const isMobile = useMobile();
   const [showPicker, setShowPicker] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [timeFrame, setTimeFrame] = useState({
     start: Date.now(),
     end: Date.now(),
@@ -83,7 +92,15 @@ function Timeline() {
     // check if the start date is before the end date
     const start = frameType === 'start' ? newValue : timeFrame.start;
     const end = frameType === 'end' ? newValue : timeFrame.end;
-    if (start > end) return;
+
+    if (start > end) {
+      setIsError(true);
+      return;
+    }
+
+    if (isError) {
+      setIsError(false);
+    }
 
     setTimeFrame((prevTimeFrame) => ({
       ...prevTimeFrame,
@@ -101,37 +118,22 @@ function Timeline() {
 
   return (
     isGlobalPage && (
-      <Box
-        sx={{
-          position: 'absolute',
-          zIndex: ['996', '9999'], // 996 is same as used for zoom buttons
-          bottom: '0px',
-          left: '0px',
-          margin: '20px',
-          mb: isMobile ? 'calc(2rem + 25px)' : null, // currently based on the zoom buttons
-          pr: showPicker && '15px',
-          height: 52,
-          borderRadius: 4,
-          backgroundColor: 'background.paper',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 1,
-          boxSizing: 'border-box',
-        }}
-      >
-        <Box
+      <>
+        {isError && (
+          <Alert severity="error">Start date must be before end date</Alert>
+        )}
+        <Paper
+          elevation={7}
           sx={{
             position: 'absolute',
             zIndex: ['996', '9999'], // 996 is same as used for zoom buttons
             bottom: '0px',
             left: '0px',
             margin: '20px',
-            mb: isMobile && 'calc(2rem + 25px)', // currently based on the zoom buttons
+            mb: isMobile ? 'calc(2rem + 25px)' : null, // currently based on the zoom buttons
             pr: showPicker && '15px',
             height: 52,
             borderRadius: 4,
-            backgroundColor: 'background.paper',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -146,22 +148,21 @@ function Timeline() {
               width: 52,
               borderRadius: 4,
               background: 'none',
-              '-webkit-tap-highlight-color': 'transparent',
+              WebkitTapHighlightColor: 'transparent',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               cursor: 'pointer',
             }}
           >
-            <SvgIcon
-              component={TimeIcon}
+            <Icon
+              icon={TimeIcon}
+              width={22}
               sx={{
-                width: 22,
                 '& path': {
                   fill: ({ palette }) => palette.primary.main,
                 },
               }}
-              inheritViewBox
             />
           </Box>
           {showPicker && (
@@ -219,8 +220,8 @@ function Timeline() {
               </Box>
             </LocalizationProvider>
           )}
-        </Box>
-      </Box>
+        </Paper>
+      </>
     )
   );
 }

@@ -49,7 +49,7 @@ function MapComponent() {
   const mapContext = useMapContext();
   const router = useRouter();
 
-  console.log(mapRef, mapContext);
+  log.warn(mapRef, mapContext);
 
   function handleMessageClose() {
     setMessage({
@@ -76,6 +76,7 @@ function MapComponent() {
       tree,
       window.location,
       router,
+      undefined,
       {
         base: process.env.NEXT_PUBLIC_BASE,
       },
@@ -154,7 +155,7 @@ function MapComponent() {
         process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
       apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
     });
-    map.on('move-end', () => {
+    map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
       log.warn('update url');
       const path = pathResolver.updatePathWhenMapMoveEnd(
         window.location,

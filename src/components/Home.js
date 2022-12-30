@@ -2,8 +2,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { makeStyles } from 'models/makeStyles';
+import * as pathResolver from 'models/pathResolver';
 import Link from './Link';
 import { useMapContext } from '../mapContext';
 
@@ -54,6 +56,7 @@ export default function Home(props) {
   const { classes } = useStyles();
 
   const mapContext = useMapContext();
+  const router = useRouter();
 
   React.useEffect(() => {
     async function reload() {
@@ -61,7 +64,16 @@ export default function Home(props) {
       if (map) {
         await map.clearSelection();
         await map.setFilters({});
-        await map.gotoView(0, 0, 2);
+        log.warn('location:', window.location);
+        log.warn('router:', router);
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await map.gotoBounds(bounds);
+        } else {
+          log.warn('goto global view');
+          await map.gotoView(0, 0, 2);
+        }
       }
     }
     reload();
@@ -114,16 +126,34 @@ export default function Home(props) {
           }}
         >
           <Button variant="outlined" color="inherit" className={classes.button}>
-            Learn more
+            <Link
+              target="_blank"
+              href="https://greenstand.org/treetracker/web-map"
+            >
+              <Box
+                sx={{
+                  color: 'white',
+                  '.MuiBox-root&:hover': {
+                    color: 'brightGrey.main',
+                  },
+                }}
+              >
+                Learn more
+              </Box>
+            </Link>
           </Button>
+
           <Link href="/top">
             <Button
               variant="contained"
               color="primaryLight"
               className={classes.button}
               sx={{
-                color: '#474B4F',
+                color: 'darkGrey.main',
                 ml: [4, 6],
+                '.MuiButton-root&:hover': {
+                  color: 'white',
+                },
               }}
             >
               Let&apos;s Find a Tree

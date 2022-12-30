@@ -6,6 +6,14 @@ labels: ''
 assignees: ''
 ---
 
+# Description
+
+[comment]: # 'Description of the issue'
+
+To reproduce
+
+[comment]: # 'To reproduce'
+
 ---
 
 Some hints:
