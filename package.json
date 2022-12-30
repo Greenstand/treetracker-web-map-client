@@ -5,8 +5,8 @@
   "scripts": {
     "build": "next build",
     "build-and-start": "next build && next start",
-    "cy": "start-server-and-test dev http://localhost:3000 cypress:open",
-    "cy:nock": "cypress open --env nock=true",
+    "cy": "cypress open --env nock=true",
+    "cy:nockless": "start-server-and-test dev http://localhost:3000 cypress:open",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:fast": "cypress run --env nock=true --spec=cypress/tests/integration/**/*.cy.js --config video=false",
