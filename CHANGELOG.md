@@ -1,3 +1,12 @@
+# [2.0.0-beta.220](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.219...v2.0.0-beta.220) (2022-12-30)
+
+
+### Bug Fixes
+
+* corrected image rotation ([fa1730e](https://github.com/Greenstand/treetracker-web-map-client/commit/fa1730e352378fff70b0821d52d523c0b21219de))
+* final fix, added && conditional ([39821e5](https://github.com/Greenstand/treetracker-web-map-client/commit/39821e5e84eb753e4ba08dba57165e3798d2dfa8))
+* removed my console.log ([8a30185](https://github.com/Greenstand/treetracker-web-map-client/commit/8a30185098ca0b7c84461aa5669eef12fff738d3))
+
 # [2.0.0-beta.219](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.218...v2.0.0-beta.219) (2022-12-29)
 
 
