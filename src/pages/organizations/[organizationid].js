@@ -31,6 +31,7 @@ import { useMapContext } from '../../mapContext';
 import * as pathResolver from '../../models/pathResolver';
 import { getLocationString, getContinent, wrapper } from '../../models/utils';
 
+
 export default function Organization(props) {
   log.warn('props for org page:', props);
   const { organization, nextExtraIsEmbed } = props;

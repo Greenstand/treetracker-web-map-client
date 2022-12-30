@@ -137,3 +137,19 @@ export async function getTokenById(id) {
     throw err;
   }
 }
+
+// establishing an ondemand revalidation route 
+export default async function handler(req, res){
+  const {params, secret} = {params: req.params, secret: req.query.secret}
+  console.log(secret);
+  if(secret !== process.env.ondemand_token) {
+    return res.status(401).json({message: 'Invalid Token'});
+  }
+  try {
+    await res.revalidate(`/organizations/${params}`);
+    return res.json({revalidated: true});
+  } catch (e) {
+    //log the error to a service via log.error
+    return res.status(500).send('Error revalidating')
+  }
+}
