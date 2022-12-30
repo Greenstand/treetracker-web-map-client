@@ -5,7 +5,7 @@ export default async function handler({ query }, res) {
   }
 
   if (!path) {
-    return res.status(401).json({ message: 'Invalid path' });
+    return res.status(404).json({ message: 'Invalid path' });
   }
 
   try {
