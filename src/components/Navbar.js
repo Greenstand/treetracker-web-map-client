@@ -8,8 +8,9 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { initialState } from 'context/configContext';
+import { getStorageValue } from 'hooks/globalHooks/useLocalStorage';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
@@ -60,11 +61,11 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-function Navbar() {
+function Navbar({ preview }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
   const [webMapConfig] = useLocalStorage('config', initialState);
-  const { items: navItems } = webMapConfig.navbar;
+  const [navItems, setNavItems] = useState(webMapConfig.navbar.items);
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -74,10 +75,24 @@ function Navbar() {
     setAnchorEl(null);
   };
   const { classes } = useStyles();
+
+  // Detect webMapConfig changes. Reactively update the nav-items;
+  useEffect(() => {
+    const updateFunction = () => {
+      const localWebMapConfig = getStorageValue('config', initialState);
+      setNavItems(localWebMapConfig.navbar.items);
+    };
+    window.addEventListener('storage', updateFunction);
+    return () => {
+      window.removeEventListener('storage', updateFunction);
+    };
+  }, []);
+
   return (
     <AppBar
       elevation={4}
       className={classes.navContainer}
+      sx={preview ? { width: '100%!important' } : null}
       color="default"
       position="static"
     >
