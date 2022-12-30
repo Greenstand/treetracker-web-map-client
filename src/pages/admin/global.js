@@ -2,10 +2,12 @@ import { Box, Typography, Divider, List } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import HeadTag from 'components/HeadTag';
+import Navbar from 'components/Navbar';
 import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
 import ChangeNavSection from 'components/dashboard/ChangeNavSection';
 import { Tab, TabPanel } from 'components/dashboard/Tabs';
 import { ConfigProvider, useConfigContext } from 'context/configContext';
+import { CustomThemeProvider } from 'context/themeContext';
 import { getOrganizationById } from 'models/api';
 import { updateLogoUrl } from 'models/config.reducer';
 import { wrapper } from 'models/utils';
@@ -47,7 +49,7 @@ function Global({ organization }) {
   }, [mapContext, organization, state.map.initialLocation]);
 
   return (
-    <>
+    <CustomThemeProvider>
       <HeadTag title="Admin Dashboard" />
       <Box
         sx={{
@@ -98,7 +100,21 @@ function Global({ organization }) {
           }}
         >
           <TabPanel value={currentTab} index={0}>
-            <Typography variant="h5">Navbar View</Typography>
+            <Typography variant="h4">Navbar Preview</Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                paddingY: '50px;',
+                backgroundColor: 'background.paperDark',
+                borderRadius: '8px',
+                marginBottom: '24px',
+              }}
+            >
+              <Navbar preview />
+            </Box>
+
             <Box
               sx={{
                 display: 'flex',
@@ -119,7 +135,7 @@ function Global({ organization }) {
           </TabPanel>
         </Box>
       </Box>
-    </>
+    </CustomThemeProvider>
   );
 }
 
