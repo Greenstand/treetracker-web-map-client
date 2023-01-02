@@ -29,12 +29,7 @@ import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
-import {
-  getLocationString,
-  getContinent,
-  wrapper,
-  abbreviateNumber,
-} from 'models/utils';
+import { getLocationString, getContinent, wrapper } from 'models/utils';
 
 export default function Organization(props) {
   log.warn('props for org page:', props);
@@ -332,7 +327,7 @@ export default function Organization(props) {
               <CustomWorldMap
                 totalTrees={
                   (organization?.featuredTrees?.total &&
-                    abbreviateNumber(organization?.featuredTrees?.total)) ||
+                    organization?.featuredTrees?.total) ||
                   undefined
                 }
                 con={organization?.continent_name || 'af'}

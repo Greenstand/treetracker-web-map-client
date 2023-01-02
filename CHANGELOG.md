@@ -1,6 +1,64 @@
+# [2.0.0-beta.221](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.220...v2.0.0-beta.221) (2022-12-30)
+
+### Bug Fixes
+
+- introduce a 'noBackground' prop to 'ProfileAvatar' component ([f110c4e](https://github.com/Greenstand/treetracker-web-map-client/commit/f110c4e6cee85f05fc6870f6991eb19075ad8f9f))
+- planter incorrect image rotation at organization page ([2b417b8](https://github.com/Greenstand/treetracker-web-map-client/commit/2b417b802b73073536bd6a56569048ed81e2c8d9))
+- remove 'boxSizing' from 'noBackground' ([9aeed48](https://github.com/Greenstand/treetracker-web-map-client/commit/9aeed48846a25e476fcc82e376973f6ea8a3816a))
+- set 'mt' value to 0 and remove unused variables ([9d8d299](https://github.com/Greenstand/treetracker-web-map-client/commit/9d8d299f9e805b70c54722a701b9cbab5b6ae436))
+
+# [2.0.0-beta.220](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.219...v2.0.0-beta.220) (2022-12-30)
+
+### Bug Fixes
+
+- corrected image rotation ([fa1730e](https://github.com/Greenstand/treetracker-web-map-client/commit/fa1730e352378fff70b0821d52d523c0b21219de))
+- final fix, added && conditional ([39821e5](https://github.com/Greenstand/treetracker-web-map-client/commit/39821e5e84eb753e4ba08dba57165e3798d2dfa8))
+- removed my console.log ([8a30185](https://github.com/Greenstand/treetracker-web-map-client/commit/8a30185098ca0b7c84461aa5669eef12fff738d3))
+
+# [2.0.0-beta.219](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.218...v2.0.0-beta.219) (2022-12-29)
+
+### Features
+
+# <<<<<<< HEAD
+
+- increase expire time ([fd5305f](https://github.com/Greenstand/treetracker-web-map-client/commit/fd5305fa44b7b3ead07742366e8afc346bb690ba))
+
+# [2.0.0-beta.218](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.217...v2.0.0-beta.218) (2022-12-27)
+
+### Bug Fixes
+
+- navigate to top of the page on route change ([19516e4](https://github.com/Greenstand/treetracker-web-map-client/commit/19516e495f3115e72cec4b5d6ee841a07a101332))
+
+### Features
+
+- add ref direct on drawer ([3bf3571](https://github.com/Greenstand/treetracker-web-map-client/commit/3bf3571909347132f7aa35fee4fecb2594b9d796))
+
+# [2.0.0-beta.217](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.216...v2.0.0-beta.217) (2022-12-26)
+
+### Bug Fixes
+
+- can not jump to token page ([5e94df8](https://github.com/Greenstand/treetracker-web-map-client/commit/5e94df8dd16ac2d064a15051eaa58408bde233e8))
+
+# [2.0.0-beta.216](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.215...v2.0.0-beta.216) (2022-12-24)
+
+### Bug Fixes
+
+- abbreviate numbers for CustomWorldMap on wallet page ([8f31850](https://github.com/Greenstand/treetracker-web-map-client/commit/8f31850bf0f27477f804ed98c294a3d5109cfb1b))
+- remove abbreviate number from organization page ([03ce1c9](https://github.com/Greenstand/treetracker-web-map-client/commit/03ce1c9b27b5deccbb89297c2f172b5ee031391f))
+
+### Features
+
+- abbreviate tree count in CustomWorldMap component ([2c4f0e6](https://github.com/Greenstand/treetracker-web-map-client/commit/2c4f0e6ed5af1099175f594ff17cdd25ad51e448))
+
+### Reverts
+
+- remove abbreviate number from wallet page ([93b4b9a](https://github.com/Greenstand/treetracker-web-map-client/commit/93b4b9ac627a9b2b53130c897f336c2329872d40))
+
 # [2.0.0-beta.215](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.214...v2.0.0-beta.215) (2022-12-22)
 
 ### Features
+
+> > > > > > > beta
 
 - implement navbar config ([7511bbe](https://github.com/Greenstand/treetracker-web-map-client/commit/7511bbe6a0d54d21f4d9e56f9ea624f5d4eebfa1))
 

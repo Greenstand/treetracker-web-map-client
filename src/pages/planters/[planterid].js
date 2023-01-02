@@ -76,6 +76,7 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 export default function Planter(props) {
   log.warn('props for planter page:', props);
   const { planter, nextExtraIsEmbed } = props;
+
   const { featuredTrees } = planter;
   const treeCount = featuredTrees?.total;
   const mapContext = useMapContext();
@@ -494,6 +495,9 @@ export default function Planter(props) {
               width: '120px',
               height: '120px',
               margin: '10px',
+              transform:
+                planter.image_rotation &&
+                `rotate(${planter.image_rotation}deg)`,
             }}
             src={planter.image_url}
             variant="rounded"
