@@ -1,3 +1,29 @@
+# [2.0.0-beta.221](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.220...v2.0.0-beta.221) (2022-12-30)
+
+
+### Bug Fixes
+
+* introduce a 'noBackground' prop to 'ProfileAvatar' component ([f110c4e](https://github.com/Greenstand/treetracker-web-map-client/commit/f110c4e6cee85f05fc6870f6991eb19075ad8f9f))
+* planter incorrect image rotation at organization page ([2b417b8](https://github.com/Greenstand/treetracker-web-map-client/commit/2b417b802b73073536bd6a56569048ed81e2c8d9))
+* remove 'boxSizing' from 'noBackground' ([9aeed48](https://github.com/Greenstand/treetracker-web-map-client/commit/9aeed48846a25e476fcc82e376973f6ea8a3816a))
+* set 'mt' value to 0 and remove unused variables ([9d8d299](https://github.com/Greenstand/treetracker-web-map-client/commit/9d8d299f9e805b70c54722a701b9cbab5b6ae436))
+
+# [2.0.0-beta.220](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.219...v2.0.0-beta.220) (2022-12-30)
+
+
+### Bug Fixes
+
+* corrected image rotation ([fa1730e](https://github.com/Greenstand/treetracker-web-map-client/commit/fa1730e352378fff70b0821d52d523c0b21219de))
+* final fix, added && conditional ([39821e5](https://github.com/Greenstand/treetracker-web-map-client/commit/39821e5e84eb753e4ba08dba57165e3798d2dfa8))
+* removed my console.log ([8a30185](https://github.com/Greenstand/treetracker-web-map-client/commit/8a30185098ca0b7c84461aa5669eef12fff738d3))
+
+# [2.0.0-beta.219](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.218...v2.0.0-beta.219) (2022-12-29)
+
+
+### Features
+
+* increase expire time ([fd5305f](https://github.com/Greenstand/treetracker-web-map-client/commit/fd5305fa44b7b3ead07742366e8afc346bb690ba))
+
 # [2.0.0-beta.218](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.217...v2.0.0-beta.218) (2022-12-27)
 
 
