@@ -19,8 +19,6 @@
 
 ### Features
 
-# <<<<<<< HEAD
-
 - increase expire time ([fd5305f](https://github.com/Greenstand/treetracker-web-map-client/commit/fd5305fa44b7b3ead07742366e8afc346bb690ba))
 
 # [2.0.0-beta.218](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.217...v2.0.0-beta.218) (2022-12-27)
@@ -57,8 +55,6 @@
 # [2.0.0-beta.215](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.214...v2.0.0-beta.215) (2022-12-22)
 
 ### Features
-
-> > > > > > > beta
 
 - implement navbar config ([7511bbe](https://github.com/Greenstand/treetracker-web-map-client/commit/7511bbe6a0d54d21f4d9e56f9ea624f5d4eebfa1))
 
