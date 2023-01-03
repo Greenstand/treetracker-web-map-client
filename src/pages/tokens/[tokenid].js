@@ -718,20 +718,27 @@ async function serverSideData(params, query) {
   return result;
 }
 
-const getStaticProps = wrapper(async ({ params, query }) => {
+// const getStaticProps = wrapper(async ({ params, query }) => {
+//   const props = await serverSideData(params, query);
+//   return {
+//     props,
+//     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+//   };
+// });
+
+// // eslint-disable-next-line
+// const getStaticPaths = async () => {
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   };
+// };
+
+const getServerSideProps = wrapper(async ({ params, query }) => {
   const props = await serverSideData(params, query);
   return {
     props,
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 });
 
-// eslint-disable-next-line
-const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  };
-};
-
-export { getStaticProps, getStaticPaths };
+export { getServerSideProps };

@@ -1,6 +1,7 @@
 import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
+import { forwardRef } from 'react';
 import { makeStyles } from 'models/makeStyles';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
@@ -48,7 +49,7 @@ const useStyles = makeStyles()((theme) => ({
   above: {},
 }));
 
-export default function Layout({ children }) {
+const Layout = forwardRef(({ children }, ref) => {
   const { classes } = useStyles();
   const mapContext = useMapContext();
 
@@ -69,7 +70,7 @@ export default function Layout({ children }) {
         >
           <App />
         </Box>
-        <Drawer>{children}</Drawer>
+        <Drawer outerRef={ref}>{children}</Drawer>
         <Box className={classes.right}>
           <Timeline />
           <Box
@@ -119,4 +120,7 @@ export default function Layout({ children }) {
       </Box>
     </Box>
   );
-}
+});
+
+Layout.displayName = 'LayoutMobile';
+export default Layout;
