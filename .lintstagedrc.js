@@ -2,11 +2,11 @@ module.exports = {
   // sort package.json if changed
   'package.json': 'sort-package-json',
 
-  // format all file types recognized by prettier
-  '*': ['prettier --ignore-unknown --write'],
-
   // import alias for uniform pattern of imports
   'src/**/*.js': ['jscodeshift  -t codeshift.js'],
+
+  // format all file types recognized by prettier
+  '*': ['prettier --ignore-unknown --write'],
 
   // lint javascript after formatting
   '*.{js,jsx}': ['eslint --fix --cache'],
