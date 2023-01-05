@@ -3,7 +3,7 @@ module.exports = {
   'package.json': 'sort-package-json',
 
   // import alias for uniform pattern of imports
-  'src/**/*.js': ['jscodeshift  -t codeshift.js'],
+  'src/**/*.js': ['jscodeshift  -t scripts/codeshift.js'],
 
   // format all file types recognized by prettier
   '*': ['prettier --ignore-unknown --write'],
