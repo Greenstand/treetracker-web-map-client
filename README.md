@@ -195,16 +195,16 @@ Open cypress test viewer
 npm run cypress:open
 ```
 
-Nextjs dev server + Cypress test viewer
+Nextjs dev server + Cypress test viewer + nock
 
 ```
 npm run cy
 ```
 
-Nextjs dev server + Cypress test viewer + nock
+Nextjs dev server + Cypress test viewer without nock
 
 ```
-npm run cy:nock
+npm run cy:nockless
 ```
 
 Run cypress tests headless
