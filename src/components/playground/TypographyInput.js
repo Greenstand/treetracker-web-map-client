@@ -13,16 +13,13 @@ import {
   FormHelperText,
 } from '@mui/material';
 import { useState, useEffect, useCallback } from 'react';
-import { loadFonts } from 'models/utils';
-import {
-  usePlaygroundUtils,
-  usePlaygroundFonts,
-} from '../../hooks/contextHooks';
+import { usePlaygroundUtils, usePlaygroundFonts } from 'hooks/contextHooks';
 import {
   predefinedFonts as defaultFonts,
   propRules,
   fontWeightNameToValue,
-} from '../../models/themePlaygroundOptions';
+} from 'models/themePlaygroundOptions';
+import { loadFonts } from 'models/utils';
 
 function FontFamilyWeightElm(props) {
   const { label, path, fontValue } = props;

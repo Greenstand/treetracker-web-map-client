@@ -1,5 +1,5 @@
+import { mountWithTheme as mount } from 'models/test-utils';
 import FeaturedTreesSlider from './index';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Featured Trees Slider', () => {
   it('it shows featured trees', () => {

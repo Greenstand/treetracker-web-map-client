@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
 import ColorPicker from 'react-best-gradient-color-picker';
-import { usePlaygroundUtils } from '../../hooks/contextHooks';
-import useDisclosure from '../../hooks/useDisclosure';
-import { propRules } from '../../models/themePlaygroundOptions';
+import { usePlaygroundUtils } from 'hooks/contextHooks';
+import useDisclosure from 'hooks/useDisclosure';
+import { propRules } from 'models/themePlaygroundOptions';
 
 function ColorInput(props) {
   const { path, label } = props;

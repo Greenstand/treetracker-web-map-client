@@ -1,6 +1,6 @@
 import { PlaygroundProvider } from 'context/playgroundContext';
+import { mountWithTheme as mount } from 'models/test-utils';
 import ColorThumbnail from './ColorThumbnail';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Color Thumbnail', () => {
   const path = 'palette.dark.primary.main';

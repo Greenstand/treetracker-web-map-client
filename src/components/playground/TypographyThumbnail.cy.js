@@ -1,6 +1,6 @@
+import { PlaygroundProvider } from 'context/playgroundContext';
+import { mountWithTheme as mount } from 'models/test-utils';
 import TypographyThumbnail from './TypographyThumbnail';
-import { PlaygroundProvider } from '../../context/playgroundContext';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Typography Thumbnail', () => {
   const prop = 'h1';

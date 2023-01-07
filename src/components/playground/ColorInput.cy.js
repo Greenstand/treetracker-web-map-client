@@ -1,6 +1,6 @@
 import { PlaygroundProvider } from 'context/playgroundContext';
+import { mountWithTheme as mount } from 'models/test-utils';
 import ColorInput from './ColorInput';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Color Input', () => {
   const name = 'main';

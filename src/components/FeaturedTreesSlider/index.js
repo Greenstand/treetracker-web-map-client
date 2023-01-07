@@ -8,9 +8,8 @@ import {
   CardMedia,
 } from '@mui/material';
 import { useRef, useState, useEffect } from 'react';
-import { debounce } from 'models/utils';
+import { debounce, getThumbnailImageUrls } from 'models/utils';
 import { useStyles } from './style'; // the style file
-import { getThumbnailImageUrls } from '../../models/utils';
 import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;

@@ -12,8 +12,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useState } from 'react';
-import { usePlaygroundFonts } from '../../hooks/contextHooks';
-import { loadFonts } from '../../models/utils';
+import { usePlaygroundFonts } from 'hooks/contextHooks';
+import { loadFonts } from 'models/utils';
 
 function FontsList(props) {
   const { title, list, canAddItems } = props;

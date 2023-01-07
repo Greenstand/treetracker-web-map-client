@@ -1,5 +1,5 @@
+import { mountWithTheme as mount } from 'models/test-utils';
 import CategoryTabPanel from './CategoryTabPanel';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Category Tab Panel', () => {
   it('renders if tab index is equal', () => {
