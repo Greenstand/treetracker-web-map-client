@@ -20,23 +20,23 @@ import { propRules } from 'models/themePlaygroundOptions';
 function ColorInput(props) {
   const { path, label } = props;
   const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-  const initialValue = getPropByPath(path);
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(() => getPropByPath(path));
   const [isValid, setValid] = useState(true);
-  const isGradient = /gradient/i.test(label);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pickerRef = useRef(null);
   const timer = useRef(null);
-  const [defaultColor, setDefaultColor] = useState(initialValue);
+  const defaultColor = useRef(null);
+  const isGradient = /gradient/i.test(label);
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+    if (defaultColor.current !== null) return;
+    defaultColor.current = value;
+  }, [value]);
 
   // change single colors back to default
   const handleReset = () => {
-    setValue(defaultColor);
-    setPropByPath(path, defaultColor);
+    setValue(defaultColor.current);
+    setPropByPath(path, defaultColor.current);
     setValid(true);
   };
 
