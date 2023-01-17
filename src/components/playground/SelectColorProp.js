@@ -8,12 +8,14 @@ import {
   AccordionDetails,
   Typography,
 } from '@mui/material';
+import { usePlaygroundUtils } from 'hooks/contextHooks';
 import ColorInput from './ColorInput';
 import ColorThumbnail from './ColorThumbnail';
 
 function SelectColorProp(props) {
   const { prop, path } = props;
   const { propName, options } = prop;
+  const { getPropByPath } = usePlaygroundUtils();
 
   return (
     <ListItem
@@ -53,12 +55,15 @@ function SelectColorProp(props) {
               {propName}
             </Typography>
             <Stack direction="row">
-              {options.map((option) => (
-                <ColorThumbnail
-                  key={`color-thumbnail-${propName}-${option}`}
-                  path={`${path}.${option}`}
-                />
-              ))}
+              {options.map((option) => {
+                const color = getPropByPath(`${path}.${option}`);
+                return (
+                  <ColorThumbnail
+                    key={`color-thumbnail-${propName}-${option}`}
+                    color={color}
+                  />
+                );
+              })}
             </Stack>
           </Stack>
         </AccordionSummary>
