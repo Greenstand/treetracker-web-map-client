@@ -18,6 +18,7 @@ import {
   usePlaygroundFonts,
   usePlaygroundTheme,
 } from 'hooks/contextHooks';
+import { useDefaultValue } from 'hooks/cwmHooks';
 import {
   predefinedFonts as defaultFonts,
   propRules,
@@ -25,21 +26,19 @@ import {
 } from 'models/themePlaygroundOptions';
 import { loadFonts } from 'models/utils';
 
-function FontFamilyWeightElm(props) {
-  const { label, path, fontValue } = props;
+function FontFamilyWeightElm({ label, path, fontValue }) {
   const { getPropByPath } = usePlaygroundTheme();
   const { setPropByPath } = usePlaygroundUtils();
   const [fonts, setFonts] = usePlaygroundFonts();
-  const initialValue = getPropByPath(path);
-  const [value, setValue] = useState('');
-  const [defaultValue] = useState(initialValue.toString());
+  const [value, setValue] = useState(() => getPropByPath(path));
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const defaultValue = useDefaultValue(value);
 
   useEffect(() => {
-    setValue(initialValue.toString());
+    setValue(defaultValue.current.toString());
     setError('');
-  }, [fontValue, initialValue]);
+  }, [fontValue, defaultValue]);
 
   const loadWeight = useCallback(
     (userInput) => {
@@ -133,12 +132,13 @@ function FontFamilyWeightElm(props) {
 
 function FontFamily(props) {
   const { label, path } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-  const initialValue = getPropByPath(path);
-  const [value, setValue] = useState(initialValue);
-  const [defaultValue] = useState(initialValue);
+  const { getPropByPath } = usePlaygroundTheme();
+  const { setPropByPath } = usePlaygroundUtils();
+  const [value, setValue] = useState(() => getPropByPath(path));
   const [fonts] = usePlaygroundFonts();
   const [error, setError] = useState('');
+  const defaultValue = useDefaultValue(value);
+
   const fontWeightPath = `${path
     .split('.')
     .splice(0, path.split('.').length - 1)
@@ -224,15 +224,11 @@ function FontFamily(props) {
 
 function TypographyInput(props) {
   const { path, label } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-  const initialValue = getPropByPath(path);
-  const [value, setValue] = useState(initialValue);
+  const { getPropByPath } = usePlaygroundTheme();
+  const { setPropByPath } = usePlaygroundUtils();
+  const [value, setValue] = useState(() => getPropByPath(path));
   const [isValid, setValid] = useState(true);
-  const [defaultValue] = useState(initialValue);
-
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+  const defaultValue = useDefaultValue(value);
 
   const resetTypography = () => {
     setPropByPath(path, defaultValue);
