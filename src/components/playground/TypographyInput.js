@@ -139,10 +139,7 @@ function FontFamily(props) {
   const [error, setError] = useState('');
   const defaultValue = useDefaultValue(value);
 
-  const fontWeightPath = `${path
-    .split('.')
-    .splice(0, path.split('.').length - 1)
-    .join('.')}.fontWeight`;
+  const fontWeightPath = path.replace('fontFamily', 'fontWeight');
 
   const resetTypography = () => {
     setValue(defaultValue);
@@ -150,17 +147,15 @@ function FontFamily(props) {
   };
 
   const handleChange = (e) => {
-    const userInput =
-      e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+    const userInput = e.target.value;
 
     setValue(userInput);
-    // setValid(false);
 
-    // if (!propRules[label].test(userValue)) return;
-    if (!fonts[userInput]) {
+    if (!(userInput in fonts)) {
       setError('Font family not loaded.');
       return;
     }
+
     setError('');
     setPropByPath(path, userInput);
   };
