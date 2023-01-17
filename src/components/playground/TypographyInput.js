@@ -228,6 +228,10 @@ function TypographyInput({ path, label, typographyValue }) {
   const [isValid, setValid] = useState(true);
   const defaultValue = useDefaultValue(value);
 
+  useEffect(() => {
+    setValue(typographyValue);
+  }, [typographyValue]);
+
   const resetTypography = () => {
     setPropByPath(path, defaultValue);
     setValue(defaultValue);

@@ -11,7 +11,7 @@ import {
   Input,
   FormHelperText,
 } from '@mui/material';
-import { useState, useRef, memo } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 import ColorPicker from 'react-best-gradient-color-picker';
 import { usePlaygroundUtils } from 'hooks/contextHooks';
 import { useDefaultValue } from 'hooks/cwmHooks';
@@ -27,6 +27,10 @@ function ColorInput({ path, color, label }) {
   const timer = useRef(null);
   const isGradient = /gradient/i.test(label);
   const defaultValue = useDefaultValue(value);
+
+  useEffect(() => {
+    setValue(color);
+  }, [color]);
 
   // change single colors back to default
   const handleReset = () => {
