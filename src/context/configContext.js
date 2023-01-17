@@ -10,7 +10,7 @@ import configReducer from '../models/config.reducer';
 
 const ConfigContext = createContext(null);
 
-export const initialState = {
+export const defaultConfig = {
   navbar: {
     logoUrl: 'http://localhost:3000/images/greenstand_logo.svg',
     items: [
@@ -57,7 +57,7 @@ export function ConfigProvider({ children }) {
   );
   const [state, dispatch] = useReducer(
     configReducer,
-    localStorageConfig ?? initialState,
+    localStorageConfig ?? defaultConfig,
   );
 
   useEffect(() => {

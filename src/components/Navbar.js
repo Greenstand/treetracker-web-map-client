@@ -9,12 +9,11 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
-import { initialState } from 'context/configContext';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
-import { useLocalStorage, useMobile } from '../hooks/globalHooks';
+import { useMobile } from '../hooks/globalHooks';
 
 const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
 
@@ -60,11 +59,9 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-function Navbar() {
+function Navbar({ config }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
-  const [webMapConfig] = useLocalStorage('config', initialState);
-  const { items: navItems } = webMapConfig.navbar;
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -142,7 +139,7 @@ function Navbar() {
         )}
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
-        {navItems.map((item) => (
+        {config?.items.map((item) => (
           <Link key={`nav-${item.title}`} target="_blank" href={item.url}>
             <Button className={classes.buttonStyle} variant="text">
               <Typography className={classes.buttonStyle}>
@@ -176,7 +173,7 @@ function Navbar() {
           },
         }}
       >
-        {navItems.map((item) => (
+        {config?.items.map((item) => (
           <MenuItem key={`nav-${item.title}`}>
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>

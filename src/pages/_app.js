@@ -16,9 +16,11 @@ import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
 import LayoutMobileC from '../components/LayoutMobileC';
 import { DrawerProvider } from '../context/DrawerContext';
+import { defaultConfig } from '../context/configContext';
 import { CustomThemeProvider } from '../context/themeContext';
 import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
+import { wrapper } from '../models/utils';
 
 log.warn(`Web Map Client version ${packageJson.version}`);
 
@@ -69,8 +71,9 @@ function GoogleAnalytics() {
   );
 }
 
-function TreetrackerApp({ Component, pageProps, device }) {
+function TreetrackerApp({ Component, pageProps, device, config }) {
   log.warn('!!!! render the _app');
+  log.warn('webmap config', config);
   const router = useRouter();
   const theme = useTheme();
   const layoutRef = React.useRef();
@@ -132,6 +135,7 @@ function TreetrackerApp({ Component, pageProps, device }) {
     nextExtraIsDesktop,
     nextExtraKeyword,
     nextExtraLoading,
+    config,
   };
 
   const isAdmin = !!router.asPath.match(/admin/);
@@ -212,7 +216,21 @@ TreetrackerApp.getInitialProps = async (context) => {
 
   const device = userAgentFromString(userAgent)?.device.type || 'desktop';
 
-  return { props, device };
+  const mapConfigRequest = await fetch(
+    // TODO: use the ENV var, currently results in a bug with the theme editor
+    // `${process.env.NEXT_PUBLIC_CONFIG_API}/config`,
+    `https://dev-k8s.treetracker.org/map_config/config`,
+  );
+  const mapConfig = await mapConfigRequest.json();
+  const config =
+    mapConfig.find((item) => item.name === 'testing-config')?.data ||
+    defaultConfig;
+
+  return {
+    props,
+    config,
+    device,
+  };
 };
 
 export default TreetrackerApp;
