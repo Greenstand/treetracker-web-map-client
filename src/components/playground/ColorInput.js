@@ -11,7 +11,6 @@ import {
   Input,
   FormHelperText,
 } from '@mui/material';
-import log from 'loglevel';
 import { useState, useEffect, useRef, memo } from 'react';
 import ColorPicker from 'react-best-gradient-color-picker';
 import { usePlaygroundUtils } from 'hooks/contextHooks';
@@ -27,8 +26,6 @@ function ColorInput({ path, color, label }) {
   const timer = useRef(null);
   const defaultColor = useRef(null);
   const isGradient = /gradient/i.test(label);
-
-  log.warn('cwm: render ColorInput');
 
   useEffect(() => {
     if (defaultColor.current !== null) return;
