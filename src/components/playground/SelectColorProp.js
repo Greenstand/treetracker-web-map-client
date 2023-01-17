@@ -8,14 +8,14 @@ import {
   AccordionDetails,
   Typography,
 } from '@mui/material';
-import { usePlaygroundUtils } from 'hooks/contextHooks';
+import { usePlaygroundTheme } from 'hooks/contextHooks';
 import ColorInput from './ColorInput';
 import ColorThumbnail from './ColorThumbnail';
 
 function SelectColorProp(props) {
   const { prop, path } = props;
   const { propName, options } = prop;
-  const { getPropByPath } = usePlaygroundUtils();
+  const { getPropByPath } = usePlaygroundTheme();
 
   return (
     <ListItem
@@ -69,16 +69,23 @@ function SelectColorProp(props) {
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {options.map((option) => (
-              <ListItem
-                key={`color-input-${option}`}
-                sx={{
-                  px: 0,
-                }}
-              >
-                <ColorInput path={`${path}.${option}`} label={option} />
-              </ListItem>
-            ))}
+            {options.map((option) => {
+              const color = getPropByPath(`${path}.${option}`);
+              return (
+                <ListItem
+                  key={`color-input-${path}-${option}`}
+                  sx={{
+                    px: 0,
+                  }}
+                >
+                  <ColorInput
+                    path={`${path}.${option}`}
+                    color={color}
+                    label={option}
+                  />
+                </ListItem>
+              );
+            })}
           </List>
         </AccordionDetails>
       </Accordion>

@@ -11,22 +11,24 @@ import {
   Input,
   FormHelperText,
 } from '@mui/material';
-import { useState, useEffect, useRef } from 'react';
+import log from 'loglevel';
+import { useState, useEffect, useRef, memo } from 'react';
 import ColorPicker from 'react-best-gradient-color-picker';
 import { usePlaygroundUtils } from 'hooks/contextHooks';
 import useDisclosure from 'hooks/useDisclosure';
 import { propRules } from 'models/themePlaygroundOptions';
 
-function ColorInput(props) {
-  const { path, label } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-  const [value, setValue] = useState(() => getPropByPath(path));
+function ColorInput({ path, color, label }) {
+  const { setPropByPath } = usePlaygroundUtils();
+  const [value, setValue] = useState(color);
   const [isValid, setValid] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pickerRef = useRef(null);
   const timer = useRef(null);
   const defaultColor = useRef(null);
   const isGradient = /gradient/i.test(label);
+
+  log.warn('cwm: render ColorInput');
 
   useEffect(() => {
     if (defaultColor.current !== null) return;
@@ -50,12 +52,12 @@ function ColorInput(props) {
     setPropByPath(path, userValue);
   };
 
-  const handleColorChange = (color) => {
-    setValue(color);
+  const handleColorChange = (newColor) => {
+    setValue(newColor);
     // if the user drags too fast the (global) state can't keep up
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      setPropByPath(path, color);
+      setPropByPath(path, newColor);
     }, 200);
   };
 
@@ -143,4 +145,4 @@ function ColorInput(props) {
   );
 }
 
-export default ColorInput;
+export default memo(ColorInput);

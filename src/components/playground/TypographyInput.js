@@ -13,7 +13,11 @@ import {
   FormHelperText,
 } from '@mui/material';
 import { useState, useEffect, useCallback } from 'react';
-import { usePlaygroundUtils, usePlaygroundFonts } from 'hooks/contextHooks';
+import {
+  usePlaygroundUtils,
+  usePlaygroundFonts,
+  usePlaygroundTheme,
+} from 'hooks/contextHooks';
 import {
   predefinedFonts as defaultFonts,
   propRules,
@@ -23,7 +27,8 @@ import { loadFonts } from 'models/utils';
 
 function FontFamilyWeightElm(props) {
   const { label, path, fontValue } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
+  const { getPropByPath } = usePlaygroundTheme();
+  const { setPropByPath } = usePlaygroundUtils();
   const [fonts, setFonts] = usePlaygroundFonts();
   const initialValue = getPropByPath(path);
   const [value, setValue] = useState('');

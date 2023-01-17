@@ -25,6 +25,8 @@ const getInitialTheme = () => {
 
 export const PlaygroundContext = createContext({});
 
+export const PlaygroundUtilsContext = createContext({});
+
 export function PlaygroundProvider({ children }) {
   const [themeType, setThemeType] = useLocalStorage('theme', 'light');
   const [themeObject] = useLocalStorage('themeObject', undefined);
@@ -110,26 +112,23 @@ export function PlaygroundProvider({ children }) {
       setThemeType,
       fonts,
       setFonts,
-      resetTheme,
       getPropByPath,
+    }),
+    [theme, setTheme, themeType, setThemeType, fonts, setFonts, getPropByPath],
+  );
+  const utilsContextValue = React.useMemo(
+    () => ({
+      resetTheme,
       setPropByPath,
     }),
-    [
-      theme,
-      setTheme,
-      themeType,
-      setThemeType,
-      fonts,
-      setFonts,
-      resetTheme,
-      getPropByPath,
-      setPropByPath,
-    ],
+    [resetTheme, setPropByPath],
   );
 
   return (
-    <PlaygroundContext.Provider value={contextValue}>
-      {children}
-    </PlaygroundContext.Provider>
+    <PlaygroundUtilsContext.Provider value={utilsContextValue}>
+      <PlaygroundContext.Provider value={contextValue}>
+        {children}
+      </PlaygroundContext.Provider>
+    </PlaygroundUtilsContext.Provider>
   );
 }
