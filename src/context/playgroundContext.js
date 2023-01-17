@@ -27,10 +27,7 @@ export const PlaygroundContext = createContext({});
 
 export function PlaygroundProvider({ children }) {
   const [themeType, setThemeType] = useLocalStorage('theme', 'light');
-  const [themeObject, setThemeObject] = useLocalStorage(
-    'themeObject',
-    undefined,
-  );
+  const [themeObject] = useLocalStorage('themeObject', undefined);
   const [fonts, setFonts] = useState(() => predefinedFonts);
   const [theme, setTheme] = useState(getInitialTheme());
 
@@ -60,10 +57,10 @@ export function PlaygroundProvider({ children }) {
     }));
   }, [fonts]);
 
-  const resetTheme = () => {
+  const resetTheme = useCallback(() => {
     setTheme(getInitialTheme());
     setFonts(predefinedFonts);
-  };
+  }, [setTheme, setFonts]);
 
   /**
    * set mui theme prop by path
@@ -73,17 +70,19 @@ export function PlaygroundProvider({ children }) {
    *
    * @example
    * setPropByPath('palette.primary.main', '#FFFF33')
-   *
-   * @returns the new theme
    */
-  const setPropByPath = (propPath, value) => {
-    const updatedTheme = utils.setPropByPath(propPath, value, theme);
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      ...updatedTheme,
-    }));
-    return updatedTheme;
-  };
+  const setPropByPath = useCallback(
+    (propPath, value) => {
+      setTheme((prevTheme) => {
+        const updatedTheme = utils.setPropByPath(propPath, value, prevTheme);
+        return {
+          ...prevTheme,
+          ...updatedTheme,
+        };
+      });
+    },
+    [setTheme],
+  );
 
   /**
    * get mui theme prop by path
