@@ -45,7 +45,7 @@ function ColorInput(props) {
     setValue(userValue);
     setValid(false);
 
-    if (!isGradient) if (!propRules.color.test(userValue)) return;
+    if (!isGradient && !propRules.color.test(userValue)) return;
     setValid(true);
     setPropByPath(path, userValue);
   };
