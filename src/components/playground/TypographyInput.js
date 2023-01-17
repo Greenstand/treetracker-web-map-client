@@ -12,7 +12,7 @@ import {
   Input,
   FormHelperText,
 } from '@mui/material';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import {
   usePlaygroundUtils,
   usePlaygroundFonts,
@@ -222,11 +222,9 @@ function FontFamily(props) {
   );
 }
 
-function TypographyInput(props) {
-  const { path, label } = props;
-  const { getPropByPath } = usePlaygroundTheme();
+function TypographyInput({ path, label, typographyValue }) {
   const { setPropByPath } = usePlaygroundUtils();
-  const [value, setValue] = useState(() => getPropByPath(path));
+  const [value, setValue] = useState(typographyValue);
   const [isValid, setValid] = useState(true);
   const defaultValue = useDefaultValue(value);
 
@@ -286,4 +284,4 @@ function TypographyInput(props) {
   );
 }
 
-export default TypographyInput;
+export default memo(TypographyInput);
