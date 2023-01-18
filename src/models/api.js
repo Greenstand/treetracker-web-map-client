@@ -72,6 +72,19 @@ export async function getTreeById(id) {
     throw err;
   }
 }
+export async function getCapturesById(id) {
+  try {
+    const url = apiPaths.trees(id);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const { data } = res;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
 
 export async function getOrgLinks({
   featured_trees: treesUrl,
