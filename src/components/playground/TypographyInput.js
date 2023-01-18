@@ -36,7 +36,7 @@ function FontFamilyWeightElm({ label, path, fontValue }) {
   const defaultValue = useDefaultValue(value);
 
   useEffect(() => {
-    setValue(defaultValue.current.toString());
+    setValue(defaultValue || '');
     setError('');
   }, [fontValue, defaultValue]);
 

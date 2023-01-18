@@ -34,8 +34,8 @@ function ColorInput({ path, color, label }) {
 
   // change single colors back to default
   const handleReset = () => {
-    setValue(defaultValue.current);
-    setPropByPath(path, defaultValue.current);
+    setValue(defaultValue);
+    setPropByPath(path, defaultValue);
     setValid(true);
   };
 

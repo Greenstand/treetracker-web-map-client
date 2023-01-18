@@ -8,7 +8,7 @@ const useDefaultValue = (value) => {
     defaultValue.current = value;
   }, [value]);
 
-  return defaultValue;
+  return defaultValue.current;
 };
 
 export default useDefaultValue;
