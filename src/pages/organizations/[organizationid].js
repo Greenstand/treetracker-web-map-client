@@ -123,7 +123,7 @@ export default function Organization(props) {
                 },
                 {
                   icon: logo_url,
-                  name: `organization ${name}`,
+                  name: `${name}`,
                 },
               ]}
             />
