@@ -41,7 +41,7 @@ function ThemeConfig() {
   const iframeRef = useRef();
 
   // playground theme for customization
-  const [theme, setTheme] = usePlaygroundTheme();
+  const { theme, setTheme } = usePlaygroundTheme();
   const [themeType, setThemeType] = usePlaygroundThemeType();
   const { resetTheme } = usePlaygroundUtils();
   const [autoReload, setAutoReload] = useState(false);
