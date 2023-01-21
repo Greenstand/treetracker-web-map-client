@@ -74,7 +74,7 @@ export async function getTreeById(id) {
 }
 export async function getCapturesById(id) {
   try {
-    const url = apiPaths.trees(id);
+    const url = apiPaths.captures(id);
     const begin = Date.now();
     const res = await axios.get(url);
     const { data } = res;

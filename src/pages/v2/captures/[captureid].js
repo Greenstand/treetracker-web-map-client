@@ -43,7 +43,7 @@ import {
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
-export default function Captures({
+export default function Capture({
   tree,
   planter,
   organization,
@@ -52,6 +52,7 @@ export default function Captures({
 }) {
   log.warn('tree: ', tree);
   log.warn('org: ', organization);
+  log.warn('planter: ', planter);
   console.log(tree, 'haha');
   const mapContext = useMapContext();
   const { map } = mapContext;
@@ -66,7 +67,7 @@ export default function Captures({
   const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
-
+  console.log(context, 'chicken');
   log.warn('map:', mapContext);
 
   function handleShare() {}
@@ -181,6 +182,7 @@ export default function Captures({
   }, [map, tree.lat, tree.lon]);
 
   log.warn(planter, 'planter');
+  const { id } = tree;
   console.log(tree.id, 'moo');
 
   return (
@@ -428,11 +430,11 @@ export default function Captures({
                   </Box>
                 }
               />
-              <TreeInfoDialog
+              {/* <TreeInfoDialog
                 tree={tree}
                 planter={planter}
                 organization={organization}
-              />
+              /> */}
             </Box>
           </Box>
           <img src={tree.image_url} alt="tree" height="764" />
@@ -563,7 +565,7 @@ export default function Captures({
             mt: [4, 10],
           }}
         >
-          <InformationCard1
+          {/* <InformationCard1
             entityName={`${planter.first_name} ${planter.last_name}`}
             entityType="Planter"
             buttonText="Meet the Planter"
@@ -572,7 +574,7 @@ export default function Captures({
             link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
               isEmbed ? '&embed=true' : ''
             }`}
-          />
+          /> */}
         </Box>
         <Typography
           variant="h4"
@@ -715,24 +717,24 @@ export default function Captures({
 }
 
 async function serverSideData(params) {
-  const { treeid } = params;
-  const tree = await getTreeById(treeid);
-  const { planter_id, planting_organization_id } = tree;
-  const planter = await getPlanterById(planter_id);
-  let organization = null;
-  if (planting_organization_id) {
-    log.warn('load org from planting_orgniazation_id');
-    organization = await getOrganizationById(planting_organization_id);
-  } else if (planter.organization_id) {
-    log.warn('load org from planter. organization_id');
-    organization = await getOrganizationById(planter.organization_id);
-  } else {
-    log.warn('can not load org for tree:', tree, planter);
-  }
+  const { captureid } = params;
+  const tree = await getCapturesById(captureid);
+  const { planting_organization_id } = tree;
+  // const planter = await getPlanterById(planter_id);
+  const organization = null;
+  // if (planting_organization_id) {
+  //   log.warn('load org from planting_orgniazation_id');
+  //   organization = await getOrganizationById(planting_organization_id);
+  // } else if (planter.organization_id) {
+  //   log.warn('load org from planter. organization_id');
+  //   organization = await getOrganizationById(planter.organization_id);
+  // } else {
+  //   log.warn('can not load org for tree:', tree, planter);
+  // }
 
   return {
     tree,
-    planter,
+    // planter,
     organization,
   };
 }
