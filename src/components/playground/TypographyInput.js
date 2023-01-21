@@ -160,6 +160,10 @@ function FontFamily(props) {
     setPropByPath(path, userInput);
   };
 
+  useEffect(() => {
+    setValue(() => getPropByPath(path));
+  });
+
   return (
     <>
       <FormControl
