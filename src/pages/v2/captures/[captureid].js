@@ -36,24 +36,23 @@ import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import {
   getOrganizationById,
-  getPlanterById,
   getCapturesById,
-  getTreeById,
+  getGrowerById,
 } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
 export default function Capture({
   tree,
-  planter,
+  grower,
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
 }) {
   log.warn('tree: ', tree);
   log.warn('org: ', organization);
-  log.warn('planter: ', planter);
-  console.log(tree, 'haha');
+  log.warn('grower: ', grower);
+
   const mapContext = useMapContext();
   const { map } = mapContext;
   const theme = useTheme();
@@ -63,11 +62,10 @@ export default function Capture({
   });
   const isMobile = useMobile();
   const isEmbed = useEmbed();
-  const isPlanterContext = context && context.name === 'planters';
+  const isPlanterContext = context && context.name === 'grower';
   const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
-  console.log(context, 'chicken');
   log.warn('map:', mapContext);
 
   function handleShare() {}
@@ -130,7 +128,7 @@ export default function Capture({
       if (map && tree?.lat && tree?.lon) {
         if (context && context.name) {
           if (isPlanterContext) {
-            log.warn('set planter filter', context.id);
+            log.warn('set grower filter', context.id);
             await map.setFilters({
               userid: context.id,
             });
@@ -181,9 +179,7 @@ export default function Capture({
     reload();
   }, [map, tree.lat, tree.lon]);
 
-  log.warn(planter, 'planter');
-  const { id } = tree;
-  console.log(tree.id, 'moo');
+  log.warn(grower, 'grower');
 
   return (
     <>
@@ -259,7 +255,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.time_created).format(
+                  {`Planted on ${moment(tree.created_at).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -327,11 +323,11 @@ export default function Capture({
                 ...(isPlanterContext
                   ? [
                       {
-                        url: `/planters/${planter.id}`,
-                        icon: planter.image_url,
+                        url: `/grower-accounts/${grower.id}`,
+                        icon: grower.image_url,
                         name: `${utils.getPlanterName(
-                          planter.first_name,
-                          planter.last_name,
+                          grower.first_name,
+                          grower.last_name,
                         )}`,
                       },
                     ]
@@ -430,11 +426,11 @@ export default function Capture({
                   </Box>
                 }
               />
-              {/* <TreeInfoDialog
+              <TreeInfoDialog
                 tree={tree}
-                planter={planter}
+                planter={grower}
                 organization={organization}
-              /> */}
+              />
             </Box>
           </Box>
           <img src={tree.image_url} alt="tree" height="764" />
@@ -497,7 +493,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.time_created).format(
+                  {`Planted on ${moment(tree.created_at).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -565,16 +561,16 @@ export default function Capture({
             mt: [4, 10],
           }}
         >
-          {/* <InformationCard1
-            entityName={`${planter.first_name} ${planter.last_name}`}
-            entityType="Planter"
-            buttonText="Meet the Planter"
-            cardImageSrc={planter?.image_url || imagePlaceholder}
-            rotation={planter?.image_rotation}
-            link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
+          <InformationCard1
+            entityName={`${grower.first_name} ${grower.last_name}`}
+            entityType="Grower"
+            buttonText="Meet the Grower"
+            cardImageSrc={grower?.image_url || imagePlaceholder}
+            rotation={grower?.image_rotation}
+            link={`/grower-accounts/${grower.id}?keyword=${nextExtraKeyword}${
               isEmbed ? '&embed=true' : ''
             }`}
-          /> */}
+          />
         </Box>
         <Typography
           variant="h4"
@@ -593,7 +589,7 @@ export default function Capture({
         </Typography>
         <TagList>
           <TreeTag
-            TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
+            TreeTagValue={new Date(tree.created_at).toLocaleDateString()}
             title="Planted on"
             icon={<Icon icon={CalendarIcon} />}
           />
@@ -706,7 +702,7 @@ export default function Capture({
                 height: '120px',
                 margin: '10px',
               }}
-              src={isPlanterContext ? planter.image_url : organization.logo_url}
+              src={isPlanterContext ? grower.image_url : organization.logo_url}
               variant="rounded"
             />
           </Portal>
@@ -719,22 +715,23 @@ export default function Capture({
 async function serverSideData(params) {
   const { captureid } = params;
   const tree = await getCapturesById(captureid);
-  const { planting_organization_id } = tree;
-  // const planter = await getPlanterById(planter_id);
+  const { planting_organization_id, grower_account_id } = tree;
+  const grower = await getGrowerById(grower_account_id);
   const organization = null;
+  // TODO: Will fix this once I get the planting_organization_id from the stakeholder API
   // if (planting_organization_id) {
   //   log.warn('load org from planting_orgniazation_id');
-  //   organization = await getOrganizationById(planting_organization_id);
-  // } else if (planter.organization_id) {
+  // organization = await getOrganizationById(planting_organization_id);
+  // } else if (grower.organization_id) {
   //   log.warn('load org from planter. organization_id');
-  //   organization = await getOrganizationById(planter.organization_id);
+  //   organization = await getOrganizationById(grower.organization_id);
   // } else {
-  //   log.warn('can not load org for tree:', tree, planter);
+  //   log.warn('can not load org for tree:', tree, grower);
   // }
 
   return {
     tree,
-    // planter,
+    grower,
     organization,
   };
 }
