@@ -58,12 +58,27 @@ export async function getPlanterById(id) {
     throw err;
   }
 }
+
 export async function getGrowerById(id) {
   try {
     const url = apiPaths.growers(id);
     const begin = Date.now();
     const res = await axios.get(url);
     const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
+
+export async function getStakeHolderById(id) {
+  try {
+    const url = apiPaths.stakeHolders(id);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const { data } = res;
     log.warn('url:', url, 'took:', Date.now() - begin);
     return data;
   } catch (err) {

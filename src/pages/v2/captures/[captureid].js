@@ -34,11 +34,7 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import {
-  getOrganizationById,
-  getCapturesById,
-  getGrowerById,
-} from 'models/api';
+import { getStakeHolderById, getCapturesById, getGrowerById } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
@@ -50,7 +46,7 @@ export default function Capture({
   nextExtraKeyword,
 }) {
   log.warn('tree: ', tree);
-  log.warn('org: ', organization);
+  log.warn('org: ', organization.stakeholders[0]);
   log.warn('grower: ', grower);
 
   const mapContext = useMapContext();
@@ -67,6 +63,8 @@ export default function Capture({
 
   const { setTitlesData } = useDrawerContext();
   log.warn('map:', mapContext);
+
+  const { org_name, logo_url, id } = organization.stakeholders[0];
 
   function handleShare() {}
 
@@ -335,9 +333,9 @@ export default function Capture({
                 ...(isOrganizationContext && organization
                   ? [
                       {
-                        url: `/organizations/${organization.id}`,
-                        icon: organization.logo_url,
-                        name: organization.name,
+                        url: `/stakeholder/stakeholders/${id}`,
+                        icon: logo_url,
+                        name: org_name,
                       },
                     ]
                   : []),
@@ -546,13 +544,14 @@ export default function Capture({
             ]}
           >
             <InformationCard1
-              entityName={organization.name}
+              entityName={org_name}
               entityType="Planting Organization"
               buttonText="Meet the Organization"
-              cardImageSrc={organization?.logo_url || imagePlaceholder}
-              link={`/organizations/${
-                organization.id
-              }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
+              cardImageSrc={logo_url || imagePlaceholder}
+              // TODO: this wont work until organizationsV2 page is completed
+              link={`/stakeholder/stakeholders/${id}?keyword=${nextExtraKeyword}${
+                isEmbed ? '&embed=true' : ''
+              }`}
             />
           </Box>
         )}
@@ -567,6 +566,7 @@ export default function Capture({
             buttonText="Meet the Grower"
             cardImageSrc={grower?.image_url || imagePlaceholder}
             rotation={grower?.image_rotation}
+            // TODO: this wont work until growers page is completed
             link={`/grower-accounts/${grower.id}?keyword=${nextExtraKeyword}${
               isEmbed ? '&embed=true' : ''
             }`}
@@ -702,7 +702,7 @@ export default function Capture({
                 height: '120px',
                 margin: '10px',
               }}
-              src={isPlanterContext ? grower.image_url : organization.logo_url}
+              src={isPlanterContext ? grower.image_url : logo_url}
               variant="rounded"
             />
           </Portal>
@@ -717,17 +717,17 @@ async function serverSideData(params) {
   const tree = await getCapturesById(captureid);
   const { planting_organization_id, grower_account_id } = tree;
   const grower = await getGrowerById(grower_account_id);
-  const organization = null;
-  // TODO: Will fix this once I get the planting_organization_id from the stakeholder API
-  // if (planting_organization_id) {
-  //   log.warn('load org from planting_orgniazation_id');
-  // organization = await getOrganizationById(planting_organization_id);
-  // } else if (grower.organization_id) {
-  //   log.warn('load org from planter. organization_id');
-  //   organization = await getOrganizationById(grower.organization_id);
-  // } else {
-  //   log.warn('can not load org for tree:', tree, grower);
-  // }
+  let organization = await getStakeHolderById(planting_organization_id);
+
+  if (planting_organization_id) {
+    log.warn('load org from planting_orgniazation_id');
+    organization = await getStakeHolderById(planting_organization_id);
+  } else if (grower.organization_id) {
+    log.warn('load org from planter. organization_id');
+    organization = await getStakeHolderById(grower.organization_id);
+  } else {
+    log.warn('can not load org for tree:', tree, grower);
+  }
 
   return {
     tree,

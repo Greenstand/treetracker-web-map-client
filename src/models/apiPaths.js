@@ -1,6 +1,7 @@
 import { urlJoin } from 'url-join-ts';
 
 const host = process.env.NEXT_PUBLIC_API || '';
+const hostV2 = process.env.NEXT_PUBLIC_API_V2 || '';
 const apiPaths = {
   featuredTrees: urlJoin(host, '/trees/featured'),
   leaders: urlJoin(host, '/countries/leaderboard'),
@@ -8,6 +9,7 @@ const apiPaths = {
   captures: (id = '') => urlJoin(host, `/v2/captures/${id}`),
   growers: (id = '') => urlJoin(host, `/grower-accounts/${id}`),
   planters: (id = '') => urlJoin(host, `/planters/${id}`),
+  stakeHolders: (id = '') => urlJoin(hostV2, `/stakeholder/stakeholders/${id}`),
   species: urlJoin(host, '/species'),
   organization: (id = '') => urlJoin(host, `/organizations/${id}`),
   wallets: (id = '') => urlJoin(host, `/wallets/${id}`),
