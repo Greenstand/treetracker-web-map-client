@@ -4,6 +4,8 @@ const host = process.env.NEXT_PUBLIC_API || '';
 const hostV2 = process.env.NEXT_PUBLIC_API_V2 || '';
 const apiPaths = {
   featuredTrees: urlJoin(host, '/trees/featured'),
+  countriesLatLon: (lat = '', lon = '') =>
+    urlJoin(host, `/countries?lat=${lat}&lon=${lon}`),
   leaders: urlJoin(host, '/countries/leaderboard'),
   trees: (id = '') => urlJoin(host, `/trees/${id}`),
   captures: (id = '') => urlJoin(host, `/v2/captures/${id}`),

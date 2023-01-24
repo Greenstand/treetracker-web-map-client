@@ -34,7 +34,12 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getStakeHolderById, getCapturesById, getGrowerById } from 'models/api';
+import {
+  getStakeHolderById,
+  getCapturesById,
+  getGrowerById,
+  getCountryByLatLon,
+} from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
@@ -44,10 +49,12 @@ export default function Capture({
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
+  country,
 }) {
   log.warn('tree: ', tree);
   log.warn('org: ', organization.stakeholders[0]);
   log.warn('grower: ', grower);
+  log.warn('country: ', country);
 
   const mapContext = useMapContext();
   const { map } = mapContext;
@@ -273,9 +280,8 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={LocationIcon} />
-                  {tree.country_name !== null
-                    ? `Located in ${tree.country_name}`
-                    : 'Unknown location'}
+
+                  {`Located in ${country.name || 'Unknown location'}`}
                 </Typography>
               </Box>
               <Box
@@ -510,9 +516,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={LocationIcon} />
-                  {tree.country_name !== null
-                    ? `Located in ${tree.country_name}`
-                    : 'Unknown location'}
+                  {`Located in ${country.name}` || 'Unknown location'}
                 </Typography>
               </Box>
               <Box
@@ -600,12 +604,10 @@ export default function Capture({
             disabled={tree.verified === false}
           />
           <TreeTag
-            TreeTagValue={
-              tree.country_name === null ? 'unknown' : tree.country_name
-            }
+            TreeTagValue={country.name === null ? 'unknown' : country.name}
             title="Located in"
             icon={<Icon icon={LocationIcon} />}
-            disabled={tree.country_name === null}
+            disabled={country.name === null}
           />
           <TreeTag
             TreeTagValue={tree.age === null ? 'unknown' : tree.age}
@@ -715,8 +717,9 @@ export default function Capture({
 async function serverSideData(params) {
   const { captureid } = params;
   const tree = await getCapturesById(captureid);
-  const { planting_organization_id, grower_account_id } = tree;
+  const { planting_organization_id, grower_account_id, lat, lon } = tree;
   const grower = await getGrowerById(grower_account_id);
+  const country = await getCountryByLatLon(lat, lon);
   let organization = await getStakeHolderById(planting_organization_id);
 
   if (planting_organization_id) {
@@ -733,6 +736,7 @@ async function serverSideData(params) {
     tree,
     grower,
     organization,
+    country,
   };
 }
 
