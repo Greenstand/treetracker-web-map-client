@@ -132,7 +132,7 @@ function FontFamilyWeightElm({ label, path, fontValue }) {
 
 function FontFamily(props) {
   const { label, path } = props;
-  const { getPropByPath } = usePlaygroundTheme();
+  const { theme, getPropByPath } = usePlaygroundTheme();
   const { setPropByPath } = usePlaygroundUtils();
   const [value, setValue] = useState(() => getPropByPath(path));
   const [fonts] = usePlaygroundFonts();
@@ -159,6 +159,10 @@ function FontFamily(props) {
     setError('');
     setPropByPath(path, userInput);
   };
+
+  useEffect(() => {
+    setValue(() => getPropByPath(path));
+  }, [theme]);
 
   return (
     <>
