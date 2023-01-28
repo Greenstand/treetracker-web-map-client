@@ -722,7 +722,8 @@ async function serverSideData(params, query) {
 //   const props = await serverSideData(params, query);
 //   return {
 //     props,
-//     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+//     revalidate: process.env.NEXT_CACHE_ENABLED ? (Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30) :
+// 1,
 //   };
 // });
 

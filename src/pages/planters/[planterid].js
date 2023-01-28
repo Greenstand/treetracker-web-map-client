@@ -521,7 +521,9 @@ const getStaticProps = wrapper(async ({ params }) => {
   const props = await serverSideData(params);
   return {
     props,
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+    revalidate: process.env.NEXT_CACHE_ENABLED
+      ? Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30
+      : 1,
   };
 });
 
