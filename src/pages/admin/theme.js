@@ -12,7 +12,6 @@ import axios from 'axios';
 import log from 'loglevel';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import HeadTag from 'components/HeadTag';
-import { useLocalStorage } from 'hooks/globalHooks';
 import {
   SelectColorProp,
   SelectTypographyProp,
@@ -22,15 +21,16 @@ import {
   getTabProps,
   FontCustomization,
   JSONTextarea,
-} from '../../components/playground';
-import { PlaygroundProvider } from '../../context/playgroundContext';
+} from 'components/playground';
+import { PlaygroundProvider } from 'context/playgroundContext';
 import {
   usePlaygroundTheme,
   usePlaygroundThemeType,
   usePlaygroundUtils,
-} from '../../hooks/contextHooks';
-import { customizeOptions } from '../../models/themePlaygroundOptions';
-import { optimizeThemeFonts } from '../../models/utils';
+} from 'hooks/contextHooks';
+import { useLocalStorage } from 'hooks/globalHooks';
+import { customizeOptions } from 'models/themePlaygroundOptions';
+import { optimizeThemeFonts } from 'models/utils';
 
 function ThemeConfig() {
   const { keycloak } = useKeycloak();
@@ -41,7 +41,7 @@ function ThemeConfig() {
   const iframeRef = useRef();
 
   // playground theme for customization
-  const [theme, setTheme] = usePlaygroundTheme();
+  const { theme, setTheme } = usePlaygroundTheme();
   const [themeType, setThemeType] = usePlaygroundThemeType();
   const { resetTheme } = usePlaygroundUtils();
   const [autoReload, setAutoReload] = useState(false);

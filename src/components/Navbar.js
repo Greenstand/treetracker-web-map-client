@@ -7,7 +7,6 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useConfigContext } from 'context/configContext';
 import MenuBar from 'images/MenuBar';
@@ -90,12 +89,7 @@ function Navbar() {
               m: 4,
             }}
           >
-            <Image
-              src={iconLogo}
-              width={24}
-              height={30}
-              alt="Greenstand Logo"
-            />
+            <img src={iconLogo} width={24} height={30} alt="Greenstand Logo" />
           </Box>
         )}
         {!isMobile && (
@@ -106,7 +100,7 @@ function Navbar() {
               alignItems: 'baseline',
             }}
           >
-            {/* <Image
+            {/* <img
               src={iconLogo}
               width={24}
               height={30}

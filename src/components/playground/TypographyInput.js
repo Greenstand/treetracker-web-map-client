@@ -12,32 +12,33 @@ import {
   Input,
   FormHelperText,
 } from '@mui/material';
-import { useState, useEffect, useCallback } from 'react';
-import { loadFonts } from 'models/utils';
+import { useState, useEffect, useCallback, memo } from 'react';
 import {
   usePlaygroundUtils,
   usePlaygroundFonts,
-} from '../../hooks/contextHooks';
+  usePlaygroundTheme,
+} from 'hooks/contextHooks';
+import { useDefaultValue } from 'hooks/cwmHooks';
 import {
   predefinedFonts as defaultFonts,
   propRules,
   fontWeightNameToValue,
-} from '../../models/themePlaygroundOptions';
+} from 'models/themePlaygroundOptions';
+import { loadFonts } from 'models/utils';
 
-function FontFamilyWeightElm(props) {
-  const { label, path, fontValue } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
+function FontFamilyWeightElm({ label, path, fontValue }) {
+  const { getPropByPath } = usePlaygroundTheme();
+  const { setPropByPath } = usePlaygroundUtils();
   const [fonts, setFonts] = usePlaygroundFonts();
-  const initialValue = getPropByPath(path);
-  const [value, setValue] = useState('');
-  const [defaultValue] = useState(initialValue.toString());
+  const [value, setValue] = useState(() => getPropByPath(path));
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const defaultValue = useDefaultValue(value);
 
   useEffect(() => {
-    setValue(initialValue.toString());
+    setValue(defaultValue || '');
     setError('');
-  }, [fontValue, initialValue]);
+  }, [fontValue, defaultValue]);
 
   const loadWeight = useCallback(
     (userInput) => {
@@ -131,16 +132,14 @@ function FontFamilyWeightElm(props) {
 
 function FontFamily(props) {
   const { label, path } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-  const initialValue = getPropByPath(path);
-  const [value, setValue] = useState(initialValue);
-  const [defaultValue] = useState(initialValue);
+  const { theme, getPropByPath } = usePlaygroundTheme();
+  const { setPropByPath } = usePlaygroundUtils();
+  const [value, setValue] = useState(() => getPropByPath(path));
   const [fonts] = usePlaygroundFonts();
   const [error, setError] = useState('');
-  const fontWeightPath = `${path
-    .split('.')
-    .splice(0, path.split('.').length - 1)
-    .join('.')}.fontWeight`;
+  const defaultValue = useDefaultValue(value);
+
+  const fontWeightPath = path.replace('fontFamily', 'fontWeight');
 
   const resetTypography = () => {
     setValue(defaultValue);
@@ -148,20 +147,22 @@ function FontFamily(props) {
   };
 
   const handleChange = (e) => {
-    const userInput =
-      e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+    const userInput = e.target.value;
 
     setValue(userInput);
-    // setValid(false);
 
-    // if (!propRules[label].test(userValue)) return;
-    if (!fonts[userInput]) {
+    if (!(userInput in fonts)) {
       setError('Font family not loaded.');
       return;
     }
+
     setError('');
     setPropByPath(path, userInput);
   };
+
+  useEffect(() => {
+    setValue(() => getPropByPath(path));
+  }, [theme]);
 
   return (
     <>
@@ -220,17 +221,15 @@ function FontFamily(props) {
   );
 }
 
-function TypographyInput(props) {
-  const { path, label } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-  const initialValue = getPropByPath(path);
-  const [value, setValue] = useState(initialValue);
+function TypographyInput({ path, label, typographyValue }) {
+  const { setPropByPath } = usePlaygroundUtils();
+  const [value, setValue] = useState(typographyValue);
   const [isValid, setValid] = useState(true);
-  const [defaultValue] = useState(initialValue);
+  const defaultValue = useDefaultValue(value);
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+    setValue(typographyValue);
+  }, [typographyValue]);
 
   const resetTypography = () => {
     setPropByPath(path, defaultValue);
@@ -288,4 +287,4 @@ function TypographyInput(props) {
   );
 }
 
-export default TypographyInput;
+export default memo(TypographyInput);

@@ -1,6 +1,5 @@
 import { Paper, Box, Grid, Typography } from '@mui/material';
 import countries from 'i18n-iso-countries';
-import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
 import { abbreviateNumber, fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
@@ -223,7 +222,7 @@ function LeaderBoard(props) {
               </Grid>
               <Grid item xs={4}>
                 <Box className={classes.flagContainer}>
-                  <Image
+                  <img
                     alt={`${country.name}`}
                     src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countries.getAlpha2Code(
                       `${country.name}`,

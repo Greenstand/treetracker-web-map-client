@@ -11,32 +11,31 @@ import {
   Input,
   FormHelperText,
 } from '@mui/material';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 import ColorPicker from 'react-best-gradient-color-picker';
-import { usePlaygroundUtils } from '../../hooks/contextHooks';
-import useDisclosure from '../../hooks/useDisclosure';
-import { propRules } from '../../models/themePlaygroundOptions';
+import { usePlaygroundUtils } from 'hooks/contextHooks';
+import { useDefaultValue } from 'hooks/cwmHooks';
+import useDisclosure from 'hooks/useDisclosure';
+import { propRules } from 'models/themePlaygroundOptions';
 
-function ColorInput(props) {
-  const { path, label } = props;
-  const { getPropByPath, setPropByPath } = usePlaygroundUtils();
-  const initialValue = getPropByPath(path);
-  const [value, setValue] = useState(initialValue);
+function ColorInput({ path, color, label }) {
+  const { setPropByPath } = usePlaygroundUtils();
+  const [value, setValue] = useState(color);
   const [isValid, setValid] = useState(true);
-  const isGradient = /gradient/i.test(label);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pickerRef = useRef(null);
   const timer = useRef(null);
-  const [defaultColor, setDefaultColor] = useState(initialValue);
+  const isGradient = /gradient/i.test(label);
+  const defaultValue = useDefaultValue(value);
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+    setValue(color);
+  }, [color]);
 
   // change single colors back to default
   const handleReset = () => {
-    setValue(defaultColor);
-    setPropByPath(path, defaultColor);
+    setValue(defaultValue);
+    setPropByPath(path, defaultValue);
     setValid(true);
   };
 
@@ -45,17 +44,17 @@ function ColorInput(props) {
     setValue(userValue);
     setValid(false);
 
-    if (!isGradient) if (!propRules.color.test(userValue)) return;
+    if (!isGradient && !propRules.color.test(userValue)) return;
     setValid(true);
     setPropByPath(path, userValue);
   };
 
-  const handleColorChange = (color) => {
-    setValue(color);
+  const handleColorChange = (newColor) => {
+    setValue(newColor);
     // if the user drags too fast the (global) state can't keep up
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      setPropByPath(path, color);
+      setPropByPath(path, newColor);
     }, 200);
   };
 
@@ -143,4 +142,4 @@ function ColorInput(props) {
   );
 }
 
-export default ColorInput;
+export default memo(ColorInput);

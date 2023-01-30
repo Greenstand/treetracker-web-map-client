@@ -1,5 +1,5 @@
 import { Box, Tooltip, Typography } from '@mui/material';
-import { useClipboard } from '../../hooks/globalHooks';
+import { useClipboard } from 'hooks/globalHooks';
 
 function UUIDTag({ uuid, sx }) {
   const formattedId = `${uuid.slice(0, 4)}...${uuid.slice(

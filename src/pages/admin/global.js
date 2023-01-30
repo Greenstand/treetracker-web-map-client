@@ -9,10 +9,10 @@ import {
   DashboardProvider,
   useDashboardContext,
 } from 'context/dashboardContext';
+import { MapContextProvider, useMapContext } from 'mapContext';
 import { getOrganizationById } from 'models/api';
 import { updateLogoUrl } from 'models/config.reducer';
 import { wrapper } from 'models/utils';
-import { MapContextProvider, useMapContext } from '../../mapContext';
 
 const MapLayout = dynamic(() => import('components/GlobalMapLayout'), {
   ssr: false,

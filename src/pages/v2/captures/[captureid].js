@@ -34,19 +34,28 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
+import {
+  getStakeHolderById,
+  getCapturesById,
+  getGrowerById,
+  getCountryByLatLon,
+} from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
-export default function Tree({
+export default function Capture({
   tree,
-  planter,
+  grower,
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
+  country,
 }) {
   log.warn('tree: ', tree);
-  log.warn('org: ', organization);
+  log.warn('org: ', organization.stakeholders[0]);
+  log.warn('grower: ', grower);
+  log.warn('country: ', country);
+
   const mapContext = useMapContext();
   const { map } = mapContext;
   const theme = useTheme();
@@ -56,12 +65,13 @@ export default function Tree({
   });
   const isMobile = useMobile();
   const isEmbed = useEmbed();
-  const isPlanterContext = context && context.name === 'planters';
+  const isPlanterContext = context && context.name === 'grower';
   const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
-
   log.warn('map:', mapContext);
+
+  const { org_name, logo_url, id } = organization.stakeholders[0];
 
   function handleShare() {}
 
@@ -123,7 +133,7 @@ export default function Tree({
       if (map && tree?.lat && tree?.lon) {
         if (context && context.name) {
           if (isPlanterContext) {
-            log.warn('set planter filter', context.id);
+            log.warn('set grower filter', context.id);
             await map.setFilters({
               userid: context.id,
             });
@@ -174,7 +184,7 @@ export default function Tree({
     reload();
   }, [map, tree.lat, tree.lon]);
 
-  log.warn(planter, 'planter');
+  log.warn(grower, 'grower');
 
   return (
     <>
@@ -250,7 +260,7 @@ export default function Tree({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.time_created).format(
+                  {`Planted on ${moment(tree.created_at).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -270,9 +280,8 @@ export default function Tree({
                   }}
                 >
                   <Icon icon={LocationIcon} />
-                  {tree.country_name !== null
-                    ? `Located in ${tree.country_name}`
-                    : 'Unknown location'}
+
+                  {`Located in ${country.name || 'Unknown location'}`}
                 </Typography>
               </Box>
               <Box
@@ -318,11 +327,11 @@ export default function Tree({
                 ...(isPlanterContext
                   ? [
                       {
-                        url: `/planters/${planter.id}`,
-                        icon: planter.image_url,
+                        url: `/grower-accounts/${grower.id}`,
+                        icon: grower.image_url,
                         name: `${utils.getPlanterName(
-                          planter.first_name,
-                          planter.last_name,
+                          grower.first_name,
+                          grower.last_name,
                         )}`,
                       },
                     ]
@@ -330,9 +339,9 @@ export default function Tree({
                 ...(isOrganizationContext && organization
                   ? [
                       {
-                        url: `/organizations/${organization.id}`,
-                        icon: organization.logo_url,
-                        name: organization.name,
+                        url: `/stakeholder/stakeholders/${id}`,
+                        icon: logo_url,
+                        name: org_name,
                       },
                     ]
                   : []),
@@ -423,7 +432,7 @@ export default function Tree({
               />
               <TreeInfoDialog
                 tree={tree}
-                planter={planter}
+                planter={grower}
                 organization={organization}
               />
             </Box>
@@ -488,7 +497,7 @@ export default function Tree({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.time_created).format(
+                  {`Planted on ${moment(tree.created_at).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -507,9 +516,7 @@ export default function Tree({
                   }}
                 >
                   <Icon icon={LocationIcon} />
-                  {tree.country_name !== null
-                    ? `Located in ${tree.country_name}`
-                    : 'Unknown location'}
+                  {`Located in ${country.name}` || 'Unknown location'}
                 </Typography>
               </Box>
               <Box
@@ -541,13 +548,14 @@ export default function Tree({
             ]}
           >
             <InformationCard1
-              entityName={organization.name}
+              entityName={org_name}
               entityType="Planting Organization"
               buttonText="Meet the Organization"
-              cardImageSrc={organization?.logo_url || imagePlaceholder}
-              link={`/organizations/${
-                organization.id
-              }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
+              cardImageSrc={logo_url || imagePlaceholder}
+              // TODO: this wont work until organizationsV2 page is completed
+              link={`/stakeholder/stakeholders/${id}?keyword=${nextExtraKeyword}${
+                isEmbed ? '&embed=true' : ''
+              }`}
             />
           </Box>
         )}
@@ -557,12 +565,13 @@ export default function Tree({
           }}
         >
           <InformationCard1
-            entityName={`${planter.first_name} ${planter.last_name}`}
-            entityType="Planter"
-            buttonText="Meet the Planter"
-            cardImageSrc={planter?.image_url || imagePlaceholder}
-            rotation={planter?.image_rotation}
-            link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
+            entityName={`${grower.first_name} ${grower.last_name}`}
+            entityType="Grower"
+            buttonText="Meet the Grower"
+            cardImageSrc={grower?.image_url || imagePlaceholder}
+            rotation={grower?.image_rotation}
+            // TODO: this wont work until growers page is completed
+            link={`/grower-accounts/${grower.id}?keyword=${nextExtraKeyword}${
               isEmbed ? '&embed=true' : ''
             }`}
           />
@@ -584,7 +593,7 @@ export default function Tree({
         </Typography>
         <TagList>
           <TreeTag
-            TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
+            TreeTagValue={new Date(tree.created_at).toLocaleDateString()}
             title="Planted on"
             icon={<Icon icon={CalendarIcon} />}
           />
@@ -595,12 +604,10 @@ export default function Tree({
             disabled={tree.verified === false}
           />
           <TreeTag
-            TreeTagValue={
-              tree.country_name === null ? 'unknown' : tree.country_name
-            }
+            TreeTagValue={country.name === null ? 'unknown' : country.name}
             title="Located in"
             icon={<Icon icon={LocationIcon} />}
-            disabled={tree.country_name === null}
+            disabled={country.name === null}
           />
           <TreeTag
             TreeTagValue={tree.age === null ? 'unknown' : tree.age}
@@ -697,7 +704,7 @@ export default function Tree({
                 height: '120px',
                 margin: '10px',
               }}
-              src={isPlanterContext ? planter.image_url : organization.logo_url}
+              src={isPlanterContext ? grower.image_url : logo_url}
               variant="rounded"
             />
           </Portal>
@@ -708,25 +715,28 @@ export default function Tree({
 }
 
 async function serverSideData(params) {
-  const { treeid } = params;
-  const tree = await getTreeById(treeid);
-  const { planter_id, planting_organization_id } = tree;
-  const planter = await getPlanterById(planter_id);
-  let organization = null;
+  const { captureid } = params;
+  const tree = await getCapturesById(captureid);
+  const { planting_organization_id, grower_account_id, lat, lon } = tree;
+  const grower = await getGrowerById(grower_account_id);
+  const country = await getCountryByLatLon(lat, lon);
+  let organization = await getStakeHolderById(planting_organization_id);
+
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');
-    organization = await getOrganizationById(planting_organization_id);
-  } else if (planter.organization_id) {
+    organization = await getStakeHolderById(planting_organization_id);
+  } else if (grower.organization_id) {
     log.warn('load org from planter. organization_id');
-    organization = await getOrganizationById(planter.organization_id);
+    organization = await getStakeHolderById(grower.organization_id);
   } else {
-    log.warn('can not load org for tree:', tree, planter);
+    log.warn('can not load org for tree:', tree, grower);
   }
 
   return {
     tree,
-    planter,
+    grower,
     organization,
+    country,
   };
 }
 
