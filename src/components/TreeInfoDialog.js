@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+// /* eslint-disable @next/next/no-Image-element */
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
@@ -17,6 +17,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
+import Image from 'next/image';
 import { useState } from 'react';
 import Share from './Share';
 import Icon from './common/CustomIcon';
@@ -104,7 +105,7 @@ function CustomImageItem(props) {
         p: 2,
       }}
     >
-      <img
+      <Image
         src={src}
         srcSet={src}
         alt={alt}
@@ -244,7 +245,7 @@ export default function TreeInfoDialog(props) {
                     maxHeight: 'calc(100vh - 150px)',
                   }}
                 >
-                  <img
+                  <Image
                     src={tree.image_url}
                     alt={`tree - #${tree.id}`}
                     className={classes.imageLarge}
@@ -363,7 +364,7 @@ export default function TreeInfoDialog(props) {
                 overflow: 'scroll',
               }}
             >
-              <img
+              <Image
                 src={tree.image_url}
                 alt={`tree - #${tree.id}`}
                 className={classes.imageLarge}
