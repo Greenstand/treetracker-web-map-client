@@ -214,15 +214,19 @@ TreetrackerApp.getInitialProps = async (context) => {
 
   const device = userAgentFromString(userAgent)?.device.type || 'desktop';
 
-  const mapConfigRequest = await fetch(
-    // TODO: use the ENV var, currently results in a bug with the theme editor
-    // `${process.env.NEXT_PUBLIC_CONFIG_API}/config`,
-    `https://dev-k8s.treetracker.org/map_config/config`,
-  );
-  const mapConfig = await mapConfigRequest.json();
-  const config =
-    mapConfig.find((item) => item.name === 'testing-config')?.data ||
-    defaultConfig;
+  let config = defaultConfig;
+  // currently only fetch from db in DEVELOPMENT
+  if (process.env.NODE_ENV === 'development') {
+    const mapConfigRequest = await fetch(
+      // TODO: use the ENV var, currently results in a bug with the theme editor
+      // `${process.env.NEXT_PUBLIC_CONFIG_API}/config`,
+      `https://dev-k8s.treetracker.org/map_config/config`,
+    );
+    const configData = await mapConfigRequest.json();
+    config =
+      configData.find((item) => item.name === 'testing-config')?.data ||
+      defaultConfig;
+  }
 
   return {
     props,
