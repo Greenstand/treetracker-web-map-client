@@ -16,11 +16,10 @@ import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
 import LayoutMobileC from '../components/LayoutMobileC';
 import { DrawerProvider } from '../context/DrawerContext';
-import { defaultConfig } from '../context/configContext';
+import { ConfigProvider, defaultConfig } from '../context/configContext';
 import { CustomThemeProvider } from '../context/themeContext';
 import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
-import { wrapper } from '../models/utils';
 
 log.warn(`Web Map Client version ${packageJson.version}`);
 
@@ -135,7 +134,6 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
     nextExtraIsDesktop,
     nextExtraKeyword,
     nextExtraLoading,
-    config,
   };
 
   const isAdmin = !!router.asPath.match(/admin/);
@@ -151,7 +149,7 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
   }
 
   return (
-    <>
+    <ConfigProvider config={config}>
       <GoogleAnalytics />
       <CacheProvider value={muiCache ?? createMuiCache()}>
         <CustomThemeProvider>
@@ -203,7 +201,7 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
           <LinearProgress />
         </Box>
       )}
-    </>
+    </ConfigProvider>
   );
 }
 

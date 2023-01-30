@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useConfigContext } from 'context/configContext';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
@@ -59,9 +60,10 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-function Navbar({ config }) {
+function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
+  const { navbar: config } = useConfigContext();
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {

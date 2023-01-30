@@ -49,7 +49,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 const Layout = forwardRef(
-  ({ children, config, nextExtraIsEmbed, nextExtraIsEmbedCallback }, ref) => {
+  ({ children, nextExtraIsEmbed, nextExtraIsEmbedCallback }, ref) => {
     const { classes } = useStyles();
 
     function handleFullScreen() {
@@ -58,7 +58,7 @@ const Layout = forwardRef(
 
     return (
       <Box className={classes.root}>
-        <Navbar config={config.navbar} />
+        <Navbar />
         <Box className={classes.main}>
           <Paper ref={ref} elevation={11} className={classes.left}>
             {children}

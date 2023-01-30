@@ -6,49 +6,10 @@ import {
   useEffect,
 } from 'react';
 import { useLocalStorage } from 'hooks/globalHooks';
+import { defaultConfig } from './configContext';
 import configReducer from '../models/config.reducer';
 
 const DashboardContext = createContext(null);
-
-export const defaultConfig = {
-  navbar: {
-    logoUrl: 'http://localhost:3000/images/greenstand_logo.svg',
-    items: [
-      {
-        id: 1,
-        url: 'https://greenstand.org/',
-        title: 'About Greenstand',
-      },
-      {
-        id: 2,
-        url: 'https://greenstand.org/treetracker/start-tracking',
-        title: 'About Treetracker',
-      },
-      {
-        id: 3,
-        url: 'https://greenstand.org/contribute/donate',
-        title: 'Contribute',
-      },
-      {
-        id: 4,
-        url: 'https://greenstand.org/blog',
-        title: 'Blog',
-      },
-      {
-        id: 5,
-        url: 'https://greenstand.org/contact',
-        title: 'Contact Us',
-      },
-    ],
-  },
-  map: {
-    initialLocation: {
-      lat: '',
-      lon: '',
-      zoom: '',
-    },
-  },
-};
 
 export function DashboardProvider({ children }) {
   const [localStorageConfig, setLocalStorageConfig] = useLocalStorage(
