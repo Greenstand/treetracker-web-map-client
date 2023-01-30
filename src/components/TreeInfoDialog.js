@@ -17,7 +17,6 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
-import Image from 'next/image';
 import { useState } from 'react';
 import Share from './Share';
 import Icon from './common/CustomIcon';
@@ -105,7 +104,7 @@ function CustomImageItem(props) {
         p: 2,
       }}
     >
-      <Image
+      <img
         src={src}
         srcSet={src}
         alt={alt}
@@ -245,7 +244,7 @@ export default function TreeInfoDialog(props) {
                     maxHeight: 'calc(100vh - 150px)',
                   }}
                 >
-                  <Image
+                  <img
                     src={tree.image_url}
                     alt={`tree - #${tree.id}`}
                     className={classes.imageLarge}
@@ -364,7 +363,7 @@ export default function TreeInfoDialog(props) {
                 overflow: 'scroll',
               }}
             >
-              <Image
+              <img
                 src={tree.image_url}
                 alt={`tree - #${tree.id}`}
                 className={classes.imageLarge}

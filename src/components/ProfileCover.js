@@ -1,5 +1,4 @@
 import { Box } from '@mui/material';
-import Image from 'next/image';
 import imagePlaceholder from '../images/image-placeholder.png';
 
 function ProfileCover({ src }) {
@@ -17,7 +16,7 @@ function ProfileCover({ src }) {
           },
         }}
       >
-        <Image src={src} alt="profile" />
+        <img src={src} alt="profile" />
       </Box>
     );
   }
