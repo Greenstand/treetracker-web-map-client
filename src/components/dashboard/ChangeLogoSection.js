@@ -1,9 +1,9 @@
 import { Grid, Typography } from '@mui/material';
-import { useConfigContext } from 'context/configContext';
+import { useDashboardContext } from 'context/dashboardContext';
 import CustomLogo from './CustomLogo';
 
 function ChangeLogoSection() {
-  const { state } = useConfigContext();
+  const { state } = useDashboardContext();
 
   return (
     <Grid item xs={6}>

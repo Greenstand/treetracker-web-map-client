@@ -8,7 +8,7 @@ import {
 import { useLocalStorage } from 'hooks/globalHooks';
 import configReducer from '../models/config.reducer';
 
-const ConfigContext = createContext(null);
+const DashboardContext = createContext(null);
 
 export const defaultConfig = {
   navbar: {
@@ -50,7 +50,7 @@ export const defaultConfig = {
   },
 };
 
-export function ConfigProvider({ children }) {
+export function DashboardProvider({ children }) {
   const [localStorageConfig, setLocalStorageConfig] = useLocalStorage(
     'config',
     null,
@@ -62,7 +62,7 @@ export function ConfigProvider({ children }) {
 
   useEffect(() => {
     setLocalStorageConfig(state);
-  }, [state]);
+  }, [setLocalStorageConfig, state]);
 
   const value = useMemo(
     () => ({
@@ -73,10 +73,12 @@ export function ConfigProvider({ children }) {
   );
 
   return (
-    <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
+    <DashboardContext.Provider value={value}>
+      {children}
+    </DashboardContext.Provider>
   );
 }
 
-export const useConfigContext = () => useContext(ConfigContext);
+export const useDashboardContext = () => useContext(DashboardContext);
 
-export default ConfigContext;
+export default DashboardContext;
