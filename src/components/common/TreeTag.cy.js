@@ -1,6 +1,6 @@
 import AccessTime from '@mui/icons-material/AccessTime';
+import { mountWithTheme as mount } from 'models/test-utils';
 import TreeTag from './TreeTag';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('TreeTag', () => {
   it('TreeTag', () => {

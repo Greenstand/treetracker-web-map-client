@@ -1,7 +1,7 @@
+import { mountWithTheme as mount } from 'models/test-utils';
 import { formatDateString } from 'models/utils';
 import CustomImageWrapper from './CustomImageWrapper';
 import data from '../../../cypress/fixtures/tree186734.json';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('CustomImageWrapper', () => {
   it('The maximum icon link points to the right location', () => {

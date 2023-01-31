@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
+import { mountWithTheme as mount } from 'models/test-utils';
 import Crumbs from './Crumbs';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Crumbs', () => {
   it('cases', () => {

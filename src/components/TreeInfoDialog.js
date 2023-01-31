@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+// /* eslint-disable @next/next/no-Image-element */
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,

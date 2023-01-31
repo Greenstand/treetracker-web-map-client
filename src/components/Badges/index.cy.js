@@ -1,5 +1,5 @@
+import { mountWithTheme as mount } from 'models/test-utils';
 import Badges from '.';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('CustomWorldMap', () => {
   it('renders unverified and without token badge correctly', () => {
