@@ -1,3 +1,10 @@
+# [2.0.0-beta.223](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.222...v2.0.0-beta.223) (2023-01-31)
+
+
+### Features
+
+* update codeshift file to handle all cases ([d6f80ea](https://github.com/Greenstand/treetracker-web-map-client/commit/d6f80eaa0bd481aa7b2509a05cacf7694fee0629))
+
 # [2.0.0-beta.222](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.221...v2.0.0-beta.222) (2023-01-30)
 
 
