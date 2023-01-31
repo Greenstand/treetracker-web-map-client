@@ -215,8 +215,7 @@ TreetrackerApp.getInitialProps = async (context) => {
   const device = userAgentFromString(userAgent)?.device.type || 'desktop';
 
   let config = defaultConfig;
-  // currently only fetch from db in DEVELOPMENT
-  if (process.env.NODE_ENV === 'development') {
+  if (!process.env.NEXT_PUBLIC_SERVER_CONFIG_DISABLED) {
     const mapConfigRequest = await fetch(
       // TODO: use the ENV var, currently results in a bug with the theme editor
       // `${process.env.NEXT_PUBLIC_CONFIG_API}/config`,
