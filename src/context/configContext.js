@@ -1,7 +1,5 @@
 import { createContext, useContext } from 'react';
 
-const ConfigContext = createContext(null);
-
 export const defaultConfig = {
   navbar: {
     logoUrl: 'http://localhost:3000/images/greenstand_logo.svg',
@@ -41,6 +39,8 @@ export const defaultConfig = {
     },
   },
 };
+
+const ConfigContext = createContext(defaultConfig);
 
 export function ConfigProvider({ children, config }) {
   return (
