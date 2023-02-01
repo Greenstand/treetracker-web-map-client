@@ -125,8 +125,8 @@ function Timeline() {
             sx={{
               position: 'absolute',
               zIndex: '9999',
-              top: '10px',
-              left: '10px',
+              top: '20px',
+              left: '20px',
             }}
           >
             Start date must be before end date
