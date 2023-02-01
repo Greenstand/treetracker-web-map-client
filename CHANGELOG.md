@@ -1,3 +1,11 @@
+# [2.0.0-beta.224](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.223...v2.0.0-beta.224) (2023-02-01)
+
+
+### Bug Fixes
+
+* text ([cc9500a](https://github.com/Greenstand/treetracker-web-map-client/commit/cc9500ab2f445986d62c5855888f9f5c0c569c16))
+* verified tree ([e68f580](https://github.com/Greenstand/treetracker-web-map-client/commit/e68f580acc91990f31d884df4621d67d864d5bef))
+
 # [2.0.0-beta.223](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.222...v2.0.0-beta.223) (2023-01-31)
 
 
