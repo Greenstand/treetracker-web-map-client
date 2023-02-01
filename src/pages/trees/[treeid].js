@@ -78,11 +78,11 @@ export default function Tree({
     setTitlesData({
       treeId: tree.id,
       verifiedToken: tree.token_id,
-      verifiedTree: tree.verified,
+      verifiedTree: tree.approved,
     });
     // eslint-disable-next-line prefer-template, no-useless-concat
     log.warn('the tree data' + '' + JSON.stringify(tree));
-  }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
+  }, [setTitlesData, tree, tree.id, tree.token_id, tree.approved]);
 
   // useEffect(() => {
   //   async function draw() {
@@ -282,7 +282,7 @@ export default function Tree({
                   mt: 2,
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.verified} />
+                <Badges tokenId={tree.token_id} verified={tree.approved} />
               </Box>
             </Box>
           </Portal>
@@ -519,7 +519,7 @@ export default function Tree({
                   mt: 2,
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.verified} />
+                <Badges tokenId={tree.token_id} verified={tree.approved} />
               </Box>
             </Box>
           )}
@@ -589,10 +589,10 @@ export default function Tree({
             icon={<Icon icon={CalendarIcon} />}
           />
           <TreeTag
-            TreeTagValue={tree.verified === false ? 'not verified' : 'verifed'}
+            TreeTagValue={tree.approved === false ? 'not verified' : 'verifed'}
             title="Verification"
             icon={<Icon icon={VerifiedIcon} />}
-            disabled={tree.verified === false}
+            disabled={tree.approved === false}
           />
           <TreeTag
             TreeTagValue={
