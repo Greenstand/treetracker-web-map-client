@@ -1,5 +1,4 @@
 import { Link } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import HeadTag from 'components/HeadTag';
 
 export default function somethingWentWrong() {
@@ -10,17 +9,15 @@ export default function somethingWentWrong() {
         <h1>500</h1>
         <div className="not-found-background" />
         <h3>Something went wrong</h3>
-        <CustomLink />
+        <Link
+          href="/"
+          sx={{
+            color: 'text.primary',
+          }}
+        >
+          Go home
+        </Link>
       </div>
     </>
-  );
-}
-
-function CustomLink() {
-  const theme = useTheme();
-  return (
-    <Link href="/">
-      <a style={{ color: theme.palette.text.primary }}>Go home</a>
-    </Link>
   );
 }
