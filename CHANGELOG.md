@@ -1,3 +1,12 @@
+# [2.0.0-beta.225](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.224...v2.0.0-beta.225) (2023-02-03)
+
+
+### Bug Fixes
+
+* import useTheme from material ([dd03e46](https://github.com/Greenstand/treetracker-web-map-client/commit/dd03e468ddfd28bfa20280b7e88e8c07564bfda5))
+* replace a tag with Link component ([c94af26](https://github.com/Greenstand/treetracker-web-map-client/commit/c94af2642410c1a67dfd9ae402f64f2842902f04))
+* update link color with theme mode ([4b03d99](https://github.com/Greenstand/treetracker-web-map-client/commit/4b03d999e9dba05499c1ea842a083b5312a72128))
+
 # [2.0.0-beta.224](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.223...v2.0.0-beta.224) (2023-02-01)
 
 
