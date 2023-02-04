@@ -1,3 +1,10 @@
+# [2.0.0-beta.226](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.225...v2.0.0-beta.226) (2023-02-04)
+
+
+### Features
+
+* **treeid:** added MUIv5 skeleton loader component for tree info panel ([6fd467a](https://github.com/Greenstand/treetracker-web-map-client/commit/6fd467a0dc5487ec27ec5d64e2bf407fc9180fc0))
+
 # [2.0.0-beta.225](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.224...v2.0.0-beta.225) (2023-02-03)
 
 
