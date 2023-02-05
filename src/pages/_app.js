@@ -221,6 +221,7 @@ TreetrackerApp.getInitialProps = async (context) => {
       // `${process.env.NEXT_PUBLIC_CONFIG_API}/config`,
       `https://dev-k8s.treetracker.org/map_config/config`,
     );
+    // Temp solution since the backend does not have full support for the config
     const configData = await mapConfigRequest.json();
     config =
       configData.find((item) => item.name === 'testing-config')?.data ||
