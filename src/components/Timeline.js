@@ -127,6 +127,7 @@ function Timeline() {
               zIndex: '9999',
               top: '20px',
               left: '20px',
+              alignItems: 'center',
             }}
           >
             Start date must be before end date
