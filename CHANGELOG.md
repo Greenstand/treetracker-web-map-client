@@ -1,3 +1,12 @@
+# [2.0.0-beta.227](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.226...v2.0.0-beta.227) (2023-02-05)
+
+
+### Bug Fixes
+
+* align icon and text ([cb43af4](https://github.com/Greenstand/treetracker-web-map-client/commit/cb43af4443f40155db228bd1b706c6eb524dd4b8))
+* move  message location ([32f9ce3](https://github.com/Greenstand/treetracker-web-map-client/commit/32f9ce3f5591f5906f42b9dbea5217709202be01))
+* show date error on expand screen ([1515802](https://github.com/Greenstand/treetracker-web-map-client/commit/15158024cf1ce03208b656b23fa48b2ce5b265a9))
+
 # [2.0.0-beta.226](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.225...v2.0.0-beta.226) (2023-02-04)
 
 
