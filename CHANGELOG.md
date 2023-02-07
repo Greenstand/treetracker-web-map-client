@@ -1,3 +1,10 @@
+# [2.0.0-beta.229](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.228...v2.0.0-beta.229) (2023-02-07)
+
+
+### Bug Fixes
+
+*  initial view wrong [#1332](https://github.com/Greenstand/treetracker-web-map-client/issues/1332) ([baa8749](https://github.com/Greenstand/treetracker-web-map-client/commit/baa87491ec8adcafd8c79db45cfeef7b3a3d80b7))
+
 # [2.0.0-beta.228](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.227...v2.0.0-beta.228) (2023-02-07)
 
 
