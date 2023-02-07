@@ -1,16 +1,7 @@
 import { Box } from '@mui/material';
-import { useState, useEffect } from 'react';
-import { usePlaygroundUtils } from '../../hooks/contextHooks';
+import { memo } from 'react';
 
-function ColorThumbnail({ path }) {
-  const { getPropByPath } = usePlaygroundUtils();
-  const themeColor = getPropByPath(path);
-  const [color, setColor] = useState('');
-
-  useEffect(() => {
-    setColor(themeColor);
-  }, [themeColor]);
-
+function ColorThumbnail({ color }) {
   return (
     <Box
       sx={{
@@ -24,4 +15,4 @@ function ColorThumbnail({ path }) {
   );
 }
 
-export default ColorThumbnail;
+export default memo(ColorThumbnail);

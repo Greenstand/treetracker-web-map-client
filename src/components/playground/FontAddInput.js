@@ -11,8 +11,8 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { useState, useCallback } from 'react';
-import { usePlaygroundFonts } from '../../hooks/contextHooks';
-import { loadFonts } from '../../models/utils';
+import { usePlaygroundFonts } from 'hooks/contextHooks';
+import { loadFonts } from 'models/utils';
 
 function FontAddInput() {
   const [value, setValue] = useState('');

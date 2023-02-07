@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { PlaygroundContext } from 'context/playgroundContext';
 
 const usePlaygroundTheme = () => {
-  const { theme, setTheme } = useContext(PlaygroundContext);
-  return [theme, setTheme];
+  const { theme, setTheme, getPropByPath } = useContext(PlaygroundContext);
+  return { theme, setTheme, getPropByPath };
 };
 
 export default usePlaygroundTheme;

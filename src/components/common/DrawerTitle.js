@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { useDrawerContext } from 'context/DrawerContext';
+import * as utils from 'models/utils';
 import DataTag from './DataTag';
-import * as utils from '../../models/utils';
 import VerifiedBadge from '../VerifiedBadge';
 
 const Wrapper = styled(Box)(({ theme }) => ({

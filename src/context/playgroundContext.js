@@ -25,12 +25,11 @@ const getInitialTheme = () => {
 
 export const PlaygroundContext = createContext({});
 
+export const PlaygroundUtilsContext = createContext({});
+
 export function PlaygroundProvider({ children }) {
   const [themeType, setThemeType] = useLocalStorage('theme', 'light');
-  const [themeObject, setThemeObject] = useLocalStorage(
-    'themeObject',
-    undefined,
-  );
+  const [themeObject] = useLocalStorage('themeObject', undefined);
   const [fonts, setFonts] = useState(() => predefinedFonts);
   const [theme, setTheme] = useState(getInitialTheme());
 
@@ -60,10 +59,10 @@ export function PlaygroundProvider({ children }) {
     }));
   }, [fonts]);
 
-  const resetTheme = () => {
+  const resetTheme = useCallback(() => {
     setTheme(getInitialTheme());
     setFonts(predefinedFonts);
-  };
+  }, [setTheme, setFonts]);
 
   /**
    * set mui theme prop by path
@@ -73,17 +72,19 @@ export function PlaygroundProvider({ children }) {
    *
    * @example
    * setPropByPath('palette.primary.main', '#FFFF33')
-   *
-   * @returns the new theme
    */
-  const setPropByPath = (propPath, value) => {
-    const updatedTheme = utils.setPropByPath(propPath, value, theme);
-    setTheme((prevTheme) => ({
-      ...prevTheme,
-      ...updatedTheme,
-    }));
-    return updatedTheme;
-  };
+  const setPropByPath = useCallback(
+    (propPath, value) => {
+      setTheme((prevTheme) => {
+        const updatedTheme = utils.setPropByPath(propPath, value, prevTheme);
+        return {
+          ...prevTheme,
+          ...updatedTheme,
+        };
+      });
+    },
+    [setTheme],
+  );
 
   /**
    * get mui theme prop by path
@@ -111,26 +112,23 @@ export function PlaygroundProvider({ children }) {
       setThemeType,
       fonts,
       setFonts,
-      resetTheme,
       getPropByPath,
+    }),
+    [theme, setTheme, themeType, setThemeType, fonts, setFonts, getPropByPath],
+  );
+  const utilsContextValue = React.useMemo(
+    () => ({
+      resetTheme,
       setPropByPath,
     }),
-    [
-      theme,
-      setTheme,
-      themeType,
-      setThemeType,
-      fonts,
-      setFonts,
-      resetTheme,
-      getPropByPath,
-      setPropByPath,
-    ],
+    [resetTheme, setPropByPath],
   );
 
   return (
-    <PlaygroundContext.Provider value={contextValue}>
-      {children}
-    </PlaygroundContext.Provider>
+    <PlaygroundUtilsContext.Provider value={utilsContextValue}>
+      <PlaygroundContext.Provider value={contextValue}>
+        {children}
+      </PlaygroundContext.Provider>
+    </PlaygroundUtilsContext.Provider>
   );
 }

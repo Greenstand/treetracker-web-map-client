@@ -1,5 +1,5 @@
+import { mountWithTheme as mount } from 'models/test-utils';
 import FeaturedPlantersSlider from './index';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Featured Planters Slider', () => {
   it('it shows featured organization', () => {

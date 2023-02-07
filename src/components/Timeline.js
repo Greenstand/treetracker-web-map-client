@@ -120,7 +120,18 @@ function Timeline() {
     isGlobalPage && (
       <>
         {isError && (
-          <Alert severity="error">Start date must be before end date</Alert>
+          <Alert
+            severity="error"
+            sx={{
+              position: 'absolute',
+              zIndex: '9999',
+              top: '20px',
+              left: '20px',
+              alignItems: 'center',
+            }}
+          >
+            Start date must be before end date
+          </Alert>
         )}
         <Paper
           elevation={7}

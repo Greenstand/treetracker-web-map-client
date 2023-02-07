@@ -6,10 +6,10 @@ import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
 import ChangeNavSection from 'components/dashboard/ChangeNavSection';
 import { Tab, TabPanel } from 'components/dashboard/Tabs';
 import { ConfigProvider, useConfigContext } from 'context/configContext';
+import { MapContextProvider, useMapContext } from 'mapContext';
 import { getOrganizationById } from 'models/api';
 import { updateLogoUrl } from 'models/config.reducer';
 import { wrapper } from 'models/utils';
-import { MapContextProvider, useMapContext } from '../../mapContext';
 
 const MapLayout = dynamic(() => import('components/GlobalMapLayout'), {
   ssr: false,

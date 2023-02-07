@@ -1,10 +1,9 @@
 import { useContext } from 'react';
-import { PlaygroundContext } from 'context/playgroundContext';
+import { PlaygroundUtilsContext } from 'context/playgroundContext';
 
 const usePlaygroundUtils = () => {
-  const { resetTheme, getPropByPath, setPropByPath } =
-    useContext(PlaygroundContext);
-  return { resetTheme, getPropByPath, setPropByPath };
+  const { resetTheme, setPropByPath } = useContext(PlaygroundUtilsContext);
+  return { resetTheme, setPropByPath };
 };
 
 export default usePlaygroundUtils;
