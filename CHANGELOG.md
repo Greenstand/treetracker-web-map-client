@@ -1,3 +1,10 @@
+# [2.0.0-beta.228](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.227...v2.0.0-beta.228) (2023-02-07)
+
+
+### Bug Fixes
+
+* replace the fallbacks image in the information card with a logo [#1331](https://github.com/Greenstand/treetracker-web-map-client/issues/1331) ([3713a80](https://github.com/Greenstand/treetracker-web-map-client/commit/3713a8053e4dfa0c3b1b91cc3607eb0209aa7fac))
+
 # [2.0.0-beta.227](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.226...v2.0.0-beta.227) (2023-02-05)
 
 
