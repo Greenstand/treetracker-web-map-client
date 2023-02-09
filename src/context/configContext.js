@@ -6,7 +6,7 @@ import {
   useEffect,
 } from 'react';
 import { useLocalStorage } from 'hooks/globalHooks';
-import configReducer from '../models/config.reducer';
+import configReducer from 'models/config.reducer';
 
 const ConfigContext = createContext(null);
 
@@ -47,6 +47,12 @@ export const initialState = {
       lon: '',
       zoom: '',
     },
+  },
+  globalMessage: {
+    visible: false,
+    severity: 'info',
+    message:
+      ' Scheduled maintenance from 3:00am PST to 6:00am PST. (This is an example)',
   },
 };
 

@@ -1,5 +1,6 @@
 const ACTION_TYPES = {
   UPDATE_LOGO_URL: 'UPDATE_LOGO_URL',
+  UPDATE_NOTICE_VISIBLE: 'UPDATE_NOTICE_VISIBLE',
   ADD_NAV_ITEM: 'ADD_NAV_ITEM',
   REMOVE_NAV_ITEM: 'REMOVE_NAV_ITEM',
   UPDATE_NAV_ITEM: 'UPDATE_NAV_ITEM',
@@ -15,6 +16,15 @@ const configReducer = (state, action) => {
         navbar: {
           ...state.navbar,
           logoUrl: action.payload,
+        },
+      };
+    }
+    case ACTION_TYPES.UPDATE_NOTICE_VISIBLE: {
+      return {
+        ...state,
+        globalMessage: {
+          ...state.globalMessage,
+          visible: action.payload,
         },
       };
     }
@@ -130,6 +140,11 @@ export default configReducer;
 export const updateLogoUrl = (newUrl) => ({
   type: ACTION_TYPES.UPDATE_LOGO_URL,
   payload: newUrl,
+});
+
+export const updateNoticeVisible = (bool) => ({
+  type: ACTION_TYPES.UPDATE_NOTICE_VISIBLE,
+  payload: bool,
 });
 
 export const addNavItem = (newNavItem) => ({

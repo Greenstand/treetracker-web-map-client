@@ -3,11 +3,12 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { forwardRef } from 'react';
+import Max from 'images/max.svg';
 import { makeStyles } from 'models/makeStyles';
+import GlobalNotification from './GlobalNotification';
 import Navbar from './Navbar';
 import Timeline from './Timeline';
 import ZoomInOutButton from './ZoomInOutButton';
-import Max from '../images/max.svg';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
@@ -59,6 +60,7 @@ const Layout = forwardRef(
     return (
       <Box className={classes.root}>
         <Navbar />
+        <GlobalNotification />
         <Box className={classes.main}>
           <Paper ref={ref} elevation={11} className={classes.left}>
             {children}
