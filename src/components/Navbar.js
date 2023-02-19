@@ -9,13 +9,14 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { initialState } from 'context/configContext';
+import { useLocalStorage, useMobile } from 'hooks/globalHooks';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
-import { useLocalStorage, useMobile } from '../hooks/globalHooks';
 
 const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
+const treeTrackerLogo = `${process.env.NEXT_PUBLIC_BASE}/images/treetracker_logo.png`;
 
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
@@ -99,15 +100,16 @@ function Navbar() {
               display: 'flex',
               justifyContent: 'flex-start',
               alignItems: 'baseline',
+              marginLeft: '25px',
             }}
           >
-            {/* <img
-              src={iconLogo}
-              width={24}
-              height={30}
+            <img
+              src={treeTrackerLogo}
+              width={217}
+              height={35}
               alt="Greenstand Logo"
-            /> */}
-            <Typography
+            />
+            {/* <Typography
               variant="h1"
               ml={2.5}
               color="primary"
@@ -131,7 +133,7 @@ function Navbar() {
               }}
             >
               by Greenstand
-            </Typography>
+            </Typography> */}
           </Box>
         )}
       </Link>
