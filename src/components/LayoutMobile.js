@@ -2,16 +2,19 @@ import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { forwardRef } from 'react';
+import ZoomIn from 'images/zoom-in.svg';
+import ZoomOut from 'images/zoom-out.svg';
+import { useMapContext } from 'mapContext';
 import { makeStyles } from 'models/makeStyles';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
-import ZoomIn from '../images/zoom-in.svg';
-import ZoomOut from '../images/zoom-out.svg';
-import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 const Drawer = dynamic(() => import('./Drawer'), { ssr: false });
+const GlobalNotification = dynamic(() => import('./GlobalNotification'), {
+  ssr: false,
+});
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -64,6 +67,7 @@ const Layout = forwardRef(({ children }, ref) => {
   return (
     <Box className={classes.root}>
       <Navbar />
+      <GlobalNotification />
       <Box sx={{ position: 'relative', width: 1, height: 1 }}>
         <Box
           sx={{ position: 'absolute', top: 0, left: 0, width: 1, height: 1 }}
