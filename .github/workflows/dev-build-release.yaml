@@ -1,0 +1,91 @@
+name: Build the project and tag,version it and release to dev env
+
+on:
+  push:
+    branches:
+      - xxx
+
+env:
+  project-directory: ./
+
+jobs:
+  release:
+    name: Build Frontend Project
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.head_commit.message, 'skip-ci')
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: beta
+      - name: git configure
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: npm clean install
+        run: npm ci
+        working-directory: ${{ env.project-directory }}
+      - run: npm i -g semantic-release @semantic-release/{git,exec,changelog}
+      - run: semantic-release --debug
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      # next.js build
+      - name: build next
+        run: npm run build
+        working-directory: ${{ env.project-directory }}
+        env:
+          NODE_ENV: production
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build snapshot and push on merge
+        id: docker_build_release
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: false #true
+          tags: greenstand/${{ github.event.repository.name }}:${{ steps.package-version.outputs.current-version }}
+
+      - id: export_bumped_version
+        run: |
+          export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
+          echo "::set-output name=bumped_version::${BUMPED_VERSION}"
+    outputs:
+      bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
+
+#  deploy:
+#    name: Deploy to dev env
+#    runs-on: ubuntu-latest
+#    needs: release
+#    if: |
+#      !contains(github.event.head_commit.message, 'skip-ci') &&
+#      github.event_name == 'push' &&
+#      github.repository == "Greenstand/${{ github.event.repository.name }}"
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Install kustomize
+#        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+#      - name: Run kustomize
+#        run: (cd deployment-beta/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }} )
+#      - name: Install doctl for kubernetes
+#        uses: digitalocean/action-doctl@v2
+#        with:
+#          token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
+#      - name: Save DigitalOcean kubeconfig
+#        run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
