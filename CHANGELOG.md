@@ -1,3 +1,17 @@
+# [2.0.0-beta.230](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.229...v2.0.0-beta.230) (2023-03-01)
+
+
+### Bug Fixes
+
+* env var not a valid boolean ([11b1426](https://github.com/Greenstand/treetracker-web-map-client/commit/11b142697bf3c414b7be422733165c53d6a09a10))
+
+
+### Features
+
+* connect backend config ([2f9a2e6](https://github.com/Greenstand/treetracker-web-map-client/commit/2f9a2e641ec6d180fb5d85e21a1e4c0d089fc3e5))
+* **cwm:** add config context ([d151561](https://github.com/Greenstand/treetracker-web-map-client/commit/d1515616ab0110cacdad5b54c7ed05e0ca056fab))
+* **cwm:** add default config as initial context value ([5d85fa5](https://github.com/Greenstand/treetracker-web-map-client/commit/5d85fa5c810146e194c9aa65ea3a35333b8771ae))
+
 # [2.0.0-beta.229](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.228...v2.0.0-beta.229) (2023-02-07)
 
 
