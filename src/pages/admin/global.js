@@ -5,7 +5,10 @@ import HeadTag from 'components/HeadTag';
 import ChangeLogoSection from 'components/dashboard/ChangeLogoSection';
 import ChangeNavSection from 'components/dashboard/ChangeNavSection';
 import { Tab, TabPanel } from 'components/dashboard/Tabs';
-import { ConfigProvider, useConfigContext } from 'context/configContext';
+import {
+  DashboardProvider,
+  useDashboardContext,
+} from 'context/dashboardContext';
 import { MapContextProvider, useMapContext } from 'mapContext';
 import { getOrganizationById } from 'models/api';
 import { updateLogoUrl } from 'models/config.reducer';
@@ -17,7 +20,7 @@ const MapLayout = dynamic(() => import('components/GlobalMapLayout'), {
 
 function Global({ organization }) {
   const [currentTab, setCurrentTab] = useState(0);
-  const { state, dispatch } = useConfigContext();
+  const { state, dispatch } = useDashboardContext();
   const mapContext = useMapContext();
 
   useEffect(() => {
@@ -125,11 +128,11 @@ function Global({ organization }) {
 
 function GlobalWithContext(props) {
   return (
-    <ConfigProvider>
+    <DashboardProvider>
       <MapContextProvider>
         <Global {...props} />
       </MapContextProvider>
-    </ConfigProvider>
+    </DashboardProvider>
   );
 }
 
