@@ -9,6 +9,7 @@ on:
       - '**.md'
     branches:
       - beta
+      - v2
 
 jobs:
   install:
