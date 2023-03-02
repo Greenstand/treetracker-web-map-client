@@ -11,6 +11,11 @@
       channel: 'alpha',
       range: '2.0.0-alpha.0',
     },
+    { 
+      name: 'cwm', 
+      prerelease: true,
+      channel: 'newfeature',
+    },
   ],
     "plugins": [
       "@semantic-release/commit-analyzer",
