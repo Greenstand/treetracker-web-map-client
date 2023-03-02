@@ -1,0 +1,11 @@
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: treetracker-web-map-client-next-be-api
+  namespace: webmap
+spec:
+  #host: next-dev.treetracker.org
+  prefix: /next/webmap/
+  service: treetracker-web-map-client-next-ambassador-svc
+  timeout_ms: 0
+  precedence: 9

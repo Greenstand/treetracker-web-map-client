@@ -1,0 +1,5 @@
+resources:
+  - deployment.yaml
+  - mapping.yaml
+  - service.yaml
+    #- database-connection-sealed-secret.yaml

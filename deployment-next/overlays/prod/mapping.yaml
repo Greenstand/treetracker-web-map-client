@@ -1,0 +1,7 @@
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: treetracker-web-map-client-beta-be-api
+  namespace: webmap
+spec:
+  host: beta-map.treetracker.org
