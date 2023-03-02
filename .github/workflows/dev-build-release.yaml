@@ -91,8 +91,7 @@ jobs:
       - name: get bumped version
         id: get_bumped_version
         run: |
-        echo "::set-output name=bumped_version::${{ needs.release.outputs.bumped_version }}"
-        echo "Bumped version: ${{ steps.get_bumped_version.outputs.bumped_version }}"
+          echo "::set-output name=bumped_version::${{ needs.release.outputs.bumped_version }}"
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
