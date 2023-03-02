@@ -87,14 +87,16 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
-      - id: export_bumped_version
+      # get bumped version from release job output
+      - name: get bumped version
+        id: get_bumped_version
         run: |
-          export BUMPED_VERSION="${{ github.outputs.bumped_version }}"
-          echo "::set-output name=bumped_version::${BUMPED_VERSION}"
+        echo "::set-output name=bumped_version::${{ needs.release.outputs.bumped_version }}"
+        echo "Bumped version: ${{ steps.get_bumped_version.outputs.bumped_version }}"
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
-        run: (cd deployment-beta/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ github.event.inputs.git-tag }} )
+        run: (cd deployment-beta/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}}
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
