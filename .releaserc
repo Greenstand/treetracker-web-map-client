@@ -8,8 +8,7 @@
     { 
       name: 'v2', 
       prerelease: true,
-      channel: 'alpha',
-      range: '2.0.0-2.alpha',
+      channel: 'alpha-v2',
     },
     { 
       name: 'cwm', 
