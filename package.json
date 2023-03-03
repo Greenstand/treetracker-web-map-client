@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.0.0-cwm.5",
+  "version": "2.0.0-cwm.6",
   "private": true,
   "scripts": {
     "build": "next build",
