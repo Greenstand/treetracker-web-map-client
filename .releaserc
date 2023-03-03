@@ -14,7 +14,7 @@
     { 
       name: 'cwm', 
       prerelease: true,
-      channel: 'newfeature',
+      channel: 'next',
     },
   ],
     "plugins": [
