@@ -95,7 +95,7 @@ jobs:
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
-        run: (cd deployment-next/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}}
+        run: (cd deployment-next/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
