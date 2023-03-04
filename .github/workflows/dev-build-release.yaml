@@ -3,7 +3,7 @@ name: Build the project and tag,version it and release to dev env
 on:
   push:
     branches:
-      - cwm
+      - *
 
 env:
   project-directory: ./
@@ -25,6 +25,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+      - name: Read .releaserc
+        run: echo ::set-output name=RELEASE_NEEDED::$(echo `node -e 'console.log(require("./.releaserc.json").branches.map(e => e.name || e).reduce((a,c) => a || c === process.env.GITHUB_REF_NAME, false))'`)
+        id: release_needed
+      - name: Print rn
+        run: echo ${{ steps.release_needed.outputs.RELEASE_NEEDED }}
+      - name: Quit if version is not changed
+        if: steps.release_needed.outputs.RELEASE_NEEDED == 'false'
+        run: echo "The branch is not configured to release. Quitting." && exit 0
       - name: npm clean install
         run: npm ci
         working-directory: ${{ env.project-directory }}
@@ -95,7 +103,7 @@ jobs:
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
-        run: (cd deployment-next/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
+        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
@@ -103,4 +111,4 @@ jobs:
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
       - name: Update kubernetes resources
-        run: kustomize build deployment-next/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
