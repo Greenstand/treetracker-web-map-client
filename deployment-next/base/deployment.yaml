@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: treetracker-web-map-client
+  name: treetracker-web-map-client-next
   namespace: webmap
   labels:
-    app: treetracker-web-map-client
+    app: treetracker-web-map-client-next
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: treetracker-web-map-client
+      app: treetracker-web-map-client-next
   template:
     metadata:
       labels:
-        app: treetracker-web-map-client
+        app: treetracker-web-map-client-next
     spec:
       affinity:
         nodeAffinity:
@@ -25,8 +25,8 @@ spec:
                     values:
                       - microservices-node-pool
       containers:
-        - name: treetracker-web-map-client
-          image: greenstand/treetracker-web-map-client:TAG
+        - name: treetracker-web-map-client-next
+          image: greenstand/treetracker-web-map-client:TAG-next
           env:
             - name: NEXT_PUBLIC_API
               value: https://dev-k8s.treetracker.org/query
