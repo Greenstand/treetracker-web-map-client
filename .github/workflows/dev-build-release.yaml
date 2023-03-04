@@ -116,4 +116,4 @@ jobs:
       - name: Print channel
         run: echo ${{ steps.channel.outputs.CHANNEL }}
       - name: Update kubernetes resources
-        run: kustomize build deployment/overlays/development${{ step.channel.outputs.CHANNEL}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build deployment/overlays/development${{ steps.channel.outputs.CHANNEL}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
