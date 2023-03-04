@@ -1,4 +1,5 @@
 bases:
   - ../../base
 patchesStrategicMerge:
+  - deployment.yaml
   - mapping.yaml
