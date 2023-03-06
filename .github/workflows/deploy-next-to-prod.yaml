@@ -3,7 +3,7 @@ name: Build the project and tag,version it and release to dev env
 on:
   push:
     branches:
-      - '*'
+      - 'xxxxxx'
 
 env:
   project-directory: ./
