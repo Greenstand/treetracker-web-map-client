@@ -15,8 +15,7 @@
     { 
       "name": "cwm", 
       "prerelease": true,
-      "channel": "next",
-      "range": "2.0.0-cwm.0"
+      "channel": "next"
     }
   ],
     "plugins": [
