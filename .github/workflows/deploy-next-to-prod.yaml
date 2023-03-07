@@ -111,7 +111,7 @@ jobs:
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
       - name: Load channel
-        run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
+        run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
         id: channel
       - name: Print channel
         run: echo ${{ steps.channel.outputs.CHANNEL }}
