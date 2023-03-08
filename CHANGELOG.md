@@ -1,3 +1,10 @@
+# [2.0.0-beta.231](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.230...v2.0.0-beta.231) (2023-03-08)
+
+
+### Bug Fixes
+
+* remove impact section ([2346e71](https://github.com/Greenstand/treetracker-web-map-client/commit/2346e715687b9ff881ce0f91ba8869f638b6484f))
+
 # [2.0.0-beta.230](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.229...v2.0.0-beta.230) (2023-03-01)
 
 
