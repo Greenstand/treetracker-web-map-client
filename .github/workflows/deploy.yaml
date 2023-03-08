@@ -30,8 +30,8 @@ jobs:
           echo "env: ${{ github.event.inputs.env }}"
       - uses: actions/checkout@v2
         with:
-          # set ref with input
-          ref: ${{ github.event.inputs.version }}
+          # set ref with input, add prefix 'refs/tags/' if it is a tag
+          ref: ${{ "v" + github.event.inputs.version }}
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
