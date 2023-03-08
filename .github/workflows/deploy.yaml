@@ -47,7 +47,7 @@ jobs:
       - name: Run kustomize
         run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
       - name: Resolve the secrets name
-        run: echo ::set-output name=SECRET_KEY::=$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",pod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}["${process.env.ENV_TO_DEPLOY"])'`)
+        run: echo ::set-output name=SECRET_KEY::=$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",pod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}[process.env.ENV_TO_DEPLOY)'`)
         id: do_secrets_name
         env:
           ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
@@ -56,7 +56,7 @@ jobs:
         with:
           token: ${{ secrets[ steps.do_secrets_name.outputs.SECRET_KEY ] }}
       - name: Resolve cluster name
-        run: echo ::set-output name=SECRET_KEY::=$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",pod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}["${process.env.ENV_TO_DEPLOY"])'`)
+        run: echo ::set-output name=SECRET_KEY::=$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",pod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}[process.env.ENV_TO_DEPLOY])'`)
         id: cluster_secrets_name
         env:
           ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
