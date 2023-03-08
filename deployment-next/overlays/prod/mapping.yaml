@@ -4,4 +4,4 @@ metadata:
   name: treetracker-web-map-client-be-api-next
   namespace: webmap
 spec:
-  host: beta-map.treetracker.org
+  host: next-map.treetracker.org
