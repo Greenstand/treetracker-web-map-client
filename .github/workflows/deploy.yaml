@@ -24,6 +24,10 @@ jobs:
     name: Deploy to dev
     runs-on: ubuntu-latest
     steps:
+      - name: Info
+        run: |
+          echo "version: ${{ github.event.inputs.version }}"
+          echo "env: ${{ github.event.inputs.env }}"
       - uses: actions/checkout@v2
         with:
           # set ref with input
