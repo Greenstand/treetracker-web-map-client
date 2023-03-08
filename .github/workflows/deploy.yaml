@@ -26,7 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: {{ git.event.inputs.version }}
+          # set ref with input
+          ref: ${{ github.event.inputs.version }}
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
@@ -40,12 +41,12 @@ jobs:
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
-        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{git.event.inputs.version}})
+        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
       - name: Resolve the secrets name
         run: echo ::set-output name=SECRET_KEY::=$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",pod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}["${process.env.ENV_TO_DEPLOY"])'`)
         id: do_secrets_name
         env:
-          ENV_TO_DEPLOY: ${{ git.event.inputs.env }}
+          ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
@@ -54,7 +55,7 @@ jobs:
         run: echo ::set-output name=SECRET_KEY::=$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",pod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}["${process.env.ENV_TO_DEPLOY"])'`)
         id: cluster_secrets_name
         env:
-          ENV_TO_DEPLOY: ${{ git.event.inputs.env }}
+          ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save ${{ secrets[ steps.do_secrets_name.outputs.SECRET_KEY ] }}
       - name: Load channel
