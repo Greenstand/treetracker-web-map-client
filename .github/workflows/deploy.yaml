@@ -51,6 +51,8 @@ jobs:
         id: do_secrets_name
         env:
           ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
+      - name: Print digitalocean token name
+        run: echo ${{ steps.do_secrets_name.outputs.SECRET_KEY }}
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
@@ -60,7 +62,7 @@ jobs:
         id: cluster_secrets_name
         env:
           ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
-      - name: Echo
+      - name: Print cluster name
         run: echo ${{ steps.cluster_secrets_name.outputs.SECRET_KEY }}
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save $CLUSTER_NAME
