@@ -61,7 +61,9 @@ jobs:
         env:
           ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
       - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ${{ secrets[ steps.do_secrets_name.outputs.SECRET_KEY ] }}
+        run: doctl kubernetes cluster kubeconfig save $CLUSTER_NAME
+        env:
+          CLUSTER_NAME: ${{ secrets[ steps.cluster_secrets_name.outputs.SECRET_KEY ] }}
       - name: Load channel
         run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
         id: channel
