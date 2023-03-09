@@ -7,6 +7,15 @@
 * overlay folder name [skip ci] ([68b36ee](https://github.com/Greenstand/treetracker-web-map-client/commit/68b36ee5614b36124beed1522edc79d56f56c599))
 * restore change log ([844e7ed](https://github.com/Greenstand/treetracker-web-map-client/commit/844e7ed497fb41a9cee6326a965673b7bf737eb3))
 
+# [2.0.0-cwm.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-cwm.3...v2.0.0-cwm.4) (2023-03-09)
+
+
+### Bug Fixes
+
+* action wrong folder ([42a5e22](https://github.com/Greenstand/treetracker-web-map-client/commit/42a5e22826ff8c1c26d0e4ea0c26b841f833ade0))
+* overlay folder name [skip ci] ([68b36ee](https://github.com/Greenstand/treetracker-web-map-client/commit/68b36ee5614b36124beed1522edc79d56f56c599))
+* restore change log ([844e7ed](https://github.com/Greenstand/treetracker-web-map-client/commit/844e7ed497fb41a9cee6326a965673b7bf737eb3))
+
 # [2.0.0-cwm.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.14.0...v2.0.0-cwm.1) (2023-03-02)
 
 
