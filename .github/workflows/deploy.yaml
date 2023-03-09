@@ -21,12 +21,17 @@ env:
 
 jobs:
   deploy:
-    name: Deploy to dev
+    name: Deploy 
     runs-on: ubuntu-latest
     steps:
+      - name: Info
+        run: |
+          echo "version: ${{ github.event.inputs.version }}"
+          echo "env: ${{ github.event.inputs.env }}"
       - uses: actions/checkout@v2
         with:
-          ref: {{ git.event.inputs.version }}
+          # set ref with input, add prefix 'refs/tags/' if it is a tag
+          ref: ${{format('v{0}', github.event.inputs.version)}}
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
@@ -39,28 +44,41 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-      - name: Run kustomize
-        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{git.event.inputs.version}})
-      - name: Resolve the secrets name
-        run: echo ::set-output name=SECRET_KEY::=$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",pod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}["${process.env.ENV_TO_DEPLOY"])'`)
-        id: do_secrets_name
-        env:
-          ENV_TO_DEPLOY: ${{ git.event.inputs.env }}
-      - name: Install doctl for kubernetes
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets[ steps.do_secrets_name.outputs.SECRET_KEY ] }}
-      - name: Resolve cluster name
-        run: echo ::set-output name=SECRET_KEY::=$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",pod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}["${process.env.ENV_TO_DEPLOY"])'`)
-        id: cluster_secrets_name
-        env:
-          ENV_TO_DEPLOY: ${{ git.event.inputs.env }}
-      - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ${{ secrets[ steps.do_secrets_name.outputs.SECRET_KEY ] }}
       - name: Load channel
         run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
         id: channel
       - name: Print channel
         run: echo ${{ steps.channel.outputs.CHANNEL }}
-          #      - name: Update kubernetes resources
-          #        run: kustomize build deployment${{ steps.channel.outputs.CHANNEL}}/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+      - name: Run kustomize
+        run: (cd deployment${{ steps.channel.outputs.CHANNEL}}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
+      - name: Resolve the secrets name
+        run: echo ::set-output name=SECRET_KEY::$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",prod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}[process.env.ENV_TO_DEPLOY])'`)
+        id: do_secrets_name
+        env:
+          ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
+      - name: Print digitalocean token name
+        run: echo ${{ steps.do_secrets_name.outputs.SECRET_KEY }}
+      - name: Install doctl for kubernetes
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets[ steps.do_secrets_name.outputs.SECRET_KEY ] }}
+      - name: Resolve cluster name
+        run: echo ::set-output name=SECRET_KEY::$( echo `node -e 'console.log({dev:"DEV_CLUSTER_NAME",prod:"PRODUCTION_CLUSTER_NAME",test:"TEST_CLUSTER_NAME"}[process.env.ENV_TO_DEPLOY])'`)
+        id: cluster_secrets_name
+        env:
+          ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
+      - name: Print cluster name
+        run: echo ${{ steps.cluster_secrets_name.outputs.SECRET_KEY }}
+      - name: Save DigitalOcean kubeconfig
+        run: doctl kubernetes cluster kubeconfig save $CLUSTER_NAME
+        env:
+          CLUSTER_NAME: ${{ secrets[ steps.cluster_secrets_name.outputs.SECRET_KEY ] }}
+      - name: Resolve overlay name
+        run: echo ::set-output name=OVERLAY_FOLDER::$( echo `node -e 'console.log({dev:"development",prod:"prod",test:"test"}[process.env.ENV_TO_DEPLOY])'`)
+        env:
+          ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
+        id: overlay_folder
+      - name: Print overlay folder
+        run: echo ${{ steps.overlay_folder.outputs.OVERLAY_FOLDER }}
+      - name: Update kubernetes resources
+        run: kustomize build deployment${{ steps.channel.outputs.CHANNEL}}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
