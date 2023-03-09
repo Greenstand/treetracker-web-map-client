@@ -1,20 +1,22 @@
 {
   "branches": [
-    '+([0-9])?(.{+([0-9]),x}).x',
-    'master',
-    'next',
-    'next-major',
-    { name: 'beta', prerelease: true },
+    "+([0-9])?(.{+([0-9]),x}).x",
+    "master",
+    "next",
+    "next-major",
     { 
-      name: 'v2', 
-      prerelease: true,
-      channel: 'alpha-v2',
+      "name": "beta", 
+      "prerelease": true },
+    { 
+      "name": "v2", 
+      "prerelease": true,
+      "channel": "alpha"
     },
     { 
-      name: 'cwm', 
-      prerelease: true,
-      channel: 'next',
-    },
+      "name": "cwm", 
+      "prerelease": true,
+      "channel": "next"
+    }
   ],
     "plugins": [
       "@semantic-release/commit-analyzer",
@@ -34,5 +36,4 @@
       ],
       "@semantic-release/github"
     ]
-
 }
