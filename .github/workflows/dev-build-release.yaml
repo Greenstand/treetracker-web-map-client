@@ -15,9 +15,10 @@ jobs:
     if: |
       !contains(github.event.head_commit.message, 'skip-ci')
     steps:
+      # checkout the branch to be merged
       - uses: actions/checkout@v2
         with:
-          ref: cwm
+          ref: ${{ github.ref }}
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
