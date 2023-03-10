@@ -8,13 +8,18 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+
 import { initialState } from 'context/configContext';
 import { useCustomThemeContext } from 'hooks/contextHooks';
 import { useLocalStorage, useMobile } from 'hooks/globalHooks';
+
+
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
+
+
 
 const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
 const treeTrackerLogo = `${process.env.NEXT_PUBLIC_BASE}/images/treetracker_logo.svg`;
@@ -65,8 +70,7 @@ const useStyles = makeStyles()((theme) => ({
 function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
-  const [webMapConfig] = useLocalStorage('config', initialState);
-  const { items: navItems } = webMapConfig.navbar;
+  const { navbar: config } = useConfigContext();
 
   const { theme } = useCustomThemeContext();
 
@@ -150,7 +154,7 @@ function Navbar() {
         )} */}
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
-        {navItems.map((item) => (
+        {config?.items.map((item) => (
           <Link key={`nav-${item.title}`} target="_blank" href={item.url}>
             <Button className={classes.buttonStyle} variant="text">
               <Typography className={classes.buttonStyle}>
@@ -184,7 +188,7 @@ function Navbar() {
           },
         }}
       >
-        {navItems.map((item) => (
+        {config?.items.map((item) => (
           <MenuItem key={`nav-${item.title}`}>
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>

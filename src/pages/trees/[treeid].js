@@ -12,7 +12,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Badges from 'components/Badges';
 import HeadTag from 'components/HeadTag';
-import ImpactSection from 'components/ImpactSection';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
 import Share from 'components/Share';
@@ -697,7 +696,7 @@ export default function Tree({
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
+
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal

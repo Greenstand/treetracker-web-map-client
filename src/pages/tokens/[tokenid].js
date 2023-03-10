@@ -20,7 +20,6 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import HeadTag from 'components/HeadTag';
-import ImpactSection from 'components/ImpactSection';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
 import Link from 'components/Link';
@@ -639,7 +638,6 @@ export default function Token(props) {
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal

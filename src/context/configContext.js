@@ -1,16 +1,6 @@
-import {
-  createContext,
-  useReducer,
-  useContext,
-  useMemo,
-  useEffect,
-} from 'react';
-import { useLocalStorage } from 'hooks/globalHooks';
-import configReducer from '../models/config.reducer';
+import { createContext, useContext } from 'react';
 
-const ConfigContext = createContext(null);
-
-export const initialState = {
+export const defaultConfig = {
   navbar: {
     logoUrl: 'http://localhost:3000/images/greenstand_logo.svg',
     items: [
@@ -50,30 +40,11 @@ export const initialState = {
   },
 };
 
-export function ConfigProvider({ children }) {
-  const [localStorageConfig, setLocalStorageConfig] = useLocalStorage(
-    'config',
-    null,
-  );
-  const [state, dispatch] = useReducer(
-    configReducer,
-    localStorageConfig ?? initialState,
-  );
+const ConfigContext = createContext(defaultConfig);
 
-  useEffect(() => {
-    setLocalStorageConfig(state);
-  }, [state]);
-
-  const value = useMemo(
-    () => ({
-      state,
-      dispatch,
-    }),
-    [state],
-  );
-
+export function ConfigProvider({ children, config }) {
   return (
-    <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
+    <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>
   );
 }
 
