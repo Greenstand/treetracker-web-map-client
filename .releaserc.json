@@ -6,7 +6,9 @@
     "next-major",
     { 
       "name": "beta", 
-      "prerelease": true },
+      "prerelease": true,
+      "channel": "beta"
+    },
     { 
       "name": "v2", 
       "prerelease": true,
