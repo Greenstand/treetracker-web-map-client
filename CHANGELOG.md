@@ -1,3 +1,17 @@
+# [2.0.0-cwm.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-cwm.4...v2.0.0-cwm.5) (2023-03-10)
+
+
+### Bug Fixes
+
+* merge cwm ([dd2286d](https://github.com/Greenstand/treetracker-web-map-client/commit/dd2286d8b9cc5fa993bb5fe569c1f24546b5e048))
+* remove impact section ([2346e71](https://github.com/Greenstand/treetracker-web-map-client/commit/2346e715687b9ff881ce0f91ba8869f638b6484f))
+* version ([44a7522](https://github.com/Greenstand/treetracker-web-map-client/commit/44a75223fa2a07d4a9a84b0bf4afb01dbe951e54))
+
+
+### Features
+
+* deployment action [skip ci] ([d6ebcdc](https://github.com/Greenstand/treetracker-web-map-client/commit/d6ebcdc64075c037bd3a300d90ca810acf2907d2))
+
 # [2.0.0-cwm.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-cwm.3...v2.0.0-cwm.4) (2023-03-09)
 
 
