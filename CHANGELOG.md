@@ -1,3 +1,10 @@
+# [2.0.0-cwm.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-cwm.5...v2.0.0-cwm.6) (2023-03-10)
+
+
+### Bug Fixes
+
+* hardcode for branch ([b433db4](https://github.com/Greenstand/treetracker-web-map-client/commit/b433db41ba79fc5a9c3ce95f2c760c64c21eea61))
+
 # [2.0.0-cwm.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-cwm.4...v2.0.0-cwm.5) (2023-03-10)
 
 
