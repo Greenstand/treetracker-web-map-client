@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.1...v2.0.2) (2023-03-10)
+
+
+### Bug Fixes
+
+* channel variable for deployments ([f2e9a5d](https://github.com/Greenstand/treetracker-web-map-client/commit/f2e9a5d239c0d31bc158fdd350571e14b823b4f5))
+
 ## [2.0.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0...v2.0.1) (2023-03-10)
 
 
