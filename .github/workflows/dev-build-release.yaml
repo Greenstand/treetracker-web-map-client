@@ -109,7 +109,7 @@ jobs:
       - name: Print channel
         run: echo ${{ steps.channel.outputs.CHANNEL }}
       - name: Run kustomize
-        run: (cd deployment${{ steps.channel.outputs.CHANNEL}}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
+        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
@@ -117,4 +117,4 @@ jobs:
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
       - name: Update kubernetes resources
-        run: kustomize build deployment${{ steps.channel.outputs.CHANNEL}}/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
