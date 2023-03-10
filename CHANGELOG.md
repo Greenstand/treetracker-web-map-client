@@ -1,3 +1,11 @@
+# [2.0.0-beta.234](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.233...v2.0.0-beta.234) (2023-03-10)
+
+
+### Bug Fixes
+
+* delete previous merge ci ([fa8ef3f](https://github.com/Greenstand/treetracker-web-map-client/commit/fa8ef3fce5c0ff652ddcbef62cb97ce70047ebb5))
+* missing channle for beta [skip ci] ([ed6dd7c](https://github.com/Greenstand/treetracker-web-map-client/commit/ed6dd7c576258b8368d1fd9627e8753b34078fd4))
+
 # [2.0.0-beta.233](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.232...v2.0.0-beta.233) (2023-03-10)
 
 
