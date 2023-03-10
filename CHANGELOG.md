@@ -1,3 +1,10 @@
+# [2.0.0-beta.235](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.234...v2.0.0-beta.235) (2023-03-10)
+
+
+### Bug Fixes
+
+* wrong branch name ([1c535b3](https://github.com/Greenstand/treetracker-web-map-client/commit/1c535b3ddf90cca12613f65a7ecc80a80239914a))
+
 # [2.0.0-beta.234](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.233...v2.0.0-beta.234) (2023-03-10)
 
 
