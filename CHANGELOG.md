@@ -1,3 +1,16 @@
+# [2.0.0-beta.233](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.232...v2.0.0-beta.233) (2023-03-10)
+
+
+### Bug Fixes
+
+* hardcode for branch ([b433db4](https://github.com/Greenstand/treetracker-web-map-client/commit/b433db41ba79fc5a9c3ce95f2c760c64c21eea61))
+* version ([44a7522](https://github.com/Greenstand/treetracker-web-map-client/commit/44a75223fa2a07d4a9a84b0bf4afb01dbe951e54))
+
+
+### Features
+
+* merge change from cwm ([9c95a3a](https://github.com/Greenstand/treetracker-web-map-client/commit/9c95a3aae9942cf130c654479e07569e2df39540))
+
 # [2.0.0-beta.232](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.231...v2.0.0-beta.232) (2023-03-09)
 
 
