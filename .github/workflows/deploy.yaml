@@ -35,7 +35,7 @@ jobs:
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
-      - name: Use Node.js 14.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'

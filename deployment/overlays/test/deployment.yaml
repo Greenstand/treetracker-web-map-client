@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: treetracker-web-map-client-beta
+  name: treetracker-web-map-client-main
   namespace: webmap
   labels:
-    app: treetracker-web-map-client-beta
+    app: treetracker-web-map-client-main
 spec:
   template:
     metadata:
       labels:
-        app: treetracker-web-map-client-beta
+        app: treetracker-web-map-client-main
     spec:
       containers:
         - name: treetracker-web-map-client

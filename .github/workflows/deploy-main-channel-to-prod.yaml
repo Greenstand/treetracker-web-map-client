@@ -1,4 +1,4 @@
-name: Deploy beta channel to prod
+name: Deploy main channel to prod
 
 on:
   workflow_dispatch:
@@ -21,11 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: beta
+          ref: main
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
-      - name: Use Node.js 14.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
@@ -39,7 +39,7 @@ jobs:
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
-        run: (cd deployment-beta/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ github.event.inputs.git-tag }} )
+        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ github.event.inputs.git-tag }} )
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
@@ -49,7 +49,7 @@ jobs:
       #- name: Delete completed migration jobs prior to deployment
       #  run: kubectl -n ${{ secrets.K8S_NAMESPACE }} delete job --ignore-not-found=true  database-migration-job
       - name: Update kubernetes resources
-        run: kustomize build deployment-beta/overlays/prod | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build deployment/overlays/prod | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
       #- name: Attempt to wait for migration job to complete
       #  run: kubectl wait -n ${{ secrets.K8S_NAMESPACE }} --for=condition=complete --timeout=45s job/database-migration-job
 #  deploy:
