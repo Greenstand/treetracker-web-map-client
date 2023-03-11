@@ -1,3 +1,10 @@
+# [2.0.0-v2.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-v2.1...v2.0.0-v2.2) (2023-03-11)
+
+
+### Features
+
+* v2 frist ([b64f779](https://github.com/Greenstand/treetracker-web-map-client/commit/b64f7798e716748ca5a45196cb1098166d3d71db))
+
 # [2.0.0-v2.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.14.0...v2.0.0-v2.1) (2023-03-11)
 
 
