@@ -1,3 +1,10 @@
+# [2.0.0-beta.237](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.236...v2.0.0-beta.237) (2023-03-11)
+
+
+### Bug Fixes
+
+* update image link to work with getThumbnailImageUrls ([a074f06](https://github.com/Greenstand/treetracker-web-map-client/commit/a074f06f7f13a5c8e4dc5e7e597c5d124998b6aa))
+
 # [2.0.0-beta.236](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.235...v2.0.0-beta.236) (2023-03-10)
 
 
