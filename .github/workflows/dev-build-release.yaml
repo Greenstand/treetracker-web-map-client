@@ -103,11 +103,11 @@ jobs:
           echo "::set-output name=bumped_version::${{ needs.release.outputs.bumped_version }}"
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-      - name: Load channel
-        run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
-        id: channel
-      - name: Print channel
-        run: echo ${{ steps.channel.outputs.CHANNEL }}
+      #- name: Load channel
+      #  run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
+      #  id: channel
+      #- name: Print channel
+      #  run: echo ${{ steps.channel.outputs.CHANNEL }}
       - name: Run kustomize
         run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
       - name: Install doctl for kubernetes
