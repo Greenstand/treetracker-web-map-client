@@ -5,6 +5,13 @@
 
 * trigger ([5b4bd32](https://github.com/Greenstand/treetracker-web-map-client/commit/5b4bd32522896ed2c62913386c7ff2c25611306c))
 
+# [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-03-11)
+
+
+### Bug Fixes
+
+* trigger ([5b4bd32](https://github.com/Greenstand/treetracker-web-map-client/commit/5b4bd32522896ed2c62913386c7ff2c25611306c))
+
 # [2.0.0-beta.237](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.236...v2.0.0-beta.237) (2023-03-11)
 
 
