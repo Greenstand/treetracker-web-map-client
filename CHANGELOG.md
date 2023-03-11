@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.3...v2.0.4) (2023-03-11)
+
+
+### Bug Fixes
+
+* deployment configs ([edb0d9d](https://github.com/Greenstand/treetracker-web-map-client/commit/edb0d9dc3369a9b157e7dcdae1a48e8e6280c6fe))
+
 ## [2.0.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.2...v2.0.3) (2023-03-11)
 
 
