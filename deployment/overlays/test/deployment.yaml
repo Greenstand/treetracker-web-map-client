@@ -12,7 +12,7 @@ spec:
         app: treetracker-web-map-client-main
     spec:
       containers:
-        - name: treetracker-web-map-client
+        - name: treetracker-web-map-client-main
           env:
             - name: NODE_ENV
               value: test
