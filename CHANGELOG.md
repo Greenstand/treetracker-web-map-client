@@ -1,3 +1,10 @@
+## [2.0.8](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.7...v2.0.8) (2023-03-14)
+
+
+### Bug Fixes
+
+* correct config of channels ([ea1013c](https://github.com/Greenstand/treetracker-web-map-client/commit/ea1013cef798b4fa465a9a8500abf0b7f8f2c70b))
+
 ## [2.0.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.6...v2.0.7) (2023-03-12)
 
 
