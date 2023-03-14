@@ -1,7 +1,7 @@
 apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
-  name: treetracker-web-map-client-mapping-main
+  name: treetracker-web-map-client-mapping-alpha
   namespace: webmap
 spec:
   cors:

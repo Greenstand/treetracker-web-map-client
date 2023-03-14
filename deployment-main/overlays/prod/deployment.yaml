@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treetracker-web-map-client-main
+  namespace: webmap
+  labels:
+    app: treetracker-web-map-client-main
+spec:
+  template:
+    metadata:
+      labels:
+        app: treetracker-web-map-client-main
+    spec:
+      containers:
+        - name: treetracker-web-map-client-main
+          env:
+            - name: NEXT_PUBLIC_API
+              value: https://prod-k8s.treetracker.org/query
+            - name: NEXT_PUBLIC_TILE_SERVER_URL
+              value: https://{s}.treetracker.org/
+            - name: NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS
+              value: tiles1,tiles2,tiles3,tiles4
+            - name: NEXT_PUBLIC_TILE_SERVER_WEBMAP_API
+              value: https://prod-k8s.treetracker.org/webmap/
+            - name: NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED
+              value: 'false'
+            - name: NEXT_PUBLIC_GA_ID
+              value: G-6QS615H24Z
