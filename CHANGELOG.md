@@ -1,3 +1,11 @@
+# [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-03-15)
+
+
+### Bug Fixes
+
+* config hook undefined ([cb7cea7](https://github.com/Greenstand/treetracker-web-map-client/commit/cb7cea714f2715fe9959984f7973b568de1ac70f))
+* trigger ([5b4bd32](https://github.com/Greenstand/treetracker-web-map-client/commit/5b4bd32522896ed2c62913386c7ff2c25611306c))
+
 # [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-03-11)
 
 
