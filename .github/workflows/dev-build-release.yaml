@@ -27,7 +27,15 @@ jobs:
         with:
           node-version: '18.x'
       - name: Read .releaserc
-        run: echo ::set-output name=RELEASE_NEEDED::$(echo `node -e 'console.log(require("./.releaserc.json").branches.map(e => e.name || e).reduce((a,c) => a || c === process.env.GITHUB_REF_NAME, false))'`)
+        run: |
+          RELEASE_NEEDED=false
+          while read -r branch; do
+            if [ "$branch" == "${GITHUB_REF_NAME}" ]; then
+              RELEASE_NEEDED=true
+              break
+            fi
+          done < <(jq -r '.branches[].name' .releaserc.json)
+          echo "::set-output name=RELEASE_NEEDED::$RELEASE_NEEDED"
         id: release_needed
       - name: Print rn
         run: echo ${{ steps.release_needed.outputs.RELEASE_NEEDED }}
