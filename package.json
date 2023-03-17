@@ -65,7 +65,7 @@
     "leaflet": "^1.7.1",
     "leaflet-utfgrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
     "leaflet.gridlayer.googlemutant": "^0.12.1",
-    "loglevel": "^1.7.0",
+    "loglevel": "^1.8.1",
     "marked": "^4.1.1",
     "moment": "^2.29.1",
     "next": "^12.1.0",
