@@ -15,7 +15,6 @@ const Drawer = dynamic(() => import('./Drawer'), { ssr: false });
 
 const useStyles = makeStyles()((theme) => ({
   root: {
-    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -62,7 +61,12 @@ const Layout = forwardRef(({ children }, ref) => {
   }
 
   return (
-    <Box className={classes.root}>
+    <Box
+      className={classes.root}
+      sx={{
+        height: () => `${window.innerHeight  }px`,
+      }}
+    >
       <Navbar />
       <Box sx={{ position: 'relative', width: 1, height: 1 }}>
         <Box
