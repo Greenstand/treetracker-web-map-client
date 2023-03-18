@@ -69,6 +69,12 @@ module.exports = {
   },
   basePath: process.env.NEXT_PUBLIC_BASE,
   webpack(config) {
+    // console.log(
+    //   'next config object /n //////////////////////: /n',
+    //   config,
+    //   '/n//////////////////////////////',
+    // );
+    console.log(config.name, config.mode, config.devtool);
     config.module.rules.push(
       {
         test: /\.svg$/i,

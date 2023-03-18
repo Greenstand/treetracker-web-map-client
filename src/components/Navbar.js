@@ -8,23 +8,17 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-
-import { initialState } from 'context/configContext';
+import { useConfigContext } from 'context/configContext';
 import { useCustomThemeContext } from 'hooks/contextHooks';
 import { useLocalStorage, useMobile } from 'hooks/globalHooks';
-
-
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
 
-
-
 const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
 const treeTrackerLogo = `${process.env.NEXT_PUBLIC_BASE}/images/treetracker_logo.svg`;
 const treeTrackerLogoWhite = `${process.env.NEXT_PUBLIC_BASE}/images/treetracker_logo_white.svg`;
-
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
     height: theme.spacing(18),
