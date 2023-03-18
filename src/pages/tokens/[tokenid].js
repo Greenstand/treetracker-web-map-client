@@ -501,7 +501,7 @@ export default function Token(props) {
               <TimelineOppositeContent
                 color="text.secondary"
                 sx={{
-                  flex: [0.4, 0.2],
+                  flex: '0 0 100px',
                 }}
               >
                 {new Date(token.created_at).toLocaleDateString()}
@@ -530,7 +530,7 @@ export default function Token(props) {
               <TimelineItem key={transaction.id}>
                 <TimelineOppositeContent
                   sx={{
-                    flex: [0.4, 0.2],
+                    flex: '0 0 100px',
                   }}
                   color="text.secondary"
                 >
@@ -618,7 +618,7 @@ export default function Token(props) {
             <TimelineItem>
               <TimelineOppositeContent
                 sx={{
-                  flex: [0.4, 0.2],
+                  flex: '0 0 100px',
                 }}
                 color="text.secondary"
               >
