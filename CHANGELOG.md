@@ -6,6 +6,17 @@
 * align timeline on token page ([509dfa7](https://github.com/Greenstand/treetracker-web-map-client/commit/509dfa7297f48612010a39ad7cdfb2f6b454873d))
 * config hook undefined ([cb7cea7](https://github.com/Greenstand/treetracker-web-map-client/commit/cb7cea714f2715fe9959984f7973b568de1ac70f))
 * mobile app height incorrect ([27eb83b](https://github.com/Greenstand/treetracker-web-map-client/commit/27eb83b97f245585b21de25181774d8418e83994))
+* react styles warning ([6f67cb0](https://github.com/Greenstand/treetracker-web-map-client/commit/6f67cb09f400f674f5959565f7d9c56a19c8655c))
+* trigger ([5b4bd32](https://github.com/Greenstand/treetracker-web-map-client/commit/5b4bd32522896ed2c62913386c7ff2c25611306c))
+
+# [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-03-18)
+
+
+### Bug Fixes
+
+* align timeline on token page ([509dfa7](https://github.com/Greenstand/treetracker-web-map-client/commit/509dfa7297f48612010a39ad7cdfb2f6b454873d))
+* config hook undefined ([cb7cea7](https://github.com/Greenstand/treetracker-web-map-client/commit/cb7cea714f2715fe9959984f7973b568de1ac70f))
+* mobile app height incorrect ([27eb83b](https://github.com/Greenstand/treetracker-web-map-client/commit/27eb83b97f245585b21de25181774d8418e83994))
 * trigger ([5b4bd32](https://github.com/Greenstand/treetracker-web-map-client/commit/5b4bd32522896ed2c62913386c7ff2c25611306c))
 
 # [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-03-18)
