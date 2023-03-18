@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useCallback, useMemo, useState } from 'react';
 import { SquareIconButton } from 'components/playground';
-import { useConfigContext } from 'context/configContext';
+import { useDashboardContext } from 'context/dashboardContext';
 import {
   addNavItem,
   removeNavItem,
@@ -26,7 +26,7 @@ function CustomInputs({ item, setItem, defaultItem }) {
     url: '',
   });
 
-  const { state: config } = useConfigContext();
+  const { state: config } = useDashboardContext();
 
   const handleChange = useCallback(
     (e) => {
@@ -88,7 +88,7 @@ function CustomInputs({ item, setItem, defaultItem }) {
 }
 
 function CustomAccordion({ item: defaultItem, index }) {
-  const { dispatch } = useConfigContext();
+  const { dispatch } = useDashboardContext();
   const [item, setItem] = useState(defaultItem);
   const [expanded, setExpanded] = useState(false);
 
@@ -168,7 +168,7 @@ function CustomAccordion({ item: defaultItem, index }) {
 }
 
 function CustomizeNavbar() {
-  const { state: config, dispatch } = useConfigContext();
+  const { state: config, dispatch } = useDashboardContext();
 
   const onAddNewItem = () => {
     dispatch(addNavItem());

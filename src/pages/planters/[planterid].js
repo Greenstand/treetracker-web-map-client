@@ -13,28 +13,28 @@ import { useEffect, useState } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
+import ImpactSection from 'components/ImpactSection';
+import InformationCard1 from 'components/InformationCard1';
+import ProfileAvatar from 'components/ProfileAvatar';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import VerifiedBadge from 'components/VerifiedBadge';
+import Crumbs from 'components/common/Crumbs';
+import CustomCard from 'components/common/CustomCard';
+import Icon from 'components/common/CustomIcon';
+import Info from 'components/common/Info';
+import { useDrawerContext } from 'context/DrawerContext';
+import { useMobile } from 'hooks/globalHooks';
+import planterBackground from 'images/background.png';
+import CalendarIcon from 'images/icons/calendar.svg';
+import LocationIcon from 'images/icons/location.svg';
+import PeopleIcon from 'images/icons/people.svg';
+import TreeIcon from 'images/icons/tree.svg';
+import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getPlanterById, getOrgLinks } from 'models/api';
-import ImpactSection from '../../components/ImpactSection';
-import InformationCard1 from '../../components/InformationCard1';
-import ProfileAvatar from '../../components/ProfileAvatar';
-import VerifiedBadge from '../../components/VerifiedBadge';
-import Crumbs from '../../components/common/Crumbs';
-import CustomCard from '../../components/common/CustomCard';
-import Icon from '../../components/common/CustomIcon';
-import Info from '../../components/common/Info';
-import { useDrawerContext } from '../../context/DrawerContext';
-import { useMobile } from '../../hooks/globalHooks';
-import planterBackground from '../../images/background.png';
-import CalendarIcon from '../../images/icons/calendar.svg';
-import LocationIcon from '../../images/icons/location.svg';
-import PeopleIcon from '../../images/icons/people.svg';
-import TreeIcon from '../../images/icons/tree.svg';
-import SearchIcon from '../../images/search.svg';
-import { useMapContext } from '../../mapContext';
-import { makeStyles } from '../../models/makeStyles';
-import * as pathResolver from '../../models/pathResolver';
-import { getLocationString, getPlanterName, wrapper } from '../../models/utils';
+import { makeStyles } from 'models/makeStyles';
+import * as pathResolver from 'models/pathResolver';
+import { getLocationString, getPlanterName, wrapper } from 'models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -76,6 +76,7 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 export default function Planter(props) {
   log.warn('props for planter page:', props);
   const { planter, nextExtraIsEmbed } = props;
+
   const { featuredTrees } = planter;
   const treeCount = featuredTrees?.total;
   const mapContext = useMapContext();
@@ -494,6 +495,9 @@ export default function Planter(props) {
               width: '120px',
               height: '120px',
               margin: '10px',
+              transform:
+                planter.image_rotation &&
+                `rotate(${planter.image_rotation}deg)`,
             }}
             src={planter.image_url}
             variant="rounded"

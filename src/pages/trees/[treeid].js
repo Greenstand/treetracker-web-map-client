@@ -10,33 +10,34 @@ import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Badges from 'components/Badges';
 import HeadTag from 'components/HeadTag';
+import InformationCard1 from 'components/InformationCard1';
+import LikeButton from 'components/LikeButton';
+import Share from 'components/Share';
+import TreeInfoDialog from 'components/TreeInfoDialog';
+import TreeLoader from 'components/TreeLoader';
+import Crumbs from 'components/common/Crumbs';
+import Icon from 'components/common/CustomIcon';
 import TagList from 'components/common/TagList';
+import TreeTag from 'components/common/TreeTag';
 import { useDrawerContext } from 'context/DrawerContext';
+import { useMobile, useEmbed } from 'hooks/globalHooks';
+import { usePageLoading } from 'hooks/usePageLoading';
+import AccuracyIcon from 'images/icons/accuracy.svg';
+import CalendarIcon from 'images/icons/calendar.svg';
+import GlobalIcon from 'images/icons/global.svg';
+import HistoryIcon from 'images/icons/history.svg';
+import LocationIcon from 'images/icons/location.svg';
+import OriginIcon from 'images/icons/origin.svg';
+import ShareIcon from 'images/icons/share.svg';
+import TokenIcon from 'images/icons/token.svg';
+import imagePlaceholder from 'images/image-placeholder.png';
+import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
-import Badges from '../../components/Badges';
-import ImpactSection from '../../components/ImpactSection';
-import InformationCard1 from '../../components/InformationCard1';
-import LikeButton from '../../components/LikeButton';
-import Share from '../../components/Share';
-import TreeInfoDialog from '../../components/TreeInfoDialog';
-import Crumbs from '../../components/common/Crumbs';
-import Icon from '../../components/common/CustomIcon';
-import TreeTag from '../../components/common/TreeTag';
-import { useMobile, useEmbed } from '../../hooks/globalHooks';
-import AccuracyIcon from '../../images/icons/accuracy.svg';
-import CalendarIcon from '../../images/icons/calendar.svg';
-import GlobalIcon from '../../images/icons/global.svg';
-import HistoryIcon from '../../images/icons/history.svg';
-import LocationIcon from '../../images/icons/location.svg';
-import OriginIcon from '../../images/icons/origin.svg';
-import ShareIcon from '../../images/icons/share.svg';
-import TokenIcon from '../../images/icons/token.svg';
-import imagePlaceholder from '../../images/image-placeholder.png';
-import SearchIcon from '../../images/search.svg';
-import { useMapContext } from '../../mapContext';
-import * as pathResolver from '../../models/pathResolver';
-import * as utils from '../../models/utils';
+import * as pathResolver from 'models/pathResolver';
+import * as utils from 'models/utils';
 
 export default function Tree({
   tree,
@@ -51,6 +52,7 @@ export default function Tree({
   const { map } = mapContext;
   const theme = useTheme();
   const router = useRouter();
+  const { isPageLoading } = usePageLoading();
   const context = pathResolver.getContext(router, {
     base: process.env.NEXT_PUBLIC_BASE,
   });
@@ -78,11 +80,11 @@ export default function Tree({
     setTitlesData({
       treeId: tree.id,
       verifiedToken: tree.token_id,
-      verifiedTree: tree.verified,
+      verifiedTree: tree.approved,
     });
     // eslint-disable-next-line prefer-template, no-useless-concat
     log.warn('the tree data' + '' + JSON.stringify(tree));
-  }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
+  }, [setTitlesData, tree, tree.id, tree.token_id, tree.approved]);
 
   // useEffect(() => {
   //   async function draw() {
@@ -282,7 +284,7 @@ export default function Tree({
                   mt: 2,
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.verified} />
+                <Badges tokenId={tree.token_id} verified={tree.approved} />
               </Box>
             </Box>
           </Portal>
@@ -359,167 +361,180 @@ export default function Tree({
             </Box>
           </Box>
         )}
-        <Box
-          sx={[
-            {
-              borderRadius: 4,
-              maxHeight: [332, 764],
-              mt: 6,
-              position: 'relative',
-              overflow: 'hidden',
-              '& img': {
-                width: '100%',
-              },
-            },
-            nextExtraIsEmbed && {
-              '& img': {
-                maxHeight: 600,
-                objectFit: 'cover',
-              },
-            },
-          ]}
-        >
+        {isPageLoading ? (
+          <TreeLoader nextExtraIsEmbed={nextExtraIsEmbed} />
+        ) : (
           <Box
-            sx={{
-              position: 'absolute',
-              // top: [4, 6],
-              // left: [4, 6],
-              pt: [4, 6],
-              px: [4, 6],
-              width: 1,
-              boxSizing: 'border-box',
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
+            sx={[
+              {
+                borderRadius: 4,
+                maxHeight: [332, 764],
+                mt: 6,
+                position: 'relative',
+                overflow: 'hidden',
+                '& img': {
+                  objectFit: 'cover',
+                  width: '100%',
+                  [theme.breakpoints.down('sm')]: {
+                    maxHeight: '450px',
+                  },
+                },
+              },
+              nextExtraIsEmbed && {
+                '& img': {
+                  maxHeight: 600,
+                  objectFit: 'cover',
+                },
+              },
+            ]}
           >
-            <LikeButton url={`https://map.treetracker.org/trees/${tree.id}`} />
-            <Box
-              sx={{
-                display: 'flex',
-                gap: [4, 6],
-                flexDirection: 'row',
-              }}
-            >
-              <Share
-                shareUrl={typeof window !== 'undefined' && window.location.href}
-                icon={
-                  <Box
-                    onClick={handleShare}
-                    sx={{
-                      cursor: 'pointer',
-                      '& svg': {
-                        width: [40, 52],
-                        height: [40, 52],
-                      },
-                    }}
-                  >
-                    <Icon icon={ShareIcon} />
-                  </Box>
-                }
-              />
-              <TreeInfoDialog
-                tree={tree}
-                planter={planter}
-                organization={organization}
-              />
-            </Box>
-          </Box>
-          <img src={tree.image_url} alt="tree" />
-          {!isMobile && (
             <Box
               sx={{
                 position: 'absolute',
-                bottom: 0,
-                background:
-                  'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
-                p: 6,
+                // top: [4, 6],
+                // left: [4, 6],
+                pt: [4, 6],
+                px: [4, 6],
                 width: 1,
-                height: 260,
+                boxSizing: 'border-box',
                 display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                alignItems: 'flex-start',
+                justifyContent: 'space-between',
               }}
             >
-              <Typography variant="h2" color={theme.palette.common.white}>
-                Tree #{tree.id}
-              </Typography>
-
-              <Box
-                sx={{
-                  mt: 2,
-                  color: theme.palette.common.white,
-                  filter: 'opacity(0.8)',
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: 'text.text',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 3,
-                    '& svg': {
-                      filter: 'opacity(0.8)',
-                      maxWidth: 16,
-                      maxHeight: 16,
-                    },
-                    '& path': { fill: theme.palette.common.white },
-                  }}
-                >
-                  <Icon icon={OriginIcon} />
-                  {tree.species_name || 'Unknown Species'}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: 'text.text',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 3,
-                    '& svg': {
-                      filter: 'opacity(0.8)',
-                      maxWidth: 16,
-                      maxHeight: 16,
-                    },
-                    '& path': { fill: theme.palette.common.white },
-                  }}
-                >
-                  <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.time_created).format(
-                    'MMMM Do, YYYY',
-                  )}` || 'Unknown Date'}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: 'text.text',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 3,
-                    '& svg': {
-                      filter: 'opacity(0.8)',
-                      maxWidth: 16,
-                      maxHeight: 16,
-                    },
-                    '& path': { fill: theme.palette.common.white },
-                  }}
-                >
-                  <Icon icon={LocationIcon} />
-                  {tree.country_name !== null
-                    ? `Located in ${tree.country_name}`
-                    : 'Unknown location'}
-                </Typography>
-              </Box>
+              <LikeButton
+                url={`https://map.treetracker.org/trees/${tree.id}`}
+              />
               <Box
                 sx={{
                   display: 'flex',
-                  gap: 2,
-                  mt: 2,
+                  gap: [4, 6],
+                  flexDirection: 'row',
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.verified} />
+                <Share
+                  shareUrl={
+                    typeof window !== 'undefined' && window.location.href
+                  }
+                  icon={
+                    <Box
+                      onClick={handleShare}
+                      sx={{
+                        cursor: 'pointer',
+                        '& svg': {
+                          width: [40, 52],
+                          height: [40, 52],
+                        },
+                      }}
+                    >
+                      <Icon icon={ShareIcon} />
+                    </Box>
+                  }
+                />
+                <TreeInfoDialog
+                  tree={tree}
+                  planter={planter}
+                  organization={organization}
+                />
               </Box>
             </Box>
-          )}
-        </Box>
+            <img src={tree.image_url} alt="tree" height="764" />
+            {!isMobile && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  bottom: 0,
+                  background:
+                    'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
+                  p: 6,
+                  width: 1,
+                  height: 260,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <Typography variant="h2" color={theme.palette.common.white}>
+                  Tree #{tree.id}
+                </Typography>
+
+                <Box
+                  sx={{
+                    mt: 2,
+                    color: theme.palette.common.white,
+                    filter: 'opacity(0.8)',
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: 'text.text',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 3,
+                      '& svg': {
+                        filter: 'opacity(0.8)',
+                        maxWidth: 16,
+                        maxHeight: 16,
+                      },
+                      '& path': { fill: theme.palette.common.white },
+                    }}
+                  >
+                    <Icon icon={OriginIcon} />
+                    {tree.species_name || 'Unknown Species'}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: 'text.text',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 3,
+                      '& svg': {
+                        filter: 'opacity(0.8)',
+                        maxWidth: 16,
+                        maxHeight: 16,
+                      },
+                      '& path': { fill: theme.palette.common.white },
+                    }}
+                  >
+                    <Icon icon={CalendarIcon} />
+                    {`Planted on ${moment(tree.time_created).format(
+                      'MMMM Do, YYYY',
+                    )}` || 'Unknown Date'}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: 'text.text',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 3,
+                      '& svg': {
+                        filter: 'opacity(0.8)',
+                        maxWidth: 16,
+                        maxHeight: 16,
+                      },
+                      '& path': { fill: theme.palette.common.white },
+                    }}
+                  >
+                    <Icon icon={LocationIcon} />
+                    {tree.country_name !== null
+                      ? `Located in ${tree.country_name}`
+                      : 'Unknown location'}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: 2,
+                    mt: 2,
+                  }}
+                >
+                  <Badges tokenId={tree.token_id} verified={tree.approved} />
+                </Box>
+              </Box>
+            )}
+          </Box>
+        )}
+
         {/* <CustomImageWrapper
         imageUrl={tree.image_url}
         timeCreated={tree.time_created}
@@ -585,10 +600,10 @@ export default function Tree({
             icon={<Icon icon={CalendarIcon} />}
           />
           <TreeTag
-            TreeTagValue={tree.verified === false ? 'not verified' : 'verifed'}
+            TreeTagValue={tree.approved === false ? 'not verified' : 'verifed'}
             title="Verification"
             icon={<Icon icon={VerifiedIcon} />}
-            disabled={tree.verified === false}
+            disabled={tree.approved === false}
           />
           <TreeTag
             TreeTagValue={
@@ -681,7 +696,7 @@ export default function Tree({
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
+
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal

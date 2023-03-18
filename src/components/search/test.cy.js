@@ -1,5 +1,5 @@
+import { mountWithTheme as mount } from 'models/test-utils';
 import { Search } from './index';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('search', () => {
   it('renders', () => {

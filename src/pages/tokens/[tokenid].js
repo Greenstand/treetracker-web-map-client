@@ -20,30 +20,29 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import HeadTag from 'components/HeadTag';
+import InformationCard1 from 'components/InformationCard1';
+import LikeButton from 'components/LikeButton';
+import Link from 'components/Link';
+import Share from 'components/Share';
+import VerifiedBadge from 'components/VerifiedBadge';
+import Crumbs from 'components/common/Crumbs';
+import Icon from 'components/common/CustomIcon';
+import SimpleAvatarAndName from 'components/common/SimpleAvatarAndName';
 import TagList from 'components/common/TagList';
+import TreeTag from 'components/common/TreeTag';
 import UUIDTag from 'components/common/UUIDTag';
+import { useMobile } from 'hooks/globalHooks';
+import CalendarIcon from 'images/icons/calendar.svg';
+import ShareIcon from 'images/icons/share.svg';
+import TokenIcon from 'images/icons/token.svg';
+import TreeIcon from 'images/icons/tree.svg';
+import imagePlaceholder from 'images/image-placeholder.png';
+import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import * as pathResolver from 'models/pathResolver';
 import { wrapper } from 'models/utils';
-import ImpactSection from '../../components/ImpactSection';
-import InformationCard1 from '../../components/InformationCard1';
-import LikeButton from '../../components/LikeButton';
-import Link from '../../components/Link';
-import Share from '../../components/Share';
-import VerifiedBadge from '../../components/VerifiedBadge';
-import Crumbs from '../../components/common/Crumbs';
-import Icon from '../../components/common/CustomIcon';
-import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
-import TreeTag from '../../components/common/TreeTag';
-import { useMobile } from '../../hooks/globalHooks';
-import CalendarIcon from '../../images/icons/calendar.svg';
-import ShareIcon from '../../images/icons/share.svg';
-import TokenIcon from '../../images/icons/token.svg';
-import TreeIcon from '../../images/icons/tree.svg';
-import imagePlaceholder from '../../images/image-placeholder.png';
-import SearchIcon from '../../images/search.svg';
-import { useMapContext } from '../../mapContext';
-import * as pathResolver from '../../models/pathResolver';
 
 const useStyles = makeStyles()((theme) => ({
   tabBox: {
@@ -639,7 +638,6 @@ export default function Token(props) {
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal
@@ -718,20 +716,27 @@ async function serverSideData(params, query) {
   return result;
 }
 
-const getStaticProps = wrapper(async ({ params, query }) => {
+// const getStaticProps = wrapper(async ({ params, query }) => {
+//   const props = await serverSideData(params, query);
+//   return {
+//     props,
+//     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+//   };
+// });
+
+// // eslint-disable-next-line
+// const getStaticPaths = async () => {
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   };
+// };
+
+const getServerSideProps = wrapper(async ({ params, query }) => {
   const props = await serverSideData(params, query);
   return {
     props,
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 });
 
-// eslint-disable-next-line
-const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  };
-};
-
-export { getStaticProps, getStaticPaths };
+export { getServerSideProps };

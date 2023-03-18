@@ -45,6 +45,20 @@ export async function getOrganizationById(id) {
   }
 }
 
+export async function getCountryByLatLon(lat, lon) {
+  try {
+    const url = apiPaths.countriesLatLon(lat, lon);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data.countries[0];
+  } catch (err) {
+    log.error(err);
+    throw err;
+  }
+}
+
 export async function getPlanterById(id) {
   try {
     const url = apiPaths.planters(id);
@@ -59,9 +73,50 @@ export async function getPlanterById(id) {
   }
 }
 
+export async function getGrowerById(id) {
+  try {
+    const url = apiPaths.growers(id);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
+
+export async function getStakeHolderById(id) {
+  try {
+    const url = apiPaths.stakeHolders(id);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const { data } = res;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
+
 export async function getTreeById(id) {
   try {
     const url = apiPaths.trees(id);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const { data } = res;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
+export async function getCapturesById(id) {
+  try {
+    const url = apiPaths.captures(id);
     const begin = Date.now();
     const res = await axios.get(url);
     const { data } = res;

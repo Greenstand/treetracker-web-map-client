@@ -195,16 +195,16 @@ Open cypress test viewer
 npm run cypress:open
 ```
 
-Nextjs dev server + Cypress test viewer
+Nextjs dev server + Cypress test viewer + nock
 
 ```
 npm run cy
 ```
 
-Nextjs dev server + Cypress test viewer + nock
+Nextjs dev server + Cypress test viewer without nock
 
 ```
-npm run cy:nock
+npm run cy:nockless
 ```
 
 Run cypress tests headless
@@ -428,4 +428,19 @@ More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#g
 
 Sometimes we need to connect production data (map, tree) to debug, to do so, copy the settings in `.env.production` and put them into the `.env.local` so next.js will load them as high priority.
 
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
 .

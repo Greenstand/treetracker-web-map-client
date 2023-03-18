@@ -110,7 +110,7 @@ export default function Layout({
                   position: 'absolute',
                   zIndex: '99999',
                   top: '0px',
-                  background: 'white',
+                  // background: 'white',
                   width: 568,
                   overflowY: 'scroll',
                   height: '100vh',

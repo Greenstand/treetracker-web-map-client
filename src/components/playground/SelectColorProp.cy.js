@@ -1,6 +1,6 @@
+import { PlaygroundProvider } from 'context/playgroundContext';
+import { mountWithTheme as mount } from 'models/test-utils';
 import SelectColorProp from './SelectColorProp';
-import { PlaygroundProvider } from '../../context/playgroundContext';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Select Color Prop', () => {
   const path = 'palette.light.primary';

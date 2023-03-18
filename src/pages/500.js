@@ -9,8 +9,13 @@ export default function somethingWentWrong() {
         <h1>500</h1>
         <div className="not-found-background" />
         <h3>Something went wrong</h3>
-        <Link href="/">
-          <a className="not-found-link">Go home</a>
+        <Link
+          href="/"
+          sx={{
+            color: 'text.primary',
+          }}
+        >
+          Go home
         </Link>
       </div>
     </>

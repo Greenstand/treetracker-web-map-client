@@ -19,7 +19,7 @@ const useStyles = makeStyles()((theme, size) => ({
     position: 'relative',
     overflowX: 'scroll',
     scrollBehavior: 'smooth',
-    scrollSnapType: 'x mandatory',
+    scrollSnapType: 'x proximity',
     padding: theme.spacing(8, 4),
     scrollPadding: '0 50%',
     scrollbarWidth: 'none',

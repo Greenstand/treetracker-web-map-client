@@ -2,10 +2,10 @@ import { Card, Box, Button, Avatar, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import * as d3 from 'd3';
 import log from 'loglevel';
+import Logo from 'images/greenstand_logo.svg';
 import { makeStyles } from 'models/makeStyles';
 import Link from './Link';
 import ColorButton from './common/ColorButton';
-import Logo from '../images/greenstand_logo.svg';
 
 const useStyles = makeStyles()((theme) => ({
   contentWrapper: {

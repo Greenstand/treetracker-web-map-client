@@ -8,12 +8,14 @@ import {
   AccordionDetails,
   Typography,
 } from '@mui/material';
+import { usePlaygroundTheme } from 'hooks/contextHooks';
 import TypographyInput from './TypographyInput';
 import TypographyThumbnail from './TypographyThumbnail';
 
 function SelectTypographyProp(props) {
   const { prop, path } = props;
   const { propName, options } = prop;
+  const { getPropByPath } = usePlaygroundTheme();
 
   return (
     <ListItem
@@ -55,18 +57,24 @@ function SelectTypographyProp(props) {
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            {options.map((option) =>
-              option === 'fontWeight' ? null : (
+            {options.map((option) => {
+              if (option === 'fontWeight') return null;
+              const value = getPropByPath(`${path}.${option}`);
+              return (
                 <ListItem
                   key={`typography-input-${option}`}
                   sx={{
                     px: 0,
                   }}
                 >
-                  <TypographyInput path={`${path}.${option}`} label={option} />
+                  <TypographyInput
+                    path={`${path}.${option}`}
+                    label={option}
+                    typographyValue={value}
+                  />
                 </ListItem>
-              ),
-            )}
+              );
+            })}
           </List>
         </AccordionDetails>
       </Accordion>

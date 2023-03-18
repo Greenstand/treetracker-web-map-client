@@ -6,7 +6,7 @@ function Badges({ tokenId, verified }) {
       <VerifiedBadge
         color={!verified ? 'greyLight' : 'primary'}
         verified={verified}
-        badgeName={!verified ? 'Waiting for verify' : 'Verified Planter'}
+        badgeName={!verified ? 'Waiting for verification' : 'Verified'}
       />
       <VerifiedBadge
         color="secondary"

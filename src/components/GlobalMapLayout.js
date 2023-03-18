@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
-import { useConfigContext } from 'context/configContext';
+import { useDashboardContext } from 'context/dashboardContext';
 import { updateMapLocation } from 'models/config.reducer';
 import { makeStyles } from 'models/makeStyles';
 import { useMapContext } from '../mapContext';
@@ -29,7 +29,7 @@ function isNumber(val) {
 
 export default function MapLayout() {
   const mapContext = useMapContext();
-  const { state: config, dispatch } = useConfigContext();
+  const { state: config, dispatch } = useDashboardContext();
   const { initialLocation } = config.map;
   const { classes } = useStyles();
   const [lat, setLat] = useState(initialLocation.lat);
@@ -176,7 +176,6 @@ export default function MapLayout() {
           sx={{
             margin: '20px',
             display: 'flex',
-            alignItems: 'center',
             justifyContent: 'space-around',
           }}
         >
@@ -203,6 +202,11 @@ export default function MapLayout() {
             value={zoom}
             error={zoomError.length > 0}
             helperText={zoomError && zoomError}
+            sx={{
+              '& .MuiFormHelperText-root': {
+                maxWidth: '167px',
+              },
+            }}
           />
         </Box>
         <Box

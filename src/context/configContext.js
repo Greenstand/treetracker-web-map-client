@@ -1,21 +1,33 @@
-import { createContext, useReducer, useContext, useMemo } from 'react';
-import configReducer from '../models/config.reducer';
+import { createContext, useContext } from 'react';
 
-const ConfigContext = createContext(null);
-
-const initialState = {
+export const defaultConfig = {
   navbar: {
     logoUrl: 'http://localhost:3000/images/greenstand_logo.svg',
     items: [
       {
         id: 1,
-        title: 'Greenstand',
-        url: '/',
+        url: 'https://greenstand.org/',
+        title: 'About Greenstand',
       },
       {
         id: 2,
-        title: 'Partnerships',
-        url: '/partnerships',
+        url: 'https://greenstand.org/treetracker/start-tracking',
+        title: 'About Treetracker',
+      },
+      {
+        id: 3,
+        url: 'https://greenstand.org/contribute/donate',
+        title: 'Contribute',
+      },
+      {
+        id: 4,
+        url: 'https://greenstand.org/blog',
+        title: 'Blog',
+      },
+      {
+        id: 5,
+        url: 'https://greenstand.org/contact',
+        title: 'Contact Us',
       },
     ],
   },
@@ -28,19 +40,11 @@ const initialState = {
   },
 };
 
-export function ConfigProvider({ children }) {
-  const [state, dispatch] = useReducer(configReducer, initialState);
+const ConfigContext = createContext(defaultConfig);
 
-  const value = useMemo(
-    () => ({
-      state,
-      dispatch,
-    }),
-    [state],
-  );
-
+export function ConfigProvider({ children, config }) {
   return (
-    <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
+    <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>
   );
 }
 

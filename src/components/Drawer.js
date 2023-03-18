@@ -4,7 +4,7 @@ import log from 'loglevel';
 import React from 'react';
 
 export default function Drawer(props) {
-  const { children } = props;
+  const { children, outerRef } = props;
   const rootRef = React.useRef(null);
   const buttonRef = React.useRef(null);
   const contentRef = React.useRef(null);
@@ -301,7 +301,10 @@ export default function Drawer(props) {
         </Box>
 
         <Box
-          ref={contentRef}
+          ref={(el) => {
+            if (outerRef) outerRef.current = el;
+            if (contentRef) contentRef.current = el;
+          }}
           sx={{
             position: 'relative',
             overflow: 'scroll',

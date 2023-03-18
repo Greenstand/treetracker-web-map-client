@@ -2,6 +2,7 @@ import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
+import { forwardRef } from 'react';
 import { makeStyles } from 'models/makeStyles';
 import Navbar from './Navbar';
 import Timeline from './Timeline';
@@ -47,61 +48,62 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export default function Layout({
-  children,
-  nextExtraIsEmbed,
-  nextExtraIsEmbedCallback,
-}) {
-  const { classes } = useStyles();
+const Layout = forwardRef(
+  ({ children, nextExtraIsEmbed, nextExtraIsEmbedCallback }, ref) => {
+    const { classes } = useStyles();
 
-  function handleFullScreen() {
-    nextExtraIsEmbedCallback(!nextExtraIsEmbed);
-  }
+    function handleFullScreen() {
+      nextExtraIsEmbedCallback(!nextExtraIsEmbed);
+    }
 
-  return (
-    <Box className={classes.root}>
-      <Navbar />
-      <Box className={classes.main}>
-        <Paper elevation={11} className={classes.left}>
-          {children}
-        </Paper>
-        <Box className={classes.right}>
-          <Box
-            onClick={handleFullScreen}
-            sx={{
-              position: 'absolute',
-              zIndex: '9999',
-              top: '0px',
-              right: '0px',
-              margin: '20px',
-              cursor: 'pointer',
-            }}
-          >
-            {}
-            <SvgIcon
-              component={Max}
-              sx={{ height: 52, width: 52 }}
-              inheritViewBox
-            />
+    return (
+      <Box className={classes.root}>
+        <Navbar />
+        <Box className={classes.main}>
+          <Paper ref={ref} elevation={11} className={classes.left}>
+            {children}
+          </Paper>
+          <Box className={classes.right}>
+            <Box
+              onClick={handleFullScreen}
+              sx={{
+                position: 'absolute',
+                zIndex: '9999',
+                top: '0px',
+                right: '0px',
+                margin: '20px',
+                cursor: 'pointer',
+              }}
+            >
+              {}
+              <SvgIcon
+                component={Max}
+                sx={{ height: 52, width: 52 }}
+                inheritViewBox
+              />
+            </Box>
+            <Timeline />
+            <Box
+              sx={{
+                position: 'absolute',
+                zIndex: '9999',
+                bottom: '0px',
+                right: '0px',
+                margin: '20px',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <ZoomInOutButton />
+            </Box>
+            <App />
           </Box>
-          <Timeline />
-          <Box
-            sx={{
-              position: 'absolute',
-              zIndex: '9999',
-              bottom: '0px',
-              right: '0px',
-              margin: '20px',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <ZoomInOutButton />
-          </Box>
-          <App />
         </Box>
       </Box>
-    </Box>
-  );
-}
+    );
+  },
+);
+
+Layout.displayName = 'Layout';
+export default Layout;

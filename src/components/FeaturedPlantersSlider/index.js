@@ -10,9 +10,9 @@ import {
 } from '@mui/material';
 import * as d3 from 'd3';
 import { useEffect, useRef, useState } from 'react';
+import imagePlaceholder from 'images/image-placeholder.png';
 import { debounce } from 'models/utils';
 import { useStyles } from './style'; // the style file
-import imagePlaceholder from '../../images/image-placeholder.png';
 import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;
@@ -152,8 +152,8 @@ function FeaturedPlantersSlider({
                   textAlign: 'center',
                   wordBreak: 'break-word',
                   display: '-webkit-box',
-                  '-webkit-line-clamp': '2',
-                  '-webkit-box-orient': 'vertical',
+                  WebkitLineClamp: '2',
+                  WebkitBoxOrient: 'vertical',
                   overflow: 'hidden',
                   paddingBottom: '0 !important', // necessary to ensure extra lines remain hidden
                 }}

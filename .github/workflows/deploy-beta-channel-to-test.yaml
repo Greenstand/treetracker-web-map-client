@@ -24,7 +24,7 @@ jobs:
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: '18.x'
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
