@@ -19,7 +19,6 @@ import Link from './Link';
 const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
 const treeTrackerLogo = `${process.env.NEXT_PUBLIC_BASE}/images/treetracker_logo.svg`;
 const treeTrackerLogoWhite = `${process.env.NEXT_PUBLIC_BASE}/images/treetracker_logo_white.svg`;
-
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
     height: theme.spacing(18),
