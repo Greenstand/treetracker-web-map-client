@@ -94,7 +94,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.4.1",
-    "axios-mock-adapter": "^1.21.1",
+    "axios-mock-adapter": "^1.21.2",
     "concurrently": "^6.3.0",
     "cypress": "^8.7.0",
     "cypress-watch-and-reload": "^1.5.4",
