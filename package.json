@@ -41,7 +41,7 @@
     "@emotion/cache": "^11.5.0",
     "@emotion/react": "^11.5.0",
     "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
+    "@emotion/styled": "^11.10.6",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@hello-pangea/dnd": "^16.0.1",
     "@mui/icons-material": "^5.0.5",
