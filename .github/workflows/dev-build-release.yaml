@@ -34,7 +34,7 @@ jobs:
               RELEASE_NEEDED=true
               break
             fi
-          done < <(jq -r '.branches[].name' ./.releaserc.json)
+          done < <(jq -r '.branches[].name' .releaserc.json)
           echo "::set-output name=RELEASE_NEEDED::$RELEASE_NEEDED"
         id: release_needed
       - name: Print rn
