@@ -1,8 +1,0 @@
-apiVersion: getambassador.io/v3alpha1
-kind: Host
-metadata:
-  name: minimal-host
-spec:
-  hostname: great.greenstand.org
-  acmeProvider:
-    email: zaven@greenstand.org
