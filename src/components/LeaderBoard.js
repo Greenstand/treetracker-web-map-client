@@ -78,25 +78,21 @@ const useStyles = makeStyles()((theme) => ({
 
 function RibbonWrapper({ fill, index }) {
   const { classes } = useStyles();
-
   return (
     <div className={classes.ribbons}>
       <Ribbon fill={fill} />
-      <Typography variant="h5" className={classes.rank}>
-        {index + 1}
-      </Typography>
+      <figcaption className={classes.rank}>{index + 1}</figcaption>
     </div>
   );
 }
 
 function TreeImage(isMobile) {
   return (
-    <Icon
-      icon={TreeIcon}
-      sx={{
-        width: !isMobile ? '13.5px' : '12px',
-        height: !isMobile ? '18px' : '14px',
-      }}
+    <img
+      src={TreeIcon}
+      alt="tree icon"
+      width={!isMobile ? '13.5px' : '12px'}
+      height={!isMobile ? '18px' : '14px'}
     />
   );
 }
@@ -174,101 +170,111 @@ function LeaderBoard(props) {
           <Grid item xs={1} />
         </Grid>
       </Box>
-
-      {fixedCountries &&
-        fixedCountries.map((country, index) => (
-          <Paper
-            key={country.id}
-            onClick={() => handleCountryClick(country.id)}
-            elevation={isMobile ? 2 : 5}
-            sx={{
-              borderRadius: '100px',
-              // boxShadow: '0 4px 10px 0px rgba(0, 0, 0, 0.15)',
-              cursor: 'pointer',
-              margin: (t) => [t.spacing(4, 0), t.spacing(8, 4)],
-              // [theme.breakpoints.down('md')]: {
-              //   margin: theme.spacing(3),
-              // },
-            }}
-          >
-            <Grid
-              container
-              columns={16}
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Grid item xs={2} justifySelf="center">
-                {index < 3 ? (
-                  <p />
-                ) : (
-                  <Typography
-                    variant="h5"
-                    color="text.secondary"
-                    sx={{
-                      marginLeft: '50%',
-                      fontFamily: 'Lato',
-                      lineHeight: ['28.8px', '19.2px'],
-                    }}
-                  >
-                    {index + 1}
-                  </Typography>
-                )}
-                {/* Here we add the position number for the top 3 countries with an svg file */}
-                {index === 0 && <RibbonWrapper fill="#FFD700" index={index} />}
-                {index === 1 && <RibbonWrapper fill="#cccccc" index={index} />}
-                {index === 2 && <RibbonWrapper fill="#9f7a33" index={index} />}
-
-                {/* Here we add the position number for the rest of the countries */}
-              </Grid>
-              <Grid item xs={4}>
-                <Box className={classes.flagContainer}>
-                  <img
-                    alt={`${country.name}`}
-                    src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countries.getAlpha2Code(
-                      `${country.name}`,
-                      'en',
-                    )}.svg`}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={5}>
-                <Typography
-                  variant="h5"
-                  color="text.secondary"
-                  sx={{ fontFamily: 'Lato', marginRight: '0.5em' }}
+      <ol>
+        {fixedCountries &&
+          fixedCountries.map((country, index) => (
+            <li key={country.id}>
+              <Paper
+                onClick={() => handleCountryClick(country.id)}
+                elevation={isMobile ? 2 : 5}
+                sx={{
+                  borderRadius: '100px',
+                  // boxShadow: '0 4px 10px 0px rgba(0, 0, 0, 0.15)',
+                  cursor: 'pointer',
+                  margin: (t) => [t.spacing(4, 0), t.spacing(8, 4)],
+                  // [theme.breakpoints.down('md')]: {
+                  //   margin: theme.spacing(3),
+                  // },
+                }}
+              >
+                <Grid
+                  container
+                  columns={16}
+                  justifyContent="center"
+                  alignItems="center"
                 >
-                  {country.name}
-                </Typography>
-              </Grid>
-              <Grid item xs={5}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    width: 1,
-                    boxSizing: 'border-box',
-                    paddingRight: '32px',
-                  }}
-                >
-                  <Typography
-                    variant="h5"
-                    color="text.secondary"
-                    sx={{
-                      textAlign: 'right',
-                      fontFamily: 'Lato',
-                      marginRight: '8px',
-                    }}
-                  >
-                    {`${abbreviateNumber(country.planted)}`.toLocaleString()}
-                  </Typography>
-                  <TreeImage />
-                </Box>
-              </Grid>
-            </Grid>
-          </Paper>
-        ))}
+                  <Grid item xs={2} justifySelf="center">
+                    {index < 3 ? (
+                      <p />
+                    ) : (
+                      <Typography
+                        variant="h5"
+                        color="text.secondary"
+                        sx={{
+                          marginLeft: '50%',
+                          fontFamily: 'Lato',
+                          lineHeight: ['28.8px', '19.2px'],
+                        }}
+                      >
+                        {index + 1}
+                      </Typography>
+                    )}
+                    {/* Here we add the position number for the top 3 countries with an svg file */}
+                    {index === 0 && (
+                      <RibbonWrapper fill="#FFD700" index={index} />
+                    )}
+                    {index === 1 && (
+                      <RibbonWrapper fill="#cccccc" index={index} />
+                    )}
+                    {index === 2 && (
+                      <RibbonWrapper fill="#9f7a33" index={index} />
+                    )}
+
+                    {/* Here we add the position number for the rest of the countries */}
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Box className={classes.flagContainer}>
+                      <img
+                        alt={`${country.name}`}
+                        src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countries.getAlpha2Code(
+                          `${country.name}`,
+                          'en',
+                        )}.svg`}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography
+                      variant="h5"
+                      color="text.secondary"
+                      sx={{ fontFamily: 'Lato', marginRight: '0.5em' }}
+                    >
+                      {country.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        width: 1,
+                        boxSizing: 'border-box',
+                        paddingRight: '32px',
+                      }}
+                    >
+                      <Typography
+                        variant="h5"
+                        color="text.secondary"
+                        sx={{
+                          textAlign: 'right',
+                          fontFamily: 'Lato',
+                          marginRight: '8px',
+                        }}
+                      >
+                        {`${abbreviateNumber(
+                          country.planted,
+                        )}`.toLocaleString()}
+                      </Typography>
+                      <TreeImage />
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </li>
+          ))}
+      </ol>
       <Box pb={4} />
     </>
   );
