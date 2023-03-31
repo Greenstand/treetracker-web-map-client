@@ -419,47 +419,57 @@ export default function Organization(props) {
           }}
         >
           <Divider varian="fullwidth" />
-          <Typography
-            sx={{
-              mt: [80 / 8, 80 / 4],
-            }}
-            variant="h4"
-          >
-            About the Organization
-          </Typography>
-          <Typography variant="body2" mt={7}>
-            <Box
-              component="span"
-              dangerouslySetInnerHTML={{
-                __html: marked.parse(organization.about || 'NO DATA YET'),
-              }}
-            />
-          </Typography>
-          <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
-            Mission
-          </Typography>
-          <Typography variant="body2" mt={7}>
-            <Box
-              component="span"
+          <article>
+            <Typography
               sx={{
-                fontFamily: 'Lato',
-                fontWeight: 400,
-                fontSize: '20px',
-                lineHeight: '28px',
-                letterSpacing: '0.04em',
+                mt: [80 / 8, 80 / 4],
               }}
-              dangerouslySetInnerHTML={{
-                __html: marked.parse(organization.mission || 'NO DATA YET'),
-              }}
-            />
-          </Typography>
+              variant="h4"
+            >
+              About the Organization
+            </Typography>
+          </article>
+          <article>
+            <Typography variant="body2" mt={7}>
+              <Box
+                component="span"
+                dangerouslySetInnerHTML={{
+                  __html: marked.parse(organization.about || 'NO DATA YET'),
+                }}
+              />
+            </Typography>
+          </article>
+          <article>
+            <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
+              Mission
+            </Typography>
+          </article>
+          <article>
+            <Typography variant="body2" mt={7}>
+              <Box
+                component="span"
+                sx={{
+                  fontFamily: 'Lato',
+                  fontWeight: 400,
+                  fontSize: '20px',
+                  lineHeight: '28px',
+                  letterSpacing: '0.04em',
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: marked.parse(organization.mission || 'NO DATA YET'),
+                }}
+              />
+            </Typography>
+          </article>
           <Divider
             varian="fullwidth"
             sx={{
               mt: [10, 20],
             }}
           />
-          <ImpactSection />
+          <article>
+            <ImpactSection />
+          </article>
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>
