@@ -428,8 +428,6 @@ export default function Organization(props) {
             >
               About the Organization
             </Typography>
-          </article>
-          <article>
             <Typography variant="body2" mt={7}>
               <Box
                 component="span"
@@ -443,8 +441,6 @@ export default function Organization(props) {
             <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
               Mission
             </Typography>
-          </article>
-          <article>
             <Typography variant="body2" mt={7}>
               <Box
                 component="span"
