@@ -44,7 +44,7 @@
     "@emotion/styled": "^11.3.0",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@hello-pangea/dnd": "^16.0.1",
-    "@mui/icons-material": "^5.0.5",
+    "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.54",
     "@mui/material": "^5.0.6",
     "@mui/styles": "^5.0.2",
