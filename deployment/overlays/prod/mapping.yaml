@@ -4,4 +4,4 @@ metadata:
   name: treetracker-web-map-client-mapping-main
   namespace: webmap
 spec:
-  host: great.treetracker.org
+  host: supa.treetracker.org
