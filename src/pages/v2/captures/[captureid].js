@@ -692,7 +692,7 @@ export default function Capture({
             mt: [10, 20],
           }}
         />
-        {/**<ImpactSection /> */}
+       
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal

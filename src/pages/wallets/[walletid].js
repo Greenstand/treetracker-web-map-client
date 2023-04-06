@@ -364,7 +364,7 @@ export default function Wallet(props) {
             mt: [10, 20],
           }}
         />
-        {/* <ImpactSection /> */}
+       
       </Box>
     </>
   );
