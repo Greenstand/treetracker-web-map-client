@@ -1,3 +1,17 @@
+# [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-04-07)
+
+
+### Bug Fixes
+
+* add the article tag to wrapp the about the orgnization section ([34fd647](https://github.com/Greenstand/treetracker-web-map-client/commit/34fd6476b254d5164fdb9e89691c5cb16931d79f))
+* align timeline on token page ([509dfa7](https://github.com/Greenstand/treetracker-web-map-client/commit/509dfa7297f48612010a39ad7cdfb2f6b454873d))
+* article not wrapping whole content ([f712421](https://github.com/Greenstand/treetracker-web-map-client/commit/f7124212040e8eeada9ecded07ca74bed0449b9f))
+* config hook undefined ([cb7cea7](https://github.com/Greenstand/treetracker-web-map-client/commit/cb7cea714f2715fe9959984f7973b568de1ac70f))
+* mobile app height incorrect ([27eb83b](https://github.com/Greenstand/treetracker-web-map-client/commit/27eb83b97f245585b21de25181774d8418e83994))
+* react styles warning ([6f67cb0](https://github.com/Greenstand/treetracker-web-map-client/commit/6f67cb09f400f674f5959565f7d9c56a19c8655c))
+* remove the article tag around the impact section: ([ab1a8c3](https://github.com/Greenstand/treetracker-web-map-client/commit/ab1a8c3e365590e7fcf0cc4656bcb71df493e741))
+* trigger ([5b4bd32](https://github.com/Greenstand/treetracker-web-map-client/commit/5b4bd32522896ed2c62913386c7ff2c25611306c))
+
 # [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-04-04)
 
 
