@@ -364,11 +364,12 @@ export default function Wallet(props) {
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
+       
       </Box>
     </>
   );
 }
+
 
 async function serverSideData(params) {
   const wallet = await getWalletById(params.walletid);

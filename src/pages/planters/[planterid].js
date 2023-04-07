@@ -483,7 +483,7 @@ export default function Planter(props) {
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
+       
         <Box sx={{ height: 40 }} />
       </Box>
       {nextExtraIsEmbed && (
