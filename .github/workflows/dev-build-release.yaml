@@ -79,7 +79,7 @@ jobs:
       bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
 
   deploy:
-    name: Deploy to dev
+    name: Deploy to prod
     runs-on: ubuntu-latest
     needs: release
     steps:
@@ -113,8 +113,8 @@ jobs:
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
+          token: ${{ secrets.DIGITALOCEAN_PRODUCTION_TOKEN }}
       - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
+        run: doctl kubernetes cluster kubeconfig save ${{ secrets.PRODUCTION_CLUSTER_NAME }}
       - name: Update kubernetes resources
-        run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build deployment/overlays/prod | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -

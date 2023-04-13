@@ -1,0 +1,12 @@
+apiVersion: getambassador.io/v2
+kind: Host
+metadata:
+  name: supa.treetracker.org
+  namespace: default
+spec:
+  hostname: supa.treetracker.org
+  selector:
+    matchLabels:
+      hostname: supa.treereacker.org
+  acmeProvider:
+    email: brinkcorp@gmail.com

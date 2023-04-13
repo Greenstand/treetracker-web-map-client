@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: treetracker-web-map-client-main
+  name: treetracker-web-map-client-deploy
   namespace: webmap
   labels:
     app: treetracker-web-map-client-main

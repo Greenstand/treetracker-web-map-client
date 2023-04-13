@@ -14,7 +14,7 @@ on:
           - dev
           - test
           - prod
-        default: 'dev'
+        default: 'prod'
 
 env:
   project-directory: ./

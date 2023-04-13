@@ -2,7 +2,10 @@ name: Deploy main channel to dev
 
 on:
   workflow_dispatch:
-
+    inputs:
+      git-tag:
+        description: 'Branch/hash/tag'
+        required: true
 env:
   project-directory: ./
 
