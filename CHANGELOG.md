@@ -1,3 +1,10 @@
+## [2.0.14](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.13...v2.0.14) (2023-04-18)
+
+
+### Bug Fixes
+
+* Add host to kustomize ([555968f](https://github.com/Greenstand/treetracker-web-map-client/commit/555968f839906927266a9e9c75c981d0e2c78b63))
+
 ## [2.0.13](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.12...v2.0.13) (2023-04-13)
 
 
