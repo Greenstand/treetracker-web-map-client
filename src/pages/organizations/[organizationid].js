@@ -162,7 +162,9 @@ export default function Organization(props) {
                   <>
                     Organization since
                     <time dateTime={organization?.created_at}>
-                      {moment(organization?.created_at).format('MMMM DD, YYYY')}
+                      {` ${moment(organization?.created_at).format(
+                        'MMMM DD, YYYY',
+                      )}`}
                     </time>
                   </>
                 }
