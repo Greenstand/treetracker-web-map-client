@@ -158,9 +158,16 @@ export default function Organization(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Organization since ${moment(
-                  organization?.created_at,
-                ).format('MMMM DD, YYYY')}`}
+                info={
+                  <>
+                    Organization since
+                    <time dateTime={organization?.created_at}>
+                      {` ${moment(organization?.created_at).format(
+                        'MMMM DD, YYYY',
+                      )}`}
+                    </time>
+                  </>
+                }
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -463,7 +470,7 @@ export default function Organization(props) {
               mt: [10, 20],
             }}
           />
-         
+
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>
