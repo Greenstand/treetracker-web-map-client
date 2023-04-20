@@ -160,9 +160,7 @@ export default function Organization(props) {
                 iconURI={CalendarIcon}
                 info={
                   <time
-                    dateTime={moment(organization?.created_at).format(
-                      'MMMM DD, YYYY',
-                    )}
+                    dateTime={organization?.created_at}
                   >{`Organization since ${moment(
                     organization?.created_at,
                   ).format('MMMM DD, YYYY')}`}</time>
