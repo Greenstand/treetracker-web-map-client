@@ -233,9 +233,15 @@ export default function Planter(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Planter since ${moment(planter.created_at).format(
-                    'MMMM DD, YYYY',
-                  )}`}
+                  info={
+                    <>
+                      Planter since
+                      <time dateTime={planter?.created_at}>
+                        &nbsp;
+                        {moment(planter?.created_at).format('MMMM DD, YYYY')}
+                      </time>
+                    </>
+                  }
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
@@ -275,6 +281,7 @@ export default function Planter(props) {
                 {planter.first_name}{' '}
                 {planter.last_name && planter.last_name.slice(0, 1)}.
               </Typography>
+              <h1>Mobile</h1>
             </Box>
           </Portal>
         )}
@@ -285,12 +292,20 @@ export default function Planter(props) {
               {planter.first_name}{' '}
               {planter.last_name && planter.last_name.slice(0, 1)}.
             </Typography>
+            <h1>Hello</h1>
             <Box sx={{ mt: 2 }}>
+              {console.log('Planter ::', planter)}
               <Info
                 iconURI={CalendarIcon}
-                info={`Planter since ${moment(planter.created_at).format(
-                  'MMMM DD, YYYY',
-                )}`}
+                info={
+                  <>
+                    Planter since
+                    <time dateTime={planter?.created_at}>
+                      &nbsp;
+                      {moment(planter?.created_at).format('MMMM DD, YYYY')}
+                    </time>
+                  </>
+                }
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -325,7 +340,7 @@ export default function Planter(props) {
           }}
         >
           <Typography variant="h4">
-            Featured trees by {planter.first_name}
+            Featured trees by jjjj {planter.first_name}
           </Typography>
           <FeaturedTreesSlider
             trees={featuredTrees.trees}
@@ -483,7 +498,7 @@ export default function Planter(props) {
             mt: [10, 20],
           }}
         />
-       
+
         <Box sx={{ height: 40 }} />
       </Box>
       {nextExtraIsEmbed && (
