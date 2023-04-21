@@ -216,7 +216,6 @@ export default function Planter(props) {
             rotation={planter.image_rotation}
           />
         </Box>
-
         {isMobile && (
           <Portal
             container={() => document.getElementById('drawer-title-container')}
@@ -237,7 +236,7 @@ export default function Planter(props) {
                     <>
                       Planter since
                       <time dateTime={planter?.created_at}>
-                        &nbsp;
+                        {' '}
                         {moment(planter?.created_at).format('MMMM DD, YYYY')}
                       </time>
                     </>
@@ -292,16 +291,14 @@ export default function Planter(props) {
               {planter.first_name}{' '}
               {planter.last_name && planter.last_name.slice(0, 1)}.
             </Typography>
-            <h1>Hello</h1>
             <Box sx={{ mt: 2 }}>
-              {console.log('Planter ::', planter)}
               <Info
                 iconURI={CalendarIcon}
                 info={
                   <>
                     Planter since
                     <time dateTime={planter?.created_at}>
-                      &nbsp;
+                      {' '}
                       {moment(planter?.created_at).format('MMMM DD, YYYY')}
                     </time>
                   </>
@@ -340,7 +337,7 @@ export default function Planter(props) {
           }}
         >
           <Typography variant="h4">
-            Featured trees by jjjj {planter.first_name}
+            Featured trees by {planter.first_name}
           </Typography>
           <FeaturedTreesSlider
             trees={featuredTrees.trees}
