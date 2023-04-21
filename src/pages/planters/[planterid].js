@@ -280,7 +280,6 @@ export default function Planter(props) {
                 {planter.first_name}{' '}
                 {planter.last_name && planter.last_name.slice(0, 1)}.
               </Typography>
-              <h1>Mobile</h1>
             </Box>
           </Portal>
         )}
