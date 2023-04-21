@@ -1,3 +1,13 @@
+# [2.0.0-user-profile.3](https://github.com/dadiorchen/treetracker-web-map-client/compare/v2.0.0-user-profile.2...v2.0.0-user-profile.3) (2023-04-21)
+
+
+### Features
+
+* add fragment put time stamp data inside that ([9afe80a](https://github.com/dadiorchen/treetracker-web-map-client/commit/9afe80a7a3102068263003af5edd581e279e1eb3))
+* add space between since and date ([a493fe4](https://github.com/dadiorchen/treetracker-web-map-client/commit/a493fe4d577bb609fde6229c77ed4e738bec6cac))
+* remove moment value from datetime attribute ([faa8927](https://github.com/dadiorchen/treetracker-web-map-client/commit/faa89276f73e71a95e529728b0963a47d7f309bc))
+* wrap timestamp inside time element ([9a854a4](https://github.com/dadiorchen/treetracker-web-map-client/commit/9a854a405c46ca8672a94616e1a95fccc94a6102))
+
 # [2.0.0-user-profile.2](https://github.com/dadiorchen/treetracker-web-map-client/compare/v2.0.0-user-profile.1...v2.0.0-user-profile.2) (2023-04-21)
 
 
