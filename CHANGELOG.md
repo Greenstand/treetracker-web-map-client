@@ -1,3 +1,10 @@
+# [2.0.0-user-profile.2](https://github.com/dadiorchen/treetracker-web-map-client/compare/v2.0.0-user-profile.1...v2.0.0-user-profile.2) (2023-04-21)
+
+
+### Features
+
+* first try on user profile ([75d25ea](https://github.com/dadiorchen/treetracker-web-map-client/commit/75d25ea74de4a6a9c6d5cfcf7fd90acefe1b0227))
+
 # [2.0.0-user-profile.1](https://github.com/dadiorchen/treetracker-web-map-client/compare/v2.0.0-cwm.2...v2.0.0-user-profile.1) (2023-04-20)
 
 
