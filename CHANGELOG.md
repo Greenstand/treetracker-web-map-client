@@ -8,7 +8,9 @@
 # [2.0.0-user-profile.1](https://github.com/dadiorchen/treetracker-web-map-client/compare/v2.0.0-cwm.2...v2.0.0-user-profile.1) (2023-04-20)
 
 
+
 ### Bug Fixes
+
 
 * ab next [skip ci] ([ceb63c5](https://github.com/dadiorchen/treetracker-web-map-client/commit/ceb63c51b97889c87ab9c12d8234774fd0b6fa85))
 * action bug [skip ci] ([99daf7a](https://github.com/dadiorchen/treetracker-web-map-client/commit/99daf7ae3c28371ad7ffc352fb46ebcc1184d3ad))
@@ -67,6 +69,7 @@
 * wrong version numberr [skip ci] ([dc6bbb8](https://github.com/dadiorchen/treetracker-web-map-client/commit/dc6bbb82d67c1abeeabeed058ad2c6084a501fd8))
 
 
+
 ### Features
 
 * deployment action [skip ci] ([d6ebcdc](https://github.com/dadiorchen/treetracker-web-map-client/commit/d6ebcdc64075c037bd3a300d90ca810acf2907d2))
@@ -76,6 +79,7 @@
 * master use '' channel ([3254891](https://github.com/dadiorchen/treetracker-web-map-client/commit/3254891da48b61371d7419d1d13cf14d37f06e86))
 * merge change from cwm ([9c95a3a](https://github.com/dadiorchen/treetracker-web-map-client/commit/9c95a3aae9942cf130c654479e07569e2df39540))
 * name [skip ci] ([b4b8ff9](https://github.com/dadiorchen/treetracker-web-map-client/commit/b4b8ff90fe658cb460766061b23fcc9c8ae7ee23))
+
 
 # [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-04-13)
 
