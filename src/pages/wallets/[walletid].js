@@ -193,9 +193,8 @@ export default function Wallet(props) {
                     <>
                       Wallet created on
                       <time dateTime={wallet?.created_at}>
-                        {` ${moment(wallet?.created_at).format(
-                          'MMMM DD, YYYY',
-                        )}`}
+                        {' '}
+                        {moment(wallet?.created_at).format('MMMM DD, YYYY')}
                       </time>
                     </>
                   }
@@ -226,7 +225,8 @@ export default function Wallet(props) {
                   <>
                     Wallet created on
                     <time dateTime={wallet?.created_at}>
-                      {` ${moment(wallet?.created_at).format('MMMM DD, YYYY')}`}
+                      {' '}
+                      {moment(wallet?.created_at).format('MMMM DD, YYYY')}
                     </time>
                   </>
                 }
