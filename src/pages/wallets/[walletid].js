@@ -189,9 +189,16 @@ export default function Wallet(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Wallet created on ${moment(wallet.created_at).format(
-                    'MMMM DD, YYYY',
-                  )}`}
+                  info={
+                    <>
+                      Wallet created on
+                      <time dateTime={wallet?.created_at}>
+                        {` ${moment(wallet?.created_at).format(
+                          'MMMM DD, YYYY',
+                        )}`}
+                      </time>
+                    </>
+                  }
                 />
               </Box>
             </Box>
@@ -215,9 +222,14 @@ export default function Wallet(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Wallet created on ${moment(wallet.created_at).format(
-                  'MMMM DD, YYYY',
-                )}`}
+                info={
+                  <>
+                    Wallet created on
+                    <time dateTime={wallet?.created_at}>
+                      {` ${moment(wallet?.created_at).format('MMMM DD, YYYY')}`}
+                    </time>
+                  </>
+                }
               />
             </Box>
           </Box>
@@ -364,12 +376,10 @@ export default function Wallet(props) {
             mt: [10, 20],
           }}
         />
-       
       </Box>
     </>
   );
 }
-
 
 async function serverSideData(params) {
   const wallet = await getWalletById(params.walletid);
