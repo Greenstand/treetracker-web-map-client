@@ -79,22 +79,22 @@ export default function Token(props) {
       // manipulate the map
       // const { map } = mapContext;
       // if (map && token) {
-      //   // map.flyTo(tree.lat, tree.lon, 16);
-      //   try {
-      //     log.warn('xxxxxxxx reload');
-      //     await map.setFilters({
-      //       treeid: token.tree_id,
-      //     });
-      //     const view = await map.getInitialView();
-      //     await map.gotoView(
-      //       parseFloat(view.center.lat),
-      //       parseFloat(view.center.lon),
-      //       view.zoomLevel,
-      //     );
-      //     log.warn('no data:', map, token);
-      //   } catch (e) {
-      //     log.warn('get error when render map:', e);
-      //   }
+      // // map.flyTo(tree.lat, tree.lon, 16);
+      // try {
+      // log.warn('xxxxxxxx reload');
+      // await map.setFilters({
+      // treeid: token.tree_id,
+      // });
+      // const view = await map.getInitialView();
+      // await map.gotoView(
+      // parseFloat(view.center.lat),
+      // parseFloat(view.center.lon),
+      // view.zoomLevel,
+      // );
+      // log.warn('no data:', map, token);
+      // } catch (e) {
+      // log.warn('get error when render map:', e);
+      // }
       // }
 
       const { map } = mapContext;
@@ -316,9 +316,10 @@ export default function Token(props) {
               >
                 <Icon icon={CalendarIcon} />
                 {token.created_at !== null
-                  ? `Minted on ${moment(tree.time_created).format(
-                      'MMMM Do, YYYY',
-                    )}`
+                  ? `<
+                  dateTime={moment(tree.time_created).format('MMMM Do, YYYY',)}> ${moment(
+                      tree.time_created,
+                    ).format('MMMM Do, YYYY')} </time>`
                   : 'Unknown Mint Date'}
               </Typography>
 
@@ -370,9 +371,9 @@ export default function Token(props) {
               >
                 <Icon icon={CalendarIcon} />
                 {token.created_at !== null
-                  ? `Minted on ${moment(tree.time_created).format(
-                      'MMMM Do, YYYY',
-                    )}`
+                  ? `<time dateTime={moment(tree.time_created).format('MMMM Do, YYYY',)}> ${moment(
+                      tree.time_created,
+                    ).format('MMMM Do, YYYY')} </time>`
                   : 'Unknown Mint Date'}
               </Typography>
               <Box
@@ -717,19 +718,19 @@ async function serverSideData(params, query) {
 }
 
 // const getStaticProps = wrapper(async ({ params, query }) => {
-//   const props = await serverSideData(params, query);
-//   return {
-//     props,
-//     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
-//   };
+// const props = await serverSideData(params, query);
+// return {
+// props,
+// revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+// };
 // });
 
 // // eslint-disable-next-line
 // const getStaticPaths = async () => {
-//   return {
-//     paths: [],
-//     fallback: 'blocking',
-//   };
+// return {
+// paths: [],
+// fallback: 'blocking',
+// };
 // };
 
 const getServerSideProps = wrapper(async ({ params, query }) => {
