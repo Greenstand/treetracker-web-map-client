@@ -729,6 +729,7 @@ async function serverSideData(params, query) {
 //     paths: [],
 //     fallback: 'blocking',
 //   };
+// };
 
 const getServerSideProps = wrapper(async ({ params, query }) => {
   const props = await serverSideData(params, query);
