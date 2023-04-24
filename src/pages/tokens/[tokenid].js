@@ -79,23 +79,22 @@ export default function Token(props) {
       // manipulate the map
       // const { map } = mapContext;
       // if (map && token) {
-      // // map.flyTo(tree.lat, tree.lon, 16);
-      // try {
-      // log.warn('xxxxxxxx reload');
-      // await map.setFilters({
-      // treeid: token.tree_id,
-      // });
-      // const view = await map.getInitialView();
-      // await map.gotoView(
-      // parseFloat(view.center.lat),
-      // parseFloat(view.center.lon),
-      // view.zoomLevel,
-      // );
-      // log.warn('no data:', map, token);
-      // } catch (e) {
-      // log.warn('get error when render map:', e);
-      // }
-      // }
+       //   // map.flyTo(tree.lat, tree.lon, 16);
+      //   try {
+      //     log.warn('xxxxxxxx reload');
+      //     await map.setFilters({
+      //       treeid: token.tree_id,
+      //     });
+      //     const view = await map.getInitialView();
+      //     await map.gotoView(
+      //       parseFloat(view.center.lat),
+      //       parseFloat(view.center.lon),
+      //       view.zoomLevel,
+      //     );
+      //     log.warn('no data:', map, token);
+      //   } catch (e) {
+      //     log.warn('get error when render map:', e);
+      //   }
 
       const { map } = mapContext;
       async function focusTree(map2, tree2) {
@@ -727,11 +726,10 @@ async function serverSideData(params, query) {
 
 // // eslint-disable-next-line
 // const getStaticPaths = async () => {
-// return {
-// paths: [],
-// fallback: 'blocking',
-// };
-// };
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   };
 
 const getServerSideProps = wrapper(async ({ params, query }) => {
   const props = await serverSideData(params, query);
