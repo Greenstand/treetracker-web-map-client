@@ -95,7 +95,7 @@ export default function Token(props) {
       //   } catch (e) {
       //     log.warn('get error when render map:', e);
       //   }
-         }
+       //}
 
       const { map } = mapContext;
       async function focusTree(map2, tree2) {
