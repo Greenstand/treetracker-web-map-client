@@ -79,7 +79,7 @@ export default function Token(props) {
       // manipulate the map
       // const { map } = mapContext;
       // if (map && token) {
-       //   // map.flyTo(tree.lat, tree.lon, 16);
+      //   // map.flyTo(tree.lat, tree.lon, 16);
       //   try {
       //     log.warn('xxxxxxxx reload');
       //     await map.setFilters({
@@ -95,6 +95,7 @@ export default function Token(props) {
       //   } catch (e) {
       //     log.warn('get error when render map:', e);
       //   }
+         }
 
       const { map } = mapContext;
       async function focusTree(map2, tree2) {
@@ -723,7 +724,6 @@ async function serverSideData(params, query) {
 //     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
 //   };
 // });
-
 
 // // eslint-disable-next-line
 // const getStaticPaths = async () => {
