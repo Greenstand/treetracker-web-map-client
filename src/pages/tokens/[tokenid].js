@@ -717,12 +717,11 @@ async function serverSideData(params, query) {
 }
 
 // const getStaticProps = wrapper(async ({ params, query }) => {
-// const props = await serverSideData(params, query);
-// return {
-// props,
-// revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
-// };
-// });
+//   const props = await serverSideData(params, query);
+//   return {
+//     props,
+//     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+//   }
 
 // // eslint-disable-next-line
 // const getStaticPaths = async () => {
