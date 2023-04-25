@@ -9,4 +9,4 @@ spec:
     matchLabels:
       hostname: supa.treereacker.org
   acmeProvider:
-    email: brinkcorp@gmail.com
+    email: zaven@greenstand.org
