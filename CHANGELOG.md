@@ -1,3 +1,10 @@
+## [2.0.15](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.14...v2.0.15) (2023-04-25)
+
+
+### Bug Fixes
+
+* correct cert setting ([fe59e40](https://github.com/Greenstand/treetracker-web-map-client/commit/fe59e40aedd2c190326ae7ed31aaebcdf9ba679d))
+
 ## [2.0.14](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.13...v2.0.14) (2023-04-18)
 
 
