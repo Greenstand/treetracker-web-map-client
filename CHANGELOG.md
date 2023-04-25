@@ -1,3 +1,10 @@
+## [2.0.16](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.15...v2.0.16) (2023-04-25)
+
+
+### Bug Fixes
+
+* correct namespace ([966159d](https://github.com/Greenstand/treetracker-web-map-client/commit/966159d9015459f36d7b4813b21da16e9685d487))
+
 ## [2.0.15](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.14...v2.0.15) (2023-04-25)
 
 
