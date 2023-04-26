@@ -6,6 +6,6 @@ spec:
   hostname: map.treetracker.org
   selector:
     matchLabels:
-      hostname: map.treereacker.org
+      hostname: map.treetracker.org
   acmeProvider:
     email: zaven@greenstand.org
