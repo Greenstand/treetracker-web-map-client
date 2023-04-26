@@ -1,11 +1,11 @@
 apiVersion: getambassador.io/v2
 kind: Host
 metadata:
-  name: supa.treetracker.org
+  name: map.treetracker.org
 spec:
-  hostname: supa.treetracker.org
+  hostname: map.treetracker.org
   selector:
     matchLabels:
-      hostname: supa.treereacker.org
+      hostname: map.treereacker.org
   acmeProvider:
     email: zaven@greenstand.org
