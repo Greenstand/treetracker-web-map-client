@@ -8,4 +8,5 @@ spec:
     matchLabels:
       hostname: map.treetracker.org
   acmeProvider:
+    authority: https://acme-v02.api.letsencrypt.org/directory
     email: zaven@greenstand.org
