@@ -1,3 +1,35 @@
+# [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-04-26)
+
+
+### Bug Fixes
+
+* add the article tag to wrapp the about the orgnization section ([34fd647](https://github.com/Greenstand/treetracker-web-map-client/commit/34fd6476b254d5164fdb9e89691c5cb16931d79f))
+* align timeline on token page ([509dfa7](https://github.com/Greenstand/treetracker-web-map-client/commit/509dfa7297f48612010a39ad7cdfb2f6b454873d))
+* article not wrapping whole content ([f712421](https://github.com/Greenstand/treetracker-web-map-client/commit/f7124212040e8eeada9ecded07ca74bed0449b9f))
+* config hook undefined ([cb7cea7](https://github.com/Greenstand/treetracker-web-map-client/commit/cb7cea714f2715fe9959984f7973b568de1ac70f))
+* mobile app height incorrect ([27eb83b](https://github.com/Greenstand/treetracker-web-map-client/commit/27eb83b97f245585b21de25181774d8418e83994))
+* navbar items not vertical centered ([45366d0](https://github.com/Greenstand/treetracker-web-map-client/commit/45366d0dbeaac6551c64f28689e8b9d13fb061c8))
+* photo of planter is missing [#1509](https://github.com/Greenstand/treetracker-web-map-client/issues/1509) ([0cfe27a](https://github.com/Greenstand/treetracker-web-map-client/commit/0cfe27ac1ea01e04c221e646e621f4a8bab5abaf))
+* react styles warning ([6f67cb0](https://github.com/Greenstand/treetracker-web-map-client/commit/6f67cb09f400f674f5959565f7d9c56a19c8655c))
+* remove the article tag around the impact section: ([ab1a8c3](https://github.com/Greenstand/treetracker-web-map-client/commit/ab1a8c3e365590e7fcf0cc4656bcb71df493e741))
+* trigger ([5b4bd32](https://github.com/Greenstand/treetracker-web-map-client/commit/5b4bd32522896ed2c62913386c7ff2c25611306c))
+
+
+### Features
+
+* add fragment put time stamp data inside that ([9afe80a](https://github.com/Greenstand/treetracker-web-map-client/commit/9afe80a7a3102068263003af5edd581e279e1eb3))
+* add space between since and date ([a493fe4](https://github.com/Greenstand/treetracker-web-map-client/commit/a493fe4d577bb609fde6229c77ed4e738bec6cac))
+* add time element in mobile and pc view on planters page ([5f08dca](https://github.com/Greenstand/treetracker-web-map-client/commit/5f08dca2d5976eb029ee0d70543dbfc07b5489c4))
+* added time element in organization page for mobile view ([eff94b3](https://github.com/Greenstand/treetracker-web-map-client/commit/eff94b3f790762a8af41319e550e5e1403662eae))
+* first for user-profile ([65a72cc](https://github.com/Greenstand/treetracker-web-map-client/commit/65a72ccc6f3196b5270d6aaf995d742070753607))
+* first try on user profile ([75d25ea](https://github.com/Greenstand/treetracker-web-map-client/commit/75d25ea74de4a6a9c6d5cfcf7fd90acefe1b0227))
+* remove  &nbsp; and add {} for extra space ([10da281](https://github.com/Greenstand/treetracker-web-map-client/commit/10da2811abaeb9c0a49bfe7d8c6c8dfc17797b90))
+* remove  extra stuff ([84c8590](https://github.com/Greenstand/treetracker-web-map-client/commit/84c85908ba7962935f7e8326e55aafe7bb27b815))
+* remove moment value from datetime attribute ([faa8927](https://github.com/Greenstand/treetracker-web-map-client/commit/faa89276f73e71a95e529728b0963a47d7f309bc))
+* time element added to wallets page ([5dc4dde](https://github.com/Greenstand/treetracker-web-map-client/commit/5dc4ddedc9e4befa90294d7910d81d84b2d728e6))
+* time element added to wallets page ([e61a16f](https://github.com/Greenstand/treetracker-web-map-client/commit/e61a16faeb92196ff09eda3569b0f560dba5a985))
+* wrap timestamp inside time element ([9a854a4](https://github.com/Greenstand/treetracker-web-map-client/commit/9a854a405c46ca8672a94616e1a95fccc94a6102))
+
 # [2.0.0-beta.238](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-beta.238) (2023-04-24)
 
 
