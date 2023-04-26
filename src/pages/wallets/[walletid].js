@@ -343,14 +343,17 @@ export default function Wallet(props) {
                 mt: [5, 10],
               }}
             >
-              {species.map((specie) => (
-                <TreeSpeciesCard
-                  key={specie.id}
-                  name={specie.name}
-                  count={specie.total}
-                  subTitle={specie.desc || '---'}
-                />
-              ))}
+              <ul>
+                {species.map((specie) => (
+                  <li key={specie.id}>
+                    <TreeSpeciesCard
+                      name={specie.name}
+                      count={specie.total}
+                      subTitle={specie.desc || '---'}
+                    />
+                  </li>
+                ))}
+              </ul>
             </Box>
           </Box>
         )}
