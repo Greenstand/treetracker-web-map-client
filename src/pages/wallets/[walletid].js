@@ -299,6 +299,7 @@ export default function Wallet(props) {
         )}
 
         <Box
+          component="ul"
           sx={{
             mt: [0, 16],
             p: [2, 4],
@@ -307,6 +308,7 @@ export default function Wallet(props) {
         >
           {tokens.tokens.map((token) => (
             <Box
+              component="li"
               key={token.id}
               sx={{
                 mt: [2, 4],
@@ -339,17 +341,19 @@ export default function Wallet(props) {
               Species of trees planted
             </Typography>
             <Box
+              component="ul"
               sx={{
                 mt: [5, 10],
               }}
             >
               {species.map((specie) => (
-                <TreeSpeciesCard
-                  key={specie.id}
-                  name={specie.name}
-                  count={specie.total}
-                  subTitle={specie.desc || '---'}
-                />
+                <li key={specie.id}>
+                  <TreeSpeciesCard
+                    name={specie.name}
+                    count={specie.total}
+                    subTitle={specie.desc || '---'}
+                  />
+                </li>
               ))}
             </Box>
           </Box>
