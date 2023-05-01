@@ -318,7 +318,7 @@ export default function Token(props) {
                 {token.created_at !== null ? (
                   <>
                     Minted on
-                    <time dateTime={moment(tree.time_created)}>
+                    <time dateTime={tree.time_created}>
                       {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
                     </time>
                   </>
@@ -377,7 +377,7 @@ export default function Token(props) {
                 {token.created_at !== null ? (
                   <>
                     Minted on
-                    <time dateTime={moment(tree.time_created)}>
+                    <time dateTime={tree.time_created}>
                       {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
                     </time>
                   </>
@@ -443,9 +443,11 @@ export default function Token(props) {
         <TagList>
           <TreeTag
             key="created-at"
-            TreeTagValue=<time dateTime={new Date(token.created_at)}>
-              {new Date(token.created_at).toLocaleDateString()}
-            </time>
+            TreeTagValue={
+              <time dateTime={token.created_at}>
+                {new Date(token.created_at).toLocaleDateString()}
+              </time>
+            }
             title="Created At"
             icon={<Icon icon={CalendarIcon} />}
           />
@@ -516,7 +518,7 @@ export default function Token(props) {
                   flex: '0 0 100px',
                 }}
               >
-                <time dateTime={new Date(token.created_at)}>
+                <time dateTime={token.created_at}>
                   {new Date(token.created_at).toLocaleDateString()}
                 </time>
               </TimelineOppositeContent>
@@ -548,7 +550,7 @@ export default function Token(props) {
                   }}
                   color="text.secondary"
                 >
-                  <time dateTime={new Date(transaction.processed_at)}>
+                  <time dateTime={transaction.processed_at}>
                     {new Date(transaction.processed_at).toLocaleDateString()}
                   </time>
                 </TimelineOppositeContent>
