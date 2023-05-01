@@ -304,6 +304,7 @@ export default function Wallet(props) {
             mt: [0, 16],
             p: [2, 4],
             display: isTokenTab ? 'block' : 'none',
+            listStyle: 'none',
           }}
         >
           {tokens.tokens.map((token) => (
@@ -344,6 +345,8 @@ export default function Wallet(props) {
               component="ul"
               sx={{
                 mt: [5, 10],
+                listStyle: 'none',
+                px: 0,
               }}
             >
               {species.map((specie) => (
