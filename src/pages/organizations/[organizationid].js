@@ -357,17 +357,20 @@ export default function Organization(props) {
               Species of trees planted
             </Typography>
             <Box
+              component="ul"
               sx={{
                 mt: [5, 10],
               }}
             >
               {organization?.species?.species?.map((s) => (
                 <React.Fragment key={s.name}>
-                  <TreeSpeciesCard
-                    name={s.name}
-                    subTitle={s.desc || '---'}
-                    count={s.total}
-                  />
+                  <li key={s.id}>
+                    <TreeSpeciesCard
+                      name={s.name}
+                      subTitle={s.desc || '---'}
+                      count={s.total}
+                    />
+                  </li>
                   <Box sx={{ mt: [2, 4] }} />
                 </React.Fragment>
               ))}
