@@ -8,18 +8,18 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { userAgentFromString } from 'next/server';
 import React from 'react';
-import Layout from 'components/Layout';
-import LayoutDashboard from 'components/LayoutDashboard';
-import LayoutEmbed from 'components/LayoutEmbed';
-import LayoutMobile from 'components/LayoutMobile';
-import LayoutMobileB from 'components/LayoutMobileB';
-import LayoutMobileC from 'components/LayoutMobileC';
-import { DrawerProvider } from 'context/DrawerContext';
-import { ConfigProvider, defaultConfig } from 'context/configContext';
-import { CustomThemeProvider } from 'context/themeContext';
-import { useLocalStorage, useEmbed } from 'hooks/globalHooks';
-import { MapContextProvider } from 'mapContext';
 import packageJson from '../../package.json';
+import Layout from '../components/Layout';
+import LayoutDashboard from '../components/LayoutDashboard';
+import LayoutEmbed from '../components/LayoutEmbed';
+import LayoutMobile from '../components/LayoutMobile';
+import LayoutMobileB from '../components/LayoutMobileB';
+import LayoutMobileC from '../components/LayoutMobileC';
+import { DrawerProvider } from '../context/DrawerContext';
+import { ConfigProvider, defaultConfig } from '../context/configContext';
+import { CustomThemeProvider } from '../context/themeContext';
+import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
+import { MapContextProvider } from '../mapContext';
 
 log.warn(`Web Map Client version ${packageJson.version}`);
 
@@ -135,13 +135,6 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
     nextExtraKeyword,
     nextExtraLoading,
   };
-
-  const isDemo = !!router.asPath.match(/demo/);
-  if (isDemo) {
-    return (
-      <Component {...pageProps} {...extraProps} />
-    );
-  }
 
   const isAdmin = !!router.asPath.match(/admin/);
   if (isAdmin) {
