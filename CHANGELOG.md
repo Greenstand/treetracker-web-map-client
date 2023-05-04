@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.20...v2.1.0) (2023-05-04)
+
+
+### Features
+
+* add redirect for old wallet url ([7071933](https://github.com/Greenstand/treetracker-web-map-client/commit/7071933cc7b2eac50b0c6a829a9edd2a2584818b))
+
 ## [2.0.20](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.19...v2.0.20) (2023-04-26)
 
 
