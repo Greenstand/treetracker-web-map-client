@@ -332,12 +332,14 @@ export default function Organization(props) {
             </Grid>
           </Grid>
           <Box
+            component="ul"
             sx={{
               px: [0, 6],
               display: isPlanterTab ? 'block' : 'none',
+              listStyle: 'none',
             }}
           >
-            <Box sx={{ mt: [0, 22] }}>
+            <Box component="li" sx={{ mt: [0, 22] }}>
               <CustomWorldMap
                 totalTrees={
                   (organization?.featuredTrees?.total &&
@@ -364,7 +366,7 @@ export default function Organization(props) {
             >
               {organization?.species?.species?.map((s) => (
                 <React.Fragment key={s.name}>
-                  <li key={s.id}>
+                  <li>
                     <TreeSpeciesCard
                       name={s.name}
                       subTitle={s.desc || '---'}
