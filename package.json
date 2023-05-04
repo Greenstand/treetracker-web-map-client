@@ -56,7 +56,7 @@
     "cookie": "^0.4.2",
     "copy-to-clipboard": "^3.3.2",
     "country-flag-icons": "^1.4.19",
-    "d3": "^7.3.0",
+    "d3": "^7.8.4",
     "expect-runtime": "^0.4.0",
     "i18n-iso-countries": "^7.2.0",
     "jscodeshift": "^0.14.0",
