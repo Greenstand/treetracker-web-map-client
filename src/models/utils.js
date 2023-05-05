@@ -231,7 +231,7 @@ const wrapper = (callback) => (params) =>
     if (e.response?.status === 404) return { notFound: true };
     return {
       redirect: {
-        destination: '/404',
+        destination: '/500',
         permanent: false,
       },
       revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
