@@ -1,17 +1,26 @@
 import React from 'react';
+// import { Map } from 'treetracker-web-map-core';
 
+const label = 'DEMO:';
 function Demo() {
   const iframeRef = React.useRef();
 
   React.useEffect(() => {
     // jjiframeRef.current.contentWindow.alert("OK");
     setTimeout(() => {
-      const {map} = iframeRef.current.contentDocument.querySelector('#map-canvas');
-      console.log('map:', map);
-      map.onClickTree((data) => {
-        console.log('onClickTree:', data);
+      const { map } =
+        iframeRef.current.contentDocument.querySelector('#map-canvas');
+      console.log(label, 'map:', map);
+      map.on('move-end', (data) => {
+        console.log(label, 'onMoveEnd:', data);
       });
-    }, 5000);
+      map.on('tree-selected', (data) => {
+        console.log(label, 'select tree:', data);
+      });
+      map.onClickTree((data) => {
+        console.log(label, 'onClickTree:', data);
+      });
+    }, 10000);
   }, []);
 
   return (
@@ -24,7 +33,7 @@ function Demo() {
         src="http://localhost:3000/"
         width="800px"
         height="600px"
-       />
+      />
     </div>
   );
 }
