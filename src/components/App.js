@@ -7,8 +7,8 @@ import log from 'loglevel';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
-import { useMapContext } from '../mapContext';
-import * as pathResolver from '../models/pathResolver';
+import { useMapContext } from 'mapContext';
+import * as pathResolver from 'models/pathResolver';
 // import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
@@ -71,6 +71,10 @@ function MapComponent() {
 
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
+    if (window.parent) {
+      log.warn('DEMO:ok message parent');
+      window.parent.postMessage(tree, '*');
+    }
 
     const result = pathResolver.getPathWhenClickTree(
       tree,
@@ -156,7 +160,12 @@ function MapComponent() {
       apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
     });
     map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
+      log.warn('DEMOXXX move end:');
       log.warn('update url');
+      if (window.parent) {
+        log.warn('DEMO:ok message parent');
+        window.parent.postMessage('DEMOxxx foo', '*');
+      }
       const path = pathResolver.updatePathWhenMapMoveEnd(
         window.location,
         map,
