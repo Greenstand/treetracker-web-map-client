@@ -1,3 +1,40 @@
+# [2.0.0-demo.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-cwm.5...v2.0.0-demo.1) (2023-05-08)
+
+
+### Bug Fixes
+
+* add the article tag to wrapp the about the orgnization section ([34fd647](https://github.com/Greenstand/treetracker-web-map-client/commit/34fd6476b254d5164fdb9e89691c5cb16931d79f))
+* align timeline on token page ([509dfa7](https://github.com/Greenstand/treetracker-web-map-client/commit/509dfa7297f48612010a39ad7cdfb2f6b454873d))
+* article not wrapping whole content ([f712421](https://github.com/Greenstand/treetracker-web-map-client/commit/f7124212040e8eeada9ecded07ca74bed0449b9f))
+* config hook undefined ([cb7cea7](https://github.com/Greenstand/treetracker-web-map-client/commit/cb7cea714f2715fe9959984f7973b568de1ac70f))
+* delete previous merge ci ([fa8ef3f](https://github.com/Greenstand/treetracker-web-map-client/commit/fa8ef3fce5c0ff652ddcbef62cb97ce70047ebb5))
+* hardcode for branch ([b433db4](https://github.com/Greenstand/treetracker-web-map-client/commit/b433db41ba79fc5a9c3ce95f2c760c64c21eea61))
+* missing channle for beta [skip ci] ([ed6dd7c](https://github.com/Greenstand/treetracker-web-map-client/commit/ed6dd7c576258b8368d1fd9627e8753b34078fd4))
+* mobile app height incorrect ([27eb83b](https://github.com/Greenstand/treetracker-web-map-client/commit/27eb83b97f245585b21de25181774d8418e83994))
+* photo of planter is missing [#1509](https://github.com/Greenstand/treetracker-web-map-client/issues/1509) ([0cfe27a](https://github.com/Greenstand/treetracker-web-map-client/commit/0cfe27ac1ea01e04c221e646e621f4a8bab5abaf))
+* react styles warning ([6f67cb0](https://github.com/Greenstand/treetracker-web-map-client/commit/6f67cb09f400f674f5959565f7d9c56a19c8655c))
+* remove the article tag around the impact section: ([ab1a8c3](https://github.com/Greenstand/treetracker-web-map-client/commit/ab1a8c3e365590e7fcf0cc4656bcb71df493e741))
+* trigger ([5b4bd32](https://github.com/Greenstand/treetracker-web-map-client/commit/5b4bd32522896ed2c62913386c7ff2c25611306c))
+* trigger ci ([cde181e](https://github.com/Greenstand/treetracker-web-map-client/commit/cde181e5dd979b6e98666d11f82c0b148b4e0f90))
+* update image link to work with getThumbnailImageUrls ([a074f06](https://github.com/Greenstand/treetracker-web-map-client/commit/a074f06f7f13a5c8e4dc5e7e597c5d124998b6aa))
+* wrong branch name ([1c535b3](https://github.com/Greenstand/treetracker-web-map-client/commit/1c535b3ddf90cca12613f65a7ecc80a80239914a))
+
+
+### Features
+
+* add fragment put time stamp data inside that ([9afe80a](https://github.com/Greenstand/treetracker-web-map-client/commit/9afe80a7a3102068263003af5edd581e279e1eb3))
+* add space between since and date ([a493fe4](https://github.com/Greenstand/treetracker-web-map-client/commit/a493fe4d577bb609fde6229c77ed4e738bec6cac))
+* can receive selected tree from iframe ([1a80d5e](https://github.com/Greenstand/treetracker-web-map-client/commit/1a80d5e378f1bb844dae76654ff94fc607d64c1a))
+* deployment for alpha [skip ci] ([45b3e76](https://github.com/Greenstand/treetracker-web-map-client/commit/45b3e767bdf16c2d3f72729c7f6c1c3571fd34ca))
+* first for user-profile ([65a72cc](https://github.com/Greenstand/treetracker-web-map-client/commit/65a72ccc6f3196b5270d6aaf995d742070753607))
+* first try for user-profile ([bc268d4](https://github.com/Greenstand/treetracker-web-map-client/commit/bc268d47c1f040e4d1369fd46bca63e8e6eafc41))
+* first try on user profile ([75d25ea](https://github.com/Greenstand/treetracker-web-map-client/commit/75d25ea74de4a6a9c6d5cfcf7fd90acefe1b0227))
+* merge change from cwm ([9c95a3a](https://github.com/Greenstand/treetracker-web-map-client/commit/9c95a3aae9942cf130c654479e07569e2df39540))
+* postMessage way ([29b9a62](https://github.com/Greenstand/treetracker-web-map-client/commit/29b9a6290925d04ab125d3a907c2579906218838))
+* remove moment value from datetime attribute ([faa8927](https://github.com/Greenstand/treetracker-web-map-client/commit/faa89276f73e71a95e529728b0963a47d7f309bc))
+* use next channel for demo ([42d4b1c](https://github.com/Greenstand/treetracker-web-map-client/commit/42d4b1c54870fc5b34f3ffd991d5dff642e7b8b1))
+* wrap timestamp inside time element ([9a854a4](https://github.com/Greenstand/treetracker-web-map-client/commit/9a854a405c46ca8672a94616e1a95fccc94a6102))
+
 # [2.0.0-user-profile.3](https://github.com/dadiorchen/treetracker-web-map-client/compare/v2.0.0-user-profile.2...v2.0.0-user-profile.3) (2023-04-21)
 
 
