@@ -79,7 +79,7 @@ jobs:
       bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
 
   deploy:
-    name: Deploy to dev
+    name: Deploy to prod
     runs-on: ubuntu-latest
     needs: release
     steps:
@@ -89,7 +89,7 @@ jobs:
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
-      - name: Use Node.js 14.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
@@ -103,18 +103,18 @@ jobs:
           echo "::set-output name=bumped_version::${{ needs.release.outputs.bumped_version }}"
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-      - name: Load channel
-        run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
-        id: channel
-      - name: Print channel
-        run: echo ${{ steps.channel.outputs.CHANNEL }}
+      #- name: Load channel
+      #  run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
+      #  id: channel
+      #- name: Print channel
+      #  run: echo ${{ steps.channel.outputs.CHANNEL }}
       - name: Run kustomize
-        run: (cd deployment${{ steps.channel.outputs.CHANNEL}}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
+        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
+          token: ${{ secrets.DIGITALOCEAN_PRODUCTION_TOKEN }}
       - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
+        run: doctl kubernetes cluster kubeconfig save ${{ secrets.PRODUCTION_CLUSTER_NAME }}
       - name: Update kubernetes resources
-        run: kustomize build deployment${{ steps.channel.outputs.CHANNEL}}/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build deployment/overlays/prod | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
