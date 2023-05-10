@@ -35,7 +35,7 @@ jobs:
         if: steps.release_needed.outputs.RELEASE_NEEDED == 'false'
         run: echo "The branch is not configured to release. Quitting." && exit 0
       - name: npm clean install
-        run: npm ci
+        run: npm i
         working-directory: ${{ env.project-directory }}
       - run: npm i -g semantic-release @semantic-release/{git,exec,changelog}
       - run: semantic-release --debug
