@@ -1,3 +1,16 @@
+# [2.2.0-beta.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.0-beta.1...v2.2.0-beta.2) (2023-05-10)
+
+
+### Bug Fixes
+
+* temply use npm install ([6668e52](https://github.com/Greenstand/treetracker-web-map-client/commit/6668e523a075f7a645a3b33a3311e02f288c9ebf))
+
+
+### Features
+
+* add new map core ([d8dec86](https://github.com/Greenstand/treetracker-web-map-client/commit/d8dec868b39004b9f525868dbd88dd465d3cb77e))
+* updgrade map core ([f0d988b](https://github.com/Greenstand/treetracker-web-map-client/commit/f0d988b2927b18eb1ab59045198e79e27f0acd8e))
+
 # [2.2.0-beta.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.1.1...v2.2.0-beta.1) (2023-05-09)
 
 
