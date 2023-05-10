@@ -1,3 +1,10 @@
+# [2.2.0-beta.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2023-05-10)
+
+
+### Features
+
+* version trigger ([6c8e8f6](https://github.com/Greenstand/treetracker-web-map-client/commit/6c8e8f69cc59463647fcfbf739782fa79279ea0a))
+
 # [2.2.0-beta.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.0-beta.1...v2.2.0-beta.2) (2023-05-10)
 
 
