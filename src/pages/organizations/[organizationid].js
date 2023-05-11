@@ -1,3 +1,4 @@
+
 import { Box, Divider, Grid, Typography, Avatar } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
@@ -158,16 +159,9 @@ export default function Organization(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={
-                  <>
-                    Organization since
-                    <time dateTime={organization?.created_at}>
-                      {` ${moment(organization?.created_at).format(
-                        'MMMM DD, YYYY',
-                      )}`}
-                    </time>
-                  </>
-                }
+                info={`Organization since ${moment(
+                  organization?.created_at,
+                ).format('MMMM DD, YYYY')}`}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -210,16 +204,9 @@ export default function Organization(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={
-                    <>
-                      Organization since
-                      <time dateTime={organization?.created_at}>
-                        {` ${moment(organization?.created_at).format(
-                          'MMMM DD, YYYY',
-                        )}`}
-                      </time>
-                    </>
-                  }
+                  info={`Organization since ${moment().format(
+                    'MMMM DD, YYYY',
+                  )}`}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
@@ -356,24 +343,20 @@ export default function Organization(props) {
             >
               Species of trees planted
             </Typography>
-            <Box
-              sx={{
-                mt: [5, 10],
-              }}
-            >
-              {organization?.species?.species?.map((s) => (
-                <React.Fragment key={s.name}>
-                  <TreeSpeciesCard
-                    name={s.name}
-                    subTitle={s.desc || '---'}
-                    count={s.total}
-                  />
-                  <Box sx={{ mt: [2, 4] }} />
-                </React.Fragment>
-              ))}
-            </Box>
-            {(!organization?.species?.species ||
-              organization?.species?.species.length === 0) && (
+            {organization?.species?.species?.length ? (
+              <Box component="ul" sx={{ mt: [5, 10], listStyle: 'none', p: 0 }}>
+                {organization?.species?.species?.map((s) => (
+                  <li key={s.name}>
+                    <TreeSpeciesCard
+                      name={s.name}
+                      subTitle={s.desc || '---'}
+                      count={s.total}
+                    />
+                    <Box sx={{ mt: [2, 4] }} />
+                  </li>
+                ))}
+              </Box>
+            ) : (
               <Typography variant="h5">NO DATA YET</Typography>
             )}
           </Box>
@@ -418,14 +401,22 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-          {organization?.associatedPlanters?.planters
-            ?.sort((e1) => (e1.about ? -1 : 1))
-            .map((planter, i) => (
-              <Box sx={{ mt: [6, 12] }} key={planter.name}>
-                <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
-              </Box>
-            ))}
+          {organization?.associatedPlanters?.planters?.length ? (
+            <Box component="ul" sx={{ mt: [6, 12], listStyle: 'none', p: 0 }}>
+              {organization?.associatedPlanters?.planters
+                ?.sort((e1) => (e1.about ? -1 : 1))
+                .map((planter, i) => (
+                  <li key={planter.name}>
+                    <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
+                    <Box sx={{ mt: [6, 12] }} />
+                  </li>
+                ))}
+            </Box>
+          ) : (
+            <Typography variant="h5">NO DATA YET</Typography>
+          )}
         </Box>
+
         <Box
           sx={{
             px: [24 / 8, 24 / 4],
@@ -433,51 +424,47 @@ export default function Organization(props) {
           }}
         >
           <Divider varian="fullwidth" />
-          <article>
-            <Typography
-              sx={{
-                mt: [80 / 8, 80 / 4],
+          <Typography
+            sx={{
+              mt: [80 / 8, 80 / 4],
+            }}
+            variant="h4"
+          >
+            About the Organization
+          </Typography>
+          <Typography variant="body2" mt={7}>
+            <Box
+              component="span"
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(organization.about || 'NO DATA YET'),
               }}
-              variant="h4"
-            >
-              About the Organization
-            </Typography>
-            <Typography variant="body2" mt={7}>
-              <Box
-                component="span"
-                dangerouslySetInnerHTML={{
-                  __html: marked.parse(organization.about || 'NO DATA YET'),
-                }}
-              />
-            </Typography>
-          </article>
-          <article>
-            <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
-              Mission
-            </Typography>
-            <Typography variant="body2" mt={7}>
-              <Box
-                component="span"
-                sx={{
-                  fontFamily: 'Lato',
-                  fontWeight: 400,
-                  fontSize: '20px',
-                  lineHeight: '28px',
-                  letterSpacing: '0.04em',
-                }}
-                dangerouslySetInnerHTML={{
-                  __html: marked.parse(organization.mission || 'NO DATA YET'),
-                }}
-              />
-            </Typography>
-          </article>
+            />
+          </Typography>
+          <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
+            Mission
+          </Typography>
+          <Typography variant="body2" mt={7}>
+            <Box
+              component="span"
+              sx={{
+                fontFamily: 'Lato',
+                fontWeight: 400,
+                fontSize: '20px',
+                lineHeight: '28px',
+                letterSpacing: '0.04em',
+              }}
+              dangerouslySetInnerHTML={{
+                __html: marked.parse(organization.mission || 'NO DATA YET'),
+              }}
+            />
+          </Typography>
           <Divider
             varian="fullwidth"
             sx={{
               mt: [10, 20],
             }}
           />
-
+          <ImpactSection />
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>
