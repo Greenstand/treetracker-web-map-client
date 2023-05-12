@@ -22,7 +22,7 @@
     {
       "name": "user-profile",
       "prerelease": true,
-      "channel": "v2"
+      "channel": "alpha"
     }
   ],
   "plugins": [
