@@ -22,7 +22,7 @@
     {
       "name": "user-profile",
       "prerelease": true,
-      "channel": "next"
+      "channel": "v2"
     }
   ],
   "plugins": [
