@@ -1,3 +1,10 @@
+# [2.0.0-user-profile.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-user-profile.1...v2.0.0-user-profile.2) (2023-05-13)
+
+
+### Bug Fixes
+
+* versioning ([22e73d6](https://github.com/Greenstand/treetracker-web-map-client/commit/22e73d6993ff672208511d1ae1e60a08f2c055e7))
+
 # [2.0.0-user-profile.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v1.14.0...v2.0.0-user-profile.1) (2023-05-12)
 
 
