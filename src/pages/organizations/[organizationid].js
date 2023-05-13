@@ -401,7 +401,7 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-          {organization?.associatedPlanters?.planters?.length ? (
+          {organization?.associatedPlanters?.planters?.length > 0 ? (
             <Box component="ul" sx={{ mt: [6, 12], listStyle: 'none', p: 0 }}>
               {organization?.associatedPlanters?.planters
                 ?.sort((e1) => (e1.about ? -1 : 1))
