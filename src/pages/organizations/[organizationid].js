@@ -343,7 +343,7 @@ export default function Organization(props) {
             >
               Species of trees planted
             </Typography>
-            {organization?.species?.species?.length ? (
+            {organization?.species?.species?.length > 0 ? (
               <Box component="ul" sx={{ mt: [5, 10], listStyle: 'none', p: 0 }}>
                 {organization?.species?.species?.map((s) => (
                   <li key={s.name}>
