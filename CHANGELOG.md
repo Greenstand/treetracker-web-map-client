@@ -1,3 +1,10 @@
+# [2.2.0-beta.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.0-beta.3...v2.2.0-beta.4) (2023-05-15)
+
+
+### Features
+
+* set tree species section with ul and li tags ([7ff30fc](https://github.com/Greenstand/treetracker-web-map-client/commit/7ff30fc3d8ce75910b384c9def87bbe7c19fdc5a))
+
 # [2.2.0-beta.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2023-05-10)
 
 
