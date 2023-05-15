@@ -483,7 +483,6 @@ export default function Organization(props) {
               mt: [10, 20],
             }}
           />
-          <ImpactSection />
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>
