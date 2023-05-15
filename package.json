@@ -112,7 +112,7 @@
     "husky": "^7.0.0",
     "is-ci": "^3.0.1",
     "jest": "^27.5.0",
-    "lint-staged": "^11.2.6",
+    "lint-staged": "^13.2.2",
     "msw": "^0.36.8",
     "next-router-mock": "^0.6.3",
     "nock": "^13.1.3",
