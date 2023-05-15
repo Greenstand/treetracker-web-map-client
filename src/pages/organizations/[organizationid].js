@@ -1,4 +1,3 @@
-
 import { Box, Divider, Grid, Typography, Avatar } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import log from 'loglevel';
@@ -420,10 +419,9 @@ export default function Organization(props) {
               {organization?.associatedPlanters?.planters
                 ?.sort((e1) => (e1.about ? -1 : 1))
                 .map((planter, i) => (
-                  <li key={planter.name}>
+                  <Box component="li" key={planter.name} sx={{ mt: [6, 12] }}>
                     <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
-                    <Box sx={{ mt: [6, 12] }} />
-                  </li>
+                  </Box>
                 ))}
             </Box>
           ) : (
