@@ -61,7 +61,7 @@
     "i18n-iso-countries": "^7.2.0",
     "jscodeshift": "^0.14.0",
     "keycloak-connect": "^17.0.1",
-    "keycloak-js": "^10.0.1",
+    "keycloak-js": "^21.1.1",
     "leaflet": "^1.7.1",
     "leaflet-utfgrid": "git+https://github.com/dadiorchen/Leaflet.UTFGrid.git",
     "leaflet.gridlayer.googlemutant": "^0.12.1",
