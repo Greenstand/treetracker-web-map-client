@@ -52,20 +52,21 @@ jobs:
           echo "::debug:: env to deploy: ${{ github.event.inputs.env }}";
           ls -a
           node <<EOF >> $GITHUB_OUTPUT
-          const m = version.match(/^v\d+\.\d+.\d+(-([\w-\/\.]+)\.\d+)?$/)
-          let channel;
-          let s3BucketSecretName;
-          let cdnIdSecretName;
-          if(!m){
-            throw '::error:: wrong version:' + version;
-          }else{
-            if(!m[1]){
-              channel = "master";
+            const m = version.match(/^v\d+\.\d+.\d+(-([\w-\/\.]+)\.\d+)?$/)
+            let channel;
+            let s3BucketSecretName;
+            let cdnIdSecretName;
+            if(!m){
+              throw '::error:: wrong version:' + version;
             }else{
-              const releaseName = m[2];
-              channel = releaseJson.branches.reduce((a,c) => a || (c.prerelease === releaseName && c.channel) || (c.name === releaseName && c.channel), false);
+              if(!m[1]){
+                channel = "master";
+              }else{
+                const releaseName = m[2];
+                channel = releaseJson.branches.reduce((a,c) => a || (c.prerelease === releaseName && c.channel) || (c.name === releaseName && c.channel), false);
+              }
             }
-          }
+          EOF
         env:
           VERSION_TO_DEPLOY: ${{ github.event.inputs.version }}
           ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
