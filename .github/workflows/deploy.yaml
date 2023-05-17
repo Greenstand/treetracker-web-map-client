@@ -52,6 +52,8 @@ jobs:
           echo "::debug:: env to deploy: ${{ github.event.inputs.env }}";
           ls -a
           node <<EOF >> $GITHUB_OUTPUT
+            const releaseJson = require("./.releaserc.json");        
+            const version = process.env.VERSION_TO_DEPLOY
             const m = version.match(/^v\d+\.\d+.\d+(-([\w-\/\.]+)\.\d+)?$/)
             let channel;
             let s3BucketSecretName;
