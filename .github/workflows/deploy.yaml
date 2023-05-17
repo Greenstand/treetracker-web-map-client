@@ -68,6 +68,7 @@ jobs:
                 channel = releaseJson.branches.reduce((a,c) => a || (c.prerelease === releaseName && c.channel) || (c.name === releaseName && c.channel), false);
               }
             }
+            console.log("CHANNEL=" + channel);
           EOF
         env:
           VERSION_TO_DEPLOY: ${{ github.event.inputs.version }}
