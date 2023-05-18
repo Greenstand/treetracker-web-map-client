@@ -9,7 +9,7 @@ const apiPaths = {
   leaders: urlJoin(host, '/countries/leaderboard'),
   trees: (id = '') => urlJoin(host, `/trees/${id}`),
   captures: (id = '') => urlJoin(host, `/v2/captures/${id}`),
-  growers: (id = '') => urlJoin(host, `/grower-accounts/${id}`),
+  growers: (id = '') => urlJoin(host, `/v2/growers/${id}`),
   planters: (id = '') => urlJoin(host, `/planters/${id}`),
   stakeHolders: (id = '') => urlJoin(hostV2, `/stakeholder/stakeholders/${id}`),
   species: urlJoin(host, '/species'),

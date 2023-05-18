@@ -34,12 +34,7 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import {
-  getStakeHolderById,
-  getCapturesById,
-  getGrowerById,
-  getCountryByLatLon,
-} from 'models/api';
+import { getStakeHolderById, getCapturesById, getGrowerById, getCountryByLatLon } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
@@ -188,7 +183,7 @@ export default function Capture({
 
   return (
     <>
-      <HeadTag title={`Tree #${tree.id}`} />
+      <HeadTag title={`Capture #${tree.id}`} />
       <Box
         sx={[
           {
@@ -219,7 +214,7 @@ export default function Capture({
                 alignItems: 'flex-start',
               }}
             >
-              <Typography variant="h2">Tree #{tree.id}</Typography>
+              <Typography variant="h2">Capture #{tree.id}</Typography>
               <Box
                 sx={{
                   mt: 2,
@@ -303,7 +298,7 @@ export default function Capture({
             }
           >
             <Box sx={{}}>
-              <Typography variant="h3">Tree #{tree.id}</Typography>
+              <Typography variant="h3">Capture #{tree.id}</Typography>
             </Box>
           </Portal>
         )}
@@ -346,7 +341,7 @@ export default function Capture({
                     ]
                   : []),
                 {
-                  name: `tree #${tree.id}`,
+                  name: `capture #${tree.id}`,
                 },
               ]}
             />
@@ -455,7 +450,7 @@ export default function Capture({
               }}
             >
               <Typography variant="h2" color={theme.palette.common.white}>
-                Tree #{tree.id}
+                Capture #{tree.id}
               </Typography>
 
               <Box
