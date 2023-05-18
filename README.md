@@ -1,6 +1,6 @@
 **Table of Contents**
 
-- [Treetracker Web Map Beta](#treetracker-web-map-beta)
+- [Treetracker Web Map](#treetracker-web-map)
   - [Project Description](#project-description)
   - [Development Environment Quick Start](#development-environment-quick-start)
   - [Workflow with Github](#workflow-with-github)
@@ -35,7 +35,7 @@
   - [Can not install Cypress in some area.](#can-not-install-cypress-in-some-area)
   - [Other resource from Greenstand](#other-resource-from-greenstand)
 
-# Treetracker Web Map Beta
+# Treetracker Web Map
 
 ## Project Description
 
@@ -51,7 +51,7 @@ For the new web map beta development, we are working on the branch: beta, now we
 
 The current version online is still deployed from master.
 
-So, for issues, the issue for the new web map beta, should use the branch: `beta`, the issue for the current version online, like fix bug, add tiny features, should use `master`, generally, we will freeze new big features on the `master` branch.
+So, for issues, the issue for the new web map, should use the branch: `main`, the issue for the current version online, like fix bug, add tiny features, should use `master`, generally, we will freeze new big features on the `master` branch.
 
 ## Development Environment Quick Start
 
@@ -428,9 +428,6 @@ More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#g
 
 Sometimes we need to connect production data (map, tree) to debug, to do so, copy the settings in `.env.production` and put them into the `.env.local` so next.js will load them as high priority.
 
-.
-.
-.
 .
 .
 .

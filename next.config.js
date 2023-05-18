@@ -65,10 +65,28 @@ module.exports = {
         destination: '/planters/:planterId(\\d{1,})',
         permanent: true,
       },
+      {
+        source: '/:path((?!wallets).*)',
+        has: [
+          {
+            type: 'query',
+            key: 'wallet',
+            value: '(?<walletId>(\\w{1,}))',
+          },
+        ],
+        destination: '/wallets/:walletId(\\d{1,})',
+        permanent: true,
+      },
     ];
   },
   basePath: process.env.NEXT_PUBLIC_BASE,
   webpack(config) {
+    // console.log(
+    //   'next config object /n //////////////////////: /n',
+    //   config,
+    //   '/n//////////////////////////////',
+    // );
+    console.log(config.name, config.mode, config.devtool);
     config.module.rules.push(
       {
         test: /\.svg$/i,

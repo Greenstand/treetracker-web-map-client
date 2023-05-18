@@ -1,9 +1,10 @@
 import { Avatar } from '@mui/material';
+import imagePlaceholder from 'images/image-placeholder.png';
 
 function ProfileAvatar({ src, rotation, sx = {}, noBackground = false }) {
   return (
     <Avatar
-      src={src}
+      src={src || imagePlaceholder}
       sx={{
         width: [120, 189],
         height: [120, 189],
