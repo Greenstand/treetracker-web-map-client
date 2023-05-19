@@ -1,3 +1,11 @@
+# [2.3.0-v2.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.2...v2.3.0-v2.3) (2023-05-19)
+
+
+### Features
+
+* can display captures ([5e3f735](https://github.com/Greenstand/treetracker-web-map-client/commit/5e3f735a70761d3aff041d4b98629f0980716867))
+* config for the second api env var ([ccf4b10](https://github.com/Greenstand/treetracker-web-map-client/commit/ccf4b10025319fcd702b789e055cb98c051d5ad8))
+
 # [2.3.0-v2.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.1...v2.3.0-v2.2) (2023-05-19)
 
 
