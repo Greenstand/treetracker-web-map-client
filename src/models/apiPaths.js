@@ -3,7 +3,9 @@ import { urlJoin } from 'url-join-ts';
 const host = process.env.NEXT_PUBLIC_API || '';
 const hostV2 = process.env.NEXT_PUBLIC_API_V2 || '';
 const apiPaths = {
-  featuredTrees: urlJoin(host, '/trees/featured'),
+  featuredTrees: urlJoin(host, 'v2/trees/featured'),
+  featuredGrowers: urlJoin(host, 'v2/growers/featured'),
+  getCaptures: urlJoin(host, 'v2/captures'),
   countriesLatLon: (lat = '', lon = '') =>
     urlJoin(host, `/countries?lat=${lat}&lon=${lon}`),
   leaders: urlJoin(host, '/countries/leaderboard'),
