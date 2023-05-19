@@ -34,12 +34,7 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import {
-  getStakeHolderById,
-  getCapturesById,
-  getGrowerById,
-  getCountryByLatLon,
-} from 'models/api';
+import { getStakeHolderById, getCapturesById, getGrowerById, getCountryByLatLon } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
@@ -720,7 +715,7 @@ async function serverSideData(params) {
   const { planting_organization_id, grower_account_id, lat, lon } = tree;
   const grower = await getGrowerById(grower_account_id);
   const country = await getCountryByLatLon(lat, lon);
-  let organization = await getStakeHolderById(planting_organization_id);
+  let organization; // = await getStakeHolderById(planting_organization_id);
 
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');
