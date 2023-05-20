@@ -29,7 +29,9 @@ spec:
           image: greenstand/treetracker-web-map-client:TAG
           env:
             - name: NEXT_PUBLIC_API
-              value: https://dev-k8s.treetracker.org/query
+              value: https://dev-k8s.treetracker.org/query/v2
+            - name: NEXT_PUBLIC_API_V2
+              value: https://dev-k8s.treetracker.org/
             - name: NEXT_PUBLIC_TILE_SERVER_URL
               value: https://{s}.treetracker.org/tiles/
             - name: NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS
