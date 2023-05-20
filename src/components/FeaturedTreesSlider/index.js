@@ -79,7 +79,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
       >
         {trees.map((tree) => (
           <Link
-            href={link ? link(tree) : `/trees/${tree.id}`}
+            href={link ? link(tree) : `/v2/captures/${tree.id}`}
             key={`featured-tree-${tree.id}`}
           >
             <Card
@@ -123,7 +123,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                     fontSize: '20px',
                   }}
                 >
-                  Tree - {tree.id}
+                  Capture - {tree.id}
                 </Typography>
                 <Typography
                   variant="body1"

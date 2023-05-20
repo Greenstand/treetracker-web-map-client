@@ -13,7 +13,7 @@ export async function getFeaturedGrowers() {
     return data.grower_accounts;
   } catch (err) {
     log.error(err.message);
-    throw err.message;
+    throw err;
   }
 }
 export async function getCaptures() {
@@ -26,7 +26,7 @@ export async function getCaptures() {
     return data.captures;
   } catch (err) {
     log.error(err.message);
-    throw err.message;
+    throw err;
   }
 }
 export async function getFeaturedTrees() {
@@ -39,7 +39,7 @@ export async function getFeaturedTrees() {
     return data.trees;
   } catch (err) {
     log.error(err.message);
-    throw err.message;
+    throw err;
   }
 }
 

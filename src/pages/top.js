@@ -137,7 +137,7 @@ function Top(props) {
               mt: 8,
             }}
           >
-            <Typography variant="h4">Featured trees this week</Typography>
+            <Typography variant="h4">Featured captures this week</Typography>
           </Box>
           {false && ( // going to be replaced by search filter component
             (<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
