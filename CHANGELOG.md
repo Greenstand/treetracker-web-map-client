@@ -1,3 +1,10 @@
+# [2.3.0-v2.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.4...v2.3.0-v2.5) (2023-05-20)
+
+
+### Bug Fixes
+
+* can not display /trees{id} ([64f6746](https://github.com/Greenstand/treetracker-web-map-client/commit/64f6746a1228cf68e95572d9afad0f35348ddebb))
+
 # [2.3.0-v2.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.3...v2.3.0-v2.4) (2023-05-20)
 
 
