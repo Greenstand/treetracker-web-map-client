@@ -9,5 +9,5 @@ assignees: ''
 
 ---
 some hints:
-- What's our `v2` feature for web map: https://docs.greenstand.org/web-map/v2-web-map
+- Please read this before you start: https://docs.greenstand.org/web-map/v2-web-map
 - If you want to join the Slack community (some resources need the community member's permission), please leave your email address.
