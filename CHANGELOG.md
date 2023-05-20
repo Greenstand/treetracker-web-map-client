@@ -1,3 +1,10 @@
+# [2.3.0-v2.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.5...v2.3.0-v2.6) (2023-05-20)
+
+
+### Bug Fixes
+
+* env to point to v2 api ([3fc7302](https://github.com/Greenstand/treetracker-web-map-client/commit/3fc7302723955ab6832415dd0c1ac3d3cebdb92e))
+
 # [2.3.0-v2.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.4...v2.3.0-v2.5) (2023-05-20)
 
 
