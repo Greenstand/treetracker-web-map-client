@@ -1,3 +1,10 @@
+# [2.3.0-v2.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.3...v2.3.0-v2.4) (2023-05-20)
+
+
+### Bug Fixes
+
+* inconsistant path prefix (v2) ([bc83650](https://github.com/Greenstand/treetracker-web-map-client/commit/bc83650c8c96233d6d129261a6d9cab49ea26340))
+
 # [2.3.0-v2.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.2...v2.3.0-v2.3) (2023-05-19)
 
 
