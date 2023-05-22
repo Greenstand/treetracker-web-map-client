@@ -1,3 +1,20 @@
+## [2.2.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.0...v2.2.1) (2023-05-18)
+
+
+### Bug Fixes
+
+* deploy get wrong channel [skip ci] ([c254189](https://github.com/Greenstand/treetracker-web-map-client/commit/c254189dfc3b4fb31ba262e9aa674ef042a13402))
+* deploy to dev at pr [skip ci] ([b24760d](https://github.com/Greenstand/treetracker-web-map-client/commit/b24760d8d8918289b37861fdf340a0e66a40f2e5))
+* don't deploy [skip ci] ([2f5d8ab](https://github.com/Greenstand/treetracker-web-map-client/commit/2f5d8ab8c60340815cd12f7d7d4a5f215214eb0e))
+* EOF [skip ci] ([00872cb](https://github.com/Greenstand/treetracker-web-map-client/commit/00872cb27fafd53e2427cf4e687fc213722dc6fe))
+* js minor [skip ci] ([5ebb6b7](https://github.com/Greenstand/treetracker-web-map-client/commit/5ebb6b78ce5cca3d4735e8a633f937a798c16140))
+* JS minor [skip ci] ([311b0cc](https://github.com/Greenstand/treetracker-web-map-client/commit/311b0cc59daf2b433e7076b370379ce65ab4615c))
+* minor [skip ci] ([7237ccf](https://github.com/Greenstand/treetracker-web-map-client/commit/7237ccfa86fea6118311d285f61be8d97c4324c8))
+* minor [skip ci] ([b7934f4](https://github.com/Greenstand/treetracker-web-map-client/commit/b7934f436cb36300ba9a957bd031be28915b501d))
+* syntax error in the yaml ([b408716](https://github.com/Greenstand/treetracker-web-map-client/commit/b40871629e0bfbeb804f86bcd9571218fdcedfff))
+* test release CI ([361c965](https://github.com/Greenstand/treetracker-web-map-client/commit/361c9657cfdc04092532d091f83f2bf46683020a))
+* use `v` prfix the version [skip ci] ([6dfda0b](https://github.com/Greenstand/treetracker-web-map-client/commit/6dfda0b8230e1e95ac7f11f3f374ff3992f0e588))
+
 # [2.2.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.1.1...v2.2.0) (2023-05-15)
 
 ### Bug Fixes

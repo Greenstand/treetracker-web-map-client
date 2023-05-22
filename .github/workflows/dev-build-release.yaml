@@ -79,42 +79,43 @@ jobs:
       bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
 
   deploy:
-    name: Deploy to prod
+    name: Deploy to dev
     runs-on: ubuntu-latest
     needs: release
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
-      - name: git configure
-        run: |
-          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '18.x'
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
-      # get bumped version from release job output
-      - name: get bumped version
-        id: get_bumped_version
-        run: |
-          echo "::set-output name=bumped_version::${{ needs.release.outputs.bumped_version }}"
-      - name: Install kustomize
-        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-      #- name: Load channel
-      #  run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
-      #  id: channel
-      #- name: Print channel
-      #  run: echo ${{ steps.channel.outputs.CHANNEL }}
-      - name: Run kustomize
-        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
-      - name: Install doctl for kubernetes
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_PRODUCTION_TOKEN }}
-      - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ${{ secrets.PRODUCTION_CLUSTER_NAME }}
-      - name: Update kubernetes resources
-        run: kustomize build deployment/overlays/prod | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+    - uses: actions/checkout@v2
+      with:
+       ref: ${{ github.ref }}
+    - name: git configure
+      run: |
+       git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: '18.x'
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@master
+    # get bumped version from release job output
+    - name: get bumped version
+      id: get_bumped_version
+      run: |
+       echo "::set-output name=bumped_version::${{ needs.release.outputs.bumped_version }}"
+    - name: Install kustomize
+      run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+    #- name: Load channel
+    #  run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
+    #  id: channel
+    #- name: Print channel
+    #  run: echo ${{ steps.channel.outputs.CHANNEL }}
+    - name: Run kustomize
+      run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
+    - name: Install doctl for kubernetes
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
+    - name: Save DigitalOcean kubeconfig
+      run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
+    - name: Update kubernetes resources
+      run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+
