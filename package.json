@@ -93,7 +93,7 @@
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.4.1",
+    "@testing-library/user-event": "^14.4.3",
     "axios-mock-adapter": "^1.21.1",
     "concurrently": "^6.3.0",
     "cypress": "^8.7.0",
