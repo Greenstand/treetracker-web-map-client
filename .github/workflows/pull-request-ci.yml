@@ -22,7 +22,7 @@ jobs:
       # only install dependencies
       # https://github.com/cypress-io/github-action
       - name: Install 📦
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           runTests: false
 
