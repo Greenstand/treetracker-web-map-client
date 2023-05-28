@@ -5,7 +5,7 @@ export default function Crumbs(props) {
   const { items } = props;
 
   return (
-    <Box
+    (<Box
       sx={{
         display: 'flex',
       }}
@@ -27,7 +27,7 @@ export default function Crumbs(props) {
           </Typography>
         }
       >
-        {items.map((item) => {
+        {items.map((item, index) => {
           let { icon } = item;
           if (icon && icon.toString().match(/^(https?:\/\/|data:image)/)) {
             icon = (
@@ -43,8 +43,22 @@ export default function Crumbs(props) {
             );
           }
 
-          return (
-            <Link href={item.url || '/#'} key={item.url ?? '#'}>
+          return index === items.length - 1 ? ( // do not wrap the last item with Link since it refers to current page
+            (<Typography
+              variant="h6"
+              gutterBottom={false}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                minHeight: [16, 24],
+                cursor: item.url || 'text',
+              }}
+            >
+              {icon}
+              {item.name}
+            </Typography>)
+          ) : (
+            <Link href={item.url || '/#'} key={item.url ?? `#${index}`}>
               <Typography
                 variant="h6"
                 gutterBottom={false}
@@ -62,6 +76,6 @@ export default function Crumbs(props) {
           );
         })}
       </Breadcrumbs>
-    </Box>
+    </Box>)
   );
 }
