@@ -260,7 +260,7 @@ export default function Token(props) {
               }}
             >
               <Share
-                shareUrl={typeof window !== 'undefined' && window.location.href}
+                shareUrl={typeof window !== 'undefined' && (window.location.host + window.location.pathname)}
                 icon={
                   <Box
                     onClick={handleShare}

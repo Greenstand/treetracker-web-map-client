@@ -328,7 +328,7 @@ export default function TreeInfoDialog(props) {
                   </Button>
                   <Share
                     shareUrl={
-                      typeof window !== 'undefined' && window.location.href
+                      typeof window !== 'undefined' && (window.location.host + window.location.pathname)
                     }
                     icon={
                       <Button
