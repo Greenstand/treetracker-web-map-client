@@ -51,7 +51,7 @@
     "@mui/x-date-pickers": "^5.0.0-beta.6",
     "@react-keycloak/ssr": "^3.3.0",
     "@react-keycloak/web": "^3.4.0",
-    "axios": "^0.25.0",
+    "axios": "^1.4.0",
     "clsx": "^1.1.1",
     "cookie": "^0.4.2",
     "copy-to-clipboard": "^3.3.2",
