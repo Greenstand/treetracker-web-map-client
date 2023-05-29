@@ -1,3 +1,12 @@
+## [2.2.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.1...v2.2.2) (2023-05-29)
+
+
+### Bug Fixes
+
+* breacn crumb link redirection fro empty url ([f04eaad](https://github.com/Greenstand/treetracker-web-map-client/commit/f04eaad0d909d24e03932e928cd8c921206a995d))
+* unwrap last item with link component ([a77df0b](https://github.com/Greenstand/treetracker-web-map-client/commit/a77df0b04dd1a6d16445a3731e96a58608703e90))
+* version format problem in action [skip ci] ([49fde0f](https://github.com/Greenstand/treetracker-web-map-client/commit/49fde0f1571f84602bc637d2c0ce8c9da00b84d3))
+
 ## [2.2.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.0...v2.2.1) (2023-05-18)
 
 
