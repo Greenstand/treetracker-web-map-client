@@ -1,3 +1,10 @@
+## [2.2.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.2...v2.2.3) (2023-06-01)
+
+
+### Bug Fixes
+
+* disable auto upgrade of libs ([fbe5d82](https://github.com/Greenstand/treetracker-web-map-client/commit/fbe5d82a180259daf086f91b4230b06f940d930e))
+
 ## [2.2.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.1...v2.2.2) (2023-05-29)
 
 
