@@ -1,3 +1,10 @@
+## [2.2.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.3...v2.2.4) (2023-06-01)
+
+
+### Bug Fixes
+
+* setup dev env domain ([18858e7](https://github.com/Greenstand/treetracker-web-map-client/commit/18858e7bc0964d1126a242197bc6e6199d60b17f))
+
 ## [2.2.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.2...v2.2.3) (2023-06-01)
 
 
