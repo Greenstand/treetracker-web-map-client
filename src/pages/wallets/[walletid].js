@@ -420,6 +420,12 @@ async function serverSideData(params) {
 
 const getStaticProps = wrapper(async ({ params }) => {
   const props = await serverSideData(params);
+  const allPropertiesExists = Object.keys(props).every(prop => !!props[prop]);
+  if (!allPropertiesExists) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props,
     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
