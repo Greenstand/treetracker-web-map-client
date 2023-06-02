@@ -107,4 +107,4 @@ jobs:
       - name: Print overlay folder
         run: echo ${{ steps.overlay_folder.outputs.OVERLAY_FOLDER }}
       - name: Update kubernetes resources
-        run: kustomize build deployment-${{ steps.channel.outputs.CHANNEL}}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
