@@ -1,3 +1,11 @@
+## [2.2.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.4...v2.2.5) (2023-06-02)
+
+
+### Bug Fixes
+
+* set host for dev env [skip ci] ([4291646](https://github.com/Greenstand/treetracker-web-map-client/commit/4291646e1786f824de0b6a1938569290a162d1bf))
+* the app crash on a tree icon clicking (mobile version) ([d97bb1c](https://github.com/Greenstand/treetracker-web-map-client/commit/d97bb1c57c0fcfad08c9053d8a6091aad3e194fa))
+
 ## [2.2.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.3...v2.2.4) (2023-06-01)
 
 

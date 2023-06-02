@@ -76,7 +76,7 @@ jobs:
       - name: Print channel
         run: echo ${{ steps.channel.outputs.CHANNEL }}
       - name: Run kustomize
-        run: (cd deployment-${{ steps.channel.outputs.CHANNEL}}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
+        run: (cd ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
       - name: Resolve the secrets name
         run: echo ::set-output name=SECRET_KEY::$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",prod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}[process.env.ENV_TO_DEPLOY])'`)
         id: do_secrets_name
@@ -107,4 +107,4 @@ jobs:
       - name: Print overlay folder
         run: echo ${{ steps.overlay_folder.outputs.OVERLAY_FOLDER }}
       - name: Update kubernetes resources
-        run: kustomize build deployment-${{ steps.channel.outputs.CHANNEL}}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
