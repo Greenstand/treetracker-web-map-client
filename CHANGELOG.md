@@ -1,3 +1,13 @@
+## [2.2.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.5...v2.2.6) (2023-06-04)
+
+
+### Bug Fixes
+
+* apply k8s name is wrong [skip ci] ([168d0cd](https://github.com/Greenstand/treetracker-web-map-client/commit/168d0cdd537b4af401b57418306b79d783e0a73a))
+* k8s deployment fold is wrong, add case: master [skip ci] ([6bd8a74](https://github.com/Greenstand/treetracker-web-map-client/commit/6bd8a74873451c20d2e245d8bd3cba172c3901fd))
+* npm lock file problem ([e2e1f79](https://github.com/Greenstand/treetracker-web-map-client/commit/e2e1f797a77ed1fc12c05cf1052015e6ac94dbb2))
+* wrong strying format [skip ci] ([ebe2ede](https://github.com/Greenstand/treetracker-web-map-client/commit/ebe2ede9e374d4573cf6f903545824aef5fc17be))
+
 ## [2.2.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.4...v2.2.5) (2023-06-02)
 
 
