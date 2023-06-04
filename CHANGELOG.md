@@ -1,3 +1,11 @@
+# [2.3.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.6...v2.3.0) (2023-06-04)
+
+
+### Features
+
+* api for new nearest ([e19f4a8](https://github.com/Greenstand/treetracker-web-map-client/commit/e19f4a8c3173b8b310174f34b93569fb460ff284))
+* upgrade core ([9950317](https://github.com/Greenstand/treetracker-web-map-client/commit/9950317fc106999257381164cd67a60c1ab859b0))
+
 ## [2.2.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.5...v2.2.6) (2023-06-04)
 
 
