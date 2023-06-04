@@ -288,7 +288,12 @@ export default function Capture({
                   mt: 2,
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.verified} />
+                <Badges
+                  tokenId={tree.token_id}
+                  verified={tree.verified}
+                  isTreeMatched={tree.id}
+                  showTreeMatchStatus
+                />
               </Box>
             </Box>
           </Portal>
@@ -529,7 +534,12 @@ export default function Capture({
                   mt: 2,
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.verified} />
+                <Badges
+                  tokenId={tree.token_id}
+                  verified={tree.verified}
+                  isTreeMatched={tree.id}
+                  showTreeMatchStatus
+                />
               </Box>
             </Box>
           )}
