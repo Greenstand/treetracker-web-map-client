@@ -154,6 +154,7 @@ function MapComponent() {
       tileServerSubdomains:
         process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
       apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
+      queryApiServerUrl: process.env.NEXT_PUBLIC_API,
     });
     const isAdmin = !!router.asPath.match(/admin/);
     if (!isAdmin) {
