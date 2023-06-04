@@ -1,3 +1,10 @@
+# [2.3.0-v2.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.6...v2.3.0-v2.7) (2023-06-04)
+
+
+### Features
+
+* wrap tree id with UUID ([2581b8f](https://github.com/Greenstand/treetracker-web-map-client/commit/2581b8fa7a1a885c60ced2851248ac4ca13620d1))
+
 # [2.3.0-v2.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0-v2.5...v2.3.0-v2.6) (2023-05-20)
 
 
