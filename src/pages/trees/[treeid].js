@@ -252,7 +252,7 @@ export default function Tree({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.time_created).format(
+                  {`Captured on ${moment(tree.time_created).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -497,7 +497,7 @@ export default function Tree({
                     }}
                   >
                     <Icon icon={CalendarIcon} />
-                    {`Planted on ${moment(tree.time_created).format(
+                    {`Captured on ${moment(tree.time_created).format(
                       'MMMM Do, YYYY',
                     )}` || 'Unknown Date'}
                   </Typography>
@@ -596,7 +596,7 @@ export default function Tree({
         <TagList>
           <TreeTag
             TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
-            title="Planted on"
+            title="Captured on"
             icon={<Icon icon={CalendarIcon} />}
           />
           <TreeTag
