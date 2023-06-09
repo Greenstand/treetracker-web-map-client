@@ -13,12 +13,26 @@ import {
 } from '@mui/material';
 import { useState, useRef, useEffect, memo } from 'react';
 import ColorPicker from 'react-best-gradient-color-picker';
-import { usePlaygroundUtils } from 'hooks/contextHooks';
+import { usePlaygroundTheme, usePlaygroundUtils } from 'hooks/contextHooks';
 import { useDefaultValue } from 'hooks/cwmHooks';
 import useDisclosure from 'hooks/useDisclosure';
 import { propRules } from 'models/themePlaygroundOptions';
 
-function ColorInput({ path, color, label }) {
+function ColorInput({ prop, propName, pathToProp }) {
+  const { getPropByPath } = usePlaygroundTheme();
+
+  const color = getPropByPath(`${pathToProp}.${propName}`);
+
+  return (
+    <InternalColorInput
+      path={`${pathToProp}.${propName}`}
+      color={color}
+      label={prop.displayText}
+    />
+  );
+}
+
+function InternalColorInput({ path, color, label }) {
   const { setPropByPath } = usePlaygroundUtils();
   const [value, setValue] = useState(color);
   const [isValid, setValid] = useState(true);
