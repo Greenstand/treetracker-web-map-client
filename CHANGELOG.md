@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0...v2.3.1) (2023-06-12)
+
+
+### Bug Fixes
+
+* [#1634](https://github.com/Greenstand/treetracker-web-map-client/issues/1634) Changed text from 'Planted on' to 'Captured on' in tree image and info ([2c45af3](https://github.com/Greenstand/treetracker-web-map-client/commit/2c45af31562fa8f10fc097d997192c97e9812f34))
+
 # [2.3.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.6...v2.3.0) (2023-06-04)
 
 
