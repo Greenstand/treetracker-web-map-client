@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 import Timeline from './Timeline';
 import ZoomInOutButton from './ZoomInOutButton';
 import Max from '../images/max.svg';
+import Footer from './Footer';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
@@ -57,9 +58,9 @@ const Layout = forwardRef(
     }
 
     return (
-      <Box className={classes.root}>
+      <Box sx={{display:'flex',flexDirection:'column',height:'100vh',overflow:'hidden'}}>
         <Navbar />
-        <Box className={classes.main}>
+        <Box sx={{}}>
           <Paper ref={ref} elevation={11} className={classes.left}>
             {children}
           </Paper>
@@ -100,6 +101,7 @@ const Layout = forwardRef(
             <App />
           </Box>
         </Box>
+        <Footer/>
       </Box>
     );
   },
