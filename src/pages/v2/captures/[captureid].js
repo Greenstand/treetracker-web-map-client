@@ -181,6 +181,23 @@ export default function Capture({
 
   log.warn(grower, 'grower');
 
+  const badgesContent = [
+    {
+      color: tree.approved ? 'primary' : 'greyLight',
+      verified: tree.approved,
+      badgeName: tree?.approved ? 'Waiting for verification' : 'Verified',
+    },
+    {
+      color: 'secondary',
+      badgeName: tree.tokenId ? 'Token not issued' : 'Token issued',
+    },
+    {
+      color: tree.id ? 'primary' : 'greyLight',
+      badgeName: tree.id ? 'Tree matched' : 'Waiting for tree match',
+      onClick: tree.id ? () => router.push(`/trees/${tree.id}`) : null,
+    },
+  ];
+
   return (
     <>
       <HeadTag title={`Capture #${tree.id}`} />
@@ -288,12 +305,7 @@ export default function Capture({
                   mt: 2,
                 }}
               >
-                <Badges
-                  tokenId={tree.token_id}
-                  verified={tree.verified}
-                  isTreeMatched={tree.id}
-                  showTreeMatchStatus
-                />
+                <Badges content={badgesContent} />
               </Box>
             </Box>
           </Portal>
@@ -534,12 +546,7 @@ export default function Capture({
                   mt: 2,
                 }}
               >
-                <Badges
-                  tokenId={tree.token_id}
-                  verified={tree.verified}
-                  isTreeMatched={tree.id}
-                  showTreeMatchStatus
-                />
+                <Badges content={badgesContent} />
               </Box>
             </Box>
           )}

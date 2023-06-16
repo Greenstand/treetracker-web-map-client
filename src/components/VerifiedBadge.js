@@ -10,7 +10,7 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-function VerifiedBadge({ verified, badgeName, color, onClick }) {
+function VerifiedBadge({ verified, badgeName, color, onClick, disabled }) {
   const { classes } = useStyles();
   return (
     <Chip
@@ -25,8 +25,8 @@ function VerifiedBadge({ verified, badgeName, color, onClick }) {
       size="small"
       icon={!verified ? null : <CheckIcon />}
       label={badgeName}
-      disabled={!verified}
       onClick={onClick}
+      disabled={disabled}
     />
   );
 }

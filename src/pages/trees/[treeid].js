@@ -38,7 +38,6 @@ import { useMapContext } from 'mapContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
-import BadgesV2 from 'components/BadgesV2';
 
 export default function Tree({
   tree,
@@ -179,6 +178,18 @@ export default function Tree({
 
   log.warn(planter, 'planter');
 
+  const badgesContent = [
+    {
+      color: tree?.approved ? 'primary' : 'greyLight',
+      verified: tree?.approved,
+      badgeName: tree?.approved ? 'Waiting for verification' : 'Verified',
+    },
+    {
+      color: 'secondary',
+      badgeName: tree?.tokenId ? 'Token not issued' : 'Token issued',
+    },
+  ];
+
   return (
     <>
       <HeadTag title={`Tree #${tree.id}`} />
@@ -285,7 +296,7 @@ export default function Tree({
                   mt: 2,
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.approved} />
+                <Badges content={badgesContent} />
               </Box>
             </Box>
           </Portal>
@@ -529,20 +540,7 @@ export default function Tree({
                     mt: 2,
                   }}
                 >
-                  <Badges tokenId={tree.token_id} verified={tree.approved} />
-                  <BadgesV2 
-                  content={[
-                    {
-                      color: tree.approved ? 'primary' : 'greyLight',
-                      verified: tree.approved,
-                      badgeName: tree?.approved ? 'Waiting for verification' : 'Verified'
-                    },
-                    {
-                      color:'secondary',
-                      badgeName: tree.tokenId ? 'Token not issued' : 'Token issued'
-                    }
-                  ]}
-                  />
+                  <Badges content={badgesContent} />
                 </Box>
               </Box>
             )}
