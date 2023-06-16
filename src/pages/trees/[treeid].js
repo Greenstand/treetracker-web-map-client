@@ -38,6 +38,7 @@ import { useMapContext } from 'mapContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
+import BadgesV2 from 'components/BadgesV2';
 
 export default function Tree({
   tree,
@@ -529,6 +530,19 @@ export default function Tree({
                   }}
                 >
                   <Badges tokenId={tree.token_id} verified={tree.approved} />
+                  <BadgesV2 
+                  content={[
+                    {
+                      color: tree.approved ? 'primary' : 'greyLight',
+                      verified: tree.approved,
+                      badgeName: tree?.approved ? 'Waiting for verification' : 'Verified'
+                    },
+                    {
+                      color:'secondary',
+                      badgeName: tree.tokenId ? 'Token not issued' : 'Token issued'
+                    }
+                  ]}
+                  />
                 </Box>
               </Box>
             )}
