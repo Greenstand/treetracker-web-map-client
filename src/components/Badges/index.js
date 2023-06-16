@@ -1,18 +1,30 @@
 import VerifiedBadge from '../VerifiedBadge';
 
-function Badges({ tokenId, verified }) {
+function Badges({ content }) {
   return (
-    <>
-      <VerifiedBadge
-        color={!verified ? 'greyLight' : 'primary'}
-        verified={verified}
-        badgeName={!verified ? 'Waiting for verification' : 'Verified'}
-      />
-      <VerifiedBadge
-        color="secondary"
-        badgeName={!tokenId ? 'Token not issued' : 'Token Issued'}
-      />
-    </>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    (<>
+      {content?.map((data, index) => {
+        const {
+          color,
+          verified,
+          badgeName,
+          onClick = null,
+          disabled = false,
+        } = data;
+        return (
+          <VerifiedBadge
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            color={color}
+            verified={verified}
+            badgeName={badgeName}
+            onClick={onClick}
+            disabled={disabled}
+          />
+        );
+      })}
+    </>)
   );
 }
 

@@ -178,6 +178,18 @@ export default function Tree({
 
   log.warn(planter, 'planter');
 
+  const badgesContent = [
+    {
+      color: tree?.approved ? 'primary' : 'greyLight',
+      verified: tree?.approved,
+      badgeName: tree?.approved ? 'Waiting for verification' : 'Verified',
+    },
+    {
+      color: 'secondary',
+      badgeName: tree?.tokenId ? 'Token not issued' : 'Token issued',
+    },
+  ];
+
   return (
     <>
       <HeadTag title={`Tree #${tree.id}`} />
@@ -284,7 +296,7 @@ export default function Tree({
                   mt: 2,
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.approved} />
+                <Badges content={badgesContent}/>
               </Box>
             </Box>
           </Portal>
@@ -528,7 +540,7 @@ export default function Tree({
                     mt: 2,
                   }}
                 >
-                  <Badges tokenId={tree.token_id} verified={tree.approved} />
+                  <Badges content={badgesContent} />
                 </Box>
               </Box>
             )}
