@@ -1,116 +1,540 @@
-export const customizeOptions = {
+import PaletteIcon from '@mui/icons-material/Palette';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
+
+export const CONFIG_INPUT_TYPES = {
+  COLOR: 'COLOR',
+  SLIDER: 'SLIDER',
+  SELECT: 'SELECT',
+  TEXT: 'TEXT',
+  FONT_WEIGHT: 'FONT_WEIGHT',
+  FONT_FAMILY: 'FONT_FAMILY',
+};
+
+export const CONFIG_SECTION_TYPES = {
+  COLOR: 'COLOR',
+  TYPOGRAPHY: 'TYPOGRAPHY',
+};
+
+const defaultFontWeightOptions = [
+  {
+    label: 'Light',
+    value: 300,
+  },
+  {
+    label: 'Normal',
+    value: 400,
+  },
+  {
+    label: 'Semi Bold',
+    value: 500,
+  },
+  {
+    label: 'Bold',
+    value: 600,
+  },
+  {
+    label: 'Bolder',
+    value: 700,
+  },
+  {
+    label: 'Super Bold',
+    value: 900,
+  },
+];
+
+export const themeEditorConfig = {
   palette: {
-    themeModeDependend: true,
-    options: {
-      background: [
-        'default',
-        'paper',
-        'paperDark',
-        'greenGradient',
-        'OrangeGreenGradient',
-      ],
-      primary: ['main', 'light', 'dark', 'contrastText'],
-      primaryLight: ['main'],
-      secondary: ['main', 'light', 'dark', 'contrastText'],
-      secondaryLight: ['main'],
-      notImportant: ['main'],
-      greyLight: ['main', 'contrastText'],
-      darkGrey: ['main', 'contrastText'],
-      nearBlack: ['main', 'contrastText'],
-      text: [
-        'primary',
-        'primaryReverse',
-        'disabled',
-        'secondary',
-        'text1',
-        'text2',
-      ],
-      error: ['main', 'light', 'dark', 'contrastText'],
-      warning: ['main', 'light', 'dark', 'contrastText'],
-      info: ['main', 'light', 'dark', 'contrastText'],
-      success: ['main', 'light', 'dark', 'contrastText'],
+    tab: {
+      icon: <PaletteIcon />,
+      label: 'Palette',
+    },
+    background: {
+      displayText: 'Background',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        default: {
+          displayText: 'Default',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        paper: { displayText: 'Paper', inputType: CONFIG_INPUT_TYPES.COLOR },
+        paperDark: {
+          displayText: 'Paper Dark',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        greenGradient: {
+          displayText: 'Green Gradient',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        OrangeGreenGradient: {
+          displayText: 'Orange Green Gradient',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    primary: {
+      displayText: 'Primary',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+        light: { displayText: 'Light', inputType: CONFIG_INPUT_TYPES.COLOR },
+        dark: { displayText: 'Dark', inputType: CONFIG_INPUT_TYPES.COLOR },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    primaryLight: {
+      displayText: 'PrimaryLight',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+      },
+    },
+    secondary: {
+      displayText: 'Secondary',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+        light: { displayText: 'Light', inputType: CONFIG_INPUT_TYPES.COLOR },
+        dark: { displayText: 'Dark', inputType: CONFIG_INPUT_TYPES.COLOR },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    secondaryLight: {
+      displayText: 'SecondaryLight',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+      },
+    },
+    notImportant: {
+      displayText: 'NotImportant',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+      },
+    },
+    greyLight: {
+      displayText: 'GreyLight',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    darkGrey: {
+      displayText: 'DarkGrey',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: {
+          displayText: 'Main',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    nearBlack: {
+      displayText: 'NearBlack',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: {
+          displayText: 'Main',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    text: {
+      displayText: 'Text',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        primary: {
+          displayText: 'Primary',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        primaryReverse: {
+          displayText: 'Primary Reverse',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        disabled: {
+          displayText: 'Disabled',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        secondary: {
+          displayText: 'Secondary',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+        text1: { displayText: 'Text 1', inputType: CONFIG_INPUT_TYPES.COLOR },
+        text2: { displayText: 'Text 2', inputType: CONFIG_INPUT_TYPES.COLOR },
+      },
+    },
+    error: {
+      displayText: 'Error',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+        light: { displayText: 'Light', inputType: CONFIG_INPUT_TYPES.COLOR },
+        dark: { displayText: 'Dark', inputType: CONFIG_INPUT_TYPES.COLOR },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    warning: {
+      displayText: 'Warning',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+        light: { displayText: 'Light', inputType: CONFIG_INPUT_TYPES.COLOR },
+        dark: { displayText: 'Dark', inputType: CONFIG_INPUT_TYPES.COLOR },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    info: {
+      displayText: 'Info',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+        light: { displayText: 'Light', inputType: CONFIG_INPUT_TYPES.COLOR },
+        dark: { displayText: 'Dark', inputType: CONFIG_INPUT_TYPES.COLOR },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
+    },
+    success: {
+      displayText: 'Success',
+      sectionType: CONFIG_SECTION_TYPES.COLOR,
+      props: {
+        main: { displayText: 'Main', inputType: CONFIG_INPUT_TYPES.COLOR },
+        light: { displayText: 'Light', inputType: CONFIG_INPUT_TYPES.COLOR },
+        dark: { displayText: 'Dark', inputType: CONFIG_INPUT_TYPES.COLOR },
+        contrastText: {
+          displayText: 'Contrast Text',
+          inputType: CONFIG_INPUT_TYPES.COLOR,
+        },
+      },
     },
   },
   typography: {
-    themeModeDependend: false,
-    options: {
-      h1: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      h2: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      h3: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      h4: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      h5: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      h6: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      subtitle1: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      subtitle2: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      body1: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      body2: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
-      caption: [
-        'fontFamily',
-        'fontWeight',
-        'fontSize',
-        'lineHeight',
-        'letterSpacing',
-      ],
+    tab: {
+      icon: <TextFieldsIcon />,
+      label: 'Typography',
+    },
+    h1: {
+      displayText: 'Heading 1',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    h2: {
+      displayText: 'Heading 2',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    h3: {
+      displayText: 'Heading 3',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    h4: {
+      displayText: 'Heading 4',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    h5: {
+      displayText: 'Heading 5',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    h6: {
+      displayText: 'Heading 6',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    subtitle1: {
+      displayText: 'Subtitle 1',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    subtitle2: {
+      displayText: 'Subtitle 2',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    body1: {
+      displayText: 'Body 1',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    body2: {
+      displayText: 'Body 2',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
+    },
+    caption: {
+      displayText: 'Caption',
+      sectionType: CONFIG_SECTION_TYPES.TYPOGRAPHY,
+      props: {
+        fontFamily: {
+          displayText: 'Font Family',
+          inputType: CONFIG_INPUT_TYPES.FONT_FAMILY,
+        },
+        fontWeight: {
+          displayText: 'Font Weight',
+          inputType: CONFIG_INPUT_TYPES.FONT_WEIGHT,
+          options: defaultFontWeightOptions,
+        },
+        fontSize: {
+          displayText: 'Font Size',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        lineHeight: {
+          displayText: 'Line Height',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+        letterSpacing: {
+          displayText: 'Letter Spacing',
+          inputType: CONFIG_INPUT_TYPES.TEXT,
+        },
+      },
     },
   },
 };
