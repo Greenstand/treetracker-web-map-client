@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import CheckIcon from '@mui/icons-material/Check';
 import HubIcon from '@mui/icons-material/Hub';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { useTheme, Avatar, Divider } from '@mui/material';
@@ -181,7 +182,7 @@ export default function Tree({
   const badgesContent = [
     {
       color: tree?.approved ? 'primary' : 'greyLight',
-      verified: tree?.approved,
+      icon: tree?.approved ? <CheckIcon /> : null,
       badgeName: tree?.approved ? 'Waiting for verification' : 'Verified',
     },
     {
@@ -296,7 +297,7 @@ export default function Tree({
                   mt: 2,
                 }}
               >
-                <Badges content={badgesContent}/>
+                <Badges content={badgesContent} />
               </Box>
             </Box>
           </Portal>
