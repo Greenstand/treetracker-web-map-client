@@ -189,9 +189,16 @@ export default function Wallet(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Wallet created on ${moment(wallet.created_at).format(
-                    'MMMM DD, YYYY',
-                  )}`}
+                  info={
+                    <>
+                      Wallet created on
+                      <time dateTime={wallet?.created_at}>
+                        {` ${moment(wallet?.created_at).format(
+                          'MMMM DD, YYYY',
+                        )}`}
+                      </time>
+                    </>
+                  }
                 />
               </Box>
             </Box>
@@ -215,9 +222,14 @@ export default function Wallet(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Wallet created on ${moment(wallet.created_at).format(
-                  'MMMM DD, YYYY',
-                )}`}
+                info={
+                  <>
+                    Wallet created on
+                    <time dateTime={wallet?.created_at}>
+                      {` ${moment(wallet?.created_at).format('MMMM DD, YYYY')}`}
+                    </time>
+                  </>
+                }
               />
             </Box>
           </Box>
@@ -287,14 +299,17 @@ export default function Wallet(props) {
         )}
 
         <Box
+          component="ul"
           sx={{
             mt: [0, 16],
             p: [2, 4],
             display: isTokenTab ? 'block' : 'none',
+            listStyle: 'none',
           }}
         >
           {tokens.tokens.map((token) => (
             <Box
+              component="li"
               key={token.id}
               sx={{
                 mt: [2, 4],
@@ -327,17 +342,21 @@ export default function Wallet(props) {
               Species of trees planted
             </Typography>
             <Box
+              component="ul"
               sx={{
                 mt: [5, 10],
+                listStyle: 'none',
+                px: 0,
               }}
             >
               {species.map((specie) => (
-                <TreeSpeciesCard
-                  key={specie.id}
-                  name={specie.name}
-                  count={specie.total}
-                  subTitle={specie.desc || '---'}
-                />
+                <li key={specie.id}>
+                  <TreeSpeciesCard
+                    name={specie.name}
+                    count={specie.total}
+                    subTitle={specie.desc || '---'}
+                  />
+                </li>
               ))}
             </Box>
           </Box>
@@ -364,7 +383,6 @@ export default function Wallet(props) {
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
       </Box>
     </>
   );

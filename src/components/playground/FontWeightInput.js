@@ -10,9 +10,16 @@ import {
   FormHelperText,
 } from '@mui/material';
 import { useState, useEffect, useCallback, memo } from 'react';
-import { usePlaygroundUtils, usePlaygroundFonts, usePlaygroundTheme } from 'hooks/contextHooks';
+import {
+  usePlaygroundUtils,
+  usePlaygroundFonts,
+  usePlaygroundTheme,
+} from 'hooks/contextHooks';
 import { useDefaultValue } from 'hooks/cwmHooks';
-import { propRules, fontWeightNameToValue } from 'models/themePlaygroundOptions';
+import {
+  propRules,
+  fontWeightNameToValue,
+} from 'models/themePlaygroundOptions';
 import { loadFonts } from 'models/utils';
 
 function FontWeightInput({ prop, pathToProp, propName }) {

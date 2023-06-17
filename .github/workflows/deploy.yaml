@@ -6,7 +6,7 @@ on:
       version:
         description: 'Version to deploy'
         required: true
-        default: 'latest'
+        default: 'version without leading v, for example: 1.0.0 and 2.3.0-feature1.5'
       env:
         type: choice
         description: Environment to deploy to
@@ -35,7 +35,7 @@ jobs:
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
-      - name: Use Node.js 14.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
@@ -44,13 +44,39 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-      - name: Load channel
-        run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
+      - name: Calculate the channel 
         id: channel
+        run: |
+          echo "::debug:: begin preparing...";
+          echo "::debug:: version to deploy: $VERSION_TO_DEPLOY";
+          echo "::debug:: env to deploy: ${{ github.event.inputs.env }}";
+          ls -a
+          node <<EOF >> $GITHUB_OUTPUT
+            const releaseJson = require("./.releaserc.json");        
+            const version = 'v' + process.env.VERSION_TO_DEPLOY
+            const m = version.match(/^v\d+\.\d+.\d+(-([\w-\/\.]+)\.\d+)?$/)
+            let channel;
+            let s3BucketSecretName;
+            let cdnIdSecretName;
+            if(!m){
+              throw '::error:: wrong version:' + version;
+            }else{
+              if(!m[1]){
+                channel = "master";
+              }else{
+                const releaseName = m[2];
+                channel = releaseJson.branches.reduce((a,c) => a || (c.prerelease === releaseName && c.channel) || (c.name === releaseName && c.channel), false);
+              }
+            }
+            console.log("CHANNEL=" + channel);
+          EOF
+        env:
+          VERSION_TO_DEPLOY: ${{ github.event.inputs.version }}
+          ENV_TO_DEPLOY: ${{ github.event.inputs.env }}
       - name: Print channel
         run: echo ${{ steps.channel.outputs.CHANNEL }}
       - name: Run kustomize
-        run: (cd deployment${{ steps.channel.outputs.CHANNEL}}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
+        run: (cd ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
       - name: Resolve the secrets name
         run: echo ::set-output name=SECRET_KEY::$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",prod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}[process.env.ENV_TO_DEPLOY])'`)
         id: do_secrets_name
@@ -81,4 +107,4 @@ jobs:
       - name: Print overlay folder
         run: echo ${{ steps.overlay_folder.outputs.OVERLAY_FOLDER }}
       - name: Update kubernetes resources
-        run: kustomize build deployment${{ steps.channel.outputs.CHANNEL}}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -

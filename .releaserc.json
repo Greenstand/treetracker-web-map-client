@@ -1,39 +1,43 @@
 {
   "branches": [
     "+([0-9])?(.{+([0-9]),x}).x",
+    "main",
     "master",
     "next",
     "next-major",
-    { 
-      "name": "beta", 
-      "prerelease": true },
-    { 
-      "name": "v2", 
+    {
+      "name": "beta",
+      "prerelease": true,
+      "channel": "beta"
+    },
+    {
+      "name": "v2",
       "prerelease": true,
       "channel": "alpha"
     },
-    { 
-      "name": "cwm", 
+    {
+      "name": "cwm",
+      "prerelease": true,
+      "channel": "next"
+    },
+    {
+      "name": "user-profile",
       "prerelease": true,
       "channel": "next"
     }
   ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "docs",
-            "package.json",
-            "CHANGELOG.md"
-          ],
-          "message": "chore(release): ${nextRelease.version} [skip ci]"
-        }
-      ],
-      "@semantic-release/github"
-    ]
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["docs", "package.json", "CHANGELOG.md"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]"
+      }
+    ],
+    "@semantic-release/github"
+  ]
 }
