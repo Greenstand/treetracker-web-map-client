@@ -1,3 +1,10 @@
+## [2.3.2-cwm.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.1...v2.3.2-cwm.1) (2023-06-17)
+
+
+### Bug Fixes
+
+* broken lock file ([95c7162](https://github.com/Greenstand/treetracker-web-map-client/commit/95c71622a765aaaca63b0d5ddc99732a636af799))
+
 # [2.0.0-cwm.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-cwm.5...v2.0.0-cwm.6) (2023-03-10)
 
 ### Bug Fixes
