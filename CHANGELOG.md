@@ -1,3 +1,10 @@
+## [2.3.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.2...v2.3.3) (2023-06-19)
+
+
+### Bug Fixes
+
+* beta is not in use ([b721be7](https://github.com/Greenstand/treetracker-web-map-client/commit/b721be7930185bd4f0d47a692cb2019e86f9082e))
+
 ## [2.3.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.1...v2.3.2) (2023-06-17)
 
 
