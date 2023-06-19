@@ -12,7 +12,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Badges from 'components/Badges';
 import HeadTag from 'components/HeadTag';
-import ImpactSection from 'components/ImpactSection';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
 import Share from 'components/Share';
@@ -21,6 +20,7 @@ import Crumbs from 'components/common/Crumbs';
 import Icon from 'components/common/CustomIcon';
 import TagList from 'components/common/TagList';
 import TreeTag from 'components/common/TreeTag';
+import UUIDTag from 'components/common/UUIDTag';
 import { useDrawerContext } from 'context/DrawerContext';
 import { useMobile, useEmbed } from 'hooks/globalHooks';
 import AccuracyIcon from 'images/icons/accuracy.svg';
@@ -183,7 +183,7 @@ export default function Capture({
 
   return (
     <>
-      <HeadTag title={`Tree #${tree.id}`} />
+      <HeadTag title={`Capture #${tree.id}`} />
       <Box
         sx={[
           {
@@ -214,7 +214,9 @@ export default function Capture({
                 alignItems: 'flex-start',
               }}
             >
-              <Typography variant="h2">Tree #{tree.id}</Typography>
+              <Typography variant="h2">
+                Capture #<UUIDTag uuid={tree.id} />
+              </Typography>
               <Box
                 sx={{
                   mt: 2,
@@ -298,7 +300,9 @@ export default function Capture({
             }
           >
             <Box sx={{}}>
-              <Typography variant="h3">Tree #{tree.id}</Typography>
+              <Typography variant="h3">
+                Capture #<UUIDTag uuid={tree.id} />
+              </Typography>
             </Box>
           </Portal>
         )}
@@ -341,7 +345,11 @@ export default function Capture({
                     ]
                   : []),
                 {
-                  name: `tree #${tree.id}`,
+                  name: (
+                    <>
+                      capture #<UUIDTag uuid={tree.id} />
+                    </>
+                  ),
                 },
               ]}
             />
@@ -450,7 +458,7 @@ export default function Capture({
               }}
             >
               <Typography variant="h2" color={theme.palette.common.white}>
-                Tree #{tree.id}
+                Capture #<UUIDTag uuid={tree.id} />
               </Typography>
 
               <Box
@@ -715,7 +723,7 @@ async function serverSideData(params) {
   const { planting_organization_id, grower_account_id, lat, lon } = tree;
   const grower = await getGrowerById(grower_account_id);
   const country = await getCountryByLatLon(lat, lon);
-  let organization = await getStakeHolderById(planting_organization_id);
+  let organization; // = await getStakeHolderById(planting_organization_id);
 
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');

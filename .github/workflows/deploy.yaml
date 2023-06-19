@@ -21,7 +21,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy 
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Info
@@ -44,7 +44,7 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-      - name: Calculate the channel 
+      - name: Calculate the channel
         id: channel
         run: |
           echo "::debug:: begin preparing...";

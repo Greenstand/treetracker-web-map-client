@@ -227,6 +227,7 @@ function nextPathBaseDecode(path, base) {
 
 const wrapper = (callback) => (params) =>
   callback(params).catch((e) => {
+    log.error(e);
     log.warn('error retrieving server props:', e);
     if (e.response?.status === 404) return { notFound: true };
     return {

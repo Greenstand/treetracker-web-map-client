@@ -3,6 +3,32 @@ import log from 'loglevel';
 import apiPaths from 'models/apiPaths';
 import { requestAPI } from './utils';
 
+export async function getFeaturedGrowers() {
+  try {
+    const url = apiPaths.featuredGrowers;
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data.grower_accounts;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
+export async function getCaptures() {
+  try {
+    const url = apiPaths.getCaptures;
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data.captures;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
 export async function getFeaturedTrees() {
   try {
     const url = apiPaths.featuredTrees;
@@ -13,7 +39,7 @@ export async function getFeaturedTrees() {
     return data.trees;
   } catch (err) {
     log.error(err.message);
-    throw err.message;
+    throw err;
   }
 }
 

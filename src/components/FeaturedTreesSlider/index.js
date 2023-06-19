@@ -8,6 +8,7 @@ import {
   CardMedia,
 } from '@mui/material';
 import { useRef, useState, useEffect } from 'react';
+import UUIDTag from 'components/common/UUIDTag';
 import { debounce, getThumbnailImageUrls } from 'models/utils';
 import { useStyles } from './style'; // the style file
 import Link from '../Link';
@@ -79,7 +80,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
       >
         {trees.map((tree) => (
           <Link
-            href={link ? link(tree) : `/trees/${tree.id}`}
+            href={link ? link(tree) : `/v2/captures/${tree.id}`}
             key={`featured-tree-${tree.id}`}
           >
             <Card
@@ -123,7 +124,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
                     fontSize: '20px',
                   }}
                 >
-                  Tree - {tree.id}
+                  Capture - <UUIDTag uuid={tree.id} />
                 </Typography>
                 <Typography
                   variant="body1"
