@@ -1,3 +1,18 @@
+# [2.4.0-user-profile.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.3...v2.4.0-user-profile.1) (2023-06-19)
+
+
+### Bug Fixes
+
+* versioning ([22e73d6](https://github.com/Greenstand/treetracker-web-map-client/commit/22e73d6993ff672208511d1ae1e60a08f2c055e7))
+* versioning ([f764079](https://github.com/Greenstand/treetracker-web-map-client/commit/f76407911f3283a5c7eefb14ebaf858f913ae27d))
+* versioning ([ab4c027](https://github.com/Greenstand/treetracker-web-map-client/commit/ab4c02766ce34de6c9c0c0b89117bf4adb31b5b9))
+* wrong channel ([7c10877](https://github.com/Greenstand/treetracker-web-map-client/commit/7c10877922fc9ab318691d3bdc50517a8bc6a2d3))
+
+
+### Features
+
+* account page ([8b267c2](https://github.com/Greenstand/treetracker-web-map-client/commit/8b267c2b5120b8fe36c114b572b7a6213dc08414))
+
 # [2.0.0-user-profile.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-user-profile.1...v2.0.0-user-profile.2) (2023-05-13)
 
 
