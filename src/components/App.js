@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
 import { useMapContext } from 'mapContext';
 import * as pathResolver from 'models/pathResolver';
-// import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
 
