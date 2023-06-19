@@ -210,9 +210,16 @@ export default function Organization(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Organization since ${moment().format(
-                    'MMMM DD, YYYY',
-                  )}`}
+                  info={
+                    <>
+                      Organization since
+                      <time dateTime={organization?.created_at}>
+                        {` ${moment(organization?.created_at).format(
+                          'MMMM DD, YYYY',
+                        )}`}
+                      </time>
+                    </>
+                  }
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
@@ -349,24 +356,20 @@ export default function Organization(props) {
             >
               Species of trees planted
             </Typography>
-            <Box
-              sx={{
-                mt: [5, 10],
-              }}
-            >
-              {organization?.species?.species?.map((s) => (
-                <React.Fragment key={s.name}>
-                  <TreeSpeciesCard
-                    name={s.name}
-                    subTitle={s.desc || '---'}
-                    count={s.total}
-                  />
-                  <Box sx={{ mt: [2, 4] }} />
-                </React.Fragment>
-              ))}
-            </Box>
-            {(!organization?.species?.species ||
-              organization?.species?.species.length === 0) && (
+            {organization?.species?.species?.length > 0 ? (
+              <Box component="ul" sx={{ mt: [5, 10], listStyle: 'none', p: 0 }}>
+                {organization?.species?.species?.map((s) => (
+                  <li key={s.name}>
+                    <TreeSpeciesCard
+                      name={s.name}
+                      subTitle={s.desc || '---'}
+                      count={s.total}
+                    />
+                    <Box sx={{ mt: [2, 4] }} />
+                  </li>
+                ))}
+              </Box>
+            ) : (
               <Typography variant="h5">NO DATA YET</Typography>
             )}
           </Box>
@@ -411,14 +414,21 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-          {organization?.associatedPlanters?.planters
-            ?.sort((e1) => (e1.about ? -1 : 1))
-            .map((planter, i) => (
-              <Box sx={{ mt: [6, 12] }} key={planter.name}>
-                <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
-              </Box>
-            ))}
+          {organization?.associatedPlanters?.planters?.length > 0 ? (
+            <Box component="ul" sx={{ mt: [6, 12], listStyle: 'none', p: 0 }}>
+              {organization?.associatedPlanters?.planters
+                ?.sort((e1) => (e1.about ? -1 : 1))
+                .map((planter, i) => (
+                  <Box component="li" key={planter.name} sx={{ mt: [6, 12] }}>
+                    <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
+                  </Box>
+                ))}
+            </Box>
+          ) : (
+            <Typography variant="h5">NO DATA YET</Typography>
+          )}
         </Box>
+
         <Box
           sx={{
             px: [24 / 8, 24 / 4],
@@ -452,6 +462,7 @@ export default function Organization(props) {
               <Box
                 component="span"
                 sx={{
+                  mt: [80 / 8, 80 / 4],
                   fontFamily: 'Lato',
                   fontWeight: 400,
                   fontSize: '20px',
@@ -470,7 +481,6 @@ export default function Organization(props) {
               mt: [10, 20],
             }}
           />
-
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>

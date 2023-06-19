@@ -4,7 +4,8 @@ metadata:
   name: treetracker-web-map-client-mapping-main
   namespace: webmap
 spec:
-  cors:
-    cors:
-    origins:
-      - '*'
+  host: dev.treetracker.org
+  prefix: /
+  service: treetracker-web-map-client-svc-main
+  timeout_ms: 0
+  precedence: 9

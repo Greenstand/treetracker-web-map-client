@@ -216,7 +216,6 @@ export default function Planter(props) {
             rotation={planter.image_rotation}
           />
         </Box>
-
         {isMobile && (
           <Portal
             container={() => document.getElementById('drawer-title-container')}
@@ -233,9 +232,15 @@ export default function Planter(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Planter since ${moment(planter.created_at).format(
-                    'MMMM DD, YYYY',
-                  )}`}
+                  info={
+                    <>
+                      Planter since
+                      <time dateTime={planter?.created_at}>
+                        {' '}
+                        {moment(planter?.created_at).format('MMMM DD, YYYY')}
+                      </time>
+                    </>
+                  }
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
@@ -288,9 +293,15 @@ export default function Planter(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Planter since ${moment(planter.created_at).format(
-                  'MMMM DD, YYYY',
-                )}`}
+                info={
+                  <>
+                    Planter since
+                    <time dateTime={planter?.created_at}>
+                      {' '}
+                      {moment(planter?.created_at).format('MMMM DD, YYYY')}
+                    </time>
+                  </>
+                }
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -483,7 +494,7 @@ export default function Planter(props) {
             mt: [10, 20],
           }}
         />
-       
+
         <Box sx={{ height: 40 }} />
       </Box>
       {nextExtraIsEmbed && (
