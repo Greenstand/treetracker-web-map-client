@@ -64,7 +64,8 @@ const Layout = forwardRef(({ children }, ref) => {
     <Box
       className={classes.root}
       sx={{
-        height: () => `${window.innerHeight  }px`,
+        height: () =>
+          typeof window !== 'undefined' && `${window.innerHeight}px`,
       }}
     >
       <Navbar />
