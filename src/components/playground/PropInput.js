@@ -3,6 +3,7 @@ import { CONFIG_INPUT_TYPES } from 'models/themePlaygroundOptions';
 import ColorInput from './ColorInput';
 import FontFamilyInput from './FontFamilyInput';
 import FontWeightInput from './FontWeightInput';
+import SliderInput from './SliderInput';
 import TextInput from './TextInput';
 
 export default function PropInput({ prop, path, propName }) {
@@ -21,6 +22,9 @@ export default function PropInput({ prop, path, propName }) {
       input = (
         <FontWeightInput prop={prop} pathToProp={path} propName={propName} />
       );
+      break;
+    case CONFIG_INPUT_TYPES.FONT_SIZE:
+      input = <SliderInput prop={prop} pathToProp={path} propName={propName} />;
       break;
     default:
       input = <TextInput prop={prop} pathToProp={path} propName={propName} />;
