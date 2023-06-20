@@ -16,6 +16,7 @@ import LayoutMobile from '../components/LayoutMobile';
 import LayoutMobileB from '../components/LayoutMobileB';
 import LayoutMobileC from '../components/LayoutMobileC';
 import { DrawerProvider } from '../context/DrawerContext';
+import { ConfigProvider, defaultConfig } from '../context/configContext';
 import { CustomThemeProvider } from '../context/themeContext';
 import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
@@ -69,8 +70,9 @@ function GoogleAnalytics() {
   );
 }
 
-function TreetrackerApp({ Component, pageProps, device }) {
+function TreetrackerApp({ Component, pageProps, device, config }) {
   log.warn('!!!! render the _app');
+  log.warn('webmap config', config);
   const router = useRouter();
   const theme = useTheme();
   const layoutRef = React.useRef();
@@ -147,7 +149,7 @@ function TreetrackerApp({ Component, pageProps, device }) {
   }
 
   return (
-    <>
+    <ConfigProvider config={config}>
       <GoogleAnalytics />
       <CacheProvider value={muiCache ?? createMuiCache()}>
         <CustomThemeProvider>
@@ -199,7 +201,7 @@ function TreetrackerApp({ Component, pageProps, device }) {
           <LinearProgress />
         </Box>
       )}
-    </>
+    </ConfigProvider>
   );
 }
 
@@ -212,7 +214,25 @@ TreetrackerApp.getInitialProps = async (context) => {
 
   const device = userAgentFromString(userAgent)?.device.type || 'desktop';
 
-  return { props, device };
+  let config = defaultConfig;
+  if (!process.env.NEXT_PUBLIC_SERVER_CONFIG_DISABLED) {
+    const mapConfigRequest = await fetch(
+      // TODO: use the ENV var, currently results in a bug with the theme editor
+      // `${process.env.NEXT_PUBLIC_CONFIG_API}/config`,
+      `https://dev-k8s.treetracker.org/map_config/config`,
+    );
+    // Temp solution since the backend does not have full support for the config
+    const configData = await mapConfigRequest.json();
+    config =
+      configData.find((item) => item.name === 'testing-config')?.data ||
+      defaultConfig;
+  }
+
+  return {
+    props,
+    config,
+    device,
+  };
 };
 
 export default TreetrackerApp;

@@ -2,12 +2,12 @@ import { SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { forwardRef } from 'react';
+import ZoomIn from 'images/zoom-in.svg';
+import ZoomOut from 'images/zoom-out.svg';
+import { useMapContext } from 'mapContext';
 import { makeStyles } from 'models/makeStyles';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
-import ZoomIn from '../images/zoom-in.svg';
-import ZoomOut from '../images/zoom-out.svg';
-import { useMapContext } from '../mapContext';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
@@ -15,7 +15,6 @@ const Drawer = dynamic(() => import('./Drawer'), { ssr: false });
 
 const useStyles = makeStyles()((theme) => ({
   root: {
-    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -62,7 +61,13 @@ const Layout = forwardRef(({ children }, ref) => {
   }
 
   return (
-    <Box className={classes.root}>
+    <Box
+      className={classes.root}
+      sx={{
+        height: () =>
+          typeof window !== 'undefined' && `${window.innerHeight}px`,
+      }}
+    >
       <Navbar />
       <Box sx={{ position: 'relative', width: 1, height: 1 }}>
         <Box

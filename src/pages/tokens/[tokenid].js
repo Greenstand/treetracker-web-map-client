@@ -20,7 +20,6 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import HeadTag from 'components/HeadTag';
-import ImpactSection from 'components/ImpactSection';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
 import Link from 'components/Link';
@@ -316,11 +315,16 @@ export default function Token(props) {
                 }}
               >
                 <Icon icon={CalendarIcon} />
-                {token.created_at !== null
-                  ? `Minted on ${moment(tree.time_created).format(
-                      'MMMM Do, YYYY',
-                    )}`
-                  : 'Unknown Mint Date'}
+                {token.created_at !== null ? (
+                  <>
+                    Minted on
+                    <time dateTime={tree.time_created}>
+                      {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
+                    </time>
+                  </>
+                ) : (
+                  'Unknown Mint Date'
+                )}
               </Typography>
 
               <Box
@@ -370,11 +374,16 @@ export default function Token(props) {
                 }}
               >
                 <Icon icon={CalendarIcon} />
-                {token.created_at !== null
-                  ? `Minted on ${moment(tree.time_created).format(
-                      'MMMM Do, YYYY',
-                    )}`
-                  : 'Unknown Mint Date'}
+                {token.created_at !== null ? (
+                  <>
+                    Minted on
+                    <time dateTime={tree.time_created}>
+                      {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
+                    </time>
+                  </>
+                ) : (
+                  'Unknown Mint Date'
+                )}
               </Typography>
               <Box
                 sx={{
@@ -434,7 +443,11 @@ export default function Token(props) {
         <TagList>
           <TreeTag
             key="created-at"
-            TreeTagValue={new Date(token.created_at).toLocaleDateString()}
+            TreeTagValue={
+              <time dateTime={token.created_at}>
+                {new Date(token.created_at).toLocaleDateString()}
+              </time>
+            }
             title="Created At"
             icon={<Icon icon={CalendarIcon} />}
           />
@@ -502,10 +515,12 @@ export default function Token(props) {
               <TimelineOppositeContent
                 color="text.secondary"
                 sx={{
-                  flex: [0.4, 0.2],
+                  flex: '0 0 100px',
                 }}
               >
-                {new Date(token.created_at).toLocaleDateString()}
+                <time dateTime={token.created_at}>
+                  {new Date(token.created_at).toLocaleDateString()}
+                </time>
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineDot color="primary" />
@@ -531,11 +546,13 @@ export default function Token(props) {
               <TimelineItem key={transaction.id}>
                 <TimelineOppositeContent
                   sx={{
-                    flex: [0.4, 0.2],
+                    flex: '0 0 100px',
                   }}
                   color="text.secondary"
                 >
-                  {new Date(transaction.processed_at).toLocaleDateString()}
+                  <time dateTime={transaction.processed_at}>
+                    {new Date(transaction.processed_at).toLocaleDateString()}
+                  </time>
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot color="primary" />
@@ -619,7 +636,7 @@ export default function Token(props) {
             <TimelineItem>
               <TimelineOppositeContent
                 sx={{
-                  flex: [0.4, 0.2],
+                  flex: '0 0 100px',
                 }}
                 color="text.secondary"
               >
@@ -639,7 +656,6 @@ export default function Token(props) {
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal
@@ -742,3 +758,4 @@ const getServerSideProps = wrapper(async ({ params, query }) => {
 });
 
 export { getServerSideProps };
+

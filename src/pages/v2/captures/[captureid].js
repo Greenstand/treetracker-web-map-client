@@ -34,12 +34,7 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import {
-  getStakeHolderById,
-  getCapturesById,
-  getGrowerById,
-  getCountryByLatLon,
-} from 'models/api';
+import { getStakeHolderById, getCapturesById, getGrowerById, getCountryByLatLon } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
@@ -260,7 +255,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.created_at).format(
+                  {`Captured on ${moment(tree.created_at).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -497,7 +492,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.created_at).format(
+                  {`Captured on ${moment(tree.created_at).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -594,7 +589,7 @@ export default function Capture({
         <TagList>
           <TreeTag
             TreeTagValue={new Date(tree.created_at).toLocaleDateString()}
-            title="Planted on"
+            title="Captured on"
             icon={<Icon icon={CalendarIcon} />}
           />
           <TreeTag
@@ -692,7 +687,7 @@ export default function Capture({
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
+
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal

@@ -8,15 +8,16 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { initialState } from 'context/configContext';
-import { useLocalStorage, useMobile } from 'hooks/globalHooks';
+import { useConfigContext } from 'context/configContext';
+import { useCustomThemeContext } from 'hooks/contextHooks';
+import { useMobile } from 'hooks/globalHooks';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
 
-const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
-const treeTrackerLogo = `${process.env.NEXT_PUBLIC_BASE}/images/treetracker_logo.png`;
+const treeTrackerLogo = `/images/treetracker_logo.svg`;
+const treeTrackerLogoWhite = `/images/treetracker_logo_white.svg`;
 
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
@@ -28,12 +29,6 @@ const useStyles = makeStyles()((theme) => ({
     justifyContent: 'space-between',
     padding: '0 20px',
     zIndex: 9999,
-    // boxShadow:
-    //   '0px 20px 17px -14px rgb(0 0 0 / 32%), 0px 10px 15px 1px rgb(0 0 0 / 14%), 0px 10px 20px 3px rgb(0 0 0 / 12%)',
-    [theme.breakpoints.down('sm')]: {
-      padding: '0',
-      alignItems: 'flex-end',
-    },
   },
   toolbar: {
     gap: 25,
@@ -42,10 +37,9 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
   logo: {
-    paddingLeft: '1rem',
     paddingBottom: '.5rem',
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   buttonStyle: {
     fontSize: '16px',
@@ -55,7 +49,10 @@ const useStyles = makeStyles()((theme) => ({
     display: 'none',
     padding: 0,
     [theme.breakpoints.down('sm')]: {
-      display: 'block',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minWidth: 'fit-content',
     },
   },
 }));
@@ -63,8 +60,9 @@ const useStyles = makeStyles()((theme) => ({
 function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
-  const [webMapConfig] = useLocalStorage('config', initialState);
-  const { items: navItems } = webMapConfig.navbar;
+  const { navbar: config } = useConfigContext();
+
+  const { theme } = useCustomThemeContext();
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -82,50 +80,28 @@ function Navbar() {
       position="static"
     >
       <Link href="/" className={classes.logo}>
-        {isMobile && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'baseline',
-              m: 4,
-            }}
-          >
-            <img src={iconLogo} width={24} height={30} alt="Greenstand Logo" />
-          </Box>
-        )}
-        {!isMobile && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'baseline',
-              marginLeft: '25px',
-            }}
-          >
-            <img
-              src={treeTrackerLogo}
-              width={217}
-              height={35}
-              alt="Greenstand Logo"
-            />
-            {/* <Typography
-              variant="h1"
-              ml={2.5}
-              color="primary"
-              sx={{
-                // color: '#61892F',
-                fontSize: 30,
-                fontWeight: 900,
-                lineHeight: '37px',
-                letterSpacing: '0.2px',
-              }}
-            >
-              Treetracker
-            </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'baseline',
+            gap: theme.spacing(2),
+            width: 'max-content',
+          }}
+        >
+          <img
+            src={
+              theme.palette.mode === 'light'
+                ? treeTrackerLogo
+                : treeTrackerLogoWhite
+            }
+            width={217}
+            height={35}
+            alt="Treetracker Logo"
+          />
+          {!isMobile ? (
             <Typography
               variant="h6"
-              ml={2.5}
               color="text.secondary"
               sx={{
                 fontWeight: 900,
@@ -133,12 +109,12 @@ function Navbar() {
               }}
             >
               by Greenstand
-            </Typography> */}
-          </Box>
-        )}
+            </Typography>
+          ) : null}
+        </Box>
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
-        {navItems.map((item) => (
+        {config?.items.map((item) => (
           <Link key={`nav-${item.title}`} target="_blank" href={item.url}>
             <Button className={classes.buttonStyle} variant="text">
               <Typography className={classes.buttonStyle}>
@@ -156,7 +132,6 @@ function Navbar() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleMenuClick}
       >
-        {' '}
         <MenuBar />
       </Button>
       <Menu
@@ -172,7 +147,7 @@ function Navbar() {
           },
         }}
       >
-        {navItems.map((item) => (
+        {config?.items.map((item) => (
           <MenuItem key={`nav-${item.title}`}>
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>

@@ -12,7 +12,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Badges from 'components/Badges';
 import HeadTag from 'components/HeadTag';
-import ImpactSection from 'components/ImpactSection';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
 import Share from 'components/Share';
@@ -253,7 +252,7 @@ export default function Tree({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Planted on ${moment(tree.time_created).format(
+                  {`Captured on ${moment(tree.time_created).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -498,7 +497,7 @@ export default function Tree({
                     }}
                   >
                     <Icon icon={CalendarIcon} />
-                    {`Planted on ${moment(tree.time_created).format(
+                    {`Captured on ${moment(tree.time_created).format(
                       'MMMM Do, YYYY',
                     )}` || 'Unknown Date'}
                   </Typography>
@@ -597,7 +596,7 @@ export default function Tree({
         <TagList>
           <TreeTag
             TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
-            title="Planted on"
+            title="Captured on"
             icon={<Icon icon={CalendarIcon} />}
           />
           <TreeTag
@@ -697,7 +696,7 @@ export default function Tree({
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
+
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal
