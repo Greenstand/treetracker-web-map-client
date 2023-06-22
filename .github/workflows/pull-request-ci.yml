@@ -22,7 +22,7 @@ jobs:
       # only install dependencies
       # https://github.com/cypress-io/github-action
       - name: Install 📦
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           runTests: false
 
@@ -37,7 +37,7 @@ jobs:
 
       # Install cached NPM dependencies, run integration tests
       - name: Cypress Integration Tests 🧪
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           # use mock api
           env: nock=true
@@ -68,7 +68,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run Component tests 🧪
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           command: npx cypress run-ct
 
