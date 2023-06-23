@@ -8,7 +8,6 @@ export const CONFIG_INPUT_TYPES = {
   TEXT: 'TEXT',
   FONT_WEIGHT: 'FONT_WEIGHT',
   FONT_FAMILY: 'FONT_FAMILY',
-  FONT_SIZE: 'FONT_SIZE',
 };
 
 export const CONFIG_SECTION_TYPES = {
@@ -255,12 +254,12 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.FONT_SIZE,
-          configs: {
-            min: 2,
-            max: 24,
-            step: 2,
-            unit: 2,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 20,
+            max: 40,
+            step: 4,
+            unit: 'px',
           },
         },
         lineHeight: {
@@ -288,7 +287,7 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.FONT_SIZE,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
         },
         lineHeight: {
           displayText: 'Line Height',

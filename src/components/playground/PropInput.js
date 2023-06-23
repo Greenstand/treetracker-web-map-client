@@ -23,7 +23,7 @@ export default function PropInput({ prop, path, propName }) {
         <FontWeightInput prop={prop} pathToProp={path} propName={propName} />
       );
       break;
-    case CONFIG_INPUT_TYPES.FONT_SIZE:
+    case CONFIG_INPUT_TYPES.SLIDER:
       input = <SliderInput prop={prop} pathToProp={path} propName={propName} />;
       break;
     default:
