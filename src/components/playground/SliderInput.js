@@ -1,27 +1,15 @@
 import { FormControl, Typography } from '@mui/material';
 import Slider from '@mui/material/Slider';
-import { withStyles } from '@mui/styles';
 import { useMemo, useState } from 'react';
 import { usePlaygroundUtils } from 'hooks/contextHooks';
 
-const styles = {
-  markLabel: {
-    fontSize: '12px',
-  },
-};
-
-const CustomSlider = withStyles(styles)((props) => (
-  <Slider classes={{ markLabel: props.classes.markLabel }} {...props} />
-));
-
 export default function SliderInput({ prop, pathToProp, propName }) {
-  const { setPropByPath } = usePlaygroundUtils();
-
   const { min, max, step, unit } = prop?.inputProps ?? {};
 
+  const { setPropByPath } = usePlaygroundUtils();
   const [value, setValue] = useState(min);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
     setPropByPath(`${pathToProp}.${propName}`, newValue);
   };
@@ -47,13 +35,18 @@ export default function SliderInput({ prop, pathToProp, propName }) {
       >
         {prop.displayText}
       </Typography>
-      <CustomSlider
+      <Slider
         style={{ width: '90%', margin: '0 0 30px 20px' }}
         value={value}
         aria-labelledby="slider-input"
         valueLabelDisplay="auto"
         onChange={handleChange}
         marks={marks}
+        sx={{
+          '& .MuiSlider-markLabel': {
+            fontSize: '12px',
+          },
+        }}
         {...prop?.inputProps}
       />
     </FormControl>
