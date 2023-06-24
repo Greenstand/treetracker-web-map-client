@@ -1,11 +1,13 @@
+import CheckIcon from '@mui/icons-material/Check';
 import { Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
+import Badge from 'components/Badge';
 import { useDrawerContext } from 'context/DrawerContext';
 import * as utils from 'models/utils';
 import DataTag from './DataTag';
-import VerifiedBadge from '../VerifiedBadge';
+
 
 const Wrapper = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -51,8 +53,8 @@ function PlanterAndOrganizationTitle({
           },
         }}
       >
-        <VerifiedBadge verified badgeName="Verified Planter" />
-        <VerifiedBadge badgeName="Seeking Orgs" />
+        <Badge icon={<CheckIcon/>} badgeName="Verified Planter" />
+        <Badge badgeName="Seeking Orgs" />
       </Box>
     </>
   );
@@ -77,8 +79,8 @@ function TreeTitle({ treeId, verifiedTree, verifiedToken }) {
           },
         }}
       >
-        <VerifiedBadge verified={verifiedTree} badgeName="Tree Verified" />
-        <VerifiedBadge verified={verifiedToken} badgeName="Token Issued" />
+        <Badge icon={verifiedTree ? <CheckIcon/> : null} badgeName="Tree Verified" />
+        <Badge icon={verifiedToken ? <CheckIcon/> : null} badgeName="Token Issued" />
       </Box>
     </>
   );
