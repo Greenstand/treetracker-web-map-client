@@ -1,16 +1,23 @@
-import { FormControl, Typography } from '@mui/material';
+import { RestartAlt } from '@mui/icons-material';
+import { Box, FormControl, Tooltip, Typography } from '@mui/material';
 import Slider from '@mui/material/Slider';
-import { useMemo, useState } from 'react';
-import { usePlaygroundUtils } from 'hooks/contextHooks';
+import { useMemo } from 'react';
+import { usePlaygroundTheme, usePlaygroundUtils } from 'hooks/contextHooks';
+import { useDefaultValue } from 'hooks/cwmHooks';
 
 export default function SliderInput({ prop, pathToProp, propName }) {
   const { min, max, step, unit } = prop?.inputProps ?? {};
 
   const { setPropByPath } = usePlaygroundUtils();
-  const [value, setValue] = useState(min);
+  const { getPropByPath } = usePlaygroundTheme();
+  const value = getPropByPath(`${pathToProp}.${propName}`);
+  const defaultValue = useDefaultValue(value);
+
+  const resetSlider = () => {
+    setPropByPath(`${pathToProp}.${propName}`, defaultValue);
+  };
 
   const handleChange = (_, newValue) => {
-    setValue(newValue);
     setPropByPath(`${pathToProp}.${propName}`, newValue);
   };
 
@@ -28,16 +35,32 @@ export default function SliderInput({ prop, pathToProp, propName }) {
 
   return (
     <FormControl sx={{ width: 1 }} variant="standard">
-      <Typography
-        id="slider-input"
-        variant="caption"
-        style={{ color: 'rgba(0,0,0,0.6)' }}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
       >
-        {prop.displayText}
-      </Typography>
+        <Typography
+          id="slider-input"
+          variant="caption"
+          style={{ color: 'rgba(0,0,0,0.6)' }}
+        >
+          {prop.displayText}
+        </Typography>
+        <Tooltip sx={{ cursor: 'pointer' }} title="Reset to Default">
+          <RestartAlt
+            onClick={resetSlider}
+            color="error"
+            sx={{ fontSize: '18px' }}
+          />
+        </Tooltip>
+      </Box>
+
       <Slider
         style={{ width: '90%', margin: '0 0 30px 20px' }}
-        value={value}
+        value={parseInt(value, 10)}
         aria-labelledby="slider-input"
         valueLabelDisplay="auto"
         onChange={handleChange}

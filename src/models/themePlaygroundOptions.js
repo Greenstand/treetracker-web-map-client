@@ -256,8 +256,8 @@ export const themeEditorConfig = {
           displayText: 'Font Size',
           inputType: CONFIG_INPUT_TYPES.SLIDER,
           inputProps: {
-            min: 20,
-            max: 40,
+            min: 36,
+            max: 60,
             step: 4,
             unit: 'px',
           },
