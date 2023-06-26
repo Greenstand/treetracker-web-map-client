@@ -18,13 +18,13 @@ import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import Badge from 'components/Badge';
 import HeadTag from 'components/HeadTag';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
 import Link from 'components/Link';
 import Share from 'components/Share';
-import VerifiedBadge from 'components/VerifiedBadge';
 import Crumbs from 'components/common/Crumbs';
 import Icon from 'components/common/CustomIcon';
 import SimpleAvatarAndName from 'components/common/SimpleAvatarAndName';
@@ -150,6 +150,13 @@ export default function Token(props) {
 
   const tokenIdStart = token.id.slice(0, 4);
   const tokenIdEnd = token.id.slice(token.id.length - 4, token.id.length);
+
+  const BadgeSection = useMemo(()=>(
+    <Badge
+    color="secondary"
+    badgeName={`${token?.claim ? 'Claimed' : 'Unclaimed'}`}
+  />
+  ),[token?.claim])
 
   return (
     <>
@@ -334,11 +341,7 @@ export default function Token(props) {
                   mt: 2,
                 }}
               >
-                <VerifiedBadge
-                  color="secondary"
-                  badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-                  verified={false}
-                />
+                {BadgeSection}
               </Box>
             </Box>
           )}
@@ -392,11 +395,7 @@ export default function Token(props) {
                   mt: 2,
                 }}
               >
-                <VerifiedBadge
-                  color="secondary"
-                  badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-                  verified={false}
-                />
+                {BadgeSection}
               </Box>
             </Box>
           </Portal>
