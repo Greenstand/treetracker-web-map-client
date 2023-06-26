@@ -23,7 +23,8 @@
     "prepare": "is-ci || husky install",
     "prettier": "prettier ./ --write",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "test:cyu": "cypress run-ct"
   },
   "browserslist": {
     "production": [
