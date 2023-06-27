@@ -6,7 +6,7 @@ on:
       version:
         description: 'Version to deploy'
         required: true
-        default: 'v1.0.0'
+        default: 'version without leading v, for example: 1.0.0 and 2.3.0-feature1.5'
       env:
         type: choice
         description: Environment to deploy to
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           # set ref with input, add prefix 'refs/tags/' if it is a tag
-          ref: ${{ github.event.inputs.version }}
+          ref: ${{format('v{0}', github.event.inputs.version)}}
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
@@ -53,7 +53,7 @@ jobs:
           ls -a
           node <<EOF >> $GITHUB_OUTPUT
             const releaseJson = require("./.releaserc.json");        
-            const version = process.env.VERSION_TO_DEPLOY
+            const version = 'v' + process.env.VERSION_TO_DEPLOY
             const m = version.match(/^v\d+\.\d+.\d+(-([\w-\/\.]+)\.\d+)?$/)
             let channel;
             let s3BucketSecretName;
@@ -76,7 +76,7 @@ jobs:
       - name: Print channel
         run: echo ${{ steps.channel.outputs.CHANNEL }}
       - name: Run kustomize
-        run: (cd deployment-${{ steps.channel.outputs.CHANNEL}}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
+        run: (cd ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{github.event.inputs.version}})
       - name: Resolve the secrets name
         run: echo ::set-output name=SECRET_KEY::$( echo `node -e 'console.log({dev:"DEV_DIGITALOCEAN_TOKEN",prod:"DIGITALOCEAN_PRODUCTION_TOKEN",test:"TEST_DIGITALOCEAN_TOKEN"}[process.env.ENV_TO_DEPLOY])'`)
         id: do_secrets_name
@@ -107,4 +107,4 @@ jobs:
       - name: Print overlay folder
         run: echo ${{ steps.overlay_folder.outputs.OVERLAY_FOLDER }}
       - name: Update kubernetes resources
-        run: kustomize build deployment-${{ steps.channel.outputs.CHANNEL}}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: kustomize build ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -

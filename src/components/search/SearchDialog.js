@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import VerifiedBadge from 'components/VerifiedBadge';
+import Badge from 'components/Badge';
 
 function SearchResultItem({ title, content }) {
   return (
@@ -16,7 +16,7 @@ function SearchResultItem({ title, content }) {
         gap: '10px',
       }}
     >
-      <VerifiedBadge color="primary" badgeName={title} />
+      <Badge color="primary" badgeName={title} />
       <Box>{content}</Box>
     </Box>
   );
