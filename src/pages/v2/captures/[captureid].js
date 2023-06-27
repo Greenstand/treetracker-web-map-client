@@ -191,11 +191,11 @@ export default function Capture({
         <Badge
           color={tree?.approved ? 'primary' : 'greyLight'}
           icon={tree?.approved ? <CheckIcon /> : null}
-          badgeName={tree?.approved ? 'Verified' : 'Waiting for verification'}
+          badgeName={tree?.approved ? 'Waiting for verification' : 'Verified'}
         />
         <Badge
           color="secondary"
-          badgeName={tree?.token_id ? 'Token issued' : 'Token not issued'}
+          badgeName={tree?.token_id ? 'Token not issued' : 'Token issued'}
         />
         <Badge
           color={tree.id ? 'primary' : 'greyLight'}
