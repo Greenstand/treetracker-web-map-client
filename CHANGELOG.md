@@ -1,3 +1,17 @@
+# [2.4.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.3...v2.4.0) (2023-06-27)
+
+
+### Bug Fixes
+
+* broken int test cypress because of upgrade ([f751401](https://github.com/Greenstand/treetracker-web-map-client/commit/f7514011b678d5fc8daeca41604cf8da34f548c4))
+* broken int test in cypress ([5c3ee5b](https://github.com/Greenstand/treetracker-web-map-client/commit/5c3ee5bc6e1182e410f2cba496395f4a85a9b29b))
+* remove useless tests ([0f470ca](https://github.com/Greenstand/treetracker-web-map-client/commit/0f470cae168e0979b72b4ee430845f2c1061e876))
+
+
+### Features
+
+* upgrade cypress ([b1ec6eb](https://github.com/Greenstand/treetracker-web-map-client/commit/b1ec6ebea2467324edefe4cf4cebd7608bae8100))
+
 ## [2.3.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.2...v2.3.3) (2023-06-19)
 
 
