@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import CheckIcon from '@mui/icons-material/Check';
 import HubIcon from '@mui/icons-material/Hub';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { useTheme, Avatar, Divider } from '@mui/material';
@@ -9,8 +10,8 @@ import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import Badges from 'components/Badges';
+import { useEffect, useMemo } from 'react';
+import Badge from 'components/Badge';
 import HeadTag from 'components/HeadTag';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
@@ -178,6 +179,26 @@ export default function Tree({
 
   log.warn(planter, 'planter');
 
+  // storing under variable with useMemo wrapped
+  // to reuse the same component for mobile and desktop and
+  // avoid re-rendering of badge components
+  const BadgeSection = useMemo(
+    () => (
+      <>
+        <Badge
+          color={tree?.approved ? 'primary' : 'greyLight'}
+          icon={tree?.approved ? <CheckIcon /> : null}
+          badgeName={tree?.approved ? 'Waiting for verification' : 'Verified'}
+        />
+        <Badge
+          color="secondary"
+          badgeName={tree?.token_id ? 'Token not issued' : 'Token issued'}
+        />
+      </>
+    ),
+    [tree?.approved, tree?.token_id],
+  );
+
   return (
     <>
       <HeadTag title={`Tree #${tree.id}`} />
@@ -284,7 +305,7 @@ export default function Tree({
                   mt: 2,
                 }}
               >
-                <Badges tokenId={tree.token_id} verified={tree.approved} />
+                {BadgeSection}
               </Box>
             </Box>
           </Portal>
@@ -528,7 +549,7 @@ export default function Tree({
                     mt: 2,
                   }}
                 >
-                  <Badges tokenId={tree.token_id} verified={tree.approved} />
+                  {BadgeSection}
                 </Box>
               </Box>
             )}
