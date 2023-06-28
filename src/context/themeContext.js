@@ -168,6 +168,18 @@ export function buildTheme(theMode) {
             }),
       },
       // a light orange color, used in some components as background color
+      brightGrey: {
+        ...(themeMode === 'light'
+          ? {
+              main: '#adadad',
+              contrastText: '#fff',
+            }
+          : {
+              main: '#adadad',
+              contrastText: '#fff',
+            }),
+      },
+
       greyLight: {
         ...(themeMode === 'light'
           ? {

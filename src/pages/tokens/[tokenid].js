@@ -18,32 +18,31 @@ import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import Badge from 'components/Badge';
 import HeadTag from 'components/HeadTag';
+import InformationCard1 from 'components/InformationCard1';
+import LikeButton from 'components/LikeButton';
+import Link from 'components/Link';
+import Share from 'components/Share';
+import Crumbs from 'components/common/Crumbs';
+import Icon from 'components/common/CustomIcon';
+import SimpleAvatarAndName from 'components/common/SimpleAvatarAndName';
 import TagList from 'components/common/TagList';
+import TreeTag from 'components/common/TreeTag';
 import UUIDTag from 'components/common/UUIDTag';
+import { useMobile } from 'hooks/globalHooks';
+import CalendarIcon from 'images/icons/calendar.svg';
+import ShareIcon from 'images/icons/share.svg';
+import TokenIcon from 'images/icons/token.svg';
+import TreeIcon from 'images/icons/tree.svg';
+import imagePlaceholder from 'images/image-placeholder.png';
+import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
+import * as pathResolver from 'models/pathResolver';
 import { wrapper } from 'models/utils';
-import ImpactSection from '../../components/ImpactSection';
-import InformationCard1 from '../../components/InformationCard1';
-import LikeButton from '../../components/LikeButton';
-import Link from '../../components/Link';
-import Share from '../../components/Share';
-import VerifiedBadge from '../../components/VerifiedBadge';
-import Crumbs from '../../components/common/Crumbs';
-import Icon from '../../components/common/CustomIcon';
-import SimpleAvatarAndName from '../../components/common/SimpleAvatarAndName';
-import TreeTag from '../../components/common/TreeTag';
-import { useMobile } from '../../hooks/globalHooks';
-import CalendarIcon from '../../images/icons/calendar.svg';
-import ShareIcon from '../../images/icons/share.svg';
-import TokenIcon from '../../images/icons/token.svg';
-import TreeIcon from '../../images/icons/tree.svg';
-import imagePlaceholder from '../../images/image-placeholder.png';
-import SearchIcon from '../../images/search.svg';
-import { useMapContext } from '../../mapContext';
-import * as pathResolver from '../../models/pathResolver';
 
 const useStyles = makeStyles()((theme) => ({
   tabBox: {
@@ -151,6 +150,13 @@ export default function Token(props) {
 
   const tokenIdStart = token.id.slice(0, 4);
   const tokenIdEnd = token.id.slice(token.id.length - 4, token.id.length);
+
+  const BadgeSection = useMemo(()=>(
+    <Badge
+    color="secondary"
+    badgeName={`${token?.claim ? 'Claimed' : 'Unclaimed'}`}
+  />
+  ),[token?.claim])
 
   return (
     <>
@@ -316,11 +322,16 @@ export default function Token(props) {
                 }}
               >
                 <Icon icon={CalendarIcon} />
-                {token.created_at !== null
-                  ? `Minted on ${moment(tree.time_created).format(
-                      'MMMM Do, YYYY',
-                    )}`
-                  : 'Unknown Mint Date'}
+                {token.created_at !== null ? (
+                  <>
+                    Minted on
+                    <time dateTime={tree.time_created}>
+                      {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
+                    </time>
+                  </>
+                ) : (
+                  'Unknown Mint Date'
+                )}
               </Typography>
 
               <Box
@@ -330,11 +341,7 @@ export default function Token(props) {
                   mt: 2,
                 }}
               >
-                <VerifiedBadge
-                  color="secondary"
-                  badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-                  verified={false}
-                />
+                {BadgeSection}
               </Box>
             </Box>
           )}
@@ -370,11 +377,16 @@ export default function Token(props) {
                 }}
               >
                 <Icon icon={CalendarIcon} />
-                {token.created_at !== null
-                  ? `Minted on ${moment(tree.time_created).format(
-                      'MMMM Do, YYYY',
-                    )}`
-                  : 'Unknown Mint Date'}
+                {token.created_at !== null ? (
+                  <>
+                    Minted on
+                    <time dateTime={tree.time_created}>
+                      {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
+                    </time>
+                  </>
+                ) : (
+                  'Unknown Mint Date'
+                )}
               </Typography>
               <Box
                 sx={{
@@ -383,11 +395,7 @@ export default function Token(props) {
                   mt: 2,
                 }}
               >
-                <VerifiedBadge
-                  color="secondary"
-                  badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-                  verified={false}
-                />
+                {BadgeSection}
               </Box>
             </Box>
           </Portal>
@@ -434,7 +442,11 @@ export default function Token(props) {
         <TagList>
           <TreeTag
             key="created-at"
-            TreeTagValue={new Date(token.created_at).toLocaleDateString()}
+            TreeTagValue={
+              <time dateTime={token.created_at}>
+                {new Date(token.created_at).toLocaleDateString()}
+              </time>
+            }
             title="Created At"
             icon={<Icon icon={CalendarIcon} />}
           />
@@ -502,10 +514,12 @@ export default function Token(props) {
               <TimelineOppositeContent
                 color="text.secondary"
                 sx={{
-                  flex: [0.4, 0.2],
+                  flex: '0 0 100px',
                 }}
               >
-                {new Date(token.created_at).toLocaleDateString()}
+                <time dateTime={token.created_at}>
+                  {new Date(token.created_at).toLocaleDateString()}
+                </time>
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineDot color="primary" />
@@ -531,11 +545,13 @@ export default function Token(props) {
               <TimelineItem key={transaction.id}>
                 <TimelineOppositeContent
                   sx={{
-                    flex: [0.4, 0.2],
+                    flex: '0 0 100px',
                   }}
                   color="text.secondary"
                 >
-                  {new Date(transaction.processed_at).toLocaleDateString()}
+                  <time dateTime={transaction.processed_at}>
+                    {new Date(transaction.processed_at).toLocaleDateString()}
+                  </time>
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot color="primary" />
@@ -619,7 +635,7 @@ export default function Token(props) {
             <TimelineItem>
               <TimelineOppositeContent
                 sx={{
-                  flex: [0.4, 0.2],
+                  flex: '0 0 100px',
                 }}
                 color="text.secondary"
               >
@@ -639,7 +655,6 @@ export default function Token(props) {
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
         <Box height={20} />
         {nextExtraIsEmbed && (
           <Portal
@@ -718,20 +733,28 @@ async function serverSideData(params, query) {
   return result;
 }
 
-const getStaticProps = wrapper(async ({ params, query }) => {
+// const getStaticProps = wrapper(async ({ params, query }) => {
+//   const props = await serverSideData(params, query);
+//   return {
+//     props,
+//     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+//   };
+// });
+
+// // eslint-disable-next-line
+// const getStaticPaths = async () => {
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   };
+// };
+
+const getServerSideProps = wrapper(async ({ params, query }) => {
   const props = await serverSideData(params, query);
   return {
     props,
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
   };
 });
 
-// eslint-disable-next-line
-const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  };
-};
+export { getServerSideProps };
 
-export { getStaticProps, getStaticPaths };

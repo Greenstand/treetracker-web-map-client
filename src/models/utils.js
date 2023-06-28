@@ -294,6 +294,20 @@ const getPropByPath = (propPath, obj) => {
   return propPath.split('.').reduce((acc, curr) => acc[curr], obj);
 };
 
+/**
+ * @param {int} number - the number to abbrevate
+ *  *
+ * @example
+ * 1000
+ * // returns 1K
+ *
+ * @returns the abbreviated number
+ */
+const abbreviateNumber = (number) =>
+  new Intl.NumberFormat('en', {
+    notation: 'compact',
+  }).format(number);
+
 export {
   hideLastName,
   parseDomain,
@@ -315,4 +329,5 @@ export {
   getLocationString,
   setPropByPath,
   getPropByPath,
+  abbreviateNumber,
 };

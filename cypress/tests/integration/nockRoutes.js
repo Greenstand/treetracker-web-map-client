@@ -1,5 +1,6 @@
 import organization1 from '../../../doc/examples/organizations/1.json';
 import planter940 from '../../../doc/examples/planters/940.json';
+import { defaultConfig } from '../../../src/context/configContext';
 import leader from '../../fixtures/countries/leader.json';
 import tree186734 from '../../fixtures/tree186734.json';
 
@@ -106,10 +107,28 @@ export function getNockRoutes(
 }
 
 export function prepareNocks(props) {
-  if (!Cypress.env('nock')) return;
+  if (!Cypress.env('nock')) {
+    console.warn("Cypress.env('nock') is not set, skipping nock preparation");
+    return;
+  }
   cy.task('nocks', {
     hostname: Cypress.env('NEXT_PUBLIC_API'),
     routes: getNockRoutes(props),
+  });
+
+  cy.task('nockIntercept', {
+    hostname: 'https://dev-k8s.treetracker.org',
+    method: 'get',
+    path: '/map_config/config',
+    statusCode: 200,
+    body: {
+      data: [
+        {
+          name: 'testing-config',
+          data: defaultConfig,
+        },
+      ],
+    },
   });
 }
 

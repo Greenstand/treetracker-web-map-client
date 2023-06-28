@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
-import { usePlaygroundUtils } from '../../hooks/contextHooks';
+import { usePlaygroundTheme } from 'hooks/contextHooks';
 
 function TypographyThumbnail({ text, path }) {
-  const { getPropByPath } = usePlaygroundUtils();
+  const { getPropByPath } = usePlaygroundTheme();
   const previewStyle = getPropByPath(path);
 
   return (

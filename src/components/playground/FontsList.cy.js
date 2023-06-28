@@ -1,5 +1,5 @@
+import { mountWithTheme as mount } from 'models/test-utils';
 import FontsList from './FontsList';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Change Theme Button', () => {
   const list = {

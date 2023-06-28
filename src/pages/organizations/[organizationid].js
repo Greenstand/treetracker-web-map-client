@@ -4,73 +4,37 @@ import log from 'loglevel';
 import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import Badge from 'components/Badge';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
+import ImpactSection from 'components/ImpactSection';
 import PlanterQuote from 'components/PlanterQuote';
+import ProfileAvatar from 'components/ProfileAvatar';
+import ProfileCover from 'components/ProfileCover';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import Crumbs from 'components/common/Crumbs';
+import CustomCard from 'components/common/CustomCard';
+import Icon from 'components/common/CustomIcon';
+import Info from 'components/common/Info';
 import { useDrawerContext } from 'context/DrawerContext';
+import { useMobile } from 'hooks/globalHooks';
+import CalendarIcon from 'images/icons/calendar.svg';
+import LocationIcon from 'images/icons/location.svg';
+import PeopleIcon from 'images/icons/people.svg';
+import TreeIcon from 'images/icons/tree.svg';
+import imagePlaceholder from 'images/image-placeholder.png';
+import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
-import { makeStyles } from 'models/makeStyles';
-import ImpactSection from '../../components/ImpactSection';
-import ProfileAvatar from '../../components/ProfileAvatar';
-import ProfileCover from '../../components/ProfileCover';
-import VerifiedBadge from '../../components/VerifiedBadge';
-import Crumbs from '../../components/common/Crumbs';
-import CustomCard from '../../components/common/CustomCard';
-import Icon from '../../components/common/CustomIcon';
-import Info from '../../components/common/Info';
-import { useMobile } from '../../hooks/globalHooks';
-import CalendarIcon from '../../images/icons/calendar.svg';
-import LocationIcon from '../../images/icons/location.svg';
-import PeopleIcon from '../../images/icons/people.svg';
-import TreeIcon from '../../images/icons/tree.svg';
-import imagePlaceholder from '../../images/image-placeholder.png';
-import SearchIcon from '../../images/search.svg';
-// import placeholder from '../../images/organizationsPlaceholder.png';
-import { useMapContext } from '../../mapContext';
-import * as pathResolver from '../../models/pathResolver';
-import { getLocationString, getContinent, wrapper } from '../../models/utils';
-
-const useStyles = makeStyles()((theme) => ({
-  imgContainer: {
-    borderRadius: '16px',
-    position: 'relative',
-    img: {
-      borderRadius: '16px',
-    },
-    marginBottom: theme.spacing(4),
-    '&> img': {
-      width: '100%',
-      height: '100%',
-    },
-  },
-  logoContainer: {
-    backgroundColor: theme.palette.common.white,
-    position: 'absolute',
-    left: theme.spacing(4),
-    bottom: theme.spacing(4),
-    boxSizing: 'border-box',
-    padding: theme.spacing(5),
-    width: 108,
-    height: 108,
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    '&> img': {
-      width: '100%',
-    },
-  },
-}));
+import * as pathResolver from 'models/pathResolver';
+import { getLocationString, getContinent, wrapper } from 'models/utils';
 
 export default function Organization(props) {
   log.warn('props for org page:', props);
   const { organization, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
-  const { classes } = useStyles();
   const [isPlanterTab, setIsPlanterTab] = React.useState(true);
   // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
@@ -126,6 +90,20 @@ export default function Organization(props) {
   const logo_url = organization.logo_url || imagePlaceholder;
   const name = organization.name || '---';
 
+  const BadgeSection = useMemo(()=>(
+      <>
+        <Badge
+          color="primary"
+          verified
+          badgeName="Verified Organization"
+        />
+        <Badge 
+          color="greyLight" 
+          badgeName="Seeking Planter" 
+        />
+      </>
+  ),[])
+
   return (
     <>
       <HeadTag title={`${name} - Organization`} />
@@ -159,7 +137,7 @@ export default function Organization(props) {
                 },
                 {
                   icon: logo_url,
-                  name: `organization ${name}`,
+                  name: `${name}`,
                 },
               ]}
             />
@@ -194,9 +172,16 @@ export default function Organization(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Organization since ${moment(
-                  organization?.created_at,
-                ).format('MMMM DD, YYYY')}`}
+                info={
+                  <>
+                    Organization since
+                    <time dateTime={organization?.created_at}>
+                      {` ${moment(organization?.created_at).format(
+                        'MMMM DD, YYYY',
+                      )}`}
+                    </time>
+                  </>
+                }
               />
             </Box>
             <Box sx={{ mt: 2 }}>
@@ -215,12 +200,7 @@ export default function Organization(props) {
                 display: 'flex',
               }}
             >
-              <VerifiedBadge
-                color="primary"
-                verified
-                badgeName="Verified Organization"
-              />
-              <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
+             {BadgeSection}
             </Box>
           </Box>
         )}
@@ -239,9 +219,16 @@ export default function Organization(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Organization since ${moment().format(
-                    'MMMM DD, YYYY',
-                  )}`}
+                  info={
+                    <>
+                      Organization since
+                      <time dateTime={organization?.created_at}>
+                        {` ${moment(organization?.created_at).format(
+                          'MMMM DD, YYYY',
+                        )}`}
+                      </time>
+                    </>
+                  }
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
@@ -260,12 +247,7 @@ export default function Organization(props) {
                   display: 'flex',
                 }}
               >
-                <VerifiedBadge
-                  color="primary"
-                  verified
-                  badgeName="Verified Organization"
-                />
-                <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
+               {BadgeSection}
               </Box>
             </Box>
           </Portal>
@@ -363,12 +345,10 @@ export default function Organization(props) {
               <CustomWorldMap
                 totalTrees={
                   (organization?.featuredTrees?.total &&
-                    new Intl.NumberFormat('en', { notation: 'compact' }).format(
-                      organization?.featuredTrees?.total,
-                    )) ||
+                    organization?.featuredTrees?.total) ||
                   undefined
                 }
-                con="af"
+                con={organization?.continent_name || 'af'}
               />
             </Box>
             <Typography
@@ -380,24 +360,20 @@ export default function Organization(props) {
             >
               Species of trees planted
             </Typography>
-            <Box
-              sx={{
-                mt: [5, 10],
-              }}
-            >
-              {organization?.species?.species?.map((s) => (
-                <React.Fragment key={s.name}>
-                  <TreeSpeciesCard
-                    name={s.name}
-                    subTitle={s.desc || '---'}
-                    count={s.total}
-                  />
-                  <Box sx={{ mt: [2, 4] }} />
-                </React.Fragment>
-              ))}
-            </Box>
-            {(!organization?.species?.species ||
-              organization?.species?.species.length === 0) && (
+            {organization?.species?.species?.length > 0 ? (
+              <Box component="ul" sx={{ mt: [5, 10], listStyle: 'none', p: 0 }}>
+                {organization?.species?.species?.map((s) => (
+                  <li key={s.name}>
+                    <TreeSpeciesCard
+                      name={s.name}
+                      subTitle={s.desc || '---'}
+                      count={s.total}
+                    />
+                    <Box sx={{ mt: [2, 4] }} />
+                  </li>
+                ))}
+              </Box>
+            ) : (
               <Typography variant="h5">NO DATA YET</Typography>
             )}
           </Box>
@@ -442,14 +418,21 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-          {organization?.associatedPlanters?.planters
-            ?.sort((e1, e2) => (e1.about ? -1 : 1))
-            .map((planter, i) => (
-              <Box sx={{ mt: [6, 12] }} key={planter.name}>
-                <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
-              </Box>
-            ))}
+          {organization?.associatedPlanters?.planters?.length > 0 ? (
+            <Box component="ul" sx={{ mt: [6, 12], listStyle: 'none', p: 0 }}>
+              {organization?.associatedPlanters?.planters
+                ?.sort((e1) => (e1.about ? -1 : 1))
+                .map((planter, i) => (
+                  <Box component="li" key={planter.name} sx={{ mt: [6, 12] }}>
+                    <PlanterQuote planter={planter} reverse={i % 2 !== 0} />
+                  </Box>
+                ))}
+            </Box>
+          ) : (
+            <Typography variant="h5">NO DATA YET</Typography>
+          )}
         </Box>
+
         <Box
           sx={{
             px: [24 / 8, 24 / 4],
@@ -457,47 +440,51 @@ export default function Organization(props) {
           }}
         >
           <Divider varian="fullwidth" />
-          <Typography
-            sx={{
-              mt: [80 / 8, 80 / 4],
-            }}
-            variant="h4"
-          >
-            About the Organization
-          </Typography>
-          <Typography variant="body2" mt={7}>
-            <Box
-              component="span"
-              dangerouslySetInnerHTML={{
-                __html: marked.parse(organization.about || 'NO DATA YET'),
-              }}
-            />
-          </Typography>
-          <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
-            Mission
-          </Typography>
-          <Typography variant="body2" mt={7}>
-            <Box
-              component="span"
+          <article>
+            <Typography
               sx={{
-                fontFamily: 'Lato',
-                fontWeight: 400,
-                fontSize: '20px',
-                lineHeight: '28px',
-                letterSpacing: '0.04em',
+                mt: [80 / 8, 80 / 4],
               }}
-              dangerouslySetInnerHTML={{
-                __html: marked.parse(organization.mission || 'NO DATA YET'),
-              }}
-            />
-          </Typography>
+              variant="h4"
+            >
+              About the Organization
+            </Typography>
+            <Typography variant="body2" mt={7}>
+              <Box
+                component="span"
+                dangerouslySetInnerHTML={{
+                  __html: marked.parse(organization.about || 'NO DATA YET'),
+                }}
+              />
+            </Typography>
+          </article>
+          <article>
+            <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
+              Mission
+            </Typography>
+            <Typography variant="body2" mt={7}>
+              <Box
+                component="span"
+                sx={{
+                  mt: [80 / 8, 80 / 4],
+                  fontFamily: 'Lato',
+                  fontWeight: 400,
+                  fontSize: '20px',
+                  lineHeight: '28px',
+                  letterSpacing: '0.04em',
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: marked.parse(organization.mission || 'NO DATA YET'),
+                }}
+              />
+            </Typography>
+          </article>
           <Divider
             varian="fullwidth"
             sx={{
               mt: [10, 20],
             }}
           />
-          <ImpactSection />
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>

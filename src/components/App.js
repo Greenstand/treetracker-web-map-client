@@ -7,8 +7,8 @@ import log from 'loglevel';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
-import { useMapContext } from '../mapContext';
-import * as pathResolver from '../models/pathResolver';
+import { useMapContext } from 'mapContext';
+import * as pathResolver from 'models/pathResolver';
 // import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
@@ -154,21 +154,26 @@ function MapComponent() {
       tileServerSubdomains:
         process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
       apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
+      queryApiServerUrl: process.env.NEXT_PUBLIC_API,
     });
-    map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
-      log.warn('update url');
-      const path = pathResolver.updatePathWhenMapMoveEnd(
-        window.location,
-        map,
-        router,
-      );
-      window.history.pushState('treetracker', '', path);
-    });
+    const isAdmin = !!router.asPath.match(/admin/);
+    if (!isAdmin) {
+      map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
+        log.warn('update url');
+        const path = pathResolver.updatePathWhenMapMoveEnd(
+          window.location,
+          map,
+          router,
+        );
+        window.history.pushState('treetracker', '', path);
+      });
+    }
+
     map.mount(mapRef.current);
     mapRef.current.map = map;
     // update context
     mapContext.setMap(map);
-  }, []);
+  }, [router]);
 
   // eslint-disable-next-line no-unused-vars
   function handleDateChange(date) {

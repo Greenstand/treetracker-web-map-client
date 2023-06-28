@@ -7,15 +7,17 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
 import { useState } from 'react';
+import { useConfigContext } from 'context/configContext';
+import { useCustomThemeContext } from 'hooks/contextHooks';
+import { useMobile } from 'hooks/globalHooks';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
-import { useMobile } from '../hooks/globalHooks';
 
-const iconLogo = `${process.env.NEXT_PUBLIC_BASE}/images/greenstand_logo.svg`;
+const treeTrackerLogo = `/images/treetracker_logo.svg`;
+const treeTrackerLogoWhite = `/images/treetracker_logo_white.svg`;
 
 const useStyles = makeStyles()((theme) => ({
   navContainer: {
@@ -27,12 +29,6 @@ const useStyles = makeStyles()((theme) => ({
     justifyContent: 'space-between',
     padding: '0 20px',
     zIndex: 9999,
-    // boxShadow:
-    //   '0px 20px 17px -14px rgb(0 0 0 / 32%), 0px 10px 15px 1px rgb(0 0 0 / 14%), 0px 10px 20px 3px rgb(0 0 0 / 12%)',
-    [theme.breakpoints.down('sm')]: {
-      padding: '0',
-      alignItems: 'flex-end',
-    },
   },
   toolbar: {
     gap: 25,
@@ -41,10 +37,9 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
   logo: {
-    paddingLeft: '1rem',
     paddingBottom: '.5rem',
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   buttonStyle: {
     fontSize: '16px',
@@ -54,7 +49,10 @@ const useStyles = makeStyles()((theme) => ({
     display: 'none',
     padding: 0,
     [theme.breakpoints.down('sm')]: {
-      display: 'block',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minWidth: 'fit-content',
     },
   },
 }));
@@ -62,6 +60,9 @@ const useStyles = makeStyles()((theme) => ({
 function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
+  const { navbar: config } = useConfigContext();
+
+  const { theme } = useCustomThemeContext();
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -79,54 +80,28 @@ function Navbar() {
       position="static"
     >
       <Link href="/" className={classes.logo}>
-        {isMobile && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'baseline',
-              m: 4,
-            }}
-          >
-            <Image
-              src={iconLogo}
-              width={24}
-              height={30}
-              alt="Greenstand Logo"
-            />
-          </Box>
-        )}
-        {!isMobile && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'baseline',
-            }}
-          >
-            {/* <Image
-              src={iconLogo}
-              width={24}
-              height={30}
-              alt="Greenstand Logo"
-            /> */}
-            <Typography
-              variant="h1"
-              ml={2.5}
-              color="primary"
-              sx={{
-                // color: '#61892F',
-                fontSize: 30,
-                fontWeight: 900,
-                lineHeight: '37px',
-                letterSpacing: '0.2px',
-              }}
-            >
-              Treetracker
-            </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'baseline',
+            gap: theme.spacing(2),
+            width: 'max-content',
+          }}
+        >
+          <img
+            src={
+              theme.palette.mode === 'light'
+                ? treeTrackerLogo
+                : treeTrackerLogoWhite
+            }
+            width={217}
+            height={35}
+            alt="Treetracker Logo"
+          />
+          {!isMobile ? (
             <Typography
               variant="h6"
-              ml={2.5}
               color="text.secondary"
               sx={{
                 fontWeight: 900,
@@ -135,42 +110,19 @@ function Navbar() {
             >
               by Greenstand
             </Typography>
-          </Box>
-        )}
+          ) : null}
+        </Box>
       </Link>
       <Toolbar variant="dense" className={classes.toolbar}>
-        <Link href="https://greenstand.org/" target="_blank">
-          <Button variant="text">
-            <Typography className={classes.buttonStyle}>
-              About Greenstand
-            </Typography>
-          </Button>
-        </Link>
-        <Link
-          target="_blank"
-          href="https://greenstand.org/treetracker/start-tracking"
-        >
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>
-              About Treetracker
-            </Typography>
-          </Button>
-        </Link>
-        <Link target="_blank" href="https://greenstand.org/contribute/donate">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Contribute</Typography>
-          </Button>
-        </Link>
-        <Link target="_blank" href="https://greenstand.org/blog">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Blog</Typography>
-          </Button>
-        </Link>
-        <Link target="_blank" href="https://greenstand.org/contact">
-          <Button className={classes.buttonStyle} variant="text">
-            <Typography className={classes.buttonStyle}>Contact Us</Typography>
-          </Button>
-        </Link>
+        {config?.items.map((item) => (
+          <Link key={`nav-${item.title}`} target="_blank" href={item.url}>
+            <Button className={classes.buttonStyle} variant="text">
+              <Typography className={classes.buttonStyle}>
+                {item.title}
+              </Typography>
+            </Button>
+          </Link>
+        ))}
         <ChangeThemeButton />
       </Toolbar>
       <Button
@@ -180,7 +132,6 @@ function Navbar() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleMenuClick}
       >
-        {' '}
         <MenuBar />
       </Button>
       <Menu
@@ -196,25 +147,11 @@ function Navbar() {
           },
         }}
       >
-        <MenuItem>
-          <Link href="https://greenstand.org/">About Greenstand</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href="https://greenstand.org/treetracker/start-tracking">
-            About Treetracker
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href="https://greenstand.org/contribute/donate">
-            Contribute
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href="https://greenstand.org/blog">Blog</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href="https://greenstand.org/contact">Contact Us</Link>
-        </MenuItem>
+        {config?.items.map((item) => (
+          <MenuItem key={`nav-${item.title}`}>
+            <Link href={item.url}>{item.title}</Link>
+          </MenuItem>
+        ))}
         <MenuItem onClick={handleClose} sx={{ paddingLeft: '10px' }}>
           <ChangeThemeButton />
         </MenuItem>

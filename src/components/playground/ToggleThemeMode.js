@@ -6,7 +6,7 @@ import {
   Switch,
 } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import { usePlaygroundThemeType } from '../../hooks/contextHooks';
+import { usePlaygroundThemeType } from 'hooks/contextHooks';
 
 function ToggleThemeMode() {
   const [themeType, setThemeType] = usePlaygroundThemeType();

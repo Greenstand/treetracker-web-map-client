@@ -1,6 +1,6 @@
+import { PlaygroundProvider } from 'context/playgroundContext';
+import { mountWithTheme as mount } from 'models/test-utils';
 import FontAddInput from './FontAddInput';
-import { PlaygroundProvider } from '../../context/playgroundContext';
-import { mountWithTheme as mount } from '../../models/test-utils';
 
 describe('Toggle Theme Mode', () => {
   it('renders', () => {

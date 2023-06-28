@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { abbreviateNumber } from 'models/utils';
 import Icon from './CustomIcon';
 
 function CustomCard({
@@ -16,9 +17,7 @@ function CustomCard({
 }) {
   let count;
   if (typeof text === 'number') {
-    count = new Intl.NumberFormat('en', {
-      notation: 'compact',
-    }).format(text);
+    count = abbreviateNumber(text);
   }
 
   return (

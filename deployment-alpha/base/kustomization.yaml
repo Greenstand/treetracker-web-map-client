@@ -1,0 +1,4 @@
+resources:
+  - deployment.yaml
+  - mapping.yaml
+  - service.yaml

@@ -13,25 +13,25 @@ import React, { useEffect } from 'react';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
+import ImpactSection from 'components/ImpactSection';
+import ProfileCover from 'components/ProfileCover';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
+import Crumbs from 'components/common/Crumbs';
+import CustomCard from 'components/common/CustomCard';
+import Icon from 'components/common/CustomIcon';
+import Info from 'components/common/Info';
 import TreeTag from 'components/common/TreeTag';
+import { useDrawerContext } from 'context/DrawerContext';
+import { useMobile } from 'hooks/globalHooks';
+import CalendarIcon from 'images/icons/calendar.svg';
+import TokenIcon from 'images/icons/token.svg';
+import TreeIcon from 'images/icons/tree.svg';
+import imagePlaceholder from 'images/image-placeholder.png';
+import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
+import * as pathResolver from 'models/pathResolver';
 import { requestAPI, wrapper } from 'models/utils';
-import ImpactSection from '../../components/ImpactSection';
-import ProfileCover from '../../components/ProfileCover';
-import Crumbs from '../../components/common/Crumbs';
-import CustomCard from '../../components/common/CustomCard';
-import Icon from '../../components/common/CustomIcon';
-import Info from '../../components/common/Info';
-import { useDrawerContext } from '../../context/DrawerContext';
-import { useMobile } from '../../hooks/globalHooks';
-import CalendarIcon from '../../images/icons/calendar.svg';
-import TokenIcon from '../../images/icons/token.svg';
-import TreeIcon from '../../images/icons/tree.svg';
-import imagePlaceholder from '../../images/image-placeholder.png';
-import SearchIcon from '../../images/search.svg';
-import { useMapContext } from '../../mapContext';
-import * as pathResolver from '../../models/pathResolver';
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
@@ -189,9 +189,16 @@ export default function Wallet(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={`Wallet created on ${moment(wallet.created_at).format(
-                    'MMMM DD, YYYY',
-                  )}`}
+                  info={
+                    <>
+                      Wallet created on
+                      <time dateTime={wallet?.created_at}>
+                        {` ${moment(wallet?.created_at).format(
+                          'MMMM DD, YYYY',
+                        )}`}
+                      </time>
+                    </>
+                  }
                 />
               </Box>
             </Box>
@@ -215,9 +222,14 @@ export default function Wallet(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
-                info={`Wallet created on ${moment(wallet.created_at).format(
-                  'MMMM DD, YYYY',
-                )}`}
+                info={
+                  <>
+                    Wallet created on
+                    <time dateTime={wallet?.created_at}>
+                      {` ${moment(wallet?.created_at).format('MMMM DD, YYYY')}`}
+                    </time>
+                  </>
+                }
               />
             </Box>
           </Box>
@@ -287,14 +299,17 @@ export default function Wallet(props) {
         )}
 
         <Box
+          component="ul"
           sx={{
             mt: [0, 16],
             p: [2, 4],
             display: isTokenTab ? 'block' : 'none',
+            listStyle: 'none',
           }}
         >
           {tokens.tokens.map((token) => (
             <Box
+              component="li"
               key={token.id}
               sx={{
                 mt: [2, 4],
@@ -305,6 +320,7 @@ export default function Wallet(props) {
                 title="Token ID"
                 icon={<Icon icon={TokenIcon} />}
                 link={`/wallets/${wallet.id}/tokens/${token.id}`}
+                fullWidth
               />
             </Box>
           ))}
@@ -326,17 +342,21 @@ export default function Wallet(props) {
               Species of trees planted
             </Typography>
             <Box
+              component="ul"
               sx={{
                 mt: [5, 10],
+                listStyle: 'none',
+                px: 0,
               }}
             >
               {species.map((specie) => (
-                <TreeSpeciesCard
-                  key={specie.id}
-                  name={specie.name}
-                  count={specie.total}
-                  subTitle={specie.desc || '---'}
-                />
+                <li key={specie.id}>
+                  <TreeSpeciesCard
+                    name={specie.name}
+                    count={specie.total}
+                    subTitle={specie.desc || '---'}
+                  />
+                </li>
               ))}
             </Box>
           </Box>
@@ -350,20 +370,19 @@ export default function Wallet(props) {
         <Typography sx={{ mt: [2.5, 5] }} variant="h4">
           About the Wallet
         </Typography>
-        <Typography sx={{ mt: [2.5, 5] }} variant="body2">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: marked.parse(wallet.about || 'NO DATA YET'),
-            }}
-          />
-        </Typography>
+        <Typography
+          sx={{ mt: [2.5, 5] }}
+          variant="body2"
+          dangerouslySetInnerHTML={{
+            __html: marked.parse(wallet.about || 'NO DATA YET'),
+          }}
+        />
         <Divider
           varian="fullwidth"
           sx={{
             mt: [10, 20],
           }}
         />
-        <ImpactSection />
       </Box>
     </>
   );

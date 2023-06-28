@@ -1,13 +1,13 @@
-import { ConfigProvider } from 'context/configContext';
+import { DashboardProvider } from 'context/dashboardContext';
 import { mountWithTheme as mount } from 'models/test-utils';
 import CustomLogo from './CustomLogo';
 
 describe('CustomLogo', () => {
   it('renders', () => {
     mount(
-      <ConfigProvider>
+      <DashboardProvider>
         <CustomLogo />
-      </ConfigProvider>,
+      </DashboardProvider>,
     );
   });
 });

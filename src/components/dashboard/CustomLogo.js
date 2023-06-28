@@ -2,11 +2,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useConfigContext } from 'context/configContext';
+import { useDashboardContext } from 'context/dashboardContext';
 import { updateLogoUrl } from 'models/config.reducer';
 
 function CustomLogo() {
-  const { state, dispatch } = useConfigContext();
+  const { state, dispatch } = useDashboardContext();
 
   const handleOnChange = (e) => {
     const newUrl = e.target.value;
