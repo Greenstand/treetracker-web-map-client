@@ -1,3 +1,45 @@
+## [2.4.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.4.0...v2.4.1) (2023-06-28)
+
+
+### Bug Fixes
+
+* pass props to test component ([41c3d81](https://github.com/Greenstand/treetracker-web-map-client/commit/41c3d819eab573b724cfec0c618297c9d88a0552))
+
+# [2.4.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.3...v2.4.0) (2023-06-27)
+
+
+### Bug Fixes
+
+* broken int test cypress because of upgrade ([f751401](https://github.com/Greenstand/treetracker-web-map-client/commit/f7514011b678d5fc8daeca41604cf8da34f548c4))
+* broken int test in cypress ([5c3ee5b](https://github.com/Greenstand/treetracker-web-map-client/commit/5c3ee5bc6e1182e410f2cba496395f4a85a9b29b))
+* remove useless tests ([0f470ca](https://github.com/Greenstand/treetracker-web-map-client/commit/0f470cae168e0979b72b4ee430845f2c1061e876))
+
+
+### Features
+
+* upgrade cypress ([b1ec6eb](https://github.com/Greenstand/treetracker-web-map-client/commit/b1ec6ebea2467324edefe4cf4cebd7608bae8100))
+
+## [2.3.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.2...v2.3.3) (2023-06-19)
+
+
+### Bug Fixes
+
+* beta is not in use ([b721be7](https://github.com/Greenstand/treetracker-web-map-client/commit/b721be7930185bd4f0d47a692cb2019e86f9082e))
+
+## [2.3.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.1...v2.3.2) (2023-06-17)
+
+
+### Bug Fixes
+
+* trigger main release ([d4d552f](https://github.com/Greenstand/treetracker-web-map-client/commit/d4d552fa895f5009cf1f23901a111b189f6146c3))
+
+## [2.3.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.0...v2.3.1) (2023-06-12)
+
+
+### Bug Fixes
+
+* [#1634](https://github.com/Greenstand/treetracker-web-map-client/issues/1634) Changed text from 'Planted on' to 'Captured on' in tree image and info ([2c45af3](https://github.com/Greenstand/treetracker-web-map-client/commit/2c45af31562fa8f10fc097d997192c97e9812f34))
+
 # [2.3.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.2.6...v2.3.0) (2023-06-04)
 
 

@@ -70,7 +70,7 @@ jobs:
       - name: Run Component tests 🧪
         uses: cypress-io/github-action@v4
         with:
-          command: npx cypress run-ct
+          command: npm run cypress:run:component
 
       - name: Jest Unit Tests 🧪
         run: npx jest --ci
