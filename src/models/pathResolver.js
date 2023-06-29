@@ -93,6 +93,9 @@ function updatePathWhenMapMoveEnd(location, map, router) {
   }${router.query.embed ? `&embed=true` : ''}`;
   if (router.query.tree_id) {
     result += `&tree_id=${router.query.tree_id}`;
+  } else if (router.query.walletid) {
+    const tree_id = router.asPath.match(/tree_id=(\d+)/)[1];
+    result += `&tree_id=${tree_id}`;
   }
   return result;
 }
