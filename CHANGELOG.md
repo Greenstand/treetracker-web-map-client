@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.4.0...v2.4.1) (2023-06-28)
+
+
+### Bug Fixes
+
+* pass props to test component ([41c3d81](https://github.com/Greenstand/treetracker-web-map-client/commit/41c3d819eab573b724cfec0c618297c9d88a0552))
+
 # [2.4.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.3...v2.4.0) (2023-06-27)
 
 

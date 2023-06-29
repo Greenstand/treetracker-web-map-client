@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -8,6 +8,7 @@
     "cy": "cypress open --env nock=true",
     "cy:nockless": "start-server-and-test dev http://localhost:3000 cypress:open",
     "cypress:run": "cypress run",
+    "cypress:run:component": "cypress run --component",
     "cypress:run:fast": "cypress run --env nock=true --spec=cypress/tests/integration/**/*.cy.js --config video=false",
     "dev": "next dev",
     "dev:mock": "NEXT_PUBLIC_API_MOCKING=enabled npm run dev",
