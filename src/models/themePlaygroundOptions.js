@@ -288,6 +288,12 @@ export const themeEditorConfig = {
         fontSize: {
           displayText: 'Font Size',
           inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 26,
+            max: 50,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -314,7 +320,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 16,
+            max: 40,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -341,7 +353,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 10,
+            max: 30,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -368,7 +386,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 8,
+            max: 24,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -395,7 +419,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 16,
+            max: 40,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -422,7 +452,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 16,
+            max: 40,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -449,7 +485,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 16,
+            max: 40,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -476,7 +518,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 16,
+            max: 40,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -503,7 +551,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 16,
+            max: 40,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -530,7 +584,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 16,
+            max: 30,
+            step: 4,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
