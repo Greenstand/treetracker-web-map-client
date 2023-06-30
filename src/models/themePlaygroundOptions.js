@@ -254,7 +254,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 44,
+            max: 54,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -281,7 +287,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 30,
+            max: 40,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -308,7 +320,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 28,
+            max: 38,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -335,7 +353,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 24,
+            max: 34,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -362,7 +386,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 16,
+            max: 28,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -389,7 +419,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 12,
+            max: 24,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -416,7 +452,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 8,
+            max: 16,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -443,7 +485,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 8,
+            max: 16,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -470,7 +518,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 8,
+            max: 16,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -497,7 +551,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 10,
+            max: 20,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
@@ -524,7 +584,13 @@ export const themeEditorConfig = {
         },
         fontSize: {
           displayText: 'Font Size',
-          inputType: CONFIG_INPUT_TYPES.TEXT,
+          inputType: CONFIG_INPUT_TYPES.SLIDER,
+          inputProps: {
+            min: 8,
+            max: 18,
+            step: 2,
+            unit: 'px',
+          },
         },
         lineHeight: {
           displayText: 'Line Height',
