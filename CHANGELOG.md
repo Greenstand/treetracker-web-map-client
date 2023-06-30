@@ -1,3 +1,17 @@
+# [2.5.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.4.1...v2.5.0) (2023-06-30)
+
+
+### Bug Fixes
+
+* broken test ([2054e02](https://github.com/Greenstand/treetracker-web-map-client/commit/2054e024293d76c4d64f15d1e236ea1eb2e32c5f))
+
+
+### Features
+
+* add prettier check to CI ([ccdc330](https://github.com/Greenstand/treetracker-web-map-client/commit/ccdc330addd4f2fdc5ab226b6d752747e7a07f56))
+* prettier after lint fix ([8b8f400](https://github.com/Greenstand/treetracker-web-map-client/commit/8b8f40077d7c825651e67f9ffcf518a5afa64e21))
+* prettier ignore ([cec3b60](https://github.com/Greenstand/treetracker-web-map-client/commit/cec3b60be2571ac92347db8f8d9a68212a9ec7fe))
+
 ## [2.4.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.4.0...v2.4.1) (2023-06-28)
 
 
