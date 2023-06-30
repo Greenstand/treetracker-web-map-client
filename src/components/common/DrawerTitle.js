@@ -8,7 +8,6 @@ import { useDrawerContext } from 'context/DrawerContext';
 import * as utils from 'models/utils';
 import DataTag from './DataTag';
 
-
 const Wrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   margin: '16px',
@@ -53,7 +52,7 @@ function PlanterAndOrganizationTitle({
           },
         }}
       >
-        <Badge icon={<CheckIcon/>} badgeName="Verified Planter" />
+        <Badge icon={<CheckIcon />} badgeName="Verified Planter" />
         <Badge badgeName="Seeking Orgs" />
       </Box>
     </>
@@ -79,8 +78,14 @@ function TreeTitle({ treeId, verifiedTree, verifiedToken }) {
           },
         }}
       >
-        <Badge icon={verifiedTree ? <CheckIcon/> : null} badgeName="Tree Verified" />
-        <Badge icon={verifiedToken ? <CheckIcon/> : null} badgeName="Token Issued" />
+        <Badge
+          icon={verifiedTree ? <CheckIcon /> : null}
+          badgeName="Tree Verified"
+        />
+        <Badge
+          icon={verifiedToken ? <CheckIcon /> : null}
+          badgeName="Token Issued"
+        />
       </Box>
     </>
   );

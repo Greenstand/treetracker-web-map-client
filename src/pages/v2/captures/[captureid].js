@@ -35,7 +35,12 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getStakeHolderById, getCapturesById, getGrowerById, getCountryByLatLon } from 'models/api';
+import {
+  getStakeHolderById,
+  getCapturesById,
+  getGrowerById,
+  getCountryByLatLon,
+} from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
