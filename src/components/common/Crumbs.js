@@ -5,7 +5,7 @@ export default function Crumbs(props) {
   const { items } = props;
 
   return (
-    (<Box
+    <Box
       sx={{
         display: 'flex',
       }}
@@ -44,7 +44,7 @@ export default function Crumbs(props) {
           }
 
           return index === items.length - 1 ? ( // do not wrap the last item with Link since it refers to current page
-            (<Typography
+            <Typography
               variant="h6"
               gutterBottom={false}
               sx={{
@@ -56,7 +56,7 @@ export default function Crumbs(props) {
             >
               {icon}
               {item.name}
-            </Typography>)
+            </Typography>
           ) : (
             <Link href={item.url || '/#'} key={item.url ?? `#${index}`}>
               <Typography
@@ -76,6 +76,6 @@ export default function Crumbs(props) {
           );
         })}
       </Breadcrumbs>
-    </Box>)
+    </Box>
   );
 }

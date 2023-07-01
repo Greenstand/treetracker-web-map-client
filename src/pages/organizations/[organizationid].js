@@ -90,19 +90,15 @@ export default function Organization(props) {
   const logo_url = organization.logo_url || imagePlaceholder;
   const name = organization.name || '---';
 
-  const BadgeSection = useMemo(()=>(
+  const BadgeSection = useMemo(
+    () => (
       <>
-        <Badge
-          color="primary"
-          verified
-          badgeName="Verified Organization"
-        />
-        <Badge 
-          color="greyLight" 
-          badgeName="Seeking Planter" 
-        />
+        <Badge color="primary" verified badgeName="Verified Organization" />
+        <Badge color="greyLight" badgeName="Seeking Planter" />
       </>
-  ),[])
+    ),
+    [],
+  );
 
   return (
     <>
@@ -200,7 +196,7 @@ export default function Organization(props) {
                 display: 'flex',
               }}
             >
-             {BadgeSection}
+              {BadgeSection}
             </Box>
           </Box>
         )}
@@ -247,7 +243,7 @@ export default function Organization(props) {
                   display: 'flex',
                 }}
               >
-               {BadgeSection}
+                {BadgeSection}
               </Box>
             </Box>
           </Portal>

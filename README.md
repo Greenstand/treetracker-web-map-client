@@ -116,7 +116,7 @@ We recommend using Cypress's component testing tool to build components in isola
 **To run Cypress unit/component tests:**
 
 ```
-npm run cyu
+npm run cypress:open
 ```
 
 [Video tutorial for building component](https://loom.com/share/c750be68ecec4a9b99cb6921d2d2e041)
@@ -188,12 +188,6 @@ We need to build Cypress integration tests for every page/route. The integration
 Also, integration tests bring some benefits for the development workflow - by mocking API requests we can separately develop every single page. If you'd like to practice Test Driven Development, you can mock the API and write the tests first, then implement the real page later.
 
 **To run Cypress integration tests:**
-
-Open cypress test viewer
-
-```
-npm run cypress:open
-```
 
 Nextjs dev server + Cypress test viewer + nock
 

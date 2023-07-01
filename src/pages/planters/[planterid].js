@@ -131,20 +131,19 @@ export default function Planter(props) {
     reload();
   }, [mapContext, planter]);
 
-
-  const BadgeSection = useMemo(()=>(
-    <>
-      <Badge
-        color="primary"
-        icon={<CheckIcon/>}
-        badgeName="Verified Planter"
-      />
-      <Badge 
-        color="greyLight" 
-        badgeName="Seeking Orgs" 
-      />
-    </>
-  ),[])
+  const BadgeSection = useMemo(
+    () => (
+      <>
+        <Badge
+          color="primary"
+          icon={<CheckIcon />}
+          badgeName="Verified Planter"
+        />
+        <Badge color="greyLight" badgeName="Seeking Orgs" />
+      </>
+    ),
+    [],
+  );
 
   return (
     <>

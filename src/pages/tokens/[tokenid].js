@@ -151,12 +151,15 @@ export default function Token(props) {
   const tokenIdStart = token.id.slice(0, 4);
   const tokenIdEnd = token.id.slice(token.id.length - 4, token.id.length);
 
-  const BadgeSection = useMemo(()=>(
-    <Badge
-    color="secondary"
-    badgeName={`${token?.claim ? 'Claimed' : 'Unclaimed'}`}
-  />
-  ),[token?.claim])
+  const BadgeSection = useMemo(
+    () => (
+      <Badge
+        color="secondary"
+        badgeName={`${token?.claim ? 'Claimed' : 'Unclaimed'}`}
+      />
+    ),
+    [token?.claim],
+  );
 
   return (
     <>

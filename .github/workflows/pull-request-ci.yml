@@ -8,7 +8,7 @@ on:
     paths-ignore:
       - '**.md'
     branches:
-      - main
+      - *
 
 jobs:
   install:
@@ -70,13 +70,16 @@ jobs:
       - name: Run Component tests 🧪
         uses: cypress-io/github-action@v4
         with:
-          command: npx cypress run-ct
+          command: npm run cypress:run:component
 
       - name: Jest Unit Tests 🧪
         run: npx jest --ci
 
       - name: ESLint
         run: npm run lint
+
+      - name: Prettier
+        run: npm run prettier:check
 
       - name: Save screenshots
         # step runs even if other steps fail

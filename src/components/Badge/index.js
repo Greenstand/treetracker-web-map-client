@@ -1,7 +1,6 @@
 import { Chip } from '@mui/material';
 
 function Badge(props) {
-  
   const {
     color,
     badgeName,
