@@ -1,3 +1,18 @@
+# [2.6.0-v2.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.1...v2.6.0-v2.2) (2023-07-01)
+
+
+### Bug Fixes
+
+* badge check ([3788fbd](https://github.com/Greenstand/treetracker-web-map-client/commit/3788fbd023071d20e92c275cc2c84fff36b49d23))
+* badge check ([e6dd5fb](https://github.com/Greenstand/treetracker-web-map-client/commit/e6dd5fbb7fa213a7831eaaea39bd9c271b47a4a3))
+* don't pretieer ([4ed95c8](https://github.com/Greenstand/treetracker-web-map-client/commit/4ed95c8a0c0bfcd55ef0491fbec82b96974fae2d))
+* syntax error in yaml ([7df8f86](https://github.com/Greenstand/treetracker-web-map-client/commit/7df8f86e3586a38a45d10a7da060a677a7773056))
+
+
+### Features
+
+* useless test removed ([90fd25d](https://github.com/Greenstand/treetracker-web-map-client/commit/90fd25dc991f901447887572b07c344faecc45f3))
+
 # [2.6.0-v2.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.0...v2.6.0-v2.1) (2023-07-01)
 
 
