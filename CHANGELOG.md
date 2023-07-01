@@ -1,3 +1,26 @@
+# [2.6.0-v2.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.0...v2.6.0-v2.1) (2023-07-01)
+
+
+### Bug Fixes
+
+* can not display /trees{id} ([64f6746](https://github.com/Greenstand/treetracker-web-map-client/commit/64f6746a1228cf68e95572d9afad0f35348ddebb))
+* env to point to v2 api ([3fc7302](https://github.com/Greenstand/treetracker-web-map-client/commit/3fc7302723955ab6832415dd0c1ac3d3cebdb92e))
+* inconsistant path prefix (v2) ([bc83650](https://github.com/Greenstand/treetracker-web-map-client/commit/bc83650c8c96233d6d129261a6d9cab49ea26340))
+* migrate from v1 to  v2 api ([a6962d5](https://github.com/Greenstand/treetracker-web-map-client/commit/a6962d56676b0cfa4905ff3f90801b03c0929075))
+* readme ([1834d1d](https://github.com/Greenstand/treetracker-web-map-client/commit/1834d1d1c1e35bb7b2e707d6370df177127877a5))
+* trigger release ([cb34cd1](https://github.com/Greenstand/treetracker-web-map-client/commit/cb34cd1b61a2e99bb699c3e4ff8ff559cc2ee560))
+* trigger release on v2 ([f4b77a6](https://github.com/Greenstand/treetracker-web-map-client/commit/f4b77a6174805748f76e018fbbe6e2e5f3ce7870))
+
+
+### Features
+
+* can display captures ([5e3f735](https://github.com/Greenstand/treetracker-web-map-client/commit/5e3f735a70761d3aff041d4b98629f0980716867))
+* can display: http://localhost:3000/v2/captures/e6811362-41d7-4eeb-800c-4b27ec4e223d ([067ca0c](https://github.com/Greenstand/treetracker-web-map-client/commit/067ca0c6fb826d4825cefdbbc266c8d02cdf1efb))
+* config for the second api env var ([ccf4b10](https://github.com/Greenstand/treetracker-web-map-client/commit/ccf4b10025319fcd702b789e055cb98c051d5ad8))
+* first feature \n\n BREAKING CHANGE: it breaks something ([7587da0](https://github.com/Greenstand/treetracker-web-map-client/commit/7587da067d026958bfed13c28bf20e94779268d2))
+* v2 frist ([b64f779](https://github.com/Greenstand/treetracker-web-map-client/commit/b64f7798e716748ca5a45196cb1098166d3d71db))
+* wrap tree id with UUID ([2581b8f](https://github.com/Greenstand/treetracker-web-map-client/commit/2581b8fa7a1a885c60ced2851248ac4ca13620d1))
+
 # [2.4.0-v2.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.3...v2.4.0-v2.1) (2023-06-19)
 
 
