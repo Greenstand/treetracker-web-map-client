@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.1...v2.5.2) (2023-07-01)
+
+
+### Bug Fixes
+
+* don't pretieer ([4ed95c8](https://github.com/Greenstand/treetracker-web-map-client/commit/4ed95c8a0c0bfcd55ef0491fbec82b96974fae2d))
+
 ## [2.5.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.0...v2.5.1) (2023-07-01)
 
 
