@@ -2,10 +2,8 @@ import AutoRenewIcon from '@mui/icons-material/Autorenew';
 import ComputerIcon from '@mui/icons-material/Computer';
 import FontDownloadIcon from '@mui/icons-material/FontDownload';
 import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
-import PaletteIcon from '@mui/icons-material/Palette';
 import PreviewIcon from '@mui/icons-material/Preview';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import TextFieldsIcon from '@mui/icons-material/TextFields';
 import { Button, Box, Stack, Grid, Tabs, Tab } from '@mui/material';
 import { useKeycloak } from '@react-keycloak/ssr';
 import axios from 'axios';
@@ -13,8 +11,6 @@ import log from 'loglevel';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import HeadTag from 'components/HeadTag';
 import {
-  SelectColorProp,
-  SelectTypographyProp,
   SquareIconButton,
   CategoryTabPanel,
   ToggleThemeMode,
@@ -22,14 +18,11 @@ import {
   FontCustomization,
   JSONTextarea,
 } from 'components/playground';
+import PropSection from 'components/playground/PropSection';
 import { PlaygroundProvider } from 'context/playgroundContext';
-import {
-  usePlaygroundTheme,
-  usePlaygroundThemeType,
-  usePlaygroundUtils,
-} from 'hooks/contextHooks';
+import { usePlaygroundTheme, usePlaygroundUtils } from 'hooks/contextHooks';
 import { useLocalStorage } from 'hooks/globalHooks';
-import { customizeOptions } from 'models/themePlaygroundOptions';
+import { themeEditorConfig } from 'models/themePlaygroundOptions';
 import { optimizeThemeFonts } from 'models/utils';
 
 function ThemeConfig() {
@@ -42,7 +35,6 @@ function ThemeConfig() {
 
   // playground theme for customization
   const { theme, setTheme } = usePlaygroundTheme();
-  const [themeType, setThemeType] = usePlaygroundThemeType();
   const { resetTheme } = usePlaygroundUtils();
   const [autoReload, setAutoReload] = useState(false);
   const [viewMobile, setViewMobile] = useState(false);
@@ -458,16 +450,18 @@ function ThemeConfig() {
             onChange={handleTabChange}
             aria-label="customization category tabs"
           >
-            <Tab icon={<PaletteIcon />} label="Palette" {...getTabProps(0)} />
-            <Tab
-              icon={<TextFieldsIcon />}
-              label="Typography"
-              {...getTabProps(1)}
-            />
+            {Object.values(themeEditorConfig).map((section, idx) => (
+              <Tab
+                key={`tab-${section.tab.label}`}
+                icon={section.tab.icon ?? null}
+                label={section.tab.label}
+                {...getTabProps(idx)}
+              />
+            ))}
             <Tab
               icon={<FontDownloadIcon />}
               label="Fonts"
-              {...getTabProps(2)}
+              {...getTabProps(Object.keys(themeEditorConfig).length)}
             />
           </Tabs>
           <Box
@@ -477,38 +471,31 @@ function ThemeConfig() {
               overflowY: 'scroll',
             }}
           >
-            <CategoryTabPanel value={tabIndex} index={0}>
-              <ToggleThemeMode />
-              {Object.entries(customizeOptions.palette.options).map(
-                ([propName, options]) => (
-                  <SelectColorProp
-                    key={`select-color-${propName}`}
-                    prop={{ propName, options }}
-                    path={`palette${
-                      customizeOptions.palette.themeModeDependend
-                        ? `.${themeType}`
-                        : ''
-                    }.${propName}`}
-                  />
-                ),
-              )}
-            </CategoryTabPanel>
-            <CategoryTabPanel value={tabIndex} index={1}>
-              {Object.entries(customizeOptions.typography.options).map(
-                ([propName, options]) => (
-                  <SelectTypographyProp
-                    key={`select-typography-${propName}`}
-                    prop={{ propName, options }}
-                    path={`typography${
-                      customizeOptions.typography.themeModeDependend
-                        ? `.${themeType}`
-                        : ''
-                    }.${propName}`}
-                  />
-                ),
-              )}
-            </CategoryTabPanel>
-            <CategoryTabPanel value={tabIndex} index={2}>
+            {Object.entries(themeEditorConfig).map(
+              ([categoryName, section], idx) => (
+                <CategoryTabPanel
+                  key={categoryName}
+                  value={tabIndex}
+                  index={idx}
+                >
+                  {categoryName === 'palette' && <ToggleThemeMode />}
+                  {Object.entries(section).map(([propName, prop]) =>
+                    propName !== 'tab' ? (
+                      <PropSection
+                        key={`prop-section-${propName}`}
+                        section={prop}
+                        sectionName={propName}
+                        path={categoryName}
+                      />
+                    ) : null,
+                  )}
+                </CategoryTabPanel>
+              ),
+            )}
+            <CategoryTabPanel
+              value={tabIndex}
+              index={Object.keys(themeEditorConfig).length}
+            >
               <FontCustomization />
             </CategoryTabPanel>
           </Box>
