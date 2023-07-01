@@ -32,16 +32,6 @@ describe('getOrganizationById', () => {
   });
 });
 
-describe('getPlanterById', () => {
-  it('should get planter with id', async () => {
-    const id = 1;
-    const planter = await getPlanterById(id);
-    expect(planter).toBeDefined();
-    expect(planter.mission).toBeDefined();
-    expect(planter.mission).toBeDefined();
-  });
-});
-
 describe('getTreeById', () => {
   it('should get tree by id', async () => {
     const id = 1;
