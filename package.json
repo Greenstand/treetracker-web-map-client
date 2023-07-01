@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.5.3",
+  "version": "2.3.2-cwm.1",
   "private": true,
   "scripts": {
     "build": "next build",
