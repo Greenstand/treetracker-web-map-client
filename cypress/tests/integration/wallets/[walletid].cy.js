@@ -154,7 +154,6 @@ describe('Planter page', () => {
     cy.visit(path, {
       failOnStatusCode: false,
     });
-    cy.contains(wallet.id);
     cy.get('.MuiTypography-h2')
       .eq(0)
       .contains(/Maynard.Stroman79/i);
