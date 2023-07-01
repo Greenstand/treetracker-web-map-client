@@ -1,3 +1,11 @@
+## [2.5.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.2...v2.5.3) (2023-07-01)
+
+
+### Bug Fixes
+
+* badge check ([3788fbd](https://github.com/Greenstand/treetracker-web-map-client/commit/3788fbd023071d20e92c275cc2c84fff36b49d23))
+* badge check ([e6dd5fb](https://github.com/Greenstand/treetracker-web-map-client/commit/e6dd5fbb7fa213a7831eaaea39bd9c271b47a4a3))
+
 ## [2.5.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.1...v2.5.2) (2023-07-01)
 
 
