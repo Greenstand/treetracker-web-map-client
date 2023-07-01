@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.0...v2.5.1) (2023-07-01)
+
+
+### Bug Fixes
+
+* syntax error in yaml ([7df8f86](https://github.com/Greenstand/treetracker-web-map-client/commit/7df8f86e3586a38a45d10a7da060a677a7773056))
+
 # [2.5.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.4.1...v2.5.0) (2023-06-30)
 
 
