@@ -82,7 +82,7 @@ describe('Test pathResolver', () => {
         },
         {
           query: {
-            tree_id: 14615,
+            tree_id: '14615',
           },
         },
       );
@@ -90,7 +90,7 @@ describe('Test pathResolver', () => {
       expect(result).toMatchObject({
         pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens',
         query: {
-          tree_id: 14616,
+          tree_id: '14616',
         },
       });
     });
@@ -111,7 +111,7 @@ describe('Test pathResolver', () => {
       expect(result).toMatchObject({
         pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens',
         query: {
-          tree_id: 14615,
+          tree_id: '14615',
         },
       });
     });
@@ -171,12 +171,32 @@ describe('Test pathResolver', () => {
         },
         {
           query: {
-            tree_id: 14615,
+            tree_id: '14615',
           },
         },
       );
       expect(result).toBe(
         '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7?bounds=37.44990348815919,-3.315482794386477,37.46535301208497,-3.307471024919109&tree_id=14615',
+      );
+    });
+
+    it('update path when /wallets/5f5939ae-91ce-49cd-81ba-7fdba81e250a/tokens?tree_id=5413738', () => {
+      const result = pathResolver.updatePathWhenMapMoveEnd(
+        {
+          pathname: '/wallets/5f5939ae-91ce-49cd-81ba-7fdba81e250a/tokens',
+        },
+        {
+          getCurrentBounds: () =>
+            '46.38155221939087,-15.762146918354096,46.3908863067627,-15.74444839985392',
+        },
+        {
+          query: {
+            tree_id: '5413738',
+          },
+        },
+      );
+      expect(result).toBe(
+        '/wallets/5f5939ae-91ce-49cd-81ba-7fdba81e250a/tokens?bounds=46.38155221939087,-15.762146918354096,46.3908863067627,-15.74444839985392&tree_id=5413738',
       );
     });
   });

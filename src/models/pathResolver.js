@@ -56,7 +56,7 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
       pathnameResult = `/trees/${tree.id}`;
     } else if (path[2] === 'wallets') {
       pathnameResult = `${path[1]}/tokens`;
-      optionalParams.tree_id = tree.id;
+      optionalParams.tree_id = tree.id.toString();
     } else {
       pathnameResult = `${path[1] || ''}/${path[4] || 'trees'}/${
         path[5] === 'tokens' ? path[4] : tree.id
@@ -64,9 +64,10 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
     }
   } else {
     const match2 = pathname.match(/^\/wallets\/([a-z0-9-]+)\/tokens$/);
+    log.warn('match pattern 2', match2);
     if (match2) {
       pathnameResult = `/wallets/${match2[1]}/tokens`;
-      optionalParams.tree_id = tree.id;
+      optionalParams.tree_id = tree.id.toString();
     } else {
       pathnameResult = `/trees/${tree.id}`;
     }
@@ -93,9 +94,6 @@ function updatePathWhenMapMoveEnd(location, map, router) {
   }${router.query.embed ? `&embed=true` : ''}`;
   if (router.query.tree_id) {
     result += `&tree_id=${router.query.tree_id}`;
-  } else if (router.query.walletid) {
-    const tree_id = router.asPath.match(/tree_id=(\d+)/)[1];
-    result += `&tree_id=${tree_id}`;
   }
   return result;
 }
