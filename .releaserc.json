@@ -27,7 +27,7 @@
     {
       "name": "demo",
       "prerelease": true,
-      "channel": "beta"
+      "channel": "alpha"
     }
   ],
   "plugins": [
