@@ -328,6 +328,13 @@ function Login() {
     }, 3000);
   }, []);
 
+  function gotoProfile() {
+    window.open(
+      'https://dev-k8s.treetracker.org/auth/realms/treetracker/account',
+      '_blank',
+    );
+  }
+
   return (
     <div>
       <h1>Login</h1>
@@ -335,6 +342,7 @@ function Login() {
       {user && <h4>Hi, this is {user.preferred_username} </h4>}
       <button onClick={handleLogin}>Login</button>
       <button onClick={handleLogout}>Logout</button>
+      <button onClick={gotoProfile}>User Profile</button>
     </div>
   );
 }
