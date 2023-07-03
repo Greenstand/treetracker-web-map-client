@@ -1,0 +1,8 @@
+apiVersion: getambassador.io/v2
+kind: Host
+metadata:
+  name: dev.treetracker.org
+spec:
+  hostname: dev.treetracker.org
+  acmeProvider:
+    email: zaven@greenstand.org

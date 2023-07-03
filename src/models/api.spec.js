@@ -50,35 +50,3 @@ describe('getTreeById', () => {
     expect(tree.name).toBeDefined();
   });
 });
-
-function assertLinks(data) {
-  expect(data).toBeDefined();
-  const {
-    featuredTrees,
-    associatedPlanters,
-    species,
-    associatedOrganizations,
-  } = data;
-  expect(featuredTrees).toBeDefined();
-  expect(featuredTrees.trees).toBeDefined();
-  expect(featuredTrees.trees.length).toBeDefined();
-  expect(associatedPlanters || associatedOrganizations).toBeDefined();
-  expect(species).toBeDefined();
-}
-
-describe('getOrgLinks', () => {
-  it(
-    'should get org links',
-    async () => {
-      const data = await getOrgLinks(organization.links);
-      assertLinks(data);
-    },
-    1000 * 20,
-  );
-
-  it('should get planter links', async () => {
-    log.log(mockPlanter.links);
-    const data = await getOrgLinks(mockPlanter.links);
-    assertLinks(data);
-  });
-});

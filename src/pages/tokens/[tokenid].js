@@ -18,13 +18,13 @@ import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import Badge from 'components/Badge';
 import HeadTag from 'components/HeadTag';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
 import Link from 'components/Link';
 import Share from 'components/Share';
-import VerifiedBadge from 'components/VerifiedBadge';
 import Crumbs from 'components/common/Crumbs';
 import Icon from 'components/common/CustomIcon';
 import SimpleAvatarAndName from 'components/common/SimpleAvatarAndName';
@@ -150,6 +150,16 @@ export default function Token(props) {
 
   const tokenIdStart = token.id.slice(0, 4);
   const tokenIdEnd = token.id.slice(token.id.length - 4, token.id.length);
+
+  const BadgeSection = useMemo(
+    () => (
+      <Badge
+        color="secondary"
+        badgeName={`${token?.claim ? 'Claimed' : 'Unclaimed'}`}
+      />
+    ),
+    [token?.claim],
+  );
 
   return (
     <>
@@ -315,11 +325,16 @@ export default function Token(props) {
                 }}
               >
                 <Icon icon={CalendarIcon} />
-                {token.created_at !== null
-                  ? `Minted on ${moment(tree.time_created).format(
-                      'MMMM Do, YYYY',
-                    )}`
-                  : 'Unknown Mint Date'}
+                {token.created_at !== null ? (
+                  <>
+                    Minted on
+                    <time dateTime={tree.time_created}>
+                      {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
+                    </time>
+                  </>
+                ) : (
+                  'Unknown Mint Date'
+                )}
               </Typography>
 
               <Box
@@ -329,11 +344,7 @@ export default function Token(props) {
                   mt: 2,
                 }}
               >
-                <VerifiedBadge
-                  color="secondary"
-                  badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-                  verified={false}
-                />
+                {BadgeSection}
               </Box>
             </Box>
           )}
@@ -369,11 +380,16 @@ export default function Token(props) {
                 }}
               >
                 <Icon icon={CalendarIcon} />
-                {token.created_at !== null
-                  ? `Minted on ${moment(tree.time_created).format(
-                      'MMMM Do, YYYY',
-                    )}`
-                  : 'Unknown Mint Date'}
+                {token.created_at !== null ? (
+                  <>
+                    Minted on
+                    <time dateTime={tree.time_created}>
+                      {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
+                    </time>
+                  </>
+                ) : (
+                  'Unknown Mint Date'
+                )}
               </Typography>
               <Box
                 sx={{
@@ -382,11 +398,7 @@ export default function Token(props) {
                   mt: 2,
                 }}
               >
-                <VerifiedBadge
-                  color="secondary"
-                  badgeName={`${token.claim ? 'Claimed' : 'Unclaimed'}`}
-                  verified={false}
-                />
+                {BadgeSection}
               </Box>
             </Box>
           </Portal>
@@ -433,7 +445,11 @@ export default function Token(props) {
         <TagList>
           <TreeTag
             key="created-at"
-            TreeTagValue={new Date(token.created_at).toLocaleDateString()}
+            TreeTagValue={
+              <time dateTime={token.created_at}>
+                {new Date(token.created_at).toLocaleDateString()}
+              </time>
+            }
             title="Created At"
             icon={<Icon icon={CalendarIcon} />}
           />
@@ -504,7 +520,9 @@ export default function Token(props) {
                   flex: '0 0 100px',
                 }}
               >
-                {new Date(token.created_at).toLocaleDateString()}
+                <time dateTime={token.created_at}>
+                  {new Date(token.created_at).toLocaleDateString()}
+                </time>
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineDot color="primary" />
@@ -534,7 +552,9 @@ export default function Token(props) {
                   }}
                   color="text.secondary"
                 >
-                  {new Date(transaction.processed_at).toLocaleDateString()}
+                  <time dateTime={transaction.processed_at}>
+                    {new Date(transaction.processed_at).toLocaleDateString()}
+                  </time>
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot color="primary" />

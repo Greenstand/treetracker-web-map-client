@@ -1,6 +1,6 @@
 **Table of Contents**
 
-- [Treetracker Web Map Beta](#treetracker-web-map-beta)
+- [Treetracker Web Map](#treetracker-web-map)
   - [Project Description](#project-description)
   - [Development Environment Quick Start](#development-environment-quick-start)
   - [Workflow with Github](#workflow-with-github)
@@ -35,7 +35,7 @@
   - [Can not install Cypress in some area.](#can-not-install-cypress-in-some-area)
   - [Other resource from Greenstand](#other-resource-from-greenstand)
 
-# Treetracker Web Map Beta
+# Treetracker Web Map
 
 ## Project Description
 
@@ -51,7 +51,7 @@ For the new web map beta development, we are working on the branch: beta, now we
 
 The current version online is still deployed from master.
 
-So, for issues, the issue for the new web map beta, should use the branch: `beta`, the issue for the current version online, like fix bug, add tiny features, should use `master`, generally, we will freeze new big features on the `master` branch.
+So, for issues, the issue for the new web map, should use the branch: `main`, the issue for the current version online, like fix bug, add tiny features, should use `master`, generally, we will freeze new big features on the `master` branch.
 
 ## Development Environment Quick Start
 
@@ -116,7 +116,7 @@ We recommend using Cypress's component testing tool to build components in isola
 **To run Cypress unit/component tests:**
 
 ```
-npm run cyu
+npm run cypress:open
 ```
 
 [Video tutorial for building component](https://loom.com/share/c750be68ecec4a9b99cb6921d2d2e041)
@@ -188,12 +188,6 @@ We need to build Cypress integration tests for every page/route. The integration
 Also, integration tests bring some benefits for the development workflow - by mocking API requests we can separately develop every single page. If you'd like to practice Test Driven Development, you can mock the API and write the tests first, then implement the real page later.
 
 **To run Cypress integration tests:**
-
-Open cypress test viewer
-
-```
-npm run cypress:open
-```
 
 Nextjs dev server + Cypress test viewer + nock
 

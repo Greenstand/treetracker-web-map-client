@@ -107,7 +107,10 @@ export function getNockRoutes(
 }
 
 export function prepareNocks(props) {
-  if (!Cypress.env('nock')) return;
+  if (!Cypress.env('nock')) {
+    console.warn("Cypress.env('nock') is not set, skipping nock preparation");
+    return;
+  }
   cy.task('nocks', {
     hostname: Cypress.env('NEXT_PUBLIC_API'),
     routes: getNockRoutes(props),

@@ -158,26 +158,31 @@ function MapComponent() {
       tileServerSubdomains:
         process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
       apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
+      queryApiServerUrl: process.env.NEXT_PUBLIC_API,
     });
-    map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
-      log.warn('DEMOXXX move end:');
-      log.warn('update url');
-      if (window.parent) {
-        log.warn('DEMO:ok message parent');
-        window.parent.postMessage('DEMOxxx foo', '*');
-      }
-      const path = pathResolver.updatePathWhenMapMoveEnd(
-        window.location,
-        map,
-        router,
-      );
-      window.history.pushState('treetracker', '', path);
-    });
+    const isAdmin = !!router.asPath.match(/admin/);
+    if (!isAdmin) {
+      map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
+        log.warn('DEMOXXX move end:');
+        if (window.parent) {
+          log.warn('DEMO:ok message parent');
+          window.parent.postMessage('DEMOxxx foo', '*');
+        }
+        log.warn('update url');
+        const path = pathResolver.updatePathWhenMapMoveEnd(
+          window.location,
+          map,
+          router,
+        );
+        window.history.pushState('treetracker', '', path);
+      });
+    }
+
     map.mount(mapRef.current);
     mapRef.current.map = map;
     // update context
     mapContext.setMap(map);
-  }, []);
+  }, [router]);
 
   // eslint-disable-next-line no-unused-vars
   function handleDateChange(date) {
