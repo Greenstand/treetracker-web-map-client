@@ -1,3 +1,22 @@
+# [2.6.0-demo.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.3...v2.6.0-demo.1) (2023-07-03)
+
+
+### Bug Fixes
+
+* change to beta channel ([86a6169](https://github.com/Greenstand/treetracker-web-map-client/commit/86a6169e2e0deb060b95199ec434c4c162dbd81c))
+* change to demo to alpha [skip ci] ([71703b7](https://github.com/Greenstand/treetracker-web-map-client/commit/71703b7572e69beba46c72cb90e77cc945da4b67))
+* demo use alpha [skip ci] ([bc5327b](https://github.com/Greenstand/treetracker-web-map-client/commit/bc5327bebac3fe5f28f8be19e7723f15ae5260c6))
+* demo use alpha [skip ci] ([ed51347](https://github.com/Greenstand/treetracker-web-map-client/commit/ed51347cb8881fedc989d0b602fb7318b01b64e7))
+* release trigger ([44a3f78](https://github.com/Greenstand/treetracker-web-map-client/commit/44a3f78fe2638fb426534bc8f01900925e0dde84))
+
+
+### Features
+
+* can receive selected tree from iframe ([1a80d5e](https://github.com/Greenstand/treetracker-web-map-client/commit/1a80d5e378f1bb844dae76654ff94fc607d64c1a))
+* first try for user-profile ([bc268d4](https://github.com/Greenstand/treetracker-web-map-client/commit/bc268d47c1f040e4d1369fd46bca63e8e6eafc41))
+* postMessage way ([29b9a62](https://github.com/Greenstand/treetracker-web-map-client/commit/29b9a6290925d04ab125d3a907c2579906218838))
+* use next channel for demo ([42d4b1c](https://github.com/Greenstand/treetracker-web-map-client/commit/42d4b1c54870fc5b34f3ffd991d5dff642e7b8b1))
+
 # [2.0.0-demo.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.0.0-beta.237...v2.0.0-demo.1) (2023-06-16)
 
 
