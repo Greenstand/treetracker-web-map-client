@@ -4,7 +4,8 @@ import log from 'loglevel';
 import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import Badge from 'components/Badge';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
@@ -13,7 +14,6 @@ import PlanterQuote from 'components/PlanterQuote';
 import ProfileAvatar from 'components/ProfileAvatar';
 import ProfileCover from 'components/ProfileCover';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
-import VerifiedBadge from 'components/VerifiedBadge';
 import Crumbs from 'components/common/Crumbs';
 import CustomCard from 'components/common/CustomCard';
 import Icon from 'components/common/CustomIcon';
@@ -89,6 +89,16 @@ export default function Organization(props) {
 
   const logo_url = organization.logo_url || imagePlaceholder;
   const name = organization.name || '---';
+
+  const BadgeSection = useMemo(
+    () => (
+      <>
+        <Badge color="primary" verified badgeName="Verified Organization" />
+        <Badge color="greyLight" badgeName="Seeking Planter" />
+      </>
+    ),
+    [],
+  );
 
   return (
     <>
@@ -186,12 +196,7 @@ export default function Organization(props) {
                 display: 'flex',
               }}
             >
-              <VerifiedBadge
-                color="primary"
-                verified
-                badgeName="Verified Organization"
-              />
-              <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
+              {BadgeSection}
             </Box>
           </Box>
         )}
@@ -238,12 +243,7 @@ export default function Organization(props) {
                   display: 'flex',
                 }}
               >
-                <VerifiedBadge
-                  color="primary"
-                  verified
-                  badgeName="Verified Organization"
-                />
-                <VerifiedBadge color="greyLight" badgeName="Seeking Planter" />
+                {BadgeSection}
               </Box>
             </Box>
           </Portal>

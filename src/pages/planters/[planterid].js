@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import CheckIcon from '@mui/icons-material/Check';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -9,7 +10,8 @@ import log from 'loglevel';
 import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import Badge from 'components/Badge';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
@@ -17,7 +19,6 @@ import ImpactSection from 'components/ImpactSection';
 import InformationCard1 from 'components/InformationCard1';
 import ProfileAvatar from 'components/ProfileAvatar';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
-import VerifiedBadge from 'components/VerifiedBadge';
 import Crumbs from 'components/common/Crumbs';
 import CustomCard from 'components/common/CustomCard';
 import Icon from 'components/common/CustomIcon';
@@ -129,6 +130,20 @@ export default function Planter(props) {
     }
     reload();
   }, [mapContext, planter]);
+
+  const BadgeSection = useMemo(
+    () => (
+      <>
+        <Badge
+          color="primary"
+          icon={<CheckIcon />}
+          badgeName="Verified Planter"
+        />
+        <Badge color="greyLight" badgeName="Seeking Orgs" />
+      </>
+    ),
+    [],
+  );
 
   return (
     <>
@@ -259,12 +274,7 @@ export default function Planter(props) {
                   display: 'flex',
                 }}
               >
-                <VerifiedBadge
-                  color="primary"
-                  verified
-                  badgeName="Verified Planter"
-                />
-                <VerifiedBadge color="greyLight" badgeName="Seeking Orgs" />
+                {BadgeSection}
               </Box>
             </Box>
           </Portal>
@@ -320,12 +330,7 @@ export default function Planter(props) {
                 display: 'flex',
               }}
             >
-              <VerifiedBadge
-                color="primary"
-                verified
-                badgeName="Verified Planter"
-              />
-              <VerifiedBadge color="greyLight" badgeName="Seeking Orgs" />
+              {BadgeSection}
             </Box>
           </Box>
         )}

@@ -17,7 +17,10 @@ module.exports = async (on, config) => {
   config.env.NEXT_PUBLIC_BASE = process.env.NEXT_PUBLIC_BASE;
 
   // exit if not using nock to mock nextjs ssr functions
-  if (!config.env.nock) return config;
+  if (!config.env.nock) {
+    console.warn("Cypress.env('nock') is not set, skipping nock preparation");
+    return config;
+  }
 
   const app = next({ dev: true });
   const handleNextRequests = app.getRequestHandler();

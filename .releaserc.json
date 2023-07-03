@@ -18,6 +18,11 @@
     {
       "name": "user-profile",
       "prerelease": true,
+      "channel": "next"
+    },
+    {
+      "name": "demo",
+      "prerelease": true,
       "channel": "alpha"
     }
   ],
