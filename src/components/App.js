@@ -71,6 +71,10 @@ function MapComponent() {
 
   function handleClickTree(tree) {
     log.warn('click tree:', tree);
+    if (window.parent) {
+      log.warn('DEMO:ok message parent');
+      window.parent.postMessage(tree, '*');
+    }
 
     const result = pathResolver.getPathWhenClickTree(
       tree,
@@ -159,6 +163,11 @@ function MapComponent() {
     const isAdmin = !!router.asPath.match(/admin/);
     if (!isAdmin) {
       map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
+        log.warn('DEMOXXX move end:');
+        if (window.parent) {
+          log.warn('DEMO:ok message parent');
+          window.parent.postMessage('DEMOxxx foo', '*');
+        }
         log.warn('update url');
         const path = pathResolver.updatePathWhenMapMoveEnd(
           window.location,
