@@ -115,6 +115,7 @@ export default function Layout({
                   // background: 'white',
                   width: 568,
                   overflowY: 'scroll',
+                  overflowX: 'hidden',
                   height: '100vh',
                 }}
               >
