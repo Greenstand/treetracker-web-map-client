@@ -615,7 +615,7 @@ export default function Capture({
             },
           ]}
         >
-          Tree Info
+          Capture Info
         </Typography>
         <TagList>
           <TreeTag
@@ -650,22 +650,6 @@ export default function Capture({
             disabled={tree.species_name === null}
             subtitle={tree.species_desc === null ? null : 'click to learn more'}
             link={tree.species_desc === null ? null : tree.species_desc}
-          />
-          <TreeTag
-            TreeTagValue={
-              tree.gps_accuracy === null ? 'unknown' : tree.gps_accuracy
-            }
-            title="GPS Accuracy"
-            icon={<Icon icon={AccuracyIcon} />}
-            disabled={tree.gps_accuracy === null}
-          />
-          <TreeTag
-            TreeTagValue={
-              tree.morphology === null ? 'unknown' : tree.morphology
-            }
-            title="Morphology"
-            icon={<Icon icon={HubIcon} />}
-            disabled={tree.morphology === null}
           />
           <TreeTag
             TreeTagValue={

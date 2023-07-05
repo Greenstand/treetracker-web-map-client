@@ -1,3 +1,10 @@
+## [2.5.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.3...v2.5.4) (2023-07-05)
+
+
+### Bug Fixes
+
+* demo use alpha [skip ci] ([bc5327b](https://github.com/Greenstand/treetracker-web-map-client/commit/bc5327bebac3fe5f28f8be19e7723f15ae5260c6))
+
 ## [2.5.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.2...v2.5.3) (2023-07-01)
 
 
