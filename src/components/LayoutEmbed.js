@@ -5,12 +5,13 @@ import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
+import { useEmbed, useLocalStorage } from 'hooks/globalHooks';
+import LogoIcon from 'images/greenstand_logo_full.png';
+import MinIcon from 'images/min.svg';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
 import ZoomInOutButton from './ZoomInOutButton';
-import { useEmbed } from '../hooks/globalHooks';
-import LogoIcon from '../images/greenstand_logo_full.png';
-import MinIcon from '../images/min.svg';
+
 // import { makeStyles } from 'models/makeStyles';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -58,6 +59,7 @@ export default function Layout({
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
   const isEmbed = useEmbed();
+  useLocalStorage('embed', isEmbed);
 
   // const { _classes } = useStyles();
   function handleFullScreen() {
