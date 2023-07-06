@@ -1,3 +1,11 @@
+## [2.5.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.4...v2.5.5) (2023-07-06)
+
+
+### Bug Fixes
+
+* keep tree_id parameters when bounds are updated ([b8f8593](https://github.com/Greenstand/treetracker-web-map-client/commit/b8f85936e6671adf8248dc66d9f393c05312dc45))
+* keep tree_id parameters when bounds are updated ([2726969](https://github.com/Greenstand/treetracker-web-map-client/commit/27269694789d7de1bb9f269ef552833e33f4644d))
+
 ## [2.5.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.3...v2.5.4) (2023-07-05)
 
 
