@@ -5,12 +5,12 @@ import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
+import { useEmbed } from 'hooks/globalHooks';
+import LogoIcon from 'images/greenstand_logo_full.png';
+import MinIcon from 'images/min.svg';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
 import ZoomInOutButton from './ZoomInOutButton';
-import { useEmbed } from '../hooks/globalHooks';
-import LogoIcon from '../images/greenstand_logo_full.png';
-import MinIcon from '../images/min.svg';
 // import { makeStyles } from 'models/makeStyles';
 
 const App = dynamic(() => import('./App'), { ssr: false });
@@ -113,6 +113,7 @@ export default function Layout({
                   // background: 'white',
                   width: 568,
                   overflowY: 'scroll',
+                  overflowX: 'hidden',
                   height: '100vh',
                 }}
               >
