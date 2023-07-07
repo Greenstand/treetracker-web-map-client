@@ -389,7 +389,7 @@ export default function Wallet(props) {
 }
 
 async function serverSideData(params) {
-  const wallet = await getWalletById(params.walletid);
+  const wallet = await getWalletById(encodeURI(params.walletid));
   const { id } = wallet;
   const [species, tokens, tokenRegionCount, trees] = await Promise.all([
     getSpeciesByWalletId(id),
