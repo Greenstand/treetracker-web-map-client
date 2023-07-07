@@ -1,3 +1,10 @@
+## [2.5.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.5...v2.5.6) (2023-07-07)
+
+
+### Bug Fixes
+
+* removes horizontal scrollbar from embedded panel ([2fb6e51](https://github.com/Greenstand/treetracker-web-map-client/commit/2fb6e516e39c403cafa527067897e31c73ee28e7))
+
 ## [2.5.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.4...v2.5.5) (2023-07-06)
 
 
