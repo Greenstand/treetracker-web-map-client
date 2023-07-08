@@ -1,3 +1,10 @@
+## [2.5.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.6...v2.5.7) (2023-07-08)
+
+
+### Bug Fixes
+
+* unescaped characters in params ([56e9671](https://github.com/Greenstand/treetracker-web-map-client/commit/56e9671920fc24b712fd20bf1065d144b87877fe))
+
 ## [2.5.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.5...v2.5.6) (2023-07-07)
 
 
