@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.7...v2.6.0) (2023-07-10)
+
+
+### Features
+
+* get theme from os ([99ea089](https://github.com/Greenstand/treetracker-web-map-client/commit/99ea089ccc34f8556bd295da2ece6440fae5bcaa))
+
 ## [2.5.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.6...v2.5.7) (2023-07-08)
 
 
