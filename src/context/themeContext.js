@@ -2,8 +2,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
-import { useLocalStorage } from '../hooks/globalHooks';
-import { loadFonts, convertFontObjToFontArr } from '../models/utils';
+import { useLocalStorage } from 'hooks/globalHooks';
+import { loadFonts, convertFontObjToFontArr } from 'models/utils';
 
 export const CustomThemeContext = React.createContext({
   toggleColorMode: () => {},
@@ -344,7 +344,13 @@ const defaultLightTheme = buildTheme('light');
 const defaultDarkTheme = buildTheme('dark');
 
 export function CustomThemeProvider({ children }) {
-  const [mode, setMode] = useLocalStorage('theme', 'light');
+  let osTheme = 'light';
+  if (typeof window !== 'undefined') {
+    osTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+  const [mode, setMode] = useLocalStorage('theme', osTheme);
   const [theme, setTheme] = React.useState(
     mode === 'light' ? defaultLightTheme : defaultDarkTheme,
   );
