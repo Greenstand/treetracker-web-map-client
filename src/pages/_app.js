@@ -9,6 +9,7 @@ import Script from 'next/script';
 import { userAgentFromString } from 'next/server';
 import React from 'react';
 import packageJson from '../../package.json';
+import ErrorBoundary from '../components/ErrorBoundary'
 import Layout from '../components/Layout';
 import LayoutDashboard from '../components/LayoutDashboard';
 import LayoutEmbed from '../components/LayoutEmbed';
@@ -20,6 +21,7 @@ import { ConfigProvider, defaultConfig } from '../context/configContext';
 import { CustomThemeProvider } from '../context/themeContext';
 import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
+
 
 log.warn(`Web Map Client version ${packageJson.version}`);
 
@@ -70,7 +72,7 @@ function GoogleAnalytics() {
   );
 }
 
-function TreetrackerApp({ Component, pageProps, device, config }) {
+function TreetrackerApp({ Component, pageProps, device, config }) {  
   log.warn('!!!! render the _app');
   log.warn('webmap config', config);
   const router = useRouter();
@@ -142,7 +144,9 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
       <>
         <GoogleAnalytics />
         <LayoutDashboard>
+        <ErrorBoundary>
           <Component {...pageProps} />
+          </ErrorBoundary>
         </LayoutDashboard>
       </>
     );
@@ -157,7 +161,9 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
             <MapContextProvider>
               {nextExtraIsDesktop && !nextExtraIsEmbed && (
                 <Layout {...extraProps} ref={layoutRef}>
+                  <ErrorBoundary>
                   <Component {...pageProps} {...extraProps} />
+                  </ErrorBoundary>
                 </Layout>
               )}
               {nextExtraIsDesktop && nextExtraIsEmbed && (
@@ -165,24 +171,32 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
                   {...extraProps}
                   isFloatingDisabled={Component.isFloatingDisabled}
                 >
+                  <ErrorBoundary>
                   <Component {...pageProps} {...extraProps} />
+                  </ErrorBoundary>
                 </LayoutEmbed>
               )}
               {!nextExtraIsDesktop && Component.isBLayout && (
                 <LayoutMobileB>
+                  <ErrorBoundary>
                   <Component {...pageProps} {...extraProps} />
+                  </ErrorBoundary>
                 </LayoutMobileB>
               )}
               {!nextExtraIsDesktop && Component.isCLayout && (
                 <LayoutMobileC>
+                  <ErrorBoundary>
                   <Component {...pageProps} {...extraProps} />
+                  </ErrorBoundary>
                 </LayoutMobileC>
               )}
               {!nextExtraIsDesktop &&
                 !Component.isBLayout &&
                 !Component.isCLayout && (
                   <LayoutMobile ref={layoutRef}>
+                    <ErrorBoundary>
                     <Component {...pageProps} {...extraProps} />
+                    </ErrorBoundary>
                   </LayoutMobile>
                 )}
             </MapContextProvider>
