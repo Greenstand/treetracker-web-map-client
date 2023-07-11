@@ -1,4 +1,5 @@
 bases:
   - ../../base
 patchesStrategicMerge:
+  #  - database-connection-sealed-secret.yaml
   - mapping.yaml

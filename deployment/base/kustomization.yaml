@@ -2,4 +2,4 @@ resources:
   - deployment.yaml
   - mapping.yaml
   - service.yaml
-  - host.yaml
+    #- database-connection-sealed-secret.yaml

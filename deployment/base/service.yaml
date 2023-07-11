@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: treetracker-web-map-client-svc-main
+  name: treetracker-web-map-client-beta-ambassador-svc
   labels:
-    app: treetracker-web-map-client-main
-    name: treetracker-web-map-client-svc-main
+    app: treetracker-web-map-client-beta
+    name: treetracker-web-map-client-beta-ambassador-svc
   namespace: webmap
 spec:
   selector:
-    app: treetracker-web-map-client-main
+    app: treetracker-web-map-client-beta
   ports:
     - name: http
       protocol: TCP
