@@ -24,7 +24,6 @@ jobs:
       - name: Install 📦
         uses: cypress-io/github-action@v4
         with:
-          build: false
           runTests: false
 
   integration-tests:
