@@ -19,6 +19,11 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
+      # Install dependencies and generate package-lock.json
+      - name: Install dependencies 📦
+        run: npm ci
+        working-directory: treetracker-web-map-client
+
       # only install dependencies
       # https://github.com/cypress-io/github-action
       - name: Install 📦
