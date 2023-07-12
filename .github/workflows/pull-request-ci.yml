@@ -19,15 +19,12 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      # Install dependencies and generate package-lock.json
-      - name: Install dependencies 📦
-        run: npm ci
-
       # only install dependencies
       # https://github.com/cypress-io/github-action
       - name: Install 📦
         uses: cypress-io/github-action@v4
         with:
+          build: false
           runTests: false
 
   integration-tests:
