@@ -70,7 +70,7 @@ module.exports = {
     'no-nested-ternary': 'warn',
     'prefer-destructuring': 'warn',
     'no-unreachable': 'warn',
-    'cypress/unsafe-to-chain-command': 'warn',
+    'cypress/unsafe-to-chain-command': 'off',
   },
 
   reportUnusedDisableDirectives: true,
