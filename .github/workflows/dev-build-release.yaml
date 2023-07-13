@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '18.x'
       - name: Read .releaserc
-        run: echo ::set-output name=RELEASE_NEEDED::$(echo `node -e 'console.log(require("./.releaserc.json").branches.map(e => e.name || e).reduce((a,c) => a || c === process.env.GITHUB_REF_NAME, false))'`)
+        run: echo "RELEASE_NEEDED=$(echo `node -e 'console.log(require("./.releaserc.json").branches.map(e => e.name || e).reduce((a,c) => a || c === process.env.GITHUB_REF_NAME, false))'`)" >> $GITHUB_OUTPUT
         id: release_needed
       - name: Print rn
         run: echo ${{ steps.release_needed.outputs.RELEASE_NEEDED }}
@@ -74,7 +74,7 @@ jobs:
       - id: export_bumped_version
         run: |
           export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
-          echo "::set-output name=bumped_version::${BUMPED_VERSION}"
+          echo "bumped_version=${BUMPED_VERSION}" >> $GITHUB_OUTPUT
     outputs:
       bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
 
@@ -100,11 +100,11 @@ jobs:
     - name: get bumped version
       id: get_bumped_version
       run: |
-       echo "::set-output name=bumped_version::${{ needs.release.outputs.bumped_version }}"
+       echo "bumped_version=${{ needs.release.outputs.bumped_version }}" >> $GITHUB_OUTPUT
     - name: Install kustomize
       run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
     #- name: Load channel
-    #  run: echo ::set-output name=CHANNEL::$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`)
+    #  run: echo CHANNEL=$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`) >> $GITHUB_OUTPUT
     #  id: channel
     #- name: Print channel
     #  run: echo ${{ steps.channel.outputs.CHANNEL }}
