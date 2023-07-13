@@ -1,4 +1,4 @@
-## [2.3.2-cwm.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.3.1...v2.3.2-cwm.1) (2023-06-17)
+# [2.6.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.7...v2.6.0) (2023-07-10)
 
 
 ### Bug Fixes

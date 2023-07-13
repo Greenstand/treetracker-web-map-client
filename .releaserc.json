@@ -6,11 +6,6 @@
     "next",
     "next-major",
     {
-      "name": "beta",
-      "prerelease": true,
-      "channel": "beta"
-    },
-    {
       "name": "v2",
       "prerelease": true,
       "channel": "alpha"
@@ -24,6 +19,11 @@
       "name": "user-profile",
       "prerelease": true,
       "channel": "next"
+    },
+    {
+      "name": "demo",
+      "prerelease": true,
+      "channel": "alpha"
     }
   ],
   "plugins": [

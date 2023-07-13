@@ -94,8 +94,8 @@ function MapComponent() {
       isRefreshNeeded = true;
     } else if (
       router.query.tree_id &&
-      result.tree_id &&
-      router.query.tree_id !== result.tree_id
+      result.query.tree_id &&
+      router.query.tree_id !== result.query.tree_id
     ) {
       log.warn('tree_id query is different!');
       isRefreshNeeded = true;
@@ -104,6 +104,12 @@ function MapComponent() {
     }
 
     if (isRefreshNeeded) {
+      if (result.query) {
+        log.warn('saving query in router');
+        Object.keys(result.query).forEach((field) => {
+          router.query[field] = result.query[field];
+        });
+      }
       router.push(result);
     }
   }
