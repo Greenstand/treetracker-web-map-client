@@ -5,13 +5,16 @@ import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
+import { useCustomThemeContext } from 'hooks/contextHooks';
 import { useEmbed } from 'hooks/globalHooks';
-import LogoIcon from 'images/greenstand_logo_full.png';
 import MinIcon from 'images/min.svg';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
 import ZoomInOutButton from './ZoomInOutButton';
 // import { makeStyles } from 'models/makeStyles';
+
+const greenstandLogo = '/images/greenstand_logo_full.svg';
+const greenstandLogoWhite = '/images/greenstand_logo_full_white.svg';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
@@ -58,6 +61,7 @@ export default function Layout({
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const [toggleButtonPosition, setToggleButtonPosition] = React.useState(0);
   const isEmbed = useEmbed();
+  const { theme } = useCustomThemeContext();
 
   // const { _classes } = useStyles();
   function handleFullScreen() {
@@ -250,7 +254,15 @@ export default function Layout({
             >
               <Link href="https://greenstand.org">
                 <a target="_blank">
-                  <img src={LogoIcon} width="80px" />
+                  <img
+                    src={
+                      theme.palette.mode === 'light'
+                        ? greenstandLogo
+                        : greenstandLogoWhite
+                    }
+                    width="80px"
+                    alt="Greenstand Logo"
+                  />
                 </a>
               </Link>
             </Box>
