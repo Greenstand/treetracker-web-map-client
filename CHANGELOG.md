@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0...v2.6.1) (2023-07-14)
+
+
+### Bug Fixes
+
+* wrong logo color in dark mode ([34cb89f](https://github.com/Greenstand/treetracker-web-map-client/commit/34cb89fc2f156d435d791fdd37ac49fe463dc5d6))
+
 # [2.6.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.7...v2.6.0) (2023-07-10)
 
 
