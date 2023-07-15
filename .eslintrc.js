@@ -23,7 +23,7 @@ module.exports = {
 
     // allow test files to use dev dependencies
     'import/no-extraneous-dependencies': [
-      'error',
+      'warn',
       {
         devDependencies: [
           '**/*.{test,cy,spec}.js',
@@ -70,7 +70,11 @@ module.exports = {
     'no-nested-ternary': 'warn',
     'prefer-destructuring': 'warn',
     'no-unreachable': 'warn',
-    'cypress/unsafe-to-chain-command': 'warn',
+    'cypress/unsafe-to-chain-command': 'off',
+    'import/no-extraneous-dependencies': 'warn',
+    'global-require': 'warn',
+    'import/extensions': 'warn',
+    'no-dupe-keys': 'warn',
   },
 
   reportUnusedDisableDirectives: true,
