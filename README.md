@@ -41,7 +41,7 @@
 
 Displays location and details of all trees that have been tracked in [Greenstand](http://greenstand.org).
 
-Live site is at [www.treetracker.org](https://www.treetracker.org)
+Live site is at [map.treetracker.org](https://map.treetracker.org/)
 
 Live dev env site for the new beta version is at: https://dev-k8s.treetracker.org/web-map-site/demo
 
