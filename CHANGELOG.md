@@ -1,3 +1,12 @@
+## [2.6.1-cwm.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0...v2.6.1-cwm.1) (2023-07-15)
+
+
+### Bug Fixes
+
+* broken lock file ([95c7162](https://github.com/Greenstand/treetracker-web-map-client/commit/95c71622a765aaaca63b0d5ddc99732a636af799))
+* ci test fail ([fcff58d](https://github.com/Greenstand/treetracker-web-map-client/commit/fcff58db8d21bff16bace2bd244199e2b2636559))
+* **cwm:** color input test ([cfa0133](https://github.com/Greenstand/treetracker-web-map-client/commit/cfa01335729adc0b5b8f9eb29e994b676e87ba09))
+
 # [2.6.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.5.7...v2.6.0) (2023-07-10)
 
 
