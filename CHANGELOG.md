@@ -1,3 +1,11 @@
+# [2.6.0-v2.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.3...v2.6.0-v2.4) (2023-07-18)
+
+
+### Bug Fixes
+
+* correct hostname ([9896ec1](https://github.com/Greenstand/treetracker-web-map-client/commit/9896ec197835b881d16bacd3f1d736818e42918b))
+* deprecated set output with env [skip ci] ([e6df5e7](https://github.com/Greenstand/treetracker-web-map-client/commit/e6df5e71910242e5003a066caeb57f7ae7c75dd1))
+
 # [2.6.0-v2.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.2...v2.6.0-v2.3) (2023-07-11)
 
 
