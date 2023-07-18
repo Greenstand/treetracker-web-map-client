@@ -4,4 +4,4 @@ metadata:
   name: treetracker-web-map-client-mapping-alpha
   namespace: webmap
 spec:
-  host: alpha-test.treetracker.org
+  hostname: alpha-test.treetracker.org
