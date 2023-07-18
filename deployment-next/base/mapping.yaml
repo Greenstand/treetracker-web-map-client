@@ -4,7 +4,7 @@ metadata:
   name: treetracker-web-map-client-mapping-next
   namespace: webmap
 spec:
-  host: next-dev.treetracker.org
+  hostname: next-dev.treetracker.org
   prefix: /
   service: treetracker-web-map-client-svc-next
   timeout_ms: 0
