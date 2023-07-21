@@ -12,7 +12,6 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import Badge from 'components/Badge';
-import FeaturedPlantersSlider from 'components/FeaturedPlantersSlider';
 import HeadTag from 'components/HeadTag';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
@@ -24,7 +23,7 @@ import Icon from 'components/common/CustomIcon';
 import TagList from 'components/common/TagList';
 import TreeTag from 'components/common/TreeTag';
 import { useDrawerContext } from 'context/DrawerContext';
-import { useMobile, useEmbed, useFullscreen } from 'hooks/globalHooks';
+import { useMobile, useEmbed } from 'hooks/globalHooks';
 import { usePageLoading } from 'hooks/usePageLoading';
 import AccuracyIcon from 'images/icons/accuracy.svg';
 import CalendarIcon from 'images/icons/calendar.svg';
@@ -37,20 +36,13 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import {
-  getCapturesById,
-  getOrganizationById,
-  getPlanterById,
-  getTreeById,
-  getPlanterByOrganization,
-} from 'models/api';
+import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
 export default function Tree({
   tree,
   planter,
-  planters,
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
@@ -596,25 +588,16 @@ export default function Tree({
             mt: [4, 10],
           }}
         >
-          {planters.length > 0 && (
-            <>
-              <Box
-                sx={{
-                  mt: 8,
-                }}
-              >
-                <Typography variant="h4">
-                  People who help grow the tree
-                </Typography>
-              </Box>
-              <FeaturedPlantersSlider
-                link={(id) => `/planters/${id}`}
-                color="secondary"
-                planters={planters}
-                isMobile={isMobile}
-              />
-            </>
-          )}
+          <InformationCard1
+            entityName={`${planter.first_name} ${planter.last_name}`}
+            entityType="Planter"
+            buttonText="Meet the Planter"
+            cardImageSrc={planter?.image_url || imagePlaceholder}
+            rotation={planter?.image_rotation}
+            link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
+              isEmbed ? '&embed=true' : ''
+            }`}
+          />
         </Box>
         <Typography
           variant="h4"
@@ -745,7 +728,6 @@ async function serverSideData(params) {
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
   const planter = await getPlanterById(planter_id);
-  const planters = await getPlanterByOrganization(planter.organization_id);
   let organization = null;
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');
@@ -761,7 +743,6 @@ async function serverSideData(params) {
     tree,
     planter,
     organization,
-    planters,
   };
 }
 
