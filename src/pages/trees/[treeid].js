@@ -24,7 +24,7 @@ import Icon from 'components/common/CustomIcon';
 import TagList from 'components/common/TagList';
 import TreeTag from 'components/common/TreeTag';
 import { useDrawerContext } from 'context/DrawerContext';
-import { useMobile, useEmbed } from 'hooks/globalHooks';
+import { useMobile, useEmbed, useFullscreen } from 'hooks/globalHooks';
 import { usePageLoading } from 'hooks/usePageLoading';
 import AccuracyIcon from 'images/icons/accuracy.svg';
 import CalendarIcon from 'images/icons/calendar.svg';
