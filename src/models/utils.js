@@ -230,10 +230,6 @@ const wrapper = (callback) => (params) =>
     log.warn('error retrieving server props:', e);
     if (e.response?.status === 404) return { notFound: true };
     return {
-      redirect: {
-        destination: '/500',
-        permanent: false,
-      },
       revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
     };
   });
