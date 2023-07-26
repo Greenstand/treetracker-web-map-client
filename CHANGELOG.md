@@ -1,3 +1,10 @@
+## [2.6.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.2...v2.6.3) (2023-07-26)
+
+
+### Bug Fixes
+
+* redirect 500 error ([1bfda82](https://github.com/Greenstand/treetracker-web-map-client/commit/1bfda82cb5e80d18fa3b78bd0a0b123189825260))
+
 ## [2.6.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.1...v2.6.2) (2023-07-18)
 
 
