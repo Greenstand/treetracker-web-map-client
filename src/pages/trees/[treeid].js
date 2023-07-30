@@ -36,7 +36,7 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
+import { getCapturesById, getOrganizationById, getPlanterById, getTreeById, getCapturesByTree } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
@@ -46,6 +46,7 @@ export default function Tree({
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
+  captures,
 }) {
   log.warn('tree: ', tree);
   log.warn('org: ', organization);
@@ -583,6 +584,25 @@ export default function Tree({
             />
           </Box>
         )}
+        {captures?.length > 0 && (
+        <>
+          <Box
+            sx={{
+              mt: 8,
+            }}
+          >
+            <Typography variant="h4">Captures match to this tree</Typography>
+          </Box>
+          {false && ( // going to be replaced by search filter component
+            (<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Filter onFilter={handleFilter} />
+            </Box>)
+          )}
+          <Box>
+            <FeaturedTreesSlider trees={captures} isMobile={isFullscreen} />
+          </Box>
+        </>
+      )}
         <Box
           sx={{
             mt: [4, 10],
@@ -742,8 +762,10 @@ export default function Tree({
 async function serverSideData(params) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
+  console.log(tree.organization_id);
   const { planter_id, planting_organization_id } = tree;
   const planter = await getPlanterById(planter_id);
+  const captures = await getCapturesByTree(treeid);
   let organization = null;
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');
@@ -759,6 +781,7 @@ async function serverSideData(params) {
     tree,
     planter,
     organization,
+    captures,
   };
 }
 

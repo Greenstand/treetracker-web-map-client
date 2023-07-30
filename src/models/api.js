@@ -29,6 +29,19 @@ export async function getCaptures() {
     throw err;
   }
 }
+
+export async function getCapturesByTree(id) {
+  try {
+    const url = apiPaths.getCapturesByTree(id);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data.captures;
+  } catch (err) {
+    return null;
+  }
+}
 export async function getFeaturedTrees() {
   try {
     const url = apiPaths.featuredTrees;

@@ -6,6 +6,7 @@ const apiPaths = {
   featuredTrees: urlJoin(host, 'trees/featured'),
   featuredGrowers: urlJoin(host, 'growers/featured'),
   getCaptures: urlJoin(host, 'captures'),
+  getCapturesByTree: (id = '') => urlJoin(hostV2, `captures?tree_id=${id}`),
   countriesLatLon: (lat = '', lon = '') =>
     urlJoin(host, `/countries?lat=${lat}&lon=${lon}`),
   leaders: urlJoin(host, '/countries/leaderboard'),
