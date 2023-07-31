@@ -12,6 +12,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import Badge from 'components/Badge';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
@@ -20,10 +21,11 @@ import TreeInfoDialog from 'components/TreeInfoDialog';
 import TreeLoader from 'components/TreeLoader';
 import Crumbs from 'components/common/Crumbs';
 import Icon from 'components/common/CustomIcon';
+import Filter from 'components/common/Filter';
 import TagList from 'components/common/TagList';
 import TreeTag from 'components/common/TreeTag';
 import { useDrawerContext } from 'context/DrawerContext';
-import { useMobile, useEmbed } from 'hooks/globalHooks';
+import { useMobile, useEmbed, useFullscreen } from 'hooks/globalHooks';
 import { usePageLoading } from 'hooks/usePageLoading';
 import AccuracyIcon from 'images/icons/accuracy.svg';
 import CalendarIcon from 'images/icons/calendar.svg';
@@ -60,10 +62,20 @@ export default function Tree({
   });
   const isMobile = useMobile();
   const isEmbed = useEmbed();
+  const isFullscreen = useFullscreen();
   const isPlanterContext = context && context.name === 'planters';
   const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
+
+  function handleFilter(filter) {
+    log.warn('handleFilter', filter);
+    if (!map) return;
+    map.setFilters({
+      timeline: `${filter.startDate}_${filter.endDate}`,
+    });
+    map.rerender();
+  }
 
   log.warn('map:', mapContext);
 
