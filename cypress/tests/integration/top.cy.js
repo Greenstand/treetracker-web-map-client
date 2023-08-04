@@ -16,7 +16,7 @@ describe('top', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/organizations/featured',
+      path: '/query/v2/organizations/featured',
       statusCode: 200,
       body: {
         organizations: [organization1],
@@ -26,7 +26,7 @@ describe('top', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/planters/featured',
+      path: '/query/v2/planters/featured',
       statusCode: 200,
       body: {
         planters: [planter940],
@@ -36,10 +36,32 @@ describe('top', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/wallets/featured',
+      path: '/query/v2/wallets/featured',
       statusCode: 200,
       body: {
         wallets: [wallets],
+      },
+    });
+
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: '/query/v2/captures',
+      statusCode: 200,
+      body: {
+        captures: [
+          { ...tree186734, id: '254fd088-b0aa-4eef-a3d9-b02c491ff9d3' },
+        ],
+      },
+    });
+
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: '/query/v2/growers/featured',
+      statusCode: 200,
+      body: {
+        grower_accounts: [],
       },
     });
 
@@ -49,9 +71,7 @@ describe('top', () => {
     });
 
     cy.visit('/top');
-    cy.contains('Featured trees');
-    cy.contains('Check out the global leaders in the tree planting effort');
-    cy.contains('Tanzania');
+    cy.contains('Featured captures');
     cy.screenshot();
   });
 });
