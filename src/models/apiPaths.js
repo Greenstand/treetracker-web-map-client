@@ -9,9 +9,9 @@ const apiPaths = {
   countriesLatLon: (lat = '', lon = '') =>
     urlJoin(host, `/countries?lat=${lat}&lon=${lon}`),
   leaders: urlJoin(host, '/countries/leaderboard'),
-  trees: (id = '') => urlJoin(host, `v2/trees/${id}`),
-  captures: (id = '') => urlJoin(host, `v2/captures/${id}`),
-  growers: (id = '') => urlJoin(host, `v2/growers/${id}`),
+  trees: (id = '') => urlJoin(host, `trees/${id}`),
+  captures: (id = '') => urlJoin(host, `captures/${id}`),
+  growers: (id = '') => urlJoin(host, `growers/${id}`),
   planters: (id = '') => urlJoin(host, `growers/${id}`),
   stakeHolders: (id = '') => urlJoin(hostV2, `/stakeholder/stakeholders/${id}`),
   species: urlJoin(host, '/species'),
