@@ -171,7 +171,10 @@ function MapComponent() {
           map,
           router,
         );
-        window.history.pushState('treetracker', '', path);
+        // changing the url in history state
+        // this allow website to load page back
+        const historyState = { ...window.history.state, url: path };
+        window.history.replaceState(historyState, '', path);
       });
     }
 
