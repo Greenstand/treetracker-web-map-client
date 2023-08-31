@@ -1,3 +1,5 @@
+'use client';
+
 import {
   AppBar,
   Button,
@@ -7,6 +9,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useConfigContext } from 'context/configContext';
 import { useCustomThemeContext } from 'hooks/contextHooks';
@@ -58,6 +61,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function Navbar() {
+  const { asPath, pathname } = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
   const { navbar: config } = useConfigContext();
@@ -71,18 +75,22 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  // trees/1017648?embed=true
   const { classes } = useStyles();
+  const path = asPath.toString().includes('embed=true');
+  const mobile = path === true ? 'none' : 'flex';
   return (
     <AppBar
       elevation={4}
       className={classes.navContainer}
       color="default"
       position="static"
+      style={isMobile && path ? { display: 'none' } : { display: 'flex' }}
     >
       <Link href="/" className={classes.logo}>
         <Box
           sx={{
-            display: 'flex',
+            display: mobile,
             justifyContent: 'flex-start',
             alignItems: 'baseline',
             gap: theme.spacing(2),
@@ -113,7 +121,11 @@ function Navbar() {
           ) : null}
         </Box>
       </Link>
-      <Toolbar variant="dense" className={classes.toolbar}>
+      <Toolbar
+        variant="dense"
+        className={classes.toolbar}
+        sx={{ display: mobile }}
+      >
         {config?.items.map((item) => (
           <Link key={`nav-${item.title}`} target="_blank" href={item.url}>
             <Button className={classes.buttonStyle} variant="text">
@@ -131,6 +143,7 @@ function Navbar() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleMenuClick}
+        sx={{ display: mobile }}
       >
         <MenuBar />
       </Button>
@@ -138,6 +151,7 @@ function Navbar() {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
+        sx={{ display: mobile }}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
@@ -152,7 +166,10 @@ function Navbar() {
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>
         ))}
-        <MenuItem onClick={handleClose} sx={{ paddingLeft: '10px' }}>
+        <MenuItem
+          onClick={handleClose}
+          sx={{ paddingLeft: '10px', display: mobile }}
+        >
           <ChangeThemeButton />
         </MenuItem>
       </Menu>

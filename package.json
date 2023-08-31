@@ -69,6 +69,7 @@
     "moment": "^2.29.1",
     "next": "^12.1.0",
     "next-images": "^1.8.1",
+    "nextjs-current-url": "^1.0.3",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-best-gradient-color-picker": "^2.0.21",

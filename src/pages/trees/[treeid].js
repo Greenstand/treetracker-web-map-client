@@ -713,7 +713,9 @@ export default function Tree({
                 height: '120px',
                 margin: '10px',
               }}
-              src={isPlanterContext ? planter.image_url : organization.logo_url}
+              src={
+                isPlanterContext ? planter.image_url : organization?.logo_url
+              }
               variant="rounded"
             />
           </Portal>
