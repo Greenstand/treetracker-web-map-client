@@ -79,6 +79,9 @@ function Navbar() {
   const { classes } = useStyles();
   const path = asPath.toString().includes('embed=true');
   const mobile = path === true ? 'none' : 'flex';
+  if (path === true) {
+    return null;
+  }
   return (
     <AppBar
       elevation={4}
@@ -121,11 +124,7 @@ function Navbar() {
           ) : null}
         </Box>
       </Link>
-      <Toolbar
-        variant="dense"
-        className={classes.toolbar}
-        sx={{ display: mobile }}
-      >
+      <Toolbar variant="dense" className={classes.toolbar}>
         {config?.items.map((item) => (
           <Link key={`nav-${item.title}`} target="_blank" href={item.url}>
             <Button className={classes.buttonStyle} variant="text">
@@ -143,7 +142,6 @@ function Navbar() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleMenuClick}
-        sx={{ display: mobile }}
       >
         <MenuBar />
       </Button>
@@ -151,7 +149,6 @@ function Navbar() {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        sx={{ display: mobile }}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
@@ -166,10 +163,7 @@ function Navbar() {
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>
         ))}
-        <MenuItem
-          onClick={handleClose}
-          sx={{ paddingLeft: '10px', display: mobile }}
-        >
+        <MenuItem onClick={handleClose}>
           <ChangeThemeButton />
         </MenuItem>
       </Menu>
