@@ -78,7 +78,6 @@ function Navbar() {
   // trees/1017648?embed=true
   const { classes } = useStyles();
   const path = asPath.toString().includes('embed=true');
-  const mobile = path === true ? 'none' : 'flex';
   if (path === true) {
     return null;
   }
