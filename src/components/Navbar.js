@@ -93,7 +93,7 @@ function Navbar() {
       <Link href="/" className={classes.logo}>
         <Box
           sx={{
-            display: mobile,
+            display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'baseline',
             gap: theme.spacing(2),
