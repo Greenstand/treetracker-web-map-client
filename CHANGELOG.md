@@ -1,3 +1,10 @@
+## [2.6.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.3...v2.6.4) (2023-09-02)
+
+
+### Bug Fixes
+
+* allow page to navigate back to valid url when bounds change ([260ca1b](https://github.com/Greenstand/treetracker-web-map-client/commit/260ca1b8e910daa294735ad1fd92866d323e6759))
+
 ## [2.6.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.2...v2.6.3) (2023-07-26)
 
 
