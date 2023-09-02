@@ -1,3 +1,5 @@
+'use client';
+
 import {
   AppBar,
   Button,
@@ -7,6 +9,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useConfigContext } from 'context/configContext';
 import { useCustomThemeContext } from 'hooks/contextHooks';
@@ -58,6 +61,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function Navbar() {
+  const { asPath, pathname } = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
   const { navbar: config } = useConfigContext();
@@ -71,13 +75,19 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  // trees/1017648?embed=true
   const { classes } = useStyles();
+  const path = asPath.toString().includes('embed=true');
+  if (path === true) {
+    return null;
+  }
   return (
     <AppBar
       elevation={4}
       className={classes.navContainer}
       color="default"
       position="static"
+      style={isMobile && path ? { display: 'none' } : { display: 'flex' }}
     >
       <Link href="/" className={classes.logo}>
         <Box
@@ -152,7 +162,7 @@ function Navbar() {
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>
         ))}
-        <MenuItem onClick={handleClose} sx={{ paddingLeft: '10px' }}>
+        <MenuItem onClick={handleClose}>
           <ChangeThemeButton />
         </MenuItem>
       </Menu>
