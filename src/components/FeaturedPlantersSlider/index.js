@@ -84,6 +84,7 @@ function FeaturedPlantersSlider({
             opacity: 0.9,
           }}
           variant="contained"
+          aria-label="scroll left"
         >
           <ArrowBackIosIcon
             sx={{
@@ -135,7 +136,7 @@ function FeaturedPlantersSlider({
                 image={
                   planter.logo_url || planter.image_url || imagePlaceholder
                 }
-                alt="tree"
+                alt=""
                 sx={{
                   width: 136,
                   height: 136,
@@ -207,6 +208,7 @@ function FeaturedPlantersSlider({
             opacity: 0.9,
           }}
           variant="contained"
+          aria-label="scroll right"
         >
           <ArrowBackIosIcon
             sx={{

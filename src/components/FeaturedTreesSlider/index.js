@@ -64,6 +64,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             opacity: 0.9,
           }}
           variant="contained"
+          aria-label="scroll left"
         >
           <ArrowBackIosIcon
             sx={{
@@ -99,7 +100,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
               <CardMedia
                 component="img"
                 image={getThumbnailImageUrls(tree.image_url, 208, 232)}
-                alt="tree"
+                alt=""
                 sx={{
                   borderRadius: '16px',
                   transition: 'transform .5s',
@@ -158,6 +159,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             opacity: 0.9,
           }}
           variant="contained"
+          aria-label="scroll right"
         >
           <ArrowBackIosIcon
             sx={{
