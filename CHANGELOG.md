@@ -1,3 +1,10 @@
+## [2.6.1-cwm.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.1-cwm.2...v2.6.1-cwm.3) (2023-09-05)
+
+
+### Bug Fixes
+
+* trigger deployment ([f018897](https://github.com/Greenstand/treetracker-web-map-client/commit/f018897fc28bce17eefa7abc51f299f77e530591))
+
 ## [2.6.1-cwm.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.1-cwm.1...v2.6.1-cwm.2) (2023-07-18)
 
 
