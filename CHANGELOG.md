@@ -1,3 +1,11 @@
+## [2.6.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.4...v2.6.5) (2023-09-05)
+
+
+### Bug Fixes
+
+* remove alt tag from decorative images and add alt to slider ([82f5af6](https://github.com/Greenstand/treetracker-web-map-client/commit/82f5af670bf5811753faf5403a9d50d199df6e15))
+* update theme button alt tag and announce to screenreader ([d02cc3e](https://github.com/Greenstand/treetracker-web-map-client/commit/d02cc3e6d25a6c3b8eda3e6cde6264fea2785f81))
+
 ## [2.6.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.3...v2.6.4) (2023-09-02)
 
 
