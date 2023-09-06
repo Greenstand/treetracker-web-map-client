@@ -1,3 +1,10 @@
+## [2.6.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.5...v2.6.6) (2023-09-06)
+
+
+### Performance Improvements
+
+* add height to cover photo ([668b125](https://github.com/Greenstand/treetracker-web-map-client/commit/668b1250ab7e972ef1d871fe88771d35a828d63d))
+
 ## [2.6.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.4...v2.6.5) (2023-09-05)
 
 
