@@ -374,7 +374,9 @@ export default function Wallet(props) {
           sx={{ mt: [2.5, 5] }}
           variant="body2"
           dangerouslySetInnerHTML={{
-            __html: marked.parse(wallet.about || 'NO DATA YET'),
+            __html: marked.parse(
+              (wallet.about || 'NO DATA YET').replace(/\\n/g, '<br/>'),
+            ),
           }}
         />
         <Divider
