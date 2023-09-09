@@ -80,11 +80,7 @@ export default function Wallet(props) {
         await map.setFilters({
           wallet: wallet.name,
         });
-        const view = await map.getCurrentView();
-        if (view.zoomLevel < 2) {
-          view.zoomLevel = 2;
-        }
-        await moveMapByUrl({ map, router, initZoom: view.zoomLevel });
+        await moveMapByUrl({ map, router, getInitial: true });
       }
     }
     reload();

@@ -305,41 +305,33 @@ const abbreviateNumber = (number) =>
   }).format(number);
 
 /**
- * @param map
- * @param router
- *
- * @description move the position view of the map base on the url
+ * @description move the position view of the map base on the url.
+ * If not found, move to the global view
  */
-const moveMapByUrl = async ({ map, router, initLat, initLon, initZoom }) => {
-  const { bounds } = router.query;
-  const { view } = router.query;
-  console.log('Moving in map');
-  console.log(bounds);
-  console.log(view);
+const moveMapByUrl = async ({ map, router, getInitial = false }) => {
+  const { bounds, view } = router.query;
+
   if (bounds) {
     log.warn('goto bounds found in url');
     await map.gotoBounds(bounds);
   } else if (view) {
     log.warn('goto view found in url');
-
     const [lat, lon, zoomLevel] = view.split(',');
     await map.gotoView(
       parseFloat(lat),
       parseFloat(lon),
       parseFloat(zoomLevel.substring(0, zoomLevel.length - 1)),
     );
+  } else if (getInitial) {
+    const initView = await map.getInitialView();
+    await map.gotoView(
+      initView.center.lat,
+      initView.center.lon,
+      initView.zoomLevel,
+    );
   } else {
-    try {
-      const initView = await map.getInitialView();
-      await map.gotoView(
-        initView.center.lat,
-        initView.center.lon,
-        initView.center.zoomLevel,
-      );
-    } catch (err) {
-      console.warn('Goto global view');
-      await map.gotoView(0, 0, 2);
-    }
+    console.warn('Goto global view');
+    await map.gotoView(0, 0, 2);
   }
 };
 
