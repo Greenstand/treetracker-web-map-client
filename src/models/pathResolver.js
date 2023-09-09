@@ -79,8 +79,13 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
     query: optionalParams,
   };
 }
-
-function updatePathWhenMapMoveEnd(location, map, router) {
+/**
+ * if {isView} is true,view's is used (lat,long,zoomLevel z)
+ *
+ * else bounds is used (southWestLng, southWestLat, northEastLng, northEastLat)
+ * @returns string url
+ */
+function updatePathWhenMapMoveEnd(location, map, router, isView = true) {
   log.warn(
     'updatePathWhenMapMoveEnd: location:',
     location,
@@ -89,7 +94,17 @@ function updatePathWhenMapMoveEnd(location, map, router) {
     ' router:',
     router,
   );
-  let result = `${location.pathname}?bounds=${map.getCurrentBounds()}${
+
+  // determine to use which format to use for coordinate
+  let coordinate = '';
+  if (!isView) {
+    coordinate = `bounds=${map.getCurrentBounds()}`;
+  } else {
+    const { center, zoomLevel } = map.getCurrentView();
+    coordinate = `view=${center.lat},${center.lng},${zoomLevel}z`;
+  }
+
+  let result = `${location.pathname}?${coordinate}${
     router.query.timeline ? `&timeline=${router.query.timeline}` : ''
   }${router.query.embed ? `&embed=true` : ''}`;
   if (router.query.tree_id) {
@@ -133,9 +148,28 @@ function getContext(router, options = {}) {
 function getBounds(router) {
   return router.query.bounds;
 }
+
+function getView(router) {
+  const { view } = router.query;
+  try {
+    if (view) {
+      const [lat, lon, zoomLevel] = view.split(',');
+      return {
+        lat: parseFloat(lat),
+        lon: parseFloat(lon),
+        zoomLevel: parseFloat(zoomLevel.substring(0, zoomLevel.length - 1)),
+      };
+    }
+  } catch (e) {
+    console.warn("view's format is not correct");
+  }
+  return null;
+}
+
 export {
   getPathWhenClickTree,
   updatePathWhenMapMoveEnd,
   getContext,
   getBounds,
+  getView,
 };

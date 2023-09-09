@@ -141,7 +141,7 @@ describe('Test pathResolver', () => {
     });
   });
 
-  describe('updatePathWhenMapMoveEnd', () => {
+  describe('updatePathWhenMapMoveEnd bounds coordinate ', () => {
     it('update path when ', () => {
       const result = pathResolver.updatePathWhenMapMoveEnd(
         {
@@ -154,6 +154,7 @@ describe('Test pathResolver', () => {
         {
           query: {},
         },
+        false,
       );
       expect(result).toBe(
         '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7?bounds=37.44990348815919,-3.315482794386477,37.46535301208497,-3.307471024919109',
@@ -174,6 +175,7 @@ describe('Test pathResolver', () => {
             tree_id: '14615',
           },
         },
+        false,
       );
       expect(result).toBe(
         '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7?bounds=37.44990348815919,-3.315482794386477,37.46535301208497,-3.307471024919109&tree_id=14615',
@@ -194,9 +196,88 @@ describe('Test pathResolver', () => {
             tree_id: '5413738',
           },
         },
+        false,
       );
       expect(result).toBe(
         '/wallets/5f5939ae-91ce-49cd-81ba-7fdba81e250a/tokens?bounds=46.38155221939087,-15.762146918354096,46.3908863067627,-15.74444839985392&tree_id=5413738',
+      );
+    });
+  });
+
+  describe('updatePathWhenMapMoveEnd view coordinate ', () => {
+    it('update path when ', () => {
+      const result = pathResolver.updatePathWhenMapMoveEnd(
+        {
+          pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7',
+        },
+        {
+          getCurrentView: () => ({
+            center: {
+              lat: 2.4601811810210052,
+              lng: 32.16796875000001,
+            },
+            zoomLevel: 2,
+          }),
+        },
+        {
+          query: {},
+        },
+        true,
+      );
+      expect(result).toBe(
+        '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7?view=2.4601811810210052,32.16796875000001,2z',
+      );
+    });
+
+    it('update path when /wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens?tree_id=14615', () => {
+      const result = pathResolver.updatePathWhenMapMoveEnd(
+        {
+          pathname: '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7',
+        },
+        {
+          getCurrentView: () => ({
+            center: {
+              lat: 2.4601811810210052,
+              lng: 32.16796875000001,
+            },
+            zoomLevel: 2,
+          }),
+        },
+        {
+          query: {
+            tree_id: '14615',
+          },
+        },
+        true,
+      );
+      expect(result).toBe(
+        '/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7?view=2.4601811810210052,32.16796875000001,2z&tree_id=14615',
+      );
+    });
+
+    it('update path when /wallets/5f5939ae-91ce-49cd-81ba-7fdba81e250a/tokens?tree_id=5413738', () => {
+      const result = pathResolver.updatePathWhenMapMoveEnd(
+        {
+          pathname: '/wallets/5f5939ae-91ce-49cd-81ba-7fdba81e250a/tokens',
+        },
+        {
+          getCurrentView: () => ({
+            center: {
+              lat: 2.4601811810210052,
+              lng: 32.16796875000001,
+            },
+            zoomLevel: 2,
+          }),
+        },
+        {
+          query: {
+            tree_id: '5413738',
+          },
+        },
+        true,
+      );
+      expect(result).toBe(
+        '/wallets/5f5939ae-91ce-49cd-81ba-7fdba81e250a/tokens?view=2.4601811810210052,32.16796875000001,2z&tree_id=5413738',
       );
     });
   });
@@ -257,6 +338,21 @@ describe('Test pathResolver', () => {
       expect(bounds).toBe(
         '-126.56250000000001,-56.365250136856076,126.56250000000001,56.17002298293205',
       );
+    });
+  });
+
+  describe('getView', () => {
+    it('?view=2.4601811810210052,32.16796875000001,2z', () => {
+      const bounds = pathResolver.getView({
+        query: {
+          view: '2.4601811810210052,32.16796875000001,2z',
+        },
+      });
+      expect(bounds).toMatchObject({
+        lat: 2.4601811810210052,
+        lon: 32.16796875000001,
+        zoomLevel: 2,
+      });
     });
   });
 });

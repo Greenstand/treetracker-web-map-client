@@ -35,7 +35,7 @@ import { useMapContext } from 'mapContext';
 import { getPlanterById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
-import { getLocationString, getPlanterName, wrapper } from 'models/utils';
+import { getLocationString, getPlanterName, moveMapByUrl, wrapper } from 'models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -123,7 +123,9 @@ export default function Planter(props) {
           log.warn('goto bounds found in url');
           await map.gotoBounds(bounds);
         } else {
+          console.log('get initial');
           const view = await map.getInitialView();
+          console.log(view);
           map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         }
       }

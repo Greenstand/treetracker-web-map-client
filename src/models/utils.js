@@ -304,6 +304,45 @@ const abbreviateNumber = (number) =>
     notation: 'compact',
   }).format(number);
 
+/**
+ * @param map
+ * @param router
+ *
+ * @description move the position view of the map base on the url
+ */
+const moveMapByUrl = async ({ map, router, initLat, initLon, initZoom }) => {
+  const { bounds } = router.query;
+  const { view } = router.query;
+  console.log('Moving in map');
+  console.log(bounds);
+  console.log(view);
+  if (bounds) {
+    log.warn('goto bounds found in url');
+    await map.gotoBounds(bounds);
+  } else if (view) {
+    log.warn('goto view found in url');
+
+    const [lat, lon, zoomLevel] = view.split(',');
+    await map.gotoView(
+      parseFloat(lat),
+      parseFloat(lon),
+      parseFloat(zoomLevel.substring(0, zoomLevel.length - 1)),
+    );
+  } else {
+    try {
+      const initView = await map.getInitialView();
+      await map.gotoView(
+        initView.center.lat,
+        initView.center.lon,
+        initView.center.zoomLevel,
+      );
+    } catch (err) {
+      console.warn('Goto global view');
+      await map.gotoView(0, 0, 2);
+    }
+  }
+};
+
 export {
   hideLastName,
   parseDomain,
@@ -326,4 +365,5 @@ export {
   setPropByPath,
   getPropByPath,
   abbreviateNumber,
+  moveMapByUrl,
 };
