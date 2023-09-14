@@ -2,14 +2,20 @@ import * as pathResolver from './pathResolver';
 
 describe('Test pathResolver', () => {
   describe('getPathWhenClickTree', () => {
-    it('get path when click tree icon on page: /tokens/6c85c551-ed63-456f-ba0f-8d632897f560', async () => {
-      const result = await pathResolver.getPathWhenClickTree(
+    it('get path when click tree icon on page: /tokens/6c85c551-ed63-456f-ba0f-8d632897f560', () => {
+      const result = pathResolver.getPathWhenClickTree(
         {},
         {
           pathname: '/tokens/6c85c551-ed63-456f-ba0f-8d632897f560',
         },
         {
-          query: {},
+          query: {
+            tokenid: '6c85c551-ed63-456f-ba0f-8d632897f560',
+          },
+        },
+        undefined,
+        {
+          token_id: '6c85c551-ed63-456f-ba0f-8d632897f560',
         },
       );
       expect(result).toMatchObject({
@@ -17,18 +23,20 @@ describe('Test pathResolver', () => {
       });
     });
 
-    it('click on /tokens/0c0c90cd-75cd-4961-9d27-e5392adc3067 from tokens/254fd088-b0aa-4eef-a3d9-b02c491ff9d3', async () => {
-      const result = await pathResolver.getPathWhenClickTree(
-        {
-          token_id: '/tokens/0c0c90cd-75cd-4961-9d27-e5392adc3067',
-        },
+    it('click on /tokens/0c0c90cd-75cd-4961-9d27-e5392adc3067 from tokens/254fd088-b0aa-4eef-a3d9-b02c491ff9d3', () => {
+      const result = pathResolver.getPathWhenClickTree(
+        {},
         {
           pathname: '/tokens/0c0c90cd-75cd-4961-9d27-e5392adc3067',
         },
         {
           query: {
-            tokenid: 'tokens/254fd088-b0aa-4eef-a3d9-b02c491ff9d3',
+            tokenid: '254fd088-b0aa-4eef-a3d9-b02c491ff9d3',
           },
+        },
+        undefined,
+        {
+          token_id: '0c0c90cd-75cd-4961-9d27-e5392adc3067',
         },
       );
       expect(result).toMatchObject({
@@ -36,8 +44,8 @@ describe('Test pathResolver', () => {
       });
     });
 
-    it('click on /organizations/178/trees/735592', async () => {
-      const result = await pathResolver.getPathWhenClickTree(
+    it('click on /organizations/178/trees/735592', () => {
+      const result = pathResolver.getPathWhenClickTree(
         {
           id: 706648,
         },
@@ -53,8 +61,8 @@ describe('Test pathResolver', () => {
       });
     });
 
-    it('click on /trees/1017648', async () => {
-      const result = await pathResolver.getPathWhenClickTree(
+    it('click on /trees/1017648', () => {
+      const result = pathResolver.getPathWhenClickTree(
         {
           id: 1017681,
         },
@@ -70,8 +78,8 @@ describe('Test pathResolver', () => {
       });
     });
 
-    it('click on /wallets/0cdf4219-869a-41ce-953a-a8421d8353f7', async () => {
-      const result = await pathResolver.getPathWhenClickTree(
+    it('click on /wallets/0cdf4219-869a-41ce-953a-a8421d8353f7', () => {
+      const result = pathResolver.getPathWhenClickTree(
         {
           id: 14615,
           token_id: '3a53e2a6-ac17-43a5-a3aa-31fd04786cba',
@@ -90,8 +98,8 @@ describe('Test pathResolver', () => {
       });
     });
 
-    it('click on /wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens?tree_id=14615', async () => {
-      const result = await pathResolver.getPathWhenClickTree(
+    it('click on /wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens?tree_id=14615', () => {
+      const result = pathResolver.getPathWhenClickTree(
         {
           id: 14616,
           token_id: '3a53e2a6-ac17-43a5-a3aa-31fd04786cba',
@@ -114,8 +122,8 @@ describe('Test pathResolver', () => {
       });
     });
 
-    it('click on /wallets/0cdf4219-869a-41ce-953a-a8421d8353f7', async () => {
-      const result = await pathResolver.getPathWhenClickTree(
+    it('click on /wallets/0cdf4219-869a-41ce-953a-a8421d8353f7', () => {
+      const result = pathResolver.getPathWhenClickTree(
         {
           id: 14615,
         },
@@ -135,8 +143,8 @@ describe('Test pathResolver', () => {
       });
     });
 
-    it('click on /web-map-beta/demo/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens with base', async () => {
-      const result = await pathResolver.getPathWhenClickTree(
+    it('click on /web-map-beta/demo/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens with base', () => {
+      const result = pathResolver.getPathWhenClickTree(
         {
           id: 14615,
         },
@@ -147,6 +155,7 @@ describe('Test pathResolver', () => {
         {
           query: {},
         },
+        undefined,
         undefined,
         {
           base: '/web-map-beta/demo',
