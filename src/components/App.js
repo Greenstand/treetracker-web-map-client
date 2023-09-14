@@ -69,10 +69,10 @@ function MapComponent() {
     showMessage(error.message);
   }
 
-  function handleClickTree(tree) {
+  async function handleClickTree(tree) {
     log.warn('click tree:', tree);
 
-    const result = pathResolver.getPathWhenClickTree(
+    const result = await pathResolver.getPathWhenClickTree(
       tree,
       window.location,
       router,
