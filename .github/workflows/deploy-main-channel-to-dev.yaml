@@ -66,7 +66,7 @@ jobs:
       - id: export_bumped_version
         run: |
           export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
-          echo "::set-output name=bumped_version::${BUMPED_VERSION}"
+          echo "bumped_version=${BUMPED_VERSION}" >> $GITHUB_OUTPUT
     outputs:
       bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
 

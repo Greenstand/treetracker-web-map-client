@@ -188,11 +188,11 @@ export default function Tree({
         <Badge
           color={tree?.approved ? 'primary' : 'greyLight'}
           icon={tree?.approved ? <CheckIcon /> : null}
-          badgeName={tree?.approved ? 'Waiting for verification' : 'Verified'}
+          badgeName={tree?.approved ? 'Verified' : 'Waiting for verification'}
         />
         <Badge
           color="secondary"
-          badgeName={tree?.token_id ? 'Token not issued' : 'Token issued'}
+          badgeName={tree?.token_id ? 'Token issued' : 'Token not issued'}
         />
       </>
     ),
@@ -612,7 +612,7 @@ export default function Tree({
             },
           ]}
         >
-          Tree Info
+          Capture Info
         </Typography>
         <TagList>
           <TreeTag
@@ -649,22 +649,6 @@ export default function Tree({
             disabled={tree.species_name === null}
             subtitle={tree.species_desc === null ? null : 'click to learn more'}
             link={tree.species_desc === null ? null : tree.species_desc}
-          />
-          <TreeTag
-            TreeTagValue={
-              tree.gps_accuracy === null ? 'unknown' : tree.gps_accuracy
-            }
-            title="GPS Accuracy"
-            icon={<Icon icon={AccuracyIcon} />}
-            disabled={tree.gps_accuracy === null}
-          />
-          <TreeTag
-            TreeTagValue={
-              tree.morphology === null ? 'unknown' : tree.morphology
-            }
-            title="Morphology"
-            icon={<Icon icon={HubIcon} />}
-            disabled={tree.morphology === null}
           />
           <TreeTag
             TreeTagValue={
@@ -729,7 +713,9 @@ export default function Tree({
                 height: '120px',
                 margin: '10px',
               }}
-              src={isPlanterContext ? planter.image_url : organization.logo_url}
+              src={
+                isPlanterContext ? planter.image_url : organization?.logo_url
+              }
               variant="rounded"
             />
           </Portal>

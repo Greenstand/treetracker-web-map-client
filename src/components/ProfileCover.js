@@ -16,7 +16,7 @@ function ProfileCover({ src }) {
           },
         }}
       >
-        <img src={src} alt="profile" />
+        <img src={src} alt="profile" height="328" />
       </Box>
     );
   }

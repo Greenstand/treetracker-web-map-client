@@ -35,7 +35,7 @@ jobs:
       - id: export_bumped_version
         run: |
           export BUMPED_VERSION="${{ github.event.inputs.git-tag }}"
-          echo "::set-output name=bumped_version::${BUMPED_VERSION}"
+          echo "bumped_version=${BUMPED_VERSION}" >> $GITHUB_OUTPUT
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize

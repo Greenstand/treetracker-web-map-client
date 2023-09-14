@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.4.1",
+  "version": "2.6.6",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -20,6 +20,7 @@
     "mock-server": "prism mock ./doc/web-map-api.yaml",
     "prepare": "is-ci || husky install",
     "prettier": "prettier ./ --write",
+    "prettier:check": "prettier --check src/",
     "start": "next start",
     "test": "jest"
   },
