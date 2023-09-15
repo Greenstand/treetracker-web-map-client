@@ -4,10 +4,10 @@ import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useMapContext } from 'mapContext';
 import { makeStyles } from 'models/makeStyles';
-import * as pathResolver from 'models/pathResolver';
+import { moveMapByUrl } from 'models/utils';
 import Link from './Link';
-import { useMapContext } from '../mapContext';
 
 const backgroundImage = `${process.env.NEXT_PUBLIC_BASE}/images/bg.webp`;
 const useStyles = makeStyles()((theme) => ({
@@ -66,14 +66,7 @@ export default function Home(props) {
         await map.setFilters({});
         log.warn('location:', window.location);
         log.warn('router:', router);
-        const bounds = pathResolver.getBounds(router);
-        if (bounds) {
-          log.warn('goto bounds found in url');
-          await map.gotoBounds(bounds);
-        } else {
-          log.warn('goto global view');
-          await map.gotoView(0, 0, 2);
-        }
+        moveMapByUrl({ map, router });
       }
     }
     reload();
