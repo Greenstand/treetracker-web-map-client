@@ -18,7 +18,14 @@ const MAP_URL_PATTERNV2 =
 // '/wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens?tree_id=95614',
 const MAP_URL_PATTERN_2 = /^\/wallets\/([a-z0-9-]+)\/tokens$/;
 
-function getPathWhenClickTree(tree, location, router, map, options = {}) {
+function getPathWhenClickTree(
+  tree,
+  location,
+  router,
+  map,
+  wholeTree,
+  options = {},
+) {
   const pathname = utils.nextPathBaseDecode(
     location.pathname,
     options.base || '',
@@ -49,7 +56,9 @@ function getPathWhenClickTree(tree, location, router, map, options = {}) {
   if (path) {
     log.warn('match pattern 1');
     if (!path[1] && path[5] === 'tokens') {
-      pathnameResult = path[4];
+      const { token_id } = wholeTree;
+      const sameTree = router.query.tokenid === token_id;
+      pathnameResult = sameTree ? path[4] : `/tokens/${token_id}`;
     } else if (path[1] && path[5] === 'trees') {
       pathnameResult = `${path[1]}/trees/${tree.id}`;
     } else if (path[1] === undefined && path[5] === 'trees') {

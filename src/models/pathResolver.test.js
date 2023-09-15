@@ -9,11 +9,38 @@ describe('Test pathResolver', () => {
           pathname: '/tokens/6c85c551-ed63-456f-ba0f-8d632897f560',
         },
         {
-          query: {},
+          query: {
+            tokenid: '6c85c551-ed63-456f-ba0f-8d632897f560',
+          },
+        },
+        undefined,
+        {
+          token_id: '6c85c551-ed63-456f-ba0f-8d632897f560',
         },
       );
       expect(result).toMatchObject({
         pathname: '/tokens/6c85c551-ed63-456f-ba0f-8d632897f560',
+      });
+    });
+
+    it('click on /tokens/0c0c90cd-75cd-4961-9d27-e5392adc3067 from tokens/254fd088-b0aa-4eef-a3d9-b02c491ff9d3', () => {
+      const result = pathResolver.getPathWhenClickTree(
+        {},
+        {
+          pathname: '/tokens/0c0c90cd-75cd-4961-9d27-e5392adc3067',
+        },
+        {
+          query: {
+            tokenid: '254fd088-b0aa-4eef-a3d9-b02c491ff9d3',
+          },
+        },
+        undefined,
+        {
+          token_id: '0c0c90cd-75cd-4961-9d27-e5392adc3067',
+        },
+      );
+      expect(result).toMatchObject({
+        pathname: '/tokens/0c0c90cd-75cd-4961-9d27-e5392adc3067',
       });
     });
 
@@ -128,6 +155,7 @@ describe('Test pathResolver', () => {
         {
           query: {},
         },
+        undefined,
         undefined,
         {
           base: '/web-map-beta/demo',

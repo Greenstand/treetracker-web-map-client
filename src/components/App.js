@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { Map } from 'treetracker-web-map-core';
 import { useMapContext } from 'mapContext';
+import { getTreeById } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 // import { parseMapName } from '../models/utils';
 
@@ -69,14 +70,16 @@ function MapComponent() {
     showMessage(error.message);
   }
 
-  function handleClickTree(tree) {
+  async function handleClickTree(tree) {
     log.warn('click tree:', tree);
 
+    const wholeTree = await getTreeById(tree.id).catch((err) => log.warn(err));
     const result = pathResolver.getPathWhenClickTree(
       tree,
       window.location,
       router,
       undefined,
+      wholeTree,
       {
         base: process.env.NEXT_PUBLIC_BASE,
       },
