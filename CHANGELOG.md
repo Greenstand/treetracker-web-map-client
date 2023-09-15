@@ -1,3 +1,11 @@
+## [2.6.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.6...v2.6.7) (2023-09-15)
+
+
+### Bug Fixes
+
+* clicking between token icons updates the url ([d82ddf9](https://github.com/Greenstand/treetracker-web-map-client/commit/d82ddf9abe2e8fe3b404c0816b4fe5b10e7c8709))
+* clicking token works, removed async from pathresolver ([43ef221](https://github.com/Greenstand/treetracker-web-map-client/commit/43ef221321b17021ebd33c7ec205880bef3e9674))
+
 ## [2.6.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.5...v2.6.6) (2023-09-06)
 
 
