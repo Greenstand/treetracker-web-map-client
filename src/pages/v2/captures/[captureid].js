@@ -72,7 +72,7 @@ export default function Capture({
   const { setTitlesData } = useDrawerContext();
   log.warn('map:', mapContext);
 
-  const { org_name, logo_url, id } = organization.stakeholders[0];
+  const { org_name, logo_url, id } = organization.stakeholders[0] || {};
 
   function handleShare() {}
 
