@@ -12,6 +12,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import Badge from 'components/Badge';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
 import InformationCard1 from 'components/InformationCard1';
 import LikeButton from 'components/LikeButton';
@@ -20,10 +21,11 @@ import TreeInfoDialog from 'components/TreeInfoDialog';
 import TreeLoader from 'components/TreeLoader';
 import Crumbs from 'components/common/Crumbs';
 import Icon from 'components/common/CustomIcon';
+import Filter from 'components/common/Filter';
 import TagList from 'components/common/TagList';
 import TreeTag from 'components/common/TreeTag';
 import { useDrawerContext } from 'context/DrawerContext';
-import { useMobile, useEmbed } from 'hooks/globalHooks';
+import { useMobile, useEmbed, useFullscreen } from 'hooks/globalHooks';
 import { usePageLoading } from 'hooks/usePageLoading';
 import AccuracyIcon from 'images/icons/accuracy.svg';
 import CalendarIcon from 'images/icons/calendar.svg';
@@ -36,21 +38,29 @@ import TokenIcon from 'images/icons/token.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
+import {
+  getCaptures,
+  getOrganizationById,
+  getPlanterById,
+  getTreeById,
+} from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
 export default function Tree({
   tree,
   planter,
+  captures,
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
 }) {
   log.warn('tree: ', tree);
+  log.warn('captures ', captures);
   log.warn('org: ', organization);
   const mapContext = useMapContext();
   const { map } = mapContext;
+  const isFullscreen = useFullscreen();
   const theme = useTheme();
   const router = useRouter();
   const { isPageLoading } = usePageLoading();
@@ -199,6 +209,15 @@ export default function Tree({
     [tree?.approved, tree?.token_id],
   );
 
+  function handleFilter(filter) {
+    log.warn('handleFilter', filter);
+    if (!map) return;
+    map.setFilters({
+      timeline: `${filter.startDate}_${filter.endDate}`,
+    });
+    map.rerender();
+  }
+
   return (
     <>
       <HeadTag title={`Tree #${tree.id}`} />
@@ -215,8 +234,8 @@ export default function Tree({
         ]}
       >
         {/* <IsMobileScreen>
-        <DrawerTitle />
-      </IsMobileScreen> */}
+    <DrawerTitle />
+  </IsMobileScreen> */}
         {isMobile && (
           <Portal
             container={() => document.getElementById('drawer-title-container')}
@@ -557,10 +576,10 @@ export default function Tree({
         )}
 
         {/* <CustomImageWrapper
-        imageUrl={tree.image_url}
-        timeCreated={tree.time_created}
-        treeId={tree.id}
-      /> */}
+    imageUrl={tree.image_url}
+    timeCreated={tree.time_created}
+    treeId={tree.id}
+  /> */}
         {organization && (
           <Box
             sx={[
@@ -582,6 +601,25 @@ export default function Tree({
               }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
             />
           </Box>
+        )}
+        {captures?.length > 0 && (
+          <>
+            <Box
+              sx={{
+                mt: 8,
+              }}
+            >
+              <Typography variant="h4">Captures match to this tree</Typography>
+            </Box>
+            {false && ( // going to be replaced by search filter component
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Filter onFilter={handleFilter} />
+              </Box>
+            )}
+            <Box>
+              <FeaturedTreesSlider trees={captures} isMobile={isFullscreen} />
+            </Box>
+          </>
         )}
         <Box
           sx={{
@@ -744,6 +782,10 @@ async function serverSideData(params) {
   const tree = await getTreeById(treeid);
   const { planter_id, planting_organization_id } = tree;
   const planter = await getPlanterById(planter_id);
+  const captures = await getCaptures();
+  // const captures = await getTreeCaptures(treeid)
+  // Make sure to import getTreeCaptures from /apiPaths
+  // comment in when captures in v2 database have valid tree_id's.
   let organization = null;
   if (planting_organization_id) {
     log.warn('load org from planting_orgniazation_id');
@@ -758,6 +800,7 @@ async function serverSideData(params) {
   return {
     tree,
     planter,
+    captures,
     organization,
   };
 }
