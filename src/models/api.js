@@ -32,7 +32,7 @@ export async function getCaptures() {
 
 export async function getCapturesByTreeId(id) {
   try {
-    const url = apiPaths.getCapturesByTreeId;
+    const url = apiPaths.getCapturesByTreeId(id);
     const begin = Date.now();
     const res = await axios.get(url);
     const data = await res.data;
