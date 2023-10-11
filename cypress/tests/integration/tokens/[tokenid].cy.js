@@ -65,7 +65,7 @@ describe('Token page', () => {
     });
 
     cy.visit(path, {
-      failOnStatusCode: false,
+      // failOnStatusCode: false,
     });
     cy.contains(token.id);
     cy.screenshot();

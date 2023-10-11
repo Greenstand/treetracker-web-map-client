@@ -16,7 +16,7 @@ describe('Organizations', () => {
     });
 
     cy.visit(path, {
-      failOnStatusCode: false,
+      // failOnStatusCode: false,
     });
 
     cy.url().should('include', '/organizations');
