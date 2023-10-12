@@ -23,7 +23,7 @@ describe('Token page', () => {
         created_at: '2021-11-14T22:49:28.495Z',
         updated_at: '2021-11-14T22:49:28.495Z',
         claim: false,
-        tree_id: 951836,
+        tree_id: 'da4d3ed8-8655-44c5-a7ba-d4c45a0dfb10',
         tree_image_url:
           'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.03.26.03.04.00_8.442396096679852_-13.234358212401096_90318a55-0f01-436f-8c0a-f29e7059caff_IMG_20210310_131020_6428924620633541327.jpg',
         tree_species_name: 'apple',
@@ -32,7 +32,7 @@ describe('Token page', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/wallets/eecdf253-05b6-419a-8425-416a3e5fc9a0',
+      path: '/query/v2/wallets/eecdf253-05b6-419a-8425-416a3e5fc9a0',
       statusCode: 200,
       body: {
         id: 'eecdf253-05b6-419a-8425-416a3e5fc9a0',
@@ -56,17 +56,15 @@ describe('Token page', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/trees/951836',
+      path: '/query/v2/trees/da4d3ed8-8655-44c5-a7ba-d4c45a0dfb10',
       statusCode: 200,
       body: {
-        id: 951836,
+        id: 'da4d3ed8-8655-44c5-a7ba-d4c45a0dfb10',
         planter_id: 940,
       },
     });
 
-    cy.visit(path, {
-      // failOnStatusCode: false,
-    });
+    cy.visit(path);
     cy.contains(token.id);
     cy.screenshot();
   });
