@@ -12,7 +12,7 @@ describe('Token page', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/tokens/6c85c551-ed63-456f-ba0f-8d632897f560',
+      path: '/query/v2/tokens/6c85c551-ed63-456f-ba0f-8d632897f560',
       statusCode: 200,
       body: {
         id: '6c85c551-ed63-456f-ba0f-8d632897f560',

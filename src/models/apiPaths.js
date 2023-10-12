@@ -19,7 +19,7 @@ const apiPaths = {
   wallets: (id = '') => urlJoin(host, `/wallets/${id}`),
   filterSpeciesByWalletId: (id = '') =>
     urlJoin(host, `/species?wallet_id=${id}`),
-  tokens: (id = '') => urlJoin(hostV2, `/tokens/${id}`),
+  tokens: (id = '') => urlJoin(host, `/tokens/${id}`),
 };
 
 export default apiPaths;

@@ -9,9 +9,7 @@ describe('Planter page', () => {
   it('getServerSideProps return mocks', () => {
     const path = `/planters/${planter.id}`;
     prepareNocks({ planter });
-    cy.visit(path, {
-      failOnStatusCode: false,
-    });
+    cy.visit(path);
     cy.get('.MuiTypography-h2').contains(/sebastian g/i);
     cy.screenshot();
   });
