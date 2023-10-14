@@ -10,8 +10,12 @@
     "age":null,"created_at":"2022-01-25T12:06:36.000Z",
     "updated_at":"2022-01-25T12:06:36.000Z",
     "estimated_geographic_location":"0101000020E61000005E0A2435A8682AC0CDBB02E82FDC2040",
-    "status":"active","attributes":null,"species_id":null,
-    "planter_id":940
+    "status":"active",
+    "attributes":null,
+    "species_id":null,
+    "planter_id":940,
+    "name":"The Best Tree"
+
 }
 
 
