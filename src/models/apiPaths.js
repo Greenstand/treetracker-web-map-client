@@ -12,7 +12,7 @@ const apiPaths = {
   trees: (id = '') => urlJoin(host, `/trees/${id}`),
   captures: (id = '') => urlJoin(host, `captures/${id}`),
   growers: (id = '') => urlJoin(host, `growers/${id}`),
-  planters: (id = '') => urlJoin(host, `growers/${id}`),
+  planters: (id = '') => urlJoin(host, `planters/${id}`),
   stakeHolders: (id = '') => urlJoin(hostV2, `/stakeholder/stakeholders/${id}`),
   species: urlJoin(host, '/species'),
   organization: (id = '') => urlJoin(host, `/organizations/${id}`),

@@ -1,6 +1,7 @@
 import organization1 from '../../../doc/examples/organizations/1.json';
 import planter940 from '../../../doc/examples/planters/940.json';
 import { defaultConfig } from '../../../src/context/configContext';
+import capture1 from '../../fixtures/capture.json';
 import leader from '../../fixtures/countries/leader.json';
 import tree186734 from '../../fixtures/tree186734.json';
 
@@ -9,11 +10,13 @@ export function getNockRoutes(
     tree: {},
     organization: {},
     planter: {},
+    capture: {},
   },
 ) {
   const organization = { ...organization1, ...props.organization };
   const planter = { ...planter940, ...props.planter };
   const tree = { ...tree186734, ...props.tree };
+  const capture = { ...capture1, ...props.capture };
   return [
     {
       method: 'GET',
@@ -102,6 +105,14 @@ export function getNockRoutes(
       path: '/countries/leaderboard',
       statusCode: 200,
       body: leader,
+    },
+    {
+      method: 'GET',
+      path: '/captures',
+      statusCode: 200,
+      body: {
+        captures: [capture],
+      },
     },
   ];
 }

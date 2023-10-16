@@ -711,7 +711,7 @@ async function serverSideData(params, query) {
     const { wallet_id } = token;
     const wallet = await getWalletById(wallet_id);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+      `${process.env.NEXT_PUBLIC_API_V2}/transactions?token_id=${tokenid}`,
     );
     const { data } = res;
     const transactions = data;

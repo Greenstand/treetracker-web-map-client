@@ -13,7 +13,7 @@ describe('Planter page', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/tokens?wallet=ba95a148-7ff8-42bb-8028-99b747b86ae1',
+      path: '/query/v2/tokens?wallet=ba95a148-7ff8-42bb-8028-99b747b86ae1',
       statusCode: 200,
       body: {
         total: 10,
@@ -126,34 +126,32 @@ describe('Planter page', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/wallets/ba95a148-7ff8-42bb-8028-99b747b86ae1/token-region-count',
+      path: '/query/v2/wallets/ba95a148-7ff8-42bb-8028-99b747b86ae1/token-region-count',
       statusCode: 200,
       body: { walletStatistics: [{ continent: 'Africa', token_count: '10' }] },
     });
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/wallets/ba95a148-7ff8-42bb-8028-99b747b86ae1',
+      path: '/query/v2/wallets/ba95a148-7ff8-42bb-8028-99b747b86ae1',
       statusCode: 200,
       body: wallet,
     });
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/species?wallet_id=ba95a148-7ff8-42bb-8028-99b747b86ae1',
+      path: '/query/v2/species?wallet_id=ba95a148-7ff8-42bb-8028-99b747b86ae1',
       statusCode: 200,
       body: { total: null, offset: 0, limit: 20, species: [] },
     });
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/trees?wallet_id=ba95a148-7ff8-42bb-8028-99b747b86ae1',
+      path: '/query/v2/trees?wallet_id=ba95a148-7ff8-42bb-8028-99b747b86ae1',
       statusCode: 200,
       body: { total: 10, offset: 0, limit: 20, trees: [] },
     });
-    cy.visit(path, {
-      failOnStatusCode: false,
-    });
+    cy.visit(path);
     cy.get('.MuiTypography-h2')
       .eq(0)
       .contains(/Maynard.Stroman79/i);

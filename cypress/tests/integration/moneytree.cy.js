@@ -12,6 +12,6 @@ describe('Money Tree', () => {
     // nocksIntercept for extra data that I want to show up
     cy.visit(path);
     // misc code to confirm changes
-    cy.get('.mui-nmovop > :nth-child(1)').contains(`Money Tree`);
+    cy.contains(`${tree.id}`);
   });
 });
