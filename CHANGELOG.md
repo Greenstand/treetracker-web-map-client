@@ -1,3 +1,13 @@
+# [2.6.0-v2.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.5...v2.6.0-v2.6) (2023-10-16)
+
+
+### Bug Fixes
+
+* cypress integration tests tree and organization now work ([6e59a91](https://github.com/Greenstand/treetracker-web-map-client/commit/6e59a91b76b3727710c2861e320fa2870906bce3))
+* cypresss integration tests should work ([66ce3d5](https://github.com/Greenstand/treetracker-web-map-client/commit/66ce3d5186284bb9876c7d29a4d1d926ced0ba0b))
+* jest api.spec.js test fixed ([7db15af](https://github.com/Greenstand/treetracker-web-map-client/commit/7db15af4a08044d43a6bf15c7edeb2e5b6faadbe))
+* token cypress integration test ([449f4b6](https://github.com/Greenstand/treetracker-web-map-client/commit/449f4b675d6020d47fd695c36d4d09fcad175ff7))
+
 # [2.6.0-v2.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.4...v2.6.0-v2.5) (2023-07-18)
 
 
