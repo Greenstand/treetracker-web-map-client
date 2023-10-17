@@ -34,7 +34,7 @@ describe('getOrganizationById', () => {
 
 describe('getTreeById', () => {
   it('should get tree by id', async () => {
-    const id = 1;
+    const id = 'da4d3ed8-8655-44c5-a7ba-d4c45a0dfb10';
     const tree = await getTreeById(id);
     expect(tree).toBeDefined();
     expect(tree.name).toBeDefined();
