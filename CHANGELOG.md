@@ -1,3 +1,11 @@
+# [2.6.0-v2.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.6...v2.6.0-v2.7) (2023-10-27)
+
+
+### Features
+
+* add nock route for growers ([9a4e62f](https://github.com/Greenstand/treetracker-web-map-client/commit/9a4e62fe46d5241f1bbe0c74ab1e340693d524f3))
+* captureList on [treeid] page and api changes ([a08bc16](https://github.com/Greenstand/treetracker-web-map-client/commit/a08bc169219c844c33633cd537dac8fe5da013d8))
+
 # [2.6.0-v2.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.5...v2.6.0-v2.6) (2023-10-16)
 
 
