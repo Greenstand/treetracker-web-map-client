@@ -10,6 +10,8 @@ const apiPaths = {
     urlJoin(host, `/countries?lat=${lat}&lon=${lon}`),
   leaders: urlJoin(host, '/countries/leaderboard'),
   trees: (id = '') => urlJoin(host, `/trees/${id}`),
+  getCapturesByTreeId: (treeid = '') =>
+    urlJoin(host, `/captures?tree_id=${treeid}`),
   captures: (id = '') => urlJoin(host, `captures/${id}`),
   growers: (id = '') => urlJoin(host, `growers/${id}`),
   planters: (id = '') => urlJoin(host, `planters/${id}`),

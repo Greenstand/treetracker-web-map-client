@@ -16,6 +16,7 @@ export async function getFeaturedGrowers() {
     throw err;
   }
 }
+
 export async function getCaptures() {
   try {
     const url = apiPaths.getCaptures;
@@ -29,6 +30,21 @@ export async function getCaptures() {
     throw err;
   }
 }
+
+export async function getCapturesByTreeId(id) {
+  try {
+    const url = apiPaths.getCapturesByTreeId(id);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data.captures;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
+
 export async function getFeaturedTrees() {
   try {
     const url = apiPaths.featuredTrees;
