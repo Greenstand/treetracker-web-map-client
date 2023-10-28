@@ -1,3 +1,10 @@
+## [2.6.1-cwm.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.1-cwm.3...v2.6.1-cwm.4) (2023-10-28)
+
+
+### Bug Fixes
+
+* Setup test env for next channel ([4514d11](https://github.com/Greenstand/treetracker-web-map-client/commit/4514d116208cdd0e42dfc8282f08cf79b0b5c838))
+
 ## [2.6.1-cwm.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.1-cwm.2...v2.6.1-cwm.3) (2023-09-05)
 
 
