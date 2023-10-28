@@ -2,4 +2,6 @@ bases:
   - ../../base
 patchesStrategicMerge:
   - deployment.yaml
+  - host.yaml
+  - mapping.yaml
   # - database-connection-sealed-secret.yaml

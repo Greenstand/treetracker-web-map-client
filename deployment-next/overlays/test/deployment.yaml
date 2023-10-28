@@ -14,5 +14,13 @@ spec:
       containers:
         - name: treetracker-web-map-client-next
           env:
-            - name: NODE_ENV
-              value: test
+            - name: NEXT_PUBLIC_API
+              value: https://test-k8s.treetracker.org/query
+            - name: NEXT_PUBLIC_TILE_SERVER_URL
+              value: https://{s}.treetracker.org/tiles/
+            - name: NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS
+              value: test-k8s
+            - name: NEXT_PUBLIC_TILE_SERVER_WEBMAP_API
+              value: https://test-k8s.treetracker.org/webmap/
+            - name: NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED
+              value: 'false'
