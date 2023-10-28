@@ -1,3 +1,11 @@
+## [2.6.1-cwm.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.1-cwm.4...v2.6.1-cwm.5) (2023-10-28)
+
+
+### Bug Fixes
+
+* deploy to test env ([3b30ff7](https://github.com/Greenstand/treetracker-web-map-client/commit/3b30ff70de36d9fe331b45273d34e85ab0b55218))
+* remove host file for test env [skip ci] ([0c792a6](https://github.com/Greenstand/treetracker-web-map-client/commit/0c792a624c2f3cf3c234b078855287af8e08ccd8))
+
 ## [2.6.1-cwm.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.1-cwm.3...v2.6.1-cwm.4) (2023-10-28)
 
 
