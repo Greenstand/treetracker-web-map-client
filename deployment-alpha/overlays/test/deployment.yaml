@@ -13,9 +13,6 @@ spec:
     spec:
       containers:
         - name: treetracker-web-map-client-alpha
-          image: greenstand/treetracker-web-map-client:TAG
-          ports:
-          - containerPort: 3000
           env:
             - name: NEXT_PUBLIC_API
               value: https://test-k8s.treetracker.org/query/v2
@@ -29,5 +26,4 @@ spec:
               value: https://test-k8s.treetracker.org/webmap/
             - name: NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED
               value: 'false'
-            - name: NODE_ENV
-              value: test
+            
