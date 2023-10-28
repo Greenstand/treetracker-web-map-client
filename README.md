@@ -410,6 +410,7 @@ We have more tech guides and handbook here:
 4.  Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
 
 5.  Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
+
 6.  Optional, if you aren't fully confident about your code, it's always a good idea to create a PR in `draft` status as early as possible, so you can draw others attention on it and give you suggestions. (to do it, just expand the PR button, there is a `draft` selection)
 
 7.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.
