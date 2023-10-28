@@ -1,3 +1,10 @@
+# [2.6.0-v2.8](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.7...v2.6.0-v2.8) (2023-10-28)
+
+
+### Bug Fixes
+
+* Setup test env for alpha channel ([8224304](https://github.com/Greenstand/treetracker-web-map-client/commit/82243045cd2bfd4ec35ce1ea03cd7fa8ef58d907))
+
 # [2.6.0-v2.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.0-v2.6...v2.6.0-v2.7) (2023-10-27)
 
 
