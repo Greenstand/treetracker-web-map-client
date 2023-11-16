@@ -20,8 +20,11 @@ import { ConfigProvider, defaultConfig } from '../context/configContext';
 import { CustomThemeProvider } from '../context/themeContext';
 import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
 import { MapContextProvider } from '../mapContext';
-
+import { AuthProvider } from "react-oidc-context";
+import oidcConfig from 'models/oidcConfig';
 log.warn(`Web Map Client version ${packageJson.version}`);
+
+
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   log.warn('Mocking API calls with msw');
@@ -88,9 +91,10 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
 
   log.warn('app: isDesktop: ', nextExtraIsDesktop);
   log.warn('app: component: ', Component);
-  // log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
   log.warn('router:', router);
+
+  // oidc.createSigninRequest()
 
   React.useEffect(() => {
     const handleRouteChange = (url) => {
@@ -140,68 +144,72 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
   if (isAdmin) {
     return (
       <>
-        <GoogleAnalytics />
-        <LayoutDashboard>
-          <Component {...pageProps} />
-        </LayoutDashboard>
+        <AuthProvider { ...oidcConfig}>
+          <GoogleAnalytics />
+          <LayoutDashboard>
+            <Component {...pageProps} />
+          </LayoutDashboard>
+        </AuthProvider>
       </>
     );
   }
 
   return (
-    <ConfigProvider config={config}>
-      <GoogleAnalytics />
-      <CacheProvider value={muiCache ?? createMuiCache()}>
-        <CustomThemeProvider>
-          <DrawerProvider>
-            <MapContextProvider>
-              {nextExtraIsDesktop && !nextExtraIsEmbed && (
-                <Layout {...extraProps} ref={layoutRef}>
-                  <Component {...pageProps} {...extraProps} />
-                </Layout>
-              )}
-              {nextExtraIsDesktop && nextExtraIsEmbed && (
-                <LayoutEmbed
-                  {...extraProps}
-                  isFloatingDisabled={Component.isFloatingDisabled}
-                >
-                  <Component {...pageProps} {...extraProps} />
-                </LayoutEmbed>
-              )}
-              {!nextExtraIsDesktop && Component.isBLayout && (
-                <LayoutMobileB>
-                  <Component {...pageProps} {...extraProps} />
-                </LayoutMobileB>
-              )}
-              {!nextExtraIsDesktop && Component.isCLayout && (
-                <LayoutMobileC>
-                  <Component {...pageProps} {...extraProps} />
-                </LayoutMobileC>
-              )}
-              {!nextExtraIsDesktop &&
-                !Component.isBLayout &&
-                !Component.isCLayout && (
-                  <LayoutMobile ref={layoutRef}>
+    <AuthProvider { ...oidcConfig}>
+      <ConfigProvider config={config}>
+        <GoogleAnalytics />
+        <CacheProvider value={muiCache ?? createMuiCache()}>
+          <CustomThemeProvider>
+            <DrawerProvider>
+              <MapContextProvider>
+                {nextExtraIsDesktop && !nextExtraIsEmbed && (
+                  <Layout {...extraProps} ref={layoutRef}>
                     <Component {...pageProps} {...extraProps} />
-                  </LayoutMobile>
+                  </Layout>
                 )}
-            </MapContextProvider>
-          </DrawerProvider>
-        </CustomThemeProvider>
-      </CacheProvider>
-      {nextExtraLoading && (
-        <Box
-          sx={{
-            position: 'fixed',
-            top: 0,
-            zIndex: 9999,
-            width: '100%',
-          }}
-        >
-          <LinearProgress />
-        </Box>
-      )}
-    </ConfigProvider>
+                {nextExtraIsDesktop && nextExtraIsEmbed && (
+                  <LayoutEmbed
+                    {...extraProps}
+                    isFloatingDisabled={Component.isFloatingDisabled}
+                  >
+                    <Component {...pageProps} {...extraProps} />
+                  </LayoutEmbed>
+                )}
+                {!nextExtraIsDesktop && Component.isBLayout && (
+                  <LayoutMobileB>
+                    <Component {...pageProps} {...extraProps} />
+                  </LayoutMobileB>
+                )}
+                {!nextExtraIsDesktop && Component.isCLayout && (
+                  <LayoutMobileC>
+                    <Component {...pageProps} {...extraProps} />
+                  </LayoutMobileC>
+                )}
+                {!nextExtraIsDesktop &&
+                  !Component.isBLayout &&
+                  !Component.isCLayout && (
+                    <LayoutMobile ref={layoutRef}>
+                      <Component {...pageProps} {...extraProps} />
+                    </LayoutMobile>
+                  )}
+              </MapContextProvider>
+            </DrawerProvider>
+          </CustomThemeProvider>
+        </CacheProvider>
+        {nextExtraLoading && (
+          <Box
+            sx={{
+              position: 'fixed',
+              top: 0,
+              zIndex: 9999,
+              width: '100%',
+            }}
+          >
+            <LinearProgress />
+          </Box>
+        )}
+      </ConfigProvider>
+    </AuthProvider>
   );
 }
 
@@ -227,7 +235,7 @@ TreetrackerApp.getInitialProps = async (context) => {
       configData.find((item) => item.name === 'testing-config')?.data ||
       defaultConfig;
   }
-
+  
   return {
     props,
     config,

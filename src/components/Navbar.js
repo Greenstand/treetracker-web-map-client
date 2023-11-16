@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import {
   AppBar,
@@ -18,6 +18,7 @@ import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
+import Test from './test';
 
 const treeTrackerLogo = `/images/treetracker_logo.svg`;
 const treeTrackerLogoWhite = `/images/treetracker_logo_white.svg`;
@@ -61,7 +62,7 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function Navbar() {
-  const { asPath, pathname } = useRouter();
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
   const { navbar: config } = useConfigContext();
@@ -77,10 +78,11 @@ function Navbar() {
   };
   // trees/1017648?embed=true
   const { classes } = useStyles();
-  const path = asPath.toString().includes('embed=true');
+  const path = router.asPath.toString().includes('embed=true');
   if (path === true) {
     return null;
   }
+
   return (
     <AppBar
       elevation={4}
@@ -133,6 +135,9 @@ function Navbar() {
             </Button>
           </Link>
         ))}
+        
+        <Test />
+
         <ChangeThemeButton />
       </Toolbar>
       <Button
