@@ -439,6 +439,8 @@ Sometimes we need to connect production data (map, tree) to debug, to do so, cop
   --entrypoint cypress \
   cypress/included:latest open --project .
   ```
+
+  mode details is [here](https://www.cypress.io/blog/2019/05/02/run-cypress-with-a-single-docker-command)
 .
 .
 .
