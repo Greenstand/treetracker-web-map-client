@@ -422,7 +422,23 @@ More resource is here: https://app.gitbook.com/@greenstand/s/engineering/tools#g
 
 Sometimes we need to connect production data (map, tree) to debug, to do so, copy the settings in `.env.production` and put them into the `.env.local` so next.js will load them as high priority.
 
-.
+## How to run cypress in a docker container on Max/Linux/Windows
+
+- Install XQuartz
+- Install docker
+- `cd to/project`
+- Run command
+
+  ```
+  docker run -it \
+  --rm \
+  -v $PWD:/e2e \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -w /e2e \
+  -e DISPLAY=host.docker.internal:0 \
+  --entrypoint cypress \
+  cypress/included:latest open --project .
+  ```
 .
 .
 .
