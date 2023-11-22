@@ -2,6 +2,7 @@ import { urlJoin } from 'url-join-ts';
 
 const host = process.env.NEXT_PUBLIC_API || '';
 const hostV2 = process.env.NEXT_PUBLIC_API_V2 || '';
+const hostStakeholder = process.env.NEXT_PUBLIC_STAKEHOLDER_API || '';
 const apiPaths = {
   featuredTrees: urlJoin(host, 'trees/featured'),
   featuredGrowers: urlJoin(host, 'growers/featured'),
@@ -15,7 +16,7 @@ const apiPaths = {
   captures: (id = '') => urlJoin(host, `captures/${id}`),
   growers: (id = '') => urlJoin(host, `growers/${id}`),
   planters: (id = '') => urlJoin(host, `planters/${id}`),
-  stakeHolders: (id = '') => urlJoin(hostV2, `/stakeholder/stakeholders/${id}`),
+  stakeHolders: (id = '') => urlJoin(hostStakeholder, `/stakeholders/${id}`),
   species: urlJoin(host, '/species'),
   organization: (id = '') => urlJoin(host, `/organizations/${id}`),
   wallets: (id = '') => urlJoin(host, `/wallets/${id}`),
