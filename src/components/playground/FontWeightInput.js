@@ -1,25 +1,16 @@
 import { RestartAlt } from '@mui/icons-material';
 import {
   Box,
-  InputAdornment,
-  CircularProgress,
   InputLabel,
   Tooltip,
   FormControl,
-  Input,
   FormHelperText,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import { useState, useEffect, useCallback, memo } from 'react';
-import {
-  usePlaygroundUtils,
-  usePlaygroundFonts,
-  usePlaygroundTheme,
-} from 'hooks/contextHooks';
+import { usePlaygroundUtils, usePlaygroundFonts, usePlaygroundTheme } from 'hooks/contextHooks';
 import { useDefaultValue } from 'hooks/cwmHooks';
-import {
-  propRules,
-  fontWeightNameToValue,
-} from 'models/themePlaygroundOptions';
 import { loadFonts } from 'models/utils';
 
 function FontWeightInput({ prop, pathToProp, propName }) {
@@ -46,21 +37,7 @@ function FontWeightInput({ prop, pathToProp, propName }) {
         return setError('Please add a font first');
       }
 
-      // handle case of not a convertable string weight
-      // 'bolder', 'lighter', 'inherit' ....
-      if (!(userInput in fontWeightNameToValue)) {
-        setPropByPath(`${pathToProp}.${propName}`, userInput);
-        return true;
-      }
-
-      const isWeightValueNumber = Number.isNaN(Number(userInput)) === false;
-
-      // convert the string weight to an number
-      // 'bold' & 'normal'
-      let weightToLoad = userInput;
-      if (isWeightValueNumber === false) {
-        weightToLoad = fontWeightNameToValue[userInput];
-      }
+      const weightToLoad = userInput;
 
       setLoading(true);
       loadFonts([`${fontFamily}:${weightToLoad}`]).then((fontLoaded) => {
@@ -89,12 +66,7 @@ function FontWeightInput({ prop, pathToProp, propName }) {
   const handleChange = (e) => {
     const userInput = e.target.value;
     setValue(userInput);
-    if (!propRules[propName].test(userInput)) {
-      setError(`Invalid ${prop.displayText}`);
-      return;
-    }
 
-    e.target.blur();
     loadWeight(userInput);
     setError('');
   };
@@ -115,15 +87,25 @@ function FontWeightInput({ prop, pathToProp, propName }) {
           </Tooltip>
         </Box>
       </InputLabel>
-      <Input
-        value={value}
-        onChange={handleChange}
-        endAdornment={
-          <InputAdornment position="end">
-            {loading ? <CircularProgress size="1.5rem" /> : null}
-          </InputAdornment>
-        }
-      />
+      <Select value={value} onChange={handleChange}>
+        {prop.options?.map((data) => (
+          <MenuItem
+            value={data.value}
+            key={`fw-selector-menuitem-${data.value}`}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                flex: 1,
+              }}
+            >
+              <span>{data.label}</span>
+            </Box>
+          </MenuItem>
+        ))}
+      </Select>
       <FormHelperText>{error || `Load ${prop.displayText}.`}</FormHelperText>
     </FormControl>
   );
