@@ -16,10 +16,10 @@ import { useCustomThemeContext } from 'hooks/contextHooks';
 import { useMobile } from 'hooks/globalHooks';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
-import UserAvatar from './Avatar';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
 import LoginLogoutToggle from './LoginLogoutToggle';
+import UserAvatar from './UserAvatar';
 
 const treeTrackerLogo = `/images/treetracker_logo.svg`;
 const treeTrackerLogoWhite = `/images/treetracker_logo_white.svg`;
