@@ -25,7 +25,7 @@ function SignInButton({ auth, classes, isMobile }) {
           },
         }}
         className={classes.buttonStyle}
-        onClick={auth.signinRedirect}
+        onClick={auth?.signinRedirect}
       >
         <Typography className={classes.buttonStyle}>Sign in</Typography>
       </Link>

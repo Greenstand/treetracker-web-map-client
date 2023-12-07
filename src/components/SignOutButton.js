@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Link } from '@mui/material';
+import { Box, Button, Typography, Link, Avatar } from '@mui/material';
 
 function SignOutButton({ auth, classes, isMobile }) {
   if (isMobile) {
@@ -8,9 +8,8 @@ function SignOutButton({ auth, classes, isMobile }) {
           textDecoration: 'none',
           color: ({ palette }) => palette.text.primary,
         }}
-        onClick={auth.removeUser}
+        onClick={auth?.removeUser}
       >
-        {' '}
         Sign Out
       </Link>
     );
@@ -27,7 +26,7 @@ function SignOutButton({ auth, classes, isMobile }) {
               color: ({ palette }) => palette.text.primary,
             },
           }}
-          onClick={auth.removeUser}
+          onClick={auth?.removeUser}
         >
           <Typography className={classes.buttonStyle}>Sign Out</Typography>
         </Link>

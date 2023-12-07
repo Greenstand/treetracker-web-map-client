@@ -1,6 +1,9 @@
 import { Box, Link, Avatar } from '@mui/material';
 
 function UserAvatar({ auth }) {
+  if (!auth?.isAuthenticated) {
+    return null;
+  }
   return (
     <Box>
       <Avatar
@@ -18,7 +21,7 @@ function UserAvatar({ auth }) {
             color: ({ palette }) => palette.text.primary,
           }}
         >
-          {auth.user?.profile.preferred_username[0] || null}
+          {auth?.user?.profile.preferred_username[0] || null}
         </Link>
       </Avatar>
     </Box>

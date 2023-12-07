@@ -140,7 +140,7 @@ function Navbar() {
         ))}
 
         <LoginLogoutToggle classes={classes} />
-        {auth.isAuthenticated ? <UserAvatar auth={auth} /> : null}
+        <UserAvatar auth={auth} />
         <ChangeThemeButton />
       </Toolbar>
       <Button
