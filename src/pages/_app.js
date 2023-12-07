@@ -8,23 +8,22 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { userAgentFromString } from 'next/server';
 import React from 'react';
-import packageJson from '../../package.json';
-import Layout from '../components/Layout';
-import LayoutDashboard from '../components/LayoutDashboard';
-import LayoutEmbed from '../components/LayoutEmbed';
-import LayoutMobile from '../components/LayoutMobile';
-import LayoutMobileB from '../components/LayoutMobileB';
-import LayoutMobileC from '../components/LayoutMobileC';
-import { DrawerProvider } from '../context/DrawerContext';
-import { ConfigProvider, defaultConfig } from '../context/configContext';
-import { CustomThemeProvider } from '../context/themeContext';
-import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
-import { MapContextProvider } from '../mapContext';
-import { AuthProvider } from "react-oidc-context";
+import { AuthProvider } from 'react-oidc-context';
+import Layout from 'components/Layout';
+import LayoutDashboard from 'components/LayoutDashboard';
+import LayoutEmbed from 'components/LayoutEmbed';
+import LayoutMobile from 'components/LayoutMobile';
+import LayoutMobileB from 'components/LayoutMobileB';
+import LayoutMobileC from 'components/LayoutMobileC';
+import { DrawerProvider } from 'context/DrawerContext';
+import { ConfigProvider, defaultConfig } from 'context/configContext';
+import { CustomThemeProvider } from 'context/themeContext';
+import { useLocalStorage, useEmbed } from 'hooks/globalHooks';
+import { MapContextProvider } from 'mapContext';
 import oidcConfig from 'models/oidcConfig';
+import packageJson from '../../package.json';
+
 log.warn(`Web Map Client version ${packageJson.version}`);
-
-
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   log.warn('Mocking API calls with msw');
@@ -143,19 +142,17 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
   const isAdmin = !!router.asPath.match(/admin/);
   if (isAdmin) {
     return (
-      <>
-        <AuthProvider { ...oidcConfig}>
-          <GoogleAnalytics />
-          <LayoutDashboard>
-            <Component {...pageProps} />
-          </LayoutDashboard>
-        </AuthProvider>
-      </>
+      <AuthProvider {...oidcConfig}>
+        <GoogleAnalytics />
+        <LayoutDashboard>
+          <Component {...pageProps} />
+        </LayoutDashboard>
+      </AuthProvider>
     );
   }
 
   return (
-    <AuthProvider { ...oidcConfig}>
+    <AuthProvider {...oidcConfig}>
       <ConfigProvider config={config}>
         <GoogleAnalytics />
         <CacheProvider value={muiCache ?? createMuiCache()}>
@@ -235,7 +232,7 @@ TreetrackerApp.getInitialProps = async (context) => {
       configData.find((item) => item.name === 'testing-config')?.data ||
       defaultConfig;
   }
-  
+
   return {
     props,
     config,
