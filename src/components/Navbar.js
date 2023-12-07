@@ -1,5 +1,4 @@
 // 'use client';
-
 import {
   AppBar,
   Button,
@@ -11,14 +10,16 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useAuth } from 'react-oidc-context';
 import { useConfigContext } from 'context/configContext';
 import { useCustomThemeContext } from 'hooks/contextHooks';
 import { useMobile } from 'hooks/globalHooks';
 import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
+import UserAvatar from './Avatar';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
-import Test from './test';
+import LoginLogoutToggle from './LoginLogoutToggle';
 
 const treeTrackerLogo = `/images/treetracker_logo.svg`;
 const treeTrackerLogoWhite = `/images/treetracker_logo_white.svg`;
@@ -68,6 +69,8 @@ function Navbar() {
   const { navbar: config } = useConfigContext();
 
   const { theme } = useCustomThemeContext();
+
+  const auth = useAuth();
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -135,9 +138,9 @@ function Navbar() {
             </Button>
           </Link>
         ))}
-        
-        <Test />
 
+        <LoginLogoutToggle classes={classes} />
+        {auth.isAuthenticated ? <UserAvatar auth={auth} /> : null}
         <ChangeThemeButton />
       </Toolbar>
       <Button
@@ -167,6 +170,9 @@ function Navbar() {
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>
         ))}
+        <MenuItem>
+          <LoginLogoutToggle classes={classes} isMobile={isMobile} />
+        </MenuItem>
         <MenuItem onClick={handleClose}>
           <ChangeThemeButton />
         </MenuItem>
