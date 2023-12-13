@@ -1,3 +1,21 @@
+# [2.7.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.7...v2.7.0) (2023-12-13)
+
+
+### Bug Fixes
+
+* fixed keying into auths for cypress component test ([7e70ac5](https://github.com/Greenstand/treetracker-web-map-client/commit/7e70ac550efb97039e45791194166624bec524ea))
+* fixed linter errors ([3db59d0](https://github.com/Greenstand/treetracker-web-map-client/commit/3db59d079fdfff4009d6d852db7ece3ab90da23f))
+* layout tiny adjustment ([c41fb2b](https://github.com/Greenstand/treetracker-web-map-client/commit/c41fb2bab942f19fcf25b38372336f626707f69f))
+* rename Avatar component too UserAvatar to differentiate between that and mui Avatar ([caf135b](https://github.com/Greenstand/treetracker-web-map-client/commit/caf135b24c011e7a1b527e1f6a3a4f0cbe26a835))
+* use env for keycloak ([84e4d1c](https://github.com/Greenstand/treetracker-web-map-client/commit/84e4d1cc95ef53f48351d4aebbb90d77751ee362))
+
+
+### Features
+
+* install react-oidc dependencies ([378394b](https://github.com/Greenstand/treetracker-web-map-client/commit/378394b1b13a777459f1ca499a26a0462c61dba1))
+* keycloak login test ([46a874b](https://github.com/Greenstand/treetracker-web-map-client/commit/46a874b75992939a8a26af0b6b8fe5d5577fa806))
+* login logout buttons with integrated auth ([656f471](https://github.com/Greenstand/treetracker-web-map-client/commit/656f47137257d6698b63fd21cfdb137b43402426))
+
 ## [2.6.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.6...v2.6.7) (2023-09-15)
 
 
