@@ -8,18 +8,20 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { userAgentFromString } from 'next/server';
 import React from 'react';
+import { AuthProvider } from 'react-oidc-context';
+import Layout from 'components/Layout';
+import LayoutDashboard from 'components/LayoutDashboard';
+import LayoutEmbed from 'components/LayoutEmbed';
+import LayoutMobile from 'components/LayoutMobile';
+import LayoutMobileB from 'components/LayoutMobileB';
+import LayoutMobileC from 'components/LayoutMobileC';
+import { DrawerProvider } from 'context/DrawerContext';
+import { ConfigProvider, defaultConfig } from 'context/configContext';
+import { CustomThemeProvider } from 'context/themeContext';
+import { useLocalStorage, useEmbed } from 'hooks/globalHooks';
+import { MapContextProvider } from 'mapContext';
+import oidcConfig from 'models/oidcConfig';
 import packageJson from '../../package.json';
-import Layout from '../components/Layout';
-import LayoutDashboard from '../components/LayoutDashboard';
-import LayoutEmbed from '../components/LayoutEmbed';
-import LayoutMobile from '../components/LayoutMobile';
-import LayoutMobileB from '../components/LayoutMobileB';
-import LayoutMobileC from '../components/LayoutMobileC';
-import { DrawerProvider } from '../context/DrawerContext';
-import { ConfigProvider, defaultConfig } from '../context/configContext';
-import { CustomThemeProvider } from '../context/themeContext';
-import { useLocalStorage, useEmbed } from '../hooks/globalHooks';
-import { MapContextProvider } from '../mapContext';
 
 log.warn(`Web Map Client version ${packageJson.version}`);
 
@@ -88,9 +90,10 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
 
   log.warn('app: isDesktop: ', nextExtraIsDesktop);
   log.warn('app: component: ', Component);
-  // log.warn('app: component: ', Component);
   log.warn('app: component: isBLayout', Component.isBLayout);
   log.warn('router:', router);
+
+  // oidc.createSigninRequest()
 
   React.useEffect(() => {
     const handleRouteChange = (url) => {
@@ -139,69 +142,71 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
   const isAdmin = !!router.asPath.match(/admin/);
   if (isAdmin) {
     return (
-      <>
+      <AuthProvider {...oidcConfig}>
         <GoogleAnalytics />
         <LayoutDashboard>
           <Component {...pageProps} />
         </LayoutDashboard>
-      </>
+      </AuthProvider>
     );
   }
 
   return (
-    <ConfigProvider config={config}>
-      <GoogleAnalytics />
-      <CacheProvider value={muiCache ?? createMuiCache()}>
-        <CustomThemeProvider>
-          <DrawerProvider>
-            <MapContextProvider>
-              {nextExtraIsDesktop && !nextExtraIsEmbed && (
-                <Layout {...extraProps} ref={layoutRef}>
-                  <Component {...pageProps} {...extraProps} />
-                </Layout>
-              )}
-              {nextExtraIsDesktop && nextExtraIsEmbed && (
-                <LayoutEmbed
-                  {...extraProps}
-                  isFloatingDisabled={Component.isFloatingDisabled}
-                >
-                  <Component {...pageProps} {...extraProps} />
-                </LayoutEmbed>
-              )}
-              {!nextExtraIsDesktop && Component.isBLayout && (
-                <LayoutMobileB>
-                  <Component {...pageProps} {...extraProps} />
-                </LayoutMobileB>
-              )}
-              {!nextExtraIsDesktop && Component.isCLayout && (
-                <LayoutMobileC>
-                  <Component {...pageProps} {...extraProps} />
-                </LayoutMobileC>
-              )}
-              {!nextExtraIsDesktop &&
-                !Component.isBLayout &&
-                !Component.isCLayout && (
-                  <LayoutMobile ref={layoutRef}>
+    <AuthProvider {...oidcConfig}>
+      <ConfigProvider config={config}>
+        <GoogleAnalytics />
+        <CacheProvider value={muiCache ?? createMuiCache()}>
+          <CustomThemeProvider>
+            <DrawerProvider>
+              <MapContextProvider>
+                {nextExtraIsDesktop && !nextExtraIsEmbed && (
+                  <Layout {...extraProps} ref={layoutRef}>
                     <Component {...pageProps} {...extraProps} />
-                  </LayoutMobile>
+                  </Layout>
                 )}
-            </MapContextProvider>
-          </DrawerProvider>
-        </CustomThemeProvider>
-      </CacheProvider>
-      {nextExtraLoading && (
-        <Box
-          sx={{
-            position: 'fixed',
-            top: 0,
-            zIndex: 9999,
-            width: '100%',
-          }}
-        >
-          <LinearProgress />
-        </Box>
-      )}
-    </ConfigProvider>
+                {nextExtraIsDesktop && nextExtraIsEmbed && (
+                  <LayoutEmbed
+                    {...extraProps}
+                    isFloatingDisabled={Component.isFloatingDisabled}
+                  >
+                    <Component {...pageProps} {...extraProps} />
+                  </LayoutEmbed>
+                )}
+                {!nextExtraIsDesktop && Component.isBLayout && (
+                  <LayoutMobileB>
+                    <Component {...pageProps} {...extraProps} />
+                  </LayoutMobileB>
+                )}
+                {!nextExtraIsDesktop && Component.isCLayout && (
+                  <LayoutMobileC>
+                    <Component {...pageProps} {...extraProps} />
+                  </LayoutMobileC>
+                )}
+                {!nextExtraIsDesktop &&
+                  !Component.isBLayout &&
+                  !Component.isCLayout && (
+                    <LayoutMobile ref={layoutRef}>
+                      <Component {...pageProps} {...extraProps} />
+                    </LayoutMobile>
+                  )}
+              </MapContextProvider>
+            </DrawerProvider>
+          </CustomThemeProvider>
+        </CacheProvider>
+        {nextExtraLoading && (
+          <Box
+            sx={{
+              position: 'fixed',
+              top: 0,
+              zIndex: 9999,
+              width: '100%',
+            }}
+          >
+            <LinearProgress />
+          </Box>
+        )}
+      </ConfigProvider>
+    </AuthProvider>
   );
 }
 

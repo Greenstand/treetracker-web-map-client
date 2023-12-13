@@ -1,5 +1,4 @@
-'use client';
-
+// 'use client';
 import {
   AppBar,
   Button,
@@ -11,6 +10,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useAuth } from 'react-oidc-context';
 import { useConfigContext } from 'context/configContext';
 import { useCustomThemeContext } from 'hooks/contextHooks';
 import { useMobile } from 'hooks/globalHooks';
@@ -18,6 +18,8 @@ import MenuBar from 'images/MenuBar';
 import { makeStyles } from 'models/makeStyles';
 import ChangeThemeButton from './ChangeThemeButton';
 import Link from './Link';
+import LoginLogoutToggle from './LoginLogoutToggle';
+import UserAvatar from './UserAvatar';
 
 const treeTrackerLogo = `/images/treetracker_logo.svg`;
 const treeTrackerLogoWhite = `/images/treetracker_logo_white.svg`;
@@ -61,12 +63,14 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 function Navbar() {
-  const { asPath, pathname } = useRouter();
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const isMobile = useMobile();
   const { navbar: config } = useConfigContext();
 
   const { theme } = useCustomThemeContext();
+
+  const auth = useAuth();
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -77,10 +81,11 @@ function Navbar() {
   };
   // trees/1017648?embed=true
   const { classes } = useStyles();
-  const path = asPath.toString().includes('embed=true');
+  const path = router.asPath.toString().includes('embed=true');
   if (path === true) {
     return null;
   }
+
   return (
     <AppBar
       elevation={4}
@@ -133,6 +138,9 @@ function Navbar() {
             </Button>
           </Link>
         ))}
+
+        <LoginLogoutToggle classes={classes} />
+        <UserAvatar auth={auth} />
         <ChangeThemeButton />
       </Toolbar>
       <Button
@@ -162,6 +170,9 @@ function Navbar() {
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>
         ))}
+        <MenuItem>
+          <LoginLogoutToggle classes={classes} isMobile={isMobile} />
+        </MenuItem>
         <MenuItem onClick={handleClose}>
           <ChangeThemeButton />
         </MenuItem>
