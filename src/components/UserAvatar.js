@@ -1,4 +1,4 @@
-import { Box, Link, Avatar } from '@mui/material';
+import { Box, Link, Avatar, Typography } from '@mui/material';
 
 function UserAvatar({ auth }) {
   if (!auth?.isAuthenticated) {
@@ -6,24 +6,34 @@ function UserAvatar({ auth }) {
   }
   return (
     <Box>
-      <Avatar
+      <Link
+        href="https://dev-k8s.treetracker.org/keycloak/realms/treetracker/account/#/personal-info"
+        target="_blank"
+        rel="noopener noreferrer"
         sx={{
-          width: 20,
-          height: 20,
-          background: ({ palette }) => palette.background.greenGradient,
+          color: ({ palette }) => palette.text.primary,
         }}
       >
-        <Link
-          href="https://dev-k8s.treetracker.org/keycloak/realms/treetracker/account/#/personal-info"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Avatar
           sx={{
-            color: ({ palette }) => palette.text.primary,
+            width: 24,
+            height: 24,
+            background: ({ palette }) => palette.background.greenGradient,
           }}
         >
-          {auth?.user?.profile.preferred_username[0] || null}
-        </Link>
-      </Avatar>
+          <Typography
+            variant="caption"
+            sx={{
+              textTransform: 'uppercase',
+              fontSize: 16,
+              textDecoration: 'none',
+              color: ({ palette }) => palette.text.contrast,
+            }}
+          >
+            {auth?.user?.profile.preferred_username[0] || null}
+          </Typography>
+        </Avatar>
+      </Link>
     </Box>
   );
 }
