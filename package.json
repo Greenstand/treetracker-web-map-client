@@ -22,7 +22,9 @@
     "prettier": "prettier ./ --write",
     "prettier:check": "prettier --check src/",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "turbo-build": "turbo type-check && turbo build",
+    "turbo-dev": "turbo dev"
   },
   "browserslist": {
     "production": [
