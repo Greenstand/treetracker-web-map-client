@@ -4,7 +4,7 @@ metadata:
   name: treetracker-web-map-client-mapping-main
   namespace: webmap
 spec:
-  host: alpha-map.treetracker.org
+  host: dev.treetracker.org
   prefix: /
   service: treetracker-web-map-client-svc-main
   timeout_ms: 0
