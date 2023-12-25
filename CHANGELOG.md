@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.0...v2.7.1) (2023-12-25)
+
+
+### Bug Fixes
+
+* trigger release ([0aa96b6](https://github.com/Greenstand/treetracker-web-map-client/commit/0aa96b6582585d911538cba56808f0f09a8de4de))
+
 # [2.7.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.6.7...v2.7.0) (2023-12-13)
 
 
