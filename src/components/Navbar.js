@@ -8,6 +8,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import log from 'loglevel';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useAuth } from 'react-oidc-context';
@@ -71,6 +72,8 @@ function Navbar() {
   const { theme } = useCustomThemeContext();
 
   const auth = useAuth();
+
+  log.warn('auth', auth);
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
