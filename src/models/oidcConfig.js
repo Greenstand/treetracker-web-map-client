@@ -1,3 +1,5 @@
+import log from 'loglevel';
+
 const oidcConfig = {
   authority: process.env.NEXT_PUBLIC_KEYCLOAK_URL,
   client_id: process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID,
@@ -8,5 +10,7 @@ const oidcConfig = {
     localStorage.setItem('res', JSON.stringify(res));
   },
 };
+
+log.warn('oidcConfig', oidcConfig);
 
 export default oidcConfig;
