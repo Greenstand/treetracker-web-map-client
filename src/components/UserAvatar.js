@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Link, Avatar, Typography, Tooltip } from '@mui/material';
 
 function UserAvatar({ auth }) {
