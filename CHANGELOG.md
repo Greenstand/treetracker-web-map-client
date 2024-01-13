@@ -1,3 +1,12 @@
+## [2.7.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.4...v2.7.5) (2024-01-13)
+
+
+### Bug Fixes
+
+* demo emit ([6723095](https://github.com/Greenstand/treetracker-web-map-client/commit/6723095a2fedd3cc3764e002a433a66d2966ed02))
+* hide login ([d2512c5](https://github.com/Greenstand/treetracker-web-map-client/commit/d2512c552db96e2d94972d74550a372ae88a80f8))
+* semantic release version requires node 20 ([a8c1173](https://github.com/Greenstand/treetracker-web-map-client/commit/a8c1173974aa4c400d77ed9a659365166046fd26))
+
 ## [2.7.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.3...v2.7.4) (2023-12-25)
 
 
