@@ -142,8 +142,10 @@ function Navbar() {
           </Link>
         ))}
 
+        {/* hide login temporarily 
         <LoginLogoutToggle classes={classes} />
         <UserAvatar auth={auth} />
+        */}
         <ChangeThemeButton />
       </Toolbar>
       <Button
@@ -173,9 +175,11 @@ function Navbar() {
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>
         ))}
+        {/* hide login temporarily
         <MenuItem>
           <LoginLogoutToggle classes={classes} isMobile={isMobile} />
         </MenuItem>
+        */}
         <MenuItem onClick={handleClose}>
           <ChangeThemeButton />
         </MenuItem>
