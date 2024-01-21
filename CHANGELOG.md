@@ -1,3 +1,10 @@
+## [2.7.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.5...v2.7.6) (2024-01-21)
+
+
+### Bug Fixes
+
+* stringify message to post parant ([bb6d6d8](https://github.com/Greenstand/treetracker-web-map-client/commit/bb6d6d81bed41d4be623d2072f013b77f6d75f9e))
+
 ## [2.7.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.4...v2.7.5) (2024-01-13)
 
 
