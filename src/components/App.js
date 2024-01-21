@@ -74,7 +74,7 @@ function MapComponent() {
     log.warn('click tree:', tree);
     if (window.parent) {
       log.warn('DEMO:ok message parent');
-      window.parent.postMessage(tree, '*');
+      window.parent.postMessage(JSON.stringify(tree), '*');
     }
 
     const wholeTree = await getTreeById(tree.id).catch((err) => log.warn(err));
