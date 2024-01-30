@@ -3,28 +3,30 @@ import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 import React from 'react';
+import FeaturedPlantersSlider from 'components/FeaturedPlantersSlider';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
+import LeaderBoard from 'components/LeaderBoard';
 import SearchButton from 'components/SearchButton';
+import TagChips from 'components/TagChips';
+import Crumbs from 'components/common/Crumbs';
+import Icon from 'components/common/CustomIcon';
+import Filter from 'components/common/Filter';
+import { useFullscreen } from 'hooks/globalHooks';
+import Search from 'images/search.svg';
+import { useMapContext } from 'mapContext';
 import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
-import FeaturedPlantersSlider from '../components/FeaturedPlantersSlider';
-import FeaturedTreesSlider from '../components/FeaturedTreesSlider';
-import LeaderBoard from '../components/LeaderBoard';
-// import SearchFilter from '../components/SearchFilter';
-import TagChips from '../components/TagChips';
-import Crumbs from '../components/common/Crumbs';
-import Icon from '../components/common/CustomIcon';
-import Filter from '../components/common/Filter';
-import { useFullscreen } from '../hooks/globalHooks';
-import Search from '../images/search.svg';
-import { useMapContext } from '../mapContext';
-import * as utils from '../models/utils';
+import * as pathResolver from 'models/pathResolver';
+import * as utils from 'models/utils';
 
 function Top(props) {
   log.warn('props top:', props);
   const { trees, planters, countries, organizations, wallets } = props;
   // use map context to get the map
   const { map } = useMapContext();
+  const router = useRouter();
   const isFullscreen = useFullscreen();
 
   const continentTags = [
@@ -47,6 +49,14 @@ function Top(props) {
     async function reload() {
       if (mapContext.map) {
         await mapContext.map.setFilters({});
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          await mapContext.map.gotoBounds(bounds);
+        } else {
+          log.warn('goto global view');
+          await map.gotoView(0, 0, 2);
+        }
       }
     }
     reload();
