@@ -25,7 +25,7 @@ jobs:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: npm clean install
         run: npm ci
         working-directory: ${{ env.project-directory }}
@@ -59,9 +59,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: ./Dockerfile
+          file: ./Dockerfile-dev
           push: true
-          tags: greenstand/${{ github.event.repository.name }}:${{ steps.package-version.outputs.current-version }}
+          tags: greenstand/${{ github.event.repository.name }}-dev:${{ steps.package-version.outputs.current-version }}
 
       - id: export_bumped_version
         run: |
@@ -83,7 +83,7 @@ jobs:
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
       - name: Run kustomize
-        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }} )
+        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}-dev:${{ needs.release.outputs.bumped_version }} )
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
