@@ -29,5 +29,6 @@ yarn-error.log*
 
 .eslintcache
 .vscode
+.idea
 .history
 *.swp
