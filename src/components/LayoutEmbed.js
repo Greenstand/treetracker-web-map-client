@@ -3,6 +3,7 @@ import { Paper, Typography, SvgIcon } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useCustomThemeContext } from 'hooks/contextHooks';
@@ -254,7 +255,7 @@ export default function Layout({
             >
               <Link href="https://greenstand.org">
                 <a target="_blank">
-                  <img
+                  <Image
                     src={
                       theme.palette.mode === 'light'
                         ? greenstandLogo

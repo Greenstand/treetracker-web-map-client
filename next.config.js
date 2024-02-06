@@ -1,8 +1,10 @@
 /* eslint-disable require-await */
-
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 const withImages = require('next-images');
 
-module.exports = {
+module.exports = withBundleAnalyzer({
   ...withImages(),
   images: {
     domains: [
@@ -110,4 +112,4 @@ module.exports = {
     );
     return config;
   },
-};
+});

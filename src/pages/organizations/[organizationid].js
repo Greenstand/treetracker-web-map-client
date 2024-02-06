@@ -24,12 +24,13 @@ import CalendarIcon from 'images/icons/calendar.svg';
 import LocationIcon from 'images/icons/location.svg';
 import PeopleIcon from 'images/icons/people.svg';
 import TreeIcon from 'images/icons/tree.svg';
-import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import { getLocationString, getContinent, wrapper } from 'models/utils';
+
+const imagePlaceholder = '/images/image-placeholder.png';
 
 export default function Organization(props) {
   log.warn('props for org page:', props);

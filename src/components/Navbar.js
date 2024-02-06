@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import log from 'loglevel';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useAuth } from 'react-oidc-context';
@@ -107,7 +108,7 @@ function Navbar() {
             width: 'max-content',
           }}
         >
-          <img
+          <Image
             src={
               theme.palette.mode === 'light'
                 ? treeTrackerLogo

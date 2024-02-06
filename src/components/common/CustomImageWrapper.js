@@ -1,6 +1,7 @@
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
 import { Box, Grid, Link, Typography } from '@mui/material';
+import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import LikeButton from 'components/LikeButton';
 import { makeStyles } from 'models/makeStyles';
@@ -149,7 +150,7 @@ function CustomImageWrapper({ imageUrl, timeCreated, treeId }) {
           <LikeButton url={`https://map.treetracker.org/trees/${treeId}`} />
         </Grid>
       </InfoWrapper>
-      <img src={imageUrl} alt="tree" className={classes.image} />
+      <Image src={imageUrl} alt="tree" className={classes.image} />
     </Box>
   );
 }

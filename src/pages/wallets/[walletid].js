@@ -26,12 +26,13 @@ import { useMobile } from 'hooks/globalHooks';
 import CalendarIcon from 'images/icons/calendar.svg';
 import TokenIcon from 'images/icons/token.svg';
 import TreeIcon from 'images/icons/tree.svg';
-import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import { requestAPI, wrapper } from 'models/utils';
+
+const imagePlaceholder = '/images/image-placeholder.png';
 
 const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
         nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,

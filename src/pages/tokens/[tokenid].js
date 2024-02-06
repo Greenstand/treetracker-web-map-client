@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
@@ -17,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import Badge from 'components/Badge';
@@ -36,13 +36,14 @@ import CalendarIcon from 'images/icons/calendar.svg';
 import ShareIcon from 'images/icons/share.svg';
 import TokenIcon from 'images/icons/token.svg';
 import TreeIcon from 'images/icons/tree.svg';
-import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
 import { wrapper } from 'models/utils';
+
+const imagePlaceholder = '/images/image-placeholder.png';
 
 const useStyles = makeStyles()((theme) => ({
   tabBox: {
@@ -288,7 +289,7 @@ export default function Token(props) {
               />
             </Box>
           </Box>
-          <img src={token.tree_image_url} alt="tree" />
+          <Image src={token.tree_image_url} alt="tree" />
           {!isMobile && (
             <Box
               sx={{

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import CheckIcon from '@mui/icons-material/Check';
 import HubIcon from '@mui/icons-material/Hub';
@@ -9,6 +8,7 @@ import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import moment from 'moment';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import Badge from 'components/Badge';
@@ -32,7 +32,6 @@ import LocationIcon from 'images/icons/location.svg';
 import OriginIcon from 'images/icons/origin.svg';
 import ShareIcon from 'images/icons/share.svg';
 import TokenIcon from 'images/icons/token.svg';
-import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import {
@@ -43,6 +42,8 @@ import {
 } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
+
+const imagePlaceholder = '/images/image-placeholder.png';
 
 export default function Capture({
   tree,
@@ -463,7 +464,7 @@ export default function Capture({
               />
             </Box>
           </Box>
-          <img src={tree.image_url} alt="tree" height="764" />
+          <Image src={tree.image_url} alt="tree" height="764" />
           {!isMobile && (
             <Box
               sx={{

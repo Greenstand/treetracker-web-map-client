@@ -1,11 +1,12 @@
 import { Paper, Box, Grid, Typography } from '@mui/material';
 import countries from 'i18n-iso-countries';
+import Image from 'next/image';
+import { useMobile } from 'hooks/globalHooks';
+import TreeIcon from 'images/icons/tree.svg';
 import { makeStyles } from 'models/makeStyles';
 import { abbreviateNumber, fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
 import Icon from './common/CustomIcon';
-import { useMobile } from '../hooks/globalHooks';
-import TreeIcon from '../images/icons/tree.svg';
 
 const useStyles = makeStyles()((theme) => ({
   flagContainer: {
@@ -222,7 +223,7 @@ function LeaderBoard(props) {
               </Grid>
               <Grid item xs={4}>
                 <Box className={classes.flagContainer}>
-                  <img
+                  <Image
                     alt={`${country.name}`}
                     src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countries.getAlpha2Code(
                       `${country.name}`,

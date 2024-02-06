@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { makeStyles } from 'models/makeStyles';
 
 const logo = '/images/greenstand_logo_full.png';
@@ -20,7 +21,7 @@ function Logo() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img alt="logo" src={logo} />
+        <Image alt="logo" src={logo} />
       </a>
     </div>
   );
