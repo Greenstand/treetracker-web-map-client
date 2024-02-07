@@ -1,6 +1,6 @@
 import React from 'react';
+import { mountWithTheme as mount } from 'models/test-utils';
 import ImageShower from './ImageShower';
-import { mountWithTheme as mount } from '../models/test-utils';
 
 describe('ImageShower', () => {
   it('ImageShower', () => {
@@ -13,7 +13,7 @@ describe('ImageShower', () => {
           </button>
           <ImageShower
             open={isOpen}
-            src="xxxx"
+            src="/images/greenstand_logo_full.png"
             title="xxxxx"
             onClose={() => setOpen(false)}
           />

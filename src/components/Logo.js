@@ -21,7 +21,7 @@ function Logo() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image alt="logo" src={logo} />
+        <Image alt="logo" src={logo} layout="fill" />
       </a>
     </div>
   );

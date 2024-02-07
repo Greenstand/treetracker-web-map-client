@@ -26,7 +26,7 @@ function ImageShower(props) {
   return (
     <>
       <Dialog open onClose={onClose}>
-        <Image alt={title} src={src} />
+        <Image alt={title} src={src} layout="fill" />
       </Dialog>
       <IconButton className={classes.closeIcon} onClick={onClose}>
         <Close className={classes.icon} />
