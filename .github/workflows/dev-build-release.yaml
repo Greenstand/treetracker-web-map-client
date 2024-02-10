@@ -67,9 +67,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: ./Dockerfile
+          file: ./Dockerfile-dev
           push: true
-          tags: greenstand/${{ github.event.repository.name }}:${{ steps.package-version.outputs.current-version }}
+          tags: greenstand/${{ github.event.repository.name }}-dev:${{ steps.package-version.outputs.current-version }}
 
       - id: export_bumped_version
         run: |
@@ -109,7 +109,7 @@ jobs:
     #- name: Print channel
     #  run: echo ${{ steps.channel.outputs.CHANNEL }}
     - name: Run kustomize
-      run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{needs.release.outputs.bumped_version}} )
+      run: (cd deployment/base && ../../kustomize edit set image greenstand/treetracker-web-map-client=greenstand/${{ github.event.repository.name }}-dev:${{needs.release.outputs.bumped_version}} )
     - name: Install doctl for kubernetes
       uses: digitalocean/action-doctl@v2
       with:
