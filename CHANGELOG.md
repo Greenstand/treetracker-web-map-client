@@ -1,3 +1,15 @@
+# [2.8.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.6...v2.8.0) (2024-02-10)
+
+
+### Bug Fixes
+
+* kustomize edit img ([06b1624](https://github.com/Greenstand/treetracker-web-map-client/commit/06b16244e366f78ef58cd6664dca6be05ce1d480))
+
+
+### Features
+
+* build nextjs images in dokcer images and update ci workflows ([44ff580](https://github.com/Greenstand/treetracker-web-map-client/commit/44ff580b5ce0d4fdc7f9e92c60b1b3843a25971b))
+
 ## [2.7.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.5...v2.7.6) (2024-01-21)
 
 
