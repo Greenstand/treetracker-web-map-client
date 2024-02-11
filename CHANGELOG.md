@@ -24,6 +24,19 @@
 * add postMessage method to send message to react native webview ([4f5f40c](https://github.com/Greenstand/treetracker-web-map-client/commit/4f5f40c27f572d219853126bbae8a4b0f52c83b6))
 * build nextjs images in dokcer images and update ci workflows ([44ff580](https://github.com/Greenstand/treetracker-web-map-client/commit/44ff580b5ce0d4fdc7f9e92c60b1b3843a25971b))
 
+# [2.8.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.6...v2.8.0) (2024-02-11)
+
+
+### Bug Fixes
+
+* kustomize edit img ([06b1624](https://github.com/Greenstand/treetracker-web-map-client/commit/06b16244e366f78ef58cd6664dca6be05ce1d480))
+
+
+### Features
+
+* add postMessage method to send message to react native webview ([4f5f40c](https://github.com/Greenstand/treetracker-web-map-client/commit/4f5f40c27f572d219853126bbae8a4b0f52c83b6))
+* build nextjs images in dokcer images and update ci workflows ([44ff580](https://github.com/Greenstand/treetracker-web-map-client/commit/44ff580b5ce0d4fdc7f9e92c60b1b3843a25971b))
+
 # [2.8.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.6...v2.8.0) (2024-02-10)
 
 
