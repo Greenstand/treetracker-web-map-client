@@ -72,7 +72,14 @@ function MapComponent() {
 
   async function handleClickTree(tree) {
     log.warn('click tree:', tree);
-    window.ReactNativeWebView?.postMessage(JSON.stringify(tree));
+    if (window.ReactNativeWebView) {
+      log.debug('react native');
+      window.ReactNativeWebView?.postMessage(JSON.stringify(tree));
+    }
+    if (window.parent) {
+      log.debug('window.parent');
+      window.parent.postMessage(JSON.stringify(tree), '*');
+    }
 
     const wholeTree = await getTreeById(tree.id).catch((err) => log.warn(err));
     const result = pathResolver.getPathWhenClickTree(
