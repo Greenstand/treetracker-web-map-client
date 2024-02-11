@@ -72,8 +72,12 @@ function MapComponent() {
 
   async function handleClickTree(tree) {
     log.warn('click tree:', tree);
+    if (window.ReactNativeWebView) {
+      log.debug('react native');
+      window.ReactNativeWebView?.postMessage(JSON.stringify(tree));
+    }
     if (window.parent) {
-      log.warn('DEMO:ok message parent');
+      log.debug('window.parent');
       window.parent.postMessage(JSON.stringify(tree), '*');
     }
 
