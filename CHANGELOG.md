@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.8.0...v2.9.0) (2024-02-16)
+
+
+### Features
+
+* build multiple docker images for multiple envs ([a0cdafa](https://github.com/Greenstand/treetracker-web-map-client/commit/a0cdafa993e4d7cfe96e5881af5992710a1c76de))
+
 # [2.8.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.7.6...v2.8.0) (2024-02-11)
 
 
