@@ -86,6 +86,8 @@ jobs:
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ matrix.image_name }}
+    outputs:
+      bumped_version: ${{  needs.release.outputs.bumped_version }}
 
   deploy:
     name: Deploy to dev
@@ -109,7 +111,7 @@ jobs:
     - name: get bumped version
       id: get_bumped_version
       run: |
-       echo "bumped_version=${{ needs.release.outputs.bumped_version }}" >> $GITHUB_OUTPUT
+       echo "bumped_version=${{ needs.build-and-push-docker.outputs.bumped_version }}" >> $GITHUB_OUTPUT
     - name: Install kustomize
       run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
     #- name: Load channel
@@ -118,7 +120,7 @@ jobs:
     #- name: Print channel
     #  run: echo ${{ steps.channel.outputs.CHANNEL }}
     - name: Run kustomize
-      run: (cd deployment/base && ../../kustomize edit set image greenstand/treetracker-web-map-client=greenstand/${{ github.event.repository.name }}-dev:${{needs.release.outputs.bumped_version}} )
+      run: (cd deployment/base && ../../kustomize edit set image greenstand/treetracker-web-map-client=greenstand/${{ github.event.repository.name }}-dev:${{needs.build-and-push-docker.outputs.bumped_version}} )
     - name: Install doctl for kubernetes
       uses: digitalocean/action-doctl@v2
       with:
