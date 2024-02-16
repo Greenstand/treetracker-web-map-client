@@ -1,3 +1,10 @@
+## [2.9.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.0...v2.9.1) (2024-02-16)
+
+
+### Bug Fixes
+
+* bump version [skip ci] ([7787de2](https://github.com/Greenstand/treetracker-web-map-client/commit/7787de2e678d10e7ed9c24f048b9a99b61a45d84))
+
 # [2.9.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.8.0...v2.9.0) (2024-02-16)
 
 
