@@ -50,27 +50,6 @@ jobs:
         working-directory: ${{ env.project-directory }}
         env:
           NODE_ENV: production
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build snapshot and push on merge
-        id: docker_build_release
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          file: ./Dockerfile-dev
-          push: true
-          tags: greenstand/${{ github.event.repository.name }}-dev:${{ steps.package-version.outputs.current-version }}
-
       - id: export_bumped_version
         run: |
           export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
@@ -78,10 +57,40 @@ jobs:
     outputs:
       bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
 
+  # todo add test image here
+  # since test api is throwing some error that is why i excluded that
+  build-and-push-docker:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    needs: release 
+    strategy:
+      matrix:
+        include:
+          - dockerfile: ./Dockerfile-dev
+            image_name: greenstand/${{ github.event.repository.name }}-dev:${{ needs.release.outputs.bumped_version }}
+          - dockerfile: ./Dockerfile
+            image_name: greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ matrix.image_name }}
+
   deploy:
     name: Deploy to dev
     runs-on: ubuntu-latest
-    needs: release
+    needs: build-and-push-docker
     steps:
     - uses: actions/checkout@v2
       with:
