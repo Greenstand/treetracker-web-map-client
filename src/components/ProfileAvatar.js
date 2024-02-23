@@ -1,5 +1,7 @@
 import { Avatar } from '@mui/material';
-import imagePlaceholder from 'images/image-placeholder.png';
+// import imagePlaceholder from 'images/image-placeholder.png';
+
+const imagePlaceholder = 'images/image-placeholder.png';
 
 function ProfileAvatar({ src, rotation, sx = {}, noBackground = false }) {
   return (

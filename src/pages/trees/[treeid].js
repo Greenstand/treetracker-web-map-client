@@ -33,12 +33,13 @@ import LocationIcon from 'images/icons/location.svg';
 import OriginIcon from 'images/icons/origin.svg';
 import ShareIcon from 'images/icons/share.svg';
 import TokenIcon from 'images/icons/token.svg';
-import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getOrganizationById, getPlanterById, getTreeById } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
+
+const imagePlaceholder = 'images/image-placeholder.png';
 
 export default function Tree({
   tree,

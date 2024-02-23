@@ -1,5 +1,7 @@
 import { Box } from '@mui/material';
-import imagePlaceholder from '../images/image-placeholder.png';
+// import imagePlaceholder from '../images/image-placeholder.png';
+
+const imagePlaceholder = 'images/image-placeholder.png';
 
 function ProfileCover({ src }) {
   if (src) {
