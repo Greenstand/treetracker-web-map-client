@@ -36,13 +36,14 @@ import CalendarIcon from 'images/icons/calendar.svg';
 import ShareIcon from 'images/icons/share.svg';
 import TokenIcon from 'images/icons/token.svg';
 import TreeIcon from 'images/icons/tree.svg';
-import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
 import { wrapper } from 'models/utils';
+
+const imagePlaceholder = 'images/image-placeholder.png';
 
 const useStyles = makeStyles()((theme) => ({
   tabBox: {

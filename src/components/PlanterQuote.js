@@ -2,17 +2,18 @@ import { Box, Typography, SvgIcon } from '@mui/material';
 import * as d3 from 'd3';
 import log from 'loglevel';
 import moment from 'moment';
+import CalendarIcon from 'images/icons/calendar.svg';
+import LocationIcon from 'images/icons/location.svg';
+import QuoteImgReverse from 'images/quote-reverse.svg';
+import QuoteImg from 'images/quote-symbol.svg';
 import { getLocationString } from 'models/utils';
 import Link from './Link';
 import ProfileAvatar from './ProfileAvatar';
 import ColorButton from './common/ColorButton';
 import Info from './common/Info';
-import CalendarIcon from '../images/icons/calendar.svg';
-import LocationIcon from '../images/icons/location.svg';
-import imagePlaceholder from '../images/image-placeholder.png';
-import QuoteImgReverse from '../images/quote-reverse.svg';
-import QuoteImg from '../images/quote-symbol.svg';
 // TODO: something is wrong with quote-symbol.svg and quote-reverse.svg, they show a blank space. The svg files pull up as blanks. Not sure how to fix them, putting up an issue as this is something totally different than what I'm working on.
+
+const imagePlaceholder = 'images/image-placeholder.png';
 
 function PlanterQuote(props) {
   log.warn('props:', props);

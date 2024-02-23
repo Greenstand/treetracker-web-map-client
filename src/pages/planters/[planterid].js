@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import CheckIcon from '@mui/icons-material/Check';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -9,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import log from 'loglevel';
 import { marked } from 'marked';
 import moment from 'moment';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import Badge from 'components/Badge';
@@ -25,7 +25,6 @@ import Icon from 'components/common/CustomIcon';
 import Info from 'components/common/Info';
 import { useDrawerContext } from 'context/DrawerContext';
 import { useMobile } from 'hooks/globalHooks';
-import planterBackground from 'images/background.png';
 import CalendarIcon from 'images/icons/calendar.svg';
 import LocationIcon from 'images/icons/location.svg';
 import PeopleIcon from 'images/icons/people.svg';
@@ -36,6 +35,8 @@ import { getPlanterById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
 import { getLocationString, getPlanterName, wrapper } from 'models/utils';
+
+const planterBackground = '/images/background.png';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -225,7 +226,7 @@ export default function Planter(props) {
             },
           }}
         >
-          <img src={backgroundPic} alt="profile" />
+          <Image src={backgroundPic} alt="profile" />
           <ProfileAvatar
             src={planter.image_url}
             rotation={planter.image_rotation}
