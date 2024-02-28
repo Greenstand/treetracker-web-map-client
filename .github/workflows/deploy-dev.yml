@@ -64,6 +64,12 @@ jobs:
           push: true
           tags: greenstand/${{ github.event.repository.name }}-dev:${{ steps.package-version.outputs.current-version }}
 
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+
       - id: export_bumped_version
         run: |
           export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"

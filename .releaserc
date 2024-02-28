@@ -1,0 +1,18 @@
+{
+  "release": {
+    "branches": [
+        {
+            "name": "main",
+            "channel": "release"
+        }, 
+        {
+            "name": "dev",
+            "channel": "beta"
+        },
+        {
+            "name": "feature/*",
+            "channel": "alpha"
+        }
+    ]
+  }
+}
