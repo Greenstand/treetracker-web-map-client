@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/RingoTC/treetracker-web-map-client/compare/v1.2.0...v1.3.0) (2024-02-28)
+
+
+### Features
+
+* add semantic-release-changelog ([bf89457](https://github.com/RingoTC/treetracker-web-map-client/commit/bf8945710da8cb0908ece36ddddb142067654e21))
+
 # [1.2.0](https://github.com/RingoTC/treetracker-web-map-client/compare/v1.1.0...v1.2.0) (2024-02-28)
 
 
