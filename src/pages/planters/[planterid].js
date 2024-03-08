@@ -527,7 +527,13 @@ export default function Planter(props) {
 async function serverSideData(params) {
   const id = params.planterid;
   const planter = await getPlanterById(id);
-  const data = await getOrgLinks(planter.links);
+  const data = await getOrgLinks({
+    associated_organizations:
+      '/organizations?planter_id=3937&limit=20&offset=0',
+    featured_trees: '/trees?planter_id=3937&limit=20&offset=0',
+    species: '/species?planter_id=3937&limit=20&offset=0',
+  });
+  log.warn('DATA>>>>>', data);
   return {
     planter: { ...planter, ...data },
   };

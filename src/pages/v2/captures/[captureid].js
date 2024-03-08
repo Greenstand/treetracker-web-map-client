@@ -605,9 +605,9 @@ export default function Capture({
             cardImageSrc={grower?.image_url || imagePlaceholder}
             rotation={grower?.image_rotation}
             // TODO: this wont work until growers page is completed
-            link={`/grower-accounts/${grower.id}?keyword=${nextExtraKeyword}${
-              isEmbed ? '&embed=true' : ''
-            }`}
+            link={`/grower-accounts/${
+              tree.grower_account_id
+            }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
           />
         </Box>
         <Typography
