@@ -32,7 +32,7 @@ import PeopleIcon from 'images/icons/people.svg';
 import TreeIcon from 'images/icons/tree.svg';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getPlanterById, getOrgLinks } from 'models/api';
+import { getPlanterById, getOrgLinks, getGrowerById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
 import { getLocationString, getPlanterName, wrapper } from 'models/utils';
@@ -74,11 +74,10 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
         reprehenderit vitae temporibus, consequuntur blanditiis officia
         excepturi, natus explicabo laborum delectus repudiandae placeat
         eligendi.`;
-export default function Planter(props) {
-  log.warn('props for planter page:', props);
+export default function GrowerAccounts(props) {
   const { planter, nextExtraIsEmbed } = props;
-
-  const { featuredTrees } = planter;
+  log.warn("PROPS:", planter);
+  const { featuredTrees } = planter ?? {};
   const treeCount = featuredTrees?.total;
   const mapContext = useMapContext();
   const isMobile = useMobile();
@@ -343,10 +342,10 @@ export default function Planter(props) {
           <Typography variant="h4">
             Featured trees by {planter.first_name}
           </Typography>
-          <FeaturedTreesSlider
+          {/* <FeaturedTreesSlider
             trees={featuredTrees.trees}
             link={(item) => `/planters/${planter.id}/trees/${item.id}`}
-          />
+          /> */}
         </Box>
 
         <Grid
@@ -375,7 +374,7 @@ export default function Planter(props) {
             />
           </Grid>
           <Grid item sx={{ width: '49%' }}>
-            <CustomCard
+            {/* <CustomCard
               handleClick={
                 planter.associatedOrganizations.organizations.length
                   ? () => setIsPlanterTab(false)
@@ -403,7 +402,7 @@ export default function Planter(props) {
                 )
               }
               disabled={isPlanterTab}
-            />
+            /> */}
           </Grid>
         </Grid>
         <Box
@@ -435,19 +434,19 @@ export default function Planter(props) {
               mt: [5, 10],
             }}
           >
-            {planter.species.species.map((species) => (
+            {/* {planter.species.species.map((species) => (
               <TreeSpeciesCard
                 key={species.id}
                 name={species.name}
                 subTitle={species.desc || '---'}
                 count={species.total}
               />
-            ))}
+            ))} */}
           </Box>
-          {(!planter.species.species ||
+          {/* {(!planter.species.species ||
             planter.species.species.length === 0) && (
             <Typography variant="h5">NO DATA YET</Typography>
-          )}
+          )} */}
         </Box>
         <Box
           sx={{
@@ -456,7 +455,7 @@ export default function Planter(props) {
             display: !isPlanterTab ? 'block' : 'none',
           }}
         >
-          {planter.associatedOrganizations.organizations.map((org) => (
+          {/* {planter.associatedOrganizations.organizations.map((org) => (
             <>
               <InformationCard1
                 entityName={org.name}
@@ -467,7 +466,7 @@ export default function Planter(props) {
               />
               <Box sx={{ mt: [6, 12] }} />
             </>
-          ))}
+          ))} */}
         </Box>
         <Divider
           varian="fullwidth"
@@ -525,12 +524,15 @@ export default function Planter(props) {
 }
 
 async function serverSideData(params) {
-  const id = params.planterid;
-  const planter = await getPlanterById(id);
-  const data = await getOrgLinks(planter.links);
+  const id = params.growerId;
+  log.warn("params:",params);
+  const grower = await getGrowerById(id);
+  log.warn("grower:", grower);
+
   return {
-    planter: { ...planter, ...data },
-  };
+    planter: { ...grower },
+  }
+  
 }
 
 const getStaticProps = wrapper(async ({ params }) => {
