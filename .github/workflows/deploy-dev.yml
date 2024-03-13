@@ -1,11 +1,12 @@
-name: Deploy main channel to dev
-
+name: deploy-dev
 on:
-  workflow_dispatch:
-    inputs:
-      git-tag:
-        description: 'Branch/hash/tag'
-        required: true
+  push:
+    branches:
+      - dev
+
+permissions:
+  contents: read # for checkout
+  
 env:
   project-directory: ./
 
@@ -62,6 +63,12 @@ jobs:
           file: ./Dockerfile-dev
           push: true
           tags: greenstand/${{ github.event.repository.name }}-dev:${{ steps.package-version.outputs.current-version }}
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
 
       - id: export_bumped_version
         run: |
