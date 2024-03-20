@@ -1,6 +1,11 @@
 import { IconButton } from '@mui/material';
 
-function CustomShareIcon({ handleOnClick, children, mailString }) {
+function CustomShareIcon({
+  handleOnClick,
+  children,
+  mailString,
+  aria_label = '',
+}) {
   const button = (
     <IconButton
       sx={{
@@ -17,6 +22,7 @@ function CustomShareIcon({ handleOnClick, children, mailString }) {
         },
       }}
       onClick={handleOnClick}
+      aria-label={aria_label}
     >
       {children}
     </IconButton>
