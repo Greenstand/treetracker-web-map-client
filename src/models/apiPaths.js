@@ -18,7 +18,7 @@ const apiPaths = {
   planters: (id = '') => urlJoin(host, `planters/${id}`),
   stakeHolders: (id = '') => urlJoin(hostStakeholder, `/stakeholders/${id}`),
   species: urlJoin(host, '/species'),
-  organization: (id = '') => urlJoin(host, `/organizations/${id}`),
+  organization: (id = '') => urlJoin(host, `/stakeholder/${id}`),
   wallets: (id = '') => urlJoin(host, `/wallets/${id}`),
   filterSpeciesByWalletId: (id = '') =>
     urlJoin(host, `/species?wallet_id=${id}`),

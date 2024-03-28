@@ -462,7 +462,7 @@ export default function Planter(props) {
                 entityName={org.name}
                 entityType="Planting Organization"
                 buttonText="Meet the Organization"
-                link={`/organizations/${org.id}`}
+                link={`/stakeholder/${org.id}`}
                 cardImageSrc={org?.logo_url}
               />
               <Box sx={{ mt: [6, 12] }} />

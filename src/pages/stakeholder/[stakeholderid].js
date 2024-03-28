@@ -31,7 +31,7 @@ import { getOrganizationById, getOrgLinks } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import { getLocationString, getContinent, wrapper } from 'models/utils';
 
-export default function Organization(props) {
+export default function Stakeholder(props) {
   log.warn('props for org page:', props);
   const { organization, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
@@ -504,7 +504,9 @@ export default function Organization(props) {
 }
 
 async function serverSideData(params) {
-  const id = params.organizationid;
+  console.log('serverSideData');
+  console.log(params);
+  const id = params.stakeholderid;
   const organization = await getOrganizationById(id);
   const orgLinks = await getOrgLinks(organization.links);
   const props = {
