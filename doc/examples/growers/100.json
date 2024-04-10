@@ -1,0 +1,16 @@
+{
+  "id": 100,
+  "first_name": "Stanley",
+  "last_name": "Kubrick",
+  "links": {
+    "featured_trees": "/trees?grower_id=100&limit=4",
+    "associated_organizations": "/organizations?grower_id=100",
+    "species": "/species?grower_id=100"
+  },
+  "image_url": "https://treetracker-dev-images.s3.eu-central-1.amazonaws.com/2020.10.19.09.47.53_-5.508107173727935_38.981361706266256_39f0cc9d-0f13-4547-8142-150f15cabb67_IMG_20201019_094513_6614320100195503436.jpg",
+  "trees_planted": 4,
+  "about": "Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.",
+  "mission": "To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.",
+  "created_time": "2018-01-01",
+  "country": "Tanzania"
+}

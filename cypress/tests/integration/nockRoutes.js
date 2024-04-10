@@ -1,3 +1,4 @@
+import grower100 from '../../../doc/examples/growers/100.json';
 import organization1 from '../../../doc/examples/organizations/1.json';
 import planter940 from '../../../doc/examples/planters/940.json';
 import { defaultConfig } from '../../../src/context/configContext';
@@ -10,11 +11,13 @@ export function getNockRoutes(
     tree: {},
     organization: {},
     planter: {},
+    grower: {},
     capture: {},
   },
 ) {
   const organization = { ...organization1, ...props.organization };
   const planter = { ...planter940, ...props.planter };
+  const grower = { ...grower100, ...props.grower };
   const tree = { ...tree186734, ...props.tree };
   const capture = { ...capture1, ...props.capture };
   return [
@@ -23,6 +26,13 @@ export function getNockRoutes(
       path: `/planters/${planter.id}`,
       statusCode: 200,
       body: planter,
+    },
+
+    {
+      method: 'GET',
+      path: `/growers/${grower.id}`,
+      statusCode: 200,
+      body: grower,
     },
 
     {
@@ -50,9 +60,9 @@ export function getNockRoutes(
 
     {
       method: 'GET',
-      path: `/growers/${planter.id}`,
+      path: `/growers/${grower.grower_id}`,
       statusCode: 200,
-      body: planter,
+      body: grower,
     },
 
     {
@@ -87,6 +97,29 @@ export function getNockRoutes(
 
     {
       method: 'GET',
+      path: grower.links.species,
+      statusCode: 200,
+      body: {
+        species: [tree],
+      },
+    },
+    {
+      method: 'GET',
+      path: grower.links.associated_organizations,
+      statusCode: 200,
+      body: { organizations: [organization] },
+    },
+    {
+      method: 'GET',
+      path: grower.links.featured_trees,
+      statusCode: 200,
+      body: {
+        trees: [tree],
+      },
+    },
+
+    {
+      method: 'GET',
       path: organization.links.species,
       statusCode: 200,
       body: {
@@ -98,6 +131,12 @@ export function getNockRoutes(
       path: organization.links.associated_planters,
       statusCode: 200,
       body: { planters: [planter] },
+    },
+    {
+      method: 'GET',
+      path: organization.links.associated_growers,
+      statusCode: 200,
+      body: { growers: [grower] },
     },
     {
       method: 'GET',
