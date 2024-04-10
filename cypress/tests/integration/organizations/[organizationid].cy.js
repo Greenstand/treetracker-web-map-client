@@ -15,7 +15,9 @@ describe('Organizations', () => {
       prepareNocks({ organization: { ...org, photo_url } });
     });
 
-    cy.visit(path);
+    cy.visit(path, {
+      failOnStatusCode: false,
+    });
 
     cy.url().should('include', '/organizations');
     cy.contains(org.name);

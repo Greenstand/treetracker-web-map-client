@@ -462,7 +462,7 @@ export default function Planter(props) {
                 entityName={org.name}
                 entityType="Planting Organization"
                 buttonText="Meet the Organization"
-                link={`/organizations/${org.id}`}
+                link={`/stakeholder/${org.id}`}
                 cardImageSrc={org?.logo_url}
               />
               <Box sx={{ mt: [6, 12] }} />
@@ -525,6 +525,8 @@ export default function Planter(props) {
 }
 
 async function serverSideData(params) {
+  console.log('serverSideData');
+  console.log(params);
   const id = params.planterid;
   const planter = await getPlanterById(id);
   const data = await getOrgLinks(planter.links);

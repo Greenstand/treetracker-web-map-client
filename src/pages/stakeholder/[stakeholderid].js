@@ -27,25 +27,34 @@ import TreeIcon from 'images/icons/tree.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getOrganizationById, getOrgLinks } from 'models/api';
+import {
+  getOrganizationById,
+  getOrgLinks,
+  getStakeholderById,
+} from 'models/api';
 import * as pathResolver from 'models/pathResolver';
-import { getLocationString, getContinent, wrapper } from 'models/utils';
+import {
+  getLocationString,
+  getContinent,
+  wrapper,
+  requestAPI,
+} from 'models/utils';
 
-export default function Organization(props) {
-  log.warn('props for org page:', props);
-  const { organization, nextExtraIsEmbed } = props;
+export default function Stakeholder(props) {
+  log.warn('props for stakeholder page:', props);
+  const { stakeholder, nextExtraIsEmbed } = props;
   const mapContext = useMapContext();
   const [isPlanterTab, setIsPlanterTab] = React.useState(true);
   // eslint-disable-next-line
   const [continent, setContinent] = React.useState(null);
   const router = useRouter();
   const isMobile = useMobile();
-  const { featuredTrees } = organization;
-
+  const { featuredTrees, associated_planters } = stakeholder;
+  console.log('planters', associated_planters.planters);
   const { setTitlesData } = useDrawerContext();
 
   async function updateContinent() {
-    const tree = organization?.featuredTrees?.trees[0];
+    const tree = stakeholder?.featuredTrees?.trees[0];
     if (tree) {
       const { lat, lon } = tree;
       const newContinent = await getContinent(lat, lon);
@@ -55,19 +64,19 @@ export default function Organization(props) {
 
   useEffect(() => {
     setTitlesData({
-      name: organization.map_name,
-      createAt: organization.created_time,
+      name: stakeholder.map,
+      createAt: stakeholder.created_at,
     });
-  }, [organization.created_time, organization.map_name, setTitlesData]);
+  }, [stakeholder.created_at, stakeholder.map, setTitlesData]);
 
   useEffect(() => {
     async function reload() {
       // manipulate the map
       const { map } = mapContext;
-      if (map && organization) {
+      if (map && stakeholder) {
         // map.flyTo(tree.lat, tree.lon, 16);
         await map.setFilters({
-          map_name: organization.map_name,
+          map_name: stakeholder.map,
         });
         const bounds = pathResolver.getBounds(router);
         if (bounds) {
@@ -78,17 +87,21 @@ export default function Organization(props) {
           await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         }
       } else {
-        log.warn('no data:', map, organization);
+        log.warn('no data:', map, stakeholder);
       }
     }
     reload();
 
     updateContinent();
     // eslint-disable-next-line
-  }, [mapContext, organization]);
+  }, [mapContext, stakeholder]);
 
-  const logo_url = organization.logo_url || imagePlaceholder;
-  const name = organization.name || '---';
+  const logo_url = stakeholder.logo_url || imagePlaceholder;
+  const name =
+    stakeholder.first_name && stakeholder.last_name
+      ? `${stakeholder.first_name} ${stakeholder.last_name}`
+      : '---';
+  const org_name = stakeholder.org_name || '---';
 
   const BadgeSection = useMemo(
     () => (
@@ -102,7 +115,7 @@ export default function Organization(props) {
 
   return (
     <>
-      <HeadTag title={`${name} - Organization`} />
+      <HeadTag title={`${name} - Stakeholder`} />
       <Box
         sx={[
           {
@@ -133,7 +146,7 @@ export default function Organization(props) {
                 },
                 {
                   icon: logo_url,
-                  name: `${name}`,
+                  name: `${org_name}`,
                 },
               ]}
             />
@@ -158,7 +171,7 @@ export default function Organization(props) {
             mt: 6,
           }}
         >
-          <ProfileCover src={organization.cover_url} />
+          <ProfileCover src={stakeholder.cover_url} />
           <ProfileAvatar src={logo_url} />
         </Box>
 
@@ -166,13 +179,16 @@ export default function Organization(props) {
           <Box sx={{ mt: 6 }}>
             <Typography variant="h2">{name}</Typography>
             <Box sx={{ mt: 2 }}>
+              <Info iconURI={PeopleIcon} info=<> Organization: {org_name}</> />
+            </Box>
+            <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
                 info={
                   <>
-                    Organization since
-                    <time dateTime={organization?.created_at}>
-                      {` ${moment(organization?.created_at).format(
+                    Stakeholder since
+                    <time dateTime={stakeholder?.created_at}>
+                      {` ${moment(stakeholder?.created_at).format(
                         'MMMM DD, YYYY',
                       )}`}
                     </time>
@@ -183,10 +199,7 @@ export default function Organization(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={LocationIcon}
-                info={getLocationString(
-                  organization.country_name,
-                  organization.continent_name,
-                )}
+                info={getLocationString(stakeholder.map)}
               />
             </Box>
             <Box
@@ -215,25 +228,13 @@ export default function Organization(props) {
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={CalendarIcon}
-                  info={
-                    <>
-                      Organization since
-                      <time dateTime={organization?.created_at}>
-                        {` ${moment(organization?.created_at).format(
-                          'MMMM DD, YYYY',
-                        )}`}
-                      </time>
-                    </>
-                  }
+                  info={<>Organization: {org_name}</>}
                 />
               </Box>
               <Box sx={{ mt: 2 }}>
                 <Info
                   iconURI={LocationIcon}
-                  info={getLocationString(
-                    organization.country_name,
-                    organization.continent_name,
-                  )}
+                  info={getLocationString(stakeholder.map)}
                 />
               </Box>
               <Box
@@ -280,9 +281,7 @@ export default function Organization(props) {
             mt: [8, 16],
           }}
         >
-          <Typography variant="h4">
-            Featured trees by {organization.name}
-          </Typography>
+          <Typography variant="h4">Featured trees by {name}</Typography>
           <FeaturedTreesSlider
             trees={featuredTrees.trees}
             link={(item) => `/trees/${item.id}`}
@@ -308,7 +307,7 @@ export default function Organization(props) {
                   },
                 }}
                 title="Tree Captures Collected"
-                text={organization?.featuredTrees?.total || '---'}
+                text={stakeholder?.featuredTrees?.total || '---'}
                 disabled={!isPlanterTab}
               />
             </Grid>
@@ -324,7 +323,7 @@ export default function Organization(props) {
                   },
                 }}
                 title="Hired Planters"
-                text={organization?.associatedPlanters?.total || '---'}
+                text={associated_planters.total || '---'}
                 disabled={isPlanterTab}
               />
             </Grid>
@@ -338,11 +337,11 @@ export default function Organization(props) {
             <Box sx={{ mt: [0, 22] }}>
               <CustomWorldMap
                 totalTrees={
-                  (organization?.featuredTrees?.total &&
-                    organization?.featuredTrees?.total) ||
+                  (stakeholder?.featuredTrees?.total &&
+                    stakeholder?.featuredTrees?.total) ||
                   undefined
                 }
-                con={organization?.continent_name || 'af'}
+                con={stakeholder?.continent_name || 'af'}
               />
             </Box>
             <Typography
@@ -354,14 +353,14 @@ export default function Organization(props) {
             >
               Species of trees planted
             </Typography>
-            {organization?.species?.species?.length > 0 ? (
+            {stakeholder?.species?.species?.length > 0 ? (
               <Box component="ul" sx={{ mt: [5, 10], listStyle: 'none', p: 0 }}>
-                {organization?.species?.species?.map((s) => (
+                {stakeholder?.species?.species?.map((s) => (
                   <li key={s.name}>
                     <TreeSpeciesCard
                       name={s.name}
                       subTitle={s.desc || '---'}
-                      count={s.total}
+                      count={s.count}
                     />
                     <Box sx={{ mt: [2, 4] }} />
                   </li>
@@ -379,14 +378,16 @@ export default function Organization(props) {
             display: !isPlanterTab ? 'block' : 'none',
           }}
         >
-          {/* {organization?.associatedPlanters?.planters?.map((planter) => (
+          {/* {associated_planters?.planters?.map((planter) => (
             <PlanterQuote
-              name={planter.first_name}
+              // id={planter.id}
+              // name={planter.first_name}
               key={planter.id}
-              quote={planter.about.slice(0, 150)}
-              photo={planter.photo_url}
-              initialDate={planter.created_time}
-              location={planter.country}
+              planter={planter}
+              // quote={planter.about.slice(0, 150)}
+              // photo={planter.image_url}
+              // initialDate={planter.created_time}
+              // location={planter.country}
             />
           ))} */}
           {/* Placeholder quote card, remove after API gets data */}
@@ -412,9 +413,9 @@ export default function Organization(props) {
                 location: 'Addis Ababa, Ethisa',
               },
             ].map((planter, i) => ( */}
-          {organization?.associatedPlanters?.planters?.length > 0 ? (
+          {associated_planters?.planters?.length > 0 ? (
             <Box component="ul" sx={{ mt: [6, 12], listStyle: 'none', p: 0 }}>
-              {organization?.associatedPlanters?.planters
+              {associated_planters?.planters
                 ?.sort((e1) => (e1.about ? -1 : 1))
                 .map((planter, i) => (
                   <Box component="li" key={planter.name} sx={{ mt: [6, 12] }}>
@@ -433,52 +434,6 @@ export default function Organization(props) {
             mt: [80 / 8, 80 / 4],
           }}
         >
-          <Divider varian="fullwidth" />
-          <article>
-            <Typography
-              sx={{
-                mt: [80 / 8, 80 / 4],
-              }}
-              variant="h4"
-            >
-              About the Organization
-            </Typography>
-            <Typography variant="body2" mt={7}>
-              <Box
-                component="span"
-                dangerouslySetInnerHTML={{
-                  __html: marked.parse(organization.about || 'NO DATA YET'),
-                }}
-              />
-            </Typography>
-          </article>
-          <article>
-            <Typography variant="h4" sx={{ mt: { xs: 10, md: 16 } }}>
-              Mission
-            </Typography>
-            <Typography variant="body2" mt={7}>
-              <Box
-                component="span"
-                sx={{
-                  mt: [80 / 8, 80 / 4],
-                  fontFamily: 'Lato',
-                  fontWeight: 400,
-                  fontSize: '20px',
-                  lineHeight: '28px',
-                  letterSpacing: '0.04em',
-                }}
-                dangerouslySetInnerHTML={{
-                  __html: marked.parse(organization.mission || 'NO DATA YET'),
-                }}
-              />
-            </Typography>
-          </article>
-          <Divider
-            varian="fullwidth"
-            sx={{
-              mt: [10, 20],
-            }}
-          />
           <Box sx={{ height: 80 }} />
         </Box>
       </Box>
@@ -492,7 +447,7 @@ export default function Organization(props) {
               height: '120px',
               margin: '10px',
             }}
-            src={organization.logo_url || imagePlaceholder}
+            src={stakeholder.logo_url || imagePlaceholder}
             variant="rounded"
           />
         </Portal>
@@ -502,13 +457,33 @@ export default function Organization(props) {
 }
 
 async function serverSideData(params) {
-  const id = params.organizationid;
-  const organization = await getOrganizationById(id);
-  const orgLinks = await getOrgLinks(organization.links);
+  console.log('serverSideData');
+  console.log(params);
+  const id = params.stakeholderid;
+  const stakeholder = await getStakeholderById(id);
+  const [featuredTrees, associated_planters, species] = await Promise.all([
+    (async () => {
+      const data = await requestAPI(`/trees?stakeholder_id=${id}`);
+      return data;
+    })(),
+    (async () => {
+      const data = await requestAPI(`/planters?stakeholder_id=${id}`);
+      return data;
+    })(),
+    (async () => {
+      const data = await requestAPI(`/species?stakeholder_id=${id}`);
+      return data;
+    })(),
+  ]);
+  // const organization = await getOrganizationById(stakeholder.organization_id);
+  // const orgLinks = await getOrgLinks(organization.links);
   const props = {
-    organization: {
-      ...organization,
-      ...orgLinks,
+    stakeholder: {
+      ...stakeholder,
+      featuredTrees,
+      associated_planters,
+      species,
+      // ...orgLinks,
     },
   };
   return props;

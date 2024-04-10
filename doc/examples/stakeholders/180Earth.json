@@ -1,0 +1,17 @@
+{
+    "id": 1,
+    "type": "organization",
+    "org_name": "180Earth",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "abc@gmail.com",
+    "phone": "1234567890",
+    "website": "www.180earth.com",
+    "logo_url": "https://180.earth/wp-content/uploads/2020/01/Asset-1.png",
+    "map": "Shirimatunda, Tanzania",
+    "created_at": "November 11, 2019",
+    "updated_at": "April 1, 2024",
+    "active": "true",
+    "entity_id": 1
+  }
+  
