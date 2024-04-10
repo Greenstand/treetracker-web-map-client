@@ -525,6 +525,8 @@ export default function Planter(props) {
 }
 
 async function serverSideData(params) {
+  console.log('serverSideData');
+  console.log(params);
   const id = params.planterid;
   const planter = await getPlanterById(id);
   const data = await getOrgLinks(planter.links);

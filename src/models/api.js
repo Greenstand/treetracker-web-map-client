@@ -234,3 +234,17 @@ export async function getTokenById(id) {
     throw err;
   }
 }
+
+export async function getStakeholderById(id) {
+  try {
+    const url = apiPaths.stakeholder(id);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data;
+  } catch (err) {
+    log.error(err);
+    throw err;
+  }
+}
