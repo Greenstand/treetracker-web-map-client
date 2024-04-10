@@ -1,3 +1,10 @@
+## [2.9.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.1...v2.9.2) (2024-04-10)
+
+
+### Bug Fixes
+
+* upgrade treetracker web map core ([2aff6e3](https://github.com/Greenstand/treetracker-web-map-client/commit/2aff6e3dbb6ef975b0d3acbf819147d902d42d7c))
+
 ## [2.9.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.0...v2.9.1) (2024-02-16)
 
 
