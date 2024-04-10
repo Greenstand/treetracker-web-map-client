@@ -77,7 +77,7 @@
     "react-oidc-context": "^2.3.1",
     "react-world-map": "^2.4.0",
     "source-map-explorer": "^2.5.2",
-    "treetracker-web-map-core": "^2.7.1",
+    "treetracker-web-map-core": "^2.7.3",
     "tss-react": "^2.0.3",
     "url-join-ts": "^1.0.5",
     "webfontloader": "^1.6.28"
