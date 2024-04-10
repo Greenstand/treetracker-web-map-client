@@ -452,7 +452,7 @@ export default function Grower(props) {
           ))}
         </Box>
         <Divider
-          varian="fullwidth"
+          variant="fullwidth"
           sx={{
             mt: [10, 20],
           }}
@@ -476,7 +476,7 @@ export default function Grower(props) {
           />
         </Typography>
         <Divider
-          varian="fullwidth"
+          variant="fullwidth"
           sx={{
             mt: [10, 20],
           }}
