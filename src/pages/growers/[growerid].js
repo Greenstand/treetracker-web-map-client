@@ -24,7 +24,7 @@ import Icon from 'components/common/CustomIcon';
 import Info from 'components/common/Info';
 import { useDrawerContext } from 'context/DrawerContext';
 import { useMobile } from 'hooks/globalHooks';
-import planterBackground from 'images/background.png';
+import growerBackground from 'images/background.png';
 import CalendarIcon from 'images/icons/calendar.svg';
 import LocationIcon from 'images/icons/location.svg';
 import PeopleIcon from 'images/icons/people.svg';
@@ -34,7 +34,7 @@ import { useMapContext } from 'mapContext';
 import { getGrowerById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
-import { getLocationString, getPlanterName, wrapper } from 'models/utils';
+import { getLocationString, getGrowerName, wrapper } from 'models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -86,7 +86,7 @@ export default function Grower(props) {
   // try to find first tree image or default image return
   const backgroundPic =
     grower?.featuredTrees?.trees?.[0]?.image_url ||
-    `${router.basePath}${planterBackground}`;
+    `${router.basePath}${growerBackground}`;
 
   useEffect(() => {
     setTitlesData({
@@ -135,10 +135,7 @@ export default function Grower(props) {
   return (
     <>
       <HeadTag
-        title={`${getPlanterName(
-          grower.first_name,
-          grower.last_name,
-        )} - Grower`}
+        title={`${getGrowerName(grower.first_name, grower.last_name)} - Grower`}
       />
       <Box
         sx={[
@@ -176,10 +173,7 @@ export default function Grower(props) {
                 },
                 {
                   icon: grower.image_url,
-                  name: `${getPlanterName(
-                    grower.first_name,
-                    grower.last_name,
-                  )}`,
+                  name: `${getGrowerName(grower.first_name, grower.last_name)}`,
                 },
               ]}
             />
@@ -228,7 +222,7 @@ export default function Grower(props) {
               }}
             >
               <Typography variant="h2">
-                {getPlanterName(grower.first_name, grower.last_name)}
+                {getGrowerName(grower.first_name, grower.last_name)}
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Info

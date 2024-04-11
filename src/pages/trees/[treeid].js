@@ -41,7 +41,6 @@ import { useMapContext } from 'mapContext';
 import {
   getCaptures,
   getOrganizationById,
-  getPlanterById,
   getTreeById,
   getCapturesByTreeId,
   getGrowerById,
@@ -235,8 +234,8 @@ export default function Tree({
         ]}
       >
         {/* <IsMobileScreen>
-      <DrawerTitle />
-    </IsMobileScreen> */}
+    <DrawerTitle />
+  </IsMobileScreen> */}
         {isMobile && (
           <Portal
             container={() => document.getElementById('drawer-title-container')}
@@ -577,10 +576,10 @@ export default function Tree({
         )}
 
         {/* <CustomImageWrapper
-      imageUrl={tree.image_url}
-      timeCreated={tree.time_created}
-      treeId={tree.id}
-    /> */}
+    imageUrl={tree.image_url}
+    timeCreated={tree.time_created}
+    treeId={tree.id}
+  /> */}
         {organization && (
           <Box
             sx={[

@@ -198,7 +198,7 @@ const optimizeThemeFonts = (theme) => {
   return temp;
 };
 
-function getPlanterName(firstName, lastName) {
+function getGrowerName(firstName, lastName) {
   return `${firstName} ${(lastName && lastName.slice(0, 1)) || ''}`;
 }
 
@@ -322,7 +322,7 @@ export {
   debounce,
   loadFonts,
   optimizeThemeFonts,
-  getPlanterName,
+  getGrowerName,
   convertFontObjToFontArr,
   nextPathBaseDecode,
   nextPathBaseEncode,
