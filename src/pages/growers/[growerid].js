@@ -6,8 +6,6 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
-import log from 'loglevel';
-import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
@@ -67,21 +65,20 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function Grower(props) {
-  log.warn('props for grower page:', props);
   const { grower, nextExtraIsEmbed } = props;
 
-  const { featuredTrees } = grower;
-  const treeCount = featuredTrees?.total;
   const mapContext = useMapContext();
+  const { classes } = useStyles();
   const isMobile = useMobile();
-
   const router = useRouter();
-
   const [isGrowerTab, setIsGrowerTab] = useState(true);
-
   const { setTitlesData } = useDrawerContext();
 
-  const { classes } = useStyles();
+  const treeCount = grower.featuredTrees?.trees.length;
+  const formattedGrowerName = getGrowerName(
+    grower.first_name,
+    grower.last_name,
+  );
 
   // try to find first tree image or default image return
   const backgroundPic =
@@ -92,22 +89,20 @@ export default function Grower(props) {
     setTitlesData({
       firstName: grower.first_name,
       lastName: grower.last_name,
-      createdTime: grower.created_time,
+      createdTime: grower.created_at,
     });
-  }, [grower.created_time, grower.first_name, grower.last_name, setTitlesData]);
+  }, [grower.created_at, grower.first_name, grower.last_name, setTitlesData]);
 
   useEffect(() => {
     async function reload() {
       // manipulate the map
       const { map } = mapContext;
       if (map && grower) {
-        // map.flyTo(tree.lat, tree.lon, 16);
         await map.setFilters({
           userid: grower.id,
         });
         const bounds = pathResolver.getBounds(router);
         if (bounds) {
-          log.warn('goto bounds found in url');
           await map.gotoBounds(bounds);
         } else {
           const view = await map.getInitialView();
@@ -116,7 +111,7 @@ export default function Grower(props) {
       }
     }
     reload();
-  }, [mapContext, grower]);
+  }, [mapContext, grower, router]);
 
   const BadgeSection = useMemo(
     () => (
@@ -134,9 +129,7 @@ export default function Grower(props) {
 
   return (
     <>
-      <HeadTag
-        title={`${getGrowerName(grower.first_name, grower.last_name)} - Grower`}
-      />
+      <HeadTag title={`${formattedGrowerName} - Grower`} />
       <Box
         sx={[
           {
@@ -149,12 +142,6 @@ export default function Grower(props) {
           },
         ]}
       >
-        {/* <IsMobileScreen>
-          <DrawerTitle />
-        </IsMobileScreen> */}
-        {/* <IsMobileScreen>
-          <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
-        </IsMobileScreen> */}
         {!isMobile && (
           <Box
             sx={{
@@ -167,13 +154,12 @@ export default function Grower(props) {
             <Crumbs
               items={[
                 {
-                  // icon: <HomeIcon />,
                   name: 'Home',
                   url: '/',
                 },
                 {
                   icon: grower.image_url,
-                  name: `${getGrowerName(grower.first_name, grower.last_name)}`,
+                  name: formattedGrowerName,
                 },
               ]}
             />
@@ -211,74 +197,9 @@ export default function Grower(props) {
             rotation={grower.image_rotation}
           />
         </Box>
-        {isMobile && (
-          <Portal
-            container={() => document.getElementById('drawer-title-container')}
-          >
-            <Box
-              sx={{
-                px: 4,
-                pb: 4,
-              }}
-            >
-              <Typography variant="h2">
-                {getGrowerName(grower.first_name, grower.last_name)}
-              </Typography>
-              <Box sx={{ mt: 2 }}>
-                <Info
-                  iconURI={CalendarIcon}
-                  info={
-                    <>
-                      Grower since
-                      <time dateTime={grower?.created_at}>
-                        {' '}
-                        {moment(grower?.created_at).format('MMMM DD, YYYY')}
-                      </time>
-                    </>
-                  }
-                />
-              </Box>
-              <Box sx={{ mt: 2 }}>
-                <Info
-                  iconURI={LocationIcon}
-                  info={getLocationString(
-                    grower.country_name,
-                    grower.continent_name,
-                  )}
-                />
-              </Box>
-              <Box
-                sx={{
-                  mt: 4,
-                  gap: 2,
-                  display: 'flex',
-                }}
-              >
-                {BadgeSection}
-              </Box>
-            </Box>
-          </Portal>
-        )}
-        {isMobile && (
-          <Portal
-            container={() =>
-              document.getElementById('drawer-title-container-min')
-            }
-          >
-            <Box sx={{}}>
-              <Typography variant="h3">
-                {grower.first_name}{' '}
-                {grower.last_name && grower.last_name.slice(0, 1)}.
-              </Typography>
-            </Box>
-          </Portal>
-        )}
         {!isMobile && (
           <Box sx={{ mt: 6 }}>
-            <Typography variant="h2">
-              {grower.first_name}{' '}
-              {grower.last_name && grower.last_name.slice(0, 1)}.
-            </Typography>
+            <Typography variant="h2">{formattedGrowerName}</Typography>
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
@@ -296,10 +217,7 @@ export default function Grower(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={LocationIcon}
-                info={getLocationString(
-                  grower.country_name,
-                  grower.continent_name,
-                )}
+                info={getLocationString(grower.location)}
               />
             </Box>
             <Box
@@ -313,6 +231,62 @@ export default function Grower(props) {
             </Box>
           </Box>
         )}
+        {isMobile && (
+          <>
+            <Portal
+              container={() =>
+                document.getElementById('drawer-title-container')
+              }
+            >
+              <Box
+                sx={{
+                  px: 4,
+                  pb: 4,
+                }}
+              >
+                <Typography variant="h2">{formattedGrowerName}</Typography>
+                <Box sx={{ mt: 2 }}>
+                  <Info
+                    iconURI={CalendarIcon}
+                    info={
+                      <>
+                        Grower since
+                        <time dateTime={grower?.created_at}>
+                          {' '}
+                          {moment(grower?.created_at).format('MMMM DD, YYYY')}
+                        </time>
+                      </>
+                    }
+                  />
+                </Box>
+                <Box sx={{ mt: 2 }}>
+                  <Info
+                    iconURI={LocationIcon}
+                    info={getLocationString(grower.location)}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    mt: 4,
+                    gap: 2,
+                    display: 'flex',
+                  }}
+                >
+                  {BadgeSection}
+                </Box>
+              </Box>
+            </Portal>
+            <Portal
+              container={() =>
+                document.getElementById('drawer-title-container-min')
+              }
+            >
+              <Box sx={{}}>
+                <Typography variant="h3">{formattedGrowerName}</Typography>
+              </Box>
+            </Portal>
+          </>
+        )}
         <Box
           sx={{
             mt: [8, 16],
@@ -322,7 +296,7 @@ export default function Grower(props) {
             Featured trees by {grower.first_name}
           </Typography>
           <FeaturedTreesSlider
-            trees={featuredTrees.trees}
+            trees={grower.featuredTrees.trees}
             link={(item) => `/growers/${grower.id}/trees/${item.id}`}
           />
         </Box>
@@ -389,14 +363,14 @@ export default function Grower(props) {
             display: isGrowerTab ? 'block' : 'none',
           }}
         >
-          {grower.continent_name && (
-            <Box sx={{ mt: [0, 22] }}>
-              <CustomWorldMap
-                totalTrees={treeCount}
-                con={grower.continent_name}
-              />
-            </Box>
-          )}
+          <Box sx={{ mt: [0, 22] }}>
+            <div>Sam</div>
+            <CustomWorldMap
+              totalTrees={treeCount}
+              con={['Asia']}
+              // TODO: Replace args with appropriate data after <CustomWorldMap> refactor
+            />
+          </Box>
           <Typography
             variant="h4"
             sx={{
@@ -463,11 +437,7 @@ export default function Grower(props) {
           variant="body2"
           className={classes.textColor}
         >
-          <span
-            dangerouslySetInnerHTML={{
-              __html: marked.parse(grower.about || 'NO DATA YET'),
-            }}
-          />
+          {grower.about || 'NO DATA YET'}
         </Typography>
         <Divider
           variant="fullwidth"
