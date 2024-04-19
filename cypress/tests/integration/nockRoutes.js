@@ -40,12 +40,6 @@ export function getNockRoutes(
     },
     {
       method: 'GET',
-      path: `/growers/${grower.grower_id}`,
-      statusCode: 200,
-      body: grower,
-    },
-    {
-      method: 'GET',
       path: `/organizations/${organization.id}`,
       statusCode: 200,
       body: organization,

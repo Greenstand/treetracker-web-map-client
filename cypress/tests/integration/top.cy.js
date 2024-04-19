@@ -1,7 +1,7 @@
 import { prepareNocks, clearNocks } from './nockRoutes';
 import leaders from '../../../doc/examples/countries/leader.json';
+import grower100 from '../../../doc/examples/growers/100.json';
 import organization1 from '../../../doc/examples/organizations/1.json';
-import planter940 from '../../../doc/examples/planters/940.json';
 import wallets from '../../../doc/examples/wallets/180Earth.json';
 import capture from '../../fixtures/capture.json';
 import tree186734 from '../../fixtures/tree186734.json';
@@ -39,7 +39,7 @@ describe('top', () => {
       path: '/query/v2/growers/featured',
       statusCode: 200,
       body: {
-        grower_accounts: [planter940],
+        grower_accounts: [grower100],
       },
     });
 

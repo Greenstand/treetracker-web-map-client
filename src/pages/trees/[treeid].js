@@ -46,12 +46,12 @@ import {
   getGrowerById,
 } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
-import * as utils from 'models/utils';
+import { wrapper, getGrowerName } from 'models/utils';
 
 export default function Tree({
   tree,
   captures,
-  planter,
+  grower,
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
@@ -70,7 +70,7 @@ export default function Tree({
   });
   const isMobile = useMobile();
   const isEmbed = useEmbed();
-  const isPlanterContext = context && context.name === 'planters';
+  const isGrowerContext = context && context.name === 'growers';
   const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
@@ -136,8 +136,8 @@ export default function Tree({
       log.warn('map ,tree, context in tree page:', map, tree, context);
       if (map && tree?.lat && tree?.lon) {
         if (context && context.name) {
-          if (isPlanterContext) {
-            log.warn('set planter filter', context.id);
+          if (isGrowerContext) {
+            log.warn('set grower filter', context.id);
             await map.setFilters({
               userid: context.id,
             });
@@ -188,8 +188,6 @@ export default function Tree({
     reload();
   }, [map, tree.lat, tree.lon]);
 
-  log.warn(planter, 'planter');
-
   // storing under variable with useMemo wrapped
   // to reuse the same component for mobile and desktop and
   // avoid re-rendering of badge components
@@ -234,8 +232,8 @@ export default function Tree({
         ]}
       >
         {/* <IsMobileScreen>
-    <DrawerTitle />
-  </IsMobileScreen> */}
+  <DrawerTitle />
+</IsMobileScreen> */}
         {isMobile && (
           <Portal
             container={() => document.getElementById('drawer-title-container')}
@@ -357,14 +355,14 @@ export default function Tree({
                   name: 'Home',
                   url: '/',
                 },
-                ...(isPlanterContext
+                ...(isGrowerContext
                   ? [
                       {
-                        url: `/planters/${planter.id}`,
-                        icon: planter.image_url,
-                        name: `${utils.getPlanterName(
-                          planter.first_name,
-                          planter.last_name,
+                        url: `/growers/${grower.id}`,
+                        icon: grower.image_url,
+                        name: `${getGrowerName(
+                          grower.first_name,
+                          grower.last_name,
                         )}`,
                       },
                     ]
@@ -472,7 +470,7 @@ export default function Tree({
                 />
                 <TreeInfoDialog
                   tree={tree}
-                  planter={planter}
+                  grower={grower}
                   organization={organization}
                 />
               </Box>
@@ -576,10 +574,10 @@ export default function Tree({
         )}
 
         {/* <CustomImageWrapper
-    imageUrl={tree.image_url}
-    timeCreated={tree.time_created}
-    treeId={tree.id}
-  /> */}
+  imageUrl={tree.image_url}
+  timeCreated={tree.time_created}
+  treeId={tree.id}
+/> */}
         {organization && (
           <Box
             sx={[
@@ -593,7 +591,7 @@ export default function Tree({
           >
             <InformationCard1
               entityName={organization.name}
-              entityType="Planting Organization"
+              entityType="Growing Organization"
               buttonText="Meet the Organization"
               cardImageSrc={organization?.logo_url || imagePlaceholder}
               link={`/organizations/${
@@ -627,12 +625,12 @@ export default function Tree({
           }}
         >
           <InformationCard1
-            entityName={`${planter.first_name} ${planter.last_name}`}
-            entityType="Planter"
-            buttonText="Meet the Planter"
-            cardImageSrc={planter?.image_url || imagePlaceholder}
-            rotation={planter?.image_rotation}
-            link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
+            entityName={`${grower.first_name} ${grower.last_name}`}
+            entityType="Grower"
+            buttonText="Meet the Grower"
+            cardImageSrc={grower?.image_url || imagePlaceholder}
+            rotation={grower?.image_rotation}
+            link={`/growers/${grower.id}?keyword=${nextExtraKeyword}${
               isEmbed ? '&embed=true' : ''
             }`}
           />
@@ -767,7 +765,7 @@ export default function Tree({
                 height: '120px',
                 margin: '10px',
               }}
-              src={isPlanterContext ? planter.image_url : organization.logo_url}
+              src={isGrowerContext ? grower.image_url : organization.logo_url}
               variant="rounded"
             />
           </Portal>
@@ -780,31 +778,33 @@ export default function Tree({
 async function serverSideData(params) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
-  const { planter_id, planting_organization_id } = tree;
-  const planter = await getGrowerById(planter_id);
+  const {
+    planter_id: grower_id,
+    planting_organization_id: growing_organization_id,
+  } = tree;
+  const grower = await getGrowerById(grower_id);
   const captures = await getCaptures();
   // const captures = await getTreeCaptures(treeid)
   // comment in when captures in v2 database have valid tree_id's.
   let organization = null;
-  if (planting_organization_id) {
-    log.warn('load org from planting_orgniazation_id');
-    organization = await getOrganizationById(planting_organization_id);
-  } else if (planter.organization_id) {
-    log.warn('load org from planter. organization_id');
-    organization = await getOrganizationById(planter.organization_id);
+  if (growing_organization_id) {
+    organization = await getOrganizationById(growing_organization_id);
+  } else if (grower.organization_id) {
+    log.warn('load org from grower. organization_id');
+    organization = await getOrganizationById(grower.organization_id);
   } else {
-    log.warn('can not load org for tree:', tree, planter);
+    log.warn('can not load org for tree:', tree, grower);
   }
 
   return {
     tree,
     captures,
-    planter,
+    grower,
     organization,
   };
 }
 
-const getStaticProps = utils.wrapper(async ({ params }) => {
+const getStaticProps = wrapper(async ({ params }) => {
   const props = await serverSideData(params);
   return {
     props,
