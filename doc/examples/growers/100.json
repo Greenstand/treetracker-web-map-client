@@ -25,6 +25,5 @@
     "featured_trees": "/trees?grower_id=100&limit=4",
     "associated_organizations": "/organizations?grower_id=100",
     "species": "/species?grower_id=100"
-  },
-  "continent_name": "Asia"
+  }
 }
