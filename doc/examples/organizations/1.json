@@ -10,7 +10,7 @@
   "map_name":"freetown",
   "links": {
     "featured_trees": "/trees?organization_id=1&limit=4",
-    "associated_planters": "/planters?organization_id=1&limit=4",
+    "associated_growers": "/growers?organization_id=1&limit=4",
     "species": "/species?organization_id=1"
   }
 }
