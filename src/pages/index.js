@@ -1,6 +1,6 @@
 import log from 'loglevel';
 import Head from 'next/head';
-import Home from '../components/Home';
+import Home from 'components/Home';
 
 export default function Homepage({ nextExtraIsEmbed }) {
   log.warn(nextExtraIsEmbed);
@@ -9,7 +9,7 @@ export default function Homepage({ nextExtraIsEmbed }) {
       <Head>
         <meta
           name="description"
-          content="Treetracker is the basic mechanism to connect tree growers all over the world to an international audience. Usable by tree planting organisations as well as individual planters.   "
+          content="Treetracker is the basic mechanism to connect tree growers all over the world to an international audience. Usable by tree planting organisations as well as individual growers.   "
         />
         <meta
           name="keywords"

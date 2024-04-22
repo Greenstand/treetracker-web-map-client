@@ -1,5 +1,6 @@
 import grower100 from '../../../doc/examples/growers/100.json';
 import organization1 from '../../../doc/examples/organizations/1.json';
+import planter940 from '../../../doc/examples/planters/940.json';
 import { defaultConfig } from '../../../src/context/configContext';
 import capture1 from '../../fixtures/capture.json';
 import leader from '../../fixtures/countries/leader.json';
@@ -10,39 +11,22 @@ export function getNockRoutes(
     tree: {},
     organization: {},
     grower: {},
+    planter: {},
     capture: {},
   },
 ) {
   const organization = { ...organization1, ...props.organization };
   const grower = { ...grower100, ...props.grower };
+  const planter = { ...planter940, ...props.planter };
   const tree = { ...tree186734, ...props.tree };
   const capture = { ...capture1, ...props.capture };
+
   return [
     {
       method: 'GET',
       path: `/growers/${grower.id}`,
       statusCode: 200,
       body: grower,
-    },
-    {
-      method: 'GET',
-      path: '/trees/featured',
-      statusCode: 200,
-      body: {
-        trees: [tree],
-      },
-    },
-    {
-      method: 'GET',
-      path: `/trees/${tree.id}`,
-      statusCode: 200,
-      body: tree,
-    },
-    {
-      method: 'GET',
-      path: `/organizations/${organization.id}`,
-      statusCode: 200,
-      body: organization,
     },
     {
       method: 'GET',
@@ -68,6 +52,38 @@ export function getNockRoutes(
     },
     {
       method: 'GET',
+      path: `/planters/${planter.id}`,
+      statusCode: 200,
+      body: planter,
+    },
+    {
+      method: 'GET',
+      path: '/trees/featured',
+      statusCode: 200,
+      body: {
+        trees: [tree],
+      },
+    },
+    {
+      method: 'GET',
+      path: `/trees/${tree.id}`,
+      statusCode: 200,
+      body: tree,
+    },
+    {
+      method: 'GET',
+      path: `/growers/${planter.id}`,
+      statusCode: 200,
+      body: planter,
+    },
+    {
+      method: 'GET',
+      path: `/organizations/${organization.id}`,
+      statusCode: 200,
+      body: organization,
+    },
+    {
+      method: 'GET',
       path: organization.links.species,
       statusCode: 200,
       body: {
@@ -76,9 +92,9 @@ export function getNockRoutes(
     },
     {
       method: 'GET',
-      path: organization.links.associated_growers,
+      path: organization.links.associated_planters,
       statusCode: 200,
-      body: { growers: [grower] },
+      body: { planters: [planter] },
     },
     {
       method: 'GET',

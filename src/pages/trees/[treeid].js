@@ -232,7 +232,7 @@ export default function Tree({
         ]}
       >
         {/* <IsMobileScreen>
-  <DrawerTitle />
+<DrawerTitle />
 </IsMobileScreen> */}
         {isMobile && (
           <Portal
@@ -574,9 +574,9 @@ export default function Tree({
         )}
 
         {/* <CustomImageWrapper
-  imageUrl={tree.image_url}
-  timeCreated={tree.time_created}
-  treeId={tree.id}
+imageUrl={tree.image_url}
+timeCreated={tree.time_created}
+treeId={tree.id}
 /> */}
         {organization && (
           <Box
@@ -778,10 +778,7 @@ export default function Tree({
 async function serverSideData(params) {
   const { treeid } = params;
   const tree = await getTreeById(treeid);
-  const {
-    planter_id: grower_id,
-    planting_organization_id: growing_organization_id,
-  } = tree;
+  const { grower_id, growing_organization_id } = tree;
   const grower = await getGrowerById(grower_id);
   const captures = await getCaptures();
   // const captures = await getTreeCaptures(treeid)

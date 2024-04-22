@@ -110,7 +110,7 @@ path: '/query/trees/951836',
 statusCode: 200,
 body: {
 id:951836,
-planterid: 940
+grower_id: 940
 },
 });
 ```
