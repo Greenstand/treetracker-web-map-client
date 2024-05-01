@@ -8,7 +8,7 @@ import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import Badge from 'components/Badge';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
@@ -364,7 +364,6 @@ export default function Grower(props) {
           }}
         >
           <Box sx={{ mt: [0, 22] }}>
-            <div>Sam</div>
             <CustomWorldMap
               totalTrees={treeCount}
               con={['Asia']}
@@ -406,9 +405,8 @@ export default function Grower(props) {
           }}
         >
           {grower.associatedOrganizations.organizations.map((org) => (
-            <>
+            <Fragment key={org.id}>
               <InformationCard1
-                key={org.id}
                 entityName={org.name}
                 entityType="Planting Organization"
                 buttonText="Meet the Organization"
@@ -416,7 +414,7 @@ export default function Grower(props) {
                 cardImageSrc={org?.logo_url}
               />
               <Box sx={{ mt: [6, 12] }} />
-            </>
+            </Fragment>
           ))}
         </Box>
         <Divider
