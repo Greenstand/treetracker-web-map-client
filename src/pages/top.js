@@ -16,7 +16,12 @@ import Filter from 'components/common/Filter';
 import { useFullscreen } from 'hooks/globalHooks';
 import Search from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getCaptures, getCountryLeaderboard, getFeaturedGrowers, getFeaturedTrees } from 'models/api';
+import {
+  getCaptures,
+  getCountryLeaderboard,
+  getFeaturedGrowers,
+  getFeaturedTrees,
+} from 'models/api';
 import * as utils from 'models/utils';
 
 function Top(props) {
@@ -82,165 +87,167 @@ function Top(props) {
     map.rerender();
   }
 
-  return (<>
-    <HeadTag title="Tree Spotlight" />
-    <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
-      {!isFullscreen && false && (
-        <Stack direction="row" justifyContent="flex-end" mb={6.125}>
-          <SearchButton />
-        </Stack>
-      )}
+  return (
+    <>
+      <HeadTag title="Tree Spotlight" />
+      <Box px={4} py={3} sx={{ maxWidth: '100%', boxSizing: 'border-box' }}>
+        {!isFullscreen && false && (
+          <Stack direction="row" justifyContent="flex-end" mb={6.125}>
+            <SearchButton />
+          </Stack>
+        )}
 
-      {/* {!isFullscreen && <SearchFilter />} */}
+        {/* {!isFullscreen && <SearchFilter />} */}
 
-      <Box
-        sx={{
-          height: [4, 13],
-        }}
-      />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <Crumbs
-          items={[
-            {
-              // icon: <HomeIcon />,
-              name: 'Home',
-              url: '/',
-            },
-            {
-              name: 'tree spotlight',
-            },
-          ]}
-        />
-        <Icon
-          icon={Search}
-          width={48}
-          height={48}
-          color="grey"
-          sx={{
-            fill: 'transparent',
-            '& path': {
-              fill: 'grey',
-            },
-          }}
-        />
-      </Box>
-      {captures?.length > 0 && (
-        <>
-          <Box
-            sx={{
-              mt: 8,
-            }}
-          >
-            <Typography variant="h4">Featured captures this week</Typography>
-          </Box>
-          {false && ( // going to be replaced by search filter component
-            (<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Filter onFilter={handleFilter} />
-            </Box>)
-          )}
-          <Box>
-            <FeaturedTreesSlider trees={captures} isMobile={isFullscreen} />
-          </Box>
-        </>
-      )}
-      {organizations.length > 0 && (
-        <>
-          <Box sx={{ mt: [4, 8] }} />
-          <Typography variant="h4">
-            Featured organizations this week
-          </Typography>
-          <FeaturedPlantersSlider
-            link={(id) => `/organizations/${id}`}
-            color="primary"
-            planters={organizations}
-            isMobile={isFullscreen}
-          />
-        </>
-      )}
-      {growers.length > 0 && (
-        <>
-          <Box
-            sx={{
-              mt: 8,
-            }}
-          >
-            <Typography variant="h4">Featured planters this week</Typography>
-          </Box>
-          <FeaturedPlantersSlider
-            link={(id) => `/planters/${id}`}
-            color="secondary"
-            planters={growers}
-            isMobile={isFullscreen}
-          />
-        </>
-      )}
-      {wallets.length > 0 && (
-        <>
-          <Typography variant="h4">Featured wallets this week</Typography>
-          <FeaturedPlantersSlider
-            link={(id) => `/wallets/${id}`}
-            color="secondary"
-            planters={wallets}
-            isMobile={isFullscreen}
-          />
-        </>
-      )}
-      <Typography
-        variant="h4"
-        sx={{
-          marginTop: 8,
-        }}
-      >
-        Check out the global leaders in the tree planting effort
-      </Typography>
-      <Box
-        sx={{
-          padding: (t) => [t.spacing(4, 0, 0, 0), t.spacing(8, 0, 0, 0)],
-        }}
-      >
-        <TagChips
-          tagItems={continentTags}
-          onSelectTag={(continent) => {
-            setContinentTag(continent);
-          }}
-        />
-      </Box>
-      <Box sx={{ marginTop: 18 }} />
-      <LeaderBoard
-        countries={leaderboardCountries}
-        handleCountryClick={handleCountryClick}
-      />
-    </Box>
-    {isFullscreen && (
-      <Portal container={document.getElementById('drawer-title-container')}>
         <Box
           sx={{
-            px: 4,
-            pb: 4,
+            height: [4, 13],
+          }}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
-          <Typography variant="h2" color="primary">
-            Treetracker Spotlight
-          </Typography>
+          <Crumbs
+            items={[
+              {
+                // icon: <HomeIcon />,
+                name: 'Home',
+                url: '/',
+              },
+              {
+                name: 'tree spotlight',
+              },
+            ]}
+          />
+          <Icon
+            icon={Search}
+            width={48}
+            height={48}
+            color="grey"
+            sx={{
+              fill: 'transparent',
+              '& path': {
+                fill: 'grey',
+              },
+            }}
+          />
         </Box>
-      </Portal>
-    )}
-    {isFullscreen && (
-      <Portal
-        container={document.getElementById('drawer-title-container-min')}
-      >
-        <Box>
-          <Typography variant="h4">Treetracker Spotlight</Typography>
+        {captures?.length > 0 && (
+          <>
+            <Box
+              sx={{
+                mt: 8,
+              }}
+            >
+              <Typography variant="h4">Featured captures this week</Typography>
+            </Box>
+            {false && ( // going to be replaced by search filter component
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Filter onFilter={handleFilter} />
+              </Box>
+            )}
+            <Box>
+              <FeaturedTreesSlider trees={captures} isMobile={isFullscreen} />
+            </Box>
+          </>
+        )}
+        {organizations.length > 0 && (
+          <>
+            <Box sx={{ mt: [4, 8] }} />
+            <Typography variant="h4">
+              Featured organizations this week
+            </Typography>
+            <FeaturedPlantersSlider
+              link={(id) => `/organizations/${id}`}
+              color="primary"
+              planters={organizations}
+              isMobile={isFullscreen}
+            />
+          </>
+        )}
+        {growers.length > 0 && (
+          <>
+            <Box
+              sx={{
+                mt: 8,
+              }}
+            >
+              <Typography variant="h4">Featured planters this week</Typography>
+            </Box>
+            <FeaturedPlantersSlider
+              link={(id) => `/planters/${id}`}
+              color="secondary"
+              planters={growers}
+              isMobile={isFullscreen}
+            />
+          </>
+        )}
+        {wallets.length > 0 && (
+          <>
+            <Typography variant="h4">Featured wallets this week</Typography>
+            <FeaturedPlantersSlider
+              link={(id) => `/wallets/${id}`}
+              color="secondary"
+              planters={wallets}
+              isMobile={isFullscreen}
+            />
+          </>
+        )}
+        <Typography
+          variant="h4"
+          sx={{
+            marginTop: 8,
+          }}
+        >
+          Check out the global leaders in the tree planting effort
+        </Typography>
+        <Box
+          sx={{
+            padding: (t) => [t.spacing(4, 0, 0, 0), t.spacing(8, 0, 0, 0)],
+          }}
+        >
+          <TagChips
+            tagItems={continentTags}
+            onSelectTag={(continent) => {
+              setContinentTag(continent);
+            }}
+          />
         </Box>
-      </Portal>
-    )}
-  </>);
+        <Box sx={{ marginTop: 18 }} />
+        <LeaderBoard
+          countries={leaderboardCountries}
+          handleCountryClick={handleCountryClick}
+        />
+      </Box>
+      {isFullscreen && (
+        <Portal container={document.getElementById('drawer-title-container')}>
+          <Box
+            sx={{
+              px: 4,
+              pb: 4,
+            }}
+          >
+            <Typography variant="h2" color="primary">
+              Treetracker Spotlight
+            </Typography>
+          </Box>
+        </Portal>
+      )}
+      {isFullscreen && (
+        <Portal
+          container={document.getElementById('drawer-title-container-min')}
+        >
+          <Box>
+            <Typography variant="h4">Treetracker Spotlight</Typography>
+          </Box>
+        </Portal>
+      )}
+    </>
+  );
 }
 
 async function serverSideData(params) {

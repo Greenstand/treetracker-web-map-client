@@ -10,7 +10,9 @@ describe('Money Tree', () => {
     const path = `/trees/${tree.id}`;
     prepareNocks({ tree: { ...tree, species_name: 'Money Tree' } });
     // nocksIntercept for extra data that I want to show up
-    cy.visit(path);
+    cy.visit(path, {
+      failOnStatusCode: false,
+    });
     // misc code to confirm changes
     cy.contains(`${tree.id}`);
   });

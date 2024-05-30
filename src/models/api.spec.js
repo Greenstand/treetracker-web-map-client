@@ -4,11 +4,16 @@ import {
   getFeaturedTrees,
   getOrganizationById,
   getOrgLinks,
-  getPlanterById,
+  getGrowerById,
   getTreeById,
 } from './api';
 import organization from '../../doc/examples/organizations/1.json';
-import mockPlanter from '../../doc/examples/planters/940.json';
+
+it('should get grower by id', async () => {
+  const grower = await getGrowerById(100);
+  expect(grower).toBeDefined();
+  expect(grower.first_name).toBeDefined();
+});
 
 it('should get featured trees', async () => {
   const trees = await getFeaturedTrees();

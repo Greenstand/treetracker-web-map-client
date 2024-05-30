@@ -198,8 +198,8 @@ const optimizeThemeFonts = (theme) => {
   return temp;
 };
 
-function getPlanterName(firstName, lastName) {
-  return `${firstName} ${(lastName && lastName.slice(0, 1)) || ''}`;
+function getGrowerName(firstName, lastName) {
+  return `${firstName} ${lastName ? `${lastName.slice(0, 1)}.` : ''}`;
 }
 
 /**
@@ -240,6 +240,8 @@ const wrapper = (callback) => (params) =>
   });
 
 const getLocationString = (country, continent) => {
+  // TODO: Replace this with new implementation to use parameter of Postgres type geometry(Point,4326)
+
   if (!country && !continent) return 'Unknown';
   if (!country) return continent;
   if (!continent) return country;
@@ -322,7 +324,7 @@ export {
   debounce,
   loadFonts,
   optimizeThemeFonts,
-  getPlanterName,
+  getGrowerName,
   convertFontObjToFontArr,
   nextPathBaseDecode,
   nextPathBaseEncode,

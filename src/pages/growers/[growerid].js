@@ -6,16 +6,13 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Portal from '@mui/material/Portal';
 import Typography from '@mui/material/Typography';
-import log from 'loglevel';
-import { marked } from 'marked';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import Badge from 'components/Badge';
 import CustomWorldMap from 'components/CustomWorldMap';
 import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
 import HeadTag from 'components/HeadTag';
-import ImpactSection from 'components/ImpactSection';
 import InformationCard1 from 'components/InformationCard1';
 import ProfileAvatar from 'components/ProfileAvatar';
 import TreeSpeciesCard from 'components/TreeSpeciesCard';
@@ -25,17 +22,17 @@ import Icon from 'components/common/CustomIcon';
 import Info from 'components/common/Info';
 import { useDrawerContext } from 'context/DrawerContext';
 import { useMobile } from 'hooks/globalHooks';
-import planterBackground from 'images/background.png';
+import growerBackground from 'images/background.png';
 import CalendarIcon from 'images/icons/calendar.svg';
 import LocationIcon from 'images/icons/location.svg';
 import PeopleIcon from 'images/icons/people.svg';
 import TreeIcon from 'images/icons/tree.svg';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getPlanterById, getOrgLinks } from 'models/api';
+import { getGrowerById, getOrgLinks } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
-import { getLocationString, getPlanterName, wrapper } from 'models/utils';
+import { getLocationString, getGrowerName, wrapper } from 'models/utils';
 
 // make styles for component with material-ui
 const useStyles = makeStyles()((theme) => ({
@@ -67,60 +64,45 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa iusto
-        nesciunt quasi praesentium non cupiditate ratione nihil. Perferendis,
-        velit ipsa illo, odit unde atque doloribus tempora distinctio facere
-        dolorem expedita error. Natus, provident. Tempore harum repellendus
-        reprehenderit vitae temporibus, consequuntur blanditiis officia
-        excepturi, natus explicabo laborum delectus repudiandae placeat
-        eligendi.`;
-export default function Planter(props) {
-  log.warn('props for planter page:', props);
-  const { planter, nextExtraIsEmbed } = props;
+export default function Grower(props) {
+  const { grower, nextExtraIsEmbed } = props;
 
-  const { featuredTrees } = planter;
-  const treeCount = featuredTrees?.total;
   const mapContext = useMapContext();
+  const { classes } = useStyles();
   const isMobile = useMobile();
-
   const router = useRouter();
-
-  const [isPlanterTab, setIsPlanterTab] = useState(true);
-
+  const [isGrowerTab, setIsGrowerTab] = useState(true);
   const { setTitlesData } = useDrawerContext();
 
-  const { classes } = useStyles();
+  const treeCount = grower.featuredTrees?.trees.length;
+  const formattedGrowerName = getGrowerName(
+    grower.first_name,
+    grower.last_name,
+  );
 
   // try to find first tree image or default image return
   const backgroundPic =
-    planter?.featuredTrees?.trees?.[0]?.image_url ||
-    `${router.basePath}${planterBackground}`;
+    grower?.featuredTrees?.trees?.[0]?.image_url ||
+    `${router.basePath}${growerBackground}`;
 
   useEffect(() => {
     setTitlesData({
-      firstName: planter.first_name,
-      lastName: planter.last_name,
-      createdTime: planter.created_time,
+      firstName: grower.first_name,
+      lastName: grower.last_name,
+      createdTime: grower.created_at,
     });
-  }, [
-    planter.created_time,
-    planter.first_name,
-    planter.last_name,
-    setTitlesData,
-  ]);
+  }, [grower.created_at, grower.first_name, grower.last_name, setTitlesData]);
 
   useEffect(() => {
     async function reload() {
       // manipulate the map
       const { map } = mapContext;
-      if (map && planter) {
-        // map.flyTo(tree.lat, tree.lon, 16);
+      if (map && grower) {
         await map.setFilters({
-          userid: planter.id,
+          userid: grower.id,
         });
         const bounds = pathResolver.getBounds(router);
         if (bounds) {
-          log.warn('goto bounds found in url');
           await map.gotoBounds(bounds);
         } else {
           const view = await map.getInitialView();
@@ -129,7 +111,7 @@ export default function Planter(props) {
       }
     }
     reload();
-  }, [mapContext, planter]);
+  }, [mapContext, grower, router]);
 
   const BadgeSection = useMemo(
     () => (
@@ -137,7 +119,7 @@ export default function Planter(props) {
         <Badge
           color="primary"
           icon={<CheckIcon />}
-          badgeName="Verified Planter"
+          badgeName="Verified Grower"
         />
         <Badge color="greyLight" badgeName="Seeking Orgs" />
       </>
@@ -147,12 +129,7 @@ export default function Planter(props) {
 
   return (
     <>
-      <HeadTag
-        title={`${getPlanterName(
-          planter.first_name,
-          planter.last_name,
-        )} - Planter`}
-      />
+      <HeadTag title={`${formattedGrowerName} - Grower`} />
       <Box
         sx={[
           {
@@ -165,12 +142,6 @@ export default function Planter(props) {
           },
         ]}
       >
-        {/* <IsMobileScreen>
-          <DrawerTitle />
-        </IsMobileScreen> */}
-        {/* <IsMobileScreen>
-          <Divider variant="fullWidth" sx={{ mt: 7, mb: 13.75 }} />
-        </IsMobileScreen> */}
         {!isMobile && (
           <Box
             sx={{
@@ -183,16 +154,12 @@ export default function Planter(props) {
             <Crumbs
               items={[
                 {
-                  // icon: <HomeIcon />,
                   name: 'Home',
                   url: '/',
                 },
                 {
-                  icon: planter.image_url,
-                  name: `${getPlanterName(
-                    planter.first_name,
-                    planter.last_name,
-                  )}`,
+                  icon: grower.image_url,
+                  name: formattedGrowerName,
                 },
               ]}
             />
@@ -212,7 +179,6 @@ export default function Planter(props) {
             </Box>
           </Box>
         )}
-
         <Box
           sx={{
             borderRadius: 4,
@@ -227,88 +193,22 @@ export default function Planter(props) {
         >
           <img src={backgroundPic} alt="profile" />
           <ProfileAvatar
-            src={planter.image_url}
-            rotation={planter.image_rotation}
+            src={grower.image_url}
+            rotation={grower.image_rotation}
           />
         </Box>
-        {isMobile && (
-          <Portal
-            container={() => document.getElementById('drawer-title-container')}
-          >
-            <Box
-              sx={{
-                px: 4,
-                pb: 4,
-              }}
-            >
-              <Typography variant="h2">
-                {getPlanterName(planter.first_name, planter.last_name)}
-              </Typography>
-              <Box sx={{ mt: 2 }}>
-                <Info
-                  iconURI={CalendarIcon}
-                  info={
-                    <>
-                      Planter since
-                      <time dateTime={planter?.created_at}>
-                        {' '}
-                        {moment(planter?.created_at).format('MMMM DD, YYYY')}
-                      </time>
-                    </>
-                  }
-                />
-              </Box>
-              <Box sx={{ mt: 2 }}>
-                <Info
-                  iconURI={LocationIcon}
-                  info={getLocationString(
-                    planter.country_name,
-                    planter.continent_name,
-                  )}
-                />
-              </Box>
-              <Box
-                sx={{
-                  mt: 4,
-                  gap: 2,
-                  display: 'flex',
-                }}
-              >
-                {BadgeSection}
-              </Box>
-            </Box>
-          </Portal>
-        )}
-        {isMobile && (
-          <Portal
-            container={() =>
-              document.getElementById('drawer-title-container-min')
-            }
-          >
-            <Box sx={{}}>
-              <Typography variant="h3">
-                {planter.first_name}{' '}
-                {planter.last_name && planter.last_name.slice(0, 1)}.
-              </Typography>
-            </Box>
-          </Portal>
-        )}
-
         {!isMobile && (
           <Box sx={{ mt: 6 }}>
-            <Typography variant="h2">
-              {planter.first_name}{' '}
-              {planter.last_name && planter.last_name.slice(0, 1)}.
-            </Typography>
+            <Typography variant="h2">{formattedGrowerName}</Typography>
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={CalendarIcon}
                 info={
                   <>
-                    Planter since
-                    <time dateTime={planter?.created_at}>
+                    Grower since
+                    <time dateTime={grower?.created_at}>
                       {' '}
-                      {moment(planter?.created_at).format('MMMM DD, YYYY')}
+                      {moment(grower?.created_at).format('MMMM DD, YYYY')}
                     </time>
                   </>
                 }
@@ -317,10 +217,7 @@ export default function Planter(props) {
             <Box sx={{ mt: 2 }}>
               <Info
                 iconURI={LocationIcon}
-                info={getLocationString(
-                  planter.country_name,
-                  planter.continent_name,
-                )}
+                info={getLocationString(grower.location)}
               />
             </Box>
             <Box
@@ -334,21 +231,75 @@ export default function Planter(props) {
             </Box>
           </Box>
         )}
-
+        {isMobile && (
+          <>
+            <Portal
+              container={() =>
+                document.getElementById('drawer-title-container')
+              }
+            >
+              <Box
+                sx={{
+                  px: 4,
+                  pb: 4,
+                }}
+              >
+                <Typography variant="h2">{formattedGrowerName}</Typography>
+                <Box sx={{ mt: 2 }}>
+                  <Info
+                    iconURI={CalendarIcon}
+                    info={
+                      <>
+                        Grower since
+                        <time dateTime={grower?.created_at}>
+                          {' '}
+                          {moment(grower?.created_at).format('MMMM DD, YYYY')}
+                        </time>
+                      </>
+                    }
+                  />
+                </Box>
+                <Box sx={{ mt: 2 }}>
+                  <Info
+                    iconURI={LocationIcon}
+                    info={getLocationString(grower.location)}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    mt: 4,
+                    gap: 2,
+                    display: 'flex',
+                  }}
+                >
+                  {BadgeSection}
+                </Box>
+              </Box>
+            </Portal>
+            <Portal
+              container={() =>
+                document.getElementById('drawer-title-container-min')
+              }
+            >
+              <Box sx={{}}>
+                <Typography variant="h3">{formattedGrowerName}</Typography>
+              </Box>
+            </Portal>
+          </>
+        )}
         <Box
           sx={{
             mt: [8, 16],
           }}
         >
           <Typography variant="h4">
-            Featured trees by {planter.first_name}
+            Featured trees by {grower.first_name}
           </Typography>
           <FeaturedTreesSlider
-            trees={featuredTrees.trees}
-            link={(item) => `/planters/${planter.id}/trees/${item.id}`}
+            trees={grower.featuredTrees.trees}
+            link={(item) => `/growers/${grower.id}/trees/${item.id}`}
           />
         </Box>
-
         <Grid
           container
           wrap="nowrap"
@@ -360,7 +311,7 @@ export default function Planter(props) {
         >
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
-              handleClick={() => setIsPlanterTab(true)}
+              handleClick={() => setIsGrowerTab(true)}
               iconURI={TreeIcon}
               iconProps={{
                 sx: {
@@ -371,14 +322,14 @@ export default function Planter(props) {
               }}
               title="Trees Planted"
               text={treeCount}
-              disabled={!isPlanterTab}
+              disabled={!isGrowerTab}
             />
           </Grid>
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
               handleClick={
-                planter.associatedOrganizations.organizations.length
-                  ? () => setIsPlanterTab(false)
+                grower.associatedOrganizations.organizations.length
+                  ? () => setIsGrowerTab(false)
                   : undefined
               }
               iconURI={PeopleIcon}
@@ -391,36 +342,34 @@ export default function Planter(props) {
               }}
               title="Associated Orgs"
               text={
-                planter.associatedOrganizations.organizations.length || (
+                grower.associatedOrganizations.organizations.length || (
                   <Typography
                     variant="h5"
                     sx={{
                       minHeight: [44],
                     }}
                   >
-                    Individual planter
+                    Individual grower
                   </Typography>
                 )
               }
-              disabled={isPlanterTab}
+              disabled={isGrowerTab}
             />
           </Grid>
         </Grid>
         <Box
           sx={{
             px: [0, 6],
-            display: isPlanterTab ? 'block' : 'none',
+            display: isGrowerTab ? 'block' : 'none',
           }}
         >
-          {planter.continent_name && (
-            <Box sx={{ mt: [0, 22] }}>
-              <CustomWorldMap
-                totalTrees={treeCount}
-                con={planter.continent_name}
-              />
-            </Box>
-          )}
-
+          <Box sx={{ mt: [0, 22] }}>
+            <CustomWorldMap
+              totalTrees={treeCount}
+              con={['Asia']}
+              // TODO: Replace args with appropriate data after <CustomWorldMap> refactor
+            />
+          </Box>
           <Typography
             variant="h4"
             sx={{
@@ -435,7 +384,7 @@ export default function Planter(props) {
               mt: [5, 10],
             }}
           >
-            {planter.species.species.map((species) => (
+            {grower.species.species.map((species) => (
               <TreeSpeciesCard
                 key={species.id}
                 name={species.name}
@@ -444,8 +393,7 @@ export default function Planter(props) {
               />
             ))}
           </Box>
-          {(!planter.species.species ||
-            planter.species.species.length === 0) && (
+          {(!grower.species.species || grower.species.species.length === 0) && (
             <Typography variant="h5">NO DATA YET</Typography>
           )}
         </Box>
@@ -453,11 +401,11 @@ export default function Planter(props) {
           sx={{
             px: [0, 6],
             mt: [11, 22],
-            display: !isPlanterTab ? 'block' : 'none',
+            display: !isGrowerTab ? 'block' : 'none',
           }}
         >
-          {planter.associatedOrganizations.organizations.map((org) => (
-            <>
+          {grower.associatedOrganizations.organizations.map((org) => (
+            <Fragment key={org.id}>
               <InformationCard1
                 entityName={org.name}
                 entityType="Planting Organization"
@@ -466,11 +414,11 @@ export default function Planter(props) {
                 cardImageSrc={org?.logo_url}
               />
               <Box sx={{ mt: [6, 12] }} />
-            </>
+            </Fragment>
           ))}
         </Box>
         <Divider
-          varian="fullwidth"
+          variant="fullwidth"
           sx={{
             mt: [10, 20],
           }}
@@ -480,26 +428,21 @@ export default function Planter(props) {
           variant="h4"
           className={classes.textColor}
         >
-          About the Planter
+          About the Grower
         </Typography>
         <Typography
           sx={{ mt: [2.5, 5] }}
           variant="body2"
           className={classes.textColor}
         >
-          <span
-            dangerouslySetInnerHTML={{
-              __html: marked.parse(planter.about || 'NO DATA YET'),
-            }}
-          />
+          {grower.about || 'NO DATA YET'}
         </Typography>
         <Divider
-          varian="fullwidth"
+          variant="fullwidth"
           sx={{
             mt: [10, 20],
           }}
         />
-
         <Box sx={{ height: 40 }} />
       </Box>
       {nextExtraIsEmbed && (
@@ -512,10 +455,9 @@ export default function Planter(props) {
               height: '120px',
               margin: '10px',
               transform:
-                planter.image_rotation &&
-                `rotate(${planter.image_rotation}deg)`,
+                grower.image_rotation && `rotate(${grower.image_rotation}deg)`,
             }}
-            src={planter.image_url}
+            src={grower.image_url}
             variant="rounded"
           />
         </Portal>
@@ -525,11 +467,11 @@ export default function Planter(props) {
 }
 
 async function serverSideData(params) {
-  const id = params.planterid;
-  const planter = await getPlanterById(id);
-  const data = await getOrgLinks(planter.links);
+  const id = params.growerid;
+  const grower = await getGrowerById(id);
+  const data = await getOrgLinks(grower.links);
   return {
-    planter: { ...planter, ...data },
+    grower: { ...grower, ...data },
   };
 }
 
