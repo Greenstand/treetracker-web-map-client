@@ -1,3 +1,10 @@
+## [2.9.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.3...v2.9.4) (2024-06-04)
+
+
+### Bug Fixes
+
+* empty map on mobile ([f5611d7](https://github.com/Greenstand/treetracker-web-map-client/commit/f5611d73d02e666d88ab87be09478d4662de736f))
+
 ## [2.9.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.2...v2.9.3) (2024-06-02)
 
 
