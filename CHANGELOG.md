@@ -1,3 +1,10 @@
+## [2.9.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.4...v2.9.5) (2024-06-13)
+
+
+### Bug Fixes
+
+* run the build inside docker ([77f9c5d](https://github.com/Greenstand/treetracker-web-map-client/commit/77f9c5dc4160c9cb34dd0f7b53c08f7bf1d05939))
+
 ## [2.9.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.3...v2.9.4) (2024-06-04)
 
 
