@@ -1,0 +1,132 @@
+name: Build the project and tag,version it and release to dev env
+
+on:
+  push:
+    branches:
+      - 'v2'
+
+env:
+  project-directory: ./
+
+jobs:
+  release:
+    name: Build Frontend Project
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.head_commit.message, 'skip-ci')
+    steps:
+      # checkout the branch to be merged
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: git configure
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      - name: Read .releaserc
+        run: echo "RELEASE_NEEDED=$(echo `node -e 'console.log(require("./.releaserc.json").branches.map(e => e.name || e).reduce((a,c) => a || c === process.env.GITHUB_REF_NAME, false))'`)" >> $GITHUB_OUTPUT
+        id: release_needed
+      - name: Print rn
+        run: echo ${{ steps.release_needed.outputs.RELEASE_NEEDED }}
+      - name: Quit if version is not changed
+        if: steps.release_needed.outputs.RELEASE_NEEDED == 'false'
+        run: echo "The branch is not configured to release. Quitting." && exit 0
+      - name: npm clean install
+        run: npm i
+        working-directory: ${{ env.project-directory }}
+      - run: npm i -g semantic-release @semantic-release/{git,exec,changelog}
+      - run: semantic-release --debug
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      # next.js build
+      - name: build next
+        run: npm run build
+        working-directory: ${{ env.project-directory }}
+        env:
+          NODE_ENV: production
+      - id: export_bumped_version
+        run: |
+          export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
+          echo "bumped_version=${BUMPED_VERSION}" >> $GITHUB_OUTPUT
+    outputs:
+      bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
+
+  # todo add test image here
+  # since test api is throwing some error that is why i excluded that
+  build-and-push-docker:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    needs: release 
+    strategy:
+      matrix:
+        include:
+          - dockerfile: ./Dockerfile-dev
+            image_name: greenstand/${{ github.event.repository.name }}-dev:${{ needs.release.outputs.bumped_version }}
+          - dockerfile: ./Dockerfile
+            image_name: greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ matrix.image_name }}
+    outputs:
+      bumped_version: ${{  needs.release.outputs.bumped_version }}
+
+  deploy:
+    name: Deploy to dev
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker
+    steps:
+    - uses: actions/checkout@v2
+      with:
+       ref: ${{ github.ref }}
+    - name: git configure
+      run: |
+       git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: '18.x'
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@master
+    # get bumped version from release job output
+    - name: get bumped version
+      id: get_bumped_version
+      run: |
+       echo "bumped_version=${{ needs.build-and-push-docker.outputs.bumped_version }}" >> $GITHUB_OUTPUT
+    - name: Install kustomize
+      run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+    #- name: Load channel
+    #  run: echo CHANNEL=$(echo `node -e ' process.env.GITHUB_REF_NAME === "master" ? console.log("master") :console.log(require("./.releaserc.json").branches.reduce((a,c) => a || c.name === process.env.GITHUB_REF_NAME  && "-" + c.channel, false))'`) >> $GITHUB_OUTPUT
+    #  id: channel
+    #- name: Print channel
+    #  run: echo ${{ steps.channel.outputs.CHANNEL }}
+    - name: Run kustomize
+      run: (cd deployment-alpha/base && ../../kustomize edit set image greenstand/treetracker-web-map-client=greenstand/${{ github.event.repository.name }}-dev:${{needs.build-and-push-docker.outputs.bumped_version}} )
+    - name: Install doctl for kubernetes
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
+    - name: Save DigitalOcean kubeconfig
+      run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
+    - name: Update kubernetes resources
+      run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+
