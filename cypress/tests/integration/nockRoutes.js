@@ -1,6 +1,7 @@
 import grower100 from '../../../doc/examples/growers/100.json';
 import organization1 from '../../../doc/examples/organizations/1.json';
 import planter940 from '../../../doc/examples/planters/940.json';
+import captures186734 from '../../../doc/examples/trees/186734captures.json';
 import { defaultConfig } from '../../../src/context/configContext';
 import capture1 from '../../fixtures/capture.json';
 import leader from '../../fixtures/countries/leader.json';
@@ -13,6 +14,7 @@ export function getNockRoutes(
     grower: {},
     planter: {},
     capture: {},
+    treeCaputres: {},
   },
 ) {
   const organization = { ...organization1, ...props.organization };
@@ -20,6 +22,7 @@ export function getNockRoutes(
   const planter = { ...planter940, ...props.planter };
   const tree = { ...tree186734, ...props.tree };
   const capture = { ...capture1, ...props.capture };
+  const treeCaputres = { ...captures186734, ...props.treeCaputres };
 
   return [
     {
@@ -66,9 +69,15 @@ export function getNockRoutes(
     },
     {
       method: 'GET',
-      path: `/trees/${tree.id}`,
+      path: `/trees/**`,
       statusCode: 200,
       body: tree,
+    },
+    {
+      method: 'GET',
+      path: `/trees/**/captures`,
+      statusCode: 200,
+      body: treeCaputres,
     },
     {
       method: 'GET',
@@ -117,6 +126,12 @@ export function getNockRoutes(
       body: {
         captures: [capture],
       },
+    },
+    {
+      method: 'GET',
+      path: `/stakeholder/${organization.id}`,
+      statusCode: 200,
+      body: organization,
     },
   ];
 }
