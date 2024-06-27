@@ -69,13 +69,13 @@ export function getNockRoutes(
     },
     {
       method: 'GET',
-      path: `/trees/**`,
+      path: `/trees/${tree.id}`,
       statusCode: 200,
       body: tree,
     },
     {
       method: 'GET',
-      path: `/trees/**/captures`,
+      path: `/trees/${tree.id}/captures`,
       statusCode: 200,
       body: treeCaputres,
     },

@@ -1,0 +1,1030 @@
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import CheckIcon from '@mui/icons-material/Check';
+import HubIcon from '@mui/icons-material/Hub';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import TodayIcon from '@mui/icons-material/Today';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import { useTheme, Avatar, Divider } from '@mui/material';
+import Box from '@mui/material/Box';
+import Portal from '@mui/material/Portal';
+import Typography from '@mui/material/Typography';
+import log from 'loglevel';
+import moment from 'moment';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo } from 'react';
+import Badge from 'components/Badge';
+import FeaturedTreesSlider from 'components/FeaturedTreesSlider';
+import HeadTag from 'components/HeadTag';
+import InformationCard1 from 'components/InformationCard1';
+import LikeButton from 'components/LikeButton';
+import Share from 'components/Share';
+import TreeCapturesTimeline from 'components/TreeCapturesTimeline';
+import TreeInfoDialog from 'components/TreeInfoDialog';
+import TreeLoader from 'components/TreeLoader';
+import Crumbs from 'components/common/Crumbs';
+import Icon from 'components/common/CustomIcon';
+import Filter from 'components/common/Filter';
+import TagList from 'components/common/TagList';
+import TreeTag from 'components/common/TreeTag';
+import { useDrawerContext } from 'context/DrawerContext';
+import { useMobile, useEmbed, useFullscreen } from 'hooks/globalHooks';
+import { usePageLoading } from 'hooks/usePageLoading';
+import AccuracyIcon from 'images/icons/accuracy.svg';
+import CalendarIcon from 'images/icons/calendar.svg';
+import GlobalIcon from 'images/icons/global.svg';
+import HistoryIcon from 'images/icons/history.svg';
+import LocationIcon from 'images/icons/location.svg';
+import OriginIcon from 'images/icons/origin.svg';
+import ShareIcon from 'images/icons/share.svg';
+import TokenIcon from 'images/icons/token.svg';
+import imagePlaceholder from 'images/image-placeholder.png';
+import SearchIcon from 'images/search.svg';
+import { useMapContext } from 'mapContext';
+import {
+  getCaptures,
+  getOrganizationById,
+  getTreeCapturesById,
+  getTreeById,
+  getGrowerById,
+} from 'models/api';
+import * as pathResolver from 'models/pathResolver';
+import { wrapper, getGrowerName } from 'models/utils';
+
+export default function Tree({
+  tree,
+  captures,
+  grower,
+  organization,
+  nextExtraIsEmbed,
+  nextExtraKeyword,
+}) {
+  log.warn('tree: ', tree);
+  log.warn('captures ', captures);
+  log.warn('org: ', organization);
+  const mapContext = useMapContext();
+  const { map } = mapContext;
+  const isFullscreen = useFullscreen();
+  const theme = useTheme();
+  const router = useRouter();
+  const { isPageLoading } = usePageLoading();
+  const context = pathResolver.getContext(router, {
+    base: process.env.NEXT_PUBLIC_BASE,
+  });
+  const isMobile = useMobile();
+  const isEmbed = useEmbed();
+  const isGrowerContext = context && context.name === 'growers';
+  const isOrganizationContext = context && context.name === 'organizations';
+
+  const { setTitlesData } = useDrawerContext();
+
+  log.warn('map:', mapContext);
+
+  function handleShare() {}
+
+  // shorten tree.lat, tree.lon down to 5 decimal points
+  function shortenLongLat(number, digits) {
+    const multiplier = 10 ** digits;
+    const numAdjust = number * multiplier;
+    const shortenNum = Math[numAdjust < 0 ? 'ceil' : 'floor'](numAdjust);
+
+    return shortenNum / multiplier;
+  }
+
+  useEffect(() => {
+    setTitlesData({
+      treeId: tree.id,
+      verifiedToken: tree.token_id,
+      verifiedTree: tree.approved,
+    });
+    // eslint-disable-next-line prefer-template, no-useless-concat
+    log.warn('the tree data' + '' + JSON.stringify(tree));
+  }, [setTitlesData, tree, tree.id, tree.token_id, tree.approved]);
+
+  // useEffect(() => {
+  //   async function draw() {
+  //     // manipulate the map
+  //     const { map } = mapContext;
+  //     if (map && tree?.lat && tree?.lon) {
+  //       map.setFilters({
+  //         treeid: tree.id,
+  //       });
+  //       try {
+  //         await map.loadInitialView();
+  //       } catch (err) {
+  //         log.warn('error:', err);
+  //       }
+  //       map.rerender();
+  //     }
+  //   }
+  //   draw();
+  // }, [mapContext.map, tree.lat, tree.lon]);
+  useEffect(() => {
+    async function reload() {
+      async function focusTree(map2, tree2) {
+        const currentView = map2.getCurrentView();
+        log.warn('current view:', currentView);
+        if (currentView.zoomLevel < 16) {
+          log.warn('focus the tree:', tree2);
+          await map2.gotoView(
+            parseFloat(tree2.lat.toString()),
+            parseFloat(tree2.lon.toString()),
+            16,
+          );
+        } else {
+          log.warn('stay on the map zoom');
+        }
+      }
+      // manipulate the map
+      log.warn('map ,tree, context in tree page:', map, tree, context);
+      if (map && tree?.lat && tree?.lon) {
+        if (context && context.name) {
+          if (isGrowerContext) {
+            log.warn('set grower filter', context.id);
+            await map.setFilters({
+              userid: context.id,
+            });
+            await focusTree(map, tree);
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else if (isOrganizationContext) {
+            log.warn('set org filter', organization.map_name);
+            await map.setFilters({
+              map_name: organization.map_name,
+            });
+            await focusTree(map, tree);
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
+          } else {
+            throw new Error(`unknown context name: ${context.name}`);
+          }
+        } else {
+          log.warn('set treeid filter', tree.id);
+          await map.setFilters({});
+          await focusTree(map, tree);
+          const treeDataForMap = {
+            ...tree,
+            lat: parseFloat(tree.lat.toString()),
+            lon: parseFloat(tree.lon.toString()),
+          };
+          map.selectTree(treeDataForMap);
+        }
+
+        // // select the tree
+        // const treeDataForMap = {
+        //   ...tree,
+        //   lat: parseFloat(tree.lat.toString()),
+        //   lon: parseFloat(tree.lon.toString()),
+        // };
+        // mapContext.map.selectTree(treeDataForMap);
+        // // log.warn('filter of map:', mapContext.map.getFilters());
+      }
+    }
+    reload();
+  }, [map, tree.lat, tree.lon]);
+
+  // storing under variable with useMemo wrapped
+  // to reuse the same component for mobile and desktop and
+  // avoid re-rendering of badge components
+  const BadgeSection = useMemo(
+    () => (
+      <>
+        <Badge
+          color={tree?.approved ? 'primary' : 'greyLight'}
+          icon={tree?.approved ? <CheckIcon /> : null}
+          badgeName={tree?.approved ? 'Verified' : 'Waiting for verification'}
+        />
+        <Badge
+          color="secondary"
+          badgeName={tree?.token_id ? 'Token issued' : 'Token not issued'}
+        />
+      </>
+    ),
+    [tree?.approved, tree?.token_id],
+  );
+
+  function handleFilter(filter) {
+    log.warn('handleFilter', filter);
+    if (!map) return;
+    map.setFilters({
+      timeline: `${filter.startDate}_${filter.endDate}`,
+    });
+    map.rerender();
+  }
+  return (
+    <>
+      <HeadTag title={`Tree #${tree.id}`} />
+      <Box
+        sx={[
+          {
+            padding: (t) => [t.spacing(0, 4), 6],
+            width: 1,
+            boxSizing: 'border-box',
+          },
+          nextExtraIsEmbed && {
+            padding: (t) => [t.spacing(0, 4), 4],
+          },
+        ]}
+      >
+        {/* <IsMobileScreen>
+<DrawerTitle />
+</IsMobileScreen> */}
+        {isMobile && (
+          <Portal
+            container={() => document.getElementById('drawer-title-container')}
+          >
+            <Box
+              sx={{
+                width: 1,
+                px: 4,
+                pb: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-start',
+              }}
+            >
+              <Typography variant="h2">Tree #{tree.id}</Typography>
+              <Box
+                sx={{
+                  mt: 2,
+                  color: theme.palette.common.black,
+                  filter: 'opacity(0.8)',
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <Icon icon={OriginIcon} />
+                  {tree.species_name || 'Unknown Species'}
+                </Typography>
+                <Typography
+                  sx={{
+                    mt: 1,
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <Icon icon={CalendarIcon} />
+                  {`Captured on ${moment(tree.time_created).format(
+                    'MMMM Do, YYYY',
+                  )}` || 'Unknown Date'}
+                </Typography>
+                <Typography
+                  sx={{
+                    mt: 1,
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 16,
+                      maxHeight: 16,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <Icon icon={LocationIcon} />
+                  {tree.country_name !== null
+                    ? `Located in ${tree.country_name}`
+                    : 'Unknown location'}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  mt: 2,
+                }}
+              >
+                {BadgeSection}
+              </Box>
+            </Box>
+          </Portal>
+        )}
+        {isMobile && (
+          <Portal
+            container={() =>
+              document.getElementById('drawer-title-container-min')
+            }
+          >
+            <Box sx={{}}>
+              <Typography variant="h3">Tree #{tree.id}</Typography>
+            </Box>
+          </Portal>
+        )}
+
+        {!isMobile && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <Crumbs
+              items={[
+                {
+                  // icon: <HomeIcon />,
+                  name: 'Home',
+                  url: '/',
+                },
+                ...(isGrowerContext
+                  ? [
+                      {
+                        url: `/growers/${grower.id}`,
+                        icon: grower.image_url,
+                        name: `${getGrowerName(
+                          grower.first_name,
+                          grower.last_name,
+                        )}`,
+                      },
+                    ]
+                  : []),
+                ...(isOrganizationContext && organization
+                  ? [
+                      {
+                        url: `/organizations/${organization.id}`,
+                        icon: organization.logo_url,
+                        name: organization.name,
+                      },
+                    ]
+                  : []),
+                {
+                  name: `tree #${tree.id}`,
+                },
+              ]}
+            />
+            <Box>
+              <Icon
+                icon={SearchIcon}
+                width={48}
+                height={48}
+                sx={{
+                  fill: 'transparent',
+                  '& path': {
+                    fill: 'grey',
+                  },
+                  '& rect': {
+                    stroke: 'grey',
+                  },
+                }}
+              />
+            </Box>
+          </Box>
+        )}
+        {isPageLoading ? (
+          <TreeLoader nextExtraIsEmbed={nextExtraIsEmbed} />
+        ) : (
+          <Box
+            sx={[
+              {
+                borderRadius: 4,
+                maxHeight: [332, 764],
+                mt: 6,
+                position: 'relative',
+                overflow: 'hidden',
+                '& img': {
+                  objectFit: 'cover',
+                  width: '100%',
+                  [theme.breakpoints.down('sm')]: {
+                    maxHeight: '450px',
+                  },
+                },
+              },
+              nextExtraIsEmbed && {
+                '& img': {
+                  maxHeight: 600,
+                  objectFit: 'cover',
+                },
+              },
+            ]}
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                // top: [4, 6],
+                // left: [4, 6],
+                pt: [4, 6],
+                px: [4, 6],
+                width: 1,
+                boxSizing: 'border-box',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <LikeButton
+                url={`https://map.treetracker.org/trees/${tree.id}`}
+              />
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: [4, 6],
+                  flexDirection: 'row',
+                }}
+              >
+                <Share
+                  shareUrl={
+                    typeof window !== 'undefined' && window.location.href
+                  }
+                  icon={
+                    <Box
+                      onClick={handleShare}
+                      sx={{
+                        cursor: 'pointer',
+                        '& svg': {
+                          width: [40, 52],
+                          height: [40, 52],
+                        },
+                      }}
+                    >
+                      <Icon icon={ShareIcon} />
+                    </Box>
+                  }
+                />
+                <TreeInfoDialog
+                  tree={tree}
+                  grower={grower}
+                  organization={organization}
+                />
+              </Box>
+            </Box>
+            {/* <img src={tree.image_url} alt="tree" height="764" /> */}
+            {!isMobile && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  bottom: 0,
+                  background:
+                    'linear-gradient(359.38deg, #222629 0.49%, rgba(34, 38, 41, 0.8) 37.89%, rgba(34, 38, 41, 0.7) 50.17%, rgba(34, 38, 41, 0.6) 58.09%, rgba(34, 38, 41, 0.2) 82.64%, rgba(34, 38, 41, 0.05) 92.94%, rgba(34, 38, 41, 0) 99.42%)',
+                  p: 6,
+                  width: 1,
+                  height: 260,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <Typography variant="h2" color={theme.palette.common.white}>
+                  Tree #{tree.id}
+                </Typography>
+
+                <Box
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: 'text.text',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 3,
+                      '& svg': {
+                        filter: 'opacity(0.8)',
+                        maxWidth: 16,
+                        maxHeight: 16,
+                      },
+                      '& path': { fill: theme.palette.common.white },
+                    }}
+                  >
+                    <Icon icon={OriginIcon} />
+                    {tree.species_name || 'Unknown Species'}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: 'text.text',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 3,
+                      '& svg': {
+                        filter: 'opacity(0.8)',
+                        maxWidth: 16,
+                        maxHeight: 16,
+                      },
+                      '& path': { fill: theme.palette.common.white },
+                    }}
+                  >
+                    <Icon icon={CalendarIcon} />
+                    {`Captured on ${moment(tree.time_created).format(
+                      'MMMM Do, YYYY',
+                    )}` || 'Unknown Date'}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: 'text.text',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 3,
+                      '& svg': {
+                        filter: 'opacity(0.8)',
+                        maxWidth: 16,
+                        maxHeight: 16,
+                      },
+                      '& path': { fill: theme.palette.common.white },
+                    }}
+                  >
+                    <Icon icon={LocationIcon} />
+                    {tree.country_name !== null
+                      ? `Located in ${tree.country_name}`
+                      : 'Unknown location'}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: 2,
+                    mt: 2,
+                  }}
+                >
+                  {BadgeSection}
+                </Box>
+              </Box>
+            )}
+          </Box>
+        )}
+
+        {isPageLoading ? (
+          <TreeLoader nextExtraIsEmbed={nextExtraIsEmbed} />
+        ) : (
+          <Box>
+            <Box id="tree-title">
+              <Typography variant="h2">Tree #{tree.id}</Typography>
+            </Box>
+
+            <Box
+              id="tree-page-buttons"
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: [4, 6],
+                alignItems: 'center',
+              }}
+            >
+              <Box>
+                <Badge
+                  color={tree?.approved ? 'primary' : 'greyLight'}
+                  icon={tree?.approved ? <CheckIcon /> : null}
+                  badgeName={
+                    tree?.approved ? 'Verified' : 'Waiting for verification'
+                  }
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: [4, 6],
+                  alignItems: 'baseline',
+                }}
+              >
+                <Share
+                  shareUrl={
+                    typeof window !== 'undefined' && window.location.href
+                  }
+                  icon={
+                    <Box
+                      onClick={handleShare}
+                      sx={{
+                        cursor: 'pointer',
+                        '& svg': {
+                          width: [36, 42],
+                          height: [36, 42],
+                        },
+                      }}
+                    >
+                      <Icon icon={ShareIcon} />
+                    </Box>
+                  }
+                />
+                <LikeButton
+                  url={`https://map.treetracker.org/trees/${tree.id}`}
+                />
+                {/* <TreeInfoDialog
+                tree={tree}
+                grower={grower}
+                organization={organization}
+              /> */}
+              </Box>
+            </Box>
+
+            <Box
+              id="tree-data"
+              sx={{
+                border: '2px solid',
+                borderColor: 'grey.300',
+                borderRadius: 4,
+                mt: [4, 6],
+                p: [4, 6],
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: [4, 6],
+                }}
+              >
+                <Typography
+                  id="tree-plant-date"
+                  variant="h5"
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 24,
+                      maxHeight: 24,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <TodayIcon />
+                  Planted on:{' '}
+                  {`${moment(tree.created_at).format('MMMM Do, YYYY')}` ||
+                    'Unknown Date'}
+                </Typography>
+
+                <Typography
+                  id="tree-captures-data"
+                  variant="h5"
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 24,
+                      maxHeight: 24,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <PhotoCameraIcon />
+                  {captures.length > 0
+                    ? `Captures of growth: ${captures.length}`
+                    : 'No captures yet'}
+                </Typography>
+
+                <Typography
+                  id="tree-token-data"
+                  variant="h5"
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 24,
+                      maxHeight: 24,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <Icon icon={TokenIcon} />
+                  {tree?.token_id
+                    ? `Token: ${tree.token_id}`
+                    : 'Token not issued'}
+                </Typography>
+
+                <Typography
+                  id="tree-species-data"
+                  variant="h5"
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 24,
+                      maxHeight: 24,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <Icon icon={OriginIcon} />
+                  {tree.species_name
+                    ? `Species ${tree.species_name}`
+                    : 'Unknown Species'}
+                </Typography>
+
+                <Typography
+                  id="tree-location-data"
+                  variant="h5"
+                  sx={{
+                    color: 'text.text',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    '& svg': {
+                      filter: 'opacity(0.8)',
+                      maxWidth: 24,
+                      maxHeight: 24,
+                    },
+                    '& path': { fill: theme.palette.common.black },
+                  }}
+                >
+                  <Icon icon={LocationIcon} />
+                  {tree.country_name
+                    ? `Located in ${tree.country_name}`
+                    : 'Unknown location'}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        )}
+
+        {/* <CustomImageWrapper
+imageUrl={tree.image_url}
+timeCreated={tree.time_created}
+treeId={tree.id}
+/> */}
+        {captures?.length > 0 && (
+          <Box id="tree-growth-history">
+            <Box
+              sx={{
+                mt: 8,
+              }}
+            >
+              <Typography variant="h4">Tree Growth History</Typography>
+            </Box>
+            {false && ( // going to be replaced by search filter component
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Filter onFilter={handleFilter} />
+              </Box>
+            )}
+            <Box>
+              {/* <FeaturedTreesSlider trees={captures} isMobile={isFullscreen} /> */}
+              <TreeCapturesTimeline
+                captures={captures}
+                imgWidth={isMobile ? '120px' : '200px'}
+                imgMaxHeight={isMobile ? '300px' : '500px'}
+              />
+            </Box>
+          </Box>
+        )}
+
+        <Box
+          sx={{
+            mt: [6, 14],
+          }}
+        >
+          <Typography variant="h4">Growers Gallery</Typography>
+        </Box>
+        {organization && (
+          <Box
+            sx={[
+              {
+                mt: [4, 10],
+              },
+              nextExtraIsEmbed && {
+                mt: [4, 10],
+              },
+            ]}
+          >
+            <InformationCard1
+              entityName={organization.name}
+              entityType="Growing Organization"
+              buttonText="Meet the Organization"
+              cardImageSrc={organization?.logo_url || imagePlaceholder}
+              link={`/organizations/${
+                organization.id
+              }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
+            />
+          </Box>
+        )}
+
+        <Box
+          sx={{
+            mt: [4, 10],
+          }}
+        >
+          <InformationCard1
+            entityName={`${grower.first_name} ${grower.last_name}`}
+            entityType="Grower"
+            buttonText="Meet the Grower"
+            cardImageSrc={grower?.image_url || imagePlaceholder}
+            rotation={grower?.image_rotation}
+            link={`/growers/${grower.id}?keyword=${nextExtraKeyword}${
+              isEmbed ? '&embed=true' : ''
+            }`}
+          />
+        </Box>
+        <Typography
+          variant="h4"
+          sx={[
+            {
+              fontSize: [24, 28],
+              lineHeight: (t) => [t.spacing(7.25), t.spacing(8.5)],
+              mt: (t) => [t.spacing(14), t.spacing(26)],
+            },
+            nextExtraIsEmbed && {
+              mt: (t) => [t.spacing(14), t.spacing(26 * 0.6)],
+            },
+          ]}
+        >
+          Tree Info
+        </Typography>
+        <TagList>
+          <TreeTag
+            TreeTagValue={new Date(tree.time_created).toLocaleDateString()}
+            title="Captured on"
+            icon={<Icon icon={CalendarIcon} />}
+          />
+          <TreeTag
+            TreeTagValue={tree.approved === false ? 'not verified' : 'verifed'}
+            title="Verification"
+            icon={<Icon icon={VerifiedIcon} />}
+            disabled={tree.approved === false}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.country_name === null ? 'unknown' : tree.country_name
+            }
+            title="Located in"
+            icon={<Icon icon={LocationIcon} />}
+            disabled={tree.country_name === null}
+          />
+          <TreeTag
+            TreeTagValue={tree.age === null ? 'unknown' : tree.age}
+            title="Age"
+            icon={<Icon icon={HistoryIcon} />}
+            disabled={tree.age === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.species_name === null ? 'unknown' : tree.species_name
+            }
+            title="Species"
+            icon={<Icon icon={OriginIcon} />}
+            disabled={tree.species_name === null}
+            subtitle={tree.species_desc === null ? null : 'click to learn more'}
+            link={tree.species_desc === null ? null : tree.species_desc}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.gps_accuracy === null ? 'unknown' : tree.gps_accuracy
+            }
+            title="GPS Accuracy"
+            icon={<Icon icon={AccuracyIcon} />}
+            disabled={tree.gps_accuracy === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.morphology === null ? 'unknown' : tree.morphology
+            }
+            title="Morphology"
+            icon={<Icon icon={HubIcon} />}
+            disabled={tree.morphology === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.lat === null || tree.lon == null
+                ? 'unknown'
+                : `${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
+                    tree.lon,
+                    5,
+                  )}`
+            }
+            title="Latitude, Longitude"
+            icon={
+              <Icon
+                icon={GlobalIcon}
+                sx={{
+                  '& path': {
+                    stroke: 'none',
+                  },
+                }}
+              />
+            }
+            disabled={tree.lat === null || tree.lon === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.token_id === null ? 'Token not issued' : tree.token_id
+            }
+            title="Token ID"
+            icon={<Icon icon={TokenIcon} />}
+            subtitle={tree.token_id === null ? null : 'click to enter'}
+            link={tree.token_id === null ? null : `/tokens/${tree.token_id}`}
+            disabled={tree.token_id === null}
+          />
+          <TreeTag
+            TreeTagValue={
+              tree.wallet_name === null ? 'No wallet owns it' : tree.wallet_name
+            }
+            title="Wallet owner"
+            icon={<Icon icon={AccountBalanceWalletIcon} />}
+            subtitle={tree.wallet_name === null ? null : 'click to enter'}
+            link={
+              tree.wallet_name === null ? null : `/wallets/${tree.wallet_id}`
+            }
+            disabled={tree.wallet_name === null}
+          />
+        </TagList>
+        <Divider
+          varian="fullwidth"
+          sx={{
+            mt: [10, 20],
+          }}
+        />
+
+        <Box height={20} />
+        {nextExtraIsEmbed && (
+          <Portal
+            container={() => document.getElementById('embed-logo-container')}
+          >
+            <Avatar
+              sx={{
+                width: '120px',
+                height: '120px',
+                margin: '10px',
+              }}
+              src={isGrowerContext ? grower.image_url : organization.logo_url}
+              variant="rounded"
+            />
+          </Portal>
+        )}
+      </Box>
+    </>
+  );
+}
+
+async function serverSideData(params) {
+  const { treeid } = params;
+  const tree = await getTreeById(treeid);
+  const { grower_id, growing_organization_id } = tree;
+  const grower = await getGrowerById(grower_id);
+  // const captures = await getCaptures();
+  const captures = await getTreeCapturesById(treeid);
+  // comment in when captures in v2 database have valid tree_id's.
+  let organization = null;
+  if (growing_organization_id) {
+    organization = await getOrganizationById(growing_organization_id);
+  } else if (grower.organization_id) {
+    log.warn('load org from grower. organization_id');
+    organization = await getOrganizationById(grower.organization_id);
+  } else {
+    log.warn('can not load org for tree:', tree, grower);
+  }
+
+  log.warn('the serverSideData captures:', captures);
+
+  return {
+    tree,
+    captures: captures?.captures || [],
+    grower,
+    organization,
+  };
+}
+
+const getStaticProps = wrapper(async ({ params }) => {
+  const props = await serverSideData(params);
+  return {
+    props,
+    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+  };
+});
+
+// eslint-disable-next-line
+const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export { getStaticProps, getStaticPaths };
