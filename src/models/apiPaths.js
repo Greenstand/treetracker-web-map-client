@@ -14,8 +14,10 @@ const apiPaths = {
   getCapturesByTreeId: (treeid = '') =>
     urlJoin(host, `/captures?tree_id=${treeid}`),
   captures: (id = '') => urlJoin(host, `captures/${id}`),
+  treeCaptures: (treeid = '') => urlJoin(host, `trees/${treeid}/captures`),
   growers: (id = '') => urlJoin(host, `growers/${id}`),
-  stakeHolders: (id = '') => urlJoin(hostStakeholder, `/stakeholders/${id}`),
+  stakeHolders: (id = '') => urlJoin(host, `/stakeholder/${id}`),
+  // stakeHolders: (id = '') => urlJoin(hostStakeholder, `/stakeholders/${id}`),
   species: urlJoin(host, '/species'),
   organization: (id = '') => urlJoin(host, `/organizations/${id}`),
   wallets: (id = '') => urlJoin(host, `/wallets/${id}`),

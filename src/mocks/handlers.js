@@ -4,6 +4,7 @@ import leader from '../../doc/examples/countries/leader.json';
 import grower from '../../doc/examples/growers/100.json';
 import organization from '../../doc/examples/organizations/1.json';
 import species from '../../doc/examples/species/1.json';
+import treeCaptures from '../../doc/examples/trees/186734captures.json';
 
 const trees = { trees: [mockTree, mockTree, mockTree] };
 const host = process.env.NEXT_PUBLIC_API || '';
@@ -17,7 +18,27 @@ const handlers = [
     res(ctx.status(200, 'success'), ctx.json(mockTree)),
   ),
 
+  rest.get(`${host}/trees/:id/captures`, (req, res, ctx) =>
+    res(ctx.status(200, 'success'), ctx.json(treeCaptures)),
+  ),
+
   rest.get(`${host}/trees*`, (req, res, ctx) =>
+    res(ctx.status(200, 'success'), ctx.json(trees)),
+  ),
+
+  rest.get(`${host}/v2/trees/featured`, (req, res, ctx) =>
+    res(ctx.status(200, 'success'), ctx.json(trees)),
+  ),
+
+  rest.get(`${host}/v2/trees/:id`, (req, res, ctx) =>
+    res(ctx.status(200, 'success'), ctx.json(mockTree)),
+  ),
+
+  rest.get(`${host}/v2/trees/:id/captures`, (req, res, ctx) =>
+    res(ctx.status(200, 'success'), ctx.json(treeCaptures)),
+  ),
+
+  rest.get(`${host}/v2/trees*`, (req, res, ctx) =>
     res(ctx.status(200, 'success'), ctx.json(trees)),
   ),
 

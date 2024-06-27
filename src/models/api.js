@@ -135,7 +135,8 @@ export async function getTreeById(id) {
     const begin = Date.now();
     const res = await axios.get(url);
     const { data } = res;
-    log.warn('url:', url, 'took:', Date.now() - begin);
+    // log.warn('url:', url, 'took:', Date.now() - begin);
+    log.warn('url:', url, 'took:', Date.now() - begin, 'with data:', data);
     return data;
   } catch (err) {
     log.error(err.message);
@@ -148,6 +149,21 @@ export async function getCapturesById(id) {
     const begin = Date.now();
     const res = await axios.get(url);
     const { data } = res;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data;
+  } catch (err) {
+    log.error(err.message);
+    throw err;
+  }
+}
+
+export async function getTreeCapturesById(treeid) {
+  try {
+    const url = apiPaths.treeCaptures(treeid);
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const { data } = res;
+    // log.warn('url:', url, 'took:', Date.now() - begin, 'with data:', data);
     log.warn('url:', url, 'took:', Date.now() - begin);
     return data;
   } catch (err) {
