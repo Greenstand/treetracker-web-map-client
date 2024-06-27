@@ -5,17 +5,28 @@ import {
   TimelineConnector,
   TimelineContent,
   TimelineDot,
+  timelineItemClasses,
 } from '@mui/lab';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 
 function TreeCapturesTimeline({
   captures = [],
   imgWidth = '160px',
   imgMaxHeight = '240px',
 }) {
+  const theme = useTheme();
+  const smallerScreen = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <Box>
-      <Timeline position="alternate">
+      <Timeline
+        position={smallerScreen ? 'right' : 'alternate'}
+        sx={{
+          [`& .${timelineItemClasses.root}:before`]: {
+            flex: smallerScreen ? 0 : undefined,
+            padding: smallerScreen ? 0 : undefined,
+          },
+        }}
+      >
         {captures.map((capture, index) => (
           <TimelineItem key={capture.id}>
             <>

@@ -629,10 +629,10 @@ export default function Tree({
                   url={`https://map.treetracker.org/trees/${tree.id}`}
                 />
                 {/* <TreeInfoDialog
-                tree={tree}
-                grower={grower}
-                organization={organization}
-              /> */}
+          tree={tree}
+          grower={grower}
+          organization={organization}
+        /> */}
               </Box>
             </Box>
 
