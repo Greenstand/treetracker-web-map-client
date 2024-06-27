@@ -38,14 +38,14 @@ beforeEach(() => {
     prepareNocks(stubs);
   });
 
-  cy.visit(`/v2/trees/${tree.id}`, {
+  cy.visit(`/trees/${tree.id}`, {
     failOnStatusCode: false,
   });
 });
 
 describe('V2 Tree Page', () => {
   it('renders with tree data', () => {
-    cy.url().should('include', `/v2/trees/${tree.id}`);
+    cy.url().should('include', `/trees/${tree.id}`);
 
     // check if the tree caputrues data correct
 
