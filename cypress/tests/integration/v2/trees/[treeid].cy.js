@@ -103,3 +103,18 @@ describe('V2 Tree Page', () => {
     );
   });
 });
+
+describe('Tree Page - Mobile Version', () => {
+  beforeEach(() => {
+    // Set viewport to a mobile screen size
+    cy.viewport('iphone-6');
+  });
+
+  it('should display mobile version elements and not display desktop version elements', () => {
+    // Assert that the mobile version element exists
+    cy.get('#mobile-tree-info').should('exist');
+
+    // Assert that the desktop version element does not exist
+    cy.get('#desktop-tree-info').should('not.exist');
+  });
+});
