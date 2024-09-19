@@ -167,21 +167,6 @@ export default function Organization(props) {
             <Typography variant="h2">{name}</Typography>
             <Box sx={{ mt: 2 }}>
               <Info
-                iconURI={CalendarIcon}
-                info={
-                  <>
-                    Organization since
-                    <time dateTime={organization?.created_at}>
-                      {` ${moment(organization?.created_at).format(
-                        'MMMM DD, YYYY',
-                      )}`}
-                    </time>
-                  </>
-                }
-              />
-            </Box>
-            <Box sx={{ mt: 2 }}>
-              <Info
                 iconURI={LocationIcon}
                 info={getLocationString(
                   organization.country_name,
