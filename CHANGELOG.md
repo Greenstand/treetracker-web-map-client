@@ -1,3 +1,10 @@
+## [2.9.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.5...v2.9.6) (2024-09-19)
+
+
+### Bug Fixes
+
+* sort token transaction history in time order on client side ([26210f4](https://github.com/Greenstand/treetracker-web-map-client/commit/26210f44e5f7b9d803393e3a4b0544be6efa37ac))
+
 ## [2.9.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.4...v2.9.5) (2024-06-13)
 
 
