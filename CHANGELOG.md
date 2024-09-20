@@ -1,3 +1,10 @@
+## [2.9.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.6...v2.9.7) (2024-09-20)
+
+
+### Bug Fixes
+
+* hid org creation time ([f9884f7](https://github.com/Greenstand/treetracker-web-map-client/commit/f9884f7003f3200f5e1f7786bb13c325bbd4e7a7))
+
 ## [2.9.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.5...v2.9.6) (2024-09-19)
 
 
