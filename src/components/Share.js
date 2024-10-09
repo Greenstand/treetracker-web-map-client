@@ -60,6 +60,14 @@ function Share(props) {
     setIsOpen(true);
   }
 
+  function onKeyDown(e) {
+    e.preventDefault();
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      handleClick();
+    }
+  }
+
   function handleClose() {
     setIsOpen(false);
   }
@@ -105,7 +113,17 @@ function Share(props) {
 
   return (
     <>
-      {icon && <Box onClick={handleClick}>{icon}</Box>}
+      {icon && (
+        <Box
+          onClick={handleClick}
+          role="button"
+          tabIndex="0"
+          aria-label="View sharing options"
+          onKeyDown={onKeyDown}
+        >
+          {icon}
+        </Box>
+      )}
       {!icon && (
         <IconButton onClick={handleClick}>
           <ShareIcon style={{ color: green[500] }} />
@@ -127,17 +145,17 @@ function Share(props) {
           zIndex: 9999,
         }}
       >
-        <DialogTitle
+        <Box
           sx={{
             p: 0,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            display: 'flex',
           }}
         >
-          <Box
+          <DialogTitle
             sx={{
               p: 0,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              display: 'flex',
             }}
           >
             <Typography
@@ -148,11 +166,16 @@ function Share(props) {
             >
               Share this link
             </Typography>
-            <IconButton className={classes.closeIcon} onClick={handleClose}>
-              <Close style={{ color: green[500] }} />
-            </IconButton>
-          </Box>
-        </DialogTitle>
+          </DialogTitle>
+          <IconButton
+            className={classes.closeIcon}
+            onClick={handleClose}
+            aria-label="Close"
+          >
+            <Close style={{ color: green[500] }} />
+          </IconButton>
+        </Box>
+
         <Box
           sx={{
             gap: 4,
@@ -161,16 +184,28 @@ function Share(props) {
             p: [2, 4],
           }}
         >
-          <CustomShareIcon handleOnClick={handleEmbed}>
+          <CustomShareIcon
+            handleOnClick={handleEmbed}
+            aria_label="Get embed code"
+          >
             <Code />
           </CustomShareIcon>
-          <CustomShareIcon handleOnClick={handleFaceBook}>
+          <CustomShareIcon
+            handleOnClick={handleFaceBook}
+            aria_label="Share on Facebook"
+          >
             <FacebookRoundedIcon />
           </CustomShareIcon>
-          <CustomShareIcon handleOnClick={handleTwitter}>
+          <CustomShareIcon
+            handleOnClick={handleTwitter}
+            aria_label="Share on Twitter"
+          >
             <TwitterIcon />
           </CustomShareIcon>
-          <CustomShareIcon mailString={mailString}>
+          <CustomShareIcon
+            mailString={mailString}
+            aria_label="Share over Email"
+          >
             <Email />
           </CustomShareIcon>
         </Box>
@@ -201,18 +236,20 @@ function Share(props) {
         </Box>
       </Dialog>
       <Dialog open={isEmbedOpen} onClose={handleEmbedClose}>
-        <DialogTitle>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item xs={8}>
-              Embed Greenstand
-            </Grid>
-            <Grid item>
-              <IconButton onClick={handleEmbedClose} size="large">
-                <Close />
-              </IconButton>
-            </Grid>
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid item xs={8}>
+            <DialogTitle>Embed Greenstand</DialogTitle>
           </Grid>
-        </DialogTitle>
+          <Grid item>
+            <IconButton
+              onClick={handleEmbedClose}
+              size="large"
+              aria-label="Close"
+            >
+              <Close />
+            </IconButton>
+          </Grid>
+        </Grid>
         <TextField
           id="EmbedCode"
           multiline
