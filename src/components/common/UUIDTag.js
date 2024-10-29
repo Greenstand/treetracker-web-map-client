@@ -2,12 +2,14 @@ import { Box, Tooltip, Typography } from '@mui/material';
 import { useClipboard } from 'hooks/globalHooks';
 
 function UUIDTag({ uuid, sx }) {
-  const formattedId = `${uuid.slice(0, 4)}...${uuid.slice(
-    uuid.length - 4,
-    uuid.length,
+  const id = typeof uuid === 'string' ? uuid : String(uuid || '');
+
+  const formattedId = `${id.slice(0, 4)}...${id.slice(
+    id.length - 4,
+    id.length,
   )}`;
 
-  const { onCopy, hasCopied } = useClipboard(uuid);
+  const { onCopy, hasCopied } = useClipboard(id);
 
   const title = (
     <>
