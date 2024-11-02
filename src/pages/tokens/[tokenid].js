@@ -39,7 +39,7 @@ import TreeIcon from 'images/icons/tree.svg';
 import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getWalletById, getTokenById, getPlanterById } from 'models/api';
+import { getWalletById, getTokenById, getGrowerById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
 import { wrapper } from 'models/utils';
@@ -60,8 +60,7 @@ function handleShare() {}
 
 export default function Token(props) {
   log.warn('props:', props);
-  const { token, wallet, transactions, nextExtraIsEmbed, tree, planter } =
-    props;
+  const { token, wallet, transactions, nextExtraIsEmbed, tree, grower } = props;
   const theme = useTheme();
   const { classes } = useStyles();
   const mapContext = useMapContext();
@@ -535,10 +534,10 @@ export default function Token(props) {
                     p: [2, 4],
                   }}
                 >
-                  <Link href={`/planters/${planter.id}`}>
+                  <Link href={`/growers/${grower.id}`}>
                     <SimpleAvatarAndName
-                      image={planter.image_url}
-                      name={`${planter.first_name} ${planter.last_name}`}
+                      image={grower.image_url}
+                      name={`${grower.first_name} ${grower.last_name}`}
                     />
                   </Link>
                 </Box>
@@ -697,14 +696,14 @@ async function serverSideData(params, query) {
       `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${token.id}`,
     );
     const { data: transactions } = res;
-    const planter = await getPlanterById(tree.planter_id);
+    const grower = await getGrowerById(tree.planter_id);
 
     result = {
       token,
       wallet,
       transactions,
       tree,
-      planter,
+      grower,
     };
   } else {
     const token = await getTokenById(tokenid);
@@ -722,14 +721,14 @@ async function serverSideData(params, query) {
       );
       tree = res2.data;
     }
-    const planter = await getPlanterById(tree.planter_id);
+    const grower = await getGrowerById(tree.planter_id);
 
     result = {
       token,
       wallet,
       transactions,
       tree,
-      planter,
+      grower,
     };
   }
 

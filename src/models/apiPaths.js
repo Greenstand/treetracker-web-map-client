@@ -15,7 +15,6 @@ const apiPaths = {
     urlJoin(host, `/captures?tree_id=${treeid}`),
   captures: (id = '') => urlJoin(host, `captures/${id}`),
   growers: (id = '') => urlJoin(host, `growers/${id}`),
-  planters: (id = '') => urlJoin(host, `planters/${id}`),
   stakeHolders: (id = '') => urlJoin(hostStakeholder, `/stakeholders/${id}`),
   species: urlJoin(host, '/species'),
   organization: (id = '') => urlJoin(host, `/organizations/${id}`),
@@ -24,6 +23,8 @@ const apiPaths = {
     urlJoin(host, `/species?wallet_id=${id}`),
   tokens: (id = '') => urlJoin(host, `/tokens/${id}`),
   stakeholder: (id = '') => urlJoin(host, `/stakeholder/${id}`),
+  featuredOrganizations: urlJoin(host, '/organizations/featured'),
+  featuredWallets: urlJoin(host, '/wallets/featured'),
 };
 
 export default apiPaths;

@@ -2,13 +2,13 @@ import log from 'loglevel';
 import * as utils from './utils';
 
 const MAP_URL_PATTERN =
-  /^(\/(planters|organizations|wallets)\/([a-z0-9-]+))?(\/(trees|tokens)\/([a-z0-9-]+))?(\?.*)?$/;
+  /^(\/(growers|organizations|wallets)\/([a-z0-9-]+))?(\/(trees|tokens)\/([a-z0-9-]+))?(\?.*)?$/;
 // v2 api pattern
 const MAP_URL_PATTERNV2 =
-  /^(\/v2\/(planters|organizations|wallets)\/([a-z0-9-]+))?(\/v2\/(trees|tokens|captures)\/([a-z0-9-]+))?(\?.*)?$/;
+  /^(\/v2\/(growers|organizations|wallets)\/([a-z0-9-]+))?(\/v2\/(trees|tokens|captures)\/([a-z0-9-]+))?(\?.*)?$/;
 
-// 1: (/planters/1234)
-// 2: (planters)
+// 1: (/growers/1234)
+// 2: (growers)
 // 3: (1234)
 // 4: (/tokens/1234)
 // 5: (tokens)

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 // /* eslint-disable @next/next/no-Image-element */
 import CloseIcon from '@mui/icons-material/Close';
 import {
@@ -18,15 +19,15 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { useState } from 'react';
+import { useFullscreen, useMobile } from 'hooks/globalHooks';
+import HeartIcon from 'images/icons/heart.svg';
+import ShareIcon from 'images/icons/share-icon.svg';
+import imagePlaceholder from 'images/image-placeholder.png';
+import MaxIcon from 'images/max.svg';
+import { makeStyles } from 'models/makeStyles';
+import { getGrowerName } from 'models/utils';
 import Share from './Share';
 import Icon from './common/CustomIcon';
-import { useFullscreen, useMobile } from '../hooks/globalHooks';
-import HeartIcon from '../images/icons/heart.svg';
-import ShareIcon from '../images/icons/share-icon.svg';
-import imagePlaceholder from '../images/image-placeholder.png';
-import MaxIcon from '../images/max.svg';
-import { makeStyles } from '../models/makeStyles';
-import * as utils from '../models/utils';
 
 const useStyles = makeStyles()(() => ({
   imageLarge: {
@@ -116,7 +117,7 @@ function CustomImageItem(props) {
 }
 
 export default function TreeInfoDialog(props) {
-  const { tree, planter, organization } = props;
+  const { tree, grower, organization } = props;
   const { classes } = useStyles();
   const isMobile = useMobile();
 
@@ -273,17 +274,14 @@ export default function TreeInfoDialog(props) {
                   <List>
                     <ListItem sx={{ pl: 0 }}>
                       <CustomListAvatar
-                        src={planter.image_url}
-                        alt={utils.getPlanterName(
-                          planter.first_name,
-                          planter.last_name,
-                        )}
+                        src={grower.image_url}
+                        alt={getGrowerName(grower.first_name, grower.last_name)}
                       />
                       <CustomListText
-                        primary="Planter"
-                        secondary={utils.getPlanterName(
-                          planter.first_name,
-                          planter.last_name,
+                        primary="Grower"
+                        secondary={getGrowerName(
+                          grower.first_name,
+                          grower.last_name,
                         )}
                       />
                     </ListItem>
@@ -295,7 +293,7 @@ export default function TreeInfoDialog(props) {
                           alt={organization.name}
                         />
                         <CustomListText
-                          primary="Planting Organization"
+                          primary="Growing Organization"
                           secondary={organization.name}
                         />
                       </ListItem>

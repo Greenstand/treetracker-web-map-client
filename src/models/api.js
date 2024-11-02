@@ -10,10 +10,10 @@ export async function getFeaturedGrowers() {
     const res = await axios.get(url);
     const data = await res.data;
     log.warn('url:', url, 'took:', Date.now() - begin);
-    return data.grower_accounts;
+    return data.grower_accounts || [];
   } catch (err) {
-    log.error(err.message);
-    throw err;
+    log.error('Error in getFeaturedGrowers:', err.message);
+    return [];
   }
 }
 
@@ -24,10 +24,10 @@ export async function getCaptures() {
     const res = await axios.get(url);
     const data = await res.data;
     log.warn('url:', url, 'took:', Date.now() - begin);
-    return data.captures;
+    return data.captures || [];
   } catch (err) {
-    log.error(err.message);
-    throw err;
+    log.error('Error in getCaptures:', err.message);
+    return [];
   }
 }
 
@@ -73,6 +73,20 @@ export async function getCountryLeaderboard() {
   }
 }
 
+export async function getOrganizations() {
+  try {
+    const url = apiPaths.featuredOrganizations;
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data.organizations || [];
+  } catch (err) {
+    log.error('Error in getOrganizations:', err.message);
+    return [];
+  }
+}
+
 export async function getOrganizationById(id) {
   try {
     const url = apiPaths.organization(id);
@@ -97,20 +111,6 @@ export async function getCountryByLatLon(lat, lon) {
     return data.countries[0];
   } catch (err) {
     log.error(err);
-    throw err;
-  }
-}
-
-export async function getPlanterById(id) {
-  try {
-    const url = apiPaths.planters(id);
-    const begin = Date.now();
-    const res = await axios.get(url);
-    const data = await res.data;
-    log.warn('url:', url, 'took:', Date.now() - begin);
-    return data;
-  } catch (err) {
-    log.error(err.message);
     throw err;
   }
 }
@@ -188,6 +188,20 @@ export async function getOrgLinks({
     ...(associated_organizations && { associatedOrganizations: associates }),
     ...(associated_planters && { associatedPlanters: associates }),
   };
+}
+
+export async function getWallets() {
+  try {
+    const url = apiPaths.featuredWallets;
+    const begin = Date.now();
+    const res = await axios.get(url);
+    const data = await res.data;
+    log.warn('url:', url, 'took:', Date.now() - begin);
+    return data.wallets || [];
+  } catch (err) {
+    log.error('Error in getWallets:', err.message);
+    return [];
+  }
 }
 
 export async function getWalletById(id) {

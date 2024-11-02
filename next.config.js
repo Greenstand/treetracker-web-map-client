@@ -17,7 +17,7 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/planters/:planterId(\\d{1,})/trees/:treeId(\\d{1,})',
+        source: '/growers/:growerId(\\d{1,})/trees/:treeId(\\d{1,})',
         destination: '/trees/:treeId(\\d{1,})',
       },
       {
@@ -54,15 +54,15 @@ module.exports = {
         permanent: true,
       },
       {
-        source: '/:path((?!planters).*)',
+        source: '/:path((?!growers).*)',
         has: [
           {
             type: 'query',
             key: 'userid',
-            value: '(?<planterId>(\\d{1,}))',
+            value: '(?<growerId>(\\d{1,}))',
           },
         ],
-        destination: '/planters/:planterId(\\d{1,})',
+        destination: '/growers/:growerId(\\d{1,})',
         permanent: true,
       },
       {

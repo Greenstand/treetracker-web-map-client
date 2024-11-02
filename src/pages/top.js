@@ -20,7 +20,8 @@ import {
   getCaptures,
   getCountryLeaderboard,
   getFeaturedGrowers,
-  getFeaturedTrees,
+  getOrganizations,
+  getWallets,
 } from 'models/api';
 import * as utils from 'models/utils';
 
@@ -250,26 +251,16 @@ function Top(props) {
   );
 }
 
-async function serverSideData(params) {
-  console.log('top');
-  console.log('serverSideData', params);
+async function serverSideData() {
   const [captures, countries, growers, organizations, wallets] =
     await Promise.all([
-      getCaptures(), //
+      getCaptures(),
       process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true'
         ? []
         : getCountryLeaderboard(),
       getFeaturedGrowers(),
-      (async () => {
-        const data = await utils.requestAPI('/organizations/featured');
-        log.warn('organizations', data);
-        return data.organizations;
-      })(),
-      (async () => {
-        const data = await utils.requestAPI('/wallets/featured');
-        log.warn('wallets', data);
-        return data.wallets;
-      })(),
+      getOrganizations(),
+      getWallets(),
     ]);
   return {
     captures,
@@ -280,8 +271,8 @@ async function serverSideData(params) {
   };
 }
 
-const getStaticProps = utils.wrapper(async ({ params }) => {
-  const props = await serverSideData(params);
+const getStaticProps = utils.wrapper(async () => {
+  const props = await serverSideData();
   return {
     props,
     revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,

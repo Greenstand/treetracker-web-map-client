@@ -1,0 +1,29 @@
+{
+  "id": 100,
+  "wallet": "Stan.Kub68",
+  "person_id": 101,
+  "organization_id": 1,
+  "first_name": "Stanley",
+  "email": "stanley@mail.com",
+  "phone": "555-555-5555",
+  "image_url": "https://treetracker-dev-images.s3.eu-central-1.amazonaws.com/2020.10.19.09.47.53_-5.508107173727935_38.981361706266256_39f0cc9d-0f13-4547-8142-150f15cabb67_IMG_20201019_094513_6614320100195503436.jpg",
+  "image_rotation": 0,
+  "status": "active",
+  "first_registration_at": "2024-04-17 12:00:00+00",
+  "created_at": "2024-04-17 12:01:00+00",
+  "updated_at": "2024-04-17 21:00:00+00",
+  "last_name": "Kubrick",
+  "location": "POINT(-6.369028 34.888821)",
+  "lon": -6.369028,
+  "lat": 34.888821,
+  "bulk_pack_file_name": "foo",
+  "gender": "male",
+  "about": "Stanley Kubrick is a visionary filmmaker known for his meticulous attention to detail, innovative storytelling, and exploration of profound philosophical and psychological themes across a diverse range of genres. He also tends to several trees.",
+  "reference_id": 11,
+  "show_in_map": true,
+  "links": {
+    "featured_trees": "/trees?grower_id=100&limit=4",
+    "associated_organizations": "/organizations?grower_id=100",
+    "species": "/species?grower_id=100"
+  }
+}

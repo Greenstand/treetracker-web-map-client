@@ -466,7 +466,7 @@ export default function Capture({
               />
               <TreeInfoDialog
                 tree={tree}
-                planter={grower}
+                grower={grower}
                 organization={organization}
               />
             </Box>
