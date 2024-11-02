@@ -21,7 +21,7 @@ describe('Stakeholder', () => {
     cy.task('nockIntercept', {
       hostname: 'https://dev-k8s.treetracker.org',
       method: 'get',
-      path: '/query/v2/stakeholder/1',
+      path: `/query/v2/stakeholder/${stakeholder.id}`,
       statusCode: 200,
       body: stakeholder,
     });
