@@ -156,7 +156,8 @@ export async function getTreeById(id) {
     throw err;
   }
 }
-export async function getCapturesById(id) {
+
+export async function getCaptureById(id) {
   try {
     const url = apiPaths.captures(id);
     const begin = Date.now();

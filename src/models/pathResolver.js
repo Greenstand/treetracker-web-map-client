@@ -104,27 +104,27 @@ function getContext(router, options = {}) {
   const matchV2 = pathname.match(MAP_URL_PATTERNV2);
 
   if (match) {
-    const context = {
+    return {
       name: match[2],
       id: match[3],
     };
-    return context;
   }
 
   if (matchV2) {
-    const context = {
+    return {
       name: matchV2[2],
       id: matchV2[3],
     };
-    return context;
   }
 
   const match2 = pathname.match(/^\/wallets\/([a-z0-9-]+)\/tokens\?.*$/);
-  const context = {
-    name: 'wallets',
-    id: match2[1],
-  };
-  return context;
+  if (match2) {
+    // check if match2 is not null before accessing it
+    return {
+      name: 'wallets',
+      id: match2[1],
+    };
+  }
 
   return null;
 }

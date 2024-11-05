@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import CheckIcon from '@mui/icons-material/Check';
-import HubIcon from '@mui/icons-material/Hub';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { useTheme, Avatar, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -21,10 +20,8 @@ import Crumbs from 'components/common/Crumbs';
 import Icon from 'components/common/CustomIcon';
 import TagList from 'components/common/TagList';
 import TreeTag from 'components/common/TreeTag';
-import UUIDTag from 'components/common/UUIDTag';
 import { useDrawerContext } from 'context/DrawerContext';
 import { useMobile, useEmbed } from 'hooks/globalHooks';
-import AccuracyIcon from 'images/icons/accuracy.svg';
 import CalendarIcon from 'images/icons/calendar.svg';
 import GlobalIcon from 'images/icons/global.svg';
 import HistoryIcon from 'images/icons/history.svg';
@@ -37,7 +34,7 @@ import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import {
   getStakeHolderById,
-  getCapturesById,
+  getCaptureById,
   getGrowerById,
   getCountryByLatLon,
 } from 'models/api';
@@ -45,15 +42,15 @@ import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
 export default function Capture({
-  tree,
+  capture,
   grower,
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
   country,
 }) {
-  log.warn('tree: ', tree);
-  log.warn('org: ', organization.stakeholders[0]);
+  log.warn('capture: ', capture);
+  log.warn('org: ', organization);
   log.warn('grower: ', grower);
   log.warn('country: ', country);
 
@@ -72,7 +69,7 @@ export default function Capture({
   const { setTitlesData } = useDrawerContext();
   log.warn('map:', mapContext);
 
-  const { org_name, logo_url, id } = organization.stakeholders[0] || {};
+  const { org_name, logo_url, id } = organization;
 
   function handleShare() {}
 
@@ -87,13 +84,13 @@ export default function Capture({
 
   useEffect(() => {
     setTitlesData({
-      treeId: tree.id,
-      verifiedToken: tree.token_id,
-      verifiedTree: tree.verified,
+      captureId: capture.id,
+      verifiedToken: capture.token_id,
+      verifiedTree: capture.verified,
     });
     // eslint-disable-next-line prefer-template, no-useless-concat
-    log.warn('the tree data' + '' + JSON.stringify(tree));
-  }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
+    log.warn('the capture data' + '' + JSON.stringify(capture));
+  }, [setTitlesData, capture, capture.id, capture.token_id, capture.verified]);
 
   // useEffect(() => {
   //   async function draw() {
@@ -130,46 +127,46 @@ export default function Capture({
         }
       }
       // manipulate the map
-      log.warn('map ,tree, context in tree page:', map, tree, context);
-      if (map && tree?.lat && tree?.lon) {
+      log.warn('map ,tree, context in tree page:', map, capture, context);
+      if (map && capture?.lat && capture?.lon) {
         if (context && context.name) {
           if (isPlanterContext) {
             log.warn('set grower filter', context.id);
             await map.setFilters({
               userid: context.id,
             });
-            await focusTree(map, tree);
-            const treeDataForMap = {
-              ...tree,
-              lat: parseFloat(tree.lat.toString()),
-              lon: parseFloat(tree.lon.toString()),
+            await focusTree(map, capture);
+            const captureDataForMap = {
+              ...capture,
+              lat: parseFloat(capture.lat.toString()),
+              lon: parseFloat(capture.lon.toString()),
             };
-            map.selectTree(treeDataForMap);
+            map.selectTree(captureDataForMap);
           } else if (isOrganizationContext) {
             log.warn('set org filter', organization.map_name);
             await map.setFilters({
               map_name: organization.map_name,
             });
-            await focusTree(map, tree);
-            const treeDataForMap = {
-              ...tree,
-              lat: parseFloat(tree.lat.toString()),
-              lon: parseFloat(tree.lon.toString()),
+            await focusTree(map, capture);
+            const captureDataForMap = {
+              ...capture,
+              lat: parseFloat(capture.lat.toString()),
+              lon: parseFloat(capture.lon.toString()),
             };
-            map.selectTree(treeDataForMap);
+            map.selectTree(captureDataForMap);
           } else {
             throw new Error(`unknown context name: ${context.name}`);
           }
         } else {
-          log.warn('set treeid filter', tree.id);
+          log.warn('set treeid filter', capture.id);
           await map.setFilters({});
-          await focusTree(map, tree);
-          const treeDataForMap = {
-            ...tree,
-            lat: parseFloat(tree.lat.toString()),
-            lon: parseFloat(tree.lon.toString()),
+          await focusTree(map, capture);
+          const captureDataForMap = {
+            ...capture,
+            lat: parseFloat(capture.lat.toString()),
+            lon: parseFloat(capture.lon.toString()),
           };
-          map.selectTree(treeDataForMap);
+          map.selectTree(captureDataForMap);
         }
 
         // // select the tree
@@ -183,7 +180,7 @@ export default function Capture({
       }
     }
     reload();
-  }, [map, tree.lat, tree.lon]);
+  }, [map, capture.lat, capture.lon]);
 
   log.warn(grower, 'grower');
 
@@ -194,27 +191,31 @@ export default function Capture({
     () => (
       <>
         <Badge
-          color={tree?.approved ? 'primary' : 'greyLight'}
-          icon={tree?.approved ? <CheckIcon /> : null}
-          badgeName={tree?.approved ? 'Verified' : 'Waiting for verification'}
+          color={capture?.approved ? 'primary' : 'greyLight'}
+          icon={capture?.approved ? <CheckIcon /> : null}
+          badgeName={
+            capture?.approved ? 'Verified' : 'Waiting for verification'
+          }
         />
         <Badge
           color="secondary"
-          badgeName={tree?.token_id ? 'Token issued' : 'Token not issued'}
+          badgeName={capture?.token_id ? 'Token issued' : 'Token not issued'}
         />
         <Badge
-          color={tree.id ? 'primary' : 'greyLight'}
-          badgeName={tree.id ? 'Tree matched' : 'Waiting for tree match'}
-          onClick={tree.id ? () => router.push(`/trees/${tree.id}`) : null}
+          color={capture.id ? 'primary' : 'greyLight'}
+          badgeName={capture.id ? 'Tree matched' : 'Waiting for tree match'}
+          onClick={
+            capture.id ? () => router.push(`/captures/${capture.id}`) : null
+          }
         />
       </>
     ),
-    [tree?.approved, tree?.token_id, tree?.id],
+    [capture?.approved, capture?.token_id, capture?.id],
   );
 
   return (
     <>
-      <HeadTag title={`Capture #${tree.id}`} />
+      <HeadTag title={`Capture #${capture.id}`} />
       <Box
         sx={[
           {
@@ -245,9 +246,7 @@ export default function Capture({
                 alignItems: 'flex-start',
               }}
             >
-              <Typography variant="h2">
-                Capture #<UUIDTag uuid={tree.id} />
-              </Typography>
+              <Typography variant="h2">Tree #{capture.id}</Typography>
               <Box
                 sx={{
                   mt: 2,
@@ -270,7 +269,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={OriginIcon} />
-                  {tree.species_name || 'Unknown Species'}
+                  {capture.species_name || 'Unknown Species'}
                 </Typography>
                 <Typography
                   sx={{
@@ -288,7 +287,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Captured on ${moment(tree.created_at).format(
+                  {`Captured on ${moment(capture.created_at).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -331,9 +330,7 @@ export default function Capture({
             }
           >
             <Box sx={{}}>
-              <Typography variant="h3">
-                Capture #<UUIDTag uuid={tree.id} />
-              </Typography>
+              <Typography variant="h3">Tree #{capture.id}</Typography>
             </Box>
           </Portal>
         )}
@@ -376,11 +373,7 @@ export default function Capture({
                     ]
                   : []),
                 {
-                  name: (
-                    <>
-                      capture #<UUIDTag uuid={tree.id} />
-                    </>
-                  ),
+                  name: `capture #${capture.id}`,
                 },
               ]}
             />
@@ -439,7 +432,9 @@ export default function Capture({
               justifyContent: 'space-between',
             }}
           >
-            <LikeButton url={`https://map.treetracker.org/trees/${tree.id}`} />
+            <LikeButton
+              url={`https://map.treetracker.org/captures/${capture.id}`}
+            />
             <Box
               sx={{
                 display: 'flex',
@@ -465,13 +460,13 @@ export default function Capture({
                 }
               />
               <TreeInfoDialog
-                tree={tree}
-                grower={grower}
+                tree={capture}
+                planter={grower}
                 organization={organization}
               />
             </Box>
           </Box>
-          <img src={tree.image_url} alt="tree" height="764" />
+          <img src={capture.image_url} alt="tree" height="764" />
           {!isMobile && (
             <Box
               sx={{
@@ -489,7 +484,7 @@ export default function Capture({
               }}
             >
               <Typography variant="h2" color={theme.palette.common.white}>
-                Capture #<UUIDTag uuid={tree.id} />
+                Capture #{capture.id}
               </Typography>
 
               <Box
@@ -514,7 +509,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={OriginIcon} />
-                  {tree.species_name || 'Unknown Species'}
+                  {capture.species_name || 'Unknown Species'}
                 </Typography>
                 <Typography
                   sx={{
@@ -531,7 +526,7 @@ export default function Capture({
                   }}
                 >
                   <Icon icon={CalendarIcon} />
-                  {`Captured on ${moment(tree.created_at).format(
+                  {`Captured on ${moment(capture.created_at).format(
                     'MMMM Do, YYYY',
                   )}` || 'Unknown Date'}
                 </Typography>
@@ -623,19 +618,21 @@ export default function Capture({
             },
           ]}
         >
-          Tree Info
+          Capture Info
         </Typography>
         <TagList>
           <TreeTag
-            TreeTagValue={new Date(tree.created_at).toLocaleDateString()}
+            TreeTagValue={new Date(capture.created_at).toLocaleDateString()}
             title="Captured on"
             icon={<Icon icon={CalendarIcon} />}
           />
           <TreeTag
-            TreeTagValue={tree.verified === false ? 'not verified' : 'verifed'}
+            TreeTagValue={
+              capture.verified === false ? 'not verified' : 'verifed'
+            }
             title="Verification"
             icon={<Icon icon={VerifiedIcon} />}
-            disabled={tree.verified === false}
+            disabled={capture.verified === false}
           />
           <TreeTag
             TreeTagValue={country.name === null ? 'unknown' : country.name}
@@ -644,43 +641,29 @@ export default function Capture({
             disabled={country.name === null}
           />
           <TreeTag
-            TreeTagValue={tree.age === null ? 'unknown' : tree.age}
+            TreeTagValue={capture.age === null ? 'unknown' : capture.age}
             title="Age"
             icon={<Icon icon={HistoryIcon} />}
-            disabled={tree.age === null}
+            disabled={capture.age === null}
           />
           <TreeTag
             TreeTagValue={
-              tree.species_name === null ? 'unknown' : tree.species_name
+              capture.species_name === null ? 'unknown' : capture.species_name
             }
             title="Species"
             icon={<Icon icon={OriginIcon} />}
-            disabled={tree.species_name === null}
-            subtitle={tree.species_desc === null ? null : 'click to learn more'}
-            link={tree.species_desc === null ? null : tree.species_desc}
-          />
-          <TreeTag
-            TreeTagValue={
-              tree.gps_accuracy === null ? 'unknown' : tree.gps_accuracy
+            disabled={capture.species_name === null}
+            subtitle={
+              capture.species_desc === null ? null : 'click to learn more'
             }
-            title="GPS Accuracy"
-            icon={<Icon icon={AccuracyIcon} />}
-            disabled={tree.gps_accuracy === null}
+            link={capture.species_desc === null ? null : capture.species_desc}
           />
           <TreeTag
             TreeTagValue={
-              tree.morphology === null ? 'unknown' : tree.morphology
-            }
-            title="Morphology"
-            icon={<Icon icon={HubIcon} />}
-            disabled={tree.morphology === null}
-          />
-          <TreeTag
-            TreeTagValue={
-              tree.lat === null || tree.lon == null
+              capture.lat === null || capture.lon == null
                 ? 'unknown'
-                : `${shortenLongLat(tree.lat, 5)}, ${shortenLongLat(
-                    tree.lon,
+                : `${shortenLongLat(capture.lat, 5)}, ${shortenLongLat(
+                    capture.lon,
                     5,
                   )}`
             }
@@ -695,29 +678,35 @@ export default function Capture({
                 }}
               />
             }
-            disabled={tree.lat === null || tree.lon === null}
+            disabled={capture.lat === null || capture.lon === null}
           />
           <TreeTag
             TreeTagValue={
-              tree.token_id === null ? 'Token not issued' : tree.token_id
+              capture.token_id === null ? 'Token not issued' : capture.token_id
             }
             title="Token ID"
             icon={<Icon icon={TokenIcon} />}
-            subtitle={tree.token_id === null ? null : 'click to enter'}
-            link={tree.token_id === null ? null : `/tokens/${tree.token_id}`}
-            disabled={tree.token_id === null}
+            subtitle={capture.token_id === null ? null : 'click to enter'}
+            link={
+              capture.token_id === null ? null : `/tokens/${capture.token_id}`
+            }
+            disabled={capture.token_id === null}
           />
           <TreeTag
             TreeTagValue={
-              tree.wallet_name === null ? 'No wallet owns it' : tree.wallet_name
+              capture.wallet_name === null
+                ? 'No wallet owns it'
+                : capture.wallet_name
             }
             title="Wallet owner"
             icon={<Icon icon={AccountBalanceWalletIcon} />}
-            subtitle={tree.wallet_name === null ? null : 'click to enter'}
+            subtitle={capture.wallet_name === null ? null : 'click to enter'}
             link={
-              tree.wallet_name === null ? null : `/wallets/${tree.wallet_id}`
+              capture.wallet_name === null
+                ? null
+                : `/wallets/${capture.wallet_id}`
             }
-            disabled={tree.wallet_name === null}
+            disabled={capture.wallet_name === null}
           />
         </TagList>
         <Divider
@@ -750,24 +739,27 @@ export default function Capture({
 
 async function serverSideData(params) {
   const { captureid } = params;
-  const tree = await getCapturesById(captureid);
-  const { planting_organization_id, grower_account_id, lat, lon } = tree;
+  const capture = await getCaptureById(captureid);
+  const { planting_organization_id, grower_account_id, lat, lon } = capture;
+
+  // fetch grower and country information
   const grower = await getGrowerById(grower_account_id);
   const country = await getCountryByLatLon(lat, lon);
-  let organization; // = await getStakeHolderById(planting_organization_id);
 
+  // determine which organization to fetch
+  let organization = null;
   if (planting_organization_id) {
-    log.warn('load org from planting_orgniazation_id');
+    log.warn('Loading organization from planting_organization_id');
     organization = await getStakeHolderById(planting_organization_id);
-  } else if (grower.organization_id) {
-    log.warn('load org from planter. organization_id');
+  } else if (grower?.organization_id) {
+    log.warn('Loading organization from grower.organization_id');
     organization = await getStakeHolderById(grower.organization_id);
   } else {
-    log.warn('can not load org for tree:', tree, grower);
+    log.warn('No organization could be loaded for capture:', capture, grower);
   }
 
   return {
-    tree,
+    capture,
     grower,
     organization,
     country,
