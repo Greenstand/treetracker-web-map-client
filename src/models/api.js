@@ -157,9 +157,13 @@ export async function getTreeById(id) {
   }
 }
 
-export async function getCaptureById(id) {
+export async function getCapturesById(id) {
   try {
     const url = apiPaths.captures(id);
+
+    // debug
+    log.warn('---------- getCapturesById url: ', url);
+
     const begin = Date.now();
     const res = await axios.get(url);
     const { data } = res;

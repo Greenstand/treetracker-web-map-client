@@ -34,7 +34,7 @@ import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import {
   getStakeHolderById,
-  getCaptureById,
+  getCapturesById,
   getGrowerById,
   getCountryByLatLon,
 } from 'models/api';
@@ -739,7 +739,7 @@ export default function Capture({
 
 async function serverSideData(params) {
   const { captureid } = params;
-  const capture = await getCaptureById(captureid);
+  const capture = await getCapturesById(captureid);
   const { planting_organization_id, grower_account_id, lat, lon } = capture;
 
   // fetch grower and country information
