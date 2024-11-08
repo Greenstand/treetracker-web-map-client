@@ -9,7 +9,7 @@ beforeEach(() => {
 });
 
 describe('Capture page', () => {
-  it('getServerSideProps returns mock data for capture', () => {
+  it('getStaticProps returns mocks', () => {
     const path = `/captures/${capture.id}`;
 
     // Prepare mocks using intercepts
