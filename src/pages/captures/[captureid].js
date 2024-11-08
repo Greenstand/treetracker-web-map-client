@@ -350,6 +350,7 @@ export default function Capture({
                   // icon: <HomeIcon />,
                   name: 'Home',
                   url: '/',
+                  key: 'home',
                 },
                 ...(isPlanterContext
                   ? [
@@ -360,6 +361,7 @@ export default function Capture({
                           grower.first_name,
                           grower.last_name,
                         )}`,
+                        key: `grower-${grower.id}`,
                       },
                     ]
                   : []),
@@ -369,11 +371,13 @@ export default function Capture({
                         url: `/stakeholder/stakeholders/${id}`,
                         icon: logo_url,
                         name: org_name,
+                        key: `organization-${id}`,
                       },
                     ]
                   : []),
                 {
                   name: `capture #${capture.id}`,
+                  key: `capture-${capture.id}`,
                 },
               ]}
             />
