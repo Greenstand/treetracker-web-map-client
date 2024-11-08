@@ -1,0 +1,9 @@
+{
+  "countries": [
+    {
+      "id": 6632357,
+      "name": "United States",
+      "centroid": "{\"type\":\"Point\",\"coordinates\":[-112.4616737,45.679547203]}"
+    }
+  ]
+}

@@ -49,10 +49,10 @@ export default function Capture({
   nextExtraKeyword,
   country,
 }) {
-  log.warn('capture: ', capture);
-  log.warn('org: ', organization);
-  log.warn('grower: ', grower);
-  log.warn('country: ', country);
+  //   log.warn('capture: ', capture);
+  //   log.warn('org: ', organization);
+  //   log.warn('grower: ', grower);
+  //   log.warn('country: ', country);
 
   const mapContext = useMapContext();
   const { map } = mapContext;
@@ -67,7 +67,7 @@ export default function Capture({
   const isOrganizationContext = context && context.name === 'organizations';
 
   const { setTitlesData } = useDrawerContext();
-  log.warn('map:', mapContext);
+  //   log.warn('map:', mapContext);
 
   const { org_name, logo_url, id } = organization;
 
@@ -88,8 +88,7 @@ export default function Capture({
       verifiedToken: capture.token_id,
       verifiedTree: capture.verified,
     });
-    // eslint-disable-next-line prefer-template, no-useless-concat
-    log.warn('the capture data' + '' + JSON.stringify(capture));
+    // log.warn('the capture data' + '' + JSON.stringify(capture));
   }, [setTitlesData, capture, capture.id, capture.token_id, capture.verified]);
 
   // useEffect(() => {
@@ -127,7 +126,7 @@ export default function Capture({
         }
       }
       // manipulate the map
-      log.warn('map ,tree, context in tree page:', map, capture, context);
+      //   log.warn('map ,tree, context in tree page:', map, capture, context);
       if (map && capture?.lat && capture?.lon) {
         if (context && context.name) {
           if (isPlanterContext) {
@@ -180,9 +179,16 @@ export default function Capture({
       }
     }
     reload();
-  }, [map, capture.lat, capture.lon]);
+  }, [
+    map,
+    capture,
+    context,
+    isOrganizationContext,
+    isPlanterContext,
+    organization,
+  ]);
 
-  log.warn(grower, 'grower');
+  //   log.warn(grower, 'grower');
 
   // storing under variable with useMemo wrapped
   // to reuse the same component for mobile and desktop and
@@ -210,7 +216,7 @@ export default function Capture({
         />
       </>
     ),
-    [capture?.approved, capture?.token_id, capture?.id],
+    [capture?.approved, capture?.token_id, capture?.id, router],
   );
 
   return (

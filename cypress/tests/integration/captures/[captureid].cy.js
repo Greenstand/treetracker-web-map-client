@@ -1,32 +1,63 @@
+import moment from 'moment';
 import capture from '../../../fixtures/capture.json';
+import country from '../../../fixtures/country.json';
+import grower from '../../../fixtures/grower.json';
+import { prepareNocks, clearNocks } from '../nockRoutes';
 
 beforeEach(() => {
-  if (Cypress.env('nock')) {
-    cy.task('clearNock');
-  }
+  clearNocks();
 });
 
-it('getStaticProps returns mock data for capture', () => {
-  const path = `/captures/${capture.id}`;
+describe('Capture page', () => {
+  it('getServerSideProps returns mock data for capture', () => {
+    const path = `/captures/${capture.id}`;
 
-  if (Cypress.env('nock')) {
-    cy.task('nock', {
-      hostname: Cypress.env('NEXT_PUBLIC_API'),
-      method: 'GET',
+    // Prepare mocks using intercepts
+    prepareNocks({ capture, grower, country });
+
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
       path: `/query/v2/captures/${capture.id}`,
       statusCode: 200,
       body: capture,
     });
-  }
 
-  cy.visit(path);
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: `/query/v2/growers/${capture.grower_account_id}`,
+      statusCode: 200,
+      body: grower,
+    });
 
-  // Assertions
-  cy.contains(`Capture #${capture.id}`);
-  cy.contains(capture.species_name || 'Unknown Species');
-  cy.contains(
-    `Captured on ${new Date(capture.created_at).toLocaleDateString()}`,
-  );
-  cy.contains(capture.token_id ? 'Token issued' : 'Token not issued');
-  cy.contains(capture.wallet_name || 'No wallet owns it');
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: `/query/v2/countries?lat=${capture.lat}&lon=${capture.lon}`,
+      statusCode: 200,
+      body: country,
+    });
+
+    const organizationId =
+      capture.planting_organization_id || grower.organization_id;
+    cy.task('nockIntercept', {
+      hostname: 'https://dev-k8s.treetracker.org',
+      method: 'get',
+      path: `/stakeholder/stakeholders/${organizationId}`,
+      statusCode: 200,
+      body: {}, // Mocking an empty response
+    });
+
+    cy.visit(path);
+
+    // Assertions
+    cy.contains(`Capture #${capture.id}`);
+    cy.contains(capture.species_name || 'Unknown Species');
+    cy.contains(
+      `Captured on ${moment(capture.created_at).format('MMMM Do, YYYY')}`,
+    );
+    cy.contains(capture.token_id ? 'Token issued' : 'Token not issued');
+    cy.screenshot();
+  });
 });
