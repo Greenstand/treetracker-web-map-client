@@ -1,7 +1,7 @@
 {
   "id": "0c2d6e3a-d02a-4edf-bcdc-893e1f7a4817",
   "reference_id": "999940",
-  "tree_id": "da4d3ed8-8655-44c5-a7ba-d4c45a0dfb10",
+  "tree_id": null,
   "image_url": "https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2023.02.17.11.59.47_38.364922414000006_-122.51189396800001_a906ab31-5169-421c-8df3-be43f24d4d9c_IMG_20230217_111351_7976264471450881710.jpg",
   "lat": "38.364922414000000",
   "lon": "-122.51189396800000",
@@ -26,8 +26,11 @@
   "token_issued": null,
   "tags": null,
   "device_identifier": "something",
+  "device_manufacturer": "Android",
+  "device_model": "Android",
+  "device_type": "Android",
+  "device_os_version": "Android",
   "wallet": "wallet10@test",
   "grower_reference_id": null,
-  "wallet_name": null,
-  "wallet_token_id": null
+  "region_properties": null
 }

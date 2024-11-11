@@ -274,14 +274,16 @@ export default function TreeInfoDialog(props) {
                   <List>
                     <ListItem sx={{ pl: 0 }}>
                       <CustomListAvatar
-                        src={grower.image_url}
-                        alt={getGrowerName(grower.first_name, grower.last_name)}
+                        src={grower?.image_url || imagePlaceholder} // provide a fallback image if image_url is missing
+                        alt={getGrowerName(
+                          grower?.first_name || 'Unknown',
+                          grower?.last_name || '',
+                        )}
                       />
                       <CustomListText
-                        primary="Grower"
-                        secondary={getGrowerName(
-                          grower.first_name,
-                          grower.last_name,
+                        primary={getGrowerName(
+                          grower?.first_name || 'Unknown',
+                          grower?.last_name || '',
                         )}
                       />
                     </ListItem>
