@@ -369,7 +369,7 @@ export default function Planter(props) {
                   },
                 },
               }}
-              title="Trees Planted"
+              title="Tree Captures"
               text={treeCount}
               disabled={!isPlanterTab}
             />
