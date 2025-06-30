@@ -32,7 +32,7 @@
     - [Lint-Staged](#lint-staged)
     - [Commit Message and PR Title Format](#commit-message-and-pr-title-format)
 - [Troubleshooting](#troubleshooting)
-  - [Can not install Cypress in some areas.](#can-not-install-cypress-in-some-areas)
+  - [Cannot install Cypress in some areas](#cannot-install-cypress-in-some-areas)
   - [Other resources from Greenstand](#other-resources-from-greenstand)
   - [Workflow with Github](#workflow-with-github)
 - [MISC](#misc)
@@ -122,19 +122,19 @@ We recommend using Cypress's component testing tool to build components in isola
 npm run cyu
 ```
 
-[Video tutorial for building components](https://loom.com/share/c750be68ecec4a9b99cb6921d2d2e041)
+[Video tutorial for building component](https://loom.com/share/c750be68ecec4a9b99cb6921d2d2e041)
 
-**NOTE** If you met the `not test found` error, check this issue for the fix: [issue229](https://github.com/Greenstand/treetracker-web-map-client/issues/229)
+**NOTE** if you met : `not test found` problem, check this issue for fixing: [issue229](https://github.com/Greenstand/treetracker-web-map-client/issues/229)
 
 ### What's needed to test in a component unit test
 
 1. We require that the component should be correctly mounted and present in the following environments:
 
-- Normal, the default desktop environments.
-- The mobile viewer environments with screen size: 390\*844
-- The dark theme environment on desktop
+- Normal, the default desktop enviroments.
+- The mobile viewer enviroments with screen size: 390\*844
+- The dark theme enviroment on descktop
 
-2. We require to take a picture for every three scenarios above. ( `cy.screenshot()` )
+2. We require a picture to be taken for each of the three scenarios above. ( `cy.screenshot()` )
 
 ### Adding Material UI Theme to Component Tests
 
@@ -192,7 +192,7 @@ Also, integration tests bring some benefits for the development workflow - by mo
 
 **To run Cypress integration tests:**
 
-Open Cypress test viewer
+Open cypress test viewer
 
 ```bash
 npm run cypress:open
@@ -210,7 +210,7 @@ Next.js dev server + Cypress test viewer without nock
 npm run cy:nockless
 ```
 
-Run Cypress tests headless
+Run cypress tests headless
 
 ```bash
 npm run cypress:run
@@ -286,7 +286,7 @@ Start the dev server with msw enabled:
 npm run dev:mock
 ```
 
-[msw](https://mswjs.io) is used for mocking API calls during development and for Jest tests. To enable it use the following env var `NEXT_PUBLIC_API_MOCKING=enabled` or use the `dev:mock` script. If a new API route needs to be added use the `src/mocks/handlers.js` file.
+[msw](https://mswjs.io) is used for mocking API calls during development and for jest tests. To enable it use the following env var ` NEXT_PUBLIC_API_MOCKING=enabled` or use the `dev:mock` script. If a new API route needs to be added use the `src/mocks/handlers.js` file.
 
 ## The route/URL spec
 
@@ -362,21 +362,21 @@ You need to use a proper commit message format or you will not be able to commit
 
 Your commit messages will need to follow the [Conventional Commits](https://www.conventionalcommits.org/) format, for example:
 
-```
+```bash
 feat: add new button
 ```
 
-```
+```bash
 chore: run tests on travis ci
 ```
 
-```
+```bash
 fix(server): send cors headers
 ```
 
 # Troubleshooting
 
-## Can not install Cypress in some areas.
+## Cannot install Cypress in some areas
 
 In some areas like China, there might be some problems with installing the Cypress. It may throw an error log like this:
 
@@ -385,7 +385,7 @@ npm ERR! URL: https://download.cypress.io/desktop/8.6.0?platform=darwin&arch=x64
 npm ERR! Error: read ECONNRESET
 ```
 
-To solve this problem, download the zip file directly from the Cypress CDN following the guide here: https://docs.cypress.io/guides/getting-started/installing-cypress#Direct-download
+To solve this problem, download the zip file directly from Cypress CDN following guide here: https://docs.cypress.io/guides/getting-started/installing-cypress#Direct-download
 
 Then install the project with an env variable:
 
@@ -410,20 +410,21 @@ We have more tech guides and handbooks here:
     - `challenge`: hardest or big tasks, or needs some special skill or tricky or even hacky in some way.
     - `documentation`: writing job, sometimes it's good for new devs to learn and do some simple jobs.
     - `bug`: just bug.
-    - `wontfix`: some issues still in discussion, or can not be implemented at current stage, or just outdated problems.
+    - `wontfix`: some issue still in discussion, or can not be implemented at current stage, or just outdated problem.
     - `high-priority`: urgent problem, like some crucial bug or feature.
-    - We also tag issues with other aspects like the skill needed, the device related and so on.
+    - We also tag issue with other aspects like the skill needed, the device related and so on.
 
 3.  Fork the repo.
 
 4.  Coding (in the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
 
 5.  Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
+
 6.  Optional: if you aren't fully confident about your code, it's always a good idea to create a PR in `draft` status as early as possible. This way you can draw others attention to it and they'll be able to give you suggestions. To do this, just expand the PR button, there is a `draft` selection.
 
 7.  If necessary, add some screenshots or a video recording to show the work, especially when you are doing UI work, like building a component.
 
-More resources are here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
+More resources can be found here: https://app.gitbook.com/@greenstand/s/engineering/tools#github
 
 # MISC
 
