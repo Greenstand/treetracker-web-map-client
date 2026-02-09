@@ -577,9 +577,15 @@ export default function Tree({
               entityType="Planting Organization"
               buttonText="Meet the Organization"
               cardImageSrc={organization?.logo_url || imagePlaceholder}
-              link={`/organizations/${
-                organization.id
-              }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
+              link={`/organizations/${organization.id}${
+                nextExtraKeyword
+                  ? `?keyword=${nextExtraKeyword}`
+                  : ''
+              }${
+                isEmbed
+                  ? `${nextExtraKeyword ? '&' : '?'}embed=true`
+                  : ''
+              }`}
             />
           </Box>
         )}
@@ -594,8 +600,14 @@ export default function Tree({
             buttonText="Meet the Planter"
             cardImageSrc={planter?.image_url || imagePlaceholder}
             rotation={planter?.image_rotation}
-            link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
-              isEmbed ? '&embed=true' : ''
+            link={`/planters/${planter.id}${
+              nextExtraKeyword
+                ? `?keyword=${nextExtraKeyword}`
+                : ''
+            }${
+              isEmbed
+                ? `${nextExtraKeyword ? '&' : '?'}embed=true`
+                : ''
             }`}
           />
         </Box>
