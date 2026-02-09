@@ -2,10 +2,10 @@ import log from 'loglevel';
 import * as utils from './utils';
 
 const MAP_URL_PATTERN =
-  /^(\/(planters|organizations|wallets)\/([a-z0-9-]+))?(\/(trees|tokens)\/([a-z0-9-]+))?(\?.*)?$/;
+  /^(\/(planters|organizations|wallets)\/([^/?]+))?(\/(trees|tokens)\/([^/?]+))?(\?.*)?$/;
 // v2 api pattern
 const MAP_URL_PATTERNV2 =
-  /^(\/v2\/(planters|organizations|wallets)\/([a-z0-9-]+))?(\/v2\/(trees|tokens|captures)\/([a-z0-9-]+))?(\?.*)?$/;
+  /^(\/v2\/(planters|organizations|wallets)\/([^/?]+))?(\/v2\/(trees|tokens|captures)\/([^/?]+))?(\?.*)?$/;
 
 // 1: (/planters/1234)
 // 2: (planters)
@@ -16,7 +16,7 @@ const MAP_URL_PATTERNV2 =
 // 7: (?embed=true&timeline=true)
 
 // '/wallets/1f2a0862-66d1-4b42-8216-5a5cb9c6eca5/tokens?tree_id=95614',
-const MAP_URL_PATTERN_2 = /^\/wallets\/([a-z0-9-]+)\/tokens$/;
+const MAP_URL_PATTERN_2 = /^\/wallets\/([^/?]+)\/tokens$/;
 
 function getPathWhenClickTree(
   tree,
@@ -72,7 +72,7 @@ function getPathWhenClickTree(
       }`;
     }
   } else {
-    const match2 = pathname.match(/^\/wallets\/([a-z0-9-]+)\/tokens$/);
+    const match2 = pathname.match(/^\/wallets\/([^/?]+)\/tokens$/);
     log.warn('match pattern 2', match2);
     if (match2) {
       pathnameResult = `/wallets/${match2[1]}/tokens`;
@@ -129,12 +129,13 @@ function getContext(router, options = {}) {
     return context;
   }
 
-  const match2 = pathname.match(/^\/wallets\/([a-z0-9-]+)\/tokens\?.*$/);
-  const context = {
-    name: 'wallets',
-    id: match2[1],
-  };
-  return context;
+  const match2 = pathname.match(/^\/wallets\/([^/?]+)\/tokens\?.*$/);
+  if (match2) {
+    return {
+      name: 'wallets',
+      id: match2[1],
+    };
+  }
 
   return null;
 }
