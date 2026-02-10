@@ -114,6 +114,7 @@ export default function Capture({
   //   draw();
   // }, [mapContext.map, tree.lat, tree.lon]);
   useEffect(() => {
+    let cancelled = false;
     async function reload() {
       async function focusTree(map2, tree2) {
         const currentView = map2.getCurrentView();
@@ -139,6 +140,7 @@ export default function Capture({
               userid: context.id,
             });
             await focusTree(map, tree);
+            if (cancelled) return;
             const treeDataForMap = {
               ...tree,
               lat: parseFloat(tree.lat.toString()),
@@ -151,6 +153,7 @@ export default function Capture({
               map_name: organization.map_name,
             });
             await focusTree(map, tree);
+            if (cancelled) return;
             const treeDataForMap = {
               ...tree,
               lat: parseFloat(tree.lat.toString()),
@@ -164,6 +167,7 @@ export default function Capture({
           log.warn('set treeid filter', tree.id);
           await map.setFilters({});
           await focusTree(map, tree);
+          if (cancelled) return;
           const treeDataForMap = {
             ...tree,
             lat: parseFloat(tree.lat.toString()),
@@ -171,18 +175,10 @@ export default function Capture({
           };
           map.selectTree(treeDataForMap);
         }
-
-        // // select the tree
-        // const treeDataForMap = {
-        //   ...tree,
-        //   lat: parseFloat(tree.lat.toString()),
-        //   lon: parseFloat(tree.lon.toString()),
-        // };
-        // mapContext.map.selectTree(treeDataForMap);
-        // // log.warn('filter of map:', mapContext.map.getFilters());
       }
     }
     reload();
+    return () => { cancelled = true; };
   }, [map, tree.lat, tree.lon]);
 
   log.warn(grower, 'grower');
