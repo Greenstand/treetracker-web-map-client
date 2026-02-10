@@ -67,7 +67,8 @@ export default function Token(props) {
   const mapContext = useMapContext();
   const isMobile = useMobile();
   const router = useRouter();
-  const userCameFromWalletPage = router.asPath.includes('wallets');
+  const userCameFromWalletPage =
+    router.asPath.includes('wallets') || !!router.query.walletId;
   const context = pathResolver.getContext(router, {
     base: process.env.NEXT_PUBLIC_BASE,
   });
@@ -116,23 +117,24 @@ export default function Token(props) {
       // manipulate the map
       log.warn('map ,tree, context in tree page:', map, tree, context);
       if (map && tree?.lat && tree?.lon) {
-        if (context && context.name) {
-          if (context.name === 'wallets') {
-            log.warn('set wallet filter', context.id);
-            await map.setFilters({
-              wallet: wallet.name,
-            });
-            await focusTree(map, tree);
-            if (cancelled) return;
-            const treeDataForMap = {
-              ...tree,
-              lat: parseFloat(tree.lat.toString()),
-              lon: parseFloat(tree.lon.toString()),
-            };
-            map.selectTree(treeDataForMap);
-          } else {
-            throw new Error(`unknown context name: ${context.name}`);
-          }
+        const isWalletContext =
+          (context && context.name === 'wallets') || !!router.query.walletId;
+        if (isWalletContext && wallet) {
+          log.warn(
+            'set wallet filter',
+            context?.id || router.query.walletId,
+          );
+          await map.setFilters({
+            wallet: wallet.name,
+          });
+          await focusTree(map, tree);
+          if (cancelled) return;
+          const treeDataForMap = {
+            ...tree,
+            lat: parseFloat(tree.lat.toString()),
+            lon: parseFloat(tree.lon.toString()),
+          };
+          map.selectTree(treeDataForMap);
         } else {
           log.warn('set treeid filter', tree.id);
           await map.setFilters({});
