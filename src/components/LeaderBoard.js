@@ -1,11 +1,11 @@
 import { Paper, Box, Grid, Typography } from '@mui/material';
 import countries from 'i18n-iso-countries';
+import { useMobile } from 'hooks/globalHooks';
+import TreeIcon from 'images/icons/tree.svg';
 import { makeStyles } from 'models/makeStyles';
 import { abbreviateNumber, fixCountryNames } from 'models/utils';
 import Ribbon from './Ribbon';
 import Icon from './common/CustomIcon';
-import { useMobile } from '../hooks/globalHooks';
-import TreeIcon from '../images/icons/tree.svg';
 
 const useStyles = makeStyles()((theme) => ({
   flagContainer: {
@@ -228,8 +228,12 @@ function LeaderBoard(props) {
                       `${country.name}`,
                       'en',
                     )}.svg`}
-                    layout="fill"
-                    objectFit="cover"
+                    style={{
+                      position: 'absolute',
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
                   />
                 </Box>
               </Grid>

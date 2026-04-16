@@ -45,6 +45,7 @@ export default function Crumbs(props) {
 
           return index === items.length - 1 ? ( // do not wrap the last item with Link since it refers to current page
             <Typography
+              key={item.name ?? `item-${index}`}
               variant="h6"
               gutterBottom={false}
               sx={{
