@@ -233,7 +233,7 @@ class MapModel {
     }
     const center = this._map.getCenter();
     log.log('current center:', center);
-    const zoom_level = this._map.getZoom();
+    const zoom_level = Math.round(this._map.getZoom());
     const res = await axios.get(
       `${this.apiUrl}nearest?zoom_level=${zoom_level}&lat=${center.lat}&lng=${center.lng}`,
       {

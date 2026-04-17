@@ -17,7 +17,7 @@ jobs:
     steps:
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # only install dependencies
       # https://github.com/cypress-io/github-action
@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Install cached NPM dependencies, run integration tests
       - name: Cypress Integration Tests 🧪
@@ -47,13 +47,13 @@ jobs:
       - name: Save screenshots
         # step runs even if other steps fail
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: cypress/screenshots
       - name: Save videos
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
           path: cypress/videos
@@ -65,7 +65,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run Component tests 🧪
         uses: cypress-io/github-action@v4
@@ -81,14 +81,14 @@ jobs:
       - name: Save screenshots
         # step runs even if other steps fail
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots-ct
           path: cypress/screenshots
 
       - name: Save videos
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-videos-ct
           path: cypress/videos

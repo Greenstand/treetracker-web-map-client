@@ -161,7 +161,7 @@ function Top(props) {
             </Box>
           </>
         )}
-        {organizations.length > 0 && (
+        {organizations?.length > 0 && (
           <>
             <Box sx={{ mt: [4, 8] }} />
             <Typography variant="h4">
@@ -175,7 +175,7 @@ function Top(props) {
             />
           </>
         )}
-        {planters.length > 0 && (
+        {planters?.length > 0 && (
           <>
             <Box
               sx={{
@@ -192,7 +192,7 @@ function Top(props) {
             />
           </>
         )}
-        {wallets.length > 0 && (
+        {wallets?.length > 0 && (
           <>
             <Typography variant="h4">Featured wallets this week</Typography>
             <FeaturedPlantersSlider
