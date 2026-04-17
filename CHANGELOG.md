@@ -1,3 +1,12 @@
+## [2.9.8](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.7...v2.9.8) (2026-04-17)
+
+
+### Bug Fixes
+
+* address some 422 and 5xx errors ([3507510](https://github.com/Greenstand/treetracker-web-map-client/commit/3507510bb119967f10c8f8bcd336359d6fb6d7c0))
+* dont use the leader board ([e78582b](https://github.com/Greenstand/treetracker-web-map-client/commit/e78582bc8aaeb020dd7d8c1a6d248639616bdd4e))
+* github actions too old ([15956dc](https://github.com/Greenstand/treetracker-web-map-client/commit/15956dc26572d14e9c62ba72c4e86e7873493234))
+
 ## [2.9.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.6...v2.9.7) (2024-09-20)
 
 
