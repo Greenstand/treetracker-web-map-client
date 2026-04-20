@@ -26,7 +26,7 @@ module.exports = {
         destination: '/trees/:treeId(\\d{1,})',
       },
       {
-        source: '/wallets/:walletId([0-9a-zA-Z-]{1,})/tokens/:tokenId(.{36})',
+        source: '/wallets/:walletId([^/]+)/tokens/:tokenId(.{36})',
         destination: '/tokens/:tokenId([a-z0-9-]{36})',
       },
       {
@@ -34,7 +34,7 @@ module.exports = {
         destination: '/?map=:map_name',
       },
       {
-        source: '/wallets/:walletId([0-9a-zA-Z-]{1,})/tokens',
+        source: '/wallets/:walletId([^/]+)/tokens',
         destination: '/tokens/idfromquery',
       },
     ];
