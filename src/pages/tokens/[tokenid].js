@@ -75,6 +75,7 @@ export default function Token(props) {
   log.warn('map:', mapContext);
 
   useEffect(() => {
+    let cancelled = false;
     async function reload() {
       // manipulate the map
       // const { map } = mapContext;
@@ -122,6 +123,7 @@ export default function Token(props) {
               wallet: wallet.name,
             });
             await focusTree(map, tree);
+            if (cancelled) return;
             const treeDataForMap = {
               ...tree,
               lat: parseFloat(tree.lat.toString()),
@@ -135,6 +137,7 @@ export default function Token(props) {
           log.warn('set treeid filter', tree.id);
           await map.setFilters({});
           await focusTree(map, tree);
+          if (cancelled) return;
           const treeDataForMap = {
             ...tree,
             lat: parseFloat(tree.lat.toString()),
@@ -145,6 +148,7 @@ export default function Token(props) {
       }
     }
     reload();
+    return () => { cancelled = true; };
   }, [mapContext, token]);
   log.warn('token:', token);
 
