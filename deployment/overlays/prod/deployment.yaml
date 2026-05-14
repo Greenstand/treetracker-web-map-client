@@ -26,3 +26,12 @@ spec:
               value: 'false'
             - name: NEXT_PUBLIC_GA_ID
               value: G-6QS615H24Z
+            - name: NODE_OPTIONS
+              value: "--max-old-space-size=1344"
+          resources:
+            requests:
+              memory: "1300Mi"
+              cpu: "50m"
+            limits:
+              memory: "1792Mi"
+              cpu: "200m"
