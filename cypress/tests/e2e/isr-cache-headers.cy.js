@@ -26,10 +26,13 @@ const ISR_PAGES = [
 
 describe('ISR Cache-Control headers reflect 300s revalidation (PR #1825)', () => {
   ISR_PAGES.forEach((path) => {
-    it(`${path} — Cache-Control includes s-maxage=300`, () => {
+    it(`${path} — Cache-Control includes s-maxage=300 (or NEXT_CACHE_REVALIDATION_OVERRIDE if set)`, () => {
+      const expected = Cypress.env('NEXT_CACHE_REVALIDATION_OVERRIDE') || 300;
       cy.request(path).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.headers['cache-control']).to.match(/s-maxage=300/);
+        expect(response.headers['cache-control']).to.match(
+          new RegExp(`s-maxage=${expected}`),
+        );
       });
     });
   });
