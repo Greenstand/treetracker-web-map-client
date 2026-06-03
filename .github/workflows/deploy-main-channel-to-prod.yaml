@@ -19,14 +19,14 @@ jobs:
       github.event_name == 'push' &&
       github.repository == "Greenstand/${{ github.event.repository.name }}"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: main
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - name: get-npm-version
@@ -59,7 +59,7 @@ jobs:
 #    if: |
 #      github.repository == "Greenstand/${{ github.event.repository.name }}"
 #    steps:
-#    - uses: actions/checkout@v2
+#    - uses: actions/checkout@v4
 #    - name: Download bundled frontend resources
 #      uses: actions/download-artifact@v2
 #      with:
