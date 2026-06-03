@@ -4,6 +4,9 @@ const withImages = require('next-images');
 
 module.exports = {
   ...withImages(),
+  experimental: {
+    isrMemoryCacheSize: 0,
+  },
   images: {
     domains: [
       'treetracker-production-images.s3.eu-central-1.amazonaws.com',
