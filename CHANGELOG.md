@@ -1,3 +1,10 @@
+## [2.9.10](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.9...v2.9.10) (2026-06-10)
+
+
+### Bug Fixes
+
+* increase ISR revalidation interval from 30s to 300s on content pages ([22b72d1](https://github.com/Greenstand/treetracker-web-map-client/commit/22b72d1cc099c91df41561c0d3ea5b75326372c0))
+
 ## [2.9.9](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.8...v2.9.9) (2026-06-10)
 
 
