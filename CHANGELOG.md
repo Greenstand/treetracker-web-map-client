@@ -1,3 +1,10 @@
+## [2.9.9](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.8...v2.9.9) (2026-06-10)
+
+
+### Bug Fixes
+
+* disable ISR memory cache; set prod resource limits ([223ee4d](https://github.com/Greenstand/treetracker-web-map-client/commit/223ee4d205199853bc6284a0076bcbef2dd51d88))
+
 ## [2.9.8](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.7...v2.9.8) (2026-04-17)
 
 
