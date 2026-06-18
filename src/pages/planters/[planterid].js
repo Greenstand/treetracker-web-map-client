@@ -78,7 +78,11 @@ export default function Planter(props) {
   log.warn('props for planter page:', props);
   const { planter, nextExtraIsEmbed } = props;
 
-  const { featuredTrees } = planter;
+  const featuredTrees = planter.featuredTrees || { trees: [], total: 0 };
+  const associatedOrganizations = planter.associatedOrganizations || {
+    organizations: [],
+  };
+  const planterSpecies = planter.species || { species: [] };
   const treeCount = featuredTrees?.total;
   const mapContext = useMapContext();
   const isMobile = useMobile();
@@ -114,17 +118,43 @@ export default function Planter(props) {
       // manipulate the map
       const { map } = mapContext;
       if (map && planter) {
-        // map.flyTo(tree.lat, tree.lon, 16);
-        await map.setFilters({
-          userid: planter.id,
-        });
-        const bounds = pathResolver.getBounds(router);
-        if (bounds) {
-          log.warn('goto bounds found in url');
-          await map.gotoBounds(bounds);
-        } else {
-          const view = await map.getInitialView();
-          map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        try {
+          // map.flyTo(tree.lat, tree.lon, 16);
+          await map.setFilters({
+            userid: planter.id,
+          });
+          const bounds = pathResolver.getBounds(router);
+          if (bounds) {
+            log.warn('goto bounds found in url');
+            await map.gotoBounds(bounds);
+          } else {
+            try {
+              const view = await map.getInitialView();
+              if (view?.center) {
+                await map.gotoView(
+                  view.center.lat,
+                  view.center.lon,
+                  view.zoomLevel,
+                );
+              } else {
+                log.warn(
+                  'initial view is not ready, falling back to global view',
+                );
+                await map.gotoView(0, 0, 2);
+              }
+            } catch (err) {
+              log.warn(
+                'getInitialView failed, falling back to global view',
+                err,
+              );
+              log.warn(
+                'initial view is not ready, falling back to global view',
+              );
+              await map.gotoView(0, 0, 2);
+            }
+          }
+        } catch (err) {
+          log.warn('planter page map sync failed', err);
         }
       }
     }
@@ -344,7 +374,7 @@ export default function Planter(props) {
             Featured trees by {planter.first_name}
           </Typography>
           <FeaturedTreesSlider
-            trees={featuredTrees.trees}
+            trees={featuredTrees.trees || []}
             link={(item) => `/planters/${planter.id}/trees/${item.id}`}
           />
         </Box>
@@ -377,7 +407,7 @@ export default function Planter(props) {
           <Grid item sx={{ width: '49%' }}>
             <CustomCard
               handleClick={
-                planter.associatedOrganizations.organizations.length
+                associatedOrganizations.organizations.length
                   ? () => setIsPlanterTab(false)
                   : undefined
               }
@@ -391,7 +421,7 @@ export default function Planter(props) {
               }}
               title="Associated Orgs"
               text={
-                planter.associatedOrganizations.organizations.length || (
+                associatedOrganizations.organizations.length || (
                   <Typography
                     variant="h5"
                     sx={{
@@ -435,7 +465,7 @@ export default function Planter(props) {
               mt: [5, 10],
             }}
           >
-            {planter.species.species.map((species) => (
+            {planterSpecies.species.map((species) => (
               <TreeSpeciesCard
                 key={species.id}
                 name={species.name}
@@ -444,8 +474,7 @@ export default function Planter(props) {
               />
             ))}
           </Box>
-          {(!planter.species.species ||
-            planter.species.species.length === 0) && (
+          {planterSpecies.species.length === 0 && (
             <Typography variant="h5">NO DATA YET</Typography>
           )}
         </Box>
@@ -456,7 +485,7 @@ export default function Planter(props) {
             display: !isPlanterTab ? 'block' : 'none',
           }}
         >
-          {planter.associatedOrganizations.organizations.map((org) => (
+          {associatedOrganizations.organizations.map((org) => (
             <>
               <InformationCard1
                 entityName={org.name}
@@ -527,7 +556,17 @@ export default function Planter(props) {
 async function serverSideData(params) {
   const id = params.planterid;
   const planter = await getPlanterById(id);
-  const data = await getOrgLinks(planter.links);
+  let data = {};
+  if (planter?.links) {
+    try {
+      data = await getOrgLinks(planter.links);
+    } catch (err) {
+      log.warn(
+        'failed to load planter related links, rendering partial page',
+        err,
+      );
+    }
+  }
   return {
     planter: { ...planter, ...data },
   };

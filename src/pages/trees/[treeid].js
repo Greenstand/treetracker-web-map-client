@@ -61,6 +61,10 @@ export default function Tree({
   const isEmbed = useEmbed();
   const isPlanterContext = context && context.name === 'planters';
   const isOrganizationContext = context && context.name === 'organizations';
+  const extraQuery = new URLSearchParams({
+    ...(nextExtraKeyword ? { keyword: nextExtraKeyword } : {}),
+    ...(isEmbed ? { embed: 'true' } : {}),
+  }).toString();
 
   const { setTitlesData } = useDrawerContext();
 
@@ -121,47 +125,64 @@ export default function Tree({
           log.warn('stay on the map zoom');
         }
       }
+      async function positionMap(map2, tree2) {
+        const bounds = pathResolver.getBounds(router);
+        if (bounds) {
+          log.warn('goto bounds found in url');
+          try {
+            await map2.gotoBounds(bounds);
+            return;
+          } catch (err) {
+            log.warn('gotoBounds failed, falling back to focusing tree', err);
+          }
+        }
+        await focusTree(map2, tree2);
+      }
       // manipulate the map
       log.warn('map ,tree, context in tree page:', map, tree, context);
       if (map && tree?.lat && tree?.lon) {
-        if (context && context.name) {
-          if (isPlanterContext) {
-            log.warn('set planter filter', context.id);
-            await map.setFilters({
-              userid: context.id,
-            });
-            await focusTree(map, tree);
-            const treeDataForMap = {
-              ...tree,
-              lat: parseFloat(tree.lat.toString()),
-              lon: parseFloat(tree.lon.toString()),
-            };
-            map.selectTree(treeDataForMap);
-          } else if (isOrganizationContext) {
-            log.warn('set org filter', organization.map_name);
-            await map.setFilters({
-              map_name: organization.map_name,
-            });
-            await focusTree(map, tree);
-            const treeDataForMap = {
-              ...tree,
-              lat: parseFloat(tree.lat.toString()),
-              lon: parseFloat(tree.lon.toString()),
-            };
-            map.selectTree(treeDataForMap);
+        try {
+          if (context && context.name) {
+            if (isPlanterContext) {
+              log.warn('set planter filter', context.id);
+              await map.setFilters({
+                userid: context.id,
+              });
+              await positionMap(map, tree);
+              const treeDataForMap = {
+                ...tree,
+                lat: parseFloat(tree.lat.toString()),
+                lon: parseFloat(tree.lon.toString()),
+              };
+              map.selectTree(treeDataForMap);
+            } else if (isOrganizationContext) {
+              log.warn('set org filter', organization.map_name);
+              await map.setFilters({
+                map_name: organization.map_name,
+              });
+              await positionMap(map, tree);
+              const treeDataForMap = {
+                ...tree,
+                lat: parseFloat(tree.lat.toString()),
+                lon: parseFloat(tree.lon.toString()),
+              };
+              map.selectTree(treeDataForMap);
+            } else {
+              throw new Error(`unknown context name: ${context.name}`);
+            }
           } else {
-            throw new Error(`unknown context name: ${context.name}`);
+            log.warn('set treeid filter', tree.id);
+            await map.setFilters({});
+            await positionMap(map, tree);
+            const treeDataForMap = {
+              ...tree,
+              lat: parseFloat(tree.lat.toString()),
+              lon: parseFloat(tree.lon.toString()),
+            };
+            map.selectTree(treeDataForMap);
           }
-        } else {
-          log.warn('set treeid filter', tree.id);
-          await map.setFilters({});
-          await focusTree(map, tree);
-          const treeDataForMap = {
-            ...tree,
-            lat: parseFloat(tree.lat.toString()),
-            lon: parseFloat(tree.lon.toString()),
-          };
-          map.selectTree(treeDataForMap);
+        } catch (err) {
+          log.warn('tree page map sync failed', err);
         }
 
         // // select the tree
@@ -577,9 +598,9 @@ export default function Tree({
               entityType="Planting Organization"
               buttonText="Meet the Organization"
               cardImageSrc={organization?.logo_url || imagePlaceholder}
-              link={`/organizations/${
-                organization.id
-              }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
+              link={`/organizations/${organization.id}${
+                extraQuery ? `?${extraQuery}` : ''
+              }`}
             />
           </Box>
         )}
@@ -594,8 +615,8 @@ export default function Tree({
             buttonText="Meet the Planter"
             cardImageSrc={planter?.image_url || imagePlaceholder}
             rotation={planter?.image_rotation}
-            link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
-              isEmbed ? '&embed=true' : ''
+            link={`/planters/${planter.id}${
+              extraQuery ? `?${extraQuery}` : ''
             }`}
           />
         </Box>
