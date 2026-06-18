@@ -228,8 +228,14 @@ function nextPathBaseDecode(path, base) {
 const wrapper = (callback) => (params) =>
   callback(params).catch((e) => {
     log.warn('error retrieving server props:', e);
-    if (e.response?.status === 404) return { notFound: true };
+    if (e.response?.status === 404) {
+      return {
+        notFound: true,
+        revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
+      };
+    }
     return {
+      notFound: true,
       revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
     };
   });
