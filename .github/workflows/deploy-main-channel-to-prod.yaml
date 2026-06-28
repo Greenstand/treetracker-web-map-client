@@ -37,9 +37,7 @@ jobs:
           export BUMPED_VERSION="${{ github.event.inputs.git-tag }}"
           echo "bumped_version=${BUMPED_VERSION}" >> $GITHUB_OUTPUT
       - name: Install kustomize
-        # Pin the version so the installer fetches a specific release tag instead of
-        # querying the GitHub API for "latest" (unauthenticated -> rate-limited on
-        # shared runners, which intermittently broke the download). Token raises the API limit.
+        # Pin the version so the installer fetches a specific release tag
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.4.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
