@@ -43,7 +43,10 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
       - name: Install kustomize
-        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+        # Pin the version so the installer fetches a specific release tag
+        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.4.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Calculate the channel 
         id: channel
         run: |
@@ -107,4 +110,4 @@ jobs:
       - name: Print overlay folder
         run: echo ${{ steps.overlay_folder.outputs.OVERLAY_FOLDER }}
       - name: Update kubernetes resources
-        run: kustomize build ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: ./kustomize build ${{ steps.channel.outputs.CHANNEL == 'master' && 'deployment' || format('deployment-{0}',steps.channel.outputs.CHANNEL) }}/overlays/${{ steps.overlay_folder.outputs.OVERLAY_FOLDER}} | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
