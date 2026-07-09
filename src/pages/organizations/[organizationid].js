@@ -434,7 +434,9 @@ export default function Organization(props) {
               <Box
                 component="span"
                 dangerouslySetInnerHTML={{
-                  __html: marked.parse(organization.about || 'NO DATA YET'),
+                  __html: marked.parse(organization.about || 'NO DATA YET', {
+                    breaks: true,
+                  }),
                 }}
               />
             </Typography>
@@ -455,7 +457,9 @@ export default function Organization(props) {
                   letterSpacing: '0.04em',
                 }}
                 dangerouslySetInnerHTML={{
-                  __html: marked.parse(organization.mission || 'NO DATA YET'),
+                  __html: marked.parse(organization.mission || 'NO DATA YET', {
+                    breaks: true,
+                  }),
                 }}
               />
             </Typography>
