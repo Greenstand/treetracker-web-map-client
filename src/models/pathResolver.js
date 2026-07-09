@@ -113,7 +113,7 @@ function getContext(router, options = {}) {
   const match = pathname.match(MAP_URL_PATTERN);
   const matchV2 = pathname.match(MAP_URL_PATTERNV2);
 
-  if (match) {
+  if (match && match[2]) {
     const context = {
       name: match[2],
       id: match[3],
@@ -121,7 +121,7 @@ function getContext(router, options = {}) {
     return context;
   }
 
-  if (matchV2) {
+  if (matchV2 && matchV2[2]) {
     const context = {
       name: matchV2[2],
       id: matchV2[3],
@@ -129,12 +129,14 @@ function getContext(router, options = {}) {
     return context;
   }
 
-  const match2 = pathname.match(/^\/wallets\/([a-z0-9-]+)\/tokens\?.*$/);
-  const context = {
-    name: 'wallets',
-    id: match2[1],
-  };
-  return context;
+  const match2 = pathname.match(/^\/wallets\/([a-z0-9-]+)\/tokens(\?.*)?$/);
+  if (match2) {
+    const context = {
+      name: 'wallets',
+      id: match2[1],
+    };
+    return context;
+  }
 
   return null;
 }

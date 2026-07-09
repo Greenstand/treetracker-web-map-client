@@ -48,6 +48,7 @@ function Top(props) {
   React.useEffect(() => {
     async function reload() {
       if (mapContext.map) {
+        await mapContext.map.clearSelection();
         await mapContext.map.setFilters({});
         const bounds = pathResolver.getBounds(router);
         if (bounds) {
