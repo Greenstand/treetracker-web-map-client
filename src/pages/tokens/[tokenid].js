@@ -328,8 +328,10 @@ export default function Token(props) {
                 {token.created_at !== null ? (
                   <>
                     Minted on
-                    <time dateTime={tree.time_created}>
-                      {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
+                    <time dateTime={tree?.time_created || token?.created_at}>
+                      {`${moment(
+                        tree?.time_created || token?.created_at,
+                      ).format('MMMM Do, YYYY')}`}
                     </time>
                   </>
                 ) : (
@@ -383,8 +385,10 @@ export default function Token(props) {
                 {token.created_at !== null ? (
                   <>
                     Minted on
-                    <time dateTime={tree.time_created}>
-                      {`${moment(tree.time_created).format('MMMM Do, YYYY')}`}
+                    <time dateTime={tree?.time_created || token?.created_at}>
+                      {`${moment(
+                        tree?.time_created || token?.created_at,
+                      ).format('MMMM Do, YYYY')}`}
                     </time>
                   </>
                 ) : (
@@ -463,7 +467,7 @@ export default function Token(props) {
 
           <TreeTag
             key="tree-id"
-            TreeTagValue={token.tree_id}
+            TreeTagValue={token.tree_id || 'Unknown'}
             title="Tree ID"
             icon={
               <Icon
@@ -475,8 +479,8 @@ export default function Token(props) {
                 icon={TreeIcon}
               />
             }
-            subtitle="click to enter"
-            link={`/trees/${token.tree_id}`}
+            subtitle={token.tree_id ? 'click to enter' : undefined}
+            link={token.tree_id ? `/trees/${token.tree_id}` : undefined}
           />
 
           <TreeTag
@@ -535,12 +539,16 @@ export default function Token(props) {
                     p: [2, 4],
                   }}
                 >
-                  <Link href={`/planters/${planter.id}`}>
-                    <SimpleAvatarAndName
-                      image={planter.image_url}
-                      name={`${planter.first_name} ${planter.last_name}`}
-                    />
-                  </Link>
+                  {planter ? (
+                    <Link href={`/planters/${planter.id}`}>
+                      <SimpleAvatarAndName
+                        image={planter.image_url}
+                        name={`${planter.first_name} ${planter.last_name}`}
+                      />
+                    </Link>
+                  ) : (
+                    <Typography variant="body2">Unknown planter</Typography>
+                  )}
                 </Box>
               </TimelineContent>
             </TimelineItem>
@@ -723,14 +731,19 @@ async function serverSideData(params, query) {
     );
     const { data } = res;
     const transactions = data;
-    let tree;
-    {
+    let tree = null;
+    let planter = null;
+
+    if (token.tree_id) {
       const res2 = await axios.get(
         `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
       );
       tree = res2.data;
+
+      if (tree?.planter_id) {
+        planter = await getPlanterById(tree.planter_id);
+      }
     }
-    const planter = await getPlanterById(tree.planter_id);
 
     result = {
       token,
@@ -760,11 +773,18 @@ async function serverSideData(params, query) {
 //   };
 // };
 
-const getServerSideProps = wrapper(async ({ params, query }) => {
-  const props = await serverSideData(params, query);
-  return {
-    props,
-  };
-});
+const getServerSideProps = async ({ params, query }) => {
+  try {
+    const props = await serverSideData(params, query);
+    return {
+      props,
+    };
+  } catch (e) {
+    log.warn('error retrieving server props:', e);
+    return {
+      notFound: true,
+    };
+  }
+};
 
 export { getServerSideProps };
