@@ -1,3 +1,10 @@
+## [2.9.11](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.10...v2.9.11) (2026-07-14)
+
+
+### Bug Fixes
+
+* improve token page handling for missing data and enhance error logging ([f688c2e](https://github.com/Greenstand/treetracker-web-map-client/commit/f688c2e85c90401f4da8a25a8e26d11aa9ad7e74))
+
 ## [2.9.10](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.9...v2.9.10) (2026-06-10)
 
 
