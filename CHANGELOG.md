@@ -1,3 +1,11 @@
+## [2.9.12](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.11...v2.9.12) (2026-07-28)
+
+
+### Bug Fixes
+
+* **ci:** pin kustomize version in deploy workflows to fix flaky install ([41b917e](https://github.com/Greenstand/treetracker-web-map-client/commit/41b917e2bb731d044eba61af4e9e9e882fb24302))
+* pin kustomize version ([8f6e0c4](https://github.com/Greenstand/treetracker-web-map-client/commit/8f6e0c48bc4b96ff4d2749637cbfcdfa5ad7ce67))
+
 ## [2.9.11](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.10...v2.9.11) (2026-07-14)
 
 
