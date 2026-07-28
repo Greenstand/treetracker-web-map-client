@@ -83,7 +83,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install kustomize
-        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+        # Pin the version so the installer fetches a specific release tag
+        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.4.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run kustomize
         run: (cd deployment/base && ../../kustomize edit set image greenstand/treetracker-web-map-client=greenstand/${{ github.event.repository.name }}-dev:${{ needs.release.outputs.bumped_version }} )
       - name: Install doctl for kubernetes
@@ -95,7 +98,7 @@ jobs:
       #- name: Delete completed migration jobs prior to deployment
       #  run: kubectl -n ${{ secrets.K8S_NAMESPACE }} delete job --ignore-not-found=true  database-migration-job
       - name: Update kubernetes resources
-        run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+        run: ./kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
       #- name: Attempt to wait for migration job to complete
       #  run: kubectl wait -n ${{ secrets.K8S_NAMESPACE }} --for=condition=complete --timeout=45s job/database-migration-job
 #  deploy:
