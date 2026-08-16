@@ -579,9 +579,7 @@ export default function Capture({
               buttonText="Meet the Organization"
               cardImageSrc={logo_url || imagePlaceholder}
               // TODO: this wont work until organizationsV2 page is completed
-              link={`/stakeholder/stakeholders/${id}?keyword=${nextExtraKeyword}${
-                isEmbed ? '&embed=true' : ''
-              }`}
+              link={`/stakeholder/stakeholders/${id}${nextExtraKeyword ? `?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}` : isEmbed ? '?embed=true' : ''}`}
             />
           </Box>
         )}
@@ -597,9 +595,7 @@ export default function Capture({
             cardImageSrc={grower?.image_url || imagePlaceholder}
             rotation={grower?.image_rotation}
             // TODO: this wont work until growers page is completed
-            link={`/grower-accounts/${grower.id}?keyword=${nextExtraKeyword}${
-              isEmbed ? '&embed=true' : ''
-            }`}
+            link={`/grower-accounts/${grower.id}${nextExtraKeyword ? `?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}` : isEmbed ? '?embed=true' : ''}`}
           />
         </Box>
         <Typography
