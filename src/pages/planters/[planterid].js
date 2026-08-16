@@ -489,7 +489,9 @@ export default function Planter(props) {
         >
           <span
             dangerouslySetInnerHTML={{
-              __html: marked.parse(planter.about || 'NO DATA YET'),
+              __html: marked.parse(planter.about || 'NO DATA YET', {
+                breaks: true,
+              }),
             }}
           />
         </Typography>
