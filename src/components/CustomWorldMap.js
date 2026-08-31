@@ -3,10 +3,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import WorldMap from 'react-world-map';
+import { useMobile } from 'hooks/globalHooks';
+import TreeTooltip from 'images/tree_tooltip.svg';
 import { makeStyles } from 'models/makeStyles';
 import { abbreviateNumber } from 'models/utils';
-import { useMobile } from '../hooks/globalHooks';
-import TreeTooltip from '../images/tree_tooltip.svg';
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -66,6 +66,9 @@ const mapContinentName = (continentName) => {
 function ToolTip({ totalTrees, con }) {
   const { classes } = useStyles();
   const isMobile = useMobile();
+  const safeTotalTrees = Number.isFinite(Number(totalTrees))
+    ? Number(totalTrees)
+    : 0;
 
   return (
     <Box
@@ -91,7 +94,7 @@ function ToolTip({ totalTrees, con }) {
           transform: 'translate(-50%, -30%)',
         }}
       >
-        {totalTrees}
+        {abbreviateNumber(safeTotalTrees)}
       </Typography>
     </Box>
   );
@@ -114,7 +117,7 @@ function CustomWorldMap({ totalTrees, con }) {
       {continentAbr.map((cont, ind) => (
         <ToolTip
           key={cont}
-          totalTrees={abbreviateNumber(totalTreesArr[ind])}
+          totalTrees={totalTreesArr[ind]}
           pos={toolTipPos}
           con={cont}
         />

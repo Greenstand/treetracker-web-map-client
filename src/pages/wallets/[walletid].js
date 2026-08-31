@@ -75,22 +75,47 @@ export default function Wallet(props) {
       // manipulate the map
       const { map } = mapContext;
       if (map && wallet) {
-        // map.flyTo(tree.lat, tree.lon, 16);
-        log.warn('set filter for wallet');
-        await map.setFilters({
-          wallet: wallet.name,
-        });
-        const bounds = pathResolver.getBounds(router);
-        if (bounds) {
-          log.warn('goto bounds found in url');
-          await map.gotoBounds(bounds);
-        } else {
-          const view = await map.getInitialView();
-
-          if (view.zoomLevel < 2) {
-            view.zoomLevel = 2;
+        try {
+          // map.flyTo(tree.lat, tree.lon, 16);
+          log.warn('set filter for wallet');
+          await map.setFilters({
+            wallet: wallet.name,
+          });
+          const bounds = pathResolver.getBounds(router);
+          if (bounds) {
+            log.warn('goto bounds found in url');
+            await map.gotoBounds(bounds);
+          } else {
+            try {
+              const view = await map.getInitialView();
+              if (view?.center) {
+                if (view.zoomLevel < 2) {
+                  view.zoomLevel = 2;
+                }
+                await map.gotoView(
+                  view.center.lat,
+                  view.center.lon,
+                  view.zoomLevel,
+                );
+              } else {
+                log.warn(
+                  'initial view is not ready, falling back to global view',
+                );
+                await map.gotoView(0, 0, 2);
+              }
+            } catch (err) {
+              log.warn(
+                'getInitialView failed, falling back to global view',
+                err,
+              );
+              log.warn(
+                'initial view is not ready, falling back to global view',
+              );
+              await map.gotoView(0, 0, 2);
+            }
           }
-          await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        } catch (err) {
+          log.warn('wallet page map sync failed', err);
         }
       }
     }

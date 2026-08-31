@@ -65,17 +65,43 @@ export default function Organization(props) {
       // manipulate the map
       const { map } = mapContext;
       if (map && organization) {
-        // map.flyTo(tree.lat, tree.lon, 16);
-        await map.setFilters({
-          map_name: organization.map_name,
-        });
-        const bounds = pathResolver.getBounds(router);
-        if (bounds) {
-          log.warn('goto bounds found in url');
-          await map.gotoBounds(bounds);
-        } else {
-          const view = await map.getInitialView();
-          await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+        try {
+          // map.flyTo(tree.lat, tree.lon, 16);
+          await map.setFilters({
+            map_name: organization.map_name,
+          });
+          const bounds = pathResolver.getBounds(router);
+          if (bounds) {
+            log.warn('goto bounds found in url');
+            await map.gotoBounds(bounds);
+          } else {
+            try {
+              const view = await map.getInitialView();
+              if (view?.center) {
+                await map.gotoView(
+                  view.center.lat,
+                  view.center.lon,
+                  view.zoomLevel,
+                );
+              } else {
+                log.warn(
+                  'initial view is not ready, falling back to global view',
+                );
+                await map.gotoView(0, 0, 2);
+              }
+            } catch (err) {
+              log.warn(
+                'getInitialView failed, falling back to global view',
+                err,
+              );
+              log.warn(
+                'initial view is not ready, falling back to global view',
+              );
+              await map.gotoView(0, 0, 2);
+            }
+          }
+        } catch (err) {
+          log.warn('organization page map sync failed', err);
         }
       } else {
         log.warn('no data:', map, organization);
