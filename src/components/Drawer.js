@@ -149,7 +149,11 @@ export default function Drawer(props) {
   const handleContentTouchMove = React.useCallback((event) => {
     log.warn('content touch move: ', event);
     log.warn('content rect:', contentRef.current.scrollTop);
-    if (contentRef.current.scrollTop > 0) {
+    const currentY = event.touches[0].pageY;
+    const lastY = contentRef.current.lastContentY || currentY;
+    const deltaY = currentY - lastY;
+    contentRef.current.lastContentY = currentY;
+    if (contentRef.current.scrollTop > 0 || deltaY < 0) {
       event.stopPropagation();
     }
   }, []);
@@ -163,6 +167,9 @@ export default function Drawer(props) {
     buttonRef.current.addEventListener('touchmove', handleButtonTouchMove);
     buttonRef.current.addEventListener('touchend', handleButtonTouchEnd);
     contentRef.current.addEventListener('touchmove', handleContentTouchMove);
+    contentRef.current.addEventListener('touchstart', () => {
+      contentRef.current.lastContentY = null;
+    });
 
     // click handlers
     buttonRef.current.addEventListener('click', handleOpen);
