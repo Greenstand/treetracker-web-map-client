@@ -54,6 +54,34 @@ const useStyles = makeStyles()((theme) => ({
     display: 'flex',
     gap: 16,
   },
+  media: {
+    width: 40,
+    height: 40,
+    flexShrink: 0,
+    [theme.breakpoints.down('sm')]: {
+      width: 32,
+      height: 32,
+    },
+  },
+  // On narrow screens the default Timeline paddings (16px on the timeline,
+  // on the date column and on both sides of the content) eat most of the
+  // available width, so the wallet names end up squeezed into a sliver and
+  // get clipped. Drop the paddings that only exist for looks on desktop and
+  // let the content column extend to the edge instead.
+  timeline: {
+    padding: 0,
+    margin: 0,
+    [theme.breakpoints.down('sm')]: {
+      '& .MuiTimelineOppositeContent-root': {
+        paddingLeft: 0,
+        paddingRight: theme.spacing(1),
+      },
+      '& .MuiTimelineContent-root': {
+        paddingRight: 0,
+        paddingLeft: theme.spacing(1.5),
+      },
+    },
+  },
 }));
 
 function handleShare() {}
@@ -516,12 +544,13 @@ export default function Token(props) {
           Transaction History
         </Typography>
         <Box>
-          <Timeline>
+          <Timeline className={classes.timeline}>
             <TimelineItem>
               <TimelineOppositeContent
                 color="text.secondary"
                 sx={{
-                  flex: '0 0 100px',
+                  flex: ['0 0 64px', '0 0 100px'],
+                  fontSize: [12, 14],
                 }}
               >
                 <time dateTime={token.created_at}>
@@ -532,11 +561,23 @@ export default function Token(props) {
                 <TimelineDot color="primary" />
                 <TimelineConnector />
               </TimelineSeparator>
-              <TimelineContent>
-                <Typography variant="h6">Token created by:</Typography>
+              <TimelineContent sx={{ minWidth: 0 }}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: [16, 20], overflowWrap: 'anywhere' }}
+                >
+                  Token created by:
+                </Typography>
                 <Box
                   sx={{
-                    p: [2, 4],
+                    p: [1, 4],
+                    pr: [0, 4],
+                    // SimpleAvatarAndName renders an h5 that would otherwise
+                    // overflow its column on a phone
+                    '& .MuiTypography-root': {
+                      fontSize: [16, 20],
+                      overflowWrap: 'anywhere',
+                    },
                   }}
                 >
                   {planter ? (
@@ -562,7 +603,8 @@ export default function Token(props) {
                 <TimelineItem key={transaction.id}>
                   <TimelineOppositeContent
                     sx={{
-                      flex: '0 0 100px',
+                      flex: ['0 0 64px', '0 0 100px'],
+                      fontSize: [12, 14],
                     }}
                     color="text.secondary"
                   >
@@ -574,13 +616,17 @@ export default function Token(props) {
                     <TimelineDot color="primary" />
                     <TimelineConnector />
                   </TimelineSeparator>
-                  <TimelineContent>
-                    <Typography variant="h6">
+                  <TimelineContent sx={{ minWidth: 0 }}>
+                    <Typography
+                      variant="h6"
+                      sx={{ fontSize: [16, 20], overflowWrap: 'anywhere' }}
+                    >
                       Transfer token between:
                     </Typography>
                     <Box
                       sx={{
-                        p: [2, 4],
+                        p: [1, 4],
+                        pr: [0, 4],
                       }}
                     >
                       <Link href={`/wallets/${transaction.source_wallet_id}`}>
@@ -601,8 +647,14 @@ export default function Token(props) {
                               <AccountBalanceWalletIcon />
                             </Avatar>
                           )}
-                          <Box sx={{ marginLeft: 3 }}>
-                            <Typography variant="h5">
+                          <Box sx={{ marginLeft: [2, 3], minWidth: 0 }}>
+                            <Typography
+                              variant="h5"
+                              sx={{
+                                fontSize: [16, 20],
+                                overflowWrap: 'anywhere',
+                              }}
+                            >
                               {transaction.source_wallet_name}
                             </Typography>
                           </Box>
@@ -640,8 +692,14 @@ export default function Token(props) {
                               <AccountBalanceWalletIcon />
                             </Avatar>
                           )}
-                          <Box sx={{ marginLeft: 3 }}>
-                            <Typography variant="h5">
+                          <Box sx={{ marginLeft: [2, 3], minWidth: 0 }}>
+                            <Typography
+                              variant="h5"
+                              sx={{
+                                fontSize: [16, 20],
+                                overflowWrap: 'anywhere',
+                              }}
+                            >
                               {transaction.destination_wallet_name}
                             </Typography>
                           </Box>
@@ -654,7 +712,8 @@ export default function Token(props) {
             <TimelineItem>
               <TimelineOppositeContent
                 sx={{
-                  flex: '0 0 100px',
+                  flex: ['0 0 64px', '0 0 100px'],
+                  fontSize: [12, 14],
                 }}
                 color="text.secondary"
               >
@@ -663,7 +722,9 @@ export default function Token(props) {
               <TimelineSeparator>
                 <TimelineDot />
               </TimelineSeparator>
-              <TimelineContent>Claim Token</TimelineContent>
+              <TimelineContent sx={{ minWidth: 0 }}>
+                Claim Token
+              </TimelineContent>
             </TimelineItem>
           </Timeline>
         </Box>
