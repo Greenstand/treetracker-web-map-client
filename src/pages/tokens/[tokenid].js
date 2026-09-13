@@ -516,7 +516,7 @@ export default function Token(props) {
           Transaction History
         </Typography>
         <Box>
-          <Timeline>
+          <Timeline sx={{ px: [0, 2] }}>
             <TimelineItem>
               <TimelineOppositeContent
                 color="text.secondary"
@@ -532,7 +532,7 @@ export default function Token(props) {
                 <TimelineDot color="primary" />
                 <TimelineConnector />
               </TimelineSeparator>
-              <TimelineContent>
+              <TimelineContent sx={{ minWidth: 0 }}>
                 <Typography variant="h6">Token created by:</Typography>
                 <Box
                   sx={{
@@ -574,7 +574,7 @@ export default function Token(props) {
                     <TimelineDot color="primary" />
                     <TimelineConnector />
                   </TimelineSeparator>
-                  <TimelineContent>
+                  <TimelineContent sx={{ minWidth: 0 }}>
                     <Typography variant="h6">
                       Transfer token between:
                     </Typography>
