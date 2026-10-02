@@ -66,13 +66,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - dockerfile: ./Dockerfile-dev
-            image_name: greenstand/${{ github.event.repository.name }}-dev:${{ needs.release.outputs.bumped_version }}
+          # - dockerfile: ./Dockerfile-dev
+          #   image_name: greenstand/${{ github.event.repository.name }}-dev:${{ needs.release.outputs.bumped_version }}
           - dockerfile: ./Dockerfile
             image_name: greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }}
       # Allow other matrix jobs to run if one fails
-      fail-fast: false
-    continue-on-error: ${{ matrix }}
+      # fail-fast: false
+    # continue-on-error: ${{ matrix }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Docker Buildx
