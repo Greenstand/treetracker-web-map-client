@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.12...v2.10.0) (2026-10-02)
+
+
+### Features
+
+* load tile server env vars at runtime ([dff73f4](https://github.com/Greenstand/treetracker-web-map-client/commit/dff73f4ee3c4ea52715a3cde3aa0fe3c0856bfd9))
+
 ## [2.9.12](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.11...v2.9.12) (2026-07-28)
 
 
