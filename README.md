@@ -1,5 +1,5 @@
 **Table of Contents**
-
+ 
 - [Treetracker Web Map](#treetracker-web-map)
   - [Project Description](#project-description)
   - [Development Environment Quick Start](#development-environment-quick-start)
