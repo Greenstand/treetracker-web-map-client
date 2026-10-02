@@ -10,6 +10,7 @@ import { Map } from 'treetracker-web-map-core';
 import { useMapContext } from 'mapContext';
 import { getTreeById } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
+import { getEnv } from 'models/runtimeEnv';
 // import { parseMapName } from '../models/utils';
 
 // const MOBILE_WIDTH = 960;
@@ -167,10 +168,11 @@ function MapComponent() {
       iconSuite: window.screen.width > 1199 ? 'ptk-b' : 'ptk-s',
       zoomControl: true,
       zoomControlPosition: 'bottomright',
-      tileServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_URL,
-      tileServerSubdomains:
-        process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS.split(','),
-      apiServerUrl: process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
+      tileServerUrl: getEnv('NEXT_PUBLIC_TILE_SERVER_URL'),
+      tileServerSubdomains: getEnv('NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS').split(
+        ',',
+      ),
+      apiServerUrl: getEnv('NEXT_PUBLIC_TILE_SERVER_WEBMAP_API'),
       queryApiServerUrl: process.env.NEXT_PUBLIC_API,
     });
     const isAdmin = !!router.asPath.match(/admin/);

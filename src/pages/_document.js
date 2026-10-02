@@ -7,6 +7,11 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          {/* Blocking on purpose: must set __RUNTIME_ENV__ before app code. */}
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+          <script
+            src={`${process.env.NEXT_PUBLIC_BASE || ''}/api/runtime-env`}
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap"
