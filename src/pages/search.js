@@ -1,8 +1,9 @@
 import { Box } from '@mui/material';
 import axios from 'axios';
-import Link from '../components/Link';
-import SearchFilter from '../components/SearchFilter';
-import { useEmbed } from '../hooks/globalHooks';
+import Link from 'components/Link';
+import SearchFilter from 'components/SearchFilter';
+import { useEmbed } from 'hooks/globalHooks';
+import { getEnv } from 'models/runtimeEnv';
 
 export default function Search(props) {
   const { list, keyword } = props;
@@ -32,9 +33,7 @@ export default function Search(props) {
 
 export async function getServerSideProps({ query }) {
   const { keyword } = query;
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/trees/${keyword}`,
-  );
+  const res = await axios.get(`${getEnv('NEXT_PUBLIC_API')}/trees/${keyword}`);
   const list = [res.data];
   return {
     props: {

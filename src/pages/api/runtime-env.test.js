@@ -34,12 +34,24 @@ function evaluate(body) {
 
 describe('/api/runtime-env', () => {
   const saved = { ...process.env };
+  const values = {
+    NEXT_PUBLIC_API: 'https://example.invalid/query',
+    NEXT_PUBLIC_TILE_SERVER_URL: 'https://example.invalid/{s}/',
+    NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS: 'a,b',
+    NEXT_PUBLIC_TILE_SERVER_WEBMAP_API: 'https://example.invalid/webmap/',
+    NEXT_PUBLIC_IMAGE_API: 'https://example.invalid/images',
+    NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED: 'true',
+    NEXT_PUBLIC_SERVER_CONFIG_DISABLED: 'true',
+    NEXT_PUBLIC_KEYCLOAK_URL: 'https://example.invalid/realms/x/',
+    NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: 'public-client',
+    NEXT_PUBLIC_KEYCLOAK_REALM: 'x',
+    NEXT_PUBLIC_KEYCLOAK_REDIRECT_URI: 'https://example.invalid/',
+  };
 
   beforeEach(() => {
-    process.env.NEXT_PUBLIC_TILE_SERVER_URL = 'https://example.invalid/{s}/';
-    process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS = 'a,b';
-    process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API =
-      'https://example.invalid/webmap/';
+    Object.assign(process.env, values);
+    process.env.NEXT_PUBLIC_BASE = '/base';
+    process.env.NEXT_PUBLIC_GA_ID = 'G-NOTALLOWED';
     process.env.FAKE_SECRET = 'hunter2';
   });
 
@@ -57,13 +69,9 @@ describe('/api/runtime-env', () => {
     expect(res.headers['x-content-type-options']).toBe('nosniff');
   });
 
-  it('defines window.__RUNTIME_ENV__ with exactly the tile keys', () => {
+  it('defines window.__RUNTIME_ENV__ with exactly the allowlisted keys', () => {
     const env = evaluate(run().body);
-    expect(env).toEqual({
-      NEXT_PUBLIC_TILE_SERVER_URL: 'https://example.invalid/{s}/',
-      NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS: 'a,b',
-      NEXT_PUBLIC_TILE_SERVER_WEBMAP_API: 'https://example.invalid/webmap/',
-    });
+    expect(env).toEqual(values);
   });
 
   it('escapes values that could break out of the script', () => {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import log from 'loglevel';
 import moment from 'moment';
+import { getEnv } from 'models/runtimeEnv';
 
 function hideLastName(name) {
   const fullNameArray = name.split(' ');
@@ -57,7 +58,7 @@ async function requestAPI(url) {
     throw new Error('url is not defined');
   }
   try {
-    const urlFull = `${process.env.NEXT_PUBLIC_API}${url}`;
+    const urlFull = `${getEnv('NEXT_PUBLIC_API')}${url}`;
     log.warn('requestAPI:', urlFull);
     // urlFull = urlFull.replace(/\?/, '/query/');
 
@@ -112,7 +113,9 @@ const getThumbnailImageUrls = (imageUrl, width = 400, height = 400) => {
   const domain = imageUrlArr[imageUrlArr.length - 2];
   const imagePath = imageUrlArr[imageUrlArr.length - 1];
   const paramUrl = `w=${width},h=${height}`;
-  const thumbNailImageUrl = `${process.env.NEXT_PUBLIC_IMAGE_API}/img/${domain}/${paramUrl}/${imagePath}`;
+  const thumbNailImageUrl = `${getEnv(
+    'NEXT_PUBLIC_IMAGE_API',
+  )}/img/${domain}/${paramUrl}/${imagePath}`;
   return thumbNailImageUrl;
 };
 

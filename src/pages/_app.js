@@ -20,7 +20,8 @@ import { ConfigProvider, defaultConfig } from 'context/configContext';
 import { CustomThemeProvider } from 'context/themeContext';
 import { useLocalStorage, useEmbed } from 'hooks/globalHooks';
 import { MapContextProvider } from 'mapContext';
-import oidcConfig from 'models/oidcConfig';
+import getOidcConfig from 'models/oidcConfig';
+import { getEnv } from 'models/runtimeEnv';
 import packageJson from '../../package.json';
 
 log.warn(`Web Map Client version ${packageJson.version}`);
@@ -78,6 +79,7 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
   const router = useRouter();
   const theme = useTheme();
   const layoutRef = React.useRef();
+  const oidcConfig = React.useMemo(() => getOidcConfig(), []);
 
   const embedLocalStorage = useLocalStorage('embed', false);
   const clientSideQuery = useMediaQuery(theme.breakpoints.up('sm'));
@@ -220,7 +222,7 @@ TreetrackerApp.getInitialProps = async (context) => {
   const device = userAgentFromString(userAgent)?.device.type || 'desktop';
 
   let config = defaultConfig;
-  if (!process.env.NEXT_PUBLIC_SERVER_CONFIG_DISABLED) {
+  if (!getEnv('NEXT_PUBLIC_SERVER_CONFIG_DISABLED')) {
     const mapConfigRequest = await fetch(
       // TODO: use the ENV var, currently results in a bug with the theme editor
       // `${process.env.NEXT_PUBLIC_CONFIG_API}/config`,

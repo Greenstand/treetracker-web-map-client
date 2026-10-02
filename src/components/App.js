@@ -173,7 +173,7 @@ function MapComponent() {
         ',',
       ),
       apiServerUrl: getEnv('NEXT_PUBLIC_TILE_SERVER_WEBMAP_API'),
-      queryApiServerUrl: process.env.NEXT_PUBLIC_API,
+      queryApiServerUrl: getEnv('NEXT_PUBLIC_API'),
     });
     const isAdmin = !!router.asPath.match(/admin/);
     if (!isAdmin) {

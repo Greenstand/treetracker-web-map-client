@@ -16,6 +16,8 @@ spec:
           env:
             - name: NODE_ENV
               value: test
+            - name: NEXT_PUBLIC_API
+              value: https://test-k8s.treetracker.org/query
             - name: NEXT_PUBLIC_TILE_SERVER_URL
               value: https://{s}.treetracker.org/tiles/
             - name: NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS

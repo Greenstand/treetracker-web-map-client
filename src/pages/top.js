@@ -3,6 +3,7 @@ import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import log from 'loglevel';
+import { PHASE_PRODUCTION_BUILD } from 'next/constants';
 import { useRouter } from 'next/router';
 import React from 'react';
 import FeaturedPlantersSlider from 'components/FeaturedPlantersSlider';
@@ -19,6 +20,7 @@ import Search from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
 import * as pathResolver from 'models/pathResolver';
+import { getEnv } from 'models/runtimeEnv';
 import * as utils from 'models/utils';
 
 function Top(props) {
@@ -63,8 +65,7 @@ function Top(props) {
   }, [mapContext.map]);
 
   React.useEffect(() => {
-    if (process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true')
-      return;
+    if (getEnv('NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED') === 'true') return;
     const fetchCountries = async () => {
       const data = await utils.requestAPI(
         `/countries/leaderboard/${continentTag}`,
@@ -260,7 +261,7 @@ async function serverSideData(params) {
   const [trees, countries, planters, organizations, wallets] =
     await Promise.all([
       getFeaturedTrees(), //
-      process.env.NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED === 'true'
+      getEnv('NEXT_PUBLIC_COUNTRY_LEADER_BOARD_DISABLED') === 'true'
         ? []
         : getCountryLeaderboard(),
       (async () => {
@@ -292,7 +293,12 @@ const getStaticProps = utils.wrapper(async ({ params }) => {
   const props = await serverSideData(params);
   return {
     props,
-    revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 300,
+    // The build-time render used .env.production values; regenerate on the
+    // first runtime request so the container's env takes effect.
+    revalidate:
+      process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD
+        ? 1
+        : Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 300,
   };
 });
 

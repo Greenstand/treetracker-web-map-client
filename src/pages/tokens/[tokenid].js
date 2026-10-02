@@ -42,6 +42,7 @@ import { useMapContext } from 'mapContext';
 import { getWalletById, getTokenById, getPlanterById } from 'models/api';
 import { makeStyles } from 'models/makeStyles';
 import * as pathResolver from 'models/pathResolver';
+import { getEnv } from 'models/runtimeEnv';
 import { wrapper } from 'models/utils';
 
 const useStyles = makeStyles()((theme) => ({
@@ -704,13 +705,13 @@ async function serverSideData(params, query) {
     log.warn('to load token from treeid');
     const { tree_id } = query;
     const treeId = parseInt(tree_id, 10);
-    let res = await axios.get(`${process.env.NEXT_PUBLIC_API}/trees/${treeId}`);
+    let res = await axios.get(`${getEnv('NEXT_PUBLIC_API')}/trees/${treeId}`);
     const { data: tree } = res;
     const token = await getTokenById(tree.token_id);
     const { wallet_id } = token;
     const wallet = await getWalletById(wallet_id);
     res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${token.id}`,
+      `${getEnv('NEXT_PUBLIC_API')}/transactions?token_id=${token.id}`,
     );
     const { data: transactions } = res;
     const planter = await getPlanterById(tree.planter_id);
@@ -727,7 +728,7 @@ async function serverSideData(params, query) {
     const { wallet_id } = token;
     const wallet = await getWalletById(wallet_id);
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/transactions?token_id=${tokenid}`,
+      `${getEnv('NEXT_PUBLIC_API')}/transactions?token_id=${tokenid}`,
     );
     const { data } = res;
     const transactions = data;
@@ -736,7 +737,7 @@ async function serverSideData(params, query) {
 
     if (token.tree_id) {
       const res2 = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/trees/${token.tree_id}`,
+        `${getEnv('NEXT_PUBLIC_API')}/trees/${token.tree_id}`,
       );
       tree = res2.data;
 
