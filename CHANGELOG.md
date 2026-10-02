@@ -1,3 +1,10 @@
+## [2.10.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.0...v2.10.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* force release for CI ([b25b46e](https://github.com/Greenstand/treetracker-web-map-client/commit/b25b46ecac43de58ef7b038e63b73cba94e800b1))
+
 # [2.10.0](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.9.12...v2.10.0) (2026-10-02)
 
 
