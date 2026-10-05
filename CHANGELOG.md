@@ -1,3 +1,10 @@
+## [2.10.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.1...v2.10.2) (2026-10-05)
+
+
+### Bug Fixes
+
+* degrade gracefully when page data fails to load ([91f08ae](https://github.com/Greenstand/treetracker-web-map-client/commit/91f08ae17331231e92c5bdc355137ca3ff3a142b))
+
 ## [2.10.1](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.0...v2.10.1) (2026-10-02)
 
 
