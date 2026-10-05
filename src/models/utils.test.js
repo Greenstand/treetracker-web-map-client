@@ -1,3 +1,4 @@
+import log from 'loglevel';
 import {
   hideLastName,
   formatDateString,
@@ -7,6 +8,7 @@ import {
   nextPathBaseDecode,
   nextPathBaseEncode,
   getLocationString,
+  wrapper,
 } from './utils';
 
 describe('hideLastName', () => {
@@ -152,5 +154,89 @@ describe('getLocationString', () => {
       const result = getLocationString(null, null);
       expect(result).toBe('Unknown');
     });
+  });
+});
+
+describe('wrapper', () => {
+  const OLD_ENV = process.env;
+  beforeEach(() => {
+    process.env = { ...OLD_ENV, NEXT_CACHE_REVALIDATION_OVERRIDE: '43200' };
+    jest.spyOn(log, 'error').mockImplementation(() => {});
+  });
+  afterEach(() => {
+    process.env = OLD_ENV;
+    jest.restoreAllMocks();
+  });
+
+  function axiosError(status) {
+    const err = new Error(`Request failed with status code ${status}`);
+    err.response = { status };
+    err.config = { url: 'https://example.org/organizations/11' };
+    err.code = 'ERR_BAD_RESPONSE';
+    return err;
+  }
+
+  function hasUndefined(obj) {
+    return Object.values(obj).some(
+      (v) =>
+        v === undefined ||
+        (v && typeof v === 'object' && !Array.isArray(v) && hasUndefined(v)),
+    );
+  }
+
+  it('passes through the callback result', async () => {
+    const result = { props: { a: 1 }, revalidate: 300 };
+    const getStaticProps = wrapper(() => Promise.resolve(result));
+    await expect(getStaticProps({ params: {} })).resolves.toBe(result);
+  });
+
+  it('returns notFound on a 404', async () => {
+    const getStaticProps = wrapper(() => {
+      throw axiosError(404);
+    });
+    await expect(
+      getStaticProps({ params: { organizationid: '11' } }),
+    ).resolves.toEqual({ notFound: true });
+  });
+
+  it('returns loadError props with a short revalidate on other errors', async () => {
+    const getStaticProps = wrapper(() => {
+      throw axiosError(500);
+    });
+    const result = await getStaticProps({ params: { organizationid: '11' } });
+    expect(result).toEqual({
+      props: {
+        loadError: {
+          message: 'Request failed with status code 500',
+          status: 500,
+          url: 'https://example.org/organizations/11',
+          code: 'ERR_BAD_RESPONSE',
+          params: { organizationid: '11' },
+        },
+      },
+      revalidate: 30,
+    });
+  });
+
+  it('has no undefined values in loadError for non-axios errors', async () => {
+    const getStaticProps = wrapper(() => {
+      throw new Error('boom');
+    });
+    const result = await getStaticProps({});
+    expect(result.revalidate).toBe(30);
+    expect(result.props.loadError.message).toBe('boom');
+    expect(hasUndefined(result.props.loadError)).toBe(false);
+  });
+
+  it('omits revalidate when isr is false', async () => {
+    const getServerSideProps = wrapper(
+      () => {
+        throw new Error('boom');
+      },
+      { isr: false },
+    );
+    const result = await getServerSideProps({});
+    expect(result).not.toHaveProperty('revalidate');
+    expect(result.props.loadError.message).toBe('boom');
   });
 });

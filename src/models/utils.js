@@ -49,6 +49,10 @@ function parseMapName(domain) {
   throw new Error(`the domain is wrong :${domain}`);
 }
 
+// fail fast instead of hanging ISR renders (fallback: 'blocking') when the
+// query API is unresponsive
+const API_TIMEOUT_MS = 15000;
+
 /*
   to request the default API server
 */
@@ -62,7 +66,7 @@ async function requestAPI(url) {
     // urlFull = urlFull.replace(/\?/, '/query/');
 
     const begin = Date.now();
-    const res = await axios.get(urlFull);
+    const res = await axios.get(urlFull, { timeout: API_TIMEOUT_MS });
     const { data } = res;
     log.warn('url:', urlFull, 'took:', Date.now() - begin);
     return data;
@@ -225,14 +229,42 @@ function nextPathBaseDecode(path, base) {
   return path.replace(base, '');
 }
 
-const wrapper = (callback) => (params) =>
-  callback(params).catch((e) => {
-    log.warn('error retrieving server props:', e);
-    if (e.response?.status === 404) return { notFound: true };
-    return {
-      revalidate: Number(process.env.NEXT_CACHE_REVALIDATION_OVERRIDE) || 30,
-    };
-  });
+const ERROR_REVALIDATE_SECONDS = 30;
+
+function describeError(e) {
+  return {
+    message: e?.message || String(e),
+    status: e?.response?.status ?? null,
+    url: e?.config?.url ?? null,
+    code: e?.code ?? null,
+  };
+}
+
+/*
+  wrap getStaticProps/getServerSideProps so a failed fetch renders a degraded
+  page (props.loadError) instead of an empty-props page.
+  Use { isr: false } for getServerSideProps, which doesn't accept revalidate.
+*/
+const wrapper =
+  (callback, { isr = true } = {}) =>
+  async (context) => {
+    try {
+      return await callback(context);
+    } catch (e) {
+      const info = describeError(e);
+      if (info.status === 404) return { notFound: true };
+      log.error('[getStaticProps] failed', {
+        params: context?.params,
+        ...info,
+      });
+      return {
+        props: { loadError: { ...info, params: context?.params ?? null } },
+        // Never use NEXT_CACHE_REVALIDATION_OVERRIDE here: a transient failure
+        // must not be cached for hours.
+        ...(isr && { revalidate: ERROR_REVALIDATE_SECONDS }),
+      };
+    }
+  };
 
 const getLocationString = (country, continent) => {
   if (!country && !continent) return 'Unknown';
@@ -309,6 +341,7 @@ export {
   parseDomain,
   parseMapName,
   requestAPI,
+  API_TIMEOUT_MS,
   getContinent,
   formatDateString,
   formatDates,
@@ -322,6 +355,7 @@ export {
   nextPathBaseDecode,
   nextPathBaseEncode,
   wrapper,
+  describeError,
   getLocationString,
   setPropByPath,
   getPropByPath,

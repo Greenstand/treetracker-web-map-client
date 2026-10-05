@@ -138,14 +138,17 @@ function GlobalWithContext(props) {
 
 export default GlobalWithContext;
 
-export const getServerSideProps = wrapper(async () => {
-  const id = 178; // hardcoded FCC organization
-  const organization = await getOrganizationById(id);
-  return {
-    props: {
-      organization: {
-        ...organization,
+export const getServerSideProps = wrapper(
+  async () => {
+    const id = 178; // hardcoded FCC organization
+    const organization = await getOrganizationById(id);
+    return {
+      props: {
+        organization: {
+          ...organization,
+        },
       },
-    },
-  };
-});
+    };
+  },
+  { isr: false },
+);

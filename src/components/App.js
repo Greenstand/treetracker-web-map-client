@@ -174,25 +174,32 @@ function MapComponent() {
       ),
       apiServerUrl: getEnv('NEXT_PUBLIC_TILE_SERVER_WEBMAP_API'),
       queryApiServerUrl: process.env.NEXT_PUBLIC_API,
+      // the map core reads this.filters.treeid without a null guard; start
+      // with an empty object so map events work before a page sets filters
+      filters: {},
     });
     const isAdmin = !!router.asPath.match(/admin/);
     if (!isAdmin) {
       map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
-        log.warn('DEMO: move end:');
-        if (window.parent) {
-          log.warn('DEMO: ok message parent');
-          window.parent.postMessage('DEMO foo', '*');
+        try {
+          log.warn('DEMO: move end:');
+          if (window.parent) {
+            log.warn('DEMO: ok message parent');
+            window.parent.postMessage('DEMO foo', '*');
+          }
+          log.warn('update url');
+          const path = pathResolver.updatePathWhenMapMoveEnd(
+            window.location,
+            map,
+            router,
+          );
+          // changing the url in history state
+          // this allow website to load page back
+          const historyState = { ...window.history.state, url: path };
+          window.history.replaceState(historyState, '', path);
+        } catch (err) {
+          log.error('[map] move_end handler failed', err);
         }
-        log.warn('update url');
-        const path = pathResolver.updatePathWhenMapMoveEnd(
-          window.location,
-          map,
-          router,
-        );
-        // changing the url in history state
-        // this allow website to load page back
-        const historyState = { ...window.history.state, url: path };
-        window.history.replaceState(historyState, '', path);
       });
     }
 

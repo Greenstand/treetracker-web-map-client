@@ -1,4 +1,6 @@
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Portal from '@mui/material/Portal';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -23,7 +25,14 @@ import * as utils from 'models/utils';
 
 function Top(props) {
   log.warn('props top:', props);
-  const { trees, planters, countries, organizations, wallets } = props;
+  const {
+    trees,
+    planters,
+    countries = [],
+    organizations,
+    wallets,
+    loadError,
+  } = props;
   // use map context to get the map
   const { map } = useMapContext();
   const router = useRouter();
@@ -44,6 +53,10 @@ function Top(props) {
     React.useState(countries);
 
   const mapContext = useMapContext();
+
+  React.useEffect(() => {
+    if (loadError) log.error('[top page] rendered without data', loadError);
+  }, [loadError]);
 
   React.useEffect(() => {
     async function reload() {
@@ -142,6 +155,24 @@ function Top(props) {
             }}
           />
         </Box>
+        {loadError && (
+          <Alert
+            severity="warning"
+            sx={{ mt: 4 }}
+            action={
+              <Button
+                color="inherit"
+                size="small"
+                onClick={() => router.replace(router.asPath)}
+              >
+                Retry
+              </Button>
+            }
+          >
+            We couldn&apos;t load the featured content right now. The map is
+            still available.
+          </Alert>
+        )}
         {trees?.length > 0 && (
           <>
             <Box
@@ -225,7 +256,7 @@ function Top(props) {
         </Box>
         <Box sx={{ marginTop: 18 }} />
         <LeaderBoard
-          countries={leaderboardCountries}
+          countries={leaderboardCountries || []}
           handleCountryClick={handleCountryClick}
         />
       </Box>

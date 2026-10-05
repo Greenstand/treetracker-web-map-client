@@ -8,6 +8,7 @@ import { useMapContext } from 'mapContext';
 import { makeStyles } from 'models/makeStyles';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
+import ErrorBoundary, { PageErrorBoundary } from './common/ErrorBoundary';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
@@ -68,9 +69,13 @@ const Layout = forwardRef(({ children }, ref) => {
         <Box
           sx={{ position: 'absolute', top: 0, left: 0, width: 1, height: 1 }}
         >
-          <App />
+          <ErrorBoundary name="map" fallback={null}>
+            <App />
+          </ErrorBoundary>
         </Box>
-        <Drawer outerRef={ref}>{children}</Drawer>
+        <Drawer outerRef={ref}>
+          <PageErrorBoundary>{children}</PageErrorBoundary>
+        </Drawer>
         <Box className={classes.right}>
           <Timeline />
           <Box

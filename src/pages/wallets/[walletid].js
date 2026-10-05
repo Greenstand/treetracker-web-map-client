@@ -19,7 +19,10 @@ import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import Crumbs from 'components/common/Crumbs';
 import CustomCard from 'components/common/CustomCard';
 import Icon from 'components/common/CustomIcon';
+import ErrorBoundary from 'components/common/ErrorBoundary';
 import Info from 'components/common/Info';
+import PageLoadError from 'components/common/PageLoadError';
+import SectionUnavailable from 'components/common/SectionUnavailable';
 import TreeTag from 'components/common/TreeTag';
 import { useDrawerContext } from 'context/DrawerContext';
 import { useMobile } from 'hooks/globalHooks';
@@ -44,10 +47,10 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
 export default function Wallet(props) {
   log.info('props for wallet page:', props);
   const [isTokenTab, setIsTokenTab] = React.useState(false);
-  const { wallet, species, tokens, trees } = props;
+  const { wallet, species = [], tokens = null, trees = [], loadError } = props;
   const isMobile = useMobile();
   // eslint-disable-next-line react/destructuring-assignment
-  const tokenRegionStatistics = props.tokenRegionCount.filter(
+  const tokenRegionStatistics = (props.tokenRegionCount || []).filter(
     (statistics) => statistics.continent !== null,
   );
   const tokenRegionName = [];
@@ -64,11 +67,12 @@ export default function Wallet(props) {
   const { setTitlesData } = useDrawerContext();
 
   useEffect(() => {
+    if (!wallet) return;
     setTitlesData({
-      firstName: wallet.name,
-      createdTime: wallet.created_at,
+      firstName: wallet?.name,
+      createdTime: wallet?.created_at,
     });
-  }, [wallet.name, wallet.created_at, setTitlesData]);
+  }, [wallet, setTitlesData]);
 
   useEffect(() => {
     async function reload() {
@@ -92,10 +96,24 @@ export default function Wallet(props) {
           }
           await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         }
+      } else if (map) {
+        // no wallet data: show the global view
+        await map.setFilters({});
       }
     }
     reload();
   }, [mapContext, wallet]);
+
+  if (!wallet) {
+    return (
+      <PageLoadError
+        entityLabel="Wallet"
+        id={loadError?.params?.walletid ?? router.query.walletid}
+        loadError={loadError}
+      />
+    );
+  }
+
   return (
     <>
       <HeadTag title={`${wallet.name} - Wallet`} />
@@ -239,128 +257,138 @@ export default function Wallet(props) {
             mt: [8, 16],
           }}
         >
-          <Typography variant="h4">Featured trees by {wallet.name}</Typography>
-          <FeaturedTreesSlider
-            trees={trees}
-            link={(item) => `/wallets/${wallet.id}/tokens/${item.token_id}`}
-          />
-        </Box>
-
-        <Grid
-          container
-          wrap="nowrap"
-          justifyContent="space-between"
-          sx={{
-            width: 1,
-            mt: [6, 12],
-          }}
-        >
-          <Grid item sx={{ width: '49%' }}>
-            <CustomCard
-              handleClick={() => setIsTokenTab(false)}
-              iconURI={TreeIcon}
-              iconProps={{
-                sx: {
-                  '& path': {
-                    fill: ({ palette }) => palette.primary.main,
-                  },
-                },
-              }}
-              title="Trees"
-              text={tokens.total}
-              disabled={isTokenTab}
-            />
-          </Grid>
-          <Grid item sx={{ width: '49%' }}>
-            <CustomCard
-              handleClick={() => setIsTokenTab(true)}
-              iconURI={TokenIcon}
-              iconProps={{
-                sx: {
-                  '& path': {
-                    fill: ({ palette }) => palette.text.primary,
-                  },
-                },
-              }}
-              title="Tokens"
-              text={tokens.total}
-              disabled={!isTokenTab}
-            />
-          </Grid>
-        </Grid>
-
-        {tokenRegionName.length > 0 && (
-          <Box sx={{ mt: [0, 22], display: !isTokenTab ? 'block' : 'none' }}>
-            <CustomWorldMap
-              totalTrees={tokenRegionCount}
-              con={tokenRegionName}
-            />
-          </Box>
-        )}
-
-        <Box
-          component="ul"
-          sx={{
-            mt: [0, 16],
-            p: [2, 4],
-            display: isTokenTab ? 'block' : 'none',
-            listStyle: 'none',
-          }}
-        >
-          {tokens.tokens.map((token) => (
-            <Box
-              component="li"
-              key={token.id}
-              sx={{
-                mt: [2, 4],
-              }}
-            >
-              <TreeTag
-                TreeTagValue={token.id}
-                title="Token ID"
-                icon={<Icon icon={TokenIcon} />}
-                link={`/wallets/${wallet.id}/tokens/${token.id}`}
-                fullWidth
+          <ErrorBoundary name="wallet:featured-trees">
+            <Typography variant="h4">
+              Featured trees by {wallet.name}
+            </Typography>
+            {trees?.length ? (
+              <FeaturedTreesSlider
+                trees={trees}
+                link={(item) => `/wallets/${wallet.id}/tokens/${item.token_id}`}
               />
-            </Box>
-          ))}
+            ) : (
+              <SectionUnavailable>No featured trees yet</SectionUnavailable>
+            )}
+          </ErrorBoundary>
         </Box>
 
-        {species.length > 0 && (
-          <Box
+        <ErrorBoundary name="wallet:stats">
+          <Grid
+            container
+            wrap="nowrap"
+            justifyContent="space-between"
             sx={{
-              px: [0, 6],
+              width: 1,
+              mt: [6, 12],
             }}
           >
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: [16, 24],
-                mt: [5, 10],
-              }}
-            >
-              Species of trees planted
-            </Typography>
-            <Box
-              component="ul"
-              sx={{
-                mt: [5, 10],
-                listStyle: 'none',
-                px: 0,
-              }}
-            >
-              {species.map((specie) => (
-                <li key={specie.id}>
-                  <TreeSpeciesCard
-                    name={specie.name}
-                    count={specie.total}
-                    subTitle={specie.desc || '---'}
-                  />
-                </li>
-              ))}
+            <Grid item sx={{ width: '49%' }}>
+              <CustomCard
+                handleClick={() => setIsTokenTab(false)}
+                iconURI={TreeIcon}
+                iconProps={{
+                  sx: {
+                    '& path': {
+                      fill: ({ palette }) => palette.primary.main,
+                    },
+                  },
+                }}
+                title="Trees"
+                text={tokens?.total ?? '---'}
+                disabled={isTokenTab}
+              />
+            </Grid>
+            <Grid item sx={{ width: '49%' }}>
+              <CustomCard
+                handleClick={() => setIsTokenTab(true)}
+                iconURI={TokenIcon}
+                iconProps={{
+                  sx: {
+                    '& path': {
+                      fill: ({ palette }) => palette.text.primary,
+                    },
+                  },
+                }}
+                title="Tokens"
+                text={tokens?.total ?? '---'}
+                disabled={!isTokenTab}
+              />
+            </Grid>
+          </Grid>
+
+          {tokenRegionName.length > 0 && (
+            <Box sx={{ mt: [0, 22], display: !isTokenTab ? 'block' : 'none' }}>
+              <CustomWorldMap
+                totalTrees={tokenRegionCount}
+                con={tokenRegionName}
+              />
             </Box>
+          )}
+
+          <Box
+            component="ul"
+            sx={{
+              mt: [0, 16],
+              p: [2, 4],
+              display: isTokenTab ? 'block' : 'none',
+              listStyle: 'none',
+            }}
+          >
+            {tokens?.tokens?.map((token) => (
+              <Box
+                component="li"
+                key={token.id}
+                sx={{
+                  mt: [2, 4],
+                }}
+              >
+                <TreeTag
+                  TreeTagValue={token.id}
+                  title="Token ID"
+                  icon={<Icon icon={TokenIcon} />}
+                  link={`/wallets/${wallet.id}/tokens/${token.id}`}
+                  fullWidth
+                />
+              </Box>
+            ))}
           </Box>
-        )}
+
+          {species?.length > 0 && (
+            <Box
+              sx={{
+                px: [0, 6],
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: [16, 24],
+                  mt: [5, 10],
+                }}
+              >
+                Species of trees planted
+              </Typography>
+              <Box
+                component="ul"
+                sx={{
+                  mt: [5, 10],
+                  listStyle: 'none',
+                  px: 0,
+                }}
+              >
+                {species.map((specie) => (
+                  <li key={specie.id}>
+                    <TreeSpeciesCard
+                      name={specie.name}
+                      count={specie.total}
+                      subTitle={specie.desc || '---'}
+                    />
+                  </li>
+                ))}
+              </Box>
+            </Box>
+          )}
+        </ErrorBoundary>
         <Divider
           varian="fullwidth"
           sx={{
@@ -411,10 +439,10 @@ async function serverSideData(params) {
 
   return {
     wallet,
-    species: species.species,
-    tokens,
-    tokenRegionCount,
-    trees: trees.trees,
+    species: species?.species ?? [],
+    tokens: tokens ?? null,
+    tokenRegionCount: tokenRegionCount ?? [],
+    trees: trees?.trees ?? [],
   };
 }
 

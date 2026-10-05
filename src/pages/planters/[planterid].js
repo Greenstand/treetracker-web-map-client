@@ -22,7 +22,10 @@ import TreeSpeciesCard from 'components/TreeSpeciesCard';
 import Crumbs from 'components/common/Crumbs';
 import CustomCard from 'components/common/CustomCard';
 import Icon from 'components/common/CustomIcon';
+import ErrorBoundary from 'components/common/ErrorBoundary';
 import Info from 'components/common/Info';
+import PageLoadError from 'components/common/PageLoadError';
+import SectionUnavailable from 'components/common/SectionUnavailable';
 import { useDrawerContext } from 'context/DrawerContext';
 import { useMobile } from 'hooks/globalHooks';
 import planterBackground from 'images/background.png';
@@ -76,9 +79,13 @@ const placeholderText = `Lorem ipsum dolor sit amet consectetur adipisicing elit
         eligendi.`;
 export default function Planter(props) {
   log.warn('props for planter page:', props);
-  const { planter, nextExtraIsEmbed } = props;
+  const { planter, loadError, nextExtraIsEmbed } = props;
 
-  const { featuredTrees } = planter;
+  const featuredTrees = planter?.featuredTrees;
+  const failedResources = new Set(
+    (planter?.partialErrors || []).map((e) => e.resource),
+  );
+  const organizations = planter?.associatedOrganizations?.organizations || [];
   const treeCount = featuredTrees?.total;
   const mapContext = useMapContext();
   const isMobile = useMobile();
@@ -97,17 +104,13 @@ export default function Planter(props) {
     `${router.basePath}${planterBackground}`;
 
   useEffect(() => {
+    if (!planter) return;
     setTitlesData({
-      firstName: planter.first_name,
-      lastName: planter.last_name,
-      createdTime: planter.created_time,
+      firstName: planter?.first_name,
+      lastName: planter?.last_name,
+      createdTime: planter?.created_time,
     });
-  }, [
-    planter.created_time,
-    planter.first_name,
-    planter.last_name,
-    setTitlesData,
-  ]);
+  }, [planter, setTitlesData]);
 
   useEffect(() => {
     async function reload() {
@@ -126,6 +129,9 @@ export default function Planter(props) {
           const view = await map.getInitialView();
           map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
         }
+      } else if (map) {
+        // no planter data: show the global view
+        await map.setFilters({});
       }
     }
     reload();
@@ -144,6 +150,16 @@ export default function Planter(props) {
     ),
     [],
   );
+
+  if (!planter) {
+    return (
+      <PageLoadError
+        entityLabel="Planter"
+        id={loadError?.params?.planterid ?? router.query.planterid}
+        loadError={loadError}
+      />
+    );
+  }
 
   return (
     <>
@@ -340,135 +356,156 @@ export default function Planter(props) {
             mt: [8, 16],
           }}
         >
-          <Typography variant="h4">
-            Featured trees by {planter.first_name}
-          </Typography>
-          <FeaturedTreesSlider
-            trees={featuredTrees.trees}
-            link={(item) => `/planters/${planter.id}/trees/${item.id}`}
-          />
+          <ErrorBoundary name="planter:featured-trees">
+            <Typography variant="h4">
+              Featured trees by {planter.first_name}
+            </Typography>
+            {featuredTrees?.trees?.length ? (
+              <FeaturedTreesSlider
+                trees={featuredTrees.trees}
+                link={(item) => `/planters/${planter.id}/trees/${item.id}`}
+              />
+            ) : (
+              <SectionUnavailable>
+                {failedResources.has('featuredTrees')
+                  ? 'Featured trees are unavailable right now'
+                  : 'No featured trees yet'}
+              </SectionUnavailable>
+            )}
+          </ErrorBoundary>
         </Box>
 
-        <Grid
-          container
-          wrap="nowrap"
-          justifyContent="space-between"
-          sx={{
-            width: 1,
-            mt: [6, 12],
-          }}
-        >
-          <Grid item sx={{ width: '49%' }}>
-            <CustomCard
-              handleClick={() => setIsPlanterTab(true)}
-              iconURI={TreeIcon}
-              iconProps={{
-                sx: {
-                  '& path': {
-                    fill: ({ palette }) => palette.primary.main,
-                  },
-                },
-              }}
-              title="Trees Planted"
-              text={treeCount}
-              disabled={!isPlanterTab}
-            />
-          </Grid>
-          <Grid item sx={{ width: '49%' }}>
-            <CustomCard
-              handleClick={
-                planter.associatedOrganizations.organizations.length
-                  ? () => setIsPlanterTab(false)
-                  : undefined
-              }
-              iconURI={PeopleIcon}
-              iconProps={{
-                sx: {
-                  '& path': {
-                    fill: ({ palette }) => palette.text.primary,
-                  },
-                },
-              }}
-              title="Associated Orgs"
-              text={
-                planter.associatedOrganizations.organizations.length || (
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      minHeight: [44],
-                    }}
-                  >
-                    Individual planter
-                  </Typography>
-                )
-              }
-              disabled={isPlanterTab}
-            />
-          </Grid>
-        </Grid>
-        <Box
-          sx={{
-            px: [0, 6],
-            display: isPlanterTab ? 'block' : 'none',
-          }}
-        >
-          {planter.continent_name && (
-            <Box sx={{ mt: [0, 22] }}>
-              <CustomWorldMap
-                totalTrees={treeCount}
-                con={planter.continent_name}
-              />
-            </Box>
-          )}
-
-          <Typography
-            variant="h4"
+        <ErrorBoundary name="planter:stats">
+          <Grid
+            container
+            wrap="nowrap"
+            justifyContent="space-between"
             sx={{
-              fontSize: [16, 24],
-              mt: [0, 20],
+              width: 1,
+              mt: [6, 12],
             }}
           >
-            Species of trees planted
-          </Typography>
+            <Grid item sx={{ width: '49%' }}>
+              <CustomCard
+                handleClick={() => setIsPlanterTab(true)}
+                iconURI={TreeIcon}
+                iconProps={{
+                  sx: {
+                    '& path': {
+                      fill: ({ palette }) => palette.primary.main,
+                    },
+                  },
+                }}
+                title="Trees Planted"
+                text={treeCount}
+                disabled={!isPlanterTab}
+              />
+            </Grid>
+            <Grid item sx={{ width: '49%' }}>
+              <CustomCard
+                handleClick={
+                  organizations.length
+                    ? () => setIsPlanterTab(false)
+                    : undefined
+                }
+                iconURI={PeopleIcon}
+                iconProps={{
+                  sx: {
+                    '& path': {
+                      fill: ({ palette }) => palette.text.primary,
+                    },
+                  },
+                }}
+                title="Associated Orgs"
+                text={
+                  organizations.length || (
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        minHeight: [44],
+                      }}
+                    >
+                      Individual planter
+                    </Typography>
+                  )
+                }
+                disabled={isPlanterTab}
+              />
+            </Grid>
+          </Grid>
           <Box
             sx={{
-              mt: [5, 10],
+              px: [0, 6],
+              display: isPlanterTab ? 'block' : 'none',
             }}
           >
-            {planter.species.species.map((species) => (
-              <TreeSpeciesCard
-                key={species.id}
-                name={species.name}
-                subTitle={species.desc || '---'}
-                count={species.total}
-              />
+            {planter.continent_name && (
+              <Box sx={{ mt: [0, 22] }}>
+                <CustomWorldMap
+                  totalTrees={treeCount}
+                  con={planter.continent_name}
+                />
+              </Box>
+            )}
+
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: [16, 24],
+                mt: [0, 20],
+              }}
+            >
+              Species of trees planted
+            </Typography>
+            <Box
+              sx={{
+                mt: [5, 10],
+              }}
+            >
+              {planter?.species?.species?.map((species) => (
+                <TreeSpeciesCard
+                  key={species.id}
+                  name={species.name}
+                  subTitle={species.desc || '---'}
+                  count={species.total}
+                />
+              ))}
+            </Box>
+            {!planter?.species?.species?.length &&
+              (failedResources.has('species') ? (
+                <SectionUnavailable>
+                  Species are unavailable right now
+                </SectionUnavailable>
+              ) : (
+                <Typography variant="h5">NO DATA YET</Typography>
+              ))}
+          </Box>
+          <Box
+            sx={{
+              px: [0, 6],
+              mt: [11, 22],
+              display: !isPlanterTab ? 'block' : 'none',
+            }}
+          >
+            {failedResources.has('associates') && (
+              <SectionUnavailable>
+                Organizations are unavailable right now
+              </SectionUnavailable>
+            )}
+            {organizations.map((org) => (
+              <>
+                <InformationCard1
+                  entityName={org.name}
+                  entityType="Planting Organization"
+                  buttonText="Meet the Organization"
+                  link={`/organizations/${org.id}`}
+                  cardImageSrc={org?.logo_url}
+                />
+                <Box sx={{ mt: [6, 12] }} />
+              </>
             ))}
           </Box>
-          {(!planter.species.species ||
-            planter.species.species.length === 0) && (
-            <Typography variant="h5">NO DATA YET</Typography>
-          )}
-        </Box>
-        <Box
-          sx={{
-            px: [0, 6],
-            mt: [11, 22],
-            display: !isPlanterTab ? 'block' : 'none',
-          }}
-        >
-          {planter.associatedOrganizations.organizations.map((org) => (
-            <>
-              <InformationCard1
-                entityName={org.name}
-                entityType="Planting Organization"
-                buttonText="Meet the Organization"
-                link={`/organizations/${org.id}`}
-                cardImageSrc={org?.logo_url}
-              />
-              <Box sx={{ mt: [6, 12] }} />
-            </>
-          ))}
-        </Box>
+        </ErrorBoundary>
         <Divider
           varian="fullwidth"
           sx={{
