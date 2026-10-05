@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import dynamic from 'next/dynamic';
 import { makeStyles } from 'models/makeStyles';
+import { PageErrorBoundary } from './common/ErrorBoundary';
 
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 
@@ -47,7 +48,7 @@ export default function Layout({ children }) {
       <Navbar />
       <Box sx={{ position: 'relative', width: 1, height: 1 }}>
         <Box sx={{ position: 'absolute', width: 1, height: 1, zIndex: 1000 }}>
-          {children}
+          <PageErrorBoundary>{children}</PageErrorBoundary>
         </Box>
       </Box>
     </Box>

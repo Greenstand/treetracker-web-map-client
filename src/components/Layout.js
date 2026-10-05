@@ -3,11 +3,12 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { forwardRef } from 'react';
+import Max from 'images/max.svg';
 import { makeStyles } from 'models/makeStyles';
 import Navbar from './Navbar';
 import Timeline from './Timeline';
 import ZoomInOutButton from './ZoomInOutButton';
-import Max from '../images/max.svg';
+import ErrorBoundary, { PageErrorBoundary } from './common/ErrorBoundary';
 
 const App = dynamic(() => import('./App'), { ssr: false });
 
@@ -61,7 +62,7 @@ const Layout = forwardRef(
         <Navbar />
         <Box className={classes.main}>
           <Paper ref={ref} elevation={11} className={classes.left}>
-            {children}
+            <PageErrorBoundary>{children}</PageErrorBoundary>
           </Paper>
           <Box className={classes.right}>
             <Box
@@ -97,7 +98,9 @@ const Layout = forwardRef(
             >
               <ZoomInOutButton />
             </Box>
-            <App />
+            <ErrorBoundary name="map" fallback={null}>
+              <App />
+            </ErrorBoundary>
           </Box>
         </Box>
       </Box>

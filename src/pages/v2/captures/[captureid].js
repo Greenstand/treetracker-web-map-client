@@ -20,6 +20,7 @@ import Share from 'components/Share';
 import TreeInfoDialog from 'components/TreeInfoDialog';
 import Crumbs from 'components/common/Crumbs';
 import Icon from 'components/common/CustomIcon';
+import PageLoadError from 'components/common/PageLoadError';
 import TagList from 'components/common/TagList';
 import TreeTag from 'components/common/TreeTag';
 import { useDrawerContext } from 'context/DrawerContext';
@@ -51,9 +52,10 @@ export default function Capture({
   nextExtraIsEmbed,
   nextExtraKeyword,
   country,
+  loadError,
 }) {
   log.warn('tree: ', tree);
-  log.warn('org: ', organization.stakeholders[0]);
+  log.warn('org: ', organization?.stakeholders?.[0]);
   log.warn('grower: ', grower);
   log.warn('country: ', country);
 
@@ -72,7 +74,7 @@ export default function Capture({
   const { setTitlesData } = useDrawerContext();
   log.warn('map:', mapContext);
 
-  const { org_name, logo_url, id } = organization.stakeholders[0];
+  const { org_name, logo_url, id } = organization?.stakeholders?.[0] || {};
 
   function handleShare() {}
 
@@ -86,6 +88,7 @@ export default function Capture({
   }
 
   useEffect(() => {
+    if (!tree) return;
     setTitlesData({
       treeId: tree.id,
       verifiedToken: tree.token_id,
@@ -93,7 +96,7 @@ export default function Capture({
     });
     // eslint-disable-next-line prefer-template, no-useless-concat
     log.warn('the tree data' + '' + JSON.stringify(tree));
-  }, [setTitlesData, tree, tree.id, tree.token_id, tree.verified]);
+  }, [setTitlesData, tree]);
 
   // useEffect(() => {
   //   async function draw() {
@@ -146,9 +149,9 @@ export default function Capture({
             };
             map.selectTree(treeDataForMap);
           } else if (isOrganizationContext) {
-            log.warn('set org filter', organization.map_name);
+            log.warn('set org filter', organization?.map_name);
             await map.setFilters({
-              map_name: organization.map_name,
+              map_name: organization?.map_name,
             });
             await focusTree(map, tree);
             const treeDataForMap = {
@@ -183,7 +186,7 @@ export default function Capture({
       }
     }
     reload();
-  }, [map, tree.lat, tree.lon]);
+  }, [map, tree?.lat, tree?.lon]);
 
   log.warn(grower, 'grower');
 
@@ -203,14 +206,24 @@ export default function Capture({
           badgeName={tree?.token_id ? 'Token issued' : 'Token not issued'}
         />
         <Badge
-          color={tree.id ? 'primary' : 'greyLight'}
-          badgeName={tree.id ? 'Tree matched' : 'Waiting for tree match'}
-          onClick={tree.id ? () => router.push(`/trees/${tree.id}`) : null}
+          color={tree?.id ? 'primary' : 'greyLight'}
+          badgeName={tree?.id ? 'Tree matched' : 'Waiting for tree match'}
+          onClick={tree?.id ? () => router.push(`/trees/${tree.id}`) : null}
         />
       </>
     ),
     [tree?.approved, tree?.token_id, tree?.id],
   );
+
+  if (!tree || !grower || !organization || !country) {
+    return (
+      <PageLoadError
+        entityLabel="Capture"
+        id={loadError?.params?.captureid ?? router.query.captureid}
+        loadError={loadError}
+      />
+    );
+  }
 
   return (
     <>

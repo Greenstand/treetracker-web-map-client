@@ -11,6 +11,7 @@ import MinIcon from 'images/min.svg';
 import SearchFilter from './SearchFilter';
 import Timeline from './Timeline';
 import ZoomInOutButton from './ZoomInOutButton';
+import ErrorBoundary, { PageErrorBoundary } from './common/ErrorBoundary';
 // import { makeStyles } from 'models/makeStyles';
 
 const greenstandLogo = '/images/greenstand_logo_full.svg';
@@ -89,7 +90,9 @@ export default function Layout({
           height: '100vh',
         }}
       >
-        <App />
+        <ErrorBoundary name="map" fallback={null}>
+          <App />
+        </ErrorBoundary>
       </Box>
       {!isFloatingDisabled && (
         <>
@@ -121,7 +124,7 @@ export default function Layout({
                   height: '100vh',
                 }}
               >
-                {children}
+                <PageErrorBoundary>{children}</PageErrorBoundary>
               </Box>
             </Box>
           </Drawer>
@@ -152,7 +155,7 @@ export default function Layout({
             display: 'none',
           }}
         >
-          {children}
+          <PageErrorBoundary>{children}</PageErrorBoundary>
         </Box>
       )}
 

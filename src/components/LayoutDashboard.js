@@ -3,6 +3,7 @@
 import { SSRKeycloakProvider, SSRCookies } from '@react-keycloak/ssr';
 import cookie from 'cookie';
 import log from 'loglevel';
+import { PageErrorBoundary } from './common/ErrorBoundary';
 
 const keycloakCfg = {
   url: 'https://dev-k8s.treetracker.org/auth',
@@ -13,7 +14,11 @@ const keycloakCfg = {
 };
 
 function Layout({ children, cookies }) {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <PageErrorBoundary>{children}</PageErrorBoundary>
+    </div>
+  );
 
   // disable keycloak for now
   // return (

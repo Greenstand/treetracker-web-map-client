@@ -95,6 +95,34 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
 
   // oidc.createSigninRequest()
 
+  // log otherwise-silent client exceptions with enough detail to debug them
+  React.useEffect(() => {
+    const handleWindowError = (event) => {
+      log.error(
+        '[window.error]',
+        event.message,
+        event.error?.stack,
+        window.location.href,
+      );
+    };
+    const handleUnhandledRejection = (event) => {
+      log.error(
+        '[unhandledrejection]',
+        event.reason?.message ?? event.reason,
+        event.reason?.stack,
+      );
+    };
+    window.addEventListener('error', handleWindowError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    return () => {
+      window.removeEventListener('error', handleWindowError);
+      window.removeEventListener(
+        'unhandledrejection',
+        handleUnhandledRejection,
+      );
+    };
+  }, []);
+
   React.useEffect(() => {
     const handleRouteChange = (url) => {
       log.warn('handleRouteChange:', url);

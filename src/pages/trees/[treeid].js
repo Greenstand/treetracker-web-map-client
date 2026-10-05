@@ -20,6 +20,7 @@ import TreeInfoDialog from 'components/TreeInfoDialog';
 import TreeLoader from 'components/TreeLoader';
 import Crumbs from 'components/common/Crumbs';
 import Icon from 'components/common/CustomIcon';
+import PageLoadError from 'components/common/PageLoadError';
 import TagList from 'components/common/TagList';
 import TreeTag from 'components/common/TreeTag';
 import { useDrawerContext } from 'context/DrawerContext';
@@ -46,6 +47,7 @@ export default function Tree({
   organization,
   nextExtraIsEmbed,
   nextExtraKeyword,
+  loadError,
 }) {
   log.warn('tree: ', tree);
   log.warn('org: ', organization);
@@ -78,6 +80,7 @@ export default function Tree({
   }
 
   useEffect(() => {
+    if (!tree) return;
     setTitlesData({
       treeId: tree.id,
       verifiedToken: tree.token_id,
@@ -85,7 +88,7 @@ export default function Tree({
     });
     // eslint-disable-next-line prefer-template, no-useless-concat
     log.warn('the tree data' + '' + JSON.stringify(tree));
-  }, [setTitlesData, tree, tree.id, tree.token_id, tree.approved]);
+  }, [setTitlesData, tree]);
 
   // useEffect(() => {
   //   async function draw() {
@@ -138,9 +141,9 @@ export default function Tree({
             };
             map.selectTree(treeDataForMap);
           } else if (isOrganizationContext) {
-            log.warn('set org filter', organization.map_name);
+            log.warn('set org filter', organization?.map_name);
             await map.setFilters({
-              map_name: organization.map_name,
+              map_name: organization?.map_name,
             });
             await focusTree(map, tree);
             const treeDataForMap = {
@@ -175,7 +178,7 @@ export default function Tree({
       }
     }
     reload();
-  }, [map, tree.lat, tree.lon]);
+  }, [map, tree?.lat, tree?.lon]);
 
   log.warn(planter, 'planter');
 
@@ -198,6 +201,16 @@ export default function Tree({
     ),
     [tree?.approved, tree?.token_id],
   );
+
+  if (!tree || !planter) {
+    return (
+      <PageLoadError
+        entityLabel="Tree"
+        id={loadError?.params?.treeid ?? router.query.treeid}
+        loadError={loadError}
+      />
+    );
+  }
 
   return (
     <>
