@@ -417,7 +417,17 @@ export default function Wallet(props) {
 }
 
 async function serverSideData(params) {
-  const wallet = await getWalletById(encodeURI(params.walletid));
+  let wallet;
+  try {
+    wallet = await getWalletById(encodeURI(params.walletid));
+  } catch (e) {
+    if (e.response?.status === 404) {
+      const notFoundError = new Error('Wallet not found');
+      notFoundError.response = { status: 404 };
+      throw notFoundError;
+    }
+    throw e;
+  }
   const { id } = wallet;
   const [species, tokens, tokenRegionCount, trees] = await Promise.all([
     getSpeciesByWalletId(id),
