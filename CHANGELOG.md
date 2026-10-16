@@ -1,3 +1,10 @@
+## [2.10.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.2...v2.10.3) (2026-10-16)
+
+
+### Bug Fixes
+
+* **ci:** build the -dev image again so dev deploys from main ([22451f2](https://github.com/Greenstand/treetracker-web-map-client/commit/22451f24df90c75a6ab881b91fb9572381e01e99))
+
 ## [2.10.2](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.1...v2.10.2) (2026-10-05)
 
 
