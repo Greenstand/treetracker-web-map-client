@@ -592,7 +592,7 @@ export default function Tree({
               cardImageSrc={organization?.logo_url || imagePlaceholder}
               link={`/organizations/${
                 organization.id
-              }?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}`}
+              }${nextExtraKeyword ? `?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}` : isEmbed ? '?embed=true' : ''}`}
             />
           </Box>
         )}
@@ -607,9 +607,7 @@ export default function Tree({
             buttonText="Meet the Planter"
             cardImageSrc={planter?.image_url || imagePlaceholder}
             rotation={planter?.image_rotation}
-            link={`/planters/${planter.id}?keyword=${nextExtraKeyword}${
-              isEmbed ? '&embed=true' : ''
-            }`}
+            link={`/planters/${planter.id}${nextExtraKeyword ? `?keyword=${nextExtraKeyword}${isEmbed ? '&embed=true' : ''}` : isEmbed ? '?embed=true' : ''}`}
           />
         </Box>
         <Typography
