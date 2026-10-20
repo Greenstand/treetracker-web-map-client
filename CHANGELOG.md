@@ -1,3 +1,10 @@
+## [2.10.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.3...v2.10.4) (2026-10-20)
+
+
+### Bug Fixes
+
+* **privacy:** show only the last initial of a planter ([2a7cda6](https://github.com/Greenstand/treetracker-web-map-client/commit/2a7cda6d64378c6f82fd03bfc2469e0a49407f05)), closes [#1853](https://github.com/Greenstand/treetracker-web-map-client/issues/1853)
+
 ## [2.10.3](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.2...v2.10.3) (2026-10-16)
 
 
