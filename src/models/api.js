@@ -59,6 +59,13 @@ export async function getCountryByLatLon(lat, lon) {
   }
 }
 
+// The map shows only the last initial, so never carry the rest into the page:
+// getStaticProps embeds whatever we return in __NEXT_DATA__.
+export function maskLastName(person) {
+  if (!person?.last_name) return person;
+  return { ...person, last_name: person.last_name.slice(0, 1) };
+}
+
 export async function getPlanterById(id) {
   try {
     const url = apiPaths.planters(id);
@@ -66,7 +73,7 @@ export async function getPlanterById(id) {
     const res = await axios.get(url, { timeout: API_TIMEOUT_MS });
     const data = await res.data;
     log.warn('url:', url, 'took:', Date.now() - begin);
-    return data;
+    return maskLastName(data);
   } catch (err) {
     log.error(err.message);
     throw err;
@@ -80,7 +87,7 @@ export async function getGrowerById(id) {
     const res = await axios.get(url, { timeout: API_TIMEOUT_MS });
     const data = await res.data;
     log.warn('url:', url, 'took:', Date.now() - begin);
-    return data;
+    return maskLastName(data);
   } catch (err) {
     log.error(err.message);
     throw err;
@@ -160,7 +167,12 @@ export async function getOrgLinks({
     species,
     partialErrors,
     ...(associated_organizations && { associatedOrganizations: associates }),
-    ...(associated_planters && { associatedPlanters: associates }),
+    ...(associated_planters && {
+      associatedPlanters: {
+        ...associates,
+        planters: associates?.planters?.map(maskLastName),
+      },
+    }),
   };
 }
 

@@ -19,7 +19,11 @@ import Filter from 'components/common/Filter';
 import { useFullscreen } from 'hooks/globalHooks';
 import Search from 'images/search.svg';
 import { useMapContext } from 'mapContext';
-import { getCountryLeaderboard, getFeaturedTrees } from 'models/api';
+import {
+  getCountryLeaderboard,
+  getFeaturedTrees,
+  maskLastName,
+} from 'models/api';
 import * as pathResolver from 'models/pathResolver';
 import * as utils from 'models/utils';
 
@@ -297,7 +301,7 @@ async function serverSideData(params) {
       (async () => {
         const data = await utils.requestAPI('/planters/featured');
         log.warn('planters', data);
-        return data.planters;
+        return data.planters?.map(maskLastName);
       })(),
       (async () => {
         const data = await utils.requestAPI('/organizations/featured');
