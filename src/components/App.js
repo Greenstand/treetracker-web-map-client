@@ -39,6 +39,12 @@ function getParameters() {
   return parameters;
 }
 
+// Map core reads this.filters.* without null guards, so filters cannot start
+// null. It also skips setFilters when the new value equals the current one, so
+// it cannot start {} either, or the first setFilters({}) from a page would load
+// no tiles. The first real setFilters call replaces this sentinel.
+const UNSET_FILTERS = { unset: true };
+
 function MapComponent() {
   log.warn('Render ................ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
   // const [tree, setTree] = React.useState(undefined);
@@ -174,9 +180,7 @@ function MapComponent() {
       ),
       apiServerUrl: getEnv('NEXT_PUBLIC_TILE_SERVER_WEBMAP_API'),
       queryApiServerUrl: process.env.NEXT_PUBLIC_API,
-      // the map core reads this.filters.treeid without a null guard; start
-      // with an empty object so map events work before a page sets filters
-      filters: {},
+      filters: UNSET_FILTERS,
     });
     const isAdmin = !!router.asPath.match(/admin/);
     if (!isAdmin) {
