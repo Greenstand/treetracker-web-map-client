@@ -1,3 +1,10 @@
+## [2.10.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.4...v2.10.5) (2026-10-22)
+
+
+### Bug Fixes
+
+* **map:** load tiles again by seeding filters with a sentinel ([4d06c01](https://github.com/Greenstand/treetracker-web-map-client/commit/4d06c010878bd3b754e7e7bfef68ea55d19c0763))
+
 ## [2.10.4](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.3...v2.10.4) (2026-10-20)
 
 
