@@ -1,3 +1,10 @@
+## [2.10.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.6...v2.10.7) (2026-11-18)
+
+
+### Bug Fixes
+
+* **config:** use a relative path for the default navbar logo ([549a1e4](https://github.com/Greenstand/treetracker-web-map-client/commit/549a1e482427453b710b664927751c6c3c1b0963))
+
 ## [2.10.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.5...v2.10.6) (2026-11-18)
 
 
