@@ -1,3 +1,10 @@
+## [2.10.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.5...v2.10.6) (2026-11-18)
+
+
+### Bug Fixes
+
+* **api:** move the runtime-env test out of the pages folder ([9508b16](https://github.com/Greenstand/treetracker-web-map-client/commit/9508b16de4cd0f95b5fb79a4a3d7ce9b77d74d15))
+
 ## [2.10.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.4...v2.10.5) (2026-10-22)
 
 
