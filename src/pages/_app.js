@@ -25,7 +25,9 @@ import { MapContextProvider } from 'mapContext';
 import oidcConfig from 'models/oidcConfig';
 import packageJson from '../../package.json';
 
-log.warn(`Web Map Client version ${packageJson.version}`);
+// Print the version at each log level: it helps to debug a deployed page.
+// eslint-disable-next-line no-console
+console.info(`Web Map Client version ${packageJson.version}`);
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   log.warn('Mocking API calls with msw');
