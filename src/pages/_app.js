@@ -5,10 +5,10 @@ import { LinearProgress, Box, useTheme, useMediaQuery } from '@mui/material';
 import log from 'loglevel';
 import App from 'next/app';
 import { useRouter } from 'next/router';
-import Script from 'next/script';
 import { userAgentFromString } from 'next/server';
 import React from 'react';
 import { AuthProvider } from 'react-oidc-context';
+import GoogleAnalytics from 'components/GoogleAnalytics';
 import Layout from 'components/Layout';
 import LayoutDashboard from 'components/LayoutDashboard';
 import LayoutEmbed from 'components/LayoutEmbed';
@@ -42,7 +42,8 @@ export const createMuiCache = () =>
 
 export function reportWebVitals({ name, delta, value, id, label }) {
   const deployed = process.env.NODE_ENV === 'production';
-  if (label === 'web-vital' && deployed) {
+  // gtag exists only when Google Analytics is on (see GoogleAnalytics)
+  if (label === 'web-vital' && deployed && typeof window.gtag === 'function') {
     window.gtag('event', name, {
       value: delta,
       metric_id: id,
@@ -50,26 +51,6 @@ export function reportWebVitals({ name, delta, value, id, label }) {
       metric_delta: delta,
     });
   }
-}
-
-function GoogleAnalytics() {
-  return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){window.dataLayer.push(arguments);}
-      gtag('js', new Date());
-  
-      gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-    `}
-      </Script>
-    </>
-  );
 }
 
 function TreetrackerApp({ Component, pageProps, device, config }) {
