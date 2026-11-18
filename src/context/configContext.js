@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 
 export const defaultConfig = {
   navbar: {
-    logoUrl: 'http://localhost:3000/images/greenstand_logo.svg',
+    logoUrl: '/images/greenstand_logo.svg',
     items: [
       {
         id: 1,
