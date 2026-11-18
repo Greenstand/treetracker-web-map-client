@@ -186,12 +186,6 @@ function MapComponent() {
     if (!isAdmin) {
       map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
         try {
-          log.warn('DEMO: move end:');
-          if (window.parent) {
-            log.warn('DEMO: ok message parent');
-            window.parent.postMessage('DEMO foo', '*');
-          }
-          log.warn('update url');
           const path = pathResolver.updatePathWhenMapMoveEnd(
             window.location,
             map,
