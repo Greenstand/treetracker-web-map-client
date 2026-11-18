@@ -1,3 +1,5 @@
+// Must be the first import: it sets the log level before other modules log.
+import 'models/logLevel';
 import '../style.css';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
