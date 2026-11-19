@@ -1,3 +1,11 @@
+## [2.10.8](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.7...v2.10.8) (2026-11-19)
+
+
+### Bug Fixes
+
+* **log:** keep the version line visible in production ([fa18172](https://github.com/Greenstand/treetracker-web-map-client/commit/fa1817266474b8154956c55bf3da94042ef65ce0))
+* **log:** print only errors in production ([0624f69](https://github.com/Greenstand/treetracker-web-map-client/commit/0624f69b3fc37f4d93276a608d2d5f0aeb3b6df8))
+
 ## [2.10.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.6...v2.10.7) (2026-11-18)
 
 
