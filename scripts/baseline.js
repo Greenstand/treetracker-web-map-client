@@ -4,6 +4,9 @@
 // findings of each rule. The check fails on each finding that is not in the
 // baseline, also on a line that the PR did not change. It also fails when a
 // fixed finding is still in the baseline, so the baseline can only shrink.
+// The baseline cannot hold a finding with severity "error" or a finding
+// without a rule: the check fails on each one, also when the baseline lists
+// its file and rule.
 // The ESLint baseline has the format of ESLint's eslint-suppressions.json.
 //
 // Usage:
@@ -14,8 +17,8 @@
 //
 // check:    fail on new findings and on fixed findings in the baseline.
 // update:   remove the fixed findings from the baseline. It never adds one.
-// suppress: write all current findings to the baseline. This can grow the
-//           baseline, so the PR needs the label "baseline-change".
+// suppress: write all current findings that the baseline can hold. This can
+//           grow the baseline, so the PR needs the label "baseline-change".
 // guard:    fail when a baseline file has more findings than on the base
 //           commit, unless BASELINE_CHANGE_LABEL is "true".
 // Without a tool, check, update and suppress use each tool.
@@ -26,6 +29,9 @@ const path = require('path');
 function toPosix(file) {
   return file.split(path.sep).join('/');
 }
+
+// ESLint gives each message a severity: 1 is a warning, 2 is an error.
+const ESLINT_ERROR = 2;
 
 // All ESLint findings of the repo, with the repo's own ESLint config.
 async function collectEslint(root) {
@@ -39,6 +45,7 @@ async function collectEslint(root) {
       line: message.line,
       column: message.column,
       message: message.message,
+      severity: message.severity === ESLINT_ERROR ? 'error' : 'warning',
     })),
   );
 }
@@ -170,6 +177,13 @@ function groupFindings(findings) {
   return groups;
 }
 
+// A finding with severity "error" blocks a commit (the pre-commit hook) and
+// can stop "next build". Neither reads the baseline, so the baseline cannot
+// hold the finding, also when the baseline lists its file and rule.
+function hasError(findings) {
+  return findings.some((finding) => finding.severity === 'error');
+}
+
 // Each file and rule with more findings than the baseline allows. The
 // baseline has no line numbers, so all findings of the entry are listed.
 function newEntries(baseline, groups) {
@@ -178,12 +192,17 @@ function newEntries(baseline, groups) {
     .flatMap((file) =>
       Object.keys(groups[file])
         .sort()
-        .map((rule) => ({
-          file,
-          rule,
-          before: baselineCount(baseline, file, rule),
-          findings: groups[file][rule],
-        }))
+        .map((rule) => {
+          const findings = groups[file][rule];
+          const error = hasError(findings);
+          return {
+            file,
+            rule,
+            error,
+            before: error ? 0 : baselineCount(baseline, file, rule),
+            findings,
+          };
+        })
         .filter((entry) => entry.findings.length > entry.before),
     );
 }
@@ -250,9 +269,12 @@ function plural(count, word) {
 
 // The baseline has no line numbers. When the baseline has some findings of
 // the entry, the report cannot tell which of the findings are new.
-function entryHeading({ rule, before, findings }) {
+function entryHeading({ rule, error, before, findings }) {
   if (rule === NO_RULE) {
     return `  ${NO_RULE}: ${findings.length} now. A finding without a rule cannot be in the baseline:`;
+  }
+  if (error) {
+    return `  ${rule}: ${findings.length} now. A finding with severity "error" cannot be in the baseline:`;
   }
   const counts = `  ${rule}: ${before} in the baseline, ${findings.length} now`;
   return before
@@ -276,8 +298,19 @@ function newFindingsReport(tool, entries) {
   lines.push(
     '',
     'Fix the new findings. To see them on your computer, run "npm run baseline".',
-    `If a maintainer agrees to keep a new finding, run "npm run baseline:suppress", commit ${file}, and ask the maintainer to add the label "baseline-change" to the PR.`,
   );
+  // A finding without a rule has its own reason in its heading.
+  const withRule = entries.filter((entry) => entry.rule !== NO_RULE);
+  if (withRule.some((entry) => !entry.error)) {
+    lines.push(
+      `If a maintainer agrees to keep a new finding, run "npm run baseline:suppress", commit ${file}, and ask the maintainer to add the label "baseline-change" to the PR.`,
+    );
+  }
+  if (withRule.some((entry) => entry.error)) {
+    lines.push(
+      'A finding with severity "error" blocks a commit and can stop "next build". Fix it, or change its rule to "warn" in .eslintrc.js.',
+    );
+  }
   return lines;
 }
 
@@ -339,6 +372,16 @@ function annotation(properties, message) {
   return `::error ${list}::${escapeData(message)}`;
 }
 
+function annotationTitle(title, entry) {
+  if (entry.rule === NO_RULE) {
+    return `${title} ${NO_RULE}: cannot be in the baseline`;
+  }
+  if (entry.error) {
+    return `${title} ${entry.rule}: severity "error" cannot be in the baseline`;
+  }
+  return `${title} ${entry.rule}: ${entry.before} in the baseline, ${entry.findings.length} now`;
+}
+
 // One annotation on the line of each finding of a new entry. GitHub shows it
 // in "Files changed" when the line is part of the PR.
 function newFindingsAnnotations(tool, entries) {
@@ -350,10 +393,7 @@ function newFindingsAnnotations(tool, entries) {
           file: finding.file,
           line: finding.line,
           col: finding.column,
-          title:
-            entry.rule === NO_RULE
-              ? `${title} ${NO_RULE}: cannot be in the baseline`
-              : `${title} ${entry.rule}: ${entry.before} in the baseline, ${entry.findings.length} now`,
+          title: annotationTitle(title, entry),
         },
         finding.message,
       ),
@@ -430,16 +470,23 @@ function update(tool, root, baseline, groups) {
   return { exitCode: 0, lines };
 }
 
-// Writes each current finding with a rule. This can grow the baseline, so the
+// Writes each current finding that the baseline can hold: a finding with a
+// rule and without severity "error". This can grow the baseline, so the
 // growth guard asks for a maintainer's label.
 function suppress(tool, root, groups) {
   const next = {};
+  let errors = 0;
   Object.keys(groups).forEach((file) => {
     Object.keys(groups[file])
       .filter((rule) => rule !== NO_RULE)
       .forEach((rule) => {
+        const findings = groups[file][rule];
+        if (hasError(findings)) {
+          errors += findings.length;
+          return;
+        }
         next[file] = next[file] || {};
-        next[file][rule] = { count: groups[file][rule].length };
+        next[file][rule] = { count: findings.length };
       });
   });
   writeBaseline(root, tool, next);
@@ -447,6 +494,14 @@ function suppress(tool, root, groups) {
   const lines = [
     `${title}: wrote ${plural(totalCount(next), 'finding')} to ${file}.`,
   ];
+  if (errors) {
+    lines.push(
+      `${title}: ${plural(
+        errors,
+        'finding',
+      )} with severity "error" cannot be in the baseline. To see the findings, run "npm run baseline".`,
+    );
+  }
   const withoutRule = Object.values(groups).reduce(
     (sum, rules) => sum + (rules[NO_RULE]?.length ?? 0),
     0,
