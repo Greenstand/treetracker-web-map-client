@@ -7,7 +7,10 @@
 // The baseline cannot hold a finding with severity "error" or a finding
 // without a rule: the check fails on each one, also when the baseline lists
 // its file and rule.
-// The ESLint baseline has the format of ESLint's eslint-suppressions.json.
+// Each baseline file has the format of ESLint's eslint-suppressions.json.
+//
+// Tools: eslint (baseline eslint-suppressions.json) and tsc, the type check
+// (baseline tsc-suppressions.json).
 //
 // Usage:
 //   node scripts/baseline.js check [tool ...]     (npm run baseline)
@@ -50,6 +53,88 @@ async function collectEslint(root) {
   );
 }
 
+// TypeScript 7 has no JavaScript API, so the type check runs its tsc
+// program. package.json installs TypeScript 7 as "@typescript/native", see
+// https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/
+const TYPE_CHECK_CONFIG = 'tsconfig.typecheck.json';
+
+// One line of "tsc --pretty false": file(line,column): error TS1234: message
+const TSC_FINDING = /^(.+)\((\d+),(\d+)\): error (TS\d+): (.*)$/;
+
+// The tsc program of TypeScript 7 does not start on Node.js 16.
+const TSC_MIN_NODE = 18;
+
+// A problem that stops the check: a baseline file that is not valid, or a
+// tool that cannot collect its findings. The check reports it and fails.
+class CheckError extends Error {}
+
+function runTsc(root) {
+  const tsc = path.join(
+    path.dirname(require.resolve('@typescript/native/package.json')),
+    'bin',
+    'tsc',
+  );
+  try {
+    const stdout = execFileSync(
+      process.execPath,
+      [tsc, '-p', TYPE_CHECK_CONFIG, '--pretty', 'false'],
+      { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] },
+    );
+    return { status: 0, stdout, stderr: '' };
+  } catch (error) {
+    // tsc exits with a code above 0 when it finds a type error.
+    if (typeof error.status !== 'number') throw error;
+    return { status: error.status, stdout: error.stdout, stderr: error.stderr };
+  }
+}
+
+// All type check findings of the repo, with tsconfig.typecheck.json. The
+// TS code (for example TS2554) is the rule. A finding has no severity, so
+// the baseline can hold each one. tsc writes the details of a long message
+// on indented lines. The finding gets them on its one line.
+function collectTypeCheck(root) {
+  const { node } = process.versions;
+  if (Number(node.split('.')[0]) < TSC_MIN_NODE) {
+    throw new CheckError(
+      `TypeScript 7 needs Node.js ${TSC_MIN_NODE} or later. This computer has Node.js ${node}.`,
+    );
+  }
+  const { status, stdout, stderr } = runTsc(root);
+  const findings = [];
+  let unknown = false;
+  stdout.split(/\r?\n/).forEach((text) => {
+    const match = TSC_FINDING.exec(text);
+    if (match) {
+      const [, file, line, column, rule, message] = match;
+      findings.push({
+        file: toPosix(path.relative(root, path.resolve(root, file))),
+        rule,
+        line: Number(line),
+        column: Number(column),
+        message,
+      });
+    } else if (/^\s/.test(text) && findings.length) {
+      findings[findings.length - 1].message += ` ${text.trim()}`;
+    } else if (text.trim()) {
+      unknown = true;
+    }
+  });
+  // An error without a file (for example a bad tsconfig.typecheck.json) or
+  // a crash. Without this, the check sees no findings and can pass.
+  if (unknown || (status !== 0 && !findings.length)) {
+    const output = `${stdout}\n${stderr}`
+      .split(/\r?\n/)
+      .filter((text) => text.trim())
+      .map((text) => `  ${text}`);
+    throw new CheckError(
+      ['tsc could not check the code. The output of tsc:', ...output].join(
+        '\n',
+      ),
+    );
+  }
+  return findings;
+}
+
 // Each tool has a baseline file and a function that collects its findings.
 // The keys of a baseline file are: file path from the repo root, rule, count.
 const TOOLS = {
@@ -58,14 +143,16 @@ const TOOLS = {
     file: 'eslint-suppressions.json',
     collect: collectEslint,
   },
+  tsc: {
+    title: 'Type check',
+    file: 'tsc-suppressions.json',
+    collect: collectTypeCheck,
+  },
 };
 
 function collectFindings(tool, root) {
   return TOOLS[tool].collect(root);
 }
-
-// A problem with a baseline file. The check reports it and fails.
-class BaselineError extends Error {}
 
 function isObject(value) {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -78,10 +165,9 @@ function parseBaseline(text, file) {
   try {
     data = JSON.parse(text);
   } catch (error) {
-    throw new BaselineError(`${file} is not valid JSON. ${error.message}`);
+    throw new CheckError(`${file} is not valid JSON. ${error.message}`);
   }
-  const invalid = (detail) =>
-    new BaselineError(`${file} is not valid. ${detail}`);
+  const invalid = (detail) => new CheckError(`${file} is not valid. ${detail}`);
   if (!isObject(data)) throw invalid('The top level must be an object.');
   Object.entries(data).forEach(([name, rules]) => {
     if (!isObject(rules)) {
@@ -303,7 +389,7 @@ function newFindingsReport(tool, entries) {
   const withRule = entries.filter((entry) => entry.rule !== NO_RULE);
   if (withRule.some((entry) => !entry.error)) {
     lines.push(
-      `If a maintainer agrees to keep a new finding, run "npm run baseline:suppress", commit ${file}, and ask the maintainer to add the label "baseline-change" to the PR.`,
+      `If a maintainer agrees to keep a new finding, run "npm run baseline:suppress -- ${tool}", commit ${file}, and ask the maintainer to add the label "baseline-change" to the PR.`,
     );
   }
   if (withRule.some((entry) => entry.error)) {
@@ -595,12 +681,12 @@ function guard({ root, env, baseRef }) {
   return { exitCode: 1, output: lines.join('\n') };
 }
 
-// Turns a problem with a baseline file into a failed result with a message.
-async function reportBaselineErrors(prefix, action) {
+// Turns a problem that stops the check into a failed result with a message.
+async function reportCheckErrors(prefix, action) {
   try {
     return await action();
   } catch (error) {
-    if (!(error instanceof BaselineError)) throw error;
+    if (!(error instanceof CheckError)) throw error;
     return { exitCode: 1, output: `${prefix}: ${error.message}` };
   }
 }
@@ -612,7 +698,7 @@ async function runTool({ mode, tool, root, env, collect = collectFindings }) {
   if (!baseline && mode === 'update') {
     return {
       exitCode: 1,
-      output: `${title}: the baseline file ${file} does not exist. To make it, run "npm run baseline:suppress".`,
+      output: `${title}: the baseline file ${file} does not exist. To make it, run "npm run baseline:suppress -- ${tool}".`,
     };
   }
   if (!baseline && mode === 'check') {
@@ -635,11 +721,9 @@ async function runTool({ mode, tool, root, env, collect = collectFindings }) {
 
 function run(options) {
   if (options.mode === 'guard') {
-    return reportBaselineErrors('Baseline guard', () => guard(options));
+    return reportCheckErrors('Baseline guard', () => guard(options));
   }
-  return reportBaselineErrors(TOOLS[options.tool].title, () =>
-    runTool(options),
-  );
+  return reportCheckErrors(TOOLS[options.tool].title, () => runTool(options));
 }
 
 const USAGE = `Usage:
