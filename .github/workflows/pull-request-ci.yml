@@ -10,6 +10,10 @@ on:
     branches:
       - '*'
 
+# read-only token: the PR checks only read the repository
+permissions:
+  contents: read
+
 jobs:
   # static checks run in their own job, so a test failure cannot hide them
   static-checks:
@@ -19,12 +23,14 @@ jobs:
     steps:
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       # no node-version: use the runner's Node.js, as the Cypress jobs do
       # https://github.com/actions/setup-node
       - name: Set up npm cache
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           cache: npm
 
@@ -50,12 +56,14 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       # Install cached NPM dependencies, run integration tests
       # https://github.com/cypress-io/github-action
       - name: Cypress Integration Tests 🧪
-        uses: cypress-io/github-action@v7
+        uses: cypress-io/github-action@0ed14f5d30c4ad6e5e8ffb6f57dbb69150137a3f # v7.4.10
         with:
           # use mock api
           env: nock=true
@@ -65,13 +73,13 @@ jobs:
       - name: Save screenshots
         # step runs even if other steps fail
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: cypress-screenshots
           path: cypress/screenshots
       - name: Save videos
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: cypress-videos
           path: cypress/videos
@@ -82,10 +90,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Run Component tests 🧪
-        uses: cypress-io/github-action@v7
+        uses: cypress-io/github-action@0ed14f5d30c4ad6e5e8ffb6f57dbb69150137a3f # v7.4.10
         with:
           command: npm run cypress:run:component
 
@@ -97,14 +107,14 @@ jobs:
       - name: Save screenshots
         # step runs even if other steps fail
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: cypress-screenshots-ct
           path: cypress/screenshots
 
       - name: Save videos
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: cypress-videos-ct
           path: cypress/videos

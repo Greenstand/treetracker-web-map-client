@@ -6,6 +6,11 @@ on:
       git-tag:
         description: 'Branch/hash/tag'
         required: true
+
+# read-only token by default; a job adds write access only when it needs it
+permissions:
+  contents: read
+
 env:
   project-directory: ./
 
@@ -13,6 +18,12 @@ jobs:
   release:
     name: Build Frontend Project
     runs-on: ubuntu-latest
+    # semantic-release pushes the release commit and tag, creates the GitHub
+    # release, and comments on the released issues and pull requests
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     if: |
       !contains(github.event.head_commit.message, 'skip-ci')
     steps:
@@ -22,14 +33,14 @@ jobs:
             echo "Error: Invalid git-tag format. Please use the format 'X.Y.Z' (e.g., '2.9.3')." >&2
             exit 1
           fi
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: main
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '20.x'
       - name: npm clean install
@@ -41,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: get-npm-version
         id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
+        run: echo "current-version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
       # next.js build
       - name: build next
         run: npm run build
@@ -49,17 +60,17 @@ jobs:
         env:
           NODE_ENV: production
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # v1.2.0
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@f211e3e9ded2d9377c8cadc4489a4e38014bc4c9 # v1.7.0
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1.14.1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build snapshot and push on merge
         id: docker_build_release
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a # v2.10.0
         with:
           context: ./
           file: ./Dockerfile-dev
@@ -81,7 +92,9 @@ jobs:
       github.event_name == 'push' &&
       github.repository == "Greenstand/${{ github.event.repository.name }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - name: Install kustomize
         # Pin the version so the installer fetches a specific release tag
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.4.3
@@ -90,7 +103,7 @@ jobs:
       - name: Run kustomize
         run: (cd deployment/base && ../../kustomize edit set image greenstand/treetracker-web-map-client=greenstand/${{ github.event.repository.name }}-dev:${{ needs.release.outputs.bumped_version }} )
       - name: Install doctl for kubernetes
-        uses: digitalocean/action-doctl@v2
+        uses: digitalocean/action-doctl@3cb3953159719656269e044e0e24ca16dd2a690f # v2.5.2
         with:
           token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
       - name: Save DigitalOcean kubeconfig
