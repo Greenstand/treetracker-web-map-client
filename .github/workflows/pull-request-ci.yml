@@ -50,6 +50,30 @@ jobs:
       - name: ESLint
         run: npm run lint
 
+  # fails when the PR adds a dependency with a known high or critical
+  # vulnerability. Vulnerabilities that are already on the base branch do
+  # not count.
+  dependency-review:
+    name: Run dependency review
+    runs-on: ubuntu-latest
+
+    steps:
+      # no checkout: the action gets the dependency changes of the PR from
+      # the GitHub dependency graph
+      # https://github.com/actions/dependency-review-action
+      - name: Dependency review
+        uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec # v5.0.1
+        with:
+          fail-on-severity: high
+          # a vulnerable dev dependency does not fail the check
+          fail-on-scopes: runtime
+          # no license policy. With the check on, a license that is not a
+          # valid SPDX id fails the check.
+          license-check: false
+          # the Scorecard data comes from outside services and only adds
+          # warnings
+          show-openssf-scorecard: false
+
   integration-tests:
     name: Run integration tests
     runs-on: ubuntu-latest
