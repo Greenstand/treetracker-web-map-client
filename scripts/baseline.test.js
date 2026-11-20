@@ -159,6 +159,84 @@ describe('check', () => {
     );
   });
 
+  it('fails on a finding with severity error, also when the baseline holds it', async () => {
+    const root = makeRoot();
+    writeBaseline(root, { 'src/a.js': { 'no-debugger': { count: 1 } } });
+
+    const result = await runMode('check', root, [
+      { ...finding('src/a.js', 'no-debugger', 4), severity: 'error' },
+    ]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toMatch(/^ESLint: 1 new finding\./);
+  });
+
+  it('says why a finding with severity error cannot be in the baseline, and how to fix it', async () => {
+    const root = makeRoot();
+    writeBaseline(root, { 'src/a.js': { 'no-debugger': { count: 1 } } });
+
+    const result = await runMode('check', root, [
+      { ...finding('src/a.js', 'no-debugger', 4), severity: 'error' },
+    ]);
+
+    expect(result.output).toBe(
+      [
+        'ESLint: 1 new finding.',
+        '',
+        'src/a.js',
+        '  no-debugger: 1 now. A finding with severity "error" cannot be in the baseline:',
+        '    4:1  Message of no-debugger.',
+        '',
+        'Fix the new findings. To see them on your computer, run "npm run baseline".',
+        'A finding with severity "error" blocks a commit and can stop "next build". Fix it, or change its rule to "warn" in .eslintrc.js.',
+      ].join('\n'),
+    );
+  });
+
+  it('gives the annotation of a finding with severity error the reason in its title', async () => {
+    const root = makeRoot();
+    writeBaseline(root, {});
+
+    const result = await runMode(
+      'check',
+      root,
+      [{ ...finding('src/a.js', 'no-debugger', 4), severity: 'error' }],
+      { GITHUB_ACTIONS: 'true' },
+    );
+
+    expect(result.output).toContain(
+      '\n::error file=src/a.js,line=4,col=1,title=ESLint no-debugger%3A severity "error" cannot be in the baseline::Message of no-debugger.',
+    );
+  });
+
+  it('gives a parse error neither the advice for a rule nor the advice for the baseline', async () => {
+    const root = makeRoot();
+    writeBaseline(root, {});
+
+    const result = await runMode('check', root, [
+      {
+        file: 'src/x.js',
+        rule: null,
+        line: 5,
+        column: 3,
+        message: 'Parsing error: Unexpected token',
+        severity: 'error',
+      },
+    ]);
+
+    expect(result.output).toBe(
+      [
+        'ESLint: 1 new finding.',
+        '',
+        'src/x.js',
+        '  (no rule): 1 now. A finding without a rule cannot be in the baseline:',
+        '    5:3  Parsing error: Unexpected token',
+        '',
+        'Fix the new findings. To see them on your computer, run "npm run baseline".',
+      ].join('\n'),
+    );
+  });
+
   it('counts each finding as new when the baseline file does not exist', async () => {
     const root = makeRoot();
 
@@ -329,6 +407,41 @@ describe('suppress', () => {
   }
 }
 `);
+  });
+
+  it('does not write a finding with severity error, and reports each finding that it did not write', async () => {
+    const root = makeRoot();
+    writeBaseline(root, {});
+
+    const result = await runMode('suppress', root, [
+      finding('src/c.js', 'no-console'),
+      { ...finding('src/a.js', 'no-debugger'), severity: 'error' },
+      {
+        file: 'src/x.js',
+        rule: null,
+        line: 1,
+        column: 1,
+        message: 'Parse',
+        severity: 'error',
+      },
+    ]);
+
+    expect(result.exitCode).toBe(0);
+    expect(readBaselineText(root)).toBe(`{
+  "src/c.js": {
+    "no-console": {
+      "count": 1
+    }
+  }
+}
+`);
+    expect(result.output).toBe(
+      [
+        'ESLint: wrote 1 finding to eslint-suppressions.json.',
+        'ESLint: 1 finding with severity "error" cannot be in the baseline. To see the findings, run "npm run baseline".',
+        'ESLint: 1 finding without a rule (for example a parse error) cannot be in the baseline. To see the findings, run "npm run baseline".',
+      ].join('\n'),
+    );
   });
 
   it('makes the baseline file when none exists, and reports what it wrote', async () => {
@@ -517,7 +630,7 @@ describe('guard', () => {
 });
 
 describe('ESLint findings', () => {
-  it('gives each finding with its path from the root and its rule', async () => {
+  it('gives each finding with its path from the root, its rule and its severity', async () => {
     const root = makeRoot();
     fs.mkdirSync(path.join(root, 'src'));
     fs.writeFileSync(
@@ -542,6 +655,7 @@ describe('ESLint findings', () => {
         line: 1,
         column: 1,
         message: 'Unexpected console statement.',
+        severity: 'warning',
       },
       {
         file: 'src/a.js',
@@ -549,6 +663,7 @@ describe('ESLint findings', () => {
         line: 2,
         column: 3,
         message: "Unexpected 'debugger' statement.",
+        severity: 'error',
       },
       {
         file: 'src/bad.js',
@@ -556,6 +671,7 @@ describe('ESLint findings', () => {
         line: 1,
         column: 5,
         message: 'Parsing error: Unexpected token =',
+        severity: 'error',
       },
     ]);
   });
