@@ -34,8 +34,9 @@ jobs:
         with:
           cache: npm
 
-      # setup-node adds ESLint problem matchers. They would show the first
-      # 10 existing warnings as annotations on each PR, so remove them.
+      # setup-node adds ESLint problem matchers. They would show existing
+      # findings as annotations on each PR. The ESLint step adds its own
+      # annotations for the new findings only, so remove the matchers.
       - name: Remove ESLint annotations
         run: |
           echo "::remove-matcher owner=eslint-compact::"
@@ -47,8 +48,11 @@ jobs:
           # the static checks do not need the Cypress binary
           CYPRESS_INSTALL_BINARY: 0
 
+      # fails on each ESLint finding that is not in eslint-suppressions.json
+      # (also on a line that the PR did not change), and on each fixed finding
+      # that is still in the file. The log says how to fix each failure.
       - name: ESLint
-        run: npm run lint
+        run: npm run baseline -- eslint
 
   # fails when the PR adds a dependency with a known high or critical
   # vulnerability. Vulnerabilities that are already on the base branch do

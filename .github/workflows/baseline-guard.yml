@@ -1,0 +1,41 @@
+# Fails when a PR adds findings to a baseline file (eslint-suppressions.json),
+# unless a maintainer adds the label "baseline-change" to the PR.
+# It is a separate workflow, so a label change does not run the tests again.
+# See scripts/baseline.js.
+
+name: Baseline guard
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    branches:
+      - '*'
+
+# read-only token: the guard only reads the repository
+permissions:
+  contents: read
+
+# a new push or a label change stops the run that is still in progress
+concurrency:
+  group: baseline-guard-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  baseline-guard:
+    name: Check baseline growth
+    runs-on: ubuntu-latest
+
+    steps:
+      # the PR merge commit and its first parent, the base branch
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+
+      # no npm ci: the guard only compares the baseline files with git
+      - name: Check baseline growth
+        run: node scripts/baseline.js guard HEAD^1
+        env:
+          BASELINE_CHANGE_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'baseline-change') }}

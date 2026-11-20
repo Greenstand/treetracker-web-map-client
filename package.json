@@ -3,6 +3,9 @@
   "version": "2.10.8",
   "private": true,
   "scripts": {
+    "baseline": "node scripts/baseline.js check",
+    "baseline:suppress": "node scripts/baseline.js suppress",
+    "baseline:update": "node scripts/baseline.js update",
     "build": "next build",
     "build-and-start": "next build && next start",
     "cy": "cypress open --env nock=true",
