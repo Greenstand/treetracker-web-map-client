@@ -68,6 +68,10 @@ describe('Token page', () => {
       failOnStatusCode: false,
     });
     cy.contains(token.id);
+    // the breadcrumb at the top of the page shows the short token id
+    cy.contains(`${token.id.slice(0, 4)}...${token.id.slice(-4)}`).should(
+      'be.visible',
+    );
     cy.screenshot();
   });
 });

@@ -18,3 +18,26 @@
 // require('./commands')
 import 'cypress-watch-and-reload/support';
 import './commands';
+
+// The tree and token pages load the Facebook SDK for the Like button.
+// src/components/LikeButton.js does not handle a failed load, so a slow or
+// blocked Facebook fails the test with an unhandled promise rejection. No
+// test checks the Like button, so the SDK loads as an empty script.
+beforeEach(() => {
+  cy.intercept('https://connect.facebook.net/**', {
+    statusCode: 200,
+    headers: { 'content-type': 'application/javascript' },
+    body: '',
+  });
+});
+
+// Known defect: the organization, planter and wallet pages call
+// map.getInitialView() without a catch. The map core can then reject with
+// "Cannot read properties of undefined (reading 'center')". Ignore only this
+// error. Remove this handler when the pages handle a failed initial view.
+Cypress.on('uncaught:exception', (err) => {
+  const isKnownMapError =
+    err.message.includes("reading 'center'") &&
+    String(err.stack).includes('treetracker-web-map-core');
+  return !isKnownMapError;
+});

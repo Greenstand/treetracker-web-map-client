@@ -6,7 +6,7 @@
 
 ---
 
-Within the root,`cypress/test/integration`. Depending on what units you are testing make a new directory with the appropriate name.
+Within the root,`cypress/tests/integration`. Depending on what units you are testing make a new directory with the appropriate name.
 
 ---
 
@@ -69,7 +69,7 @@ Note: Read the `getNockRoutes` to see which routes are usable for `prepareNocks`
 
 _Prerequisite: a fork of the web-map-client repo_
 
-1. Make a new file within `cypress/test/integration` called `money_tree.cy.js`
+1. Make a new file within `cypress/tests/integration` called `money_tree.cy.js`
 
 2. Make a default import for the `tree186734.json` file from `fixtures` directory within `money_tree.cy.js`
 
@@ -126,7 +126,7 @@ misc cypress code to confirm changes happended
 
 9. Use cypress runner to validate the integration test
 
-`npm run cy:nock` - check package.json for specific scripts
+`npm run cy` - check package.json for specific scripts
 
 Challenge: Use nockIntercept task to add additional API calls needed for the trees/:id route for treetracker
 

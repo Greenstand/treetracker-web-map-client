@@ -12,7 +12,9 @@ describe('Planter page', () => {
     cy.visit(path, {
       failOnStatusCode: false,
     });
-    cy.get('.MuiTypography-h2').contains(/sebastian g/i);
+    cy.get('.MuiTypography-h2')
+      .contains(/sebastian g/i)
+      .should('be.visible');
     cy.screenshot();
   });
 });

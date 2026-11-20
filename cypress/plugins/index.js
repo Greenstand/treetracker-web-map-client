@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
+const fs = require('fs');
 const http = require('http');
 const next = require('next');
 const nock = require('nock');
@@ -9,6 +10,45 @@ require('dotenv').config({ path: '.env.development' });
 // start the Next.js server when Cypress starts
 module.exports = async (on, config) => {
   require('cypress-watch-and-reload/plugins')(config);
+
+  // A headless browser starts at 1280x720, and Chrome draws its own UI inside
+  // that window. The page then gets less than the viewport of
+  // cypress.config.js (1440x800), and each screenshot cuts the page. So open
+  // the window at 1920x1080.
+  // https://docs.cypress.io/api/node-events/browser-launch-api#Set-screen-size-when-running-headless
+  on('before:browser:launch', (browser, launchOptions) => {
+    if (!browser.isHeadless) {
+      return launchOptions;
+    }
+    if (browser.name === 'electron') {
+      return {
+        ...launchOptions,
+        preferences: {
+          ...launchOptions.preferences,
+          width: 1920,
+          height: 1080,
+        },
+      };
+    }
+    if (browser.family === 'chromium') {
+      launchOptions.args.push('--window-size=1920,1080');
+    }
+    return launchOptions;
+  });
+
+  // keep the video of a spec only when a test in the spec failed
+  // https://docs.cypress.io/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests
+  on('after:spec', (spec, results) => {
+    if (!results || !results.video) {
+      return;
+    }
+    const failed = results.tests.some((test) =>
+      test.attempts.some((attempt) => attempt.state === 'failed'),
+    );
+    if (!failed) {
+      fs.unlinkSync(results.video);
+    }
+  });
 
   // copy env vars
   // eslint-disable-next-line no-param-reassign
