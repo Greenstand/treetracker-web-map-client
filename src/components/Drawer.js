@@ -72,13 +72,11 @@ export default function Drawer(props) {
     if (touchCache.lastVelocity < -0.4) {
       rootRef.current.style.transform = `translateY(0px)`;
       rootRef.current.style.borderRadius = '0';
-      contentRef.current.style.height = '100%';
       return;
     }
     if (touchCache.lastVelocity > 0.4) {
       rootRef.current.style.transform = `translateY(${window.innerHeight}px)`;
       handleClose();
-      contentRef.current.style.height = 'auto';
       return;
     }
     log.warn(
@@ -91,10 +89,8 @@ export default function Drawer(props) {
       if (y < 150) {
         rootRef.current.style.transform = `translateY(0px)`;
         rootRef.current.style.borderRadius = '0';
-        contentRef.current.style.height = '100%';
         return;
       }
-      contentRef.current.style.height = 'auto';
       if (y > window.innerHeight - 150) {
         rootRef.current.style.transform = `translateY(${window.innerHeight}px)`;
         handleClose();
@@ -266,6 +262,8 @@ export default function Drawer(props) {
           left: 0,
           width: '100%',
           height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
           transition: 'transform 125ms cubic-bezier(0, 0, 0.2, 1) 0ms',
           // transform: 'translateY(500px)',
           zIndex: '999',
@@ -306,10 +304,11 @@ export default function Drawer(props) {
             if (contentRef) contentRef.current = el;
           }}
           sx={{
-            position: 'relative',
-            overflow: 'scroll',
-            minHeight: 200,
-            height: 'auto',
+            flex: 1,
+            minHeight: 0,
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+            paddingBottom: 4,
           }}
           className="drawer-content"
         >
