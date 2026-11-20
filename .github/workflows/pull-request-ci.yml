@@ -24,9 +24,16 @@ jobs:
       # no node-version: use the runner's Node.js, as the Cypress jobs do
       # https://github.com/actions/setup-node
       - name: Set up npm cache
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           cache: npm
+
+      # setup-node adds ESLint problem matchers. They would show the first
+      # 10 existing warnings as annotations on each PR, so remove them.
+      - name: Remove ESLint annotations
+        run: |
+          echo "::remove-matcher owner=eslint-compact::"
+          echo "::remove-matcher owner=eslint-stylish::"
 
       - name: Install 📦
         run: npm ci
