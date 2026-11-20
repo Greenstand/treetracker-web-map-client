@@ -14,7 +14,7 @@ import Link from '../Link';
 
 const SLIDE_EXTREME_INDEX = 30;
 
-function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
+function FeaturedTreesSlider({ trees, size = null, link }) {
   // default size of images = 208px;
   // if size="small" props is passed in, size of images= 144px
   const { classes } = useStyles(size);
@@ -43,7 +43,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
 
   return (
     <div className={classes.SliderContainer}>
-      {!isMobile && leftScrollButton && (
+      {leftScrollButton && (
         <Button
           onClick={() => scrollHandler(-500)}
           sx={{
@@ -57,7 +57,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             minWidth: '35px',
             height: '75px',
             cursor: 'pointer',
-            marginLeft: -3,
+            marginLeft: { xs: 0, sm: -3 },
             '& svg': {
               marginRight: -4,
             },
@@ -139,7 +139,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
           </Link>
         ))}
       </Grid>
-      {!isMobile && rightScrollButton && (
+      {rightScrollButton && (
         <Button
           onClick={() => scrollHandler(500)}
           sx={{
@@ -152,7 +152,7 @@ function FeaturedTreesSlider({ trees, size = null, isMobile, link }) {
             minWidth: '35px',
             height: '75px',
             cursor: 'pointer',
-            marginRight: -3,
+            marginRight: { xs: 0, sm: -3 },
             '& svg': {
               marginLeft: -4,
             },
