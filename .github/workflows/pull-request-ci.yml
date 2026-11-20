@@ -11,24 +11,34 @@ on:
       - '*'
 
 jobs:
-  install:
-    name: Install dependencies
+  # static checks run in their own job, so a test failure cannot hide them
+  static-checks:
+    name: Run static checks
     runs-on: ubuntu-latest
+
     steps:
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      # only install dependencies
-      # https://github.com/cypress-io/github-action
-      - name: Install 📦
-        uses: cypress-io/github-action@v4
+      # no node-version: use the runner's Node.js, as the Cypress jobs do
+      # https://github.com/actions/setup-node
+      - name: Set up npm cache
+        uses: actions/setup-node@v4
         with:
-          runTests: false
+          cache: npm
+
+      - name: Install 📦
+        run: npm ci
+        env:
+          # the static checks do not need the Cypress binary
+          CYPRESS_INSTALL_BINARY: 0
+
+      - name: ESLint
+        run: npm run lint
 
   integration-tests:
     name: Run integration tests
-    needs: install
     runs-on: ubuntu-latest
 
     steps:
@@ -36,8 +46,9 @@ jobs:
         uses: actions/checkout@v4
 
       # Install cached NPM dependencies, run integration tests
+      # https://github.com/cypress-io/github-action
       - name: Cypress Integration Tests 🧪
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v7
         with:
           # use mock api
           env: nock=true
@@ -60,7 +71,6 @@ jobs:
 
   unit-tests:
     name: Run unit tests
-    needs: install
     runs-on: ubuntu-latest
 
     steps:
@@ -68,15 +78,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Component tests 🧪
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v7
         with:
           command: npm run cypress:run:component
 
       - name: Jest Unit Tests 🧪
+        # run Jest also when a component test fails
+        if: ${{ !cancelled() }}
         run: npx jest --ci
-
-      - name: ESLint
-        run: npm run lint
 
       - name: Save screenshots
         # step runs even if other steps fail
