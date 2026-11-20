@@ -34,15 +34,18 @@ jobs:
         with:
           cache: npm
 
-      # setup-node adds ESLint problem matchers. They would show existing
-      # findings as annotations on each PR. The ESLint step adds its own
-      # annotations for the new findings only, so remove the matchers.
-      - name: Remove ESLint annotations
+      # setup-node adds problem matchers for ESLint and tsc. They would show
+      # existing findings as annotations on each PR. The ESLint step and the
+      # type check step add their own annotations for the new findings only,
+      # so remove the matchers.
+      - name: Remove problem matchers
         run: |
           echo "::remove-matcher owner=eslint-compact::"
           echo "::remove-matcher owner=eslint-stylish::"
+          echo "::remove-matcher owner=tsc::"
 
       - name: Install 📦
+        id: install
         run: npm ci
         env:
           # the static checks do not need the Cypress binary
@@ -53,6 +56,15 @@ jobs:
       # that is still in the file. The log says how to fix each failure.
       - name: ESLint
         run: npm run baseline -- eslint
+
+      # fails on each type error that is not in tsc-suppressions.json (also
+      # in a file that the PR did not change, for example a caller of a
+      # changed function), and on each fixed type error that is still in the
+      # file. It also runs when the ESLint step fails, so that the PR shows
+      # the results of both checks.
+      - name: Type check
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run baseline -- tsc
 
   # fails when the PR adds a dependency with a known high or critical
   # vulnerability. Vulnerabilities that are already on the base branch do

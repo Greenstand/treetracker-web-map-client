@@ -1,0 +1,756 @@
+{
+  "src/DesignSandbox/DesignSandbox.js": {
+    "TS2741": {
+      "count": 3
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/App.js": {
+    "TS18047": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 6
+    },
+    "TS2345": {
+      "count": 1
+    },
+    "TS2554": {
+      "count": 1
+    }
+  },
+  "src/components/ChangeThemeButton.js": {
+    "TS2339": {
+      "count": 2
+    }
+  },
+  "src/components/CustomWorldMap.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/Drawer.js": {
+    "TS18047": {
+      "count": 38
+    },
+    "TS2322": {
+      "count": 1
+    },
+    "TS2339": {
+      "count": 9
+    }
+  },
+  "src/components/DrawerDeprecated.js": {
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/FeaturedPlantersSlider/index.js": {
+    "TS18048": {
+      "count": 1
+    },
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 3
+    },
+    "TS2345": {
+      "count": 3
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/FeaturedPlantersSlider/style.js": {
+    "TS2367": {
+      "count": 5
+    }
+  },
+  "src/components/FeaturedTreesSlider/index.js": {
+    "TS18048": {
+      "count": 1
+    },
+    "TS2322": {
+      "count": 1
+    },
+    "TS2339": {
+      "count": 3
+    },
+    "TS2345": {
+      "count": 3
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/FeaturedTreesSlider/style.js": {
+    "TS2367": {
+      "count": 5
+    }
+  },
+  "src/components/GlobalMapLayout.js": {
+    "TS2339": {
+      "count": 8
+    }
+  },
+  "src/components/Home.js": {
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 4
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/ImpactSection.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 2
+    }
+  },
+  "src/components/InformationCard1.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2339": {
+      "count": 1
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/Layout.js": {
+    "TS2339": {
+      "count": 2
+    },
+    "TS2786": {
+      "count": 1
+    }
+  },
+  "src/components/LayoutEmbed.js": {
+    "TS2339": {
+      "count": 1
+    },
+    "TS2786": {
+      "count": 1
+    }
+  },
+  "src/components/LayoutMobile.js": {
+    "TS18048": {
+      "count": 2
+    },
+    "TS2769": {
+      "count": 2
+    },
+    "TS2786": {
+      "count": 1
+    }
+  },
+  "src/components/LeaderBoard.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 1
+    }
+  },
+  "src/components/LikeButton.js": {
+    "TS2339": {
+      "count": 2
+    },
+    "TS2810": {
+      "count": 1
+    }
+  },
+  "src/components/Link.js": {
+    "TS2339": {
+      "count": 2
+    },
+    "TS2554": {
+      "count": 1
+    }
+  },
+  "src/components/Navbar.js": {
+    "TS2322": {
+      "count": 3
+    },
+    "TS2339": {
+      "count": 1
+    }
+  },
+  "src/components/PlanterQuote.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/ProfileAvatar.js": {
+    "TS2339": {
+      "count": 1
+    }
+  },
+  "src/components/SearchBoxMobile.js": {
+    "TS2322": {
+      "count": 1
+    }
+  },
+  "src/components/SearchFilter.js": {
+    "TS2322": {
+      "count": 1
+    }
+  },
+  "src/components/SearchFilterMobile.js": {
+    "TS2322": {
+      "count": 1
+    }
+  },
+  "src/components/Share.js": {
+    "TS2339": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 4
+    }
+  },
+  "src/components/ShareDeprecated.js": {
+    "TS18047": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 5
+    },
+    "TS2551": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 4
+    }
+  },
+  "src/components/Timeline.js": {
+    "TS2322": {
+      "count": 5
+    },
+    "TS2339": {
+      "count": 1
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/TreeInfoDialog.js": {
+    "TS2322": {
+      "count": 3
+    },
+    "TS2339": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 2
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/TreeLoader.js": {
+    "TS2741": {
+      "count": 3
+    }
+  },
+  "src/components/TreeSpeciesCard.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2339": {
+      "count": 3
+    }
+  },
+  "src/components/UserAvatar.js": {
+    "TS2339": {
+      "count": 2
+    }
+  },
+  "src/components/ZoomInOutButton.js": {
+    "TS18048": {
+      "count": 3
+    },
+    "TS2339": {
+      "count": 1
+    },
+    "TS2769": {
+      "count": 2
+    }
+  },
+  "src/components/common/BackButton.js": {
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/common/ColorButton.js": {
+    "TS2339": {
+      "count": 2
+    }
+  },
+  "src/components/common/Crumbs.js": {
+    "TS2322": {
+      "count": 1
+    }
+  },
+  "src/components/common/CustomCard.js": {
+    "TS2339": {
+      "count": 1
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/common/CustomImageWrapper.js": {
+    "TS2739": {
+      "count": 2
+    },
+    "TS2741": {
+      "count": 1
+    }
+  },
+  "src/components/common/CustomShareIcon.js": {
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/components/common/DrawerTitle.js": {
+    "TS2339": {
+      "count": 2
+    },
+    "TS2739": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 1
+    }
+  },
+  "src/components/common/ErrorBoundary.test.js": {
+    "TS2339": {
+      "count": 1
+    }
+  },
+  "src/components/common/Info.js": {
+    "TS2741": {
+      "count": 1
+    }
+  },
+  "src/components/common/PageLoadError.js": {
+    "TS2739": {
+      "count": 1
+    }
+  },
+  "src/components/common/TreeTag.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2339": {
+      "count": 2
+    }
+  },
+  "src/components/dashboard/ChangeLogoSection.js": {
+    "TS2339": {
+      "count": 1
+    }
+  },
+  "src/components/dashboard/CustomLogo.js": {
+    "TS2339": {
+      "count": 2
+    }
+  },
+  "src/components/dashboard/CustomizeNavbar.js": {
+    "TS2339": {
+      "count": 4
+    }
+  },
+  "src/components/playground/ColorInput.js": {
+    "TS2322": {
+      "count": 1
+    }
+  },
+  "src/components/search/Search.js": {
+    "TS2786": {
+      "count": 1
+    }
+  },
+  "src/components/search/SearchInput.js": {
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/context/DrawerContext.js": {
+    "TS2554": {
+      "count": 1
+    }
+  },
+  "src/context/dashboardContext.js": {
+    "TS2322": {
+      "count": 1
+    }
+  },
+  "src/context/themeContext.js": {
+    "TS2339": {
+      "count": 1
+    },
+    "TS2345": {
+      "count": 3
+    },
+    "TS2741": {
+      "count": 1
+    }
+  },
+  "src/hooks/contextHooks/usePlaygroundFonts.js": {
+    "TS2339": {
+      "count": 2
+    }
+  },
+  "src/hooks/contextHooks/usePlaygroundTheme.js": {
+    "TS2339": {
+      "count": 3
+    }
+  },
+  "src/hooks/contextHooks/usePlaygroundThemeType.js": {
+    "TS2339": {
+      "count": 2
+    }
+  },
+  "src/hooks/contextHooks/usePlaygroundUtils.js": {
+    "TS2339": {
+      "count": 2
+    }
+  },
+  "src/hooks/globalHooks/useClipboard.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2353": {
+      "count": 1
+    }
+  },
+  "src/mapContext.js": {
+    "TS2322": {
+      "count": 1
+    }
+  },
+  "src/models/MapModel.js": {
+    "TS2339": {
+      "count": 4
+    }
+  },
+  "src/models/MapModel.test.js": {
+    "TS2322": {
+      "count": 1
+    },
+    "TS2551": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 1
+    }
+  },
+  "src/models/api.js": {
+    "TS18046": {
+      "count": 7
+    },
+    "TS2698": {
+      "count": 2
+    }
+  },
+  "src/models/api.test.js": {
+    "TS2339": {
+      "count": 6
+    },
+    "TS2345": {
+      "count": 2
+    }
+  },
+  "src/models/entity.test.js": {
+    "TS2322": {
+      "count": 3
+    }
+  },
+  "src/models/makeStyles.js": {
+    "TS2339": {
+      "count": 1
+    }
+  },
+  "src/models/runtimeEnv.js": {
+    "TS2339": {
+      "count": 1
+    }
+  },
+  "src/models/runtimeEnv.test.js": {
+    "TS2339": {
+      "count": 3
+    }
+  },
+  "src/models/test-utils.js": {
+    "TS2304": {
+      "count": 1
+    },
+    "TS2322": {
+      "count": 1
+    }
+  },
+  "src/models/utils.js": {
+    "TS2304": {
+      "count": 1
+    },
+    "TS2322": {
+      "count": 2
+    },
+    "TS8024": {
+      "count": 1
+    }
+  },
+  "src/models/utils.test.js": {
+    "TS18046": {
+      "count": 1
+    },
+    "TS2339": {
+      "count": 3
+    }
+  },
+  "src/pages/404.js": {
+    "TS2739": {
+      "count": 1
+    }
+  },
+  "src/pages/500.js": {
+    "TS2739": {
+      "count": 1
+    }
+  },
+  "src/pages/_app.js": {
+    "TS2322": {
+      "count": 4
+    },
+    "TS2339": {
+      "count": 2
+    },
+    "TS2741": {
+      "count": 1
+    }
+  },
+  "src/pages/admin/global.js": {
+    "TS2339": {
+      "count": 4
+    },
+    "TS2739": {
+      "count": 1
+    }
+  },
+  "src/pages/admin/index.js": {
+    "TS1345": {
+      "count": 1
+    },
+    "TS18047": {
+      "count": 2
+    },
+    "TS18048": {
+      "count": 6
+    },
+    "TS2304": {
+      "count": 3
+    },
+    "TS2339": {
+      "count": 13
+    },
+    "TS2554": {
+      "count": 3
+    },
+    "TS2683": {
+      "count": 1
+    },
+    "TS2722": {
+      "count": 1
+    },
+    "TS2739": {
+      "count": 1
+    }
+  },
+  "src/pages/admin/theme.js": {
+    "TS1345": {
+      "count": 1
+    },
+    "TS18047": {
+      "count": 4
+    },
+    "TS18048": {
+      "count": 5
+    },
+    "TS2304": {
+      "count": 3
+    },
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 4
+    },
+    "TS2554": {
+      "count": 2
+    },
+    "TS2683": {
+      "count": 1
+    },
+    "TS2739": {
+      "count": 1
+    }
+  },
+  "src/pages/filter.js": {
+    "TS2339": {
+      "count": 2
+    },
+    "TS2353": {
+      "count": 1
+    }
+  },
+  "src/pages/organizations/[organizationid].js": {
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 5
+    },
+    "TS2345": {
+      "count": 1
+    },
+    "TS2739": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 7
+    },
+    "TS2769": {
+      "count": 2
+    }
+  },
+  "src/pages/planters/[planterid].js": {
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 7
+    },
+    "TS2739": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 8
+    },
+    "TS2769": {
+      "count": 2
+    }
+  },
+  "src/pages/search.js": {
+    "TS2322": {
+      "count": 2
+    }
+  },
+  "src/pages/tokens/[tokenid].js": {
+    "TS2322": {
+      "count": 5
+    },
+    "TS2339": {
+      "count": 10
+    },
+    "TS2362": {
+      "count": 1
+    },
+    "TS2363": {
+      "count": 1
+    },
+    "TS2739": {
+      "count": 5
+    },
+    "TS2741": {
+      "count": 14
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/pages/top.js": {
+    "TS18048": {
+      "count": 2
+    },
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 4
+    },
+    "TS2739": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 1
+    }
+  },
+  "src/pages/trees/[treeid].js": {
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 6
+    },
+    "TS2739": {
+      "count": 6
+    },
+    "TS2741": {
+      "count": 17
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/pages/v2/captures/[captureid].js": {
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 6
+    },
+    "TS2739": {
+      "count": 6
+    },
+    "TS2741": {
+      "count": 17
+    },
+    "TS2769": {
+      "count": 1
+    }
+  },
+  "src/pages/wallets/[walletid].js": {
+    "TS2322": {
+      "count": 2
+    },
+    "TS2339": {
+      "count": 5
+    },
+    "TS2739": {
+      "count": 1
+    },
+    "TS2741": {
+      "count": 8
+    },
+    "TS2769": {
+      "count": 2
+    }
+  }
+}

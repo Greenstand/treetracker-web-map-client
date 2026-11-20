@@ -95,7 +95,7 @@ describe('check', () => {
     expect(result.output).toContain(
       [
         'Fix the new findings. To see them on your computer, run "npm run baseline".',
-        'If a maintainer agrees to keep a new finding, run "npm run baseline:suppress", commit eslint-suppressions.json, and ask the maintainer to add the label "baseline-change" to the PR.',
+        'If a maintainer agrees to keep a new finding, run "npm run baseline:suppress -- eslint", commit eslint-suppressions.json, and ask the maintainer to add the label "baseline-change" to the PR.',
       ].join('\n'),
     );
   });
@@ -351,7 +351,7 @@ describe('update', () => {
 
     expect(result.exitCode).toBe(1);
     expect(result.output).toBe(
-      'ESLint: the baseline file eslint-suppressions.json does not exist. To make it, run "npm run baseline:suppress".',
+      'ESLint: the baseline file eslint-suppressions.json does not exist. To make it, run "npm run baseline:suppress -- eslint".',
     );
     expect(fs.existsSync(path.join(root, BASELINE_FILE))).toBe(false);
   });
@@ -462,17 +462,24 @@ describe('suppress', () => {
   });
 });
 
+// The baseline file of each tool.
+const BASELINE_FILES = [BASELINE_FILE, 'tsc-suppressions.json'];
+
 // A git repo with two commits: the base branch, then the PR. A null baseline
-// means that the commit has no baseline file.
-function makeRepo(baseBaseline, prBaseline) {
+// means that the commit has no baseline file. The baseline file of each
+// other tool is empty in both commits.
+function makeRepo(baseBaseline, prBaseline, baselineFile = BASELINE_FILE) {
   const root = makeRoot();
   const git = (...args) =>
     execFileSync('git', ['-C', root, '-c', 'commit.gpgsign=false', ...args], {
       stdio: 'pipe',
     });
+  BASELINE_FILES.filter((other) => other !== baselineFile).forEach((other) => {
+    fs.writeFileSync(path.join(root, other), '{}\n');
+  });
   const commit = (baseline, message) => {
-    const file = path.join(root, BASELINE_FILE);
-    if (baseline) writeBaseline(root, baseline);
+    const file = path.join(root, baselineFile);
+    if (baseline) fs.writeFileSync(file, JSON.stringify(baseline));
     else fs.rmSync(file, { force: true });
     fs.writeFileSync(path.join(root, 'commit.txt'), message);
     git('add', '--all');
@@ -518,6 +525,29 @@ describe('guard', () => {
         'eslint-suppressions.json',
         '  src/a.js  no-console: 1 on the base branch, 2 in the PR',
         '  src/b.js  no-alert: 0 on the base branch, 1 in the PR',
+        '',
+        'Fix the new findings, and keep them out of the baseline.',
+        'If a maintainer agrees to keep them (for example in a PR that adds a new rule), the maintainer adds the label "baseline-change" to the PR. Then this check passes.',
+      ].join('\n'),
+    );
+  });
+
+  it('fails when the PR adds findings to the type check baseline', async () => {
+    const root = makeRepo(
+      { 'src/a.js': { TS2554: { count: 1 } } },
+      { 'src/a.js': { TS2554: { count: 2 } } },
+      'tsc-suppressions.json',
+    );
+
+    const result = await guard(root);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toBe(
+      [
+        'Baseline guard: the PR adds 1 finding to the baseline.',
+        '',
+        'tsc-suppressions.json',
+        '  src/a.js  TS2554: 1 on the base branch, 2 in the PR',
         '',
         'Fix the new findings, and keep them out of the baseline.',
         'If a maintainer agrees to keep them (for example in a PR that adds a new rule), the maintainer adds the label "baseline-change" to the PR. Then this check passes.',
@@ -674,5 +704,130 @@ describe('ESLint findings', () => {
         severity: 'error',
       },
     ]);
+  });
+});
+
+describe('type check', () => {
+  it('reports a new finding under its own title and baseline file', async () => {
+    const root = makeRoot();
+    fs.writeFileSync(
+      path.join(root, 'tsc-suppressions.json'),
+      JSON.stringify({ 'src/a.js': { TS2554: { count: 1 } } }),
+    );
+
+    const result = await run({
+      mode: 'check',
+      tool: 'tsc',
+      root,
+      env: {},
+      collect: () => [
+        finding('src/a.js', 'TS2554', 3),
+        finding('src/a.js', 'TS2554', 8),
+      ],
+    });
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toBe(
+      [
+        'Type check: 1 new finding.',
+        '',
+        'src/a.js',
+        '  TS2554: 1 in the baseline, 2 now. One or more of these findings is new:',
+        '    3:1  Message of TS2554.',
+        '    8:1  Message of TS2554.',
+        '',
+        'Fix the new findings. To see them on your computer, run "npm run baseline".',
+        'If a maintainer agrees to keep a new finding, run "npm run baseline:suppress -- tsc", commit tsc-suppressions.json, and ask the maintainer to add the label "baseline-change" to the PR.',
+      ].join('\n'),
+    );
+  });
+});
+
+// The settings of tsconfig.typecheck.json that the fixture needs. The
+// fixture has no node_modules, so it uses no type packages.
+const TYPE_CHECK_CONFIG = {
+  compilerOptions: {
+    allowJs: true,
+    checkJs: true,
+    noEmit: true,
+    strict: true,
+    noImplicitAny: false,
+    module: 'esnext',
+    moduleResolution: 'bundler',
+    types: [],
+  },
+  include: ['src/**/*.js'],
+};
+
+function makeTypeCheckRoot(files) {
+  const root = makeRoot();
+  fs.writeFileSync(
+    path.join(root, 'tsconfig.typecheck.json'),
+    JSON.stringify(TYPE_CHECK_CONFIG),
+  );
+  Object.entries(files).forEach(([file, text]) => {
+    fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
+    fs.writeFileSync(path.join(root, file), text);
+  });
+  return root;
+}
+
+describe('type check findings', () => {
+  it('gives each finding with its path from the root, its TS code as the rule, and no severity', async () => {
+    const root = makeTypeCheckRoot({
+      'src/a.js': 'export function f(value) {\n  return value;\n}\n',
+      'src/b.js': "import { f } from './a';\n\nf(1, 2);\n",
+    });
+
+    const findings = await collectFindings('tsc', root);
+
+    expect(findings).toEqual([
+      {
+        file: 'src/b.js',
+        rule: 'TS2554',
+        line: 3,
+        column: 6,
+        message: 'Expected 0-1 arguments, but got 2.',
+      },
+    ]);
+  });
+
+  it('joins the lines of a long message into one line', async () => {
+    const root = makeTypeCheckRoot({
+      'src/a.js': [
+        '/** @param {{ size: number }} options */',
+        'export function f(options) {',
+        '  return options.size;',
+        '}',
+        '',
+        "const options = { size: 'big' };",
+        'f(options);',
+        '',
+      ].join('\n'),
+    });
+
+    const findings = await collectFindings('tsc', root);
+
+    expect(findings).toEqual([
+      {
+        file: 'src/a.js',
+        rule: 'TS2345',
+        line: 7,
+        column: 3,
+        message:
+          "Argument of type '{ size: string; }' is not assignable to parameter of type '{ size: number; }'. Types of property 'size' are incompatible. Type 'string' is not assignable to type 'number'.",
+      },
+    ]);
+  });
+
+  it('fails with the output of tsc when tsc cannot check the code', async () => {
+    const root = makeRoot();
+
+    const result = await run({ mode: 'check', tool: 'tsc', root, env: {} });
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toMatch(
+      /^Type check: tsc could not check the code\. The output of tsc:\n {2}error TS5058: /,
+    );
   });
 });
