@@ -307,7 +307,8 @@ export default function Drawer(props) {
           }}
           sx={{
             position: 'relative',
-            overflow: 'scroll',
+            overflowY: 'scroll',
+            overflowX: 'hidden',
             minHeight: 200,
             height: 'auto',
           }}
