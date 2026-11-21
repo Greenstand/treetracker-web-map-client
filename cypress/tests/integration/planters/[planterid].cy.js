@@ -15,6 +15,6 @@ describe('Planter page', () => {
     cy.get('.MuiTypography-h2')
       .contains(/sebastian g/i)
       .should('be.visible');
-    cy.screenshot();
+    cy.screenshotPage();
   });
 });

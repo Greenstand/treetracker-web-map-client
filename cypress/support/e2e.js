@@ -31,6 +31,40 @@ beforeEach(() => {
   });
 });
 
+// The pages load the Montserrat and Lato fonts from Google Fonts. The tests
+// serve the same fonts from cypress/fixtures/fonts. So each screenshot shows
+// the right fonts, and a slow Google Fonts cannot stop a page load (its
+// stylesheet is in the <head>).
+const FONT_FILES = [
+  'montserrat-latin-400-normal.woff2',
+  'montserrat-latin-600-normal.woff2',
+  'montserrat-latin-700-normal.woff2',
+  'montserrat-latin-900-normal.woff2',
+  'lato-latin-400-normal.woff2',
+  'lato-latin-700-normal.woff2',
+];
+
+beforeEach(() => {
+  cy.intercept(/^https:\/\/fonts\.googleapis\.com\/css2\?family=Montserrat/, {
+    fixture: 'fonts/montserrat.css',
+    headers: { 'content-type': 'text/css' },
+  });
+  cy.intercept(/^https:\/\/fonts\.googleapis\.com\/css2\?family=Lato/, {
+    fixture: 'fonts/lato.css',
+    headers: { 'content-type': 'text/css' },
+  });
+  FONT_FILES.forEach((file) => {
+    cy.intercept(`https://fonts.gstatic.com/cypress-fixtures/${file}`, {
+      // ",null" serves the file as binary data
+      fixture: `fonts/${file},null`,
+      headers: {
+        'content-type': 'font/woff2',
+        'access-control-allow-origin': '*',
+      },
+    });
+  });
+});
+
 // Known defect: the organization, planter and wallet pages call
 // map.getInitialView() without a catch. The map core can then reject with
 // "Cannot read properties of undefined (reading 'center')". Ignore only this

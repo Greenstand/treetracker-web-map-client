@@ -158,6 +158,6 @@ describe('Wallet page', () => {
       .eq(0)
       .contains(/Maynard.Stroman79/i)
       .should('be.visible');
-    cy.screenshot();
+    cy.screenshotPage();
   });
 });

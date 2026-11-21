@@ -17,6 +17,6 @@ describe('Tree page', () => {
     });
     cy.visit(treePath);
     cy.contains(`${exampleTreeData.id}`).should('be.visible');
-    cy.screenshot();
+    cy.screenshotPage();
   });
 });

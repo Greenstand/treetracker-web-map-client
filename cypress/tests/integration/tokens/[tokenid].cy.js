@@ -72,6 +72,6 @@ describe('Token page', () => {
     cy.contains(`${token.id.slice(0, 4)}...${token.id.slice(-4)}`).should(
       'be.visible',
     );
-    cy.screenshot();
+    cy.screenshotPage();
   });
 });
