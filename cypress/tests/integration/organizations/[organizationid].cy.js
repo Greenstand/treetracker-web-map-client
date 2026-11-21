@@ -20,7 +20,7 @@ describe('Organizations', () => {
     });
 
     cy.url().should('include', '/organizations');
-    cy.contains(org.name);
-    cy.screenshot();
+    cy.contains(org.name).should('be.visible');
+    cy.screenshotPage();
   });
 });

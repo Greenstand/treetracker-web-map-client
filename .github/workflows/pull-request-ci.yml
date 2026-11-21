@@ -93,6 +93,17 @@ jobs:
   integration-tests:
     name: Run integration tests
     runs-on: ubuntu-latest
+    # A fixed Chrome version. Cypress 12.14.0 stops when the second spec opens
+    # in Chrome 158 or later (Cypress issue 35195, fixed in Cypress 15.21.2),
+    # and Cypress 14 or later cannot run the component tests of Next.js 12.
+    # The tag names the Node.js and Chrome versions, the digest fixes the
+    # image. Remove the container when Cypress is upgraded.
+    # https://hub.docker.com/r/cypress/browsers
+    container:
+      image: cypress/browsers:node-24.22.1-chrome-156.0.8078.73-1-ff-159.0-edge-156.0.4314.50-1@sha256:348cf0242c31155e85b2a90fdd5f95afc1f3aaeca830ba98acadb3ce5d77c4e0
+      # the README of cypress-io/github-action asks for this user, to avoid
+      # permission problems with the checkout
+      options: --user 1001
 
     steps:
       - name: Checkout
@@ -117,12 +128,16 @@ jobs:
         with:
           name: cypress-screenshots
           path: cypress/screenshots
+          # no warning when the run stops before the tests. The job log shows why.
+          if-no-files-found: ignore
       - name: Save videos
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: cypress-videos
           path: cypress/videos
+          # cypress/plugins/index.js keeps only the videos of failed specs
+          if-no-files-found: ignore
 
   unit-tests:
     name: Run unit tests
@@ -151,6 +166,8 @@ jobs:
         with:
           name: cypress-screenshots-ct
           path: cypress/screenshots
+          # the component tests take a screenshot only when a test fails
+          if-no-files-found: ignore
 
       - name: Save videos
         if: always()

@@ -119,9 +119,8 @@ describe('ISR pages render after isrMemoryCacheSize:0 (PR #1824 regression)', ()
     cy.contains('Tanzania');
   });
 
-  // TODO: v2/captures/[captureid] — no fixture exists yet for the captures API
-  // (getCapturesById, getGrowerById, getStakeHolderById, getCountryByLatLon).
-  // Add a fixture under doc/examples/captures/ and a nockIntercept route here
-  // before enabling this test.
-  it.skip('renders captures page', () => {});
+  // TODO: add a test for v2/captures/[captureid]. No fixture exists yet for
+  // the captures API (getCapturesById, getGrowerById, getStakeHolderById,
+  // getCountryByLatLon). First add a fixture under doc/examples/captures/ and
+  // a nockIntercept route here.
 });

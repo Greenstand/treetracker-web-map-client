@@ -3,7 +3,6 @@ const { defineConfig } = require('cypress');
 module.exports = defineConfig({
   viewportWidth: 1440,
   viewportHeight: 800,
-  nodeVersion: 'system',
 
   'cypress-watch-and-reload': {
     watch: ['src/**'],

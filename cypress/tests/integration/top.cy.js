@@ -49,9 +49,9 @@ describe('top', () => {
     });
 
     cy.visit('/top');
-    cy.contains('Featured trees');
+    cy.contains('Featured trees').should('be.visible');
     cy.contains('Check out the global leaders in the tree planting effort');
     cy.contains('Tanzania');
-    cy.screenshot();
+    cy.screenshotPage();
   });
 });

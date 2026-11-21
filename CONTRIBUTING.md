@@ -13,7 +13,7 @@ Each push to a PR starts these jobs. They run at the same time. A full run takes
 | Run static checks, step "ESLint"                       | The lint rules in `.eslintrc.js`. It fails on each new finding, and on each fixed finding that is still in the baseline. | 1 minute     | `npm run baseline -- eslint`                               |
 | Run static checks, step "Type check"                   | Type errors in the `.js` files in `src/`, without the Cypress files (`*.cy.js`). It uses TypeScript `checkJs`. It fails as the step "ESLint" does. | (same job)   | `npm run baseline -- tsc`                                  |
 | Run unit tests                                         | The Cypress component tests, then the Jest tests.                                                       | 4 minutes    | `npm run cypress:run:component`, then `npm test` (CI runs `npx jest --ci`) |
-| Run integration tests                                  | The Cypress tests of the pages, with a mock API.                                                        | 6 minutes    | `npm run cypress:run:fast`                                 |
+| Run integration tests                                  | The Cypress tests of the pages, with a mock API. It saves a screenshot of 7 pages.                      | 6 minutes    | `npm run cypress:run:fast` (stop `npm run dev` first)      |
 | Run dependency review                                  | A new runtime dependency with a known high or critical vulnerability.                                   | seconds      | No local command                                           |
 | Check baseline growth (workflow "Baseline guard")      | The PR does not add findings to a baseline file (see [The baseline](#the-baseline)).                    | seconds      | No local command                                           |
 
@@ -31,6 +31,8 @@ npm run cypress:run:fast
 ```
 
 `npm run baseline` runs ESLint and the type check. It shows only the new findings and the fixed findings. To see all findings, old and new, run `npm run lint` (ESLint) or `npm run typecheck` (type check). Both list many old findings, and `npm run typecheck` ends with an error. This is normal.
+
+**Integration tests on your computer:** `npm run cypress:run:fast` starts its own Next.js server on port 3000. Stop `npm run dev`, or any other server on port 3000, before you run it. The script uses Electron, the browser that comes with Cypress, and records no videos. CI uses Chrome 156, in the Docker image that `.github/workflows/pull-request-ci.yml` names.
 
 **Node.js version:** use Node.js 20 or later. CI uses Node.js 24. On Node.js 16 and 18, `npm ci` stops with the error "notsup", because some ESLint packages need a newer Node.js.
 
@@ -137,7 +139,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 1. On the PR page, find the failed check, and click **Details**.
 2. Open the failed step. The log tells you what failed and what to do.
 3. **ESLint and type check:** the log lists each new finding with its file and line. GitHub also shows each new finding in the **Files changed** tab, when the line is part of your PR. A finding in a file that your PR did not change shows only in the run summary.
-4. **Cypress tests:** the run summary has files at the bottom, under **Artifacts**. `cypress-screenshots` and `cypress-videos` are from the integration tests. `cypress-screenshots-ct` and `cypress-videos-ct` are from the component tests. The screenshot of a failed test has `(failed)` in its file name.
+4. **Cypress tests:** the run summary has files at the bottom, under **Artifacts**. From the integration tests, `cypress-screenshots` has a screenshot of 7 pages (home, top, tree, planter, organization, wallet and token), and `cypress-videos` has the video of each spec file with a failed test. From the component tests, `cypress-screenshots-ct` has the screenshots of failed tests, and `cypress-videos-ct` has the videos. The screenshot of a failed test has `(failed)` in its file name. When a job saves no files of a kind, its artifact is not in the list.
 5. **Dependency review:** the job summary names the package, the severity and a link to the advisory. The usual fix is a newer version of the package. Old vulnerabilities and dev dependencies do not count. A new GitHub Action in `.github/workflows/` counts as a dependency too.
 6. **Check baseline growth:** it fails when your PR adds findings to `eslint-suppressions.json` or `tsc-suppressions.json`. Fix the new findings, or ask a maintainer to add the label `baseline-change`.
 
