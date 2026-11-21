@@ -1,3 +1,10 @@
+## [2.10.9](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.8...v2.10.9) (2026-11-21)
+
+
+### Bug Fixes
+
+* **env:** serve the Google Analytics id in the runtime env ([1f96edc](https://github.com/Greenstand/treetracker-web-map-client/commit/1f96edc2b6404f61061478f98b8431a7369c3264))
+
 ## [2.10.8](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.7...v2.10.8) (2026-11-19)
 
 
