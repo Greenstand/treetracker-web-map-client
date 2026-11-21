@@ -47,8 +47,9 @@ export const createMuiCache = () =>
 export function reportWebVitals({ name, delta, value, id, label }) {
   const deployed = process.env.NODE_ENV === 'production';
   // gtag exists only when Google Analytics is on (see GoogleAnalytics)
-  if (label === 'web-vital' && deployed && typeof window.gtag === 'function') {
-    window.gtag('event', name, {
+  const { gtag } = window;
+  if (label === 'web-vital' && deployed && typeof gtag === 'function') {
+    gtag('event', name, {
       value: delta,
       metric_id: id,
       metric_value: value,
