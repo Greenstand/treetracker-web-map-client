@@ -1,3 +1,32 @@
+## [2.10.9](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.8...v2.10.9) (2026-11-21)
+
+
+### Bug Fixes
+
+* **env:** serve the Google Analytics id in the runtime env ([1f96edc](https://github.com/Greenstand/treetracker-web-map-client/commit/1f96edc2b6404f61061478f98b8431a7369c3264))
+
+## [2.10.8](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.7...v2.10.8) (2026-11-19)
+
+
+### Bug Fixes
+
+* **log:** keep the version line visible in production ([fa18172](https://github.com/Greenstand/treetracker-web-map-client/commit/fa1817266474b8154956c55bf3da94042ef65ce0))
+* **log:** print only errors in production ([0624f69](https://github.com/Greenstand/treetracker-web-map-client/commit/0624f69b3fc37f4d93276a608d2d5f0aeb3b6df8))
+
+## [2.10.7](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.6...v2.10.7) (2026-11-18)
+
+
+### Bug Fixes
+
+* **config:** use a relative path for the default navbar logo ([549a1e4](https://github.com/Greenstand/treetracker-web-map-client/commit/549a1e482427453b710b664927751c6c3c1b0963))
+
+## [2.10.6](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.5...v2.10.6) (2026-11-18)
+
+
+### Bug Fixes
+
+* **api:** move the runtime-env test out of the pages folder ([9508b16](https://github.com/Greenstand/treetracker-web-map-client/commit/9508b16de4cd0f95b5fb79a4a3d7ce9b77d74d15))
+
 ## [2.10.5](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.4...v2.10.5) (2026-10-22)
 
 

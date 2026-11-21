@@ -1,8 +1,11 @@
 {
   "name": "client",
-  "version": "2.10.5",
+  "version": "2.10.9",
   "private": true,
   "scripts": {
+    "baseline": "node scripts/baseline.js check",
+    "baseline:suppress": "node scripts/baseline.js suppress",
+    "baseline:update": "node scripts/baseline.js update",
     "build": "next build",
     "build-and-start": "next build && next start",
     "cy": "cypress open --env nock=true",
@@ -22,7 +25,8 @@
     "prettier": "prettier ./ --write",
     "prettier:check": "prettier --check src/",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "tsc -p tsconfig.typecheck.json"
   },
   "browserslist": {
     "production": [
@@ -88,6 +92,7 @@
     "@cypress/react": "^5.10.3",
     "@cypress/webpack-dev-server": "^1.7.0",
     "@cypress/webpack-preprocessor": "^5.4.3",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.8.1",
     "@next/eslint-plugin-next": "^12.0.7",
     "@stoplight/prism-cli": "^4.4.2",
     "@svgr/cli": "^6.3.1",
@@ -95,6 +100,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.4.1",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "axios-mock-adapter": "^1.21.1",
     "concurrently": "^6.3.0",
     "cypress": "^12.14.0",
@@ -107,8 +113,9 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-sonarjs": "^4.2.2",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.0",
     "is-ci": "^3.0.1",
@@ -120,6 +127,7 @@
     "prettier": "^2.4.1",
     "sort-package-json": "^1.53.1",
     "start-server-and-test": "^1.14.0",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "webpack": "^5.64.1",
     "webpack-dev-server": "^4.6.0"
   },

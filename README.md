@@ -47,15 +47,11 @@ Live dev env site for the new beta version is at: https://dev-k8s.treetracker.or
 
 **NOTE**
 
-For the new web map beta development, we are working on the branch: beta, now we have set it as default branch.
-
-The current version online is still deployed from master.
-
-So, for issues, the issue for the new web map, should use the branch: `main`, the issue for the current version online, like fix bug, add tiny features, should use `master`, generally, we will freeze new big features on the `master` branch.
+Open each PR against `main`. Releases and deploys come from `main`.
 
 ## Development Environment Quick Start
 
-This project must be installed and used with Node v16. [Node Version Manager](https://github.com/nvm-sh/nvm) is an excellent tool for quickly installing and selecting Node releases.
+Use Node.js 20 or later. CI uses Node.js 24. See [CONTRIBUTING.md](CONTRIBUTING.md). [Node Version Manager](https://github.com/nvm-sh/nvm) is an excellent tool for quickly installing and selecting Node releases.
 
 1. Make sure all npm modules are installed for client.
 
@@ -309,7 +305,7 @@ Please use colors from MUI's theme when working on the style of the project for 
 
 ## Code style guide
 
-We use [Prettier](https://prettier.io/), [Eslint](https://eslint.org/) along with [husky](https://typicode.github.io/husky/#/) to style our code.
+We use [Prettier](https://prettier.io/), [Eslint](https://eslint.org/) along with [husky](https://typicode.github.io/husky/#/) to style our code. CI runs ESLint and a type check on each PR. [CONTRIBUTING.md](CONTRIBUTING.md) explains all CI checks.
 
 ### Prettier
 
@@ -331,9 +327,9 @@ To fix automatic rules run:
 npm run lint:fix
 ```
 
-In .eslintrc.js, there is a set of rules with status **off or warn**. Whenever you are developing a new file or an existing file try to correct some warnings, because in the future the rules will be activated.
+In .eslintrc.js, some rules have the status **warn**. CI fails on each new finding, also on a warning. The old findings are in a baseline, so they do not fail CI. When you fix an old warning, run `npm run baseline:update` and commit `eslint-suppressions.json`. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Once the rules are activated, you can't make a commit until you fix the lint errors!
+The pre-commit hook blocks a commit with an ESLint error. A warning does not block a commit.
 
 You can find the Eslint rules in the .eslintrc.js file.
 
@@ -409,7 +405,7 @@ We have more tech guides and handbook here:
 
 4.  Coding (In the process, you can rebase/merge the newest code from the main working branch online to get the new changes, check below link to get tutorial on how to update code from upstream)
 
-5.  Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us.
+5.  Raise the PR, if possible, add `resolves #xx` in the description to link the PR with the issue, in this way, Github will automatically close that issue for us. CI checks run on each PR, see [CONTRIBUTING.md](CONTRIBUTING.md).
 6.  Optional, if you aren't fully confident about your code, it's always a good idea to create a PR in `draft` status as early as possible, so you can draw others attention on it and give you suggestions. (to do it, just expand the PR button, there is a `draft` selection)
 
 7.  If necessary, add some screenshot or video record to show the work, especial when you are doing some UI work, like build a component.

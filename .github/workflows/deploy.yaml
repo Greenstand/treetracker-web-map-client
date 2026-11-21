@@ -16,6 +16,10 @@ on:
           - prod
         default: 'dev'
 
+# read-only token by default; a job adds write access only when it needs it
+permissions:
+  contents: read
+
 env:
   project-directory: ./
 
@@ -28,20 +32,18 @@ jobs:
         run: |
           echo "version: ${{ github.event.inputs.version }}"
           echo "env: ${{ github.event.inputs.env }}"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           # set ref with input, add prefix 'refs/tags/' if it is a tag
           ref: ${{format('v{0}', github.event.inputs.version)}}
+          persist-credentials: false
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '18.x'
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
       - name: Install kustomize
         # Pin the version so the installer fetches a specific release tag
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.4.3
@@ -88,7 +90,7 @@ jobs:
       - name: Print digitalocean token name
         run: echo ${{ steps.do_secrets_name.outputs.SECRET_KEY }}
       - name: Install doctl for kubernetes
-        uses: digitalocean/action-doctl@v2
+        uses: digitalocean/action-doctl@3cb3953159719656269e044e0e24ca16dd2a690f # v2.5.2
         with:
           token: ${{ secrets[ steps.do_secrets_name.outputs.SECRET_KEY ] }}
       - name: Resolve cluster name

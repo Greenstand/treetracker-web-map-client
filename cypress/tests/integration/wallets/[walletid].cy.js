@@ -5,7 +5,7 @@ beforeEach(() => {
   clearNocks();
 });
 
-describe('Planter page', () => {
+describe('Wallet page', () => {
   it('getServerSideProps return mocks', () => {
     const path = `/wallets/${wallet.id}`;
     prepareNocks({ wallet });
@@ -156,7 +156,8 @@ describe('Planter page', () => {
     });
     cy.get('.MuiTypography-h2')
       .eq(0)
-      .contains(/Maynard.Stroman79/i);
-    cy.screenshot();
+      .contains(/Maynard.Stroman79/i)
+      .should('be.visible');
+    cy.screenshotPage();
   });
 });
