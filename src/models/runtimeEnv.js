@@ -4,6 +4,7 @@ export const RUNTIME_ENV_KEYS = Object.freeze([
   'NEXT_PUBLIC_TILE_SERVER_URL',
   'NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS',
   'NEXT_PUBLIC_TILE_SERVER_WEBMAP_API',
+  'NEXT_PUBLIC_GA_ID',
 ]);
 
 // Literal references so Next inlines the build-time values as fallbacks.
@@ -13,6 +14,7 @@ const BUILD_TIME = {
     process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS,
   NEXT_PUBLIC_TILE_SERVER_WEBMAP_API:
     process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API,
+  NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
 };
 
 // Server-side only. Dynamic key lookup so webpack can't inline the value.

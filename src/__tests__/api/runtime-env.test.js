@@ -40,6 +40,7 @@ describe('/api/runtime-env', () => {
     process.env.NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS = 'a,b';
     process.env.NEXT_PUBLIC_TILE_SERVER_WEBMAP_API =
       'https://example.invalid/webmap/';
+    process.env.NEXT_PUBLIC_GA_ID = 'G-TEST123';
     process.env.FAKE_SECRET = 'hunter2';
   });
 
@@ -57,12 +58,13 @@ describe('/api/runtime-env', () => {
     expect(res.headers['x-content-type-options']).toBe('nosniff');
   });
 
-  it('defines window.__RUNTIME_ENV__ with exactly the tile keys', () => {
+  it('defines window.__RUNTIME_ENV__ with exactly the runtime env keys', () => {
     const env = evaluate(run().body);
     expect(env).toEqual({
       NEXT_PUBLIC_TILE_SERVER_URL: 'https://example.invalid/{s}/',
       NEXT_PUBLIC_TILE_SERVER_SUBDOMAINS: 'a,b',
       NEXT_PUBLIC_TILE_SERVER_WEBMAP_API: 'https://example.invalid/webmap/',
+      NEXT_PUBLIC_GA_ID: 'G-TEST123',
     });
   });
 
