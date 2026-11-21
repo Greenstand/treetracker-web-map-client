@@ -7,6 +7,10 @@ on:
         description: 'Branch/hash/tag'
         required: true
 
+# read-only token by default; a job adds write access only when it needs it
+permissions:
+  contents: read
+
 env:
   project-directory: ./
 
@@ -19,19 +23,17 @@ jobs:
       github.event_name == 'push' &&
       github.repository == "Greenstand/${{ github.event.repository.name }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: main
+          persist-credentials: false
       - name: git configure
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '20.x'
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
       - id: export_bumped_version
         run: |
           export BUMPED_VERSION="${{ github.event.inputs.git-tag }}"
@@ -44,7 +46,7 @@ jobs:
       - name: Run kustomize
         run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ github.event.inputs.git-tag }} )
       - name: Install doctl for kubernetes
-        uses: digitalocean/action-doctl@v2
+        uses: digitalocean/action-doctl@3cb3953159719656269e044e0e24ca16dd2a690f # v2.5.2
         with:
           token: ${{ secrets.DIGITALOCEAN_PRODUCTION_TOKEN }}
       - name: Save DigitalOcean kubeconfig

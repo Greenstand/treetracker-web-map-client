@@ -1,5 +1,5 @@
 /** @jest-environment node */
-import handler from './runtime-env';
+import handler from 'pages/api/runtime-env';
 
 function mockRes() {
   const res = { headers: {}, statusCode: undefined, body: undefined };

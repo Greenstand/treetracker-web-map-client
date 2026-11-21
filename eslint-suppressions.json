@@ -1,0 +1,642 @@
+{
+  "cypress.config.js": {
+    "global-require": {
+      "count": 1
+    },
+    "import/extensions": {
+      "count": 1
+    },
+    "import/no-extraneous-dependencies": {
+      "count": 1
+    },
+    "no-dupe-keys": {
+      "count": 1
+    },
+    "no-unused-vars": {
+      "count": 2
+    }
+  },
+  "cypress/plugins/index.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 5
+    }
+  },
+  "cypress/tests/integration/nockRoutes.js": {
+    "no-console": {
+      "count": 1
+    }
+  },
+  "next.config.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    },
+    "no-console": {
+      "count": 1
+    }
+  },
+  "public/mockServiceWorker.js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 1
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/DesignSandbox/DesignSandbox.js": {
+    "no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/__tests__/api/runtime-env.test.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 2
+    }
+  },
+  "src/components/App.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 5
+    },
+    "no-unused-vars": {
+      "count": 1
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    },
+    "sonarjs/no-dead-store": {
+      "count": 4
+    }
+  },
+  "src/components/CustomWorldMap.js": {
+    "no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/components/Drawer.js": {
+    "react-hooks/exhaustive-deps": {
+      "count": 3
+    }
+  },
+  "src/components/DrawerDeprecated.js": {
+    "no-unused-vars": {
+      "count": 4
+    }
+  },
+  "src/components/FeaturedPlantersSlider/index.js": {
+    "no-constant-binary-expression": {
+      "count": 1
+    },
+    "no-unused-vars": {
+      "count": 1
+    },
+    "react/no-object-type-as-default-prop": {
+      "count": 1
+    }
+  },
+  "src/components/FeaturedPlantersSlider/style.js": {
+    "import/prefer-default-export": {
+      "count": 1
+    }
+  },
+  "src/components/FeaturedTreesSlider/style.js": {
+    "import/prefer-default-export": {
+      "count": 1
+    }
+  },
+  "src/components/GlobalMapLayout.js": {
+    "sonarjs/no-identical-expressions": {
+      "count": 3
+    }
+  },
+  "src/components/HeadTag.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/components/Home.js": {
+    "no-unused-vars": {
+      "count": 1
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    }
+  },
+  "src/components/ImageShower.js": {
+    "@next/next/no-img-element": {
+      "count": 1
+    }
+  },
+  "src/components/InformationCard1.js": {
+    "no-unused-vars": {
+      "count": 3
+    },
+    "sonarjs/no-dead-store": {
+      "count": 1
+    }
+  },
+  "src/components/LayoutDashboard.js": {
+    "no-unused-vars": {
+      "count": 4
+    }
+  },
+  "src/components/LayoutEmbed.js": {
+    "@next/next/no-img-element": {
+      "count": 1
+    },
+    "jsx-a11y/anchor-is-valid": {
+      "count": 1
+    },
+    "no-constant-binary-expression": {
+      "count": 4
+    }
+  },
+  "src/components/LayoutMobile.js": {
+    "no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/components/LeaderBoard.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    },
+    "@next/next/no-img-element": {
+      "count": 1
+    }
+  },
+  "src/components/Link.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 2
+    }
+  },
+  "src/components/Logo.js": {
+    "@next/next/no-img-element": {
+      "count": 1
+    }
+  },
+  "src/components/Navbar.cy.js": {
+    "cypress/unsafe-to-chain-command": {
+      "count": 1
+    }
+  },
+  "src/components/Navbar.js": {
+    "@next/next/no-img-element": {
+      "count": 1
+    },
+    "no-unused-vars": {
+      "count": 2
+    }
+  },
+  "src/components/PageWrapper.js": {
+    "no-constant-binary-expression": {
+      "count": 2
+    }
+  },
+  "src/components/ProfileAvatar.js": {
+    "react/no-object-type-as-default-prop": {
+      "count": 1
+    }
+  },
+  "src/components/ProfileCover.js": {
+    "@next/next/no-img-element": {
+      "count": 1
+    }
+  },
+  "src/components/Share.cy.js": {
+    "@next/next/no-img-element": {
+      "count": 1
+    },
+    "cypress/unsafe-to-chain-command": {
+      "count": 2
+    }
+  },
+  "src/components/ShareDeprecated.cy.js": {
+    "cypress/unsafe-to-chain-command": {
+      "count": 2
+    }
+  },
+  "src/components/SignInButton.js": {
+    "jsx-a11y/anchor-is-valid": {
+      "count": 2
+    }
+  },
+  "src/components/SignOutButton.js": {
+    "jsx-a11y/anchor-is-valid": {
+      "count": 2
+    },
+    "no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/components/TagChips.cy.js": {
+    "cypress/unsafe-to-chain-command": {
+      "count": 1
+    }
+  },
+  "src/components/Timeline.js": {
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    }
+  },
+  "src/components/TreeInfoDialog.js": {
+    "@next/next/no-img-element": {
+      "count": 3
+    }
+  },
+  "src/components/TreeSpeciesCard.js": {
+    "no-unused-vars": {
+      "count": 4
+    }
+  },
+  "src/components/ZoomInOutButton.js": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "src/components/common/Crumbs.cy.js": {
+    "no-unused-vars": {
+      "count": 1
+    },
+    "sonarjs/no-dead-store": {
+      "count": 1
+    }
+  },
+  "src/components/common/CustomCard.js": {
+    "sonarjs/no-all-duplicated-branches": {
+      "count": 1
+    }
+  },
+  "src/components/common/CustomIcon.js": {
+    "react/no-object-type-as-default-prop": {
+      "count": 1
+    }
+  },
+  "src/components/common/CustomImageWrapper.cy.js": {
+    "cypress/unsafe-to-chain-command": {
+      "count": 1
+    },
+    "no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/components/common/CustomImageWrapper.js": {
+    "@next/next/no-img-element": {
+      "count": 1
+    }
+  },
+  "src/components/common/Filter.cy.js": {
+    "cypress/unsafe-to-chain-command": {
+      "count": 2
+    }
+  },
+  "src/components/common/TreeTag.js": {
+    "no-nested-ternary": {
+      "count": 2
+    }
+  },
+  "src/components/dashboard/ChangeLogoSection.js": {
+    "@next/next/no-img-element": {
+      "count": 1
+    }
+  },
+  "src/components/dashboard/CustomLogo.js": {
+    "no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/components/dashboard/CustomizeNavbar.js": {
+    "react-hooks/exhaustive-deps": {
+      "count": 3
+    }
+  },
+  "src/components/playground/ColorInput.cy.js": {
+    "cypress/unsafe-to-chain-command": {
+      "count": 1
+    }
+  },
+  "src/components/playground/FontAddInput.cy.js": {
+    "cypress/unsafe-to-chain-command": {
+      "count": 1
+    }
+  },
+  "src/components/playground/FontCustomization.js": {
+    "no-unused-vars": {
+      "count": 1
+    },
+    "sonarjs/no-dead-store": {
+      "count": 1
+    }
+  },
+  "src/components/playground/ToggleThemeMode.js": {
+    "no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/components/playground/TypographyInput.js": {
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    }
+  },
+  "src/components/search/SearchDialog.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/components/search/SearchHistoryDialog.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/components/search/index.js": {
+    "import/prefer-default-export": {
+      "count": 1
+    }
+  },
+  "src/components/search/mockApi.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/context/DrawerContext.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/context/playgroundContext.js": {
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    }
+  },
+  "src/context/themeContext.js": {
+    "react-hooks/exhaustive-deps": {
+      "count": 4
+    },
+    "sonarjs/cognitive-complexity": {
+      "count": 1
+    },
+    "sonarjs/no-all-duplicated-branches": {
+      "count": 7
+    }
+  },
+  "src/hooks/cwmHooks/index.js": {
+    "import/prefer-default-export": {
+      "count": 1
+    }
+  },
+  "src/hooks/usePageLoading.js": {
+    "import/prefer-default-export": {
+      "count": 1
+    }
+  },
+  "src/mocks/browser.js": {
+    "import/prefer-default-export": {
+      "count": 1
+    }
+  },
+  "src/mocks/index.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/mocks/server.js": {
+    "import/prefer-default-export": {
+      "count": 1
+    }
+  },
+  "src/models/MapModel.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 4
+    },
+    "sonarjs/cognitive-complexity": {
+      "count": 1
+    }
+  },
+  "src/models/api.spec.js": {
+    "no-unused-vars": {
+      "count": 4
+    }
+  },
+  "src/models/config.reducer.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/models/oidcConfig.js": {
+    "no-console": {
+      "count": 1
+    }
+  },
+  "src/models/pathResolver.js": {
+    "no-unreachable": {
+      "count": 1
+    },
+    "no-unused-vars": {
+      "count": 1
+    },
+    "sonarjs/cognitive-complexity": {
+      "count": 1
+    },
+    "sonarjs/no-dead-store": {
+      "count": 1
+    }
+  },
+  "src/models/runtimeEnv.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/models/runtimeEnv.test.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 3
+    }
+  },
+  "src/models/utils.js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 1
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 2
+    },
+    "no-unused-vars": {
+      "count": 1
+    }
+  },
+  "src/pages/_app.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 3
+    },
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "src/pages/_document.js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    }
+  },
+  "src/pages/admin/global.js": {
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    }
+  },
+  "src/pages/admin/index.js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 1
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 5
+    }
+  },
+  "src/pages/admin/theme.js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 1
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 5
+    },
+    "no-alert": {
+      "count": 5
+    },
+    "no-unused-vars": {
+      "count": 3
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 2
+    },
+    "sonarjs/no-dead-store": {
+      "count": 2
+    }
+  },
+  "src/pages/organizations/[organizationid].js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 3
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 3
+    },
+    "complexity": {
+      "count": 1
+    },
+    "no-nested-ternary": {
+      "count": 2
+    },
+    "no-unused-vars": {
+      "count": 1
+    },
+    "react/no-danger": {
+      "count": 2
+    },
+    "sonarjs/no-identical-expressions": {
+      "count": 1
+    }
+  },
+  "src/pages/planters/[planterid].js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 1
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 2
+    },
+    "complexity": {
+      "count": 1
+    },
+    "no-unused-vars": {
+      "count": 2
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    },
+    "react/no-danger": {
+      "count": 1
+    }
+  },
+  "src/pages/tokens/[tokenid].js": {
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 1
+    },
+    "complexity": {
+      "count": 1
+    },
+    "no-unused-vars": {
+      "count": 3
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    },
+    "sonarjs/no-dead-store": {
+      "count": 1
+    }
+  },
+  "src/pages/top.js": {
+    "no-constant-binary-expression": {
+      "count": 2
+    },
+    "no-unused-vars": {
+      "count": 1
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    }
+  },
+  "src/pages/trees/[treeid].js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 1
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 3
+    },
+    "complexity": {
+      "count": 1
+    },
+    "no-constant-binary-expression": {
+      "count": 2
+    },
+    "no-unused-vars": {
+      "count": 2
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    },
+    "sonarjs/cognitive-complexity": {
+      "count": 1
+    }
+  },
+  "src/pages/v2/captures/[captureid].js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 1
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 3
+    },
+    "complexity": {
+      "count": 1
+    },
+    "no-constant-binary-expression": {
+      "count": 3
+    },
+    "no-unused-vars": {
+      "count": 3
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 2
+    },
+    "sonarjs/cognitive-complexity": {
+      "count": 1
+    }
+  },
+  "src/pages/wallets/[walletid].js": {
+    "@eslint-community/eslint-comments/no-unlimited-disable": {
+      "count": 1
+    },
+    "@eslint-community/eslint-comments/require-description": {
+      "count": 2
+    },
+    "no-unused-vars": {
+      "count": 2
+    },
+    "react-hooks/exhaustive-deps": {
+      "count": 1
+    },
+    "react/no-danger": {
+      "count": 1
+    }
+  }
+}
