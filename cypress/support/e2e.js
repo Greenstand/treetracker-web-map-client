@@ -64,14 +64,3 @@ beforeEach(() => {
     });
   });
 });
-
-// Known defect: the organization, planter and wallet pages call
-// map.getInitialView() without a catch. The map core can then reject with
-// "Cannot read properties of undefined (reading 'center')". Ignore only this
-// error. Remove this handler when the pages handle a failed initial view.
-Cypress.on('uncaught:exception', (err) => {
-  const isKnownMapError =
-    err.message.includes("reading 'center'") &&
-    String(err.stack).includes('treetracker-web-map-core');
-  return !isKnownMapError;
-});
