@@ -1,3 +1,10 @@
+## [2.10.12](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.11...v2.10.12) (2026-11-22)
+
+
+### Bug Fixes
+
+* **admin:** turn the admin pages off unless ADMIN_PAGES_ENABLED is true ([6ace79a](https://github.com/Greenstand/treetracker-web-map-client/commit/6ace79af89a5f3ab594bcb06ea94d4fc114b914b))
+
 ## [2.10.11](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.10...v2.10.11) (2026-11-22)
 
 
