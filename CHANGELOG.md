@@ -1,3 +1,10 @@
+## [2.10.13](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.12...v2.10.13) (2026-11-22)
+
+
+### Bug Fixes
+
+* **map:** keep the map view when the core finds no initial view ([4194bd9](https://github.com/Greenstand/treetracker-web-map-client/commit/4194bd9e9a030b097085f104a23c96f6cd7e4d2d)), closes [#914](https://github.com/Greenstand/treetracker-web-map-client/issues/914) [#1874](https://github.com/Greenstand/treetracker-web-map-client/issues/1874)
+
 ## [2.10.12](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.11...v2.10.12) (2026-11-22)
 
 
