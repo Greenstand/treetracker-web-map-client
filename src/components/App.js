@@ -182,7 +182,8 @@ function MapComponent() {
       queryApiServerUrl: process.env.NEXT_PUBLIC_API,
       filters: UNSET_FILTERS,
     });
-    const isAdmin = !!router.asPath.match(/admin/);
+    // the route, not the address: the same check as in `pages/_app.js`
+    const isAdmin = /^\/admin(\/|$)/.test(router.pathname);
     if (!isAdmin) {
       map.on(Map.REGISTERED_EVENTS.MOVE_END, () => {
         try {
