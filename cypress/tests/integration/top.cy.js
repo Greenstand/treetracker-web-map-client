@@ -10,7 +10,7 @@ describe('top', () => {
     clearNocks();
   });
 
-  it('top page', () => {
+  function prepareTopPageNocks() {
     prepareNocks({ tree: tree186734 });
 
     cy.task('nockIntercept', {
@@ -47,11 +47,27 @@ describe('top', () => {
       statusCode: 200,
       body: leaders,
     });
+  }
+
+  it('top page', () => {
+    prepareTopPageNocks();
 
     cy.visit('/top');
     cy.contains('Featured trees').should('be.visible');
     cy.contains('Check out the global leaders in the tree planting effort');
     cy.contains('Tanzania');
     cy.screenshotPage();
+  });
+
+  // "admin" in the address once gave a public page the admin layout, and the
+  // page crashed in the browser after the router read the query string
+  it('top page with "admin" in the query string', () => {
+    prepareTopPageNocks();
+
+    cy.visit('/top?ref=admin');
+    cy.window().its('next.router.isReady').should('be.true');
+    cy.contains('Featured trees').should('be.visible');
+    // the navbar of the public layout (the admin layout has none)
+    cy.get('header').should('be.visible');
   });
 });

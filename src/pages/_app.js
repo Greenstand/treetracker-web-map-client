@@ -153,7 +153,10 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
     nextExtraLoading,
   };
 
-  const isAdmin = !!router.asPath.match(/admin/);
+  // Check the route, not the address. The address also has the query string,
+  // and a public page with "admin" in it (`/top?ref=admin`) must keep its
+  // layout: the dashboard layout has no theme, so the public page crashes.
+  const isAdmin = /^\/admin(\/|$)/.test(router.pathname);
   if (isAdmin) {
     return (
       <AuthProvider {...oidcConfig}>
