@@ -4,7 +4,7 @@ const useStyles = makeStyles()((theme, size) => ({
   SliderContainer: {
     position: 'relative',
     // width: '100%',
-    overflow: 'hidden',
+    overflow: 'visible',
     marginLeft: theme.spacing(-4),
     marginRight: theme.spacing(-4),
     [theme.breakpoints.down('sm')]: {
