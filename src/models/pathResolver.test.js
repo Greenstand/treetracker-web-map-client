@@ -143,6 +143,50 @@ describe('Test pathResolver', () => {
       });
     });
 
+    it('click on /wallets/max.anders@plantamiarbol.com (email wallet ID)', () => {
+      const result = pathResolver.getPathWhenClickTree(
+        {
+          id: 14615,
+        },
+        {
+          pathname: '/wallets/max.anders@plantamiarbol.com',
+        },
+        {
+          query: {},
+        },
+      );
+
+      expect(result).toMatchObject({
+        pathname: '/wallets/max.anders@plantamiarbol.com/tokens',
+        query: {
+          tree_id: '14615',
+        },
+      });
+    });
+
+    it('click on /wallets/max.anders@plantamiarbol.com/tokens?tree_id=14615 (second click, email wallet)', () => {
+      const result = pathResolver.getPathWhenClickTree(
+        {
+          id: 14616,
+        },
+        {
+          pathname: '/wallets/max.anders@plantamiarbol.com/tokens',
+        },
+        {
+          query: {
+            tree_id: '14615',
+          },
+        },
+      );
+
+      expect(result).toMatchObject({
+        pathname: '/wallets/max.anders@plantamiarbol.com/tokens',
+        query: {
+          tree_id: '14616',
+        },
+      });
+    });
+
     it('click on /web-map-beta/demo/wallets/0cdf4219-869a-41ce-953a-a8421d8353f7/tokens with base', () => {
       const result = pathResolver.getPathWhenClickTree(
         {
@@ -260,6 +304,35 @@ describe('Test pathResolver', () => {
         name: 'wallets',
         id: '1f2a0862-66d1-4b42-8216-5a5cb9c6eca5',
       });
+    });
+
+    it('wallet context with email wallet ID', () => {
+      const result = pathResolver.getContext({
+        asPath:
+          '/wallets/max.anders@plantamiarbol.com/tokens?tree_id=123',
+      });
+      expect(result).toMatchObject({
+        name: 'wallets',
+        id: 'max.anders@plantamiarbol.com',
+      });
+    });
+
+    it('wallet context with email wallet ID and token', () => {
+      const result = pathResolver.getContext({
+        asPath:
+          '/wallets/max.anders@plantamiarbol.com/tokens/3a53e2a6-ac17-43a5-a3aa-31fd04786cba',
+      });
+      expect(result).toMatchObject({
+        name: 'wallets',
+        id: 'max.anders@plantamiarbol.com',
+      });
+    });
+
+    it('returns null for unrecognized path', () => {
+      const result = pathResolver.getContext({
+        asPath: '/some/unknown/path',
+      });
+      expect(result).toBeNull();
     });
 
     it('wallet context case2', () => {
