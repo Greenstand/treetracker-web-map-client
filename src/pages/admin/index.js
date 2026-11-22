@@ -12,6 +12,7 @@ import axios from 'axios';
 import log from 'loglevel';
 import React from 'react';
 import HeadTag from 'components/HeadTag';
+import { withAdminPages } from 'models/adminPages';
 
 export default function Index() {
   const { keycloak } = useKeycloak();
@@ -336,3 +337,6 @@ export default function Index() {
     </>
   );
 }
+
+// The 404 page unless the server starts with ADMIN_PAGES_ENABLED=true.
+export const getServerSideProps = withAdminPages();

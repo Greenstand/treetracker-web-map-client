@@ -29,6 +29,7 @@ import {
   usePlaygroundUtils,
 } from 'hooks/contextHooks';
 import { useLocalStorage } from 'hooks/globalHooks';
+import { withAdminPages } from 'models/adminPages';
 import { customizeOptions } from 'models/themePlaygroundOptions';
 import { optimizeThemeFonts } from 'models/utils';
 
@@ -526,3 +527,6 @@ export default function ThemePlayground() {
     </PlaygroundProvider>
   );
 }
+
+// The 404 page unless the server starts with ADMIN_PAGES_ENABLED=true.
+export const getServerSideProps = withAdminPages();
