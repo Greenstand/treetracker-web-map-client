@@ -12,7 +12,10 @@ describe('Organizations', () => {
     cy.fixture(imageFixturePath).then((image) => {
       const blob = Cypress.Blob.base64StringToBlob(image, 'images/png');
       const photo_url = Cypress.Blob.createObjectURL(blob);
-      prepareNocks({ organization: { ...org, photo_url } });
+      // Most organizations have no map_name, so the map core has no filter
+      // to find an initial view. The page must keep the world view without an
+      // error (#1874).
+      prepareNocks({ organization: { ...org, photo_url, map_name: null } });
     });
 
     cy.visit(path, {
@@ -21,6 +24,8 @@ describe('Organizations', () => {
 
     cy.url().should('include', '/organizations');
     cy.contains(org.name).should('be.visible');
+    // Wait until the map shows, so that the screenshot shows the map.
+    cy.get('.leaflet-control-attribution').should('be.visible');
     cy.screenshotPage();
   });
 });

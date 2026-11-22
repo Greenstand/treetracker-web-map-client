@@ -151,9 +151,16 @@ describe('Wallet page', () => {
       statusCode: 200,
       body: { total: 10, offset: 0, limit: 20, trees: [] },
     });
+    // The webmap API has no tree for this wallet, so the map has no initial
+    // view. The page must keep the world view without an error (#1874).
+    cy.intercept('GET', /\/webmap\/trees\?/, {
+      headers: { 'access-control-allow-origin': '*' },
+      body: { data: [] },
+    }).as('webmapTrees');
     cy.visit(path, {
       failOnStatusCode: false,
     });
+    cy.wait('@webmapTrees');
     cy.get('.MuiTypography-h2')
       .eq(0)
       .contains(/Maynard.Stroman79/i)

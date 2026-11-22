@@ -33,6 +33,7 @@ import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getWalletById, getSpeciesByWalletId } from 'models/api';
+import gotoInitialView from 'models/mapView';
 import * as pathResolver from 'models/pathResolver';
 import { requestAPI, wrapper } from 'models/utils';
 
@@ -89,12 +90,7 @@ export default function Wallet(props) {
           log.warn('goto bounds found in url');
           await map.gotoBounds(bounds);
         } else {
-          const view = await map.getInitialView();
-
-          if (view.zoomLevel < 2) {
-            view.zoomLevel = 2;
-          }
-          await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+          await gotoInitialView(map, { minZoom: 2 });
         }
       } else if (map) {
         // no wallet data: show the global view

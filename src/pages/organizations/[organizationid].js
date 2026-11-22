@@ -31,6 +31,7 @@ import imagePlaceholder from 'images/image-placeholder.png';
 import SearchIcon from 'images/search.svg';
 import { useMapContext } from 'mapContext';
 import { getOrganizationById, getOrgLinks } from 'models/api';
+import gotoInitialView from 'models/mapView';
 import * as pathResolver from 'models/pathResolver';
 import { getLocationString, getContinent, wrapper } from 'models/utils';
 
@@ -81,8 +82,7 @@ export default function Organization(props) {
           log.warn('goto bounds found in url');
           await map.gotoBounds(bounds);
         } else {
-          const view = await map.getInitialView();
-          await map.gotoView(view.center.lat, view.center.lon, view.zoomLevel);
+          await gotoInitialView(map);
         }
       } else if (map) {
         // no organization data: show the global view rather than leaving
