@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "2.10.10",
+  "version": "2.10.11",
   "private": true,
   "scripts": {
     "baseline": "node scripts/baseline.js check",

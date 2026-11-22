@@ -1,3 +1,10 @@
+## [2.10.11](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.10...v2.10.11) (2026-11-22)
+
+
+### Bug Fixes
+
+* **layout:** choose the admin layout by the route, not by the address ([4a2de33](https://github.com/Greenstand/treetracker-web-map-client/commit/4a2de336a7da572e02d15c83dff83dcf23fe9766))
+
 ## [2.10.10](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.9...v2.10.10) (2026-11-21)
 
 
