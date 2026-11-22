@@ -10,6 +10,7 @@ import {
   useDashboardContext,
 } from 'context/dashboardContext';
 import { MapContextProvider, useMapContext } from 'mapContext';
+import { withAdminPages } from 'models/adminPages';
 import { getOrganizationById } from 'models/api';
 import { updateLogoUrl } from 'models/config.reducer';
 import { wrapper } from 'models/utils';
@@ -138,17 +139,21 @@ function GlobalWithContext(props) {
 
 export default GlobalWithContext;
 
-export const getServerSideProps = wrapper(
-  async () => {
-    const id = 178; // hardcoded FCC organization
-    const organization = await getOrganizationById(id);
-    return {
-      props: {
-        organization: {
-          ...organization,
+// The 404 page unless the server starts with ADMIN_PAGES_ENABLED=true. The
+// request for the organization runs only when the page is on.
+export const getServerSideProps = withAdminPages(
+  wrapper(
+    async () => {
+      const id = 178; // hardcoded FCC organization
+      const organization = await getOrganizationById(id);
+      return {
+        props: {
+          organization: {
+            ...organization,
+          },
         },
-      },
-    };
-  },
-  { isr: false },
+      };
+    },
+    { isr: false },
+  ),
 );
