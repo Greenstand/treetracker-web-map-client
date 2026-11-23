@@ -1,4 +1,4 @@
-import { Link } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import HeadTag from 'components/HeadTag';
 
 export default function somethingWentWrong() {
@@ -6,9 +6,9 @@ export default function somethingWentWrong() {
     <>
       <HeadTag title="Server Error" />
       <div className="not-found">
-        <h1>500</h1>
+        <Typography variant="h1">500</Typography>
         <div className="not-found-background" />
-        <h3>Something went wrong</h3>
+        <Typography variant="h6">Something went wrong</Typography>
         <Link
           href="/"
           sx={{
