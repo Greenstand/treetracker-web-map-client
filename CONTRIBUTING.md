@@ -15,11 +15,12 @@ Each push to a PR starts these jobs. They run at the same time. A full run takes
 | Run unit tests                                         | The Cypress component tests, then the Jest tests.                                                       | 4 minutes    | `npm run cypress:run:component`, then `npm test` (CI runs `npx jest --ci`) |
 | Run integration tests                                  | The Cypress tests of the pages, with a mock API. It saves a screenshot of 7 pages.                      | 6 minutes    | `npm run cypress:run:fast` (stop `npm run dev` first)      |
 | Run dependency review                                  | A new runtime dependency with a known high or critical vulnerability.                                   | seconds      | No local command                                           |
+| CI passed                                              | All jobs above passed. It fails when one of them failed, was cancelled or did not run. A branch rule can require this one check. | seconds      | No local command                                           |
 | Check baseline growth (workflow "Baseline guard")      | The PR does not add findings to a baseline file (see [The baseline](#the-baseline)).                    | seconds      | No local command                                           |
 
 The step "Type check" also runs when the step "ESLint" fails, so you see both results.
 
-All jobs except "Check baseline growth" are in the workflow "API CI for New Pull Requests". A PR that changes only `.md` files does not run this workflow. Draft PRs also get all checks.
+All jobs except "Check baseline growth" are in the workflow "API CI for New Pull Requests". Each PR gets all checks, also a draft PR and a PR that changes only `.md` files.
 
 ## Run the checks before you push
 
@@ -142,6 +143,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 4. **Cypress tests:** the run summary has files at the bottom, under **Artifacts**. From the integration tests, `cypress-screenshots` has a screenshot of 7 pages (home, top, tree, planter, organization, wallet and token), and `cypress-videos` has the video of each spec file with a failed test. From the component tests, `cypress-screenshots-ct` has the screenshots of failed tests, and `cypress-videos-ct` has the videos. The screenshot of a failed test has `(failed)` in its file name. When a job saves no files of a kind, its artifact is not in the list.
 5. **Dependency review:** the job summary names the package, the severity and a link to the advisory. The usual fix is a newer version of the package. Old vulnerabilities and dev dependencies do not count. A new GitHub Action in `.github/workflows/` counts as a dependency too.
 6. **Check baseline growth:** it fails when your PR adds findings to `eslint-suppressions.json` or `tsc-suppressions.json`. Fix the new findings, or ask a maintainer to add the label `baseline-change`.
+7. **CI passed:** it fails when another job of the workflow failed, was cancelled or did not run. Its log names the job. Repair that job; this check then passes.
 
 ## Good to know
 
