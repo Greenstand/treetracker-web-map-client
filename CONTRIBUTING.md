@@ -6,7 +6,7 @@ In this guide, a **finding** is one problem that a check reports at one place in
 
 ## The checks
 
-Each push to a PR starts these jobs. They run at the same time. A full run takes about 6 minutes.
+Each push to a PR starts these jobs. They run at the same time. A full run takes about 6 minutes. A new push stops the run of the older commit. Each job has a time limit of 5 to 20 minutes.
 
 | Job                                                    | What it checks                                                                                          | Usual time   | On your computer                                           |
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------- |
@@ -20,7 +20,7 @@ Each push to a PR starts these jobs. They run at the same time. A full run takes
 
 The step "Type check" also runs when the step "ESLint" fails, so you see both results.
 
-All jobs except "Check baseline growth" are in the workflow "API CI for New Pull Requests". Each PR gets all checks, also a draft PR and a PR that changes only `.md` files.
+All jobs except "Check baseline growth" are in the workflow "CI checks". Each PR gets all checks, also a draft PR and a PR that changes only `.md` files.
 
 The same jobs also run on the branch `main`: after each merge, each night, and when a maintainer starts them. Only "Run dependency review" does not run there. The badge at the top of the [README](README.md) shows the last result on `main`.
 
@@ -162,7 +162,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 - **Merge only with a green run on the last commit of the PR.** Open the tab "Checks" of the PR. GitHub also shows the button "Merge" for a PR that has no run, or that has a red check.
 - **A PR that is behind `main` was tested with an old `main`.** When `main` changed files that the PR uses, get a new run before the merge.
 - **How to get a new run:** ask the author for a push, or close and reopen the PR. For a first-time contributor, read the diff, then approve the run.
-- **The checks on `main`:** a merge starts them, but not when the merge commit has `[skip ci]`. After such a merge, start them by hand in the Actions tab (workflow "API CI for New Pull Requests", button "Run workflow", branch `main`), or run `gh workflow run pull-request-ci.yml --ref main`. A run also starts each night.
+- **The checks on `main`:** a merge starts them, but not when the merge commit has `[skip ci]`. After such a merge, start them by hand in the Actions tab (workflow "CI checks", button "Run workflow", branch `main`), or run `gh workflow run pull-request-ci.yml --ref main`. A run also starts each night.
 - **When a run on `main` is red,** repair `main` first. The static checks of each PR can fail on findings that the PR did not add, until `main` is repaired.
 - `npm run baseline:suppress -- eslint` (or `-- tsc`) writes all current findings that the baseline can hold. Use it only when you agree to keep the new findings, for example in a PR that adds a new rule.
 - The label `baseline-change` lets the job "Check baseline growth" pass when a PR adds findings to a baseline file. The job runs again when the label changes. People with the triage role or more can add a label.
