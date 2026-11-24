@@ -286,5 +286,22 @@ describe('Test pathResolver', () => {
         '-126.56250000000001,-56.365250136856076,126.56250000000001,56.17002298293205',
       );
     });
+
+    it.each([
+      ['text', 'abc'],
+      ['three numbers', '-13.3,8.4,-13.1'],
+      ['five numbers', '-13.3,8.4,-13.1,8.5,1'],
+      ['an empty value', '-13.3,,-13.1,8.5'],
+      ['an empty string', ''],
+      ['a repeated parameter', ['-13.3,8.4,-13.1,8.5', 'abc']],
+    ])('ignores bounds with %s', (_, value) => {
+      const bounds = pathResolver.getBounds({ query: { bounds: value } });
+      expect(bounds).toBeUndefined();
+    });
+
+    it('returns undefined when there are no bounds', () => {
+      const bounds = pathResolver.getBounds({ query: {} });
+      expect(bounds).toBeUndefined();
+    });
   });
 });
