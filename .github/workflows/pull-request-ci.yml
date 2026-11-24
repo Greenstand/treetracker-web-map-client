@@ -10,6 +10,21 @@ on:
   pull_request:
     branches:
       - '*'
+  # The same checks on main, so that a defect on main gives a red run:
+  # - push: after each merge. GitHub starts no run when the merge commit has
+  #   a skip instruction such as [skip ci].
+  # - schedule: each night. It also covers a merge with [skip ci], and it
+  #   finds changes of outside parts (the runner, the test data of the dev
+  #   API).
+  # - workflow_dispatch: by hand, in the Actions tab or with
+  #   "gh workflow run pull-request-ci.yml --ref main".
+  push:
+    branches:
+      - main
+  schedule:
+    # 04:23 UTC. Not at the full hour: GitHub can delay runs at that time.
+    - cron: '23 4 * * *'
+  workflow_dispatch:
 
 # read-only token: the PR checks only read the repository
 permissions:
@@ -72,6 +87,9 @@ jobs:
   # not count.
   dependency-review:
     name: Run dependency review
+    # only for a pull request: the action compares the two ends of a pull
+    # request, and it fails on other events
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -179,7 +197,8 @@ jobs:
 
   # The one check that a branch rule can require. A rule finds a check by its
   # job name, so no other job in this repository can have this name.
-  # It fails when a job before it failed, was cancelled or did not run.
+  # It fails when a job before it failed, was cancelled or did not run. The
+  # one exception: the dependency review job does not run on main.
   # Without it, a rule would need the name of each job, and GitHub counts a
   # skipped job as passed.
   ci-passed:
@@ -200,14 +219,20 @@ jobs:
           UNIT_TESTS: ${{ needs.unit-tests.result }}
         run: |
           failed=0
+          # check <job name> <result> <expected result>
           check() {
             echo "$1: $2"
-            if [ "$2" != "success" ]; then failed=1; fi
+            if [ "$2" != "$3" ]; then failed=1; fi
           }
-          check "Run static checks" "${STATIC_CHECKS}"
-          check "Run dependency review" "${DEPENDENCY_REVIEW}"
-          check "Run integration tests" "${INTEGRATION_TESTS}"
-          check "Run unit tests" "${UNIT_TESTS}"
+          check "Run static checks" "${STATIC_CHECKS}" success
+          # the dependency review runs only for a pull request
+          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
+            check "Run dependency review" "${DEPENDENCY_REVIEW}" success
+          else
+            check "Run dependency review" "${DEPENDENCY_REVIEW}" skipped
+          fi
+          check "Run integration tests" "${INTEGRATION_TESTS}" success
+          check "Run unit tests" "${UNIT_TESTS}" success
           if [ "${failed}" -ne 0 ]; then
             echo "::error::A job did not pass. Open the job with the red mark to see the cause."
             exit 1

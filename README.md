@@ -37,6 +37,8 @@
 
 # Treetracker Web Map
 
+[![The checks on main](https://github.com/Greenstand/treetracker-web-map-client/actions/workflows/pull-request-ci.yml/badge.svg?branch=main)](https://github.com/Greenstand/treetracker-web-map-client/actions/workflows/pull-request-ci.yml?query=branch%3Amain)
+
 ## Project Description
 
 Displays location and details of all trees that have been tracked in [Greenstand](http://greenstand.org).
