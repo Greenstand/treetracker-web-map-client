@@ -3,10 +3,11 @@
 
 name: API CI for New Pull Requests
 
+# No path filter: each PR gets all checks, also a PR that changes only
+# documents. A branch rule can require the job "CI passed", and a PR without
+# a run would wait for that check without an end.
 on:
   pull_request:
-    paths-ignore:
-      - '**.md'
     branches:
       - '*'
 
@@ -175,3 +176,39 @@ jobs:
         with:
           name: cypress-videos-ct
           path: cypress/videos
+
+  # The one check that a branch rule can require. A rule finds a check by its
+  # job name, so no other job in this repository can have this name.
+  # It fails when a job before it failed, was cancelled or did not run.
+  # Without it, a rule would need the name of each job, and GitHub counts a
+  # skipped job as passed.
+  ci-passed:
+    name: CI passed
+    needs: [static-checks, dependency-review, integration-tests, unit-tests]
+    # always(): run also after a failed or cancelled job. GitHub would skip
+    # this job without it, and a skipped job counts as passed.
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check the result of each job
+        env:
+          STATIC_CHECKS: ${{ needs.static-checks.result }}
+          DEPENDENCY_REVIEW: ${{ needs.dependency-review.result }}
+          INTEGRATION_TESTS: ${{ needs.integration-tests.result }}
+          UNIT_TESTS: ${{ needs.unit-tests.result }}
+        run: |
+          failed=0
+          check() {
+            echo "$1: $2"
+            if [ "$2" != "success" ]; then failed=1; fi
+          }
+          check "Run static checks" "${STATIC_CHECKS}"
+          check "Run dependency review" "${DEPENDENCY_REVIEW}"
+          check "Run integration tests" "${INTEGRATION_TESTS}"
+          check "Run unit tests" "${UNIT_TESTS}"
+          if [ "${failed}" -ne 0 ]; then
+            echo "::error::A job did not pass. Open the job with the red mark to see the cause."
+            exit 1
+          fi
