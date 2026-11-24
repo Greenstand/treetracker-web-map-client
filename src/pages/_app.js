@@ -1,4 +1,3 @@
-// Must be the first import: it sets the log level before other modules log.
 import 'models/logLevel';
 import '../style.css';
 import createCache from '@emotion/cache';
@@ -119,31 +118,29 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
       // }, '500');
     };
 
-    router.events.on('routeChangeStart', handleRouteChange);
-    router.events.on('routeChangeComplete', () => {
+    const handleRouteComplete = () => {
       log.warn('handleRouteChangeComplete::');
-      setNextExtraLoading(false);
       if (layoutRef.current) {
         layoutRef.current.scrollTop = 0;
       }
-    });
-    router.events.on('routeChangeError', (...arg) => {
-      log.warn('handleChangeError:', ...arg);
       setNextExtraLoading(false);
-    });
+    };
+
+    const handleRouteError = (...arg) => {
+      log.warn('handleRouteError::', ...arg);
+      setNextExtraLoading(false);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+    router.events.on('routeChangeComplete', handleRouteComplete);
+    router.events.on('routeChangeError', handleRouteError);
 
     return () => {
       router.events.off('routeChangeStart', handleRouteChange);
-      router.events.off('routeChangeComplete', () => {
-        log.warn('off routeChangeComplete:');
-        setNextExtraLoading(false);
-      });
-      router.events.off('routeChangeError', (...arg) => {
-        log.warn('off routerChangeError', ...arg);
-        setNextExtraLoading(false);
-      });
+      router.events.off('routeChangeComplete', handleRouteComplete);
+      router.events.off('routeChangeError', handleRouteError);
     };
-  });
+  }, [router.events]);
 
   const extraProps = {
     nextExtraIsEmbed,
