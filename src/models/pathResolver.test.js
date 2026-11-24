@@ -286,5 +286,17 @@ describe('Test pathResolver', () => {
         '-126.56250000000001,-56.365250136856076,126.56250000000001,56.17002298293205',
       );
     });
+
+    it.each([
+      ['three numbers', '-13.3,8.4,-13.1'],
+      ['text', 'abc'],
+      ['a repeated parameter', ['-13.3,8.4,-13.1,8.5', '1,2,3,4']],
+      ['an empty value', ''],
+      ['a non-finite number', '-13.3,8.4,-13.1,Infinity'],
+    ])('ignores %s', (_description, value) => {
+      expect(
+        pathResolver.getBounds({ query: { bounds: value } }),
+      ).toBeUndefined();
+    });
   });
 });

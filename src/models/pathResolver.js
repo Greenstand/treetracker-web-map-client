@@ -140,7 +140,18 @@ function getContext(router, options = {}) {
 }
 
 function getBounds(router) {
-  return router.query.bounds;
+  const { bounds } = router.query;
+  if (typeof bounds !== 'string') return undefined;
+
+  const parts = bounds.split(',');
+  if (
+    parts.length !== 4 ||
+    parts.some((part) => part.trim() === '' || !Number.isFinite(Number(part)))
+  ) {
+    return undefined;
+  }
+
+  return bounds;
 }
 export {
   getPathWhenClickTree,
