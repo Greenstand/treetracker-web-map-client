@@ -140,7 +140,15 @@ function getContext(router, options = {}) {
 }
 
 function getBounds(router) {
-  return router.query.bounds;
+  const { bounds } = router.query;
+  // a shared link can carry a cut or edited value, so only pass on four
+  // numbers; anything else would make the map reject with "Invalid LatLng"
+  if (typeof bounds !== 'string') return undefined;
+  const values = bounds.split(',');
+  const isValid =
+    values.length === 4 &&
+    values.every((value) => value.trim() !== '' && Number.isFinite(+value));
+  return isValid ? bounds : undefined;
 }
 export {
   getPathWhenClickTree,
