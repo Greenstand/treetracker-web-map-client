@@ -1,7 +1,8 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# The checks of each pull request and of the branch main: static checks,
+# dependency review, integration tests, unit tests, and the final job
+# "CI passed". CONTRIBUTING.md explains each check.
 
-name: API CI for New Pull Requests
+name: CI checks
 
 # No path filter: each PR gets all checks, also a PR that changes only
 # documents. A branch rule can require the job "CI passed", and a PR without
@@ -30,11 +31,23 @@ on:
 permissions:
   contents: read
 
+# A new run for a pull request stops the older run of the same pull request
+# (a new push, or a close and reopen). The job "CI passed" of the stopped run
+# fails: that run did not test the commit to the end.
+# A run on main has no pull request number. It gets its own group, so no run
+# stops it, and each commit on main keeps its result.
+concurrency:
+  group: ci-checks-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+# Each job has a time limit of about 3 times its slowest run. Without a limit,
+# a job that hangs uses a runner for 6 hours.
 jobs:
   # static checks run in their own job, so a test failure cannot hide them
   static-checks:
     name: Run static checks
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       # https://github.com/actions/checkout
@@ -91,6 +104,7 @@ jobs:
     # request, and it fails on other events
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       # no checkout: the action gets the dependency changes of the PR from
@@ -112,6 +126,7 @@ jobs:
   integration-tests:
     name: Run integration tests
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     # A fixed Chrome version. Cypress 12.14.0 stops when the second spec opens
     # in Chrome 158 or later (Cypress issue 35195, fixed in Cypress 15.21.2),
     # and Cypress 14 or later cannot run the component tests of Next.js 12.
@@ -161,6 +176,7 @@ jobs:
   unit-tests:
     name: Run unit tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -194,6 +210,9 @@ jobs:
         with:
           name: cypress-videos-ct
           path: cypress/videos
+          # the component tests record a video of each spec. No warning when
+          # the job stops before the tests. The job log shows why.
+          if-no-files-found: ignore
 
   # The one check that a branch rule can require. A rule finds a check by its
   # job name, so no other job in this repository can have this name.
