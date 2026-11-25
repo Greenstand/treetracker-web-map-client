@@ -8,7 +8,7 @@ Do not open a public issue or a public pull request for a security problem. A pu
 
 Send a private report on GitHub:
 
-1. Open the [Security tab](https://github.com/Greenstand/treetracker-web-map-client/security) of this repo.
+1. Open the ["Security and quality" tab](https://github.com/Greenstand/treetracker-web-map-client/security) of this repo.
 2. Select "Report a vulnerability".
 3. Describe the problem, the steps that show it, and its effect.
 
