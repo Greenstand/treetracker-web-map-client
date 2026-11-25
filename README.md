@@ -363,6 +363,19 @@ chore: run tests on travis ci
 fix(server): send cors headers
 ```
 
+### Releases and Versions
+
+The commit messages decide the releases. A merge to `main` with a `fix` or a `feat` commit makes a new release: [semantic-release](https://github.com/semantic-release/semantic-release) selects the version, puts a tag such as `v2.10.14` on the commit, builds the images, and deploys them to the dev environment. A merge without such a commit makes no release. A deploy to production is a manual step of a maintainer.
+
+Where you find a version:
+
+- **All versions and their notes:** the [releases page](https://github.com/Greenstand/treetracker-web-map-client/releases). The git tags mark the commit of each version.
+- **The version that has your PR or issue:** a bot writes a comment on the PR or issue when a release includes it.
+- **The version that a site runs:** the browser console shows `Web Map Client version` and the number.
+- **The images:** the tags of [`greenstand/treetracker-web-map-client`](https://hub.docker.com/r/greenstand/treetracker-web-map-client/tags) on Docker Hub.
+
+`package.json` on `main` always has the version `0.0.0-development`, and a local build shows that value. The release puts the real version into each image. `CHANGELOG.md` ends at version 2.10.13.
+
 # Troubleshooting
 
 ## Can not install Cypress in some area.
