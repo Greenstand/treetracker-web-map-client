@@ -74,10 +74,10 @@ module.exports = {
           {
             type: 'query',
             key: 'wallet',
-            value: '(?<walletId>(\\w{1,}))',
+            value: '(?<walletId>[^/?#]+)',
           },
         ],
-        destination: '/wallets/:walletId(\\d{1,})',
+        destination: '/wallets/:walletId',
         permanent: true,
       },
     ];
