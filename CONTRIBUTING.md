@@ -155,6 +155,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 - **CI does not check your commit messages or the PR title.** The local hook checks the commit messages. See [Commit Message and PR Title Format](README.md#commit-message-and-pr-title-format).
 - **The pre-commit hook can change your files.** On the staged files, it runs `eslint --fix`, Prettier, and a rewrite of the import paths in `src/`. The commit then has these changes. CI does not run Prettier.
 - **Your first PR can wait for an approval.** For a first-time contributor, a maintainer may have to approve the CI run before it starts.
+- **A PR that changes a workflow in `.github/workflows` has two rules.** Each `uses:` line needs the full commit SHA of the action, with the version in a comment, for example `uses: owner/action@<full commit SHA> # v1.2.3`. GitHub fails a run that uses an action without a full SHA. Each new workflow needs a `permissions` block. Without one, its token can only read the repo.
 - **`package.json` installs TypeScript two times.** `@typescript/native` is TypeScript 7, and it runs the type check. `typescript` is TypeScript 6, because the ESLint plugins need its JavaScript API, and TypeScript 7 does not have one yet. Keep both lines.
 
 ## For maintainers
