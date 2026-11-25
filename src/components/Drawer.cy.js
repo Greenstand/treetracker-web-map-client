@@ -61,4 +61,21 @@ describe('CustomWorldMap', () => {
     }
     mount(<Test />);
   });
+
+  it('does not log an error when the drawer is touched', () => {
+    cy.viewport('iphone-6+');
+    cy.spy(log, 'error').as('logError');
+    mount(
+      <Drawer>
+        <Typography variant="h2">Drawer content</Typography>
+      </Drawer>,
+    );
+
+    cy.get('.drawer-root').trigger('touchstart', {
+      touches: [{ pageY: 300 }],
+      force: true,
+    });
+
+    cy.get('@logError').should('not.have.been.called');
+  });
 });
