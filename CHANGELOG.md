@@ -1,3 +1,6 @@
+> This file ends at version 2.10.13. For each later version, see the
+> [GitHub releases](https://github.com/Greenstand/treetracker-web-map-client/releases).
+
 ## [2.10.13](https://github.com/Greenstand/treetracker-web-map-client/compare/v2.10.12...v2.10.13) (2026-11-22)
 
 
