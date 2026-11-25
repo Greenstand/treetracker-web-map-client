@@ -161,6 +161,7 @@ function Navbar() {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
+        onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
@@ -171,7 +172,7 @@ function Navbar() {
         }}
       >
         {config?.items.map((item) => (
-          <MenuItem key={`nav-${item.title}`}>
+          <MenuItem key={`nav-${item.title}`} onClick={handleClose}>
             <Link href={item.url}>{item.title}</Link>
           </MenuItem>
         ))}
