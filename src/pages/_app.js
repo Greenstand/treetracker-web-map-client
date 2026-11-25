@@ -111,11 +111,7 @@ function TreetrackerApp({ Component, pageProps, device, config }) {
   React.useEffect(() => {
     const handleRouteChange = (url) => {
       log.warn('handleRouteChange:', url);
-      // setTimeout(() => {
-      //   if (url !== router.asPath) {
       setNextExtraLoading(true);
-      //   }
-      // }, '500');
     };
 
     const handleRouteComplete = () => {
