@@ -56,7 +56,7 @@ function FeaturedPlantersSlider({
       return planter.first_name;
     if (planter.last_name && planter.last_name.length > 1)
       return planter.last_name;
-    return '';
+    return `#${planter.id}`;
   };
 
   return (
@@ -136,6 +136,10 @@ function FeaturedPlantersSlider({
                 image={
                   planter.logo_url || planter.image_url || imagePlaceholder
                 }
+                onError={({ currentTarget }) => {
+                  if (currentTarget.getAttribute('src') !== imagePlaceholder)
+                    currentTarget.setAttribute('src', imagePlaceholder);
+                }}
                 alt=""
                 sx={{
                   width: 136,
