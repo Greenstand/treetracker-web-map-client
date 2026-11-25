@@ -1,7 +1,23 @@
+import imagePlaceholder from 'images/image-placeholder.png';
 import { mountWithTheme as mount } from 'models/test-utils';
 import FeaturedPlantersSlider from './index';
 
 describe('Featured Planters Slider', () => {
+  it('shows a placeholder and the ID when the logo and name are unavailable', () => {
+    cy.intercept('GET', '**/broken-logo.png', { forceNetworkError: true });
+    mount(
+      <FeaturedPlantersSlider
+        planters={[{ id: '111', name: '', logo_url: '/broken-logo.png' }]}
+        link={(id) => `/organizations/${id}`}
+        color="secondary"
+      />,
+    );
+    cy.get('a[href="/organizations/111"]').within(() => {
+      cy.get('img').should('have.attr', 'src', imagePlaceholder);
+      cy.contains('#111').should('be.visible');
+    });
+  });
+
   it('it shows featured organization', () => {
     // fake data
     const organizations = [
