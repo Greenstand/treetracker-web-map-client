@@ -165,6 +165,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 - **How to get a new run:** ask the author for a push, or close and reopen the PR. For a first-time contributor, read the diff, then approve the run.
 - **The checks on `main`:** a merge starts them, but not when the merge commit has `[skip ci]`. After such a merge, start them by hand in the Actions tab (workflow "CI checks", button "Run workflow", branch `main`), or run `gh workflow run pull-request-ci.yml --ref main`. A run also starts each night.
 - **When a run on `main` is red,** repair `main` first. The static checks of each PR can fail on findings that the PR did not add, until `main` is repaired.
+- **The commit types of a PR decide the release.** A merge with a `fix`, `feat` or `perf` commit, a revert or a breaking change makes a new version, builds the images and deploys them to dev. A merge with other commit types only (for example `docs`, `ci`, `chore`, `test`) makes no version, builds no image and deploys nothing. Check the commit types before the merge. A deploy to production is the manual workflow "Deploy main channel to prod". See [Releases and Versions](README.md#releases-and-versions).
 - `npm run baseline:suppress -- eslint` (or `-- tsc`) writes all current findings that the baseline can hold. Use it only when you agree to keep the new findings, for example in a PR that adds a new rule.
 - The label `baseline-change` lets the job "Check baseline growth" pass when a PR adds findings to a baseline file. The job runs again when the label changes. People with the triage role or more can add a label.
 - A rule with severity `error` cannot have findings in the baseline. To keep its old findings, change the rule to `warn` in `.eslintrc.js`, run `npm run baseline:suppress -- eslint`, and add the label.
@@ -173,4 +174,5 @@ The baseline lists findings by file path. When you move or rename a file that ha
 
 - [Prettier](README.md#prettier), [Eslint](README.md#eslint), [husky](README.md#husky) and [Lint-Staged](README.md#lint-staged)
 - [Integration Tests](README.md#integration-tests)
+- [Releases and Versions](README.md#releases-and-versions)
 - [Workflow with Github](README.md#workflow-with-github)
