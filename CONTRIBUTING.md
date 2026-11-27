@@ -190,7 +190,7 @@ node scripts/pr-pre-check.js --diff pr.diff
 
 ### The pre-check result on the PR
 
-The workflow "PR pre-check" (`.github/workflows/pr-pre-check.yml`) runs the pre-check for you. It starts when a run of "CI checks" of a PR from a fork waits for an approval. It reads the PR through the GitHub API, and it never runs the code of the PR. Then it shows the result on the PR:
+The workflow "PR pre-check" (`.github/workflows/pr-pre-check.yml`) runs the pre-check for you. It starts when a run of "CI checks" of a PR from a fork waits for an approval. It reads the changes of the commit whose run waits (not of a newer commit of the PR) through the GitHub API, and it never runs the code of the PR. Then it shows the result on the PR:
 
 - **The label `pre-check: clean` or `pre-check: review`.** Use the labels to find the waiting PRs in the PR list. While the check runs, the PR has no label `pre-check: clean`.
 - **The commit status `pre-check`** on the last commit of the PR, with the text `CLEAN` or `REVIEW: <n> findings in <m> files`. The status is green for both results: the text and the label give the result. Its link "Details" opens the run, and the summary of the run lists the findings. The status "error" means that the check did not end: the run shows why.
