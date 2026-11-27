@@ -162,7 +162,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 
 - **Merge only with a green run on the last commit of the PR.** Open the tab "Checks" of the PR. GitHub also shows the button "Merge" for a PR that has no run, or that has a red check.
 - **A PR that is behind `main` was tested with an old `main`.** When `main` changed files that the PR uses, get a new run before the merge.
-- **How to get a new run:** ask the author for a push, or close and reopen the PR. For a first-time contributor, read the [pre-check result](#the-pre-check-result-on-the-pr) of the PR first, then approve the run.
+- **How to get a new run:** ask the author for a push, or close and reopen the PR. For a first-time contributor, the run waits for an approval. The workflow "PR pre-check" approves it when the [pre-check result](#the-pre-check-result-on-the-pr) is `CLEAN`. For `REVIEW`, read the findings first, then approve the run.
 - **The checks on `main`:** each merge starts them, and a run also starts each night. To start them by hand, use the Actions tab (workflow "CI checks", button "Run workflow", branch `main`), or run `gh workflow run pull-request-ci.yml --ref main`.
 - **Do not put `[skip ci]` in a merge commit message.** With it, GitHub starts no workflow for the merge. Then the checks do not run on `main`, and a merge that must make a release makes none. A merge without a release commit type builds and deploys nothing, so it does not need `[skip ci]`.
 - **When a run on `main` is red,** repair `main` first. The static checks of each PR can fail on findings that the PR did not add, until `main` is repaired.
@@ -194,9 +194,13 @@ The workflow "PR pre-check" (`.github/workflows/pr-pre-check.yml`) runs the pre-
 
 - **The label `pre-check: clean` or `pre-check: review`.** Use the labels to find the waiting PRs in the PR list. While the check runs, the PR has no label `pre-check: clean`.
 - **The commit status `pre-check`** on the last commit of the PR, with the text `CLEAN` or `REVIEW: <n> findings in <m> files`. The status is green for both results: the text and the label give the result. Its link "Details" opens the run, and the summary of the run lists the findings. The status "error" means that the check did not end: the run shows why.
+- **The automatic approval.** For the result `CLEAN`, the workflow approves the waiting runs of "CI checks" and "Baseline guard" of that commit. This is an approval of the CI runs, not a review of the PR. For `REVIEW`, the runs wait: a maintainer reads the findings, then approves the runs (the button "Approve workflows to run" on the PR).
+- **What `CLEAN` lets through.** A trick that the pre-check misses runs with no person. Such a run gets no secrets, a token that can only read, and a time limit for each job.
+- When GitHub refuses the approval, the job "Approve the waiting runs" of the run is red, and the CI runs wait for a maintainer.
 - The result is for one commit. A new push starts the check again.
-- For a PR whose run waited before the workflow existed, start the check by hand: `gh workflow run pr-pre-check.yml -R Greenstand/treetracker-web-map-client -f pr=<number>`, or use the Actions tab (workflow "PR pre-check", button "Run workflow").
+- For a PR whose run waited before the workflow existed, start the check by hand: `gh workflow run pr-pre-check.yml -R Greenstand/treetracker-web-map-client -f pr=<number>`, or use the Actions tab (workflow "PR pre-check", button "Run workflow"). A `CLEAN` result of a start by hand also approves the waiting runs of the last commit of the PR.
 - The workflow starts only for a run of the workflow "CI checks". When you rename that workflow, change the name in `pr-pre-check.yml` too.
+- The workflow approves only runs of `pull-request-ci.yml` and `baseline-guard.yml`. When you add a workflow with the trigger `pull_request`, add its file to the job "Approve the waiting runs" in `pr-pre-check.yml`. Until then, its runs wait for a maintainer.
 
 ## More in the README
 

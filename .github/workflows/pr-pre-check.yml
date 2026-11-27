@@ -3,11 +3,13 @@
 # - the label "pre-check: clean" or "pre-check: review";
 # - the commit status "pre-check" on the head commit. Its "Details" link opens
 #   this run, and the summary of this run lists the findings.
-# A maintainer then approves the waiting run, or reads the findings first.
+# For "clean", the second job approves the waiting CI runs of that commit (a
+# CI run approval, not a review of the PR). For "review", the runs wait until
+# a maintainer reads the findings and approves them.
 # CONTRIBUTING.md explains the result.
 #
-# The token of this job can write labels and statuses, and nobody has read
-# the PR yet. RULES FOR EACH CHANGE OF THIS FILE:
+# The tokens of these jobs can write labels and statuses, and approve CI runs,
+# and nobody has read the PR yet. RULES FOR EACH CHANGE OF THIS FILE:
 # - never check out, install, build or run code of the PR here: read the PR
 #   only as data through the API;
 # - never put a value of the event or of the PR into a script: pass it
@@ -65,13 +67,18 @@ jobs:
       contents: read # the checkout of main
       pull-requests: write # the label
       statuses: write # the commit status
+    # for the job "approve"
+    outputs:
+      result: ${{ steps.check.outputs.result }}
+      sha: ${{ steps.find.outputs.sha }}
+      head_repo: ${{ steps.find.outputs.head_repo }}
     env:
       REPO: ${{ github.repository }}
       RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
     steps:
       # The event of a PR from a fork has no PR number: find the open PR by
-      # the fork owner and branch, and by the commit of the waiting run.
+      # the fork, the branch, and the commit of the waiting run.
       - name: Find the PR
         id: find
         env:
@@ -79,6 +86,7 @@ jobs:
           EVENT: ${{ github.event_name }}
           INPUT_PR: ${{ inputs.pr }}
           HEAD_OWNER: ${{ github.event.workflow_run.head_repository.owner.login }}
+          HEAD_REPO: ${{ github.event.workflow_run.head_repository.full_name }}
           HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
@@ -88,14 +96,17 @@ jobs:
               echo "::error::The input pr must be a number."
               exit 1
             esac
-            sha="$(gh api "repos/${REPO}/pulls/${pr}" --jq .head.sha)"
+            pull="$(gh api "repos/${REPO}/pulls/${pr}")"
+            sha="$(jq -r .head.sha <<< "${pull}")"
+            head_repo="$(jq -r '.head.repo.full_name // ""' <<< "${pull}")"
           else
             sha="${HEAD_SHA}"
+            head_repo="${HEAD_REPO}"
             pr="$(gh api --method GET "repos/${REPO}/pulls" -f state=open \
               -f "head=${HEAD_OWNER}:${HEAD_BRANCH}" -F per_page=100 |
-              jq -r --arg sha "${sha}" \
-                '[.[] | select(.head.sha == $sha) | .number] |
-                if length == 1 then .[0] else "" end')"
+              jq -r --arg sha "${sha}" --arg fork "${head_repo}" \
+                '[.[] | select(.head.sha == $sha and .head.repo.full_name == $fork)
+                | .number] | if length == 1 then .[0] else "" end')"
           fi
           if ! [[ "${sha}" =~ ^[0-9a-f]{40}$ ]]; then
             echo "::error::The head commit is not a commit SHA."
@@ -105,10 +116,16 @@ jobs:
             echo "No single open PR has this branch and this head commit. Nothing to do."
             exit 0
           fi
+          # The fork of the PR. A name of an unknown form, or a deleted fork,
+          # gives no automatic approval.
+          if ! [[ "${head_repo}" =~ ^[A-Za-z0-9-]+/[A-Za-z0-9._-]+$ ]]; then
+            head_repo=''
+          fi
           echo "PR #${pr}, head commit ${sha}"
           {
             echo "number=${pr}"
             echo "sha=${sha}"
+            echo "head_repo=${head_repo}"
           } >> "${GITHUB_OUTPUT}"
 
       # A result of an older commit must not stay on the PR while this run
@@ -312,3 +329,73 @@ jobs:
             -f context=pre-check \
             -f description='The pre-check did not end. The run shows why.' \
             -f target_url="${RUN_URL}" --silent
+
+  # For the result "clean": approve the waiting CI runs of the commit that the
+  # pre-check read. This job alone can approve. It checks out nothing and
+  # installs nothing. A run with the result "review" waits for a maintainer.
+  approve:
+    name: Approve the waiting runs
+    needs: pre-check
+    if: >-
+      needs.pre-check.outputs.result == 'clean' &&
+      needs.pre-check.outputs.head_repo != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write # the approval of the waiting runs
+    env:
+      REPO: ${{ github.repository }}
+
+    steps:
+      # Only a run of the two PR workflows of main, from the fork of the PR,
+      # at the commit that the pre-check read. A new workflow with the trigger
+      # pull_request needs a line here; until then its runs wait.
+      - name: Find the waiting runs
+        id: runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ needs.pre-check.outputs.sha }}
+          HEAD_REPO: ${{ needs.pre-check.outputs.head_repo }}
+        run: |
+          if ! [[ "${SHA}" =~ ^[0-9a-f]{40}$ ]] ||
+            ! [[ "${HEAD_REPO}" =~ ^[A-Za-z0-9-]+/[A-Za-z0-9._-]+$ ]]; then
+            echo "::error::The commit or the fork has an unknown form."
+            exit 1
+          fi
+          runs="${RUNNER_TEMP}/runs.json"
+          gh api --method GET "repos/${REPO}/actions/runs" \
+            -f "head_sha=${SHA}" -f status=action_required -F per_page=100 \
+            > "${runs}"
+          ids="$(jq -c --arg sha "${SHA}" --arg fork "${HEAD_REPO}" '
+            [.workflow_runs[]
+            | select(.head_sha == $sha
+              and .event == "pull_request"
+              and .conclusion == "action_required"
+              and .head_repository.full_name == $fork
+              and (.path == ".github/workflows/pull-request-ci.yml"
+                or .path == ".github/workflows/baseline-guard.yml"))
+            | .id]' "${runs}")"
+          echo "Waiting runs of commit ${SHA}: ${ids}"
+          echo "ids=${ids}" >> "${GITHUB_OUTPUT}"
+
+      # When GitHub refuses an approval, the job fails, and the runs wait for
+      # a maintainer.
+      - name: Approve the waiting runs
+        if: steps.runs.outputs.ids != '[]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          IDS: ${{ steps.runs.outputs.ids }}
+          SHA: ${{ needs.pre-check.outputs.sha }}
+        run: |
+          list="${RUNNER_TEMP}/ids.txt"
+          jq -r '.[]' <<< "${IDS}" > "${list}"
+          while IFS= read -r id; do
+            if ! [[ "${id}" =~ ^[0-9]+$ ]]; then
+              echo "::error::A run id has an unknown form."
+              exit 1
+            fi
+            gh api --method POST "repos/${REPO}/actions/runs/${id}/approve" \
+              --silent < /dev/null
+            echo "Approved run ${id}."
+            echo "- Approved run ${id} of commit \`${SHA}\`." >> "${GITHUB_STEP_SUMMARY}"
+          done < "${list}"
