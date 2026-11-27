@@ -162,7 +162,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 
 - **Merge only with a green run on the last commit of the PR.** Open the tab "Checks" of the PR. GitHub also shows the button "Merge" for a PR that has no run, or that has a red check.
 - **A PR that is behind `main` was tested with an old `main`.** When `main` changed files that the PR uses, get a new run before the merge.
-- **How to get a new run:** ask the author for a push, or close and reopen the PR. For a first-time contributor, read the diff, then approve the run.
+- **How to get a new run:** ask the author for a push, or close and reopen the PR. For a first-time contributor, run the [pre-check](#the-pre-check-before-you-approve-a-ci-run) and read the diff, then approve the run.
 - **The checks on `main`:** each merge starts them, and a run also starts each night. To start them by hand, use the Actions tab (workflow "CI checks", button "Run workflow", branch `main`), or run `gh workflow run pull-request-ci.yml --ref main`.
 - **Do not put `[skip ci]` in a merge commit message.** With it, GitHub starts no workflow for the merge. Then the checks do not run on `main`, and a merge that must make a release makes none. A merge without a release commit type builds and deploys nothing, so it does not need `[skip ci]`.
 - **When a run on `main` is red,** repair `main` first. The static checks of each PR can fail on findings that the PR did not add, until `main` is repaired.
@@ -170,6 +170,23 @@ The baseline lists findings by file path. When you move or rename a file that ha
 - `npm run baseline:suppress -- eslint` (or `-- tsc`) writes all current findings that the baseline can hold. Use it only when you agree to keep the new findings, for example in a PR that adds a new rule.
 - The label `baseline-change` lets the job "Check baseline growth" pass when a PR adds findings to a baseline file. The job runs again when the label changes. People with the triage role or more can add a label.
 - A rule with severity `error` cannot have findings in the baseline. To keep its old findings, change the rule to `warn` in `.eslintrc.js`, run `npm run baseline:suppress -- eslint`, and add the label.
+
+### The pre-check before you approve a CI run
+
+`scripts/pr-pre-check.js` reads the diff of a PR as text and lists each file and each added line that you must read before you approve its CI run. It never runs the code of the PR, and it makes no network request. Run it from a checkout of `main`, because it compares the imports with the packages and the `src` folders of the checkout.
+
+```bash
+gh pr diff <number> -R Greenstand/treetracker-web-map-client > pr.diff
+node scripts/pr-pre-check.js --diff pr.diff
+```
+
+- **`CLEAN`:** no rule found a sign that the PR can misuse its CI run. `CLEAN` does not mean that the code is safe: a rule can miss hidden code.
+- **`REVIEW: <n> findings in <m> files`:** read each finding before the approval. Each finding gives the file and the line, the rule, the reason, and the line as printable ASCII. A change of a workflow, a package file, a config file or a script always gives `REVIEW`.
+- **A changed code file** needs its whole new text: put the new files into a folder with the same paths and add `--new <folder>`. Without it, each changed code file gets a finding. A new file needs nothing: the diff holds all of it.
+- **A changed workflow:** when [zizmor](https://docs.zizmor.sh) is installed, the check shows the zizmor findings that the old file does not have. Add `--old <folder>` with the old files. Without zizmor, the report says "zizmor not run".
+- **`--files <file>`** takes the JSON list of the changed paths that GitHub gives for the PR. The check then reports a file that the diff does not show.
+- Exit code: 0 for `CLEAN`, 1 for `REVIEW`, 2 for a usage error.
+- One approval covers one commit. A new push makes a new waiting run.
 
 ## More in the README
 
