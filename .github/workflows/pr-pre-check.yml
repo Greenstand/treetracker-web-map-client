@@ -160,9 +160,12 @@ jobs:
           "${RUNNER_TEMP}/bin/zizmor" --version
 
       # The diff, the file list of GitHub, and the whole new text of each
-      # changed file (the diff holds all of a new file). Only data: nothing of
-      # it runs. A path with a control character, a leading "/" or a ".."
-      # part is not written: the pre-check then reports the file.
+      # changed file (the diff holds all of a new file). Each read is at the
+      # commit of the waiting run, never at the head of the PR: the head can
+      # change during the read, and the result must belong to the commit
+      # whose run waits. Only data: nothing of it runs. A path with a control
+      # character, a leading "/" or a ".." part is not written: the pre-check
+      # then reports the file.
       - name: Read the PR
         id: read
         if: steps.find.outputs.number != ''
@@ -179,10 +182,21 @@ jobs:
           trap 'echo "::${stop}::"' EXIT
           WORK="${RUNNER_TEMP}/pr"
           mkdir -p "${WORK}/new"
-          gh api "repos/${REPO}/pulls/${PR}" \
+          # The changes against the base branch, as the PR shows them. CI runs
+          # only for a PR into a branch without a slash.
+          base="$(gh api "repos/${REPO}/pulls/${PR}" --jq .base.ref)"
+          if ! [[ "${base}" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] ||
+            [[ "${base}" == *..* ]]; then
+            echo "::error::The name of the base branch has an unknown form."
+            exit 1
+          fi
+          compare="repos/${REPO}/compare/${base}...${SHA}"
+          gh api "${compare}" \
             -H 'Accept: application/vnd.github.diff' > "${WORK}/pr.diff"
-          gh api "repos/${REPO}/pulls/${PR}/files?per_page=100" --paginate \
-            --jq '.[] | [.filename, .status, (.contents_url // "")] | @json' \
+          # The compare lists at most 300 files. The pre-check gives "REVIEW"
+          # for more than 15 files, so a cut list cannot give "CLEAN".
+          gh api "${compare}" \
+            --jq '.files[] | [.filename, .status, (.contents_url // "")] | @json' \
             > "${WORK}/files.jsonl"
           jq -s 'map(.[0])' "${WORK}/files.jsonl" > "${WORK}/files.json"
           jq -c -s --argjson max "${MAX_READS}" \
