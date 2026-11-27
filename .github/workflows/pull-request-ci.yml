@@ -2,6 +2,8 @@
 # dependency review, integration tests, unit tests, and the final job
 # "CI passed". CONTRIBUTING.md explains each check.
 
+# pr-pre-check.yml starts on the runs of this workflow by this name. When you
+# change the name, change it there too.
 name: CI checks
 
 # No path filter: each PR gets all checks, also a PR that changes only

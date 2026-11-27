@@ -162,7 +162,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 
 - **Merge only with a green run on the last commit of the PR.** Open the tab "Checks" of the PR. GitHub also shows the button "Merge" for a PR that has no run, or that has a red check.
 - **A PR that is behind `main` was tested with an old `main`.** When `main` changed files that the PR uses, get a new run before the merge.
-- **How to get a new run:** ask the author for a push, or close and reopen the PR. For a first-time contributor, run the [pre-check](#the-pre-check-before-you-approve-a-ci-run) and read the diff, then approve the run.
+- **How to get a new run:** ask the author for a push, or close and reopen the PR. For a first-time contributor, read the [pre-check result](#the-pre-check-result-on-the-pr) of the PR first, then approve the run.
 - **The checks on `main`:** each merge starts them, and a run also starts each night. To start them by hand, use the Actions tab (workflow "CI checks", button "Run workflow", branch `main`), or run `gh workflow run pull-request-ci.yml --ref main`.
 - **Do not put `[skip ci]` in a merge commit message.** With it, GitHub starts no workflow for the merge. Then the checks do not run on `main`, and a merge that must make a release makes none. A merge without a release commit type builds and deploys nothing, so it does not need `[skip ci]`.
 - **When a run on `main` is red,** repair `main` first. The static checks of each PR can fail on findings that the PR did not add, until `main` is repaired.
@@ -187,6 +187,16 @@ node scripts/pr-pre-check.js --diff pr.diff
 - **`--files <file>`** takes the JSON list of the changed paths that GitHub gives for the PR. The check then reports a file that the diff does not show.
 - Exit code: 0 for `CLEAN`, 1 for `REVIEW`, 2 for a usage error.
 - One approval covers one commit. A new push makes a new waiting run.
+
+### The pre-check result on the PR
+
+The workflow "PR pre-check" (`.github/workflows/pr-pre-check.yml`) runs the pre-check for you. It starts when a run of "CI checks" of a PR from a fork waits for an approval. It reads the PR through the GitHub API, and it never runs the code of the PR. Then it shows the result on the PR:
+
+- **The label `pre-check: clean` or `pre-check: review`.** Use the labels to find the waiting PRs in the PR list. While the check runs, the PR has no label `pre-check: clean`.
+- **The commit status `pre-check`** on the last commit of the PR, with the text `CLEAN` or `REVIEW: <n> findings in <m> files`. The status is green for both results: the text and the label give the result. Its link "Details" opens the run, and the summary of the run lists the findings. The status "error" means that the check did not end: the run shows why.
+- The result is for one commit. A new push starts the check again.
+- For a PR whose run waited before the workflow existed, start the check by hand: `gh workflow run pr-pre-check.yml -R Greenstand/treetracker-web-map-client -f pr=<number>`, or use the Actions tab (workflow "PR pre-check", button "Run workflow").
+- The workflow starts only for a run of the workflow "CI checks". When you rename that workflow, change the name in `pr-pre-check.yml` too.
 
 ## More in the README
 

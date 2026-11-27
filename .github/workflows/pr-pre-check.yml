@@ -1,0 +1,300 @@
+# Runs the pre-check (scripts/pr-pre-check.js) on a PR from a fork whose run
+# of "CI checks" waits for an approval, and shows the result on the PR:
+# - the label "pre-check: clean" or "pre-check: review";
+# - the commit status "pre-check" on the head commit. Its "Details" link opens
+#   this run, and the summary of this run lists the findings.
+# A maintainer then approves the waiting run, or reads the findings first.
+# CONTRIBUTING.md explains the result.
+#
+# The token of this job can write labels and statuses, and nobody has read
+# the PR yet. RULES FOR EACH CHANGE OF THIS FILE:
+# - never check out, install, build or run code of the PR here: read the PR
+#   only as data through the API;
+# - never put a value of the event or of the PR into a script: pass it
+#   through env;
+# - keep the permissions as small as they are;
+# - never print text of the PR to the log: a log line can be a workflow
+#   command. The findings go only to the summary.
+
+name: PR pre-check
+
+on:
+  # GitHub sends "requested" when it makes a run of "CI checks", also for a
+  # run that waits for an approval. This trigger always uses the workflow
+  # file of the default branch, never a file of the PR.
+  # A rename of "CI checks" in pull-request-ci.yml stops this trigger.
+  # zizmor reports each workflow_run trigger as dangerous: the danger is code
+  # of the PR in a job with a write token, and this job runs none (the rules
+  # above).
+  workflow_run: # zizmor: ignore[dangerous-triggers]
+    workflows:
+      - CI checks
+    types:
+      - requested
+  # by hand, for example for a PR whose run waited before this workflow
+  # existed: gh workflow run pr-pre-check.yml -f pr=<number>
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: 'PR number'
+        required: true
+        type: number
+
+# no access by default; the job gets only what it needs
+permissions: {}
+
+# One run at a time for each PR branch. A newer run waits until the older run
+# ends, so the newer result is always the last one on the PR.
+concurrency:
+  group: pr-pre-check-${{ github.event.workflow_run.head_repository.full_name || 'pr' }}-${{ github.event.workflow_run.head_branch || inputs.pr }}
+  cancel-in-progress: false
+
+jobs:
+  pre-check:
+    name: Pre-check for the approval
+    # By hand, or a run of a PR from a fork that waits for an approval. At
+    # "requested", such a run already has the conclusion "action_required".
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'action_required' &&
+      github.event.workflow_run.head_repository.full_name != github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read # the checkout of main
+      pull-requests: write # the label
+      statuses: write # the commit status
+    env:
+      REPO: ${{ github.repository }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+    steps:
+      # The event of a PR from a fork has no PR number: find the open PR by
+      # the fork owner and branch, and by the commit of the waiting run.
+      - name: Find the PR
+        id: find
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          INPUT_PR: ${{ inputs.pr }}
+          HEAD_OWNER: ${{ github.event.workflow_run.head_repository.owner.login }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          if [ "${EVENT}" = workflow_dispatch ]; then
+            pr="${INPUT_PR}"
+            case "${pr}" in '' | *[!0-9]*)
+              echo "::error::The input pr must be a number."
+              exit 1
+            esac
+            sha="$(gh api "repos/${REPO}/pulls/${pr}" --jq .head.sha)"
+          else
+            sha="${HEAD_SHA}"
+            pr="$(gh api --method GET "repos/${REPO}/pulls" -f state=open \
+              -f "head=${HEAD_OWNER}:${HEAD_BRANCH}" -F per_page=100 |
+              jq -r --arg sha "${sha}" \
+                '[.[] | select(.head.sha == $sha) | .number] |
+                if length == 1 then .[0] else "" end')"
+          fi
+          if ! [[ "${sha}" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::The head commit is not a commit SHA."
+            exit 1
+          fi
+          if [ -z "${pr}" ]; then
+            echo "No single open PR has this branch and this head commit. Nothing to do."
+            exit 0
+          fi
+          echo "PR #${pr}, head commit ${sha}"
+          {
+            echo "number=${pr}"
+            echo "sha=${sha}"
+          } >> "${GITHUB_OUTPUT}"
+
+      # A result of an older commit must not stay on the PR while this run
+      # works, so "pre-check: clean" goes first.
+      - name: Mark the pre-check as running
+        if: steps.find.outputs.number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.find.outputs.number }}
+          SHA: ${{ steps.find.outputs.sha }}
+        run: |
+          gh api "repos/${REPO}/statuses/${SHA}" -f state=pending \
+            -f context=pre-check -f description='The pre-check runs.' \
+            -f target_url="${RUN_URL}" --silent
+          clean="$(gh api "repos/${REPO}/issues/${PR}/labels?per_page=100" \
+            --jq 'any(.[]; .name == "pre-check: clean")')"
+          if [ "${clean}" = true ]; then
+            gh api --method DELETE \
+              "repos/${REPO}/issues/${PR}/labels/pre-check:%20clean" --silent
+          fi
+
+      # main, never the PR: the script and its packages come from main
+      # https://github.com/actions/checkout
+      - name: Checkout main
+        if: steps.find.outputs.number != ''
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # No cache: a cache can hold files of another run. No install scripts.
+      - name: Install the packages of main
+        if: steps.find.outputs.number != ''
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      # A fixed release of zizmor, checked against its SHA-256. The script
+      # runs it on a changed workflow file, without a token and offline.
+      # https://github.com/zizmorcore/zizmor/releases
+      - name: Install zizmor
+        if: steps.find.outputs.number != ''
+        env:
+          ZIZMOR_VERSION: 1.33.1
+          ZIZMOR_SHA256: 3e6a301c7a820a2501915f5a9de8c0486da82bdec7965f068477538a98743d43
+        run: |
+          mkdir -p "${RUNNER_TEMP}/bin"
+          archive="${RUNNER_TEMP}/zizmor.tar.gz"
+          curl -fsSL -o "${archive}" "https://github.com/zizmorcore/zizmor/releases/download/v${ZIZMOR_VERSION}/zizmor-x86_64-unknown-linux-gnu.tar.gz"
+          echo "${ZIZMOR_SHA256}  ${archive}" | sha256sum --check --strict -
+          tar -xzf "${archive}" -C "${RUNNER_TEMP}/bin" zizmor
+          "${RUNNER_TEMP}/bin/zizmor" --version
+
+      # The diff, the file list of GitHub, and the whole new text of each
+      # changed file (the diff holds all of a new file). Only data: nothing of
+      # it runs. A path with a control character, a leading "/" or a ".."
+      # part is not written: the pre-check then reports the file.
+      - name: Read the PR
+        id: read
+        if: steps.find.outputs.number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.find.outputs.number }}
+          SHA: ${{ steps.find.outputs.sha }}
+          # the most files that the step reads whole; a larger PR gets
+          # "REVIEW" anyway
+          MAX_READS: 30
+        run: |
+          stop="$(openssl rand -hex 16)"
+          echo "::stop-commands::${stop}"
+          trap 'echo "::${stop}::"' EXIT
+          WORK="${RUNNER_TEMP}/pr"
+          mkdir -p "${WORK}/new"
+          gh api "repos/${REPO}/pulls/${PR}" \
+            -H 'Accept: application/vnd.github.diff' > "${WORK}/pr.diff"
+          gh api "repos/${REPO}/pulls/${PR}/files?per_page=100" --paginate \
+            --jq '.[] | [.filename, .status, (.contents_url // "")] | @json' \
+            > "${WORK}/files.jsonl"
+          jq -s 'map(.[0])' "${WORK}/files.jsonl" > "${WORK}/files.json"
+          jq -c -s --argjson max "${MAX_READS}" \
+            --arg prefix "https://api.github.com/repos/${REPO}/contents/" \
+            --arg suffix "?ref=${SHA}" '
+              [.[]
+              | select(.[1] != "added" and .[1] != "removed")
+              | select(.[0] | explode | any(.[]; . < 32 or . == 127) | not)
+              | select(.[0] != "" and (.[0] | startswith("/") | not))
+              | select(.[0] | split("/") | any(.[]; . == "..") | not)
+              | select(.[2] | startswith($prefix) and endswith($suffix))
+              | [.[0], .[2]]]
+              | .[:$max][]' "${WORK}/files.jsonl" > "${WORK}/reads.jsonl"
+          while IFS= read -r row; do
+            file="$(jq -r '.[0]' <<< "${row}")"
+            url="$(jq -r '.[1]' <<< "${row}")"
+            mkdir -p "$(dirname -- "${WORK}/new/${file}")"
+            gh api "${url}" -H 'Accept: application/vnd.github.raw' \
+              > "${WORK}/new/${file}"
+          done < "${WORK}/reads.jsonl"
+          head="$(gh api "repos/${REPO}/pulls/${PR}" --jq .head.sha)"
+          if [ "${head}" = "${SHA}" ]; then
+            echo "current=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "The PR got a newer commit during the read. The run of that commit shows its result."
+          fi
+
+      # The report goes to a file and to the summary, never to the log.
+      - name: Run the pre-check
+        id: check
+        if: steps.read.outputs.current == 'true'
+        env:
+          PR: ${{ steps.find.outputs.number }}
+          SHA: ${{ steps.find.outputs.sha }}
+        run: |
+          WORK="${RUNNER_TEMP}/pr"
+          stop="$(openssl rand -hex 16)"
+          echo "::stop-commands::${stop}"
+          code=0
+          PATH="${RUNNER_TEMP}/bin:${PATH}" node scripts/pr-pre-check.js \
+            --diff "${WORK}/pr.diff" --files "${WORK}/files.json" \
+            --new "${WORK}/new" --old . > "${WORK}/report.txt" || code=$?
+          echo "::${stop}::"
+          case "${code}" in
+            0) result=clean ;;
+            1) result=review ;;
+            *)
+              echo "::error::The pre-check script stopped with exit code ${code}."
+              exit 1
+              ;;
+          esac
+          first="$(head -n 1 "${WORK}/report.txt")"
+          if ! [[ "${first}" =~ ^(CLEAN|REVIEW:\ [0-9]+\ findings?\ in\ [0-9]+\ files?)$ ]]; then
+            echo "::error::The first line of the report has an unknown form."
+            exit 1
+          fi
+          echo "Result: ${first}"
+          {
+            echo "result=${result}"
+            echo "text=${first}"
+          } >> "${GITHUB_OUTPUT}"
+          # backticks become quotes, so the text cannot end the code block
+          {
+            echo "### Pre-check of PR #${PR}"
+            echo
+            echo "Head commit: \`${SHA}\`"
+            echo
+            echo '```text'
+            head -n 2000 "${WORK}/report.txt" | tr '`' "'"
+            echo '```'
+            echo
+            echo 'CLEAN means that no rule found a sign. It does not mean that the code is safe.'
+            echo 'CONTRIBUTING.md, section "The pre-check before you approve a CI run", explains the result.'
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      # The status belongs to the commit. The label belongs to the PR, so it
+      # changes only while the commit is still the head of the PR.
+      - name: Show the result on the PR
+        if: steps.check.outputs.result != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.find.outputs.number }}
+          SHA: ${{ steps.find.outputs.sha }}
+          RESULT: ${{ steps.check.outputs.result }}
+          TEXT: ${{ steps.check.outputs.text }}
+        run: |
+          gh api "repos/${REPO}/statuses/${SHA}" -f state=success \
+            -f context=pre-check -f description="${TEXT}" \
+            -f target_url="${RUN_URL}" --silent
+          head="$(gh api "repos/${REPO}/pulls/${PR}" --jq .head.sha)"
+          if [ "${head}" != "${SHA}" ]; then
+            echo "The PR has a newer commit. The run of that commit sets the label."
+            exit 0
+          fi
+          if [ "${RESULT}" = clean ]; then other=review; else other=clean; fi
+          has_other="$(gh api "repos/${REPO}/issues/${PR}/labels?per_page=100" \
+            --jq "any(.[]; .name == \"pre-check: ${other}\")")"
+          if [ "${has_other}" = true ]; then
+            gh api --method DELETE \
+              "repos/${REPO}/issues/${PR}/labels/pre-check:%20${other}" --silent
+          fi
+          gh api "repos/${REPO}/issues/${PR}/labels" \
+            -f "labels[]=pre-check: ${RESULT}" --silent
+
+      # A run that does not end gives no result: say so on the commit.
+      - name: Mark the pre-check as failed
+        if: (failure() || cancelled()) && steps.find.outputs.sha != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ steps.find.outputs.sha }}
+        run: |
+          gh api "repos/${REPO}/statuses/${SHA}" -f state=error \
+            -f context=pre-check \
+            -f description='The pre-check did not end. The run shows why.' \
+            -f target_url="${RUN_URL}" --silent
