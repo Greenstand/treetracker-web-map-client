@@ -22,7 +22,7 @@ export default function Drawer(props) {
   }
 
   const handleTouchStart = React.useCallback((event) => {
-    log.error('touch start: ', event);
+    log.debug('touch start: ', event);
     // event.stopPropagation();
     log.warn(
       'rootRef.current.style.transform: ',
