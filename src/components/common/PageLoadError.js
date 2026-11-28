@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Skeleton, Stack } from '@mui/material';
+import { Alert, Box, Button } from '@mui/material';
 import log from 'loglevel';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -57,41 +57,6 @@ export default function PageLoadError({
         >
           {`We couldn't load this ${entityLabel.toLowerCase()}'s details right now. The map is still available.`}
         </Alert>
-        <Box sx={{ mt: 6, position: 'relative' }}>
-          <Skeleton
-            variant="rectangular"
-            sx={{ width: 1, height: [160, 240], borderRadius: 4 }}
-          />
-          <Skeleton
-            variant="circular"
-            sx={{
-              width: [80, 120],
-              height: [80, 120],
-              mt: [-5, -7.5],
-              mx: 'auto',
-            }}
-          />
-        </Box>
-        <Skeleton variant="text" sx={{ mt: 4, fontSize: 40, width: '60%' }} />
-        <Skeleton variant="text" sx={{ width: '40%' }} />
-        <Stack direction="row" spacing={2} sx={{ mt: 8 }}>
-          {[0, 1, 2].map((i) => (
-            <Skeleton
-              key={i}
-              variant="rectangular"
-              sx={{ flex: 1, height: 120, borderRadius: 4 }}
-            />
-          ))}
-        </Stack>
-        <Stack direction="row" spacing={2} sx={{ mt: 6 }}>
-          {[0, 1].map((i) => (
-            <Skeleton
-              key={i}
-              variant="rectangular"
-              sx={{ flex: 1, height: 96, borderRadius: 4 }}
-            />
-          ))}
-        </Stack>
       </Box>
     </>
   );
