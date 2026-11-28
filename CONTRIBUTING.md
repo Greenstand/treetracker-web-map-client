@@ -10,7 +10,7 @@ Each push to a PR starts these jobs. They run at the same time. A full run takes
 
 | Job                                                    | What it checks                                                                                          | Usual time   | On your computer                                           |
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------- |
-| Run static checks, step "ESLint"                       | The lint rules in `.eslintrc.js`. It fails on each new finding, and on each fixed finding that is still in the baseline. | 1 minute     | `npm run baseline -- eslint`                               |
+| Run static checks, step "ESLint"                       | The lint rules in `.eslintrc.js`. It fails on each new finding. A fixed finding that is still in the baseline gives a notice. | 1 minute     | `npm run baseline -- eslint`                               |
 | Run static checks, step "Type check"                   | Type errors in the `.js` files in `src/`, without the Cypress files (`*.cy.js`). It uses TypeScript `checkJs`. It fails as the step "ESLint" does. | (same job)   | `npm run baseline -- tsc`                                  |
 | Run unit tests                                         | The Cypress component tests, then the Jest tests.                                                       | 4 minutes    | `npm run cypress:run:component`, then `npm test` (CI runs `npx jest --ci`) |
 | Run integration tests                                  | The Cypress tests of the pages, with a mock API. It saves a screenshot of 7 pages.                      | 6 minutes    | `npm run cypress:run:fast` (stop `npm run dev` first)      |
@@ -44,7 +44,8 @@ npm run cypress:run:fast
 The code has many old findings. We do not fix them all now. Two files list them: `eslint-suppressions.json` (ESLint) and `tsc-suppressions.json` (type check). This list is the **baseline**. For each file and rule, it records the number of old findings. The check compares these numbers.
 
 - The check fails on each new finding. This includes warnings, and lines that your PR did not change.
-- The check also fails when you fix an old finding and the baseline still lists it. So a fixed finding cannot stay in the baseline.
+- When you fix an old finding and the baseline still lists it, the check passes and gives a notice. Remove the finding from the baseline, so that the baseline stays small (see [Example: a fixed finding](#example-a-fixed-finding)).
+- In CI, the check also compares with the findings of the base branch. So a new finding cannot hide behind the count of an old finding that a PR fixed and left in the baseline. To make the same compare on your computer, give the base branch, for example `BASELINE_BASE_REF=upstream/main npm run baseline` (use the name of the remote of the Greenstand repo in your clone, after a `git fetch`).
 - When a file has old findings of a rule and you add one more, the log lists all findings of that rule in the file. Find the new one in the list:
 
   ```
@@ -102,10 +103,10 @@ Change the 5 calls, and the check passes.
 
 ### Example: a fixed finding
 
-You remove an old `console.log` line. The step "ESLint" fails, because the baseline still lists the finding:
+You remove an old `console.log` line. The step "ESLint" passes and gives a notice, because the baseline still lists the finding:
 
 ```
-ESLint: 1 fixed finding is still in the baseline (eslint-suppressions.json).
+ESLint: 1 fixed finding is still in the baseline (eslint-suppressions.json). This does not fail the check.
 
   src/models/oidcConfig.js  no-console: 1 in the baseline, 0 now
 
@@ -114,7 +115,28 @@ Or edit eslint-suppressions.json by hand (for example in the GitHub web editor):
   - Remove "src/models/oidcConfig.js".
 ```
 
-Run `npm run baseline:update` and commit the changed file. This command only removes findings. It never adds one, and it does not fail on a new finding. So run `npm run baseline` again. It must print "no new findings and no fixed findings" for ESLint and for the type check.
+Run `npm run baseline:update` and commit the changed file, so that the baseline stays small. This command only removes findings. It never adds one, and it does not fail on a new finding. So run `npm run baseline` again. It must print "no new findings and no fixed findings" for ESLint and for the type check.
+
+### Example: an old count on the base branch
+
+An earlier PR fixed an unused variable in `src/components/Navbar.js` and did not remove it from the baseline. So the baseline file on `main` lists 2 findings of `no-unused-vars` in this file, and the code has 1. Your PR adds one more. On your computer, `npm run baseline` passes, because the baseline file lists 2. In CI, the step "ESLint" compares with the findings of the base branch and fails:
+
+```
+ESLint: 1 new finding.
+
+src/components/Navbar.js
+  no-unused-vars: 1 allowed (the baseline file lists 2, the base commit has 1), 2 now. One or more of these findings is new:
+    22:8  'LoginLogoutToggle' is defined but never used.
+    192:7  'unusedHelper' is assigned a value but never used.
+
+Fix the new findings. To see them on your computer, run "npm run baseline".
+If a maintainer agrees to keep a new finding, run "npm run baseline:suppress -- eslint", commit eslint-suppressions.json, and ask the maintainer to add the label "baseline-change" to the PR.
+
+The baseline file lists more findings than the base commit has, because a fixed finding stayed in the file. The check allows only the findings of the base commit, so a new finding cannot hide behind the old count.
+To keep a new finding of such a file and rule, first remove the old count on the base branch: a maintainer runs "npm run baseline:update" there in a separate PR.
+```
+
+Fix the new finding. If you cannot fix it, ask a maintainer, as in [What to do with a new finding](#what-to-do-with-a-new-finding).
 
 ### Findings with severity "error"
 
@@ -170,6 +192,7 @@ The baseline lists findings by file path. When you move or rename a file that ha
 - `npm run baseline:suppress -- eslint` (or `-- tsc`) writes all current findings that the baseline can hold. Use it only when you agree to keep the new findings, for example in a PR that adds a new rule.
 - The label `baseline-change` lets the job "Check baseline growth" pass when a PR adds findings to a baseline file. The job runs again when the label changes. People with the triage role or more can add a label.
 - A rule with severity `error` cannot have findings in the baseline. To keep its old findings, change the rule to `warn` in `.eslintrc.js`, run `npm run baseline:suppress -- eslint`, and add the label.
+- **Old counts can stay in a baseline file on `main`,** when a PR fixed a finding and did not run `npm run baseline:update`. They hide no new finding, because the check in CI compares with the findings of the base branch. But a PR that must keep a new finding of such a file and rule fails until the old count is gone (see [Example: an old count on the base branch](#example-an-old-count-on-the-base-branch)). Then run `npm run baseline:update` on `main` in a separate PR, and merge it first.
 
 ### The pre-check before you approve a CI run
 

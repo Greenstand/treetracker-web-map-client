@@ -124,15 +124,16 @@ describe('check', () => {
     expect(local.output).not.toContain('::error');
   });
 
-  it('adds one summary annotation for fixed findings on GitHub', async () => {
+  it('adds one summary notice, not an error, for fixed findings on GitHub', async () => {
     const root = makeRoot();
     writeBaseline(root, { 'src/a.js': { 'no-console': { count: 1 } } });
 
     const result = await runMode('check', root, [], { GITHUB_ACTIONS: 'true' });
 
     expect(result.output).toContain(
-      '\n::error title=ESLint baseline::1 fixed finding is still in eslint-suppressions.json. Run "npm run baseline:update" and commit the file, or see the log of this step for the hand edit.',
+      '\n::notice title=ESLint baseline::1 fixed finding is still in eslint-suppressions.json. This does not fail the check. To remove it, run "npm run baseline:update" and commit the file, or see the log of this step for the hand edit.',
     );
+    expect(result.output).not.toContain('::error');
   });
 
   it('fails on a finding without a rule, such as a parse error', async () => {
@@ -274,7 +275,7 @@ describe('check', () => {
     );
   });
 
-  it('fails on a fixed finding that is still in the baseline, and says how to remove it', async () => {
+  it('passes on a fixed finding that is still in the baseline, and says how to remove it', async () => {
     const root = makeRoot();
     writeBaseline(root, {
       'src/a.js': { 'no-unused-vars': { count: 2 } },
@@ -287,10 +288,10 @@ describe('check', () => {
       finding('src/c.js', 'no-alert'),
     ]);
 
-    expect(result.exitCode).toBe(1);
-    expect(result.output).toContain(
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toBe(
       [
-        'ESLint: 3 fixed findings are still in the baseline (eslint-suppressions.json).',
+        'ESLint: 3 fixed findings are still in the baseline (eslint-suppressions.json). This does not fail the check.',
         '',
         '  src/a.js  no-unused-vars: 2 in the baseline, 1 now',
         '  src/c.js  no-console: 1 in the baseline, 0 now',
@@ -465,10 +466,12 @@ describe('suppress', () => {
 // The baseline file of each tool.
 const BASELINE_FILES = [BASELINE_FILE, 'tsc-suppressions.json'];
 
-// A git repo with two commits: the base branch, then the PR. A null baseline
-// means that the commit has no baseline file. The baseline file of each
-// other tool is empty in both commits.
-function makeRepo(baseBaseline, prBaseline, baselineFile = BASELINE_FILE) {
+// A git repo with one commit for each item of commits: the base branch, then
+// the PR. Each item has a baseline, and can have the findings of its code
+// (the file findings.json, for collectFromFile). A null baseline means that
+// the commit has no baseline file. The baseline file of each other tool is
+// empty in each commit.
+function makeHistory(commits, baselineFile = BASELINE_FILE) {
   const root = makeRoot();
   const git = (...args) =>
     execFileSync('git', ['-C', root, '-c', 'commit.gpgsign=false', ...args], {
@@ -477,10 +480,16 @@ function makeRepo(baseBaseline, prBaseline, baselineFile = BASELINE_FILE) {
   BASELINE_FILES.filter((other) => other !== baselineFile).forEach((other) => {
     fs.writeFileSync(path.join(root, other), '{}\n');
   });
-  const commit = (baseline, message) => {
+  const commit = ({ baseline, findings }, message) => {
     const file = path.join(root, baselineFile);
     if (baseline) fs.writeFileSync(file, JSON.stringify(baseline));
     else fs.rmSync(file, { force: true });
+    if (findings) {
+      fs.writeFileSync(
+        path.join(root, 'findings.json'),
+        JSON.stringify(findings),
+      );
+    }
     fs.writeFileSync(path.join(root, 'commit.txt'), message);
     git('add', '--all');
     git(
@@ -496,9 +505,16 @@ function makeRepo(baseBaseline, prBaseline, baselineFile = BASELINE_FILE) {
     );
   };
   git('init', '--quiet');
-  commit(baseBaseline, 'base');
-  commit(prBaseline, 'pr');
+  commits.forEach((item, index) => commit(item, `commit ${index}`));
   return root;
+}
+
+// A git repo with two commits: the base branch, then the PR.
+function makeRepo(baseBaseline, prBaseline, baselineFile = BASELINE_FILE) {
+  return makeHistory(
+    [{ baseline: baseBaseline }, { baseline: prBaseline }],
+    baselineFile,
+  );
 }
 
 function guard(root, env = {}) {
@@ -656,6 +672,253 @@ describe('guard', () => {
     expect(result.output).toMatch(
       /^Baseline guard: eslint-suppressions\.json is not valid JSON\. .+/,
     );
+  });
+});
+
+// The findings of the code in root: the file findings.json of makeHistory.
+function collectFromFile(tool, root) {
+  return JSON.parse(fs.readFileSync(path.join(root, 'findings.json'), 'utf8'));
+}
+
+// The check of the PR commit (HEAD) with a compare to the base commit.
+function checkWithBase(root, env = {}, tool = 'eslint') {
+  return run({
+    mode: 'check',
+    tool,
+    root,
+    env: { BASELINE_BASE_REF: 'HEAD^1', ...env },
+    collect: collectFromFile,
+  });
+}
+
+describe('check with a compare to the base commit', () => {
+  it('fails on a new finding that a fixed finding in the baseline of the base commit would hide', async () => {
+    // The base commit fixed one finding and kept the count of 2.
+    const baseline = { 'src/a.js': { 'no-unused-vars': { count: 2 } } };
+    const root = makeHistory([
+      { baseline, findings: [finding('src/a.js', 'no-unused-vars', 3)] },
+      {
+        baseline,
+        findings: [
+          finding('src/a.js', 'no-unused-vars', 3),
+          finding('src/a.js', 'no-unused-vars', 9),
+        ],
+      },
+    ]);
+
+    const result = await checkWithBase(root);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toContain(
+      [
+        'ESLint: 1 new finding.',
+        '',
+        'src/a.js',
+        '  no-unused-vars: 1 allowed (the baseline file lists 2, the base commit has 1), 2 now. One or more of these findings is new:',
+        '    3:1  Message of no-unused-vars.',
+        '    9:1  Message of no-unused-vars.',
+      ].join('\n'),
+    );
+    expect(result.output).toContain(
+      [
+        'The baseline file lists more findings than the base commit has, because a fixed finding stayed in the file. The check allows only the findings of the base commit, so a new finding cannot hide behind the old count.',
+        'To keep a new finding of such a file and rule, first remove the old count on the base branch: a maintainer runs "npm run baseline:update" there in a separate PR.',
+      ].join('\n'),
+    );
+  });
+
+  it('gives the annotation of a lowered count the allowed count in its title', async () => {
+    const baseline = { 'src/a.js': { 'no-unused-vars': { count: 2 } } };
+    const root = makeHistory([
+      { baseline, findings: [finding('src/a.js', 'no-unused-vars', 3)] },
+      {
+        baseline,
+        findings: [
+          finding('src/a.js', 'no-unused-vars', 3),
+          finding('src/a.js', 'no-unused-vars', 9),
+        ],
+      },
+    ]);
+
+    const result = await checkWithBase(root, { GITHUB_ACTIONS: 'true' });
+
+    expect(result.output).toContain(
+      '\n::error file=src/a.js,line=9,col=1,title=ESLint no-unused-vars%3A 1 allowed (the baseline file lists 2)%2C 2 now::Message of no-unused-vars.',
+    );
+  });
+
+  it('passes on a PR that fixes a finding and keeps the baseline file', async () => {
+    const baseline = { 'src/a.js': { 'no-unused-vars': { count: 2 } } };
+    const root = makeHistory([
+      {
+        baseline,
+        findings: [
+          finding('src/a.js', 'no-unused-vars', 3),
+          finding('src/a.js', 'no-unused-vars', 9),
+        ],
+      },
+      { baseline, findings: [finding('src/a.js', 'no-unused-vars', 3)] },
+    ]);
+
+    const result = await checkWithBase(root);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toContain(
+      'ESLint: 1 fixed finding is still in the baseline (eslint-suppressions.json). This does not fail the check.',
+    );
+  });
+
+  it('allows the findings that the PR adds to the baseline file (the growth guard asks for the label)', async () => {
+    const root = makeHistory([
+      {
+        baseline: { 'src/a.js': { 'no-unused-vars': { count: 1 } } },
+        findings: [finding('src/a.js', 'no-unused-vars', 3)],
+      },
+      {
+        baseline: { 'src/a.js': { 'no-unused-vars': { count: 2 } } },
+        findings: [
+          finding('src/a.js', 'no-unused-vars', 3),
+          finding('src/a.js', 'no-unused-vars', 9),
+        ],
+      },
+    ]);
+
+    const result = await checkWithBase(root);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toBe(
+      'ESLint: no new findings and no fixed findings (2 findings in the baseline).',
+    );
+  });
+
+  it('passes on the PR that removes the old count of a fixed finding from the baseline file', async () => {
+    const root = makeHistory([
+      {
+        baseline: { 'src/a.js': { 'no-unused-vars': { count: 2 } } },
+        findings: [finding('src/a.js', 'no-unused-vars', 3)],
+      },
+      {
+        baseline: { 'src/a.js': { 'no-unused-vars': { count: 1 } } },
+        findings: [finding('src/a.js', 'no-unused-vars', 3)],
+      },
+    ]);
+
+    const result = await checkWithBase(root);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toBe(
+      'ESLint: no new findings and no fixed findings (1 finding in the baseline).',
+    );
+  });
+
+  it('allows no more than the baseline file of the PR lists', async () => {
+    const root = makeHistory([
+      {
+        baseline: { 'src/a.js': { 'no-unused-vars': { count: 2 } } },
+        findings: [
+          finding('src/a.js', 'no-unused-vars', 3),
+          finding('src/a.js', 'no-unused-vars', 9),
+        ],
+      },
+      {
+        baseline: { 'src/a.js': { 'no-unused-vars': { count: 1 } } },
+        findings: [
+          finding('src/a.js', 'no-unused-vars', 3),
+          finding('src/a.js', 'no-unused-vars', 12),
+        ],
+      },
+    ]);
+
+    const result = await checkWithBase(root);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toContain(
+      '  no-unused-vars: 1 in the baseline, 2 now. One or more of these findings is new:',
+    );
+  });
+
+  it('compares the type check with the type check baseline of the base commit', async () => {
+    const baseline = { 'src/a.js': { TS2339: { count: 2 } } };
+    const root = makeHistory(
+      [
+        { baseline, findings: [finding('src/a.js', 'TS2339', 3)] },
+        {
+          baseline,
+          findings: [
+            finding('src/a.js', 'TS2339', 3),
+            finding('src/a.js', 'TS2339', 9),
+          ],
+        },
+      ],
+      'tsc-suppressions.json',
+    );
+
+    const result = await checkWithBase(root, {}, 'tsc');
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toContain(
+      '  TS2339: 1 allowed (the baseline file lists 2, the base commit has 1), 2 now. One or more of these findings is new:',
+    );
+  });
+
+  it('fails with a clear message when the base commit is not in the checkout', async () => {
+    const root = makeHistory([{ baseline: {}, findings: [] }]);
+
+    const result = await checkWithBase(root);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toBe(
+      'ESLint: the base commit "HEAD^1" is not in the checkout. Check out the PR with "fetch-depth: 2".',
+    );
+  });
+
+  it('does not read a base ref that starts with "-" as a git option', async () => {
+    const root = makeHistory([
+      { baseline: {}, findings: [] },
+      { baseline: {}, findings: [] },
+    ]);
+
+    const result = await checkWithBase(root, {
+      BASELINE_BASE_REF: '--output=x',
+    });
+
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toContain(
+      'the base commit "--output=x" is not in the checkout',
+    );
+    expect(fs.existsSync(path.join(root, 'x'))).toBe(false);
+  });
+
+  it('removes its checkout of the base commit, also when the tool fails there', async () => {
+    const root = makeHistory([
+      { baseline: {}, findings: [] },
+      { baseline: {}, findings: [] },
+    ]);
+    const leftovers = () =>
+      fs
+        .readdirSync(os.tmpdir())
+        .filter((name) => name.startsWith('baseline-base-'));
+    const before = leftovers();
+    const worktrees = () =>
+      execFileSync('git', ['-C', root, 'worktree', 'list', '--porcelain'], {
+        encoding: 'utf8',
+      }).match(/^worktree /gm).length;
+
+    await checkWithBase(root);
+    const failing = run({
+      mode: 'check',
+      tool: 'eslint',
+      root,
+      env: { BASELINE_BASE_REF: 'HEAD^1' },
+      collect: (tool, dir) => {
+        if (dir !== root) throw new Error('the tool failed');
+        return [];
+      },
+    });
+
+    await expect(failing).rejects.toThrow('the tool failed');
+    expect(worktrees()).toBe(1);
+    expect(leftovers()).toEqual(before);
   });
 });
 
