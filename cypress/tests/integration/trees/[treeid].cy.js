@@ -17,6 +17,9 @@ describe('Tree page', () => {
     });
     cy.visit(treePath);
     cy.contains(`${exampleTreeData.id}`).should('be.visible');
+    // The page zooms the map to the tree, then marks the tree. Wait for the
+    // mark, so that the screenshot shows the tree and not the world view.
+    cy.get('.greenstand-point-selected', { timeout: 30000 }).should('exist');
     cy.screenshotPage();
   });
 });

@@ -64,3 +64,30 @@ beforeEach(() => {
     });
   });
 });
+
+// The map loads its background tiles from the map service of Google. The
+// tests serve one plain test tile for each of them. So a slow or blocked
+// Google cannot leave the map grey in a screenshot, and the wait for the map
+// in cy.screenshotPage() does not depend on Google. The tree tiles come from
+// the dev server, as before.
+beforeEach(() => {
+  cy.intercept(/^https:\/\/mt\d\.google\.com\/vt\//, {
+    // ",null" serves the file as binary data
+    fixture: 'tiles/background.png,null',
+    headers: {
+      'content-type': 'image/png',
+      'access-control-allow-origin': '*',
+    },
+  });
+});
+
+// When the map has no tree in its view, the map core asks the API for the
+// nearest tree. This request can fail with status 422 (a known defect of the
+// map core), and the failure stops the test with an unhandled promise
+// rejection. The tests answer "no nearest tree".
+beforeEach(() => {
+  cy.intercept(/\/query\/gis\/location\/nearest\?/, {
+    body: { nearest: null },
+    headers: { 'access-control-allow-origin': '*' },
+  });
+});
