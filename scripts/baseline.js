@@ -2,8 +2,12 @@
 //
 // The baseline file lists the existing findings: for each file, the number of
 // findings of each rule. The check fails on each finding that is not in the
-// baseline, also on a line that the PR did not change. It also fails when a
-// fixed finding is still in the baseline, so the baseline can only shrink.
+// baseline, also on a line that the PR did not change. A fixed finding that
+// is still in the baseline gives a notice, not a failure. When
+// BASELINE_BASE_REF names the base commit (CI does this), the check allows for
+// each file and rule only the findings of the base commit plus the growth of
+// the baseline file in the PR. So the count of a fixed finding that stayed in
+// the baseline cannot hide a new finding.
 // The baseline cannot hold a finding with severity "error" or a finding
 // without a rule: the check fails on each one, also when the baseline lists
 // its file and rule.
@@ -18,7 +22,8 @@
 //   node scripts/baseline.js suppress [tool ...]  (npm run baseline:suppress)
 //   node scripts/baseline.js guard <base commit>  (CI only)
 //
-// check:    fail on new findings and on fixed findings in the baseline.
+// check:    fail on new findings. A fixed finding in the baseline is a notice.
+//           With BASELINE_BASE_REF, compare with the base commit (see above).
 // update:   remove the fixed findings from the baseline. It never adds one.
 // suppress: write all current findings that the baseline can hold. This can
 //           grow the baseline, so the PR needs the label "baseline-change".
@@ -27,6 +32,7 @@
 // Without a tool, check, update and suppress use each tool.
 const { execFileSync } = require('child_process');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
 function toPosix(file) {
@@ -231,6 +237,23 @@ function git(root, args) {
   });
 }
 
+// The full id of the commit of a git ref, or null when the checkout does not
+// have the commit. A ref that starts with "-" could be read as an option, so
+// it gives null too.
+function resolveCommit(root, ref) {
+  if (ref.startsWith('-')) return null;
+  try {
+    return git(root, [
+      'rev-parse',
+      '--verify',
+      '--quiet',
+      `${ref}^{commit}`,
+    ]).trim();
+  } catch {
+    return null;
+  }
+}
+
 // The baseline of a tool on a git ref, or null when the ref has no file.
 function readBaselineAt(root, ref, tool) {
   const { file } = TOOLS[tool];
@@ -281,11 +304,18 @@ function newEntries(baseline, groups) {
         .map((rule) => {
           const findings = groups[file][rule];
           const error = hasError(findings);
+          const { listed, base } = baseline[file]?.[rule] ?? {};
+          const before = error ? 0 : baselineCount(baseline, file, rule);
           return {
             file,
             rule,
             error,
-            before: error ? 0 : baselineCount(baseline, file, rule),
+            before,
+            // set when the compare with the base commit lowered the count
+            lowered:
+              !error && rule !== NO_RULE && listed > before
+                ? { listed, base }
+                : undefined,
             findings,
           };
         })
@@ -355,14 +385,16 @@ function plural(count, word) {
 
 // The baseline has no line numbers. When the baseline has some findings of
 // the entry, the report cannot tell which of the findings are new.
-function entryHeading({ rule, error, before, findings }) {
+function entryHeading({ rule, error, before, lowered, findings }) {
   if (rule === NO_RULE) {
     return `  ${NO_RULE}: ${findings.length} now. A finding without a rule cannot be in the baseline:`;
   }
   if (error) {
     return `  ${rule}: ${findings.length} now. A finding with severity "error" cannot be in the baseline:`;
   }
-  const counts = `  ${rule}: ${before} in the baseline, ${findings.length} now`;
+  const counts = lowered
+    ? `  ${rule}: ${before} allowed (the baseline file lists ${lowered.listed}, the base commit has ${lowered.base}), ${findings.length} now`
+    : `  ${rule}: ${before} in the baseline, ${findings.length} now`;
   return before
     ? `${counts}. One or more of these findings is new:`
     : `${counts}:`;
@@ -426,7 +458,9 @@ function handEdits(baseline, entries) {
 function fixedFindingsReport(tool, baseline, entries) {
   const { title, file } = TOOLS[tool];
   return [
-    `${title}: ${fixedPhrase(entries)} still in the baseline (${file}).`,
+    `${title}: ${fixedPhrase(
+      entries,
+    )} still in the baseline (${file}). This does not fail the check.`,
     '',
     ...entries.map(
       (entry) =>
@@ -451,11 +485,13 @@ function escapeProperty(text) {
   return escapeData(text).replace(/:/g, '%3A').replace(/,/g, '%2C');
 }
 
-function annotation(properties, message) {
+// level: "error" (the default) or "notice". A notice does not look like a
+// failure on GitHub.
+function annotation(properties, message, level = 'error') {
   const list = Object.entries(properties)
     .map(([key, value]) => `${key}=${escapeProperty(value)}`)
     .join(',');
-  return `::error ${list}::${escapeData(message)}`;
+  return `::${level} ${list}::${escapeData(message)}`;
 }
 
 function annotationTitle(title, entry) {
@@ -464,6 +500,9 @@ function annotationTitle(title, entry) {
   }
   if (entry.error) {
     return `${title} ${entry.rule}: severity "error" cannot be in the baseline`;
+  }
+  if (entry.lowered) {
+    return `${title} ${entry.rule}: ${entry.before} allowed (the baseline file lists ${entry.lowered.listed}), ${entry.findings.length} now`;
   }
   return `${title} ${entry.rule}: ${entry.before} in the baseline, ${entry.findings.length} now`;
 }
@@ -487,9 +526,11 @@ function newFindingsAnnotations(tool, entries) {
   );
 }
 
-function check(tool, baseline, groups, env) {
+// allowed: the counts that the check allows. Without a compare with the base
+// commit, they are the counts of the baseline file.
+function check(tool, baseline, groups, env, allowed = baseline) {
   const { title, file } = TOOLS[tool];
-  const added = newEntries(baseline, groups);
+  const added = newEntries(allowed, groups);
   const fixed = fixedEntries(baseline, groups);
   if (!added.length && !fixed.length) {
     return {
@@ -504,6 +545,13 @@ function check(tool, baseline, groups, env) {
   }
   const lines = [];
   if (added.length) lines.push(...newFindingsReport(tool, added));
+  if (added.some((entry) => entry.lowered)) {
+    lines.push(
+      '',
+      'The baseline file lists more findings than the base commit has, because a fixed finding stayed in the file. The check allows only the findings of the base commit, so a new finding cannot hide behind the old count.',
+      'To keep a new finding of such a file and rule, first remove the old count on the base branch: a maintainer runs "npm run baseline:update" there in a separate PR.',
+    );
+  }
   if (added.length && fixed.length) lines.push('');
   if (fixed.length) lines.push(...fixedFindingsReport(tool, baseline, fixed));
   if (env.GITHUB_ACTIONS === 'true') {
@@ -514,12 +562,85 @@ function check(tool, baseline, groups, env) {
           { title: `${title} baseline` },
           `${fixedPhrase(
             fixed,
-          )} still in ${file}. Run "npm run baseline:update" and commit the file, or see the log of this step for the hand edit.`,
+          )} still in ${file}. This does not fail the check. To remove ${
+            fixedTotal(fixed) === 1 ? 'it' : 'them'
+          }, run "npm run baseline:update" and commit the file, or see the log of this step for the hand edit.`,
+          'notice',
         ),
       );
     }
   }
-  return { exitCode: 1, lines };
+  return { exitCode: added.length ? 1 : 0, lines };
+}
+
+// The count that the check allows for each file and rule of the baseline
+// file, after a compare with the base commit:
+//   allowed = min(listed, base + max(0, listed - listedOnBase))
+// listed: the count in the baseline file of the PR. listedOnBase: the count
+// in the baseline file of the base commit. base: the findings of the base
+// commit. So a fixed finding that stayed in the baseline file of the base
+// commit cannot hide a new finding. Growth of the baseline file in the PR is
+// still allowed here; the growth guard asks for a label for it.
+function allowedBaseline(baseline, baseBaseline, baseGroups) {
+  const allowed = {};
+  Object.keys(baseline).forEach((file) => {
+    allowed[file] = {};
+    Object.keys(baseline[file]).forEach((rule) => {
+      const listed = baseline[file][rule].count;
+      const listedOnBase = baselineCount(baseBaseline, file, rule);
+      const base = baseGroups[file]?.[rule]?.length ?? 0;
+      allowed[file][rule] = {
+        count: Math.min(listed, base + Math.max(0, listed - listedOnBase)),
+        listed,
+        base,
+      };
+    });
+  });
+  return allowed;
+}
+
+// The findings of a tool on another commit, in a temporary git worktree. The
+// worktree uses the node_modules folder of this checkout, so it needs no
+// install. The worktree is removed also when the tool fails.
+async function collectAtCommit(tool, root, commit, collect) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'baseline-base-'));
+  try {
+    git(root, ['worktree', 'add', '--detach', '--quiet', dir, commit]);
+    try {
+      fs.symlinkSync(
+        path.join(root, 'node_modules'),
+        path.join(dir, 'node_modules'),
+        // a junction needs no admin rights on Windows; other systems ignore it
+        'junction',
+      );
+      return await collect(tool, dir);
+    } finally {
+      git(root, ['worktree', 'remove', '--force', dir]);
+    }
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+// The counts that the check allows when env.BASELINE_BASE_REF names the base
+// commit; else the counts of the baseline file.
+async function allowedCounts({ tool, root, env, collect, baseline }) {
+  const ref = env.BASELINE_BASE_REF;
+  if (!ref) return baseline;
+  const commit = resolveCommit(root, ref);
+  if (!commit) {
+    throw new CheckError(
+      `the base commit "${ref}" is not in the checkout. Check out the PR with "fetch-depth: 2".`,
+    );
+  }
+  const baseGroups = groupFindings(
+    await collectAtCommit(tool, root, commit, collect),
+  );
+  return allowedBaseline(
+    baseline,
+    readBaselineAt(root, commit, tool) || {},
+    baseGroups,
+  );
 }
 
 // Lowers each count to the current count. It never adds a finding.
@@ -605,11 +726,9 @@ function suppress(tool, root, groups) {
 
 // Compares each baseline file of the PR with the file on the base branch.
 function guard({ root, env, baseRef }) {
-  try {
-    git(root, ['rev-parse', '--verify', '--quiet', `${baseRef}^{commit}`]);
-  } catch {
-    // Without this check, a missing commit looks like a base branch without
-    // a baseline file, and the guard passes.
+  // Without this check, a missing commit looks like a base branch without a
+  // baseline file, and the guard passes.
+  if (!resolveCommit(root, baseRef)) {
     return {
       exitCode: 1,
       output: `Baseline guard: the base commit "${baseRef}" is not in the checkout. Check out the PR with "fetch-depth: 2".`,
@@ -709,8 +828,12 @@ async function runTool({ mode, tool, root, env, collect = collectFindings }) {
   }
   baseline = baseline || {};
   const groups = groupFindings(await collect(tool, root));
+  const allowed =
+    mode === 'check'
+      ? await allowedCounts({ tool, root, env, collect, baseline })
+      : baseline;
   const modes = {
-    check: () => check(tool, baseline, groups, env),
+    check: () => check(tool, baseline, groups, env, allowed),
     update: () => update(tool, root, baseline, groups),
     suppress: () => suppress(tool, root, groups),
   };

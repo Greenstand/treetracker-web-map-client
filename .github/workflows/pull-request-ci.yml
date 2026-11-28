@@ -57,6 +57,9 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
+          # the ESLint step and the type check step compare with the parent
+          # commit HEAD^1 (for a PR: the base branch)
+          fetch-depth: 2
 
       # no node-version: use the runner's Node.js, as the Cypress jobs do
       # https://github.com/actions/setup-node
@@ -83,19 +86,25 @@ jobs:
           CYPRESS_INSTALL_BINARY: 0
 
       # fails on each ESLint finding that is not in eslint-suppressions.json
-      # (also on a line that the PR did not change), and on each fixed finding
-      # that is still in the file. The log says how to fix each failure.
+      # (also on a line that the PR did not change). A fixed finding that is
+      # still in the file gives a notice. The step compares with the findings
+      # of HEAD^1, so a new finding cannot hide behind the count of a fixed
+      # finding. The log says how to fix each failure.
       - name: ESLint
         run: npm run baseline -- eslint
+        env:
+          BASELINE_BASE_REF: HEAD^1
 
       # fails on each type error that is not in tsc-suppressions.json (also
       # in a file that the PR did not change, for example a caller of a
-      # changed function), and on each fixed type error that is still in the
-      # file. It also runs when the ESLint step fails, so that the PR shows
-      # the results of both checks.
+      # changed function). It works as the ESLint step does. It also runs
+      # when the ESLint step fails, so that the PR shows the results of both
+      # checks.
       - name: Type check
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run baseline -- tsc
+        env:
+          BASELINE_BASE_REF: HEAD^1
 
   # fails when the PR adds a dependency with a known high or critical
   # vulnerability. Vulnerabilities that are already on the base branch do
